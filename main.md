@@ -166,6 +166,8 @@ DISCLOSED-VALUE)` matches the hash under the given claim name in the JWS-SD.
 
 # JWS-SD Format
 
+TODO: The holder needs to be able to figure out what the correct raw value was.
+
 A JWS-SD is a JWT signed using the issuer's private key. The following shows an example for a JWS-SD document:
 
 ```
