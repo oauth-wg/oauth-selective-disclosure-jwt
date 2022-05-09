@@ -164,26 +164,26 @@ A JWS-SD is a JWT signed using the issuer's private key. The following shows an 
     "iss": "https://example.com/issuer",
     "sub_jwk": {
         "kty": "RSA",
-        "n": "s2Dk6W7ygZqmNKE_OrRTJsR9Y8CL1yYFp-tSqmiBVBEp8w_PAH65Z14SJOkngtmggo-CJVez7D-lgYMK1hglyKW7FDShuFjjAaNeMU6lKHXa2re0J8OaCjFEANCHrPtItfl1XSM_pCpYaIxfShDj3Ra1tfmcZG3bbe8KDCcLVJzZWhB1zx8CligoKGG8XpkO-5YVKrfjYvkx5_AaG2qAC-wSqwnX37M6yJaWIOHItYnwDErOP8JBZXrP5jY2Cq2fPPkDYrWxanob1iDQ8cierZ-CAzypUwZd2dm5HetIs5GKGBte4zmCk4OOkRi3r5xaPC73kG-npQeUDfU2mnXjBQ",
+        "n": "rCZ-u2jj0CCRswyA-GtRyKMqRe4c-gjOjZDNaMcIJg8vSYDV7XHExeex3uqQBfOyV2_ukCZRc2gYCr2OzyqkqtQe_vQjL66uA3xktxNMTeqtYfqKeosfZ0cvc90bZf_GPnY-lV1GFrddG0jQ_Xg4ygitC7NAeQLMCuT4HPVUNgfR0FIC5zZ_z-0qXHT46Tco48Obp-k9dEfdyIKFpLjEF13AoFzfohaA_IqJCuNGCoGvvgoEMwPSAe-r9V11MhiMnDXNeIXB0zsEPyO2ve9c_hcpfi53c9JSBaQFSeV707prScdh9IWb9Yks6a2sNC83ZYYskUeWYRqNFFf9xiq1XQ",
         "e": "AQAB"
     },
     "iat": 1516239022,
     "exp": 1516247022,
     "sd_claims": {
-        "given_name": "rexfcHCGgyyM+aN7KcMxJFWZCvAJyd4OTAPYP7eJixo=",
-        "family_name": "HLrHyOYbeGnFxPqDPNIluH0A/BTZ4WUeZfjkv5KHGDM=",
-        "email": "sNHSvsiL698yNoQY886pAKPLBDAWs7UZL0Dxg/K0h7A=",
-        "phone_number": "TXkm7kCwGYqK0M41fLEl/mHnX8sGHk0p4rNhB3931cM=",
-        "address": "SqTxb1O3HFgTGgbL7wQ2gz9jCbPWVrPt6fqXMYmxJtY=",
-        "birthdate": "oNvWSi8meGurSceFr+jORsMs5dwLPNg3zuTbei0sCYM="
+        "given_name": "DumhwVNX7ljM2kbW9S0nISOVRBCgBGCAqYUgiB3RoFQ",
+        "family_name": "XW2uJY_3ewKOzdCvXFx3n0GR1e7AFFITlRs9LaEpXhc",
+        "email": "lN7aE0WeDBQ7HZuWCNYSljPR8nussvZHoDinaAnZyZ4",
+        "phone_number": "BkhM0_2EX9DxckOS_KCOGpQ4NawNFozGJbMrUWWQgow",
+        "address": "4axMBso9yntfx2lAsYOf1FUDovROgeKRpq3PcBExK9M",
+        "birthdate": "o5iE3bwryuMLLh9ZB1IYtbWZ2eNcFABNKNWqIyW3esw"
     }
 }
 ```
 In `sd_claims`, the hashes are built by hashing over a JSON array containing the
 salt and the claim value, in the JSON notation: `["6qMQvRL5haj","Peter"]`. The
-hashes are then Base64 encoded. Note that the precise JSON encoding can vary,
-and therefore, the JSON encodings are sent to the holder along with the JWS-SD,
-as described below.
+salt values and the hashes are Base64url encoded, trailing `=` removed. Note
+that the precise JSON encoding can vary, and therefore, the JSON encodings are
+sent to the holder along with the JWS-SD, as described below.
 
 TODO: Consider using Base85 instead.
 
@@ -201,12 +201,12 @@ The issuer therefore creates a Salt/Value Container (SVC) as follows:
 
 ```
 {
-    "given_name": "[\"sTKnC4qUu3GnLmzxRvybDw==\", \"John\"]",
-    "family_name": "[\"YEjr4CwVuSDtmeAOF0nNKw==\", \"Doe\"]",
-    "email": "[\"kvwHVQfz656FeRGGHzPthQ==\", \"johndoe@example.com\"]",
-    "phone_number": "[\"gVzjFOyGEv+YaBVwe4U22Q==\", \"+1-202-555-0101\"]",
-    "address": "[\"vw3Pg61KkF4i9ruZXNOIKQ==\", {\"street_address\": \"123 Main St\", \"locality\": \"Anytown\", \"region\": \"Anystate\", \"country\": \"US\"}]",
-    "birthdate": "[\"lCko1GmCAJnkP/6/u+a4mg==\", \"1940-01-01\"]"
+    "given_name": "[\"J8Lxj906DiXX_aE4zs05cg\", \"John\"]",
+    "family_name": "[\"wHPRcNJ-62nuGbLRUu08wQ\", \"Doe\"]",
+    "email": "[\"Iyby9C7l19MhWXC7z2aDFA\", \"johndoe@example.com\"]",
+    "phone_number": "[\"o1s_VI5qyyu29YqQrMI5OA\", \"+1-202-555-0101\"]",
+    "address": "[\"ZAHYs4SE5Un9Er-YeUs4Zg\", {\"street_address\": \"123 Main St\", \"locality\": \"Anytown\", \"region\": \"Anystate\", \"country\": \"US\"}]",
+    "birthdate": "[\"RH0rt8U8LpC9elOus2y5Tg\", \"1940-01-01\"]"
 }
 ```
 
@@ -223,10 +223,10 @@ appended to the JWS-SD using `;` as the separator:
 The following shows the contents of a proof document:
 ```
 {
-    "nonce": 798143,
+    "nonce": 882515,
     "sd": {
-        "family_name": "[\"YEjr4CwVuSDtmeAOF0nNKw==\", \"Doe\"]",
-        "address": "[\"vw3Pg61KkF4i9ruZXNOIKQ==\", {\"street_address\": \"123 Main St\", \"locality\": \"Anytown\", \"region\": \"Anystate\", \"country\": \"US\"}]"
+        "family_name": "[\"wHPRcNJ-62nuGbLRUu08wQ\", \"Doe\"]",
+        "address": "[\"ZAHYs4SE5Un9Er-YeUs4Zg\", {\"street_address\": \"123 Main St\", \"locality\": \"Anytown\", \"region\": \"Anystate\", \"country\": \"US\"}]"
     }
 }
 ```

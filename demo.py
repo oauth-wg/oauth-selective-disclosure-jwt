@@ -2,7 +2,7 @@ from jwcrypto.jwk import JWK
 from jwcrypto.jws import JWS
 from json import dumps
 from hashlib import sha256
-from base64 import b64encode, urlsafe_b64encode
+from base64 import urlsafe_b64encode
 import random
 
 # Create the issuer's key in JWK format
@@ -28,7 +28,7 @@ full_user_claims = {
 
 # The salts will be selected by the server, of course.
 def generate_salt():
-    return b64encode(bytes(random.getrandbits(8) for _ in range(16))).decode("ascii")
+    return urlsafe_b64encode(bytes(random.getrandbits(8) for _ in range(16))).decode("ascii").strip("=")
 
 
 salts = {name: generate_salt() for name in full_user_claims}
@@ -43,7 +43,7 @@ def hash_claim(salt, value, return_raw=False):
     if return_raw:
         return raw
     # Calculate the SHA 256 hash and output it base64 encoded
-    return b64encode(sha256(raw.encode("utf-8")).digest()).decode("ascii")
+    return urlsafe_b64encode(sha256(raw.encode("utf-8")).digest()).decode("ascii").strip("=")
 
 
 jws_sd_doc = {
