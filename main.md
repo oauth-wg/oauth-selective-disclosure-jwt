@@ -157,52 +157,76 @@ DISCLOSED-VALUE)` matches the hash under the given claim name in the JWS-SD.
 
 # JWS-SD Format
 
-TODO: The holder needs to be able to figure out what the correct raw value was.
-
-TODO: The holder needs to learn the salts.
-
 A JWS-SD is a JWT signed using the issuer's private key. The following shows an example for a JWS-SD document:
 
 ```
 {
-    "iss": "https://example.com",
+    "iss": "https://example.com/issuer",
     "sub_jwk": {
         "kty": "RSA",
-        "n": "0vx7agoebGcQSuuPiLJXZptN9nndrQmbXEps2aiAFbWhM78LhWx4cbbfAAt\n    VT86zwu1RK7aPFFxuhDR1L6tSoc_BJECPebWKRXjBZCiFV4n3oknjhMstn64tZ_2W\n    -5JsGY4Hc5n9yBXArwl93lqt7_RN5w6Cf0h4QyQ5v-65YGjQR0_FDW2QvzqY368QQ\n    MicAtaSqzs8KJZgnYb9c7d0zgdAZHzu6qMQvRL5hajrn1n91CbOpbISD08qNLyrdk\n    t-bFTWhAI4vMQFh6WeZu0fM4lFd2NcRwr3XPksINHaQ-G_xBniIqbw0Ls1jF44-cs\n    FCur-kEgU8awapJzKnqDKgw",
+        "n": "s2Dk6W7ygZqmNKE_OrRTJsR9Y8CL1yYFp-tSqmiBVBEp8w_PAH65Z14SJOkngtmggo-CJVez7D-lgYMK1hglyKW7FDShuFjjAaNeMU6lKHXa2re0J8OaCjFEANCHrPtItfl1XSM_pCpYaIxfShDj3Ra1tfmcZG3bbe8KDCcLVJzZWhB1zx8CligoKGG8XpkO-5YVKrfjYvkx5_AaG2qAC-wSqwnX37M6yJaWIOHItYnwDErOP8JBZXrP5jY2Cq2fPPkDYrWxanob1iDQ8cierZ-CAzypUwZd2dm5HetIs5GKGBte4zmCk4OOkRi3r5xaPC73kG-npQeUDfU2mnXjBQ",
         "e": "AQAB"
     },
-    "nbf": "1541493724",
-    "iat": "1541493724",
-    "exp": "1573029723",
+    "iat": 1516239022,
+    "exp": 1516247022,
     "sd_claims": {
-        "given_name": "6nLHlZQpbkW4wqKWZE2YhYH1jPrGYB0SLtCovXwC6L8=",  // not actually the correct values
-        "family_name": "EpdMWYlm3X/8hyPfAFoI/14D9ohtzHMJcA53S3K6GrQ=",
-        "birthdate": "WAmS827uHRF1xhKGAJVft5iyF9LW3vQ2lfOB7r96Yg4="
+        "given_name": "rexfcHCGgyyM+aN7KcMxJFWZCvAJyd4OTAPYP7eJixo=",
+        "family_name": "HLrHyOYbeGnFxPqDPNIluH0A/BTZ4WUeZfjkv5KHGDM=",
+        "email": "sNHSvsiL698yNoQY886pAKPLBDAWs7UZL0Dxg/K0h7A=",
+        "phone_number": "TXkm7kCwGYqK0M41fLEl/mHnX8sGHk0p4rNhB3931cM=",
+        "address": "SqTxb1O3HFgTGgbL7wQ2gz9jCbPWVrPt6fqXMYmxJtY=",
+        "birthdate": "oNvWSi8meGurSceFr+jORsMs5dwLPNg3zuTbei0sCYM="
     }
 }
 ```
-In `sd_claims`, the hashes are built by hashing a JSON array containing the salt
-and the claim value, where there must be no white space characters in the JSON
-notation: `["6qMQvRL5haj","Peter"]`. The hashes are Base64 encoded.
+In `sd_claims`, the hashes are built by hashing over a JSON array containing the
+salt and the claim value, in the JSON notation: `["6qMQvRL5haj","Peter"]`. The
+hashes are then Base64 encoded. Note that the precise JSON encoding can vary,
+and therefore, the JSON encodings are sent to the holder along with the JWS-SD,
+as described below.
 
 TODO: Consider using Base85 instead.
 
 The JWS-SD is then signed by the issuer, to create a document like the following (shortened for presentation):
 
-`eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJodHRwczovL2V4YW1wbGUuY29tIic0PSJ9fQ.qWVAIJ4OzoIUEy-9v0af3UW7NKufBh34V6JRBe7I8H0`
+`eyJhbGciOiAiUlMyNTYifQ.eyJpc3MiOiAiaHR0cHM6Ly9leGFtcGxlLmNvbS9pc3N1ZXIiLCAic3ViX2p3ayI6IHsT(...)DRyTmhCMzkzMWNNPSIsICJhZGRyZXNzIjogIlNxVHhiMU8zSEZnVEdnYkw3d1EyZ3o5akNiUFdWclB0NmZxWE1ZbXhKNPSJ9fQ.cHNaU6b9hvVRNevXlPlmKCr6n-LHgvGcAYwAtBi6YIKPqqfIiBG1L-eo4wPTY-Fo4FYHJ5iJ3InGSxwlWboxwcAZ-cdedhfBmw`
+
+# JWS-SD Salt/Value Container
+
+Besides the JWS-SD itself, the holder needs to learn the raw claim values that
+are contained in the JWS-SD, along with the precise input to the hash
+calculation, and the salts.
+
+The issuer therefore creates a Salt/Value Container (SVC) as follows:
+
+```
+{
+    "given_name": "[\"sTKnC4qUu3GnLmzxRvybDw==\", \"John\"]",
+    "family_name": "[\"YEjr4CwVuSDtmeAOF0nNKw==\", \"Doe\"]",
+    "email": "[\"kvwHVQfz656FeRGGHzPthQ==\", \"johndoe@example.com\"]",
+    "phone_number": "[\"gVzjFOyGEv+YaBVwe4U22Q==\", \"+1-202-555-0101\"]",
+    "address": "[\"vw3Pg61KkF4i9ruZXNOIKQ==\", {\"street_address\": \"123 Main St\", \"locality\": \"Anytown\", \"region\": \"Anystate\", \"country\": \"US\"}]",
+    "birthdate": "[\"lCko1GmCAJnkP/6/u+a4mg==\", \"1940-01-01\"]"
+}
+```
+
+For transporting the SVC together with the JWS-SD from the issuer to the holder,
+the SVC is base64url encoded (as the parts of any JWS, todo reference) and
+appended to the JWS-SD using `;` as the separator:
+
+`eyJhbGciOiAiUlMyNTYifQ.eyJpc3MiOiAiaHR0cHM6Ly3ayI6IHsT(...)DRyTmXhKNPSJ9fQ.cHNaU6b9hAZ-cdedhfBmw;ewogICAgImdpdmVuX25hbWUiOi(...)MTk0MC0wMS0wMVwiXSIKfQ`
+
+(Shortened for presentation.)
 
 # JWS-SD Proof Format
-
-TODO: In the demo, the contents are sent as a JSON-encoded string in JSON, to achieve the same hash value.
 
 The following shows the contents of a proof document:
 ```
 {
-    "nonce": "d2NcRwr3",
+    "nonce": 798143,
     "sd": {
-        "given_name": ["6qMQvRL5haj", "Peter"],
-        "family_name": ["HMJcA53S3K6", "Example"],
-        "birthdate": ["hGJf3vQ2lfO", "2000-01-01"],
+        "family_name": "[\"YEjr4CwVuSDtmeAOF0nNKw==\", \"Doe\"]",
+        "address": "[\"vw3Pg61KkF4i9ruZXNOIKQ==\", {\"street_address\": \"123 Main St\", \"locality\": \"Anytown\", \"region\": \"Anystate\", \"country\": \"US\"}]"
     }
 }
 ```
@@ -214,10 +238,10 @@ The JWS-SD Proof is then signed by the holder, to create a document like the fol
 
 # Presentation
 
-The JWS-SD and the JWS-SD Proof can be combined into one document using `.` as a separator:
+The JWS-SD and the JWS-SD Proof can be combined into one document using `;` as a separator:
 
 
-`eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJodHRwczovL2V4YW1wbGUuY29tIic0PSJ9fQ.qWVAIJ4OzoIUEy-9v0af3UW7NKufBh34V6JRBe7I8H0.eyJhbGciOiJIUzI1NiJ9.eyJub25jZSI6ImQyTmNSd3IzIiwic2QiOnsiZ2l2ZW5fbBsZSJdLCJiaXJ0aGRhdGUiOlsiaEdKZjN2UTJsZk8iLCIyMDAwLTAxLTAxIl19fQ.Dt99fCFmXYLXRLwk4Y4DrAOaY5ufoYvMijtJACDzoB0`
+`eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJodHRwczovL2V4YW1wbGUuY29tIic0PSJ9fQ.qWVAIJ4OzoIUEy-9v0af3UW7NKufBh34V6JRBe7I8H0.eyJhbGciOiJIUzI1NiJ9;eyJub25jZSI6ImQyTmNSd3IzIiwic2QiOnsiZ2l2ZW5fbBsZSJdLCJiaXJ0aGRhdGUiOlsiaEdKZjN2UTJsZk8iLCIyMDAwLTAxLTAxIl19fQ.Dt99fCFmXYLXRLwk4Y4DrAOaY5ufoYvMijtJACDzoB0`
 
 
 # Security Considerations {#security_considerations}
