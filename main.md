@@ -38,15 +38,6 @@ organization="Microsoft"
     [author.address]
     email = "mbj@microsoft.com"
     uri = "https://self-issued.info/"
-
-
-[[author]]
-initials="T."
-surname="Lodderstedt"
-fullname="Torsten Lodderstedt"
-organization="yes.com"
-    [author.address]
-    email = "torsten@lodderstedt.net"
         
     
 %%%
