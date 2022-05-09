@@ -167,6 +167,7 @@ DISCLOSED-VALUE)` matches the hash under the given claim name in the JWS-SD.
 # JWS-SD Format
 
 TODO: The holder needs to be able to figure out what the correct raw value was.
+TODO: The holder needs to learn the salts.
 
 A JWS-SD is a JWT signed using the issuer's private key. The following shows an example for a JWS-SD document:
 
@@ -190,7 +191,9 @@ A JWS-SD is a JWT signed using the issuer's private key. The following shows an 
 ```
 In `sd_claims`, the hashes are built by hashing a JSON array containing the salt
 and the claim value, where there must be no white space characters in the JSON
-notation: `["6qMQvRL5haj","Peter"]`.
+notation: `["6qMQvRL5haj","Peter"]`. The hashes are Base64 encoded.
+
+TODO: Consider using Base85 instead.
 
 The JWS-SD is then signed by the issuer, to create a document like the following (shortened for presentation):
 
@@ -236,21 +239,7 @@ TBD
 
 # Acknowledgements {#Acknowledgements}
       
-We would like to thank Daniel Fett, Sebastian Ebling, Dave Tonge, Mike Jones, Nat Sakimura, and Rob Otto for their valuable feedback during the preparation of this specification.
-
-We would also like to thank 
-Vladimir Dzhuvinov,
-Takahiko Kawasaki,
-Daniel Fett, 
-Dave Tonge, 
-Travis Spencer, 
-Joergen Binningsboe, 
-Aamund Bremer, 
-Steinar Noem,
-Francis Pouatcha,
-Jacob Ideskog,
-Hannes Tschofenig,
-and Aaron Parecki for their valuable feedback to this specification.
+We would like to thank ...
 
 # IANA Considerations {#iana_considerations}
 
