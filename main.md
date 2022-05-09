@@ -28,7 +28,7 @@ surname="Yasuda"
 fullname="Kristina Yasuda"
 organization="Microsoft"
     [author.address]
-    email = "Kristina.Yasuda%40microsoft.com"
+    email = "Kristina.Yasuda@microsoft.com"
 
 [[author]]
 initials="M."
@@ -158,6 +158,7 @@ DISCLOSED-VALUE)` matches the hash under the given claim name in the JWS-SD.
 # JWS-SD Format
 
 TODO: The holder needs to be able to figure out what the correct raw value was.
+
 TODO: The holder needs to learn the salts.
 
 A JWS-SD is a JWT signed using the issuer's private key. The following shows an example for a JWS-SD document:
@@ -191,6 +192,8 @@ The JWS-SD is then signed by the issuer, to create a document like the following
 `eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJodHRwczovL2V4YW1wbGUuY29tIic0PSJ9fQ.qWVAIJ4OzoIUEy-9v0af3UW7NKufBh34V6JRBe7I8H0`
 
 # JWS-SD Proof Format
+
+TODO: In the demo, the contents are sent as a JSON-encoded string in JSON, to achieve the same hash value.
 
 The following shows the contents of a proof document:
 ```
