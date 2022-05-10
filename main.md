@@ -94,29 +94,29 @@ This specification uses the terms "access token", "refresh token",
 
 # Terminology
 
- * A **JWS-SD** is a signed JWT [@!RFC7515], i.e., a JWS, that is formatted
+ * A **SD-JWS** is a signed JWT [@!RFC7515], i.e., a JWS, that is formatted
    according to the rules defined below and therefore supports selective
    disclosure. 
- * An **issuer** is the entity that creates a JWS-SD.
- * A **holder** has control over a JWS-SD and the private key for the public key
-   contained in the JWS-SD.
- * A **verifier** checks, upon receiving a JWS-SD and a matching proof from a
-   holder, that the JWS-SD was issued for the holder and can extract claims from
-   the JWS-SD as far as their values have been released by the holder.  
+ * An **issuer** is the entity that creates a SD-JWS.
+ * A **holder** has control over a SD-JWS and the private key for the public key
+   contained in the SD-JWS.
+ * A **verifier** checks, upon receiving a SD-JWS and a matching proof from a
+   holder, that the SD-JWS was issued for the holder and can extract claims from
+   the SD-JWS as far as their values have been released by the holder.  
 
-# Working Principle
+# Concept
 
-In the following, the working principle of JWS-SDs and matching proofs is described on a conceptual level.
+In the following, the concept of SD-JWSs and matching proofs is described on a conceptual level.
 
-## Creating a JWS-SD
+## Creating a SD-JWS
 
-A JWS-SD, at its core, is a signed document containing some metadata, the
+An SD-JWS, at its core, is a signed document containing some metadata, the
 holder's public key, and hashed and salted claims. It is signed using the
 issuer's private key.
 
 ```
-    JWS-SD-DOC = (METADATA, HOLDER-PUBLIC-KEY, HS-CLAIMS)
-    JWS-SD = JWS-SD-DOC | SIG(JWS-SD-DOC, ISSUER-PRIV-KEY)
+    SD-JWS-DOC = (METADATA, HOLDER-PUBLIC-KEY, HS-CLAIMS)
+    SD-JWS = SD-JWS-DOC | SIG(SD-JWS-DOC, ISSUER-PRIV-KEY)
 ```
 
 `HS-CLAIMS` is usually a simple object with claim names mapped to  salted and
@@ -151,13 +151,13 @@ Just as `HS-CLAIMS`, `SALTS` can be more complex as well.
 ## Verifying 
 
 A verifier first checks that the `PROOF` was indeed signed by the private key
-belonging to the public key contained in `JWS-SD-DOC`. The verifier can then
+belonging to the public key contained in `SD-JWS-DOC`. The verifier can then
 check that for each claim in `PROOF`, the hash `HASH(DISCLOSED-SALT |
-DISCLOSED-VALUE)` matches the hash under the given claim name in the JWS-SD.
+DISCLOSED-VALUE)` matches the hash under the given claim name in the SD-JWS.
 
-# JWS-SD Format
+# SD-JWS Format
 
-A JWS-SD is a JWT signed using the issuer's private key. The following shows an example for a JWS-SD document:
+A SD-JWS is a JWT signed using the issuer's private key. The following shows an example for a SD-JWS document:
 
 ```
 {
@@ -183,18 +183,18 @@ In `sd_claims`, the hashes are built by hashing over a JSON array containing the
 salt and the claim value, in the JSON notation: `["6qMQvRL5haj","Peter"]`. The
 salt values and the hashes are Base64url encoded, trailing `=` removed. Note
 that the precise JSON encoding can vary, and therefore, the JSON encodings are
-sent to the holder along with the JWS-SD, as described below.
+sent to the holder along with the SD-JWS, as described below.
 
 TODO: Consider using Base85 instead.
 
-The JWS-SD is then signed by the issuer, to create a document like the following (shortened for presentation):
+The SD-JWS is then signed by the issuer, to create a document like the following (shortened for presentation):
 
 `eyJhbGciOiAiUlMyNTYifQ.eyJpc3MiOiAiaHR0cHM6Ly9leGFtcGxlLmNvbS9pc3N1ZXIiLCAic3ViX2p3ayI6IHsT(...)DRyTmhCMzkzMWNNPSIsICJhZGRyZXNzIjogIlNxVHhiMU8zSEZnVEdnYkw3d1EyZ3o5akNiUFdWclB0NmZxWE1ZbXhKNPSJ9fQ.cHNaU6b9hvVRNevXlPlmKCr6n-LHgvGcAYwAtBi6YIKPqqfIiBG1L-eo4wPTY-Fo4FYHJ5iJ3InGSxwlWboxwcAZ-cdedhfBmw`
 
-# JWS-SD Salt/Value Container
+# SD-JWS Salt/Value Container
 
-Besides the JWS-SD itself, the holder needs to learn the raw claim values that
-are contained in the JWS-SD, along with the precise input to the hash
+Besides the SD-JWS itself, the holder needs to learn the raw claim values that
+are contained in the SD-JWS, along with the precise input to the hash
 calculation, and the salts.
 
 The issuer therefore creates a Salt/Value Container (SVC) as follows:
@@ -210,15 +210,15 @@ The issuer therefore creates a Salt/Value Container (SVC) as follows:
 }
 ```
 
-For transporting the SVC together with the JWS-SD from the issuer to the holder,
+For transporting the SVC together with the SD-JWS from the issuer to the holder,
 the SVC is base64url encoded (as the parts of any JWS, todo reference) and
-appended to the JWS-SD using `;` as the separator:
+appended to the SD-JWS using `;` as the separator:
 
 `eyJhbGciOiAiUlMyNTYifQ.eyJpc3MiOiAiaHR0cHM6Ly3ayI6IHsT(...)DRyTmXhKNPSJ9fQ.cHNaU6b9hAZ-cdedhfBmw;ewogICAgImdpdmVuX25hbWUiOi(...)MTk0MC0wMS0wMVwiXSIKfQ`
 
 (Shortened for presentation.)
 
-# JWS-SD Proof Format
+# SD-JWS Proof Format
 
 The following shows the contents of a proof document:
 ```
@@ -232,13 +232,13 @@ The following shows the contents of a proof document:
 ```
 For each claim, an array of the salt and the claim value is contained in the `sd` object.
 
-The JWS-SD Proof is then signed by the holder, to create a document like the following:
+The SD-JWS Proof is then signed by the holder, to create a document like the following:
 
 `eyJhbGciOiJIUzI1NiJ9.eyJub25jZSI6ImQyTmNSd3IzIiwic2QiOnsiZ2l2ZW5fbBsZSJdLCJiaXJ0aGRhdGUiOlsiaEdKZjN2UTJsZk8iLCIyMDAwLTAxLTAxIl19fQ.Dt99fCFmXYLXRLwk4Y4DrAOaY5ufoYvMijtJACDzoB0`
 
 # Presentation
 
-The JWS-SD and the JWS-SD Proof can be combined into one document using `;` as a separator:
+The SD-JWS and the SD-JWS Proof can be combined into one document using `;` as a separator:
 
 
 `eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJodHRwczovL2V4YW1wbGUuY29tIic0PSJ9fQ.qWVAIJ4OzoIUEy-9v0af3UW7NKufBh34V6JRBe7I8H0.eyJhbGciOiJIUzI1NiJ9;eyJub25jZSI6ImQyTmNSd3IzIiwic2QiOnsiZ2l2ZW5fbBsZSJdLCJiaXJ0aGRhdGUiOlsiaEdKZjN2UTJsZk8iLCIyMDAwLTAxLTAxIl19fQ.Dt99fCFmXYLXRLwk4Y4DrAOaY5ufoYvMijtJACDzoB0`
