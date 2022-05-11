@@ -45,7 +45,7 @@ organization="Microsoft"
 .# Abstract 
 
 This document specifies conventions for creating JSON Web Signature (JWS)
-documents that support selective disclosure of claim values. 
+documents that support selective disclosure of JWT claim values. 
 
 {mainmatter}
 
@@ -54,29 +54,27 @@ documents that support selective disclosure of claim values.
 The JSON-based content of JSON Web Signatures (JWS) as defined in [@!RFC7515] is
 secured against modification using digital signatures. A consumer of a JWS
 document that has checked the document's signature can safely assume that the
-contents of the document have not been modified.  However, anyone receiving a
-JWS document can read all contents of the document. 
+contents of the document have not been modified.  This means that anyone 
+receiving a JWS document can read all contents of the document because the all 
+of the JWT claims are secured using one signature.
 
-For example, a common use case is that the signed document represents a user's
-identity credential, created by an issuer. The issuer includes the user's public
-key or a reference thereto. To proof their identity to a verifier, the user can
-then send the issuer-signed credential plus a signature over some
-transaction-specific values, the so-called proof. It is signed using the user's
-private key. This demonstrates possession of the private key, and by extension,
-the identity of the user. 
+This is not a problem in a federated identity use case when the user has given 
+the Client authorization to access certain resources, and the Authorization 
+Server returns to the Client only the claims the user has consented to release.
 
-The problem is, that using this approach, the user has to release the full
-issuer-signed credential to the verifier. The credential is often created once
-and can then be used for many transactions. Thus, it is in the user's interest
-that the credential creates many user attributes which can be disclosed
-selectively to verifiers.
+However, in a use case involving verifiable credentials where the user is 
+presenting a JWS signed by the issuer at multiple Clients over a period of time
+in multiple transactions, the user's ability to choose which claims within 
+a JWS to present to a certain Client becomes critical. 
 
-This document describes a format for JWS documents that support selective
-disclosure (SD-JWS) including a format for proofs.
+This document describes a format for JWS documents that enable selective disclosure
+of the included claims (SD-JWS), including a format for proofs.
 
-It is important to note that while user identity credentials of natural persons
-are common use cases, the mechanisms defined in this document can be used for
-any other use case as well. 
+In a common use case, such JWS document includes claims describing natural persons, 
+the mechanisms defined in this document can be used for any other use cases as well.
+
+It is important to note that this format enables selective disclosure of claims, but
+in itself it does not achieve unlinkability of the subject of a JWS document.
 
 ## Conventions and Terminology
 
