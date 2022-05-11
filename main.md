@@ -68,13 +68,18 @@ in multiple transactions, the user's ability to choose which claims within
 a JWS to present to a certain Client becomes critical. 
 
 This document describes a format for JWS documents that enable selective disclosure
-of the included claims (SD-JWS), including a format for proofs.
+of the included claims (SD-JWS), including a format for proofs, which are digitally
+signed JWS documents presented during verification.
 
 In a common use case, such JWS document includes claims describing natural persons, 
 the mechanisms defined in this document can be used for any other use cases as well.
 
 It is important to note that this format enables selective disclosure of claims, but
 in itself it does not achieve unlinkability of the subject of a JWS document.
+
+Note: discuss how much we want to get into the holder binding (user's public key contained inside an SD-JWS).
+From my perspective, it is very use case specific and orthogonal to the general mechanism of selective disclosure
+we are trying to define here.
 
 ## Conventions and Terminology
 
@@ -92,33 +97,39 @@ This specification uses the terms "access token", "refresh token",
 
 # Terminology
 
- * A **SD-JWS** is a signed JWT [@!RFC7515], i.e., a JWS, that is formatted
+ * An **SD-JWS** is a signed JWT [@!RFC7515], i.e., a JWS, that is formatted
    according to the rules defined below and therefore supports selective
    disclosure. 
- * An **issuer** is the entity that creates a SD-JWS.
- * A **holder** has control over a SD-JWS and the private key for the public key
-   contained in the SD-JWS.
+ * An **issuer** is the entity that creates a digital signature on an SD-JWS.
+ * A **wallet** is the entity that receives, stores, presents, and manages SD-JWSs
+   enabling the user to exercise control over SD-JWSs.
  * A **verifier** checks, upon receiving a SD-JWS and a matching proof from a
    holder, that the SD-JWS was issued for the holder and can extract claims from
-   the SD-JWS as far as their values have been released by the holder.  
+   the SD-JWS as far as their values have been released by the holder.
+ * A **proof** 
+
+Note: discuss if we want to include Client, Authorization Server for the purpose of
+ensuring continuity and separating the entity from the actor.
+
+Note: discuss definition of `proof`.
+
+Note: holder of wallet? add that wallet can be of any deployment
 
 # Concept
 
-In the following, the concept of SD-JWSs and matching proofs is described on a conceptual level.
+In the following section, the concept of SD-JWSs and matching proofs are described at a conceptual level.
 
 ## Creating a SD-JWS
 
-An SD-JWS, at its core, is a signed document containing some metadata, the
-holder's public key, and hashed and salted claims. It is signed using the
-issuer's private key.
+An SD-JWS, at its core, is a digitally signed document containing hashes over the claim values and unique salts,
+the holder's public key and other metadata. It is digitally signed using the issuer's private key.
 
 ```
     SD-JWS-DOC = (METADATA, HOLDER-PUBLIC-KEY, HS-CLAIMS)
     SD-JWS = SD-JWS-DOC | SIG(SD-JWS-DOC, ISSUER-PRIV-KEY)
 ```
 
-`HS-CLAIMS` is usually a simple object with claim names mapped to  salted and
-hashed claim values:
+`HS-CLAIMS` is usually a simple object with claim names mapped to hashes over the claim values with unique salts:
 ```
     HS-CLAIMS = (
         CLAIM-NAME: HASH(SALT | CLAIM-VALUE)
@@ -129,7 +140,8 @@ hashed claim values:
 
 ## Creating a Proof
 
-For a proof, a holder releases a document such as the following to the verifier:
+For a proof, a holder releases a JWS document with the claim values that the user has consented to release
+such as the following to the verifier:
 
 ```
     PROOF-DOC = (METADATA, SALTS)
@@ -146,16 +158,21 @@ For a proof, a holder releases a document such as the following to the verifier:
 
 Just as `HS-CLAIMS`, `SALTS` can be more complex as well.
 
+Note: Suggest we separate creating a SD-JWS from creating a proof. those happen at a different period of time.
+And the way it is written now, that is not exactly clear. I would make it 
+Creating a SD-JWS -> SD-JWS Salt/Value Container -> Creating a Proof -> Verifying (SD-JWS Format, SD-JWS Proof Format)
+
 ## Verifying 
 
 A verifier first checks that the `PROOF` was indeed signed by the private key
-belonging to the public key contained in `SD-JWS-DOC`. The verifier can then
-check that for each claim in `PROOF`, the hash `HASH(DISCLOSED-SALT |
+belonging to the public key contained in `SD-JWS-DOC`. 
+
+The verifier can then check that for each claim in `PROOF`, the hash `HASH(DISCLOSED-SALT |
 DISCLOSED-VALUE)` matches the hash under the given claim name in the SD-JWS.
 
 # SD-JWS Format
 
-A SD-JWS is a JWT signed using the issuer's private key. The following shows an example for a SD-JWS document:
+A SD-JWS is signed using the issuer's private key. The following shows an example for a body of a SD-JWS document:
 
 ```
 {
@@ -185,9 +202,11 @@ sent to the holder along with the SD-JWS, as described below.
 
 TODO: Consider using Base85 instead.
 
-The SD-JWS is then signed by the issuer, to create a document like the following (shortened for presentation):
+The SD-JWS is then signed by the issuer, to create a document like the following (abbreviated for for display purposes only):
 
 `eyJhbGciOiAiUlMyNTYifQ.eyJpc3MiOiAiaHR0cHM6Ly9leGFtcGxlLmNvbS9pc3N1ZXIiLCAic3ViX2p3ayI6IHsT(...)DRyTmhCMzkzMWNNPSIsICJhZGRyZXNzIjogIlNxVHhiMU8zSEZnVEdnYkw3d1EyZ3o5akNiUFdWclB0NmZxWE1ZbXhKNPSJ9fQ.cHNaU6b9hvVRNevXlPlmKCr6n-LHgvGcAYwAtBi6YIKPqqfIiBG1L-eo4wPTY-Fo4FYHJ5iJ3InGSxwlWboxwcAZ-cdedhfBmw`
+
+Note: need to define `sub_jwk`. Why are we using `sub_jwk`?
 
 # SD-JWS Salt/Value Container
 
@@ -210,11 +229,9 @@ The issuer therefore creates a Salt/Value Container (SVC) as follows:
 
 For transporting the SVC together with the SD-JWS from the issuer to the holder,
 the SVC is base64url encoded (as the parts of any JWS, todo reference) and
-appended to the SD-JWS using `;` as the separator:
+appended to the SD-JWS using `;` as the separator (abbreviated for for display purposes only):
 
 `eyJhbGciOiAiUlMyNTYifQ.eyJpc3MiOiAiaHR0cHM6Ly3ayI6IHsT(...)DRyTmXhKNPSJ9fQ.cHNaU6b9hAZ-cdedhfBmw;ewogICAgImdpdmVuX25hbWUiOi(...)MTk0MC0wMS0wMVwiXSIKfQ`
-
-(Shortened for presentation.)
 
 # SD-JWS Proof Format
 
@@ -248,6 +265,9 @@ For the security of this scheme, the following properties are required of the ha
 
 - Given a claim value, a salt, and the resulting hash, it is hard to find a second salt value so that HASH(salt | claim_value) equals the hash.
 
+Add: The Salts must be random/long enough so that the attacker cannot brute force them.
+
+Note: No need for the wallet-generated hashes? to prevent issuer-verifier collusion
 
 # Privacy Considerations {#privacy_considerations}
 
