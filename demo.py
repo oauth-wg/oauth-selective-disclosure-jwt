@@ -13,6 +13,7 @@ holder_key = JWK.generate(key_size=2048, kty="RSA")
 
 # Define the claims
 full_user_claims = {
+    "sub": "6c5c0a49-b589-431d-bae7-219122a9ec2c",
     "given_name": "John",
     "family_name": "Doe",
     "email": "johndoe@example.com",
@@ -28,7 +29,11 @@ full_user_claims = {
 
 # The salts will be selected by the server, of course.
 def generate_salt():
-    return urlsafe_b64encode(bytes(random.getrandbits(8) for _ in range(16))).decode("ascii").strip("=")
+    return (
+        urlsafe_b64encode(bytes(random.getrandbits(8) for _ in range(16)))
+        .decode("ascii")
+        .strip("=")
+    )
 
 
 salts = {name: generate_salt() for name in full_user_claims}
@@ -43,7 +48,11 @@ def hash_claim(salt, value, return_raw=False):
     if return_raw:
         return raw
     # Calculate the SHA 256 hash and output it base64 encoded
-    return urlsafe_b64encode(sha256(raw.encode("utf-8")).digest()).decode("ascii").strip("=")
+    return (
+        urlsafe_b64encode(sha256(raw.encode("utf-8")).digest())
+        .decode("ascii")
+        .strip("=")
+    )
 
 
 jws_sd_doc = {
@@ -56,6 +65,8 @@ jws_sd_doc = {
     },
 }
 
+print(f"User claims:\n```\n{dumps(full_user_claims, indent=4)}\n```")
+
 print("Contents of the JWS-SD:\n```\n" + dumps(jws_sd_doc, indent=4) + "\n```\n\n")
 
 # Sign the JWS-SD using the issuer's key
@@ -64,12 +75,19 @@ jws_sd.add_signature(issuer_key, alg="RS256", protected=dumps({"alg": "RS256"}))
 print("The serialized JWS-SD:\n```\n" + jws_sd.serialize(compact=True) + "\n```\n\n")
 
 svc = {
-    name: hash_claim(salts[name], value, return_raw=True)
-    for name, value in full_user_claims.items()
+    "sd_claims": {
+        name: hash_claim(salts[name], value, return_raw=True)
+        for name, value in full_user_claims.items()
+    },
+    "sub_jwk_private": issuer_key.export_private(as_dict=True),
 }
 print("Contents of the JWS-SD SVC:\n```\n" + dumps(svc, indent=4) + "\n```\n\n")
 
-print("The serialized JWS-SD SVC:\n```\n" + urlsafe_b64encode(dumps(svc, indent=4).encode('utf-8')).decode('ascii').strip('=') + "\n```\n\n")
+print(
+    "The serialized JWS-SD SVC:\n```\n"
+    + urlsafe_b64encode(dumps(svc, indent=4).encode("utf-8")).decode("ascii").strip("=")
+    + "\n```\n\n"
+)
 
 #######################################################################
 
@@ -79,7 +97,7 @@ disclosed_claims = ["family_name", "address"]
 
 jws_sd_p_doc = {
     "nonce": random.randint(0, 1000000),
-    "sd": {
+    "sd_claims": {
         name: hash_claim(salts[name], full_user_claims[name], return_raw=True)
         for name in disclosed_claims
     },
