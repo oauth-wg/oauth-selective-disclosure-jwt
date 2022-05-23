@@ -78,11 +78,8 @@ NOT", "SHOULD", "SHOULD NOT", "RECOMMENDED", "NOT RECOMMENDED",
 described in BCP 14 [@!RFC2119] [@!RFC8174] when, and only when, they
 appear in all capitals, as shown here.
 
-This specification uses the terms "access token", "refresh token",
-"authorization server", "resource server", "authorization endpoint",
-"authorization request", "authorization response", "token endpoint",
-"grant type", "access token request", "access token response", and
-"client" defined by The OAuth 2.0 Authorization Framework [@!RFC6749].
+BASE64URL denotes the URL-safe Base64 encoding without padding as defined in
+[@!RFC7515], Section 2.
 
 # Terminology
 
@@ -117,16 +114,16 @@ optionally the holder's public key, and hashed and salted claims. It is signed
 using the issuer's private key.
 
 ```
-    SD-JWT-DOC = (METADATA, HOLDER-PUBLIC-KEY?, HS-CLAIMS)
-    SD-JWT = SD-JWT-DOC | SIG(SD-JWT-DOC, ISSUER-PRIV-KEY)
+SD-JWT-DOC = (METADATA, HOLDER-PUBLIC-KEY?, HS-CLAIMS)
+SD-JWT = SD-JWT-DOC | SIG(SD-JWT-DOC, ISSUER-PRIV-KEY)
 ```
 
 `HS-CLAIMS` is usually a simple object with claim names mapped to  salted and
 hashed claim values:
 ```
-    HS-CLAIMS = (
-        CLAIM-NAME: HASH(SALT | CLAIM-VALUE)
-    )*
+HS-CLAIMS = (
+    CLAIM-NAME: HASH(SALT | CLAIM-VALUE)
+)*
 ```
 
 `HS-CLAIMS` can also be nested deeper to capture more complex objects, as will be shown later.
@@ -139,8 +136,8 @@ To release claim values to a verifier, a holder creates a document such as the
 following:
 
 ```
-    RELEASE-DOC = (METADATA, SALTS)
-    RELEASE = RELEASE-DOC | SIG(RELEASE-DOC, HOLDER-PRIV-KEY)?
+RELEASE-DOC = (METADATA, SALTS)
+RELEASE = RELEASE-DOC | SIG(RELEASE-DOC, HOLDER-PRIV-KEY)?
 ```
 
 Note that the signature over `RELEASE-DOC` is optional and required if, and only
@@ -149,9 +146,9 @@ if, holder binding is desired.
 `SALTS` is usually a simple object with claim names mapped to values and salts:
 
 ```
-    SALTS = (
-        CLAIM-NAME: (DISCLOSED-SALT, DISCLOSED-VALUE)
-    )
+SALTS = (
+    CLAIM-NAME: (DISCLOSED-SALT, DISCLOSED-VALUE)
+)
 ```
 
 Just as `HS-CLAIMS`, `SALTS` can be more complex as well.
@@ -161,7 +158,7 @@ verifier.
 
 ## Verifying a Proof
 
-A checks that 
+A verifier checks that 
 
  * if holder binding is desired, the `RELEASE` was signed by
 the private key belonging to the public key contained in `SD-JWT-DOC`,
@@ -185,12 +182,11 @@ made available for selective disclosure form a JSON object under the property
 For each claim value, an individual salt value MUST be chosen such that it
 contains at least 128 bits of pseudorandom data, making it hard for an attacker
 to guess the salt value.  The salt value MUST then be encoded as a string. It is
-RECOMMENDED to base64url encode at least 16 pseudorandom bytes and remove any
-trailing `=` characters from the encoded string.
+RECOMMENDED to BASE64URL encode at least 16 pseudorandom bytes.
 
 The hashes are built by hashing over string that is formed by JSON-encoding an
 array containing the salt and the claim value, e.g.: `["6qMQvRL5haj","Peter"]`.
-The hash value is then Base64url encoded and any trailing `=` are removed. Note
+The hash value is then BASE64URL encoded. Note
 that the precise JSON encoding can vary, and therefore, the JSON encodings MUST
 be sent to the holder along with the SD-JWT, as described below.
 
@@ -203,8 +199,6 @@ It is out of the scope of this document to describe how the holder key pair is
 established. For example, the issuer MAY create the key pair for the holder or
 holder and issuer MAY use pre-established key material.
 
-TODO: What will be the default mechanism in this draft?
-
 #### Other Claims
 
 The SD-JWT payload typically contains other claims, such as `iss`, `iat`, etc. 
@@ -213,6 +207,7 @@ The SD-JWT payload typically contains other claims, such as `iss`, `iat`, etc.
 
 In the following examples, these claims are the payload of the SD-JWT:
 
+{#example-sd-jwt-claims}
 ```json
 {
     "sub": "6c5c0a49-b589-431d-bae7-219122a9ec2c",
@@ -232,6 +227,7 @@ In the following examples, these claims are the payload of the SD-JWT:
 
 The following shows the resulting SD-JWT payload:
 
+{#example-sd-jwt-payload}
 ```json
 {
     "iss": "https://example.com/issuer",
@@ -257,7 +253,10 @@ The following shows the resulting SD-JWT payload:
 The SD-JWT is then signed by the issuer to create a document like the following
 (shortened for presentation):
 
-`eyJhbGciOiAiUlMyNTYifQ.eyJpc3MiOiAiaHR0cHM6Ly9leGFtcGxlLmNvbS9pc3N1ZXIiLCAic3ViX2p3ayI6IHsT(...)DRyTmhCMzkzMWNNPSIsICJhZGRyZXNzIjogIlNxVHhiMU8zSEZnVEdnYkw3d1EyZ3o5akNiUFdWclB0NmZxWE1ZbXhKNPSJ9fQ.cHNaU6b9hvVRNevXlPlmKCr6n-LHgvGcAYwAtBi6YIKPqqfIiBG1L-eo4wPTY-Fo4FYHJ5iJ3InGSxwlWboxwcAZ-cdedhfBmw`
+{#example-sd-jwt-encoded}
+```
+eyJhbGciOiAiUlMyNTYifQ.eyJpc3MiOiAiaHR0cHM6Ly9leGFtcGxlLmNvbS9pc3N1ZXIiLCAic3ViX2p3ayI6IHsT(...)DRyTmhCMzkzMWNNPSIsICJhZGRyZXNzIjogIlNxVHhiMU8zSEZnVEdnYkw3d1EyZ3o5akNiUFdWclB0NmZxWE1ZbXhKNPSJ9fQ.cHNaU6b9hvVRNevXlPlmKCr6n-LHgvGcAYwAtBi6YIKPqqfIiBG1L-eo4wPTY-Fo4FYHJ5iJ3InGSxwlWboxwcAZ-cdedhfBmw
+```
 
 ## SD-JWT Salt/Value Container
 
@@ -278,7 +277,7 @@ The SVC MAY contain further properties, for example, to transport the holder
 private key.
 
 ### Example
-
+{#example-svc-payload}
 ```json
 {
     "sd_claims": {
@@ -308,9 +307,10 @@ private key.
 ## SD-JWT and SVC Combined Format
 
 For transporting the SVC together with the SD-JWT from the issuer to the holder,
-the SVC is base64url encoded (as the parts of any JWT, todo reference) and
-appended to the SD-JWT using `.` as the separator:
+the SVC is BASE64URL encoded and appended to the SD-JWT using `.` as the
+separator:
 
+{#example-combined-encoded}
 `eyJhbGciOiAiUlMyNTYifQ.eyJpc3MiOiAiaHR0cHM6Ly3ayI6IHsT(...)DRyTmXhKNPSJ9fQ.cHNaU6b9hAZ-cdedhfBmw.ewogICAgImdpdmVuX25hbWUiOi(...)MTk0MC0wMS0wMVwiXSIKfQ`
 
 (Shortened for presentation.)
@@ -318,7 +318,9 @@ appended to the SD-JWT using `.` as the separator:
 ## SD-JWT Release Format
 
 The following shows the contents of a release document:
-```
+
+{#example-release-payload}
+```json
 {
     "nonce": 882515,
     "sd_claims": {
@@ -337,12 +339,14 @@ is not signed.
 
 In any case, the result is encoded as described in [@!RFC7515]:
 
+{#example-release-encoded}
 `eyJhbGciOiJIUzI1NiJ9.eyJub25jZSI6ImQyTmNSd3IzIiwic2QiOnsiZ2l2ZW5fbBsZSJdLCJiaXJ0aGRhdGUiOlsiaEdKZjN2UTJsZk8iLCIyMDAwLTAxLTAxIl19fQ.Dt99fCFmXYLXRLwk4Y4DrAOaY5ufoYvMijtJACDzoB0`
 
 ## Presentation Format
 
 The SD-JWT and the SD-JWT Release can be combined into one document using `.` as a separator:
 
+{#example-release-combined}
 `eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJodHRwczovL2V4YW1wbGUuY29tIic0PSJ9fQ.qWVAIJ4OzoIUEy-9v0af3UW7NKufBh34V6JRBe7I8H0.eyJhbGciOiJIUzI1NiJ9.eyJub25jZSI6ImQyTmNSd3IzIiwic2QiOnsiZ2l2ZW5fbBsZSJdLCJiaXJ0aGRhdGUiOlsiaEdKZjN2UTJsZk8iLCIyMDAwLTAxLTAxIl19fQ.Dt99fCFmXYLXRLwk4Y4DrAOaY5ufoYvMijtJACDzoB0`
 
 # Verification
