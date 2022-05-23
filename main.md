@@ -233,19 +233,19 @@ The following shows the resulting SD-JWT payload:
     "iss": "https://example.com/issuer",
     "sub_jwk": {
         "kty": "RSA",
-        "n": "mBWK1BtMhWTsMHmxvzrGuvYcbq_5dl8YgjwclkZ-knERWqAyoioHUmNgCfiM4RBBGwh2xW8QKv6n-i5RyYHmY6DGOhOH1nxGR7aet1ULUgoau_A1_JtGJQlO9iJSs1QXE0W9cLzMxZJaC-e-fDFu3c6PHS4dvmsxA0eWNpe_3y1joXdCvzoBECiWXpl9wW3lvwXJddSGhdnvFB3Lj9GFRGgdFVPEelkw4_S8bnn1WBdjAd8AzY7DK4Up6f0_zdUJ0plmrR04WKzhQ7gpS3z6QJ3Gd54lASBXvGn82efAymtdO83RNFs1sRJ6WKYdokn7q0VxaCOe7bYt3JJsmkkTEw",
+        "n": "7swmcr5Nh9iJRg_9BmWNj2QKJ826K-WfTxSHjomQhwvX4t94V68Oe3es35y5mOawaf0v8Ktc40VpP5t3CHcQHpCH-Ht_r2vz75IayPwoCCuaYUEgoAPh0c3_12rqhVUd2VInDqlUY9mhWNTq3e9LH9wVehqVcBC2cV8MeNQa3oI7WuHC9r4REXLJOoqWoIx09D1SIcC1t3le99ETFJzwoFDgR5cfeIKq9Ccm9Y9HFasuDJwjzn0hMAmP5_-cRCtzkN9d9J9Ud1agJ17_QGEvxB7laqI5kDV_CflrZlarYbJWtPPbl8eAbOwDYwz0KtZbDafRL2FXUaLcQwkpxmcmGw",
         "e": "AQAB"
     },
     "iat": 1516239022,
     "exp": 1516247022,
     "sd_claims": {
-        "sub": "GkpL7BdF43J2_xLy3J_GRJZC3M5M6xa4mxaGP3sykvs",
-        "given_name": "33PnYpkTB6yRY8XEhWKf3tpgf29YvvixOVY8I1nrr3w",
-        "family_name": "A0ZEHKs9Yr2rc5uYEjoaiRxPNno_jAa2_UUvHwMrV_Y",
-        "email": "GnloszsOs-2p8fHdbToLziZk27eLU9gfhnJni3dPpyY",
-        "phone_number": "qKXC47L-VXavDrbdzIgimKDhiMfJjvBDy5ainkwGHlI",
-        "address": "74Py7HIMNWg804aoyba5tMvI0NCJJzQvMkfPe4v5AdQ",
-        "birthdate": "CxqGCua-9Rl9pvPuMztJwv-7ZzOw3Sje5n8ROgvmjqs"
+        "sub": "7C3a4gmoVNLFH8CT0ZaVMZyZWv7_8BwUwkbPrA9rlvc",
+        "given_name": "Ue0F83URdYtaLYtddjgBD7wqDzVm2IYmEhyy2kX_EpQ",
+        "family_name": "D8xO8GBLv0OYnIBCRiLX8GRC42WEUxK5APqpN1GXYIs",
+        "email": "B5FAqIgtytJ_R9nI6dPsXj4qYjMWy-Mumqxh_ThjGTo",
+        "phone_number": "MhHhzKpYVFRg95qxWwH2hutImbSjbbrK-E7rPHA-9dI",
+        "address": "8hL1eJbfkk5VK1288cxt1aPuwWaV07Q50K9eIUgpvf4",
+        "birthdate": "lkcZg7hHk5zSfTbkPeeCxbXaIOANJaJk0EF2_qMRBnQ"
     }
 }
 ```
@@ -255,7 +255,41 @@ The SD-JWT is then signed by the issuer to create a document like the following
 
 {#example-sd-jwt-encoded}
 ```
-eyJhbGciOiAiUlMyNTYifQ.eyJpc3MiOiAiaHR0cHM6Ly9leGFtcGxlLmNvbS9pc3N1ZXIiLCAic3ViX2p3ayI6IHsT(...)DRyTmhCMzkzMWNNPSIsICJhZGRyZXNzIjogIlNxVHhiMU8zSEZnVEdnYkw3d1EyZ3o5akNiUFdWclB0NmZxWE1ZbXhKNPSJ9fQ.cHNaU6b9hvVRNevXlPlmKCr6n-LHgvGcAYwAtBi6YIKPqqfIiBG1L-eo4wPTY-Fo4FYHJ5iJ3InGSxwlWboxwcAZ-cdedhfBmw
+eyJhbGciOiAiUlMyNTYifQ.eyJpc3MiOiAiaHR0cHM6Ly9leGFtcGxlLmNvbS9pc3N1ZXI
+iLCAic3ViX2p3ayI6IHsia3R5IjogIlJTQSIsICJuIjogIjdzd21jcjVOaDlpSlJnXzlCb
+VdOajJRS0o4MjZLLVdmVHhTSGpvbVFod3ZYNHQ5NFY2OE9lM2VzMzV5NW1PYXdhZjB2OEt
+0YzQwVnBQNXQzQ0hjUUhwQ0gtSHRfcjJ2ejc1SWF5UHdvQ0N1YVlVRWdvQVBoMGMzXzEyc
+nFoVlVkMlZJbkRxbFVZOW1oV05UcTNlOUxIOXdWZWhxVmNCQzJjVjhNZU5RYTNvSTdXdUh
+DOXI0UkVYTEpPb3FXb0l4MDlEMVNJY0MxdDNsZTk5RVRGSnp3b0ZEZ1I1Y2ZlSUtxOUNjb
+TlZOUhGYXN1REp3anpuMGhNQW1QNV8tY1JDdHprTjlkOUo5VWQxYWdKMTdfUUdFdnhCN2x
+hcUk1a0RWX0NmbHJabGFyWWJKV3RQUGJsOGVBYk93RFl3ejBLdFpiRGFmUkwyRlhVYUxjU
+XdrcHhtY21HdyIsICJlIjogIkFRQUIifSwgImlhdCI6IDE1MTYyMzkwMjIsICJleHAiOiA
+xNTE2MjQ3MDIyLCAic2RfY2xhaW1zIjogeyJzdWIiOiAiN0MzYTRnbW9WTkxGSDhDVDBaY
+VZNWnlaV3Y3XzhCd1V3a2JQckE5cmx2YyIsICJnaXZlbl9uYW1lIjogIlVlMEY4M1VSZFl
+0YUxZdGRkamdCRDd3cUR6Vm0ySVltRWh5eTJrWF9FcFEiLCAiZmFtaWx5X25hbWUiOiAiR
+Dh4TzhHQkx2ME9ZbklCQ1JpTFg4R1JDNDJXRVV4SzVBUHFwTjFHWFlJcyIsICJlbWFpbCI
+6ICJCNUZBcUlndHl0Sl9SOW5JNmRQc1hqNHFZak1XeS1NdW1xeGhfVGhqR1RvIiwgInBob
+25lX251bWJlciI6ICJNaEhoektwWVZGUmc5NXF4V3dIMmh1dEltYlNqYmJySy1FN3JQSEE
+tOWRJIiwgImFkZHJlc3MiOiAiOGhMMWVKYmZrazVWSzEyODhjeHQxYVB1d1dhVjA3UTUwS
+zllSVVncHZmNCIsICJiaXJ0aGRhdGUiOiAibGtjWmc3aEhrNXpTZlRia1BlZUN4YlhhSU9
+BTkphSmswRUYyX3FNUkJuUSJ9fQ.vTgjWNzQ51EntAEUtmvNfcbykArEHz0ny7KriGNFXC
+mRphysAXlF4itOg-94b6tQIPZT-vNQQWXlFMxjfzN9j_qIfuq39nKt9CSmCtA-wEEeMSlA
+TQB1YHVvVHHwof3nJnSZdW2B4m3Tf7fu2r9Ul0RasNVGr25zX-wHwjol6Rh3vJuxTeFBlZ
+_btA2fhngpUBg-G7bHGyrQ44nQJ8cpjomJUEZpANLV8ds1N7-iKVwDPqE6dd-AH5EqbTd7
+-Ofis3LTFz995TU4j1a_I4_hrrxzYkuanCSUrCUuxJVRZBj75gD6Iy_6KEMKaT2iCpg1N5
+xc1uMF2qe_QB_BJPt_hg.ewogICAgInNkX2NsYWltcyI6IHsKICAgICAgICAic3ViIjogI
+ltcIk0wUlhRdi1ia01TWmVvTjhXT0xvRVFcIiwgXCI2YzVjMGE0OS1iNTg5LTQzMWQtYmF
+lNy0yMTkxMjJhOWVjMmNcIl0iLAogICAgICAgICJnaXZlbl9uYW1lIjogIltcImxLbUlxZ
+G1PajBlb1J0a0Q5YXhJZHdcIiwgXCJKb2huXCJdIiwKICAgICAgICAiZmFtaWx5X25hbWU
+iOiAiW1wiMjh0dWQ2R0Y2YUE5U1k2dWo0MkV1QVwiLCBcIkRvZVwiXSIsCiAgICAgICAgI
+mVtYWlsIjogIltcImY4TUhab2ZUWEx0d2R4dUU3bXVpTHdcIiwgXCJqb2huZG9lQGV4YW1
+wbGUuY29tXCJdIiwKICAgICAgICAicGhvbmVfbnVtYmVyIjogIltcIlVseFBQdm1HRV9EQ
+XNJX21rMmJhNFFcIiwgXCIrMS0yMDItNTU1LTAxMDFcIl0iLAogICAgICAgICJhZGRyZXN
+zIjogIltcIlFtcVpWSUZLbU44X3VaNGNNZ2ZsdndcIiwge1wic3RyZWV0X2FkZHJlc3NcI
+jogXCIxMjMgTWFpbiBTdFwiLCBcImxvY2FsaXR5XCI6IFwiQW55dG93blwiLCBcInJlZ2l
+vblwiOiBcIkFueXN0YXRlXCIsIFwiY291bnRyeVwiOiBcIlVTXCJ9XSIsCiAgICAgICAgI
+mJpcnRoZGF0ZSI6ICJbXCIwaXlkd2Z5RU1vLXhrMXpHLXJOZHV3XCIsIFwiMTk0MC0wMS0
+wMVwiXSIKICAgIH0KfQ
 ```
 
 ## SD-JWT Salt/Value Container
@@ -281,25 +315,13 @@ private key.
 ```json
 {
     "sd_claims": {
-        "sub": "[\"d_FsrvwS3RuFvO9W3FG3Nw\", \"6c5c0a49-b589-431d-bae7-219122a9ec2c\"]",
-        "given_name": "[\"JwcCSabVqxVpEOCia8Zocg\", \"John\"]",
-        "family_name": "[\"5OqO4BR4YpKvOgIjBsc_7A\", \"Doe\"]",
-        "email": "[\"-z-w6ronWMPghRPEWCJLEA\", \"johndoe@example.com\"]",
-        "phone_number": "[\"gjD0GK8rbe0qTtHW8Xy-Aw\", \"+1-202-555-0101\"]",
-        "address": "[\"PI5cp5zjN659nLRfSjkbXw\", {\"street_address\": \"123 Main St\", \"locality\": \"Anytown\", \"region\": \"Anystate\", \"country\": \"US\"}]",
-        "birthdate": "[\"6z0iSqcodlh-HkIeTUboQg\", \"1940-01-01\"]"
-    },
-    "sub_jwk_private": {
-        "kty": "RSA",
-        "n": "zgHzSGBWdPmWJaWSfdf8MaD0gKBeXWQ47MdWiDM4M5podnU6Mmbm3MDJQyUgY_0KR1JSVWyHpjyMtv4kKeVA2iIwZfSaEJEtlV4r0fRMcq3XhaLEfIUsMjb_gJzL1RpJXth-2sbQBVPzJuKQXlU-iRh5TUdaqelQ-Xt2QOnapAzzYTUUjhqW4BJwaceFxze4DzkUpVVG58i6dJQxRWTJ_KhwCrwywj2t1TFxkOUbhHe8Y-t68kw2fvwFqsHDasMs19MNTcjiEJa99J5vcLUz2p3TMaGHzvmPnC2o03eqjnl4fI7kVrDXyeWLZeaiwv0fzbOVhQlCspfbeXvsJT0DhQ",
-        "e": "AQAB",
-        "d": "mmSxzVOOWFraIdrmYHRoKVXFCUWnk3zSgPqgqrEgdORLWERhWnbunRHLhQwlK2rwsiVLWYReYcNNfrQXrGKJ6THobfEVKkd0D1clplPem7AYL6qecehpCDVZ5i0dQthRlsjQwexw6R1SxZjVtC1VEfCKsNVCaMdZDbFvHhVl7L4C4QwqmIZBuJiVk0n0J5DtaR-aH0wGFuKtOoBXzgqR6EW6gzrrJLu5nqWCT_z5869x7SmZPVJgDSXxHqQl9PBnMsgkufpEFTwoPekQyGymXLV3EsLzHI36tAFF3XRa_wnt_oVce5MpJSXopoXm8QF5n_p4i58TKTddjhdK6eF2_Q",
-        "p": "9wheZIIly70KU4nLhCKMe-bn-lpuQGfNXIDL1uoZbbsLdz-wg-1qUGP8tpEfCSTgA1--NmjOacv2pWLhNG5V5MZgPv29owY0ikkl3rKmHiltrvGrqpz6iSfRVN9J70lqgK5m8jpmilkH1eid38c-zXNWFerOBmXWuHLOyK7Cd6M",
-        "q": "1XxXxA1ZPnQ_2COfoYvKlzzaKZ3UnUuXdkFPDoD0ZHinfan9FQE_o2AgHKDoZLW4OiA8WWq8tQCrija-aUwbU5yjuTgJi_u94RRTRQTvbYoOkmu90HsBi-df_iDlltnk3WtpeLeUa1M8PFKe6hGobYVhNj9nL0SoSs1RjW2Qarc",
-        "dp": "UjDhnxVCWAg8oFDPetY34Z2Q_1YJKrqetDFSIN5guYarKPDy3OIoJjkuQtwD9HnlYpn_YoD6dG7dUGeWwGgZgfWS3kJ0TwJohr4RsIfGB3EHQla8JBb4sJuj5VYpdkj5-3iLXfqaVVuL5NrxdBwJxDeko8Qs6ioGB_aC4Hhs0Xs",
-        "dq": "Ia6wmjoQ7o2g1RUpxm8r05jCQvan6PlYOEwtkPg_luqCYo1DZOEBjWFJL7sjb2BMZL9ZRjJU-6nTZsckW7CqTxLTshFpUDCz0KNIUAdrTzkM-4UMOaxunggvWQUPtDFErrqXtXghbp1_T3UppXyLulvk7o4qVYbblpG2YD39Hxk",
-        "qi": "ymxeRT2Miru6riR4otygjbCi0-Z82Ob45U_vCB2JrHRBjEKvK99hgUlYonsC3Q23A0sZJbqCgIuFtVIA43dveSz-KGPl1asZViz6WFFS4BZgGhhlv8y_Rnhfq4MrMdpYbPCLjCSWf8ywhvFBRlia14Tfme6dinTnSWUi70d-1v0",
-        "key_size": 2048
+        "sub": "[\"M0RXQv-bkMSZeoN8WOLoEQ\", \"6c5c0a49-b589-431d-bae7-219122a9ec2c\"]",
+        "given_name": "[\"lKmIqdmOj0eoRtkD9axIdw\", \"John\"]",
+        "family_name": "[\"28tud6GF6aA9SY6uj42EuA\", \"Doe\"]",
+        "email": "[\"f8MHZofTXLtwdxuE7muiLw\", \"johndoe@example.com\"]",
+        "phone_number": "[\"UlxPPvmGE_DAsI_mk2ba4Q\", \"+1-202-555-0101\"]",
+        "address": "[\"QmqZVIFKmN8_uZ4cMgflvw\", {\"street_address\": \"123 Main St\", \"locality\": \"Anytown\", \"region\": \"Anystate\", \"country\": \"US\"}]",
+        "birthdate": "[\"0iydwfyEMo-xk1zG-rNduw\", \"1940-01-01\"]"
     }
 }
 ```
@@ -322,10 +344,10 @@ The following shows the contents of a release document:
 {#example-release-payload}
 ```json
 {
-    "nonce": 882515,
+    "nonce": "B47HtpCpiAqdIp1H3bg4Og",
     "sd_claims": {
-        "family_name": "[\"wHPRcNJ-62nuGbLRUu08wQ\", \"Doe\"]",
-        "address": "[\"ZAHYs4SE5Un9Er-YeUs4Zg\", {\"street_address\": \"123 Main St\", \"locality\": \"Anytown\", \"region\": \"Anystate\", \"country\": \"US\"}]"
+        "family_name": "[\"28tud6GF6aA9SY6uj42EuA\", \"Doe\"]",
+        "address": "[\"QmqZVIFKmN8_uZ4cMgflvw\", {\"street_address\": \"123 Main St\", \"locality\": \"Anytown\", \"region\": \"Anystate\", \"country\": \"US\"}]"
     }
 }
 ```
@@ -340,14 +362,48 @@ is not signed.
 In any case, the result is encoded as described in [@!RFC7515]:
 
 {#example-release-encoded}
-`eyJhbGciOiJIUzI1NiJ9.eyJub25jZSI6ImQyTmNSd3IzIiwic2QiOnsiZ2l2ZW5fbBsZSJdLCJiaXJ0aGRhdGUiOlsiaEdKZjN2UTJsZk8iLCIyMDAwLTAxLTAxIl19fQ.Dt99fCFmXYLXRLwk4Y4DrAOaY5ufoYvMijtJACDzoB0`
+```
+eyJhbGciOiAiUlMyNTYifQ.eyJub25jZSI6ICJCNDdIdHBDcGlBcWRJcDFIM2JnNE9nIiw
+gInNkX2NsYWltcyI6IHsiZmFtaWx5X25hbWUiOiAiW1wiMjh0dWQ2R0Y2YUE5U1k2dWo0M
+kV1QVwiLCBcIkRvZVwiXSIsICJhZGRyZXNzIjogIltcIlFtcVpWSUZLbU44X3VaNGNNZ2Z
+sdndcIiwge1wic3RyZWV0X2FkZHJlc3NcIjogXCIxMjMgTWFpbiBTdFwiLCBcImxvY2Fsa
+XR5XCI6IFwiQW55dG93blwiLCBcInJlZ2lvblwiOiBcIkFueXN0YXRlXCIsIFwiY291bnR
+yeVwiOiBcIlVTXCJ9XSJ9fQ.c7yyFqxEDpIWG93y6l61NVrwnW5EAaD9Rr-Ab6VggclOsc
+hN_x7q703TDEG3JsAfWSJroU7pbCOgAXdtx_88T_SDh6daxqbMt_2faRWIF0vjTvuvvGXx
+dzfNJit8U-4d_g82Mbjw9kUkouhdDPFo7Z7a6Q4dC8Kn-0PJ5LeMVdRVHIvfotU_EZ6kPD
+66VGv_3aPD4KnZuMAbztf-Ng43H6Xvx1KLX0JUd3Fg6jUNmjTVo1s1s5KVYANJ2CkuVQ1f
+OhcJG_YF0nyy2X8x3CseC0vl2jYQ7eacqgJrlLEyh0ym15CyF4fzkX8CRC8Res3RUDtQMa
+XYMM0E0JM6sredsw
+```
 
 ## Presentation Format
 
 The SD-JWT and the SD-JWT Release can be combined into one document using `.` as a separator:
 
 {#example-release-combined}
-`eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJodHRwczovL2V4YW1wbGUuY29tIic0PSJ9fQ.qWVAIJ4OzoIUEy-9v0af3UW7NKufBh34V6JRBe7I8H0.eyJhbGciOiJIUzI1NiJ9.eyJub25jZSI6ImQyTmNSd3IzIiwic2QiOnsiZ2l2ZW5fbBsZSJdLCJiaXJ0aGRhdGUiOlsiaEdKZjN2UTJsZk8iLCIyMDAwLTAxLTAxIl19fQ.Dt99fCFmXYLXRLwk4Y4DrAOaY5ufoYvMijtJACDzoB0`
+```
+eyJhbGciOiAiUlMyNTYifQ.eyJub25jZSI6ICJCNDdIdHBDcGlBcWRJcDFIM2JnNE9nIiw
+gInNkX2NsYWltcyI6IHsiZmFtaWx5X25hbWUiOiAiW1wiMjh0dWQ2R0Y2YUE5U1k2dWo0M
+kV1QVwiLCBcIkRvZVwiXSIsICJhZGRyZXNzIjogIltcIlFtcVpWSUZLbU44X3VaNGNNZ2Z
+sdndcIiwge1wic3RyZWV0X2FkZHJlc3NcIjogXCIxMjMgTWFpbiBTdFwiLCBcImxvY2Fsa
+XR5XCI6IFwiQW55dG93blwiLCBcInJlZ2lvblwiOiBcIkFueXN0YXRlXCIsIFwiY291bnR
+yeVwiOiBcIlVTXCJ9XSJ9fQ.c7yyFqxEDpIWG93y6l61NVrwnW5EAaD9Rr-Ab6VggclOsc
+hN_x7q703TDEG3JsAfWSJroU7pbCOgAXdtx_88T_SDh6daxqbMt_2faRWIF0vjTvuvvGXx
+dzfNJit8U-4d_g82Mbjw9kUkouhdDPFo7Z7a6Q4dC8Kn-0PJ5LeMVdRVHIvfotU_EZ6kPD
+66VGv_3aPD4KnZuMAbztf-Ng43H6Xvx1KLX0JUd3Fg6jUNmjTVo1s1s5KVYANJ2CkuVQ1f
+OhcJG_YF0nyy2X8x3CseC0vl2jYQ7eacqgJrlLEyh0ym15CyF4fzkX8CRC8Res3RUDtQMa
+XYMM0E0JM6sredsw.eyJhbGciOiAiUlMyNTYifQ.eyJub25jZSI6ICJCNDdIdHBDcGlBcW
+RJcDFIM2JnNE9nIiwgInNkX2NsYWltcyI6IHsiZmFtaWx5X25hbWUiOiAiW1wiMjh0dWQ2
+R0Y2YUE5U1k2dWo0MkV1QVwiLCBcIkRvZVwiXSIsICJhZGRyZXNzIjogIltcIlFtcVpWSU
+ZLbU44X3VaNGNNZ2ZsdndcIiwge1wic3RyZWV0X2FkZHJlc3NcIjogXCIxMjMgTWFpbiBT
+dFwiLCBcImxvY2FsaXR5XCI6IFwiQW55dG93blwiLCBcInJlZ2lvblwiOiBcIkFueXN0YX
+RlXCIsIFwiY291bnRyeVwiOiBcIlVTXCJ9XSJ9fQ.c7yyFqxEDpIWG93y6l61NVrwnW5EA
+aD9Rr-Ab6VggclOschN_x7q703TDEG3JsAfWSJroU7pbCOgAXdtx_88T_SDh6daxqbMt_2
+faRWIF0vjTvuvvGXxdzfNJit8U-4d_g82Mbjw9kUkouhdDPFo7Z7a6Q4dC8Kn-0PJ5LeMV
+dRVHIvfotU_EZ6kPD66VGv_3aPD4KnZuMAbztf-Ng43H6Xvx1KLX0JUd3Fg6jUNmjTVo1s
+1s5KVYANJ2CkuVQ1fOhcJG_YF0nyy2X8x3CseC0vl2jYQ7eacqgJrlLEyh0ym15CyF4fzk
+X8CRC8Res3RUDtQMaXYMM0E0JM6sredsw
+```
 
 # Verification
 
@@ -407,4 +463,5 @@ TBD
    *  Renamed to SD-JWT (focus on JWT instead of JWS since signature is optional)
    *  Rename proof to release, since when there is no signature, the term "proof" can be misleading
    *  Improved the structure of the description
+   *  Examples generated and placed in main.md using python code
 

@@ -4,7 +4,7 @@ import sys
 from base64 import urlsafe_b64encode
 from hashlib import sha256
 from json import dumps
-from textwrap import wrap
+from textwrap import fill
 
 from jwcrypto.jwk import JWK
 from jwcrypto.jws import JWS
@@ -79,16 +79,16 @@ sd_jwt.add_signature(issuer_key, alg="RS256", protected=dumps({"alg": "RS256"}))
 serialized_sd_jwt = sd_jwt.serialize(compact=True)
 print("The serialized SD-JWT:\n```\n" + serialized_sd_jwt + "\n```\n\n")
 
-svc = {
+svc_payload = {
     "sd_claims": {
         name: hash_claim(salts[name], value, return_raw=True)
         for name, value in full_user_claims.items()
     },
     #"sub_jwk_private": issuer_key.export_private(as_dict=True),
 }
-print("Payload of the SD-JWT SVC:\n```\n" + dumps(svc, indent=4) + "\n```\n\n")
+print("Payload of the SD-JWT SVC:\n```\n" + dumps(svc_payload, indent=4) + "\n```\n\n")
 
-serialized_svc = urlsafe_b64encode(dumps(svc, indent=4).encode("utf-8")).decode("ascii").strip("=")
+serialized_svc = urlsafe_b64encode(dumps(svc_payload, indent=4).encode("utf-8")).decode("ascii").strip("=")
 
 print(
     "The serialized SD-JWT SVC:\n```\n"
@@ -154,12 +154,16 @@ def replace_code_in_markdown_source(file_contents, placeholder_id, new_code):
     def replacement(match):
         return match.group(1) + new_code + "\n```"
 
-    return re.sub(
-        r"({#" + placeholder_id + r"}\n```[a-z-_]*)\n(?:[\s\S]*?)\n```",
+    new_string, count =  re.subn(
+        r"({#" + placeholder_id + r"}\n```[a-z-_]*\n)(?:[\s\S]*?)\n```",
         replacement,
         file_contents,
         flags=re.MULTILINE,
     )
+    if count == 0:
+        raise ValueError(f"Could not find placeholder with id {placeholder_id}")
+
+    return new_string
 
 def replace_all_in_main(replacements):
     """
@@ -188,9 +192,10 @@ if "--replace" in sys.argv:
     replacements = {
         "example-sd-jwt-claims": dumps(full_user_claims, indent=EXAMPLE_INDENT),
         "example-sd-jwt-payload": dumps(sd_jwt_payload, indent=EXAMPLE_INDENT),
-        "example-sd-jwt-encoded": wrap(combined_sd_jwt_svc, width=EXAMPLE_MAX_WIDTH),
+        "example-sd-jwt-encoded": fill(combined_sd_jwt_svc, width=EXAMPLE_MAX_WIDTH, break_on_hyphens=False),
+        "example-svc-payload": dumps(svc_payload, indent=EXAMPLE_INDENT),
         "example-release-payload": dumps(sd_jwt_release_payload, indent=EXAMPLE_INDENT),
-        "example-release-encoded": wrap(serialized_sd_jwt_release, width=EXAMPLE_MAX_WIDTH),
-        "example-release-combined": wrap(combined_sd_jwt_sd_jwt_release, width=EXAMPLE_MAX_WIDTH),
+        "example-release-encoded": fill(serialized_sd_jwt_release, width=EXAMPLE_MAX_WIDTH, break_on_hyphens=False),
+        "example-release-combined": fill(combined_sd_jwt_sd_jwt_release, width=EXAMPLE_MAX_WIDTH, break_on_hyphens=False),
     }
     replace_all_in_main(replacements)
