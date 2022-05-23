@@ -250,8 +250,7 @@ The following shows the resulting SD-JWT payload:
 }
 ```
 
-The SD-JWT is then signed by the issuer to create a document like the following
-(shortened for presentation):
+The SD-JWT is then signed by the issuer to create a document like the following:
 
 {#example-sd-jwt-encoded}
 ```
@@ -291,6 +290,8 @@ vblwiOiBcIkFueXN0YXRlXCIsIFwiY291bnRyeVwiOiBcIlVTXCJ9XSIsCiAgICAgICAgI
 mJpcnRoZGF0ZSI6ICJbXCIwaXlkd2Z5RU1vLXhrMXpHLXJOZHV3XCIsIFwiMTk0MC0wMS0
 wMVwiXSIKICAgIH0KfQ
 ```
+
+(Line breaks for presentation only.)
 
 ## SD-JWT Salt/Value Container
 
@@ -333,9 +334,11 @@ the SVC is BASE64URL encoded and appended to the SD-JWT using `.` as the
 separator:
 
 {#example-combined-encoded}
-`eyJhbGciOiAiUlMyNTYifQ.eyJpc3MiOiAiaHR0cHM6Ly3ayI6IHsT(...)DRyTmXhKNPSJ9fQ.cHNaU6b9hAZ-cdedhfBmw.ewogICAgImdpdmVuX25hbWUiOi(...)MTk0MC0wMS0wMVwiXSIKfQ`
+```
+eyJhbGciOiAiUlMyNTYifQ.eyJpc3MiOiAiaHR0cHM6Ly3ayI6IHsT(...)DRyTmXhKNPSJ9fQ.cHNaU6b9hAZ-cdedhfBmw.ewogICAgImdpdmVuX25hbWUiOi(...)MTk0MC0wMS0wMVwiXSIKfQ
+```
 
-(Shortened for presentation.)
+(Line breaks for presentation only.)
 
 ## SD-JWT Release Format
 
@@ -353,7 +356,7 @@ The following shows the contents of a release document:
 ```
 For each claim, an array of the salt and the claim value is contained in the
 `sd_claims` object. The SD-JWT Release MAY contain further claims, for example, to
-ensure a binding to a concrete transaction (in the example the `nonce` claim).
+ensure a binding to a concrete transaction (in the example the `nonce` and `aud` claims).
 
 If holder binding is desired, the SD-JWT Release is signed by the holder. If no
 holder binding is to be used, the `none` algorithm is used, i.e., the document
@@ -376,6 +379,7 @@ OhcJG_YF0nyy2X8x3CseC0vl2jYQ7eacqgJrlLEyh0ym15CyF4fzkX8CRC8Res3RUDtQMa
 XYMM0E0JM6sredsw
 ```
 
+(Line breaks for presentation only.)
 ## Presentation Format
 
 The SD-JWT and the SD-JWT Release can be combined into one document using `.` as a separator:
@@ -405,15 +409,46 @@ dRVHIvfotU_EZ6kPD66VGv_3aPD4KnZuMAbztf-Ng43H6Xvx1KLX0JUd3Fg6jUNmjTVo1s
 X8CRC8Res3RUDtQMaXYMM0E0JM6sredsw
 ```
 
+(Line breaks for presentation only.)
+
 # Verification
 
-TODO!
+Verifiers MUST follow [@RFC8725] for checking the SD-JWT and, if signed, the
+SD-JWT Release.
+
+A verifier needs to go through (at least) the following steps before
+trusting/using any of the contents of an SD-JWT:
+
+ 1. Determine if holder binding is to be checked for the SD-JWT. Refer to (#holder_binding_security) for details.
+ 2. Check that the presentation consists of six `.`-separated elements; if holder binding is not required, the last element can be empty.
+ 3. Separate the SD-JWT from the SD-JWT Release.
+ 4. Validate the SD-JWT:
+    1. Ensure that a signing algorithm was used that was deemed secure for the application. Refer to [@RFC8725], Sections 3.1 and 3.2 for details.
+    2. Validate the signature over the SD-JWT. 
+    3. Validate the issuer of the SD-JWT and that the signing key belongs to this issuer.
+    4. Check that the SD-JWT is valid using `nbf`, `iat`, and `exp` claims, if provided in the SD-JWT.
+    5. Check that the claim `sd_claims` is present in the SD-JWT.
+ 5. Validate the SD-JWT Release:
+    1. If holder binding is required, validate the signature over the SD-JWT using the same steps as for the SD-JWT plus the following steps:
+       1. Determine that the public key for the private key that used to sign the SD-JWT Release is bound to the SD-JWT, i.e., the SD-JWT either contains a reference to the public key or contains the public key itself.
+       2. Determine that the SD-JWT Release is bound to the current transaction and was created for this verifier (replay protection). This is usually achieved by a `nonce` and `aud` field within the SD-JWT Release.
+    2. For each claim that the verifier requires:
+       1. Ensure that the claim is present in `sd_claims` both in the SD-JWT and the SD-JWT Release. If `sd_claims` is structured, the claim MUST be present at the same place within the structure.
+       2. Check that the BASE64URL encoded hash of the claim value in the SD-JWT Release (which includes the salt and the actual claim value) matches the hash provided in the SD-JWT.
+       3. Ensure that the claim value in the SD-JWT Release is a JSON-encoded array of exactly two values.
+       4. Store the second of the two values. Once all necessary claims have been verified, it can be validated and used according to the requirements of the application.
+
+If any step fails, the input is not valid and processing MUST be aborted.
+
 
 # Security Considerations {#security_considerations}
 
 For the security of this scheme, the following properties are required of the hash function:
 
 - Given a claim value, a salt, and the resulting hash, it is hard to find a second salt value so that HASH(salt | claim_value) equals the hash.
+
+
+## Holder Binding {#holder_binding_security}
 
 
 # Privacy Considerations {#privacy_considerations}

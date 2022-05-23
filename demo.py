@@ -106,6 +106,7 @@ disclosed_claims = ["family_name", "address"]
 
 sd_jwt_release_payload = {
     "nonce": generate_salt(),
+    "aud": "https://example.com/verifier",
     "sd_claims": {
         name: hash_claim(salts[name], full_user_claims[name], return_raw=True)
         for name in disclosed_claims
@@ -194,6 +195,7 @@ if "--replace" in sys.argv:
         "example-sd-jwt-payload": dumps(sd_jwt_payload, indent=EXAMPLE_INDENT),
         "example-sd-jwt-encoded": fill(combined_sd_jwt_svc, width=EXAMPLE_MAX_WIDTH, break_on_hyphens=False),
         "example-svc-payload": dumps(svc_payload, indent=EXAMPLE_INDENT),
+        "example-combined-encoded": fill(combined_sd_jwt_sd_jwt_release, width=EXAMPLE_MAX_WIDTH, break_on_hyphens=False),
         "example-release-payload": dumps(sd_jwt_release_payload, indent=EXAMPLE_INDENT),
         "example-release-encoded": fill(serialized_sd_jwt_release, width=EXAMPLE_MAX_WIDTH, break_on_hyphens=False),
         "example-release-combined": fill(combined_sd_jwt_sd_jwt_release, width=EXAMPLE_MAX_WIDTH, break_on_hyphens=False),
