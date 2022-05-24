@@ -1,41 +1,13 @@
 import random
 import re
-import sys
 from base64 import urlsafe_b64decode, urlsafe_b64encode
 from hashlib import sha256
 from json import dumps
-from textwrap import fill
-
-from jwcrypto.jwk import JWK
-from jwcrypto.jws import JWS
-from simplejson import loads
 from secrets import compare_digest
 
-# issuer
-ISSUER = "https://example.com/issuer"
+from jwcrypto.jws import JWS
+from simplejson import loads
 
-# Create the issuer's key in JWK format
-ISSUER_KEY = JWK.generate(key_size=2048, kty="RSA")
-ISSUER_PUBLIC_KEY = JWK.from_json(ISSUER_KEY.export_public())
-
-# Create the holder's key in JWK format
-HOLDER_KEY = JWK.generate(key_size=2048, kty="RSA")
-
-# Define the claims
-FULL_USER_CLAIMS = {
-    "sub": "6c5c0a49-b589-431d-bae7-219122a9ec2c",
-    "given_name": "John",
-    "family_name": "Doe",
-    "email": "johndoe@example.com",
-    "phone_number": "+1-202-555-0101",
-    "address": {
-        "street_address": "123 Main St",
-        "locality": "Anytown",
-        "region": "Anystate",
-        "country": "US",
-    },
-    "birthdate": "1940-01-01",
-}
 
 # The salts will be selected by the server, of course.
 def generate_salt():
@@ -44,13 +16,6 @@ def generate_salt():
         .decode("ascii")
         .strip("=")
     )
-
-
-NONCE = generate_salt()
-
-#######################################################################
-
-print("# Creating the SD-JWT")
 
 
 def hash_raw(raw):
@@ -64,9 +29,6 @@ def hash_claim(salt, value, return_raw=False):
         return raw
     # Calculate the SHA 256 hash and output it base64 encoded
     return hash_raw(raw.encode("utf-8"))
-
-
-print(f"User claims:\n```\n{dumps(FULL_USER_CLAIMS, indent=4)}\n```")
 
 
 def create_sd_jwt_and_svc(user_claims, issuer, issuer_key):
@@ -110,32 +72,10 @@ def create_sd_jwt_and_svc(user_claims, issuer, issuer_key):
     return sd_jwt_payload, serialized_sd_jwt, svc_payload, serialized_svc
 
 
-sd_jwt_payload, serialized_sd_jwt, svc_payload, serialized_svc = create_sd_jwt_and_svc(
-    FULL_USER_CLAIMS, ISSUER, ISSUER_KEY
-)
-
-print("Payload of the SD-JWT:\n```\n" + dumps(sd_jwt_payload, indent=4) + "\n```\n\n")
-
-print("The serialized SD-JWT:\n```\n" + serialized_sd_jwt + "\n```\n\n")
-
-print("Payload of the SD-JWT SVC:\n```\n" + dumps(svc_payload, indent=4) + "\n```\n\n")
-
-print("The serialized SD-JWT SVC:\n```\n" + serialized_svc + "\n```\n\n")
-
-combined_sd_jwt_svc = serialized_sd_jwt + "." + serialized_svc
-
-#######################################################################
-
-print("# Creating the SD-JWT-Release")
-
-disclosed_claims = ["given_name", "family_name", "address"]
-
-
 def create_release_jwt(nonce, aud, disclosed_claims, serialized_svc, holder_key):
     # Reconstruct hash raw values (salt+claim value) from serialized_svc
 
     hash_raw_values = loads(urlsafe_b64decode(serialized_svc + "=="))["sd_claims"]
-    print(hash_raw_values)
 
     sd_jwt_release_payload = {
         "nonce": nonce,
@@ -151,38 +91,6 @@ def create_release_jwt(nonce, aud, disclosed_claims, serialized_svc, holder_key)
     serialized_sd_jwt_release = sd_jwt_release.serialize(compact=True)
 
     return sd_jwt_release_payload, serialized_sd_jwt_release
-
-
-sd_jwt_release_payload, serialized_sd_jwt_release = create_release_jwt(
-    NONCE, "https://example.com/verifier", disclosed_claims, serialized_svc, HOLDER_KEY
-)
-
-print(
-    "Payload of the SD-JWT-Release:\n```\n"
-    + dumps(sd_jwt_release_payload, indent=4)
-    + "\n```\n\n"
-)
-
-
-print("The serialized SD-JWT-Release:\n```\n" + serialized_sd_jwt_release + "\n```\n\n")
-
-#######################################################################
-
-print("# Creating the Combined Presentation")
-# Combine both documents!
-combined_sd_jwt_sd_jwt_release = serialized_sd_jwt + "." + serialized_sd_jwt_release
-
-print("Combined Presentation:\n```\n" + combined_sd_jwt_sd_jwt_release + "\n```\n\n")
-
-#######################################################################
-
-print("# Verification")
-
-# input: combined_sd_jwt_sd_jwt_release, holder_key, issuer_key
-
-list_of_required_claims = ["family_name", "address"]
-
-check_holder_binding = True
 
 
 def _verify_sd_jwt(sd_jwt, issuer_public_key, expected_issuer):
@@ -283,18 +191,6 @@ def verify(
     return verified_claims
 
 
-vc = verify(
-    combined_sd_jwt_sd_jwt_release,
-    list_of_required_claims,
-    ISSUER_PUBLIC_KEY,
-    ISSUER,
-    HOLDER_KEY,
-    "https://example.com/verifier",
-    NONCE,
-)
-
-print("Verified claims: " + dumps(vc, indent=4))
-
 #######################################################################
 # Helper functions to replace the examples in the markdown file
 #######################################################################
@@ -344,33 +240,3 @@ def replace_all_in_main(replacements):
 
     with open("main.md", "w") as f:
         f.write(file_contents)
-
-
-EXAMPLE_INDENT = 4
-EXAMPLE_MAX_WIDTH = 70
-
-if "--replace" in sys.argv:
-    print("Replacing the placeholders in the main.md file")
-    replacements = {
-        "example-sd-jwt-claims": dumps(FULL_USER_CLAIMS, indent=EXAMPLE_INDENT),
-        "example-sd-jwt-payload": dumps(sd_jwt_payload, indent=EXAMPLE_INDENT),
-        "example-sd-jwt-encoded": fill(
-            combined_sd_jwt_svc, width=EXAMPLE_MAX_WIDTH, break_on_hyphens=False
-        ),
-        "example-svc-payload": dumps(svc_payload, indent=EXAMPLE_INDENT),
-        "example-combined-encoded": fill(
-            combined_sd_jwt_sd_jwt_release,
-            width=EXAMPLE_MAX_WIDTH,
-            break_on_hyphens=False,
-        ),
-        "example-release-payload": dumps(sd_jwt_release_payload, indent=EXAMPLE_INDENT),
-        "example-release-encoded": fill(
-            serialized_sd_jwt_release, width=EXAMPLE_MAX_WIDTH, break_on_hyphens=False
-        ),
-        "example-release-combined": fill(
-            combined_sd_jwt_sd_jwt_release,
-            width=EXAMPLE_MAX_WIDTH,
-            break_on_hyphens=False,
-        ),
-    }
-    replace_all_in_main(replacements)
