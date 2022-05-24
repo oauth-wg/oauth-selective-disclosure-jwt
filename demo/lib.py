@@ -8,6 +8,8 @@ from secrets import compare_digest
 from jwcrypto.jws import JWS
 from simplejson import loads
 
+from .walk_by_structure import walk_by_structure
+
 
 # The salts will be selected by the server, of course.
 def generate_salt():
@@ -31,12 +33,15 @@ def hash_claim(salt, value, return_raw=False):
     return hash_raw(raw.encode("utf-8"))
 
 
-def create_sd_jwt_and_svc(user_claims, issuer, issuer_key):
+def create_sd_jwt_and_svc(user_claims, issuer, issuer_key, claim_structure={}):
     """
     Create the SD-JWT
     """
 
-    salts = {name: generate_salt() for name in user_claims}
+    salts = walk_by_structure(claim_structure, user_claims, lambda _,__,___=None: generate_salt())
+
+    def _create_sd_claim_entry(_, value, salt):
+        return hash_claim(salt, value)
 
     # Create the JWS payload
     sd_jwt_payload = {
@@ -44,9 +49,7 @@ def create_sd_jwt_and_svc(user_claims, issuer, issuer_key):
         "sub_jwk": issuer_key.export_public(as_dict=True),
         "iat": 1516239022,
         "exp": 1516247022,
-        "sd_claims": {
-            name: hash_claim(salts[name], value) for name, value in user_claims.items()
-        },
+        "sd_claims": walk_by_structure(salts, user_claims, _create_sd_claim_entry),
     }
 
     # Sign the SD-JWT using the issuer's key
@@ -54,12 +57,13 @@ def create_sd_jwt_and_svc(user_claims, issuer, issuer_key):
     sd_jwt.add_signature(issuer_key, alg="RS256", protected=dumps({"alg": "RS256"}))
     serialized_sd_jwt = sd_jwt.serialize(compact=True)
 
+
+    def _create_svc_entry(_, value, salt):
+        return hash_claim(salt, value, return_raw=True)
+
     # Create the SVC
     svc_payload = {
-        "sd_claims": {
-            name: hash_claim(salts[name], value, return_raw=True)
-            for name, value in user_claims.items()
-        },
+        "sd_claims": walk_by_structure(salts, user_claims, _create_svc_entry),
         # "sub_jwk_private": issuer_key.export_private(as_dict=True),
     }
     serialized_svc = (
@@ -77,10 +81,11 @@ def create_release_jwt(nonce, aud, disclosed_claims, serialized_svc, holder_key)
 
     hash_raw_values = loads(urlsafe_b64decode(serialized_svc + "=="))["sd_claims"]
 
+
     sd_jwt_release_payload = {
         "nonce": nonce,
         "aud": aud,
-        "sd_claims": {name: hash_raw_values[name] for name in disclosed_claims},
+        "sd_claims": walk_by_structure(hash_raw_values, disclosed_claims, lambda _,__,raw: raw),
     }
 
     # Sign the SD-JWT-Release using the holder's key
@@ -131,10 +136,27 @@ def _verify_sd_jwt_release(
 
     return sd_jwt_release_payload["sd_claims"]
 
+def _check_claim(claim_name, released_value, sd_jwt_claim_value):
+    # the hash of the release claim value must match the claim value in the sd_jwt
+    hashed_release_value = hash_raw(
+        released_value.encode("utf-8")
+    )
+    if not compare_digest(hashed_release_value, sd_jwt_claim_value):
+        raise ValueError(
+            "Claim release value does not match the claim value in the SD-JWT"
+        )
+
+    decoded = loads(released_value)
+    if not isinstance(decoded, list):
+        raise ValueError("Claim release value is not a list")
+
+    if len(decoded) != 2:
+        raise ValueError("Claim release value is not of length 2")
+
+    return decoded[1]
 
 def verify(
     combined_presentation,
-    required_claims,
     issuer_public_key,
     expected_issuer,
     holder_public_key=None,
@@ -160,35 +182,8 @@ def verify(
         input_sd_jwt_release, holder_public_key, expected_aud, expected_nonce
     )
 
-    verified_claims = {}
 
-    for claim_name in required_claims:
-        if claim_name not in sd_jwt_claims:
-            raise ValueError("Claim not found in SD-JWT: " + claim_name)
-
-        if claim_name not in sd_jwt_release_claims:
-            raise ValueError("Claim not found in SD-JWT-Release: " + claim_name)
-
-        # the hash of the release claim value must match the claim value in the sd_jwt
-        hashed_release_value = hash_raw(
-            sd_jwt_release_claims[claim_name].encode("utf-8")
-        )
-        expected_hash = sd_jwt_claims[claim_name]
-        if not compare_digest(hashed_release_value, expected_hash):
-            raise ValueError(
-                "Claim release value does not match the claim value in the SD-JWT"
-            )
-
-        decoded = loads(sd_jwt_release_claims[claim_name])
-        if not isinstance(decoded, list):
-            raise ValueError("Claim release value is not a list")
-
-        if len(decoded) != 2:
-            raise ValueError("Claim release value is not of length 2")
-
-        verified_claims[claim_name] = decoded[1]
-
-    return verified_claims
+    return walk_by_structure(sd_jwt_claims, sd_jwt_release_claims, _check_claim)
 
 
 #######################################################################

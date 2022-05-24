@@ -18,21 +18,77 @@ HOLDER_KEY = JWK.generate(key_size=2048, kty="RSA")
 
 # Define the claims
 FULL_USER_CLAIMS = {
-    "sub": "6c5c0a49-b589-431d-bae7-219122a9ec2c",
-    "given_name": "John",
-    "family_name": "Doe",
-    "email": "johndoe@example.com",
-    "phone_number": "+1-202-555-0101",
-    "address": {
-        "street_address": "123 Main St",
-        "locality": "Anytown",
-        "region": "Anystate",
-        "country": "US",
+    "verified_claims": {
+        "verification": {
+            "trust_framework": "de_aml",
+            "time": "2012-04-23T18:25Z",
+            "verification_process": "f24c6f-6d3f-4ec5-973e-b0d8506f3bc7",
+            "evidence": [
+                {
+                    "type": "document",
+                    "method": "pipp",
+                    "time": "2012-04-22T11:30Z",
+                    "document": {
+                        "type": "idcard",
+                        "issuer": {"name": "Stadt Augsburg", "country": "DE"},
+                        "number": "53554554",
+                        "date_of_issuance": "2010-03-23",
+                        "date_of_expiry": "2020-03-22",
+                    },
+                }
+            ],
+        },
+        "claims": {
+            "given_name": "Max",
+            "family_name": "Meier",
+            "birthdate": "1956-01-28",
+            "place_of_birth": {"country": "DE", "locality": "Musterstadt"},
+            "nationalities": ["DE"],
+            "address": {
+                "locality": "Maxstadt",
+                "postal_code": "12344",
+                "country": "DE",
+                "street_address": "An der Weide 22",
+            },
+        },
     },
-    "birthdate": "1940-01-01",
+    "birth_middle_name": "Meier",
+    "salutation": "Dr.",
+    "msisdn": "49123456789",
 }
 
-DISCLOSED_CLAIMS = {"given_name": None, "family_name": None, "address": None}
+CLAIMS_STRUCTURE = {
+    "verified_claims": {
+        "verification": {
+            "evidence": [
+                {
+                    "document": {
+                        "issuer": {},
+                    }
+                }
+            ]
+        },
+        "claims": {
+            "place_of_birth": {},
+        },
+    }
+}
+
+DISCLOSED_CLAIMS = {
+    "verified_claims": {
+        "verification": {
+            "trust_framework": None,
+            "time": None,
+            "evidence": [{"type": None}],
+        },
+        "claims": {
+            "given_name": None,
+            "family_name": None,
+            "birthdate": None,
+            "place_of_birth": {"country": None},
+        },
+    },
+}
 
 
 NONCE = generate_salt()
@@ -46,7 +102,7 @@ print(f"User claims:\n{dumps(FULL_USER_CLAIMS, indent=4)}")
 
 
 sd_jwt_payload, serialized_sd_jwt, svc_payload, serialized_svc = create_sd_jwt_and_svc(
-    FULL_USER_CLAIMS, ISSUER, ISSUER_KEY
+    FULL_USER_CLAIMS, ISSUER, ISSUER_KEY, CLAIMS_STRUCTURE
 )
 
 print("Payload of the SD-JWT:\n" + dumps(sd_jwt_payload, indent=4) + "\n\n")
@@ -113,24 +169,22 @@ EXAMPLE_MAX_WIDTH = 70
 if "--replace" in sys.argv:
     print("Replacing the placeholders in the main.md file")
     replacements = {
-        "example-simple-sd-jwt-claims": dumps(FULL_USER_CLAIMS, indent=EXAMPLE_INDENT),
-        "example-simple-sd-jwt-payload": dumps(sd_jwt_payload, indent=EXAMPLE_INDENT),
-        "example-simple-sd-jwt-encoded": fill(
+        "example-simple_structured-sd-jwt-claims": dumps(FULL_USER_CLAIMS, indent=EXAMPLE_INDENT),
+        "example-simple_structured-sd-jwt-payload": dumps(sd_jwt_payload, indent=EXAMPLE_INDENT),
+        "example-simple_structured-sd-jwt-encoded": fill(
             combined_sd_jwt_svc, width=EXAMPLE_MAX_WIDTH, break_on_hyphens=False
         ),
-        "example-simple-svc-payload": dumps(svc_payload, indent=EXAMPLE_INDENT),
-        "example-simple-combined-encoded": fill(
+        "example-simple_structured-svc-payload": dumps(svc_payload, indent=EXAMPLE_INDENT),
+        "example-simple_structured-combined-encoded": fill(
             combined_sd_jwt_sd_jwt_release,
             width=EXAMPLE_MAX_WIDTH,
             break_on_hyphens=False,
         ),
-        "example-simple-release-payload": dumps(
-            sd_jwt_release_payload, indent=EXAMPLE_INDENT
-        ),
-        "example-simple-release-encoded": fill(
+        "example-simple_structured-release-payload": dumps(sd_jwt_release_payload, indent=EXAMPLE_INDENT),
+        "example-simple_structured-release-encoded": fill(
             serialized_sd_jwt_release, width=EXAMPLE_MAX_WIDTH, break_on_hyphens=False
         ),
-        "example-simple-release-combined": fill(
+        "example-simple_structured-release-combined": fill(
             combined_sd_jwt_sd_jwt_release,
             width=EXAMPLE_MAX_WIDTH,
             break_on_hyphens=False,

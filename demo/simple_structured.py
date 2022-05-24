@@ -32,7 +32,14 @@ FULL_USER_CLAIMS = {
     "birthdate": "1940-01-01",
 }
 
-DISCLOSED_CLAIMS = {"given_name": None, "family_name": None, "address": None}
+CLAIMS_STRUCTURE = {"address": {}}
+
+DISCLOSED_CLAIMS = {
+    "given_name": None,
+    "family_name": None,
+    "birthdate": None,
+    "address": {"region": None, "country": None},
+}
 
 
 NONCE = generate_salt()
@@ -46,7 +53,7 @@ print(f"User claims:\n{dumps(FULL_USER_CLAIMS, indent=4)}")
 
 
 sd_jwt_payload, serialized_sd_jwt, svc_payload, serialized_svc = create_sd_jwt_and_svc(
-    FULL_USER_CLAIMS, ISSUER, ISSUER_KEY
+    FULL_USER_CLAIMS, ISSUER, ISSUER_KEY, CLAIMS_STRUCTURE
 )
 
 print("Payload of the SD-JWT:\n" + dumps(sd_jwt_payload, indent=4) + "\n\n")
@@ -113,24 +120,30 @@ EXAMPLE_MAX_WIDTH = 70
 if "--replace" in sys.argv:
     print("Replacing the placeholders in the main.md file")
     replacements = {
-        "example-simple-sd-jwt-claims": dumps(FULL_USER_CLAIMS, indent=EXAMPLE_INDENT),
-        "example-simple-sd-jwt-payload": dumps(sd_jwt_payload, indent=EXAMPLE_INDENT),
-        "example-simple-sd-jwt-encoded": fill(
+        "example-complex_structured-sd-jwt-claims": dumps(
+            FULL_USER_CLAIMS, indent=EXAMPLE_INDENT
+        ),
+        "example-complex_structured-sd-jwt-payload": dumps(
+            sd_jwt_payload, indent=EXAMPLE_INDENT
+        ),
+        "example-complex_structured-sd-jwt-encoded": fill(
             combined_sd_jwt_svc, width=EXAMPLE_MAX_WIDTH, break_on_hyphens=False
         ),
-        "example-simple-svc-payload": dumps(svc_payload, indent=EXAMPLE_INDENT),
-        "example-simple-combined-encoded": fill(
+        "example-complex_structured-svc-payload": dumps(
+            svc_payload, indent=EXAMPLE_INDENT
+        ),
+        "example-complex_structured-combined-encoded": fill(
             combined_sd_jwt_sd_jwt_release,
             width=EXAMPLE_MAX_WIDTH,
             break_on_hyphens=False,
         ),
-        "example-simple-release-payload": dumps(
+        "example-complex_structured-release-payload": dumps(
             sd_jwt_release_payload, indent=EXAMPLE_INDENT
         ),
-        "example-simple-release-encoded": fill(
+        "example-complex_structured-release-encoded": fill(
             serialized_sd_jwt_release, width=EXAMPLE_MAX_WIDTH, break_on_hyphens=False
         ),
-        "example-simple-release-combined": fill(
+        "example-complex_structured-release-combined": fill(
             combined_sd_jwt_sd_jwt_release,
             width=EXAMPLE_MAX_WIDTH,
             break_on_hyphens=False,
