@@ -891,9 +891,6 @@ A release document for some of the claims:
 }
 ```
 
-
-(Line breaks for presentation only.)
-
 # Document History
 
    [[ To be removed from the final specification ]]
