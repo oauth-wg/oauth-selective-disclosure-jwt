@@ -107,7 +107,7 @@ print("Verified claims: " + dumps(vc, indent=4))
 #######################################################################
 
 
-EXAMPLE_INDENT = 4
+EXAMPLE_INDENT = 2
 EXAMPLE_MAX_WIDTH = 70
 
 if "--replace" in sys.argv:

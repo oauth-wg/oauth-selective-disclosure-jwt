@@ -38,7 +38,9 @@ def create_sd_jwt_and_svc(user_claims, issuer, issuer_key, claim_structure={}):
     Create the SD-JWT
     """
 
-    salts = walk_by_structure(claim_structure, user_claims, lambda _,__,___=None: generate_salt())
+    salts = walk_by_structure(
+        claim_structure, user_claims, lambda _, __, ___=None: generate_salt()
+    )
 
     def _create_sd_claim_entry(_, value, salt):
         return hash_claim(salt, value)
@@ -56,7 +58,6 @@ def create_sd_jwt_and_svc(user_claims, issuer, issuer_key, claim_structure={}):
     sd_jwt = JWS(payload=dumps(sd_jwt_payload))
     sd_jwt.add_signature(issuer_key, alg="RS256", protected=dumps({"alg": "RS256"}))
     serialized_sd_jwt = sd_jwt.serialize(compact=True)
-
 
     def _create_svc_entry(_, value, salt):
         return hash_claim(salt, value, return_raw=True)
@@ -81,11 +82,12 @@ def create_release_jwt(nonce, aud, disclosed_claims, serialized_svc, holder_key)
 
     hash_raw_values = loads(urlsafe_b64decode(serialized_svc + "=="))["sd_claims"]
 
-
     sd_jwt_release_payload = {
         "nonce": nonce,
         "aud": aud,
-        "sd_claims": walk_by_structure(hash_raw_values, disclosed_claims, lambda _,__,raw: raw),
+        "sd_claims": walk_by_structure(
+            hash_raw_values, disclosed_claims, lambda _, __, raw: raw
+        ),
     }
 
     # Sign the SD-JWT-Release using the holder's key
@@ -136,11 +138,10 @@ def _verify_sd_jwt_release(
 
     return sd_jwt_release_payload["sd_claims"]
 
+
 def _check_claim(claim_name, released_value, sd_jwt_claim_value):
     # the hash of the release claim value must match the claim value in the sd_jwt
-    hashed_release_value = hash_raw(
-        released_value.encode("utf-8")
-    )
+    hashed_release_value = hash_raw(released_value.encode("utf-8"))
     if not compare_digest(hashed_release_value, sd_jwt_claim_value):
         raise ValueError(
             "Claim release value does not match the claim value in the SD-JWT"
@@ -154,6 +155,7 @@ def _check_claim(claim_name, released_value, sd_jwt_claim_value):
         raise ValueError("Claim release value is not of length 2")
 
     return decoded[1]
+
 
 def verify(
     combined_presentation,
@@ -181,7 +183,6 @@ def verify(
     sd_jwt_release_claims = _verify_sd_jwt_release(
         input_sd_jwt_release, holder_public_key, expected_aud, expected_nonce
     )
-
 
     return walk_by_structure(sd_jwt_claims, sd_jwt_release_claims, _check_claim)
 
@@ -217,7 +218,7 @@ def replace_code_in_markdown_source(file_contents, placeholder_id, new_code):
     return new_string
 
 
-def replace_all_in_main(replacements):
+def replace_all_in_main(replacements, ignore_missing_placeholders=False):
     """
     Replaces all the placeholders in the main.md file
     """
@@ -229,9 +230,15 @@ def replace_all_in_main(replacements):
         f.write(file_contents)
 
     for placeholder_id, new_code in replacements.items():
-        file_contents = replace_code_in_markdown_source(
-            file_contents, placeholder_id, new_code
-        )
+        try:
+            file_contents = replace_code_in_markdown_source(
+                file_contents, placeholder_id, new_code
+            )
+        except ValueError:
+            if not ignore_missing_placeholders:
+                raise
+            else:
+                print(f"Could not find placeholder with id {placeholder_id}")
 
     with open("main.md", "w") as f:
         f.write(file_contents)

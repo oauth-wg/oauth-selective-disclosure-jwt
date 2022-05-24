@@ -52,7 +52,7 @@ FULL_USER_CLAIMS = {
             },
         },
     },
-    "birth_middle_name": "Meier",
+    "birth_middle_name": "Timotheus",
     "salutation": "Dr.",
     "msisdn": "49123456789",
 }
@@ -163,31 +163,31 @@ print("Verified claims: " + dumps(vc, indent=4))
 #######################################################################
 
 
-EXAMPLE_INDENT = 4
+EXAMPLE_INDENT = 2
 EXAMPLE_MAX_WIDTH = 70
 
 if "--replace" in sys.argv:
     print("Replacing the placeholders in the main.md file")
     replacements = {
-        "example-simple_structured-sd-jwt-claims": dumps(FULL_USER_CLAIMS, indent=EXAMPLE_INDENT),
-        "example-simple_structured-sd-jwt-payload": dumps(sd_jwt_payload, indent=EXAMPLE_INDENT),
-        "example-simple_structured-sd-jwt-encoded": fill(
+        "example-complex_structured-sd-jwt-claims": dumps(FULL_USER_CLAIMS, indent=EXAMPLE_INDENT),
+        "example-complex_structured-sd-jwt-payload": dumps(sd_jwt_payload, indent=EXAMPLE_INDENT),
+        "example-complex_structured-sd-jwt-encoded": fill(
             combined_sd_jwt_svc, width=EXAMPLE_MAX_WIDTH, break_on_hyphens=False
         ),
-        "example-simple_structured-svc-payload": dumps(svc_payload, indent=EXAMPLE_INDENT),
-        "example-simple_structured-combined-encoded": fill(
+        "example-complex_structured-svc-payload": dumps(svc_payload, indent=EXAMPLE_INDENT),
+        "example-complex_structured-combined-encoded": fill(
             combined_sd_jwt_sd_jwt_release,
             width=EXAMPLE_MAX_WIDTH,
             break_on_hyphens=False,
         ),
-        "example-simple_structured-release-payload": dumps(sd_jwt_release_payload, indent=EXAMPLE_INDENT),
-        "example-simple_structured-release-encoded": fill(
+        "example-complex_structured-release-payload": dumps(sd_jwt_release_payload, indent=EXAMPLE_INDENT),
+        "example-complex_structured-release-encoded": fill(
             serialized_sd_jwt_release, width=EXAMPLE_MAX_WIDTH, break_on_hyphens=False
         ),
-        "example-simple_structured-release-combined": fill(
+        "example-complex_structured-release-combined": fill(
             combined_sd_jwt_sd_jwt_release,
             width=EXAMPLE_MAX_WIDTH,
             break_on_hyphens=False,
         ),
     }
-    replace_all_in_main(replacements)
+    replace_all_in_main(replacements, ignore_missing_placeholders=True)
