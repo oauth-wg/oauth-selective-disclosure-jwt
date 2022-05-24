@@ -901,7 +901,10 @@ A release document for some of the claims:
    -00
 
    *  Renamed to SD-JWT (focus on JWT instead of JWS since signature is optional)
+   *  Make holder binding optional
    *  Rename proof to release, since when there is no signature, the term "proof" can be misleading
    *  Improved the structure of the description
-   *  Examples generated and placed in main.md using python code
+   *  Described verification steps
+   *  All examples generated from python demo implementation
+   *  Examples for structured objects
 
