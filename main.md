@@ -29,15 +29,6 @@ fullname="Kristina Yasuda"
 organization="Microsoft"
     [author.address]
     email = "Kristina.Yasuda@microsoft.com"
-
-[[author]]
-initials="M."
-surname="Jones"
-fullname="Michael Jones"
-organization="Microsoft"
-    [author.address]
-    email = "mbj@microsoft.com"
-    uri = "https://self-issued.info/"
         
     
 %%%
