@@ -43,11 +43,14 @@ documents that support selective disclosure of claim values.
 
 # Introduction {#Introduction}
 
-The JSON-based content of signed JSON Web Token documents as defined in
-[@!RFC7515] is secured against modification using digital signatures. A consumer
-of a JWT document that has checked the document's signature can safely assume
+The JSON-based claims in a signed JSON Web Token (JWT) [@!RFC7519] document
+are secured against modification using JSON Web Signature (JWS) [@!RFC7515] digital signatures.
+A consumer
+of a signed JWT document that has checked the document's signature can safely assume
 that the contents of the document have not been modified.  However, anyone
-receiving a JWT can read all contents of the document. 
+receiving an unencrypted JWT can read all of the claims and likewise,
+anyone with the decryption key receiving an encrypted JWT
+can also read all of the claims.
 
 A common use case is that the signed document represents a user's identity
 credential, created by an issuer. The issuer includes the user's public key or a
@@ -88,7 +91,7 @@ BASE64URL denotes the URL-safe Base64 encoding without padding as defined in
 
 # Terminology
 
- * A **SD-JWT** is a signed JWT [@!RFC7515], i.e., a JWS, that contains claims
+ * A **SD-JWT** is a signed JWT [@!RFC7519], i.e., a JWS [@!RFC7515], that contains claims
    in a hashed format described in this document and therefore supports
    selective disclosure.
  * A **release** (SD-JWT-R) is a document that contains a subset of the claim
@@ -501,7 +504,7 @@ If holder binding is desired, the SD-JWT Release is signed by the holder. If no
 holder binding is to be used, the `none` algorithm is used, i.e., the document
 is not signed.
 
-In any case, the result is encoded as described in [@!RFC7515] (here for Example 1):
+In any case, the result is encoded as described in [@!RFC7519] (here for Example 1):
 
 {#example-simple-release-encoded}
 ```
