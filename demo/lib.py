@@ -1,14 +1,22 @@
 import random
 import re
+import sys
 from base64 import urlsafe_b64decode, urlsafe_b64encode
 from hashlib import sha256
-from json import dumps
+from json import dumps, loads
 from secrets import compare_digest
 
 from jwcrypto.jws import JWS
-from simplejson import loads
 
 from .walk_by_structure import walk_by_structure
+
+SD_CLAIMS_KEY = "_sd"
+
+# For the purpose of generating static examples for the spec, this command line
+# switch disables randomness. Using this in production is highly insecure!
+if "--no-randomness" in sys.argv:
+    random.seed(0)
+    print("WARNING: Using fixed randomness for demo purposes")
 
 
 # The salts will be selected by the server, of course.
@@ -51,7 +59,7 @@ def create_sd_jwt_and_svc(user_claims, issuer, issuer_key, claim_structure={}):
         "sub_jwk": issuer_key.export_public(as_dict=True),
         "iat": 1516239022,
         "exp": 1516247022,
-        "sd_claims": walk_by_structure(salts, user_claims, _create_sd_claim_entry),
+        SD_CLAIMS_KEY: walk_by_structure(salts, user_claims, _create_sd_claim_entry),
     }
 
     # Sign the SD-JWT using the issuer's key
@@ -64,7 +72,7 @@ def create_sd_jwt_and_svc(user_claims, issuer, issuer_key, claim_structure={}):
 
     # Create the SVC
     svc_payload = {
-        "sd_claims": walk_by_structure(salts, user_claims, _create_svc_entry),
+        SD_CLAIMS_KEY: walk_by_structure(salts, user_claims, _create_svc_entry),
         # "sub_jwk_private": issuer_key.export_private(as_dict=True),
     }
     serialized_svc = (
@@ -80,12 +88,12 @@ def create_sd_jwt_and_svc(user_claims, issuer, issuer_key, claim_structure={}):
 def create_release_jwt(nonce, aud, disclosed_claims, serialized_svc, holder_key):
     # Reconstruct hash raw values (salt+claim value) from serialized_svc
 
-    hash_raw_values = loads(urlsafe_b64decode(serialized_svc + "=="))["sd_claims"]
+    hash_raw_values = loads(urlsafe_b64decode(serialized_svc + "=="))[SD_CLAIMS_KEY]
 
     sd_jwt_release_payload = {
         "nonce": nonce,
         "aud": aud,
-        "sd_claims": walk_by_structure(
+        SD_CLAIMS_KEY: walk_by_structure(
             hash_raw_values, disclosed_claims, lambda _, __, raw: raw
         ),
     }
@@ -111,10 +119,10 @@ def _verify_sd_jwt(sd_jwt, issuer_public_key, expected_issuer):
 
     # TODO: Check exp/nbf/iat
 
-    if "sd_claims" not in sd_jwt_payload:
+    if SD_CLAIMS_KEY not in sd_jwt_payload:
         raise ValueError("No selective disclosure claims in SD-JWT")
 
-    return sd_jwt_payload["sd_claims"]
+    return sd_jwt_payload[SD_CLAIMS_KEY]
 
 
 def _verify_sd_jwt_release(
@@ -133,10 +141,10 @@ def _verify_sd_jwt_release(
         if sd_jwt_release_payload["nonce"] != expected_nonce:
             raise ValueError("Invalid nonce")
 
-    if "sd_claims" not in sd_jwt_release_payload:
+    if SD_CLAIMS_KEY not in sd_jwt_release_payload:
         raise ValueError("No selective disclosure claims in SD-JWT-Release")
 
-    return sd_jwt_release_payload["sd_claims"]
+    return sd_jwt_release_payload[SD_CLAIMS_KEY]
 
 
 def _check_claim(claim_name, released_value, sd_jwt_claim_value):
