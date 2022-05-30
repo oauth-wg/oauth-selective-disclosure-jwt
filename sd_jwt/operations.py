@@ -9,8 +9,13 @@ from typing import Dict, List, Optional, Tuple, Union
 from jwcrypto.jwk import JWK
 from jwcrypto.jws import JWS
 
-from sd_jwt import DEFAULT_SIGNING_ALG, HASH_ALG_KEY, SD_CLAIMS_KEY, SD_DIGESTS_KEY
+<<<<<<< HEAD
+from sd_jwt import DEFAULT_SIGNING_ALG, DIGEST_ALG_KEY, SD_CLAIMS_KEY, SD_DIGESTS_KEY
 from sd_jwt.utils import generate_salt, pad_urlsafe_b64
+=======
+from sd_jwt import DEFAULT_SIGNING_ALG, HASH_ALG_KEY, SD_CLAIMS_KEY, SD_DIGESTS_KEY
+from sd_jwt.utils import generate_salt, pad_urlsafe_b64, merge
+>>>>>>> e2307eea50efa4b0823763e99871794642636a1a
 from sd_jwt.walk import by_structure as walk_by_structure
 
 
@@ -46,6 +51,7 @@ class SDJWT:
     def __init__(
         self,
         user_claims: Dict,
+        further_claims: Dict,
         issuer: str,
         issuer_key,
         holder_key,
@@ -56,6 +62,7 @@ class SDJWT:
         sign_alg=None,
     ):
         self._user_claims = user_claims
+        self._further_claims = further_claims
         self._issuer = issuer
         self._issuer_key = issuer_key
         self._holder_key = holder_key
@@ -92,13 +99,14 @@ class SDJWT:
             "cnf": {"jwk": self._holder_key.export_public(as_dict=True)},
             "iat": self._iat,
             "exp": self._exp,
-            HASH_ALG_KEY: self.HASH_ALG["name"],
+            DIGEST_ALG_KEY: self.HASH_ALG["name"],
             SD_DIGESTS_KEY: walk_by_structure(
                 self.salts_and_blinded_claim_names,
                 self._user_claims,
                 self._create_sd_claim_entry,
             ),
         }
+        self.sd_jwt_payload.update(self._further_claims)
 
     def _hash_raw(self, raw):
         # Calculate the SHA 256 hash and output it base64 encoded
@@ -284,6 +292,7 @@ class SDJWT:
         holder_public_key: Union[dict, None] = None,
         expected_aud: Union[str, None] = None,
         expected_nonce: Union[str, None] = None,
+        return_merged=False,
     ):
 
         if holder_public_key and (not expected_aud or not expected_nonce):
@@ -295,6 +304,8 @@ class SDJWT:
             self._unverified_input_sd_jwt, issuer_public_key, expected_issuer
         )
 
+        sd_jwt_sd_claims = sd_jwt_claims[SD_DIGESTS_KEY]
+
         # Verify the SD-JWT-Release
         sd_jwt_release_claims = self._verify_sd_jwt_release(
             self._unverified_input_sd_jwt_release,
@@ -305,9 +316,14 @@ class SDJWT:
         )
 
         _wbs = walk_by_structure(
-            sd_jwt_claims, sd_jwt_release_claims, self._check_claim
+            sd_jwt_sd_claims, sd_jwt_release_claims, self._check_claim
         )
-        return _wbs
+        if not return_merged:
+            return _wbs
+        else:
+            del sd_jwt_claims[SD_DIGESTS_KEY]
+            del sd_jwt_claims[HASH_ALG_KEY]
+            return merge(_wbs, sd_jwt_claims)
 
     def _verify_sd_jwt(
         self,
@@ -325,10 +341,10 @@ class SDJWT:
             raise ValueError("Invalid issuer")
 
         # TODO: Check exp/nbf/iat
-        if HASH_ALG_KEY not in sd_jwt_payload:
+        if DIGEST_ALG_KEY not in sd_jwt_payload:
             raise ValueError("Missing hash algorithm")
 
-        if sd_jwt_payload[HASH_ALG_KEY] != SDJWT.HASH_ALG["name"]:
+        if sd_jwt_payload[DIGEST_ALG_KEY] != SDJWT.HASH_ALG["name"]:
             raise ValueError("Invalid hash algorithm")
 
         if SD_DIGESTS_KEY not in sd_jwt_payload:
@@ -338,7 +354,7 @@ class SDJWT:
         if "cnf" in sd_jwt_payload:
             holder_public_key_payload = sd_jwt_payload["cnf"]
 
-        return sd_jwt_payload[SD_DIGESTS_KEY], holder_public_key_payload
+        return sd_jwt_payload, holder_public_key_payload
 
     def _verify_sd_jwt_release(
         self,
