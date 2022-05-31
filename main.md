@@ -184,7 +184,7 @@ An SD-JWT is a JWT signed using the issuer's private key.
 #### Selective Disclosure Claims
 
 The claims that are made available for selective disclosure form a JSON object
-under the property `sd_claims`, with the values hashed. 
+under the property `_sd`, with the values hashed. 
 
 The object can be a 'flat' object, directly containing all claim names and
 hashed claim values without any deeper structure. The object can also be a
@@ -360,7 +360,7 @@ holder key pair.
 ### Payload
 
 A SD-JWT Salt/Value Container (SVC) is a JSON object containing at least the
-top-level property `sd_claims`. Its structure mirrors the one of `sd_claims` in
+top-level property `_sd`. Its structure mirrors the one of `_sd` in
 the SD-JWT, but the values are the inputs to the hash calculations the issuer
 used, as strings.
 
@@ -476,9 +476,9 @@ The following shows the contents of a release document for Example 1:
 ```
 
 For each claim, an array of the salt and the claim value is contained in the
-`sd_claims` object. 
+`_sd` object. 
 
-Again, the release document follows the same structure as the `sd_claims` in the SD-JWT. For Example 2, a release document limiting `address` to `region` and `country` only could look as follows:
+Again, the release document follows the same structure as the `_sd` in the SD-JWT. For Example 2, a release document limiting `address` to `region` and `country` only could look as follows:
 
 {#example-simple_structured-release-payload}
 ```json
@@ -584,14 +584,14 @@ trusting/using any of the contents of an SD-JWT:
     2. Validate the signature over the SD-JWT. 
     3. Validate the issuer of the SD-JWT and that the signing key belongs to this issuer.
     4. Check that the SD-JWT is valid using `nbf`, `iat`, and `exp` claims, if provided in the SD-JWT.
-    5. Check that the claim `sd_claims` is present in the SD-JWT.
+    5. Check that the claim `_sd` is present in the SD-JWT.
  5. Validate the SD-JWT Release:
     1. If holder binding is required, validate the signature over the SD-JWT using the same steps as for the SD-JWT plus the following steps:
        1. Determine that the public key for the private key that used to sign the SD-JWT Release is bound to the SD-JWT, i.e., the SD-JWT either contains a reference to the public key or contains the public key itself.
        2. Determine that the SD-JWT Release is bound to the current transaction and was created for this verifier (replay protection). This is usually achieved by a `nonce` and `aud` field within the SD-JWT Release.
     2. For each claim in the SD-JWT Release:
-       1. Ensure that the claim is present as well in `sd_claims` in the SD-JWT.
-          If `sd_claims` is structured, the claim MUST be present at the same
+       1. Ensure that the claim is present as well in `_sd` in the SD-JWT.
+          If `_sd` is structured, the claim MUST be present at the same
           place within the structure.
        2. Check that the base64url-encoded hash of the claim value in the SD-JWT
           Release (which includes the salt and the actual claim value) matches
