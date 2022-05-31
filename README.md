@@ -22,10 +22,14 @@ You can then run the code (from the root of this repository):
 python3 -m demo.simple
 ```
 
-To update the examples in [main.md](main.md), use the switch `--replace`:
+To update the examples in [main.md](main.md), use the provided script:
 ```
-python3 -m demo.simple --replace
+./update-all-example.sh
 ```
+
+It calls the demos with the switch `--replace` to replace the example code in
+[main.md](main.md) and `--no-randomness` to ensure that the examples are always
+generated in the same way (this minimizes the changes that need to be tracked).
 
 The code creates a backup before modifying [main.md](main.md) in [main.md.bak](main.md.bak).
 
