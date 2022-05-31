@@ -29,7 +29,6 @@ fullname="Kristina Yasuda"
 organization="Microsoft"
     [author.address]
     email = "Kristina.Yasuda@microsoft.com"
-
         
     
 %%%
@@ -37,7 +36,7 @@ organization="Microsoft"
 .# Abstract 
 
 This document specifies conventions for creating JSON Web Token (JWT)
-documents that support selective disclosure of claim values. 
+documents that support selective disclosure of JWT claim values. 
 
 {mainmatter}
 
@@ -94,40 +93,43 @@ BASE64URL denotes the URL-safe Base64 encoding without padding as defined in
  * A **SD-JWT** is a signed JWT [@!RFC7519], i.e., a JWS [@!RFC7515], that contains claims
    in a hashed format described in this document and therefore supports
    selective disclosure.
- * A **release** (SD-JWT-R) is a document that contains a subset of the claim
-   values of an SD-JWT in plain-text format. It further contains salt values,
+ * A **SD-JWT Salt/Value Container (SVC)** is a JSON object that contains mapping between 
+   raw claim values that contained in the SD-JWT and the salts for each claim value.
+ * A **SD-JWT Release (SD-JWT-R)** is a JWT that contains in plain-text format a subset 
+   of the SD-JWT claim values which are being disclosed. It also contains salt values,
    enabling a verifier to check that the plain-text claim values map to the
    hashed claim values in the SD-JWT. If holder binding is desired, the release is
    signed by the holder. 
- * **Holder binding** means that the SD-JWT contains a public key or a reference
-   to a public key such that a holder can prove knowledge of the matching
-   private key.
- * An **issuer** is the entity that creates a SD-JWT.
- * A **holder** has control over a SD-JWT and, if holder binding is desired, the
-   private key for the public key contained in the SD-JWT.
- * A **verifier** checks, upon receiving a SD-JWT and a matching release from a
-   holder, that the SD-JWT was issued for the holder (if holder binding is
-   desired) and can extract claims from the SD-JWT as far as their values have
-   been released by the holder.
+ * **Holder binding** is ability of the holder to prove legitimate possession of SD-JWT by proving 
+   control over the same private key during the issuance and presentation. SD-JWT signed by the issuer contains
+   a public key or a reference to a public key that matches to the private key controlled by the holder.
+ * An **issuer** is an entity that creates a SD-JWT.
+ * A **holder** is an entity that received SD-JWT from the issuer and has control over it.
+ * A **verifier** is an entity that requests subset or all SD-JWT claims and, upon receiving a SD-JWT and 
+   a matching SD-JWT-R from a holder, verifies legitimacy of the claims released in SD-JWT and optionally that
+   SD-JWT was issued to the holder (if holder binding is desired).
+
+Note: discuss if we want to include Client, Authorization Server for the purpose of
+ensuring continuity and separating the entity from the actor.
+
+Note: noneed to define `proof` anymore?
 
 # Concept
 
-In the following, the concept of SD-JWTs and releases is described on a
+In the following section, the concepts of SD-JWTs and releases are described at a
 conceptual level.
 
 ## Creating a SD-JWT
 
-An SD-JWT, at its core, is a signed document containing some metadata,
-optionally the holder's public key, and hashed and salted claims. It is signed
-using the issuer's private key.
+An SD-JWS, at its core, is a digitally signed document containing hashes over the claim values with unique salts,
+optionally the holder's public key and other metadata. It is digitally signed using the issuer's private key.
 
 ```
 SD-JWT-DOC = (METADATA, HOLDER-PUBLIC-KEY?, HS-CLAIMS)
 SD-JWT = SD-JWT-DOC | SIG(SD-JWT-DOC, ISSUER-PRIV-KEY)
 ```
 
-`HS-CLAIMS` is usually a simple object with claim names mapped to  salted and
-hashed claim values:
+`HS-CLAIMS` is usually a simple object with claim names mapped to hashes over the claim values with unique salts:
 ```
 HS-CLAIMS = (
     CLAIM-NAME: HASH(SALT | CLAIM-VALUE)
@@ -136,11 +138,11 @@ HS-CLAIMS = (
 
 `HS-CLAIMS` can also be nested deeper to capture more complex objects, as will be shown later.
 
-The SD-JWT is sent from the issuer to the holder, together with the plain-text claim values, the salt values, and potentially some other information. 
+The SD-JWT is sent from the issuer to the holder, together with the mapping of the plain-text claim values, the salt values, and potentially some other information. 
 
 ## Creating a Release
 
-To release claim values to a verifier, a holder creates a document such as the
+To release to a verifier a subset of SD-JWT claim values, a holder creates a JWS such as the
 following:
 
 ```
@@ -161,50 +163,66 @@ SALTS = (
 
 Just as `HS-CLAIMS`, `SALTS` can be more complex as well.
 
-The release document is sent together with the SD-JWT from the holder to the
+The Release is sent together with the SD-JWT from the holder to the
 verifier.
 
-## Verifying a Proof
+## Verifying a Release
 
 A verifier checks that 
 
  * if holder binding is desired, the `RELEASE` was signed by
-the private key belonging to the public key contained in `SD-JWT-DOC`,
- *  for each claim in `RELEASE`, the hash `HASH(DISCLOSED-SALT | DISCLOSED-VALUE)` matches the hash under the given claim name in the SD-JWT.
+ the private key belonging to the public key contained in `SD-JWT-DOC`.
+ * for each claim in `RELEASE`, the hash `HASH(DISCLOSED-SALT | DISCLOSED-VALUE)` 
+ matches the hash under the given claim name in the SD-JWT.
 
 The detailed algorithm is described below.
 
 # Data Formats
+
+This section defines data formats of SD-JWT that contains hashes of the salted claim values 
+and SD-JWT Salt/Value Container that contains the mapping of the plain-text claim values 
+and the salt values.
+
 ## SD-JWT Format
 
-An SD-JWT is a JWT signed using the issuer's private key. 
+An SD-JWT is a JWT that is optionally signed using the issuer's private key 
+and contains following claims as payload. 
 
 ### Payload
 
-#### Selective Disclosure Claims
+Payload of SD-JWT can consist of the following claims.
 
-The claims that are made available for selective disclosure form a JSON object
-under the property `sd_claims`, with the values hashed. 
+#### Selectively Disclosable Claims
 
-The object can be a 'flat' object, directly containing all claim names and
-hashed claim values without any deeper structure. The object can also be a
-structured object, where some claims and their respective hashes are contained
+SD-JWT MUST include hashes of the salted claim values that are included by the issuer
+under the property `sd_claims`. 
+
+Issuer MUST choose a unique salt value for each claim value. Each salt value MUST 
+contain at least 128 bits of pseudorandom data, making it hard for an attacker
+to guess. The salt value MUST then be encoded as a string. It is
+RECOMMENDED to BASE64URL encode at least 16 pseudorandom bytes.
+
+Issuer MUST build the hashes by hashing over a string that is formed by JSON-encoding an ordered
+array containing the salt and the claim value, e.g.: `["6qMQvRL5haj","Peter"]`.
+The hash value is then BASE64URL encoded. Note that the precise JSON encoding can vary,
+and therefore, the JSON encodings MUST be sent to the holder along with the SD-JWT, 
+as described below.
+
+`sd_claims` object can be a 'flat' object, directly containing all claim names and
+hashed claim values without any deeper structure. `sd_claims` object can also be a
+'structured' object, where some claims and their respective hashes are contained
 in places deeper in the structure. It is up to the issuer to decide how to
 structure the representation such that it is suitable for the use case. Examples
 1 and 2 below show this using the [@OIDC] `address` claim, a structured claim.
 Appendix 1 shows a more complex example using claims from eKYC (todo:
 reference).
 
-For each claim value, an individual salt value MUST be chosen such that it
-contains at least 128 bits of pseudorandom data, making it hard for an attacker
-to guess the salt value.  The salt value MUST then be encoded as a string. It is
-RECOMMENDED to BASE64URL encode at least 16 pseudorandom bytes.
+Note that it is up to the issuer's discretion whether to turn the same payload of SD-JWT 
+into 'flat' or 'structured' `sd_claims` SD-JWT object.
 
-The hashes are built by hashing over string that is formed by JSON-encoding an
-array containing the salt and the claim value, e.g.: `["6qMQvRL5haj","Peter"]`.
-The hash value is then BASE64URL encoded. Note
-that the precise JSON encoding can vary, and therefore, the JSON encodings MUST
-be sent to the holder along with the SD-JWT, as described below.
+Note that claim names are used as keys in a key-value pair, where the value is the hash.
+Claim names are not hashed because SD-JWT already reveals information about the issuer and the schema,
+and revealing the claim names does not provide any additional information.
 
 #### Holder Public Key
 
@@ -212,12 +230,15 @@ If the issuer wants to enable holder binding, it includes a public key
 associated with the holder, or a reference thereto. 
 
 It is out of the scope of this document to describe how the holder key pair is
-established. For example, the issuer MAY create the key pair for the holder or
+established. For example, the holder MAY provide a key pair to the issuer, 
+the issuer MAY create the key pair for the holder, or
 holder and issuer MAY use pre-established key material.
+
+Note: need to define how holder public key is included, right now examples are using `sub_jwk` I think.
 
 #### Other Claims
 
-The SD-JWT payload typically contains other claims, such as `iss`, `iat`, etc. 
+The SD-JWT payload typically contains other JWT claims, such as `iss`, `iat`, etc. 
 
 ### Example 1 - Flat SD-JWT
 
@@ -349,7 +370,7 @@ The user claims are as in Example 1 above. The resulting SD-JWT payload is as fo
 }
 ```
 
-## SD-JWT Salt/Value Container
+## SD-JWT Salt/Value Container (SVC)
 
 Besides the SD-JWT itself, the holder needs to learn the raw claim values that
 are contained in the SD-JWT, along with the precise input to the hash
@@ -409,7 +430,6 @@ The SVC for Example 2 is as follows:
   }
 }
 ```
-
 
 ## SD-JWT and SVC Combined Format
 
@@ -613,6 +633,9 @@ For the security of this scheme, the following properties are required of the ha
 
 - Given a claim value, a salt, and the resulting hash, it is hard to find a second salt value so that HASH(salt | claim_value) equals the hash.
 
+Add: The Salts must be random/long enough so that the attacker cannot brute force them.
+
+Note: No need for the wallet-generated hashes? to prevent issuer-verifier collusion
 
 ## Holder Binding {#holder_binding_security}
 
