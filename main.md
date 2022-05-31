@@ -909,5 +909,4 @@ A release document for some of the claims:
    *  Improved the structure of the description
    *  Described verification steps
    *  All examples generated from python demo implementation
-   *  Examples for structured objects
-   
+   *  Examples for structured object
