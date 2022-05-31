@@ -86,8 +86,8 @@ NOT", "SHOULD", "SHOULD NOT", "RECOMMENDED", "NOT RECOMMENDED",
 described in BCP 14 [@!RFC2119] [@!RFC8174] when, and only when, they
 appear in all capitals, as shown here.
 
-BASE64URL denotes the URL-safe Base64 encoding without padding as defined in
-[@!RFC7515], Section 2.
+**base64url** denotes the URL-safe base64 encoding without padding defined in
+Section 2 of [@!RFC7515].
 
 # Terminology
 
@@ -198,11 +198,11 @@ reference).
 For each claim value, an individual salt value MUST be chosen such that it
 contains at least 128 bits of pseudorandom data, making it hard for an attacker
 to guess the salt value.  The salt value MUST then be encoded as a string. It is
-RECOMMENDED to BASE64URL encode at least 16 pseudorandom bytes.
+RECOMMENDED to base64url encode at least 16 pseudorandom bytes.
 
 The hashes are built by hashing over string that is formed by JSON-encoding an
 array containing the salt and the claim value, e.g.: `["6qMQvRL5haj","Peter"]`.
-The hash value is then BASE64URL encoded. Note
+The hash value is then base64url encoded. Note
 that the precise JSON encoding can vary, and therefore, the JSON encodings MUST
 be sent to the holder along with the SD-JWT, as described below.
 
@@ -414,7 +414,7 @@ The SVC for Example 2 is as follows:
 ## SD-JWT and SVC Combined Format
 
 For transporting the SVC together with the SD-JWT from the issuer to the holder,
-the SVC is BASE64URL encoded and appended to the SD-JWT using `.` as the
+the SVC is base64url encoded and appended to the SD-JWT using `.` as the
 separator. For Example 1, the combined format looks as follows:
 
 {#example-simple-combined-encoded}
@@ -593,7 +593,7 @@ trusting/using any of the contents of an SD-JWT:
        1. Ensure that the claim is present as well in `sd_claims` in the SD-JWT.
           If `sd_claims` is structured, the claim MUST be present at the same
           place within the structure.
-       2. Check that the BASE64URL encoded hash of the claim value in the SD-JWT
+       2. Check that the base64url-encoded hash of the claim value in the SD-JWT
           Release (which includes the salt and the actual claim value) matches
           the hash provided in the SD-JWT.
        3. Ensure that the claim value in the SD-JWT Release is a JSON-encoded
