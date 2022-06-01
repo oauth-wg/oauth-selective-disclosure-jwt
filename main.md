@@ -923,6 +923,36 @@ A SD-JWT-R for some of the claims:
 }
 ```
 
+## Example 4 - W3C VC
+
+```json
+{
+  "sub": "did:example:ebfeb1f712ebc6f1c276e12ec21",
+  "jti": "http://example.edu/credentials/3732",
+  "iss": "https://example.com/keys/foo.jwk",
+  "nbf": 1541493724,
+  "iat": 1541493724,
+  "exp": 1573029723,
+  "nonce": "660!6345FSer",
+  "vc": {
+    "@context": [
+      "https://www.w3.org/2018/credentials/v1",
+      "https://www.w3.org/2018/credentials/examples/v1"
+    ],
+    "type": [
+      "VerifiableCredential",
+      "UniversityDegreeCredential"
+    ]
+  },
+  "_sd": {
+    "given_name": "LbnhkOr5oS7KjeUrxezAu8TG0CpWz0jSixy6tffuo04",
+    "family_name": "9h5vgv6TpFV6GmnPtugiMLl5tHetHeb5X_2cKHjN7cw",
+    "birthdate": "fPZ92dtYMCN2Nb-2ac_zSH19p4yakUXrZl_-wSgaazA"
+  }
+}
+```
+
+
 # Document History
 
    [[ To be removed from the final specification ]]
