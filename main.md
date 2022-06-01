@@ -169,7 +169,7 @@ Just as `HS-CLAIMS`, `SALTS` can be more complex as well.
 The SD-JWT-R is sent together with the SD-JWT from the holder to the
 verifier.
 
-## Verifying an SD-JWWT Release
+## Verifying an SD-JWT Release
 
 A verifier checks that 
 
