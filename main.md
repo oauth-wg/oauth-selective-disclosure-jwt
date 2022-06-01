@@ -53,7 +53,7 @@ can also read all of the claims.
 This document describes a format for JWT that supports selective
 disclosure (SD-JWT) which would enable sharing only subset of the claims included in 
 the original JWT instead of releasing all the claims to every Verifeir. 
-This document also defines an optional format for signatures called releases (SD-JWT-R).
+This document also defines an optional format for signatures called SD-JWT Releases (SD-JWT-R).
 
 One of the common use cases of a signed JWT is representing a user's identity created by an issuer.
 In such use case, there has been no privacy-related concerns with existing JOSE signature schemes,
@@ -121,9 +121,9 @@ ensuring continuity and separating the entity from the actor.
 
 Note: no need to define `proof` anymore?
 
-# Concept
+# Concepts
 
-In the following section, the concepts of SD-JWTs and releases are described at a
+In the following section, the concepts of SD-JWTs and SD-JWT Releases are described at a
 conceptual level.
 
 ## Creating a SD-JWT
@@ -147,7 +147,7 @@ HS-CLAIMS = (
 
 The SD-JWT is sent from the issuer to the holder, together with the mapping of the plain-text claim values, the salt values, and potentially some other information. 
 
-## Creating a Release
+## Creating an SD-JWT Release
 
 To SD-JWT-R to a verifier a subset of SD-JWT claim values, a holder creates a JWS such as the
 following:
@@ -173,7 +173,7 @@ Just as `HS-CLAIMS`, `SALTS` can be more complex as well.
 The SD-JWT-R is sent together with the SD-JWT from the holder to the
 verifier.
 
-## Verifying a Release
+## Verifying an SD-JWWT Release
 
 A verifier checks that 
 
