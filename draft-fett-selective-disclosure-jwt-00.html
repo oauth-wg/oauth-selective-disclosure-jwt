@@ -1289,6 +1289,9 @@ documents that support selective disclosure of JWT claim values.<a href="#sectio
 <li class="toc ulEmpty" id="section-toc.1-1.12.2.1">
                 <p id="section-toc.1-1.12.2.1.1"><a href="#section-a.1" class="xref">A.1</a>.  <a href="#name-example-3-complex-structure" class="xref">Example 3 - Complex Structured SD-JWT</a><a href="#section-toc.1-1.12.2.1.1" class="pilcrow">¶</a></p>
 </li>
+<li class="toc ulEmpty" id="section-toc.1-1.12.2.2">
+                <p id="section-toc.1-1.12.2.2.1"><a href="#section-a.2" class="xref">A.2</a>.  <a href="#name-example-4-w3c-vc" class="xref">Example 4 - W3C VC</a><a href="#section-toc.1-1.12.2.2.1" class="pilcrow">¶</a></p>
+</li>
 </ul>
 </li>
 <li class="toc ulEmpty" id="section-toc.1-1.13">
@@ -2102,9 +2105,6 @@ and revealing the claim names does not provide any additional information.<a hre
 <a href="#section-10" class="section-number selfRef">10. </a><a href="#name-normative-references" class="section-name selfRef">Normative References</a>
       </h2>
 <dl class="references">
-<dt id="RFC8174">[RFC8174]</dt>
-<dd>
-<span class="refAuthor">Leiba, B.</span>, <span class="refTitle">"Ambiguity of Uppercase vs Lowercase in RFC 2119 Key Words"</span>, <span class="seriesInfo">BCP 14</span>, <span class="seriesInfo">RFC 8174</span>, <span class="seriesInfo">DOI 10.17487/RFC8174</span>, <time datetime="2017-05">May 2017</time>, <span>&lt;<a href="https://www.rfc-editor.org/info/rfc8174">https://www.rfc-editor.org/info/rfc8174</a>&gt;</span>. </dd>
 <dt id="RFC7519">[RFC7519]</dt>
 <dd>
 <span class="refAuthor">Jones, M.</span><span class="refAuthor">, Bradley, J.</span><span class="refAuthor">, and N. Sakimura</span>, <span class="refTitle">"JSON Web Token (JWT)"</span>, <span class="seriesInfo">RFC 7519</span>, <span class="seriesInfo">DOI 10.17487/RFC7519</span>, <time datetime="2015-05">May 2015</time>, <span>&lt;<a href="https://www.rfc-editor.org/info/rfc7519">https://www.rfc-editor.org/info/rfc7519</a>&gt;</span>. </dd>
@@ -2114,6 +2114,9 @@ and revealing the claim names does not provide any additional information.<a hre
 <dt id="RFC2119">[RFC2119]</dt>
 <dd>
 <span class="refAuthor">Bradner, S.</span>, <span class="refTitle">"Key words for use in RFCs to Indicate Requirement Levels"</span>, <span class="seriesInfo">BCP 14</span>, <span class="seriesInfo">RFC 2119</span>, <span class="seriesInfo">DOI 10.17487/RFC2119</span>, <time datetime="1997-03">March 1997</time>, <span>&lt;<a href="https://www.rfc-editor.org/info/rfc2119">https://www.rfc-editor.org/info/rfc2119</a>&gt;</span>. </dd>
+<dt id="RFC8174">[RFC8174]</dt>
+<dd>
+<span class="refAuthor">Leiba, B.</span>, <span class="refTitle">"Ambiguity of Uppercase vs Lowercase in RFC 2119 Key Words"</span>, <span class="seriesInfo">BCP 14</span>, <span class="seriesInfo">RFC 8174</span>, <span class="seriesInfo">DOI 10.17487/RFC8174</span>, <time datetime="2017-05">May 2017</time>, <span>&lt;<a href="https://www.rfc-editor.org/info/rfc8174">https://www.rfc-editor.org/info/rfc8174</a>&gt;</span>. </dd>
 </dl>
 </section>
 <section id="section-11">
@@ -2372,6 +2375,40 @@ TEyMzQ1Njc4OVwiXSIKICAgIH0KfQ
 }
 </pre><a href="#section-a.1-10" class="pilcrow">¶</a>
 </div>
+</div>
+</section>
+</div>
+<div id="example-4-w3c-vc">
+<section id="section-a.2">
+        <h2 id="name-example-4-w3c-vc">
+<a href="#section-a.2" class="section-number selfRef">A.2. </a><a href="#name-example-4-w3c-vc" class="section-name selfRef">Example 4 - W3C VC</a>
+        </h2>
+<div id="section-a.2-1">
+<pre class="sourcecode lang-json">{
+  "sub": "did:example:ebfeb1f712ebc6f1c276e12ec21",
+  "jti": "http://example.edu/credentials/3732",
+  "iss": "https://example.com/keys/foo.jwk",
+  "nbf": 1541493724,
+  "iat": 1541493724,
+  "exp": 1573029723,
+  "nonce": "660!6345FSer",
+  "vc": {
+    "@context": [
+      "https://www.w3.org/2018/credentials/v1",
+      "https://www.w3.org/2018/credentials/examples/v1"
+    ],
+    "type": [
+      "VerifiableCredential",
+      "UniversityDegreeCredential"
+    ]
+  },
+  "_sd": {
+    "given_name": "LbnhkOr5oS7KjeUrxezAu8TG0CpWz0jSixy6tffuo04",
+    "family_name": "9h5vgv6TpFV6GmnPtugiMLl5tHetHeb5X_2cKHjN7cw",
+    "birthdate": "fPZ92dtYMCN2Nb-2ac_zSH19p4yakUXrZl_-wSgaazA"
+  }
+}
+</pre><a href="#section-a.2-1" class="pilcrow">¶</a>
 </div>
 </section>
 </div>
