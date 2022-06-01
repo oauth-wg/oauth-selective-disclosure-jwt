@@ -9,12 +9,6 @@ from .lib import *
 # issuer
 ISSUER = "https://example.com/issuer"
 
-# Create the issuer's key in JWK format
-ISSUER_KEY = JWK.generate(key_size=2048, kty="RSA")
-ISSUER_PUBLIC_KEY = JWK.from_json(ISSUER_KEY.export_public())
-
-# Create the holder's key in JWK format
-HOLDER_KEY = JWK.generate(key_size=2048, kty="RSA")
 
 # Define the claims
 FULL_USER_CLAIMS = {
@@ -115,11 +109,11 @@ if "--replace" in sys.argv:
     replacements = {
         "example-simple-sd-jwt-claims": dumps(FULL_USER_CLAIMS, indent=EXAMPLE_INDENT),
         "example-simple-sd-jwt-payload": dumps(sd_jwt_payload, indent=EXAMPLE_INDENT),
-        "example-simple-sd-jwt-encoded": fill(
+        "example-simple-combined-sd-jwt-svc": fill(
             combined_sd_jwt_svc, width=EXAMPLE_MAX_WIDTH, break_on_hyphens=False
         ),
         "example-simple-svc-payload": dumps(svc_payload, indent=EXAMPLE_INDENT),
-        "example-simple-combined-encoded": fill(
+        "example-simple-combined-sd-jwt-sd-jwt-release": fill(
             combined_sd_jwt_sd_jwt_release,
             width=EXAMPLE_MAX_WIDTH,
             break_on_hyphens=False,
@@ -129,11 +123,6 @@ if "--replace" in sys.argv:
         ),
         "example-simple-release-encoded": fill(
             serialized_sd_jwt_release, width=EXAMPLE_MAX_WIDTH, break_on_hyphens=False
-        ),
-        "example-simple-release-combined": fill(
-            combined_sd_jwt_sd_jwt_release,
-            width=EXAMPLE_MAX_WIDTH,
-            break_on_hyphens=False,
         ),
     }
     replace_all_in_main(replacements)

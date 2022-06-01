@@ -1197,16 +1197,16 @@ documents that support selective disclosure of JWT claim values.<a href="#sectio
 </ul>
 </li>
 <li class="toc ulEmpty" id="section-toc.1-1.3">
-            <p id="section-toc.1-1.3.1"><a href="#section-3" class="xref">3</a>.  <a href="#name-concept" class="xref">Concept</a><a href="#section-toc.1-1.3.1" class="pilcrow">¶</a></p>
+            <p id="section-toc.1-1.3.1"><a href="#section-3" class="xref">3</a>.  <a href="#name-concepts" class="xref">Concepts</a><a href="#section-toc.1-1.3.1" class="pilcrow">¶</a></p>
 <ul class="toc ulEmpty">
 <li class="toc ulEmpty" id="section-toc.1-1.3.2.1">
                 <p id="section-toc.1-1.3.2.1.1"><a href="#section-3.1" class="xref">3.1</a>.  <a href="#name-creating-a-sd-jwt" class="xref">Creating a SD-JWT</a><a href="#section-toc.1-1.3.2.1.1" class="pilcrow">¶</a></p>
 </li>
 <li class="toc ulEmpty" id="section-toc.1-1.3.2.2">
-                <p id="section-toc.1-1.3.2.2.1"><a href="#section-3.2" class="xref">3.2</a>.  <a href="#name-creating-a-release" class="xref">Creating a Release</a><a href="#section-toc.1-1.3.2.2.1" class="pilcrow">¶</a></p>
+                <p id="section-toc.1-1.3.2.2.1"><a href="#section-3.2" class="xref">3.2</a>.  <a href="#name-creating-an-sd-jwt-release" class="xref">Creating an SD-JWT Release</a><a href="#section-toc.1-1.3.2.2.1" class="pilcrow">¶</a></p>
 </li>
 <li class="toc ulEmpty" id="section-toc.1-1.3.2.3">
-                <p id="section-toc.1-1.3.2.3.1"><a href="#section-3.3" class="xref">3.3</a>.  <a href="#name-verifying-a-release" class="xref">Verifying a Release</a><a href="#section-toc.1-1.3.2.3.1" class="pilcrow">¶</a></p>
+                <p id="section-toc.1-1.3.2.3.1"><a href="#section-3.3" class="xref">3.3</a>.  <a href="#name-verifying-an-sd-jwwt-releas" class="xref">Verifying an SD-JWWT Release</a><a href="#section-toc.1-1.3.2.3.1" class="pilcrow">¶</a></p>
 </li>
 </ul>
 </li>
@@ -1319,7 +1319,7 @@ can also read all of the claims.<a href="#section-1-1" class="pilcrow">¶</a></p
 <p id="section-1-2">This document describes a format for JWT that supports selective
 disclosure (SD-JWT) which would enable sharing only subset of the claims included in
 the original JWT instead of releasing all the claims to every Verifeir.
-This document also defines an optional format for signatures called releases (SD-JWT-R).<a href="#section-1-2" class="pilcrow">¶</a></p>
+This document also defines an optional format for signatures called SD-JWT Releases (SD-JWT-R).<a href="#section-1-2" class="pilcrow">¶</a></p>
 <p id="section-1-3">One of the common use cases of a signed JWT is representing a user's identity created by an issuer.
 In such use case, there has been no privacy-related concerns with existing JOSE signature schemes,
 because when a signed JWT is one-time use, it contains only JWT claims that the user has consented
@@ -1422,12 +1422,12 @@ ensuring continuity and separating the entity from the actor.<a href="#section-2
 </div>
 </section>
 </div>
-<div id="concept">
+<div id="concepts">
 <section id="section-3">
-      <h2 id="name-concept">
-<a href="#section-3" class="section-number selfRef">3. </a><a href="#name-concept" class="section-name selfRef">Concept</a>
+      <h2 id="name-concepts">
+<a href="#section-3" class="section-number selfRef">3. </a><a href="#name-concepts" class="section-name selfRef">Concepts</a>
       </h2>
-<p id="section-3-1">In the following section, the concepts of SD-JWTs and releases are described at a
+<p id="section-3-1">In the following section, the concepts of SD-JWTs and SD-JWT Releases are described at a
 conceptual level.<a href="#section-3-1" class="pilcrow">¶</a></p>
 <div id="creating-a-sd-jwt">
 <section id="section-3.1">
@@ -1452,10 +1452,10 @@ SD-JWT = SD-JWT-DOC | SIG(SD-JWT-DOC, ISSUER-PRIV-KEY)
 <p id="section-3.1-6">The SD-JWT is sent from the issuer to the holder, together with the mapping of the plain-text claim values, the salt values, and potentially some other information.<a href="#section-3.1-6" class="pilcrow">¶</a></p>
 </section>
 </div>
-<div id="creating-a-release">
+<div id="creating-an-sd-jwt-release">
 <section id="section-3.2">
-        <h3 id="name-creating-a-release">
-<a href="#section-3.2" class="section-number selfRef">3.2. </a><a href="#name-creating-a-release" class="section-name selfRef">Creating a Release</a>
+        <h3 id="name-creating-an-sd-jwt-release">
+<a href="#section-3.2" class="section-number selfRef">3.2. </a><a href="#name-creating-an-sd-jwt-release" class="section-name selfRef">Creating an SD-JWT Release</a>
         </h3>
 <p id="section-3.2-1">To SD-JWT-R to a verifier a subset of SD-JWT claim values, a holder creates a JWS such as the
 following:<a href="#section-3.2-1" class="pilcrow">¶</a></p>
@@ -1478,10 +1478,10 @@ if, holder binding is desired.<a href="#section-3.2-3" class="pilcrow">¶</a></p
 verifier.<a href="#section-3.2-7" class="pilcrow">¶</a></p>
 </section>
 </div>
-<div id="verifying-a-release">
+<div id="verifying-an-sd-jwwt-release">
 <section id="section-3.3">
-        <h3 id="name-verifying-a-release">
-<a href="#section-3.3" class="section-number selfRef">3.3. </a><a href="#name-verifying-a-release" class="section-name selfRef">Verifying a Release</a>
+        <h3 id="name-verifying-an-sd-jwwt-releas">
+<a href="#section-3.3" class="section-number selfRef">3.3. </a><a href="#name-verifying-an-sd-jwwt-releas" class="section-name selfRef">Verifying an SD-JWWT Release</a>
         </h3>
 <p id="section-3.3-1">A verifier checks that<a href="#section-3.3-1" class="pilcrow">¶</a></p>
 <ul>
@@ -1797,7 +1797,7 @@ private key.<a href="#section-4.2.1-2" class="pilcrow">¶</a></p>
 <p id="section-4.3-1">For transporting the SVC together with the SD-JWT from the issuer to the holder,
 the SVC is base64ur-encoded and appended to the SD-JWT using <code>.</code> as the
 separator. For Example 1, the combined format looks as follows:<a href="#section-4.3-1" class="pilcrow">¶</a></p>
-<div id="example-simple-combined-encoded">
+<div id="example-simple-combined-sd-jwt-svc">
 <div class="artwork art-text alignLeft" id="section-4.3-2">
 <pre>eyJhbGciOiAiUlMyNTYifQ.eyJpc3MiOiAiaHR0cHM6Ly9leGFtcGxlLmNvbS9pc3N1ZXI
 iLCAic3ViX2p3ayI6IHsia3R5IjogIlJTQSIsICJuIjogInRYMnhjV3ZqQWtMbDV1TjVnY
@@ -1913,7 +1913,7 @@ tlHN86eJDtuayGHr8aCr95EAaUnuMbcT_WzGc_ifhzDBLJ4U0MVNlfiyk9Fd8OgnwC11cE
 <a href="#section-4.5" class="section-number selfRef">4.5. </a><a href="#name-presentation-format" class="section-name selfRef">Presentation Format</a>
         </h3>
 <p id="section-4.5-1">The SD-JWT and the SD-JWT-R can be combined into one document using <code>.</code> as a separator (here for Example 1):<a href="#section-4.5-1" class="pilcrow">¶</a></p>
-<div id="example-simple-release-combined">
+<div id="example-simple-combined-sd-jwt-sd-jwt-release">
 <div class="artwork art-text alignLeft" id="section-4.5-2">
 <pre>eyJhbGciOiAiUlMyNTYifQ.eyJpc3MiOiAiaHR0cHM6Ly9leGFtcGxlLmNvbS9pc3N1ZXI
 iLCAic3ViX2p3ayI6IHsia3R5IjogIlJTQSIsICJuIjogInRYMnhjV3ZqQWtMbDV1TjVnY
@@ -2105,18 +2105,18 @@ and revealing the claim names does not provide any additional information.<a hre
 <a href="#section-10" class="section-number selfRef">10. </a><a href="#name-normative-references" class="section-name selfRef">Normative References</a>
       </h2>
 <dl class="references">
-<dt id="RFC7519">[RFC7519]</dt>
-<dd>
-<span class="refAuthor">Jones, M.</span><span class="refAuthor">, Bradley, J.</span><span class="refAuthor">, and N. Sakimura</span>, <span class="refTitle">"JSON Web Token (JWT)"</span>, <span class="seriesInfo">RFC 7519</span>, <span class="seriesInfo">DOI 10.17487/RFC7519</span>, <time datetime="2015-05">May 2015</time>, <span>&lt;<a href="https://www.rfc-editor.org/info/rfc7519">https://www.rfc-editor.org/info/rfc7519</a>&gt;</span>. </dd>
-<dt id="RFC7515">[RFC7515]</dt>
-<dd>
-<span class="refAuthor">Jones, M.</span><span class="refAuthor">, Bradley, J.</span><span class="refAuthor">, and N. Sakimura</span>, <span class="refTitle">"JSON Web Signature (JWS)"</span>, <span class="seriesInfo">RFC 7515</span>, <span class="seriesInfo">DOI 10.17487/RFC7515</span>, <time datetime="2015-05">May 2015</time>, <span>&lt;<a href="https://www.rfc-editor.org/info/rfc7515">https://www.rfc-editor.org/info/rfc7515</a>&gt;</span>. </dd>
 <dt id="RFC2119">[RFC2119]</dt>
 <dd>
 <span class="refAuthor">Bradner, S.</span>, <span class="refTitle">"Key words for use in RFCs to Indicate Requirement Levels"</span>, <span class="seriesInfo">BCP 14</span>, <span class="seriesInfo">RFC 2119</span>, <span class="seriesInfo">DOI 10.17487/RFC2119</span>, <time datetime="1997-03">March 1997</time>, <span>&lt;<a href="https://www.rfc-editor.org/info/rfc2119">https://www.rfc-editor.org/info/rfc2119</a>&gt;</span>. </dd>
 <dt id="RFC8174">[RFC8174]</dt>
 <dd>
 <span class="refAuthor">Leiba, B.</span>, <span class="refTitle">"Ambiguity of Uppercase vs Lowercase in RFC 2119 Key Words"</span>, <span class="seriesInfo">BCP 14</span>, <span class="seriesInfo">RFC 8174</span>, <span class="seriesInfo">DOI 10.17487/RFC8174</span>, <time datetime="2017-05">May 2017</time>, <span>&lt;<a href="https://www.rfc-editor.org/info/rfc8174">https://www.rfc-editor.org/info/rfc8174</a>&gt;</span>. </dd>
+<dt id="RFC7519">[RFC7519]</dt>
+<dd>
+<span class="refAuthor">Jones, M.</span><span class="refAuthor">, Bradley, J.</span><span class="refAuthor">, and N. Sakimura</span>, <span class="refTitle">"JSON Web Token (JWT)"</span>, <span class="seriesInfo">RFC 7519</span>, <span class="seriesInfo">DOI 10.17487/RFC7519</span>, <time datetime="2015-05">May 2015</time>, <span>&lt;<a href="https://www.rfc-editor.org/info/rfc7519">https://www.rfc-editor.org/info/rfc7519</a>&gt;</span>. </dd>
+<dt id="RFC7515">[RFC7515]</dt>
+<dd>
+<span class="refAuthor">Jones, M.</span><span class="refAuthor">, Bradley, J.</span><span class="refAuthor">, and N. Sakimura</span>, <span class="refTitle">"JSON Web Signature (JWS)"</span>, <span class="seriesInfo">RFC 7515</span>, <span class="seriesInfo">DOI 10.17487/RFC7515</span>, <time datetime="2015-05">May 2015</time>, <span>&lt;<a href="https://www.rfc-editor.org/info/rfc7515">https://www.rfc-editor.org/info/rfc7515</a>&gt;</span>. </dd>
 </dl>
 </section>
 <section id="section-11">
