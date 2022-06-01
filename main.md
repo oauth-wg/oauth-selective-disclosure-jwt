@@ -91,29 +91,29 @@ Section 2 of [@!RFC7515].
 
 # Terms and Definitions
 
-## **Selective Disclosure JWT (SD-JWT)** 
+## Selective Disclosure JWT (SD-JWT) 
    A JWT [@!RFC7515] created by the issuer, which can be signed as a JWS [@!RFC7515], 
    that supports selective disclosure as defined in this document.
 
-## **SD-JWT Salt/Value Container (SVC)** 
+## SD-JWT Salt/Value Container (SVC) 
    A JSON object created by the issuer that contains mapping between 
    raw claim values that contained in the SD-JWT and the salts for each claim value.
 
-## **SD-JWT Release (SD-JWT-R)** 
+## SD-JWT Release (SD-JWT-R) 
    A JWT created by the holder that contains a subset of the claim values of an SD-JWT in a verifiable way. 
 
-## **Holder binding** 
+## Holder binding 
    Ability of the holder to prove legitimate possession of SD-JWT by proving 
    control over the same private key during the issuance and presentation. SD-JWT signed by the issuer contains
    a public key or a reference to a public key that matches to the private key controlled by the holder.
 
-## **issuer** 
+## issuer 
    An entity that creates SD-JWTs (2.1).
 
-## **holder** 
+## holder 
    An entity that received SD-JWTs (2.1) from the issuer and has control over them.
 
-## **verifier** 
+## verifier 
    An entity that entity that requests, checks and extracts the claims from SSD-JWT-R (2.2)
 
 Note: discuss if we want to include Client, Authorization Server for the purpose of
