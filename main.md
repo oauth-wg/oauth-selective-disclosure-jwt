@@ -50,30 +50,28 @@ receiving an unencrypted JWT can read all of the claims and likewise,
 anyone with the decryption key receiving an encrypted JWT
 can also read all of the claims.
 
-This document describes a format for JWT that supports selective
-disclosure (SD-JWT) which would enable sharing only subset of the claims included in 
-the original JWT instead of releasing all the claims to every Verifeir. 
-This document also defines an optional format for signatures called SD-JWT Releases (SD-JWT-R).
+This document describes a format for JWTs that support selective
+disclosure (SD-JWT), enabling sharing only a subset of the claims included in 
+the original JWT instead of releasing all the claims to every verifier. 
+This document also defines a format for so-called SD-JWT Releases (SD-JWT-R).
 
 One of the common use cases of a signed JWT is representing a user's identity created by an issuer.
-In such use case, there has been no privacy-related concerns with existing JOSE signature schemes,
+In such a use case, there has been no privacy-related concerns with existing JOSE signature schemes,
 because when a signed JWT is one-time use, it contains only JWT claims that the user has consented
-in real time to release to the Verifier. However, when a signed JWT is intended to be multi-use, 
+in real time to release to the verifier. However, when a signed JWT is intended to be multi-use, 
 the ability to selectively disclose a subset of the claims depending on the verifier becomes crucial
-to ensure minimum disclosure and prevent Verifier from obtaining claims irrelevant for the use case at hand. 
+to ensure minimum disclosure and prevent verifier from obtaining claims irrelevant for the use case at hand. 
 
-One example of such multi-use JWT is a verifiable credential, or a tamper-evident credential with 
-a cryptographically verifiable authorship that contains claims about a subject.
+One example of such a multi-use JWT is a verifiable credential, or a
+tamper-evident credential with a cryptographically verifiable authorship that
+contains claims about a subject. SD-JWTs defined in this document enable such
+selective disclosure of claims. 
 
-SD-JWT defined in this document enables such selective disclosure of claims. 
+While JWTs for claims describing natural persons are a common use case, the
+mechanisms defined in this document can be used for many other use cases as
+well.
 
-In a common use case, such JWT includes claims describing natural persons, 
-the mechanisms defined in this document can be used for any other use cases as well.
-
-It is also important to note that this format enables selective disclosure of claims, but
-in itself it does not achieve unlinkability of the subject of a JWS document.
-
-Note: so far agreed to define holder binding (user's public key contained inside an SD-JWS) as an option.
+Note: so far agreed to define holder binding (user's public key contained inside an SD-JWT) as an option.
 It is not mandatory since holder binding is use case specific and orthogonal to the general mechanism of 
 selective disclosure we are trying to define here.
 
@@ -119,17 +117,15 @@ Section 2 of [@!RFC7515].
 Note: discuss if we want to include Client, Authorization Server for the purpose of
 ensuring continuity and separating the entity from the actor.
 
-Note: no need to define `proof` anymore?
-
 # Concepts
 
 In the following section, the concepts of SD-JWTs and SD-JWT Releases are described at a
 conceptual level.
 
-## Creating a SD-JWT
+## Creating an SD-JWT
 
-An SD-JWS, at its core, is a digitally signed document containing hashes over the claim values with unique salts,
-optionally the holder's public key and other metadata. It is digitally signed using the issuer's private key.
+An SD-JWT, at its core, is a digitally signed document containing hashes over the claim values with unique salts,
+optionally the holder's public key or a reference thereto and other metadata. It is digitally signed using the issuer's private key.
 
 ```
 SD-JWT-DOC = (METADATA, HOLDER-PUBLIC-KEY?, HS-CLAIMS)
@@ -149,7 +145,7 @@ The SD-JWT is sent from the issuer to the holder, together with the mapping of t
 
 ## Creating an SD-JWT Release
 
-To SD-JWT-R to a verifier a subset of SD-JWT claim values, a holder creates a JWS such as the
+To disclose to a verifier a subset of the SD-JWT claim values, a holder creates a JWS such as the
 following:
 
 ```
@@ -186,37 +182,36 @@ The detailed algorithm is described below.
 
 # Data Formats
 
-This section defines data formats of SD-JWT that contains hashes of the salted claim values 
-and SD-JWT Salt/Value Container that contains the mapping of the plain-text claim values 
-and the salt values.
+This section defines a data format for SD-JWTs (containing hashes of the salted claim values) 
+and for SD-JWT Salt/Value Containers (containing the mapping of the plain-text claim values 
+and the salt values).
 
 ## SD-JWT Format
 
-An SD-JWT is a JWT that is optionally signed using the issuer's private key 
-and contains following claims as payload. 
+An SD-JWT is a JWT that is optionally signed using the issuer's private key.
 
 ### Payload
 
-Payload of SD-JWT can consist of the following claims.
+The payload of an SD-JWT can consist of the following claims.
 
 #### Selectively Disclosable Claims
 
-SD-JWT MUST include hashes of the salted claim values that are included by the issuer
+An SD-JWT MUST include hashes of the salted claim values that are included by the issuer
 under the property `_sd`. 
 
-Issuer MUST choose a unique salt value for each claim value. Each salt value MUST 
-contain at least 128 bits of pseudorandom data, making it hard for an attacker
-to guess. The salt value MUST then be encoded as a string. It is
-RECOMMENDED to BASE64URL encode at least 16 pseudorandom bytes.
+The issuer MUST choose a unique salt value for each claim value. Each salt value
+MUST contain at least 128 bits of pseudorandom data, making it hard for an
+attacker to guess. The salt value MUST then be encoded as a string. It is
+RECOMMENDED to base64url encode at least 16 pseudorandom bytes.
 
-Issuer MUST build the hashes by hashing over a string that is formed by JSON-encoding an ordered
-array containing the salt and the claim value, e.g.: `["6qMQvRL5haj","Peter"]`.
-The hash value is then BASE64URL-encoded. Note that the precise JSON encoding can vary,
-and therefore, the JSON encodings MUST be sent to the holder along with the SD-JWT, 
-as described below. 
+The issuer MUST build the hashes by hashing over a string that is formed by
+JSON-encoding an ordered array containing the salt and the claim value, e.g.:
+`["6qMQvRL5haj","Peter"]`. The hash value is then base64url-encoded. Note that
+the precise JSON encoding can vary, and therefore, the JSON encodings MUST be
+sent to the holder along with the SD-JWT, as described below. 
 
-`_sd` object can be a 'flat' object, directly containing all claim names and
-hashed claim values without any deeper structure. `_sd` object can also be a
+The `_sd` object can be a 'flat' object, directly containing all claim names and
+hashed claim values without any deeper structure. The `_sd` object can also be a
 'structured' object, where some claims and their respective hashes are contained
 in places deeper in the structure. It is up to the issuer to decide how to
 structure the representation such that it is suitable for the use case. Examples
@@ -224,8 +219,8 @@ structure the representation such that it is suitable for the use case. Examples
 Appendix 1 shows a more complex example using claims from eKYC (todo:
 reference).
 
-Note that it is up to the issuer's discretion whether to turn the same payload of SD-JWT 
-into 'flat' or 'structured' `_sd` SD-JWT object.
+Note that it is at the issuer's discretion whether to turn the payload of SD-JWT
+into a 'flat' or 'structured' `_sd` SD-JWT object.
 
 #### Holder Public Key
 
@@ -241,7 +236,7 @@ Note: need to define how holder public key is included, right now examples are u
 
 #### Other Claims
 
-The SD-JWT payload typically contains other JWT claims, such as `iss`, `iat`, etc. 
+The SD-JWT payload MAY contain other claims and will typically contain other JWT claims, such as `iss`, `iat`, etc. 
 
 ### Example 1 - Flat SD-JWT
 
@@ -650,6 +645,12 @@ Note: No need for the wallet-generated hashes? to prevent issuer-verifier collus
 Claim names are not hashed in the SD-JWT and are used as keys in a key-value pair, where the value is the hash.
 This is because SD-JWT already reveals information about the issuer and the schema,
 and revealing the claim names does not provide any additional information.
+
+## Unlinkability 
+
+It is also important to note that this format enables selective disclosure of claims, but
+in itself it does not achieve unlinkability of the subject of a JWS document.
+
 
 # Acknowledgements {#Acknowledgements}
       
