@@ -89,7 +89,7 @@ appear in all capitals, as shown here.
 **base64url** denotes the URL-safe base64 encoding without padding defined in
 Section 2 of [@!RFC7515].
 
-# Terminology
+# Terms and Definitions
 
  * A **Selective Disclosure JWT (SD-JWT)** is a JWT [@!RFC7515], which can be signed as a JWS [@!RFC7515], that contains hashes
    of the claims as described in this document and therefore supports
