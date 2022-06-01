@@ -639,7 +639,11 @@ Note: No need for the wallet-generated hashes? to prevent issuer-verifier collus
 
 # Privacy Considerations {#privacy_considerations}
 
-TBD
+## Claim Names
+
+Claim names are not hashed in the SD-JWT and are used as keys in a key-value pair, where the value is the hash.
+This is because SD-JWT already reveals information about the issuer and the schema,
+and revealing the claim names does not provide any additional information.
 
 # Acknowledgements {#Acknowledgements}
       
@@ -926,4 +930,3 @@ A release document for some of the claims:
    *  Described verification steps
    *  All examples generated from python demo implementation
    *  Examples for structured objects
-
