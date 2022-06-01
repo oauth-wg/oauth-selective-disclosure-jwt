@@ -89,31 +89,37 @@ appear in all capitals, as shown here.
 **base64url** denotes the URL-safe base64 encoding without padding defined in
 Section 2 of [@!RFC7515].
 
-# Terminology
+# Terms and Definitions
 
- * A **SD-JWT** is a JWT [@!RFC7515], which can be signed as a JWS [@!RFC7515], that contains hashes
-   of the claims as described in this document and therefore supports
-   selective disclosure.
- * A **SD-JWT Salt/Value Container (SVC)** is a JSON object that contains mapping between 
+## **Selective Disclosure JWT (SD-JWT)** 
+   A JWT [@!RFC7515] created by the issuer, which can be signed as a JWS [@!RFC7515], 
+   that supports selective disclosure as defined in this document.
+
+## **SD-JWT Salt/Value Container (SVC)** 
+   A JSON object created by the issuer that contains mapping between 
    raw claim values that contained in the SD-JWT and the salts for each claim value.
- * A **SD-JWT Release (SD-JWT-R)** is a JWT that contains in plain-text format a subset 
-   of the SD-JWT claim values which are being disclosed. It also contains salt values,
-   enabling a verifier to check that the plain-text claim values map to the
-   hashed claim values in the SD-JWT. If holder binding is desired, the release is
-   signed by the holder. 
- * **Holder binding** is ability of the holder to prove legitimate possession of SD-JWT by proving 
+
+## **SD-JWT Release (SD-JWT-R)** 
+   A JWT created by the holder that contains a subset of the claim values of an SD-JWT in a verifiable way. 
+
+## **Holder binding** 
+   Ability of the holder to prove legitimate possession of SD-JWT by proving 
    control over the same private key during the issuance and presentation. SD-JWT signed by the issuer contains
    a public key or a reference to a public key that matches to the private key controlled by the holder.
- * An **issuer** is an entity that creates a SD-JWT.
- * A **holder** is an entity that received SD-JWT from the issuer and has control over it.
- * A **verifier** is an entity that requests subset or all SD-JWT claims and, upon receiving a SD-JWT and 
-   a matching SD-JWT-R from a holder, verifies legitimacy of the claims released in SD-JWT and optionally that
-   SD-JWT was issued to the holder (if holder binding is desired).
+
+## **issuer** 
+   An entity that creates SD-JWTs (2.1).
+
+## **holder** 
+   An entity that received SD-JWTs (2.1) from the issuer and has control over them.
+
+## **verifier** 
+   An entity that entity that requests, checks and extracts the claims from SSD-JWT-R (2.2)
 
 Note: discuss if we want to include Client, Authorization Server for the purpose of
 ensuring continuity and separating the entity from the actor.
 
-Note: noneed to define `proof` anymore?
+Note: no need to define `proof` anymore?
 
 # Concept
 
@@ -143,7 +149,7 @@ The SD-JWT is sent from the issuer to the holder, together with the mapping of t
 
 ## Creating a Release
 
-To release to a verifier a subset of SD-JWT claim values, a holder creates a JWS such as the
+To SD-JWT-R to a verifier a subset of SD-JWT claim values, a holder creates a JWS such as the
 following:
 
 ```
@@ -164,7 +170,7 @@ SALTS = (
 
 Just as `HS-CLAIMS`, `SALTS` can be more complex as well.
 
-The Release is sent together with the SD-JWT from the holder to the
+The SD-JWT-R is sent together with the SD-JWT from the holder to the
 verifier.
 
 ## Verifying a Release
@@ -475,9 +481,9 @@ bXLCfEg
 
 (Line breaks for presentation only.)
 
-## SD-JWT Release Format
+## SD-JWT-R Format
 
-The following shows the contents of a release document for Example 1:
+The following shows the contents of an SD-JWT-R for Example 1:
 
 {#example-simple-release-payload}
 ```json
@@ -495,7 +501,7 @@ The following shows the contents of a release document for Example 1:
 For each claim, an array of the salt and the claim value is contained in the
 `_sd` object. 
 
-Again, the release document follows the same structure as the `_sd` in the SD-JWT. For Example 2, a release document limiting `address` to `region` and `country` only could look as follows:
+Again, the SD-JWT-R follows the same structure as the `_sd` in the SD-JWT. For Example 2, a SD-JWT-R limiting `address` to `region` and `country` only could look as follows:
 
 {#example-simple_structured-release-payload}
 ```json
@@ -514,10 +520,10 @@ Again, the release document follows the same structure as the `_sd` in the SD-JW
 }
 ```
 
-The SD-JWT Release MAY contain further claims, for example, to ensure a binding
+The SD-JWT-R MAY contain further claims, for example, to ensure a binding
 to a concrete transaction (in the example the `nonce` and `aud` claims).
 
-If holder binding is desired, the SD-JWT Release is signed by the holder. If no
+If holder binding is desired, the SD-JWT-R is signed by the holder. If no
 holder binding is to be used, the `none` algorithm is used, i.e., the document
 is not signed.
 
@@ -542,7 +548,7 @@ tlHN86eJDtuayGHr8aCr95EAaUnuMbcT_WzGc_ifhzDBLJ4U0MVNlfiyk9Fd8OgnwC11cE
 (Line breaks for presentation only.)
 ## Presentation Format
 
-The SD-JWT and the SD-JWT Release can be combined into one document using `.` as a separator (here for Example 1):
+The SD-JWT and the SD-JWT-R can be combined into one document using `.` as a separator (here for Example 1):
 
 {#example-simple-release-combined}
 ```
@@ -604,16 +610,16 @@ trusting/using any of the contents of an SD-JWT:
     5. Check that the claim `_sd` is present in the SD-JWT.
  5. Validate the SD-JWT Release:
     1. If holder binding is required, validate the signature over the SD-JWT using the same steps as for the SD-JWT plus the following steps:
-       1. Determine that the public key for the private key that used to sign the SD-JWT Release is bound to the SD-JWT, i.e., the SD-JWT either contains a reference to the public key or contains the public key itself.
-       2. Determine that the SD-JWT Release is bound to the current transaction and was created for this verifier (replay protection). This is usually achieved by a `nonce` and `aud` field within the SD-JWT Release.
+       1. Determine that the public key for the private key that used to sign the SD-JWT-R is bound to the SD-JWT, i.e., the SD-JWT either contains a reference to the public key or contains the public key itself.
+       2. Determine that the SD-JWT-R is bound to the current transaction and was created for this verifier (replay protection). This is usually achieved by a `nonce` and `aud` field within the SD-JWT Release.
     2. For each claim in the SD-JWT Release:
        1. Ensure that the claim is present as well in `_sd` in the SD-JWT.
           If `_sd` is structured, the claim MUST be present at the same
           place within the structure.
-       2. Check that the base64url-encoded hash of the claim value in the SD-JWT
-          Release (which includes the salt and the actual claim value) matches
+       2. Check that the base64url-encoded hash of the claim value in the SD-JWT-R
+          (which includes the salt and the actual claim value) matches
           the hash provided in the SD-JWT.
-       3. Ensure that the claim value in the SD-JWT Release is a JSON-encoded
+       3. Ensure that the claim value in the SD-JWT-R is a JSON-encoded
           array of exactly two values.
        4. Store the second of the two values. 
     3. Once all necessary claims have been verified, their values can be
@@ -886,7 +892,7 @@ TEyMzQ1Njc4OVwiXSIKICAgIH0KfQ
 
 (Line breaks for presentation only.)
 
-A release document for some of the claims:
+A SD-JWT-R for some of the claims:
 
 {#example-complex_structured-release-payload}
 ```json
