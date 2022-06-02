@@ -595,7 +595,7 @@ Verifiers MUST go through (at least) the following steps before
 trusting/using any of the contents of an SD-JWT:
 
  1. Determine if holder binding is to be checked for the SD-JWT. Refer to (#holder_binding_security) for details.
- 2. Check that the presentation consists of six period-separated (`.`) elements; if holder binding is not required, the last element can be empty.
+ 2. Check that the presentation consists of four period-separated (`.`) elements; if holder binding is not required, the last element can be empty.
  3. Separate the SD-JWT from the SD-JWT Release.
  4. Validate the SD-JWT:
     1. Ensure that a signing algorithm was used that was deemed secure for the application. Refer to [@RFC8725], Sections 3.1 and 3.2 for details.
