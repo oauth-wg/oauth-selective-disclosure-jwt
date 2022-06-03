@@ -1200,7 +1200,7 @@ documents that support selective disclosure of JWT claim values.<a href="#sectio
             <p id="section-toc.1-1.3.1"><a href="#section-3" class="xref">3</a>.  <a href="#name-concepts" class="xref">Concepts</a><a href="#section-toc.1-1.3.1" class="pilcrow">¶</a></p>
 <ul class="toc ulEmpty">
 <li class="toc ulEmpty" id="section-toc.1-1.3.2.1">
-                <p id="section-toc.1-1.3.2.1.1"><a href="#section-3.1" class="xref">3.1</a>.  <a href="#name-creating-a-sd-jwt" class="xref">Creating a SD-JWT</a><a href="#section-toc.1-1.3.2.1.1" class="pilcrow">¶</a></p>
+                <p id="section-toc.1-1.3.2.1.1"><a href="#section-3.1" class="xref">3.1</a>.  <a href="#name-creating-an-sd-jwt" class="xref">Creating an SD-JWT</a><a href="#section-toc.1-1.3.2.1.1" class="pilcrow">¶</a></p>
 </li>
 <li class="toc ulEmpty" id="section-toc.1-1.3.2.2">
                 <p id="section-toc.1-1.3.2.2.1"><a href="#section-3.2" class="xref">3.2</a>.  <a href="#name-creating-an-sd-jwt-release" class="xref">Creating an SD-JWT Release</a><a href="#section-toc.1-1.3.2.2.1" class="pilcrow">¶</a></p>
@@ -1269,6 +1269,9 @@ documents that support selective disclosure of JWT claim values.<a href="#sectio
 <li class="toc ulEmpty" id="section-toc.1-1.7.2.1">
                 <p id="section-toc.1-1.7.2.1.1"><a href="#section-7.1" class="xref">7.1</a>.  <a href="#name-claim-names" class="xref">Claim Names</a><a href="#section-toc.1-1.7.2.1.1" class="pilcrow">¶</a></p>
 </li>
+<li class="toc ulEmpty" id="section-toc.1-1.7.2.2">
+                <p id="section-toc.1-1.7.2.2.1"><a href="#section-7.2" class="xref">7.2</a>.  <a href="#name-unlinkability" class="xref">Unlinkability</a><a href="#section-toc.1-1.7.2.2.1" class="pilcrow">¶</a></p>
+</li>
 </ul>
 </li>
 <li class="toc ulEmpty" id="section-toc.1-1.8">
@@ -1316,26 +1319,26 @@ that the contents of the document have not been modified.  However, anyone
 receiving an unencrypted JWT can read all of the claims and likewise,
 anyone with the decryption key receiving an encrypted JWT
 can also read all of the claims.<a href="#section-1-1" class="pilcrow">¶</a></p>
-<p id="section-1-2">This document describes a format for JWT that supports selective
-disclosure (SD-JWT) which would enable sharing only subset of the claims included in
-the original JWT instead of releasing all the claims to every Verifeir.
-This document also defines an optional format for signatures called SD-JWT Releases (SD-JWT-R).<a href="#section-1-2" class="pilcrow">¶</a></p>
+<p id="section-1-2">This document describes a format for JWTs that support selective
+disclosure (SD-JWT), enabling sharing only a subset of the claims included in
+the original JWT instead of releasing all the claims to every verifier.
+This document also defines a format for so-called SD-JWT Releases (SD-JWT-R).<a href="#section-1-2" class="pilcrow">¶</a></p>
 <p id="section-1-3">One of the common use cases of a signed JWT is representing a user's identity created by an issuer.
-In such use case, there has been no privacy-related concerns with existing JOSE signature schemes,
+In such a use case, there has been no privacy-related concerns with existing JOSE signature schemes,
 because when a signed JWT is one-time use, it contains only JWT claims that the user has consented
-in real time to release to the Verifier. However, when a signed JWT is intended to be multi-use,
+in real time to release to the verifier. However, when a signed JWT is intended to be multi-use,
 the ability to selectively disclose a subset of the claims depending on the verifier becomes crucial
-to ensure minimum disclosure and prevent Verifier from obtaining claims irrelevant for the use case at hand.<a href="#section-1-3" class="pilcrow">¶</a></p>
-<p id="section-1-4">One example of such multi-use JWT is a verifiable credential, or a tamper-evident credential with
-a cryptographically verifiable authorship that contains claims about a subject.<a href="#section-1-4" class="pilcrow">¶</a></p>
-<p id="section-1-5">SD-JWT defined in this document enables such selective disclosure of claims.<a href="#section-1-5" class="pilcrow">¶</a></p>
-<p id="section-1-6">In a common use case, such JWT includes claims describing natural persons,
-the mechanisms defined in this document can be used for any other use cases as well.<a href="#section-1-6" class="pilcrow">¶</a></p>
-<p id="section-1-7">It is also important to note that this format enables selective disclosure of claims, but
-in itself it does not achieve unlinkability of the subject of a JWS document.<a href="#section-1-7" class="pilcrow">¶</a></p>
-<p id="section-1-8">Note: so far agreed to define holder binding (user's public key contained inside an SD-JWS) as an option.
+to ensure minimum disclosure and prevent verifier from obtaining claims irrelevant for the use case at hand.<a href="#section-1-3" class="pilcrow">¶</a></p>
+<p id="section-1-4">One example of such a multi-use JWT is a verifiable credential, or a
+tamper-evident credential with a cryptographically verifiable authorship that
+contains claims about a subject. SD-JWTs defined in this document enable such
+selective disclosure of claims.<a href="#section-1-4" class="pilcrow">¶</a></p>
+<p id="section-1-5">While JWTs for claims describing natural persons are a common use case, the
+mechanisms defined in this document can be used for many other use cases as
+well.<a href="#section-1-5" class="pilcrow">¶</a></p>
+<p id="section-1-6">Note: so far agreed to define holder binding (user's public key contained inside an SD-JWT) as an option.
 It is not mandatory since holder binding is use case specific and orthogonal to the general mechanism of
-selective disclosure we are trying to define here.<a href="#section-1-8" class="pilcrow">¶</a></p>
+selective disclosure we are trying to define here.<a href="#section-1-6" class="pilcrow">¶</a></p>
 <div id="conventions-and-terminology">
 <section id="section-1.1">
         <h3 id="name-conventions-and-terminology">
@@ -1417,7 +1420,6 @@ Section 2 of <span>[<a href="#RFC7515" class="xref">RFC7515</a>]</span>.<a href=
 <p id="section-2.7-1">An entity that entity that requests, checks and extracts the claims from SSD-JWT-R (2.2)<a href="#section-2.7-1" class="pilcrow">¶</a></p>
 <p id="section-2.7-2">Note: discuss if we want to include Client, Authorization Server for the purpose of
 ensuring continuity and separating the entity from the actor.<a href="#section-2.7-2" class="pilcrow">¶</a></p>
-<p id="section-2.7-3">Note: no need to define <code>proof</code> anymore?<a href="#section-2.7-3" class="pilcrow">¶</a></p>
 </section>
 </div>
 </section>
@@ -1429,13 +1431,13 @@ ensuring continuity and separating the entity from the actor.<a href="#section-2
       </h2>
 <p id="section-3-1">In the following section, the concepts of SD-JWTs and SD-JWT Releases are described at a
 conceptual level.<a href="#section-3-1" class="pilcrow">¶</a></p>
-<div id="creating-a-sd-jwt">
+<div id="creating-an-sd-jwt">
 <section id="section-3.1">
-        <h3 id="name-creating-a-sd-jwt">
-<a href="#section-3.1" class="section-number selfRef">3.1. </a><a href="#name-creating-a-sd-jwt" class="section-name selfRef">Creating a SD-JWT</a>
+        <h3 id="name-creating-an-sd-jwt">
+<a href="#section-3.1" class="section-number selfRef">3.1. </a><a href="#name-creating-an-sd-jwt" class="section-name selfRef">Creating an SD-JWT</a>
         </h3>
-<p id="section-3.1-1">An SD-JWS, at its core, is a digitally signed document containing hashes over the claim values with unique salts,
-optionally the holder's public key and other metadata. It is digitally signed using the issuer's private key.<a href="#section-3.1-1" class="pilcrow">¶</a></p>
+<p id="section-3.1-1">An SD-JWT, at its core, is a digitally signed document containing hashes over the claim values with unique salts,
+optionally the holder's public key or a reference thereto and other metadata. It is digitally signed using the issuer's private key.<a href="#section-3.1-1" class="pilcrow">¶</a></p>
 <div class="artwork art-text alignLeft" id="section-3.1-2">
 <pre>SD-JWT-DOC = (METADATA, HOLDER-PUBLIC-KEY?, HS-CLAIMS)
 SD-JWT = SD-JWT-DOC | SIG(SD-JWT-DOC, ISSUER-PRIV-KEY)
@@ -1457,7 +1459,7 @@ SD-JWT = SD-JWT-DOC | SIG(SD-JWT-DOC, ISSUER-PRIV-KEY)
         <h3 id="name-creating-an-sd-jwt-release">
 <a href="#section-3.2" class="section-number selfRef">3.2. </a><a href="#name-creating-an-sd-jwt-release" class="section-name selfRef">Creating an SD-JWT Release</a>
         </h3>
-<p id="section-3.2-1">To SD-JWT-R to a verifier a subset of SD-JWT claim values, a holder creates a JWS such as the
+<p id="section-3.2-1">To disclose to a verifier a subset of the SD-JWT claim values, a holder creates a JWS such as the
 following:<a href="#section-3.2-1" class="pilcrow">¶</a></p>
 <div class="artwork art-text alignLeft" id="section-3.2-2">
 <pre>RELEASE-DOC = (METADATA, SALTS)
@@ -1504,48 +1506,47 @@ matches the hash under the given claim name in the SD-JWT.<a href="#section-3.3-
       <h2 id="name-data-formats">
 <a href="#section-4" class="section-number selfRef">4. </a><a href="#name-data-formats" class="section-name selfRef">Data Formats</a>
       </h2>
-<p id="section-4-1">This section defines data formats of SD-JWT that contains hashes of the salted claim values
-and SD-JWT Salt/Value Container that contains the mapping of the plain-text claim values
-and the salt values.<a href="#section-4-1" class="pilcrow">¶</a></p>
+<p id="section-4-1">This section defines a data format for SD-JWTs (containing hashes of the salted claim values)
+and for SD-JWT Salt/Value Containers (containing the mapping of the plain-text claim values
+and the salt values).<a href="#section-4-1" class="pilcrow">¶</a></p>
 <div id="sd-jwt-format">
 <section id="section-4.1">
         <h3 id="name-sd-jwt-format">
 <a href="#section-4.1" class="section-number selfRef">4.1. </a><a href="#name-sd-jwt-format" class="section-name selfRef">SD-JWT Format</a>
         </h3>
-<p id="section-4.1-1">An SD-JWT is a JWT that is optionally signed using the issuer's private key
-and contains following claims as payload.<a href="#section-4.1-1" class="pilcrow">¶</a></p>
+<p id="section-4.1-1">An SD-JWT is a JWT that is optionally signed using the issuer's private key.<a href="#section-4.1-1" class="pilcrow">¶</a></p>
 <div id="payload">
 <section id="section-4.1.1">
           <h4 id="name-payload">
 <a href="#section-4.1.1" class="section-number selfRef">4.1.1. </a><a href="#name-payload" class="section-name selfRef">Payload</a>
           </h4>
-<p id="section-4.1.1-1">Payload of SD-JWT can consist of the following claims.<a href="#section-4.1.1-1" class="pilcrow">¶</a></p>
+<p id="section-4.1.1-1">The payload of an SD-JWT can consist of the following claims.<a href="#section-4.1.1-1" class="pilcrow">¶</a></p>
 <div id="selectively-disclosable-claims">
 <section id="section-4.1.1.1">
             <h5 id="name-selectively-disclosable-cla">
 <a href="#section-4.1.1.1" class="section-number selfRef">4.1.1.1. </a><a href="#name-selectively-disclosable-cla" class="section-name selfRef">Selectively Disclosable Claims</a>
             </h5>
-<p id="section-4.1.1.1-1">SD-JWT MUST include hashes of the salted claim values that are included by the issuer
+<p id="section-4.1.1.1-1">An SD-JWT MUST include hashes of the salted claim values that are included by the issuer
 under the property <code>_sd</code>.<a href="#section-4.1.1.1-1" class="pilcrow">¶</a></p>
-<p id="section-4.1.1.1-2">Issuer MUST choose a unique salt value for each claim value. Each salt value MUST
-contain at least 128 bits of pseudorandom data, making it hard for an attacker
-to guess. The salt value MUST then be encoded as a string. It is
-RECOMMENDED to BASE64URL encode at least 16 pseudorandom bytes.<a href="#section-4.1.1.1-2" class="pilcrow">¶</a></p>
-<p id="section-4.1.1.1-3">Issuer MUST build the hashes by hashing over a string that is formed by JSON-encoding an ordered
-array containing the salt and the claim value, e.g.: <code>["6qMQvRL5haj","Peter"]</code>.
-The hash value is then BASE64URL-encoded. Note that the precise JSON encoding can vary,
-and therefore, the JSON encodings MUST be sent to the holder along with the SD-JWT,
-as described below.<a href="#section-4.1.1.1-3" class="pilcrow">¶</a></p>
-<p id="section-4.1.1.1-4"><code>_sd</code> object can be a 'flat' object, directly containing all claim names and
-hashed claim values without any deeper structure. <code>_sd</code> object can also be a
+<p id="section-4.1.1.1-2">The issuer MUST choose a unique salt value for each claim value. Each salt value
+MUST contain at least 128 bits of pseudorandom data, making it hard for an
+attacker to guess. The salt value MUST then be encoded as a string. It is
+RECOMMENDED to base64url encode at least 16 pseudorandom bytes.<a href="#section-4.1.1.1-2" class="pilcrow">¶</a></p>
+<p id="section-4.1.1.1-3">The issuer MUST build the hashes by hashing over a string that is formed by
+JSON-encoding an ordered array containing the salt and the claim value, e.g.:
+<code>["6qMQvRL5haj","Peter"]</code>. The hash value is then base64url-encoded. Note that
+the precise JSON encoding can vary, and therefore, the JSON encodings MUST be
+sent to the holder along with the SD-JWT, as described below.<a href="#section-4.1.1.1-3" class="pilcrow">¶</a></p>
+<p id="section-4.1.1.1-4">The <code>_sd</code> object can be a 'flat' object, directly containing all claim names and
+hashed claim values without any deeper structure. The <code>_sd</code> object can also be a
 'structured' object, where some claims and their respective hashes are contained
 in places deeper in the structure. It is up to the issuer to decide how to
 structure the representation such that it is suitable for the use case. Examples
 1 and 2 below show this using the <span>[<a href="#OIDC" class="xref">OIDC</a>]</span> <code>address</code> claim, a structured claim.
 Appendix 1 shows a more complex example using claims from eKYC (todo:
 reference).<a href="#section-4.1.1.1-4" class="pilcrow">¶</a></p>
-<p id="section-4.1.1.1-5">Note that it is up to the issuer's discretion whether to turn the same payload of SD-JWT
-into 'flat' or 'structured' <code>_sd</code> SD-JWT object.<a href="#section-4.1.1.1-5" class="pilcrow">¶</a></p>
+<p id="section-4.1.1.1-5">Note that it is at the issuer's discretion whether to turn the payload of SD-JWT
+into a 'flat' or 'structured' <code>_sd</code> SD-JWT object.<a href="#section-4.1.1.1-5" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="holder-public-key">
@@ -1567,7 +1568,7 @@ holder and issuer MAY use pre-established key material.<a href="#section-4.1.1.2
             <h5 id="name-other-claims">
 <a href="#section-4.1.1.3" class="section-number selfRef">4.1.1.3. </a><a href="#name-other-claims" class="section-name selfRef">Other Claims</a>
             </h5>
-<p id="section-4.1.1.3-1">The SD-JWT payload typically contains other JWT claims, such as <code>iss</code>, <code>iat</code>, etc.<a href="#section-4.1.1.3-1" class="pilcrow">¶</a></p>
+<p id="section-4.1.1.3-1">The SD-JWT payload MAY contain other claims and will typically contain other JWT claims, such as <code>iss</code>, <code>iat</code>, etc.<a href="#section-4.1.1.3-1" class="pilcrow">¶</a></p>
 </section>
 </div>
 </section>
@@ -1607,7 +1608,7 @@ be disclosed in full.<a href="#section-4.1.2-1" class="pilcrow">¶</a></p>
   "iss": "https://example.com/issuer",
   "sub_jwk": {
     "kty": "RSA",
-    "n": "tX2xcWvjAkLl5uN5gaTDeDVFpevOcNjjPM-ryCWKjbUoh5nyDEaFpqvv3WDeGwWeBjMXed4htovR-3fJyW5S0d_tUWcdEmSGeqrcUnb8C71VU_pCQYD6MH9YjRCmt3RjnuFeHZiJymbgT8h7cVL0ivTX7qL9ftMCN5JRoNYF5DMGBXlvCgLCGIbdK7-tkPyhdeGgsFJa_aM4ft5SRSsqzrP76vyv55VxPMmDoGJrAJn38HlkqoIEXhjjMh0EACuC8HXM9XwovtOqeXAO4GgJwKEwWgypa5QwqReHoQIcUYqYTJCwikrzkhvtIlqIdkSRKUSX-A9gjtQ_E-gyt93NGQ",
+    "n": "6GwTTwcjVyOtKtuGf7ft5PAU0GiDtnD4DGcmtVrFQHVhtx05-DJigfmR-3Tetw-Od5su4TNZYzjh3tQ6Bj1HRdOfGmX9E9YbPw4goKg_d0kM4oZMUd64tmlAUFtX0NYaYnRkjQtok2CJBUq22wucK93JV11T38PYDATqbK9UFqMM3vu07XXlaQGXP1vh4iX04w4dU4d2xTACXho_wKKcV85yvIGrO1eGwwnSilTiqQbak31_VnHGNVVZEk4dnVO7eOc6MVZa-qPkVj77GaILO53TMq69Vp1faJoGFHjha_Ue5D8zfpiAEx2AsAeotIwNk2QT0UZkeZoK23Q-s4p1dQ",
     "e": "AQAB"
   },
   "iat": 1516239022,
@@ -1684,7 +1685,7 @@ separately.<a href="#section-4.1.3-1" class="pilcrow">¶</a></p>
   "iss": "https://example.com/issuer",
   "sub_jwk": {
     "kty": "RSA",
-    "n": "vxqABmnBwkDVrTK99gD70GFSXfVsTZdcX_CCjYWU6wE6AuPTFDSiFtP4tdIo_BY4fnO7E_-JbyBv-xeot79ZiF-4yKD9jPs0n79205quVdO_GKWAZD0fQTyxFTm7qaBelPtuHahiyiz1Q0W5HJPFiFOqAQAd7le7ZO3y-3gFrWATwD6FNYE_dLhna7Kd6aNyIN9lFUrKdJh__jOEv1hLbdojL8bnX5LKcYltJ6hfW6vQHuUs2cghvwqGaGWy8fn1ilWhDF8uED-FkruyfaXoCFhFL8MQcZx1Sim_Tpmg18hoQXnFazhZUTnCtlWFTBQKyjbZ0S6GqS8hYChE-taZ5Q",
+    "n": "lg9Nie6g-pgoUrDK5Kyni4xZd5ILVnGtBcWx-caAq2FLmtGNIHD9qEzlcLjJCNhrGAUNYOBlkpS0ySJPBlGkdI45WfJLNQVIHwpp1IzgWXPuyM9NvHiPuxef-C6sPZsQeUXTP9YavMBPn0bMt6xi92PGk8KYT9ljajxd8ySbKN8VHsOi34Pdnxy4oe6pOOaoS5vCIFVENXmrTu8pSqWQUsXNju6qsS0wwG6ClifNqp-a6HkOz1UJjdn1w2NVT34LNqzIBuWxFvMQzdXfetgpICwRvj29fJvh9Z6E--b48CHNqppaAzH5DmhMY5DacTxsKwJJmUwo9J6AXrnCwouTdQ",
     "e": "AQAB"
   },
   "iat": 1516239022,
@@ -1800,14 +1801,14 @@ separator. For Example 1, the combined format looks as follows:<a href="#section
 <div id="example-simple-combined-sd-jwt-svc">
 <div class="artwork art-text alignLeft" id="section-4.3-2">
 <pre>eyJhbGciOiAiUlMyNTYifQ.eyJpc3MiOiAiaHR0cHM6Ly9leGFtcGxlLmNvbS9pc3N1ZXI
-iLCAic3ViX2p3ayI6IHsia3R5IjogIlJTQSIsICJuIjogInRYMnhjV3ZqQWtMbDV1TjVnY
-VREZURWRnBldk9jTmpqUE0tcnlDV0tqYlVvaDVueURFYUZwcXZ2M1dEZUd3V2VCak1YZWQ
-0aHRvdlItM2ZKeVc1UzBkX3RVV2NkRW1TR2VxcmNVbmI4QzcxVlVfcENRWUQ2TUg5WWpSQ
-210M1JqbnVGZUhaaUp5bWJnVDhoN2NWTDBpdlRYN3FMOWZ0TUNONUpSb05ZRjVETUdCWGx
-2Q2dMQ0dJYmRLNy10a1B5aGRlR2dzRkphX2FNNGZ0NVNSU3NxenJQNzZ2eXY1NVZ4UE1tR
-G9HSnJBSm4zOEhsa3FvSUVYaGpqTWgwRUFDdUM4SFhNOVh3b3Z0T3FlWEFPNEdnSndLRXd
-XZ3lwYTVRd3FSZUhvUUljVVlxWVRKQ3dpa3J6a2h2dElscUlka1NSS1VTWC1BOWdqdFFfR
-S1neXQ5M05HUSIsICJlIjogIkFRQUIifSwgImlhdCI6IDE1MTYyMzkwMjIsICJleHAiOiA
+iLCAic3ViX2p3ayI6IHsia3R5IjogIlJTQSIsICJuIjogIjZHd1RUd2NqVnlPdEt0dUdmN
+2Z0NVBBVTBHaUR0bkQ0REdjbXRWckZRSFZodHgwNS1ESmlnZm1SLTNUZXR3LU9kNXN1NFR
+OWll6amgzdFE2QmoxSFJkT2ZHbVg5RTlZYlB3NGdvS2dfZDBrTTRvWk1VZDY0dG1sQVVGd
+FgwTllhWW5Sa2pRdG9rMkNKQlVxMjJ3dWNLOTNKVjExVDM4UFlEQVRxYks5VUZxTU0zdnU
+wN1hYbGFRR1hQMXZoNGlYMDR3NGRVNGQyeFRBQ1hob193S0tjVjg1eXZJR3JPMWVHd3duU
+2lsVGlxUWJhazMxX1ZuSEdOVlZaRWs0ZG5WTzdlT2M2TVZaYS1xUGtWajc3R2FJTE81M1R
+NcTY5VnAxZmFKb0dGSGpoYV9VZTVEOHpmcGlBRXgyQXNBZW90SXdOazJRVDBVWmtlWm9LM
+jNRLXM0cDFkUSIsICJlIjogIkFRQUIifSwgImlhdCI6IDE1MTYyMzkwMjIsICJleHAiOiA
 xNTE2MjQ3MDIyLCAiX3NkIjogeyJzdWIiOiAiTGJuaGtPcjVvUzdLamVVcnhlekF1OFRHM
 ENwV3owalNpeHk2dGZmdW8wNCIsICJnaXZlbl9uYW1lIjogImZVTWRuODhhYW95S1RIcnZ
 aZDZBdUxtUHJhR2hQSjB6RjVyX0poeENWWnMiLCAiZmFtaWx5X25hbWUiOiAiOWg1dmd2N
@@ -1816,24 +1817,24 @@ lRwRlY2R21uUHR1Z2lNTGw1dEhldEhlYjVYXzJjS0hqTjdjdyIsICJlbWFpbCI6ICJmUFo
 WJlciI6ICJRZFNmZnpOenpkMG42ME1zU211aUtqNlk2RW5rMmItQlMtS3RFZVBkZTVNIiw
 gImFkZHJlc3MiOiAiSkZ1OTlOVVhQcTU1ZjZERkJaMjJyTWt4TU5IYXlDcmZQRzBGRHNxY
 nlEcyIsICJiaXJ0aGRhdGUiOiAiSWExVGM2X1hudDVDSmMyTHRLY3U2V3ZxcjQyZ2xCR0d
-jakdPeWU4WmYzVSJ9fQ.IS4oc1f3XuxhNSnecIXbpT-3ZVwgbjpMSfpyqhFUEE2T_ij3uW
-Bqb1_zn0nLvIvXDs8rn6l10ilHwCgpMaPmYAE8_nfZtNwvfAFnwBFjzdrJOJWhZ5dp6UJe
-VULOZvjsCw1EpyRbBgIyZ9QiLzRJ_5JS1C1AelDDyXxI3FZYYc3-1MqQMnaXR7AWOct698
-t-LsookAA_LxXx-RYKG1wygEp9e9BzgCxQugsdGejMPTZyfaQewGrJalQm8bYvSXKcJ1DG
--T297kFEV_VTaeLCOoan1DS1DtaH48Q13yUUmdwil8jqjpVgf_lU0A7dO4AYmojgvdng-c
-MLWSp5YtL_Gw.eyJhbGciOiAiUlMyNTYifQ.eyJub25jZSI6ICIyR0xDNDJzS1F2ZUNmR2
-ZyeU5STjl3IiwgImF1ZCI6ICJodHRwczovL2V4YW1wbGUuY29tL3ZlcmlmaWVyIiwgIl9z
-ZCI6IHsiZ2l2ZW5fbmFtZSI6ICJbXCI2SWo3dE0tYTVpVlBHYm9TNXRtdlZBXCIsIFwiSm
-9oblwiXSIsICJmYW1pbHlfbmFtZSI6ICJbXCJlSThaV205UW5LUHBOUGVOZW5IZGhRXCIs
-IFwiRG9lXCJdIiwgImFkZHJlc3MiOiAiW1wiUGMzM0pNMkxjaGNVX2xIZ2d2X3VmUVwiLC
-B7XCJzdHJlZXRfYWRkcmVzc1wiOiBcIjEyMyBNYWluIFN0XCIsIFwibG9jYWxpdHlcIjog
-XCJBbnl0b3duXCIsIFwicmVnaW9uXCI6IFwiQW55c3RhdGVcIiwgXCJjb3VudHJ5XCI6IF
-wiVVNcIn1dIn19.Z6l-sUfifRth6djDqvHng4Zm1TNkKGiQqC5P_5Nn0pSo5dMaClpheNc
-NAPiPSf39A0jB8HBFceUQ_dmfTxi1U4NGFxbp-gTB00rPCY_RzCR3J-jgGmilYGLt4g2D6
-BV1YuLmFLBgT_IW6GR5mq_RJYK6AANYrVbVPmBbMTfrYT9SAsDkKKWXWz4i0gScLhmz4yi
-7FoNsvGtgb7WMtlHN86eJDtuayGHr8aCr95EAaUnuMbcT_WzGc_ifhzDBLJ4U0MVNlfiyk
-9Fd8OgnwC11cE3QE3kKDUeQcNAAo81K_sCt-_AwvhMzSj1OK81L4frekUkfomzrCGbdVSC
-bXLCfEg
+jakdPeWU4WmYzVSJ9fQ.rJmWAVghpour5wvdqw8xwdpSEEDMwGJKX1UZ-4mLxYUFv2qCJJ
+gQrwtXNccxHpR86F3_51zT9v2TffwZcuU3q4xi-YdyUrVtB6PHHo8F11qanGtnhxqAcFMM
+XXQRb7iO_P2Vr7j0Ad8yMcxLituyVLxwjJ0T1s3X-PTomH_zb2wsNsSgrltpjNdoVDHE9k
+K8uOWmvx8VMXlaxks74gWjFQoBpnySrlo6PDy2V8zGnj7qc93Qo2Ei01rLYua2jMZJQlRE
+ZEp1mI25WYGuz4lJMMjq_SsysLr_r1qGCk1YU12yVz9-xtgL7zVz7KEUY-8TjQEsr_UTbg
+vcSUDyd3Smgg.ewogICAgIl9zZCI6IHsKICAgICAgICAic3ViIjogIltcImVsdVY1T2czZ
+1NOSUk4RVluc3hBX0FcIiwgXCI2YzVjMGE0OS1iNTg5LTQzMWQtYmFlNy0yMTkxMjJhOWV
+jMmNcIl0iLAogICAgICAgICJnaXZlbl9uYW1lIjogIltcIjZJajd0TS1hNWlWUEdib1M1d
+G12VkFcIiwgXCJKb2huXCJdIiwKICAgICAgICAiZmFtaWx5X25hbWUiOiAiW1wiZUk4Wld
+tOVFuS1BwTlBlTmVuSGRoUVwiLCBcIkRvZVwiXSIsCiAgICAgICAgImVtYWlsIjogIltcI
+lFnX082NHpxQXhlNDEyYTEwOGlyb0FcIiwgXCJqb2huZG9lQGV4YW1wbGUuY29tXCJdIiw
+KICAgICAgICAicGhvbmVfbnVtYmVyIjogIltcIkFKeC0wOTVWUHJwVHRONFFNT3FST0FcI
+iwgXCIrMS0yMDItNTU1LTAxMDFcIl0iLAogICAgICAgICJhZGRyZXNzIjogIltcIlBjMzN
+KTTJMY2hjVV9sSGdndl91ZlFcIiwge1wic3RyZWV0X2FkZHJlc3NcIjogXCIxMjMgTWFpb
+iBTdFwiLCBcImxvY2FsaXR5XCI6IFwiQW55dG93blwiLCBcInJlZ2lvblwiOiBcIkFueXN
+0YXRlXCIsIFwiY291bnRyeVwiOiBcIlVTXCJ9XSIsCiAgICAgICAgImJpcnRoZGF0ZSI6I
+CJbXCJHMDJOU3JRZmpGWFE3SW8wOXN5YWpBXCIsIFwiMTk0MC0wMS0wMVwiXSIKICAgIH0
+KfQ
 </pre><a href="#section-4.3-2" class="pilcrow">¶</a>
 </div>
 </div>
@@ -1896,11 +1897,11 @@ mYW1pbHlfbmFtZSI6ICJbXCJlSThaV205UW5LUHBOUGVOZW5IZGhRXCIsIFwiRG9lXCJdI
 iwgImFkZHJlc3MiOiAiW1wiUGMzM0pNMkxjaGNVX2xIZ2d2X3VmUVwiLCB7XCJzdHJlZXR
 fYWRkcmVzc1wiOiBcIjEyMyBNYWluIFN0XCIsIFwibG9jYWxpdHlcIjogXCJBbnl0b3duX
 CIsIFwicmVnaW9uXCI6IFwiQW55c3RhdGVcIiwgXCJjb3VudHJ5XCI6IFwiVVNcIn1dIn1
-9.Z6l-sUfifRth6djDqvHng4Zm1TNkKGiQqC5P_5Nn0pSo5dMaClpheNcNAPiPSf39A0jB
-8HBFceUQ_dmfTxi1U4NGFxbp-gTB00rPCY_RzCR3J-jgGmilYGLt4g2D6BV1YuLmFLBgT_
-IW6GR5mq_RJYK6AANYrVbVPmBbMTfrYT9SAsDkKKWXWz4i0gScLhmz4yi7FoNsvGtgb7WM
-tlHN86eJDtuayGHr8aCr95EAaUnuMbcT_WzGc_ifhzDBLJ4U0MVNlfiyk9Fd8OgnwC11cE
-3QE3kKDUeQcNAAo81K_sCt-_AwvhMzSj1OK81L4frekUkfomzrCGbdVSCbXLCfEg
+9.b0hG3v71rzHvtoDTdroZ9m-lt9tf8nobFKb2YGiyGOjIklfcKc2KWj72oi_tBKcOCqZh
+dX6IV4BRXIw-aspQfLh-xBrNLuGqiC-Y3rZBBlWw0WWnbbtsy1tj8yZOiXBr8vO6mCgZGA
+d4MgPYPd-QzOr9ukObYDRB4I24xHrqlAEYPJIzSw9MI_dEmIkNnAuIfLQKiuyTqVVVp6Ly
+pBIz6fBLm6NOLC4-uVXlOzI91iT4zlkrhP0-vj8TmfB-XL9aD3-xqytvLBHTESct49OSRZ
+FrwkLUKTM56_6KW3pG7Ucuv8VnpHXHIka0SGRaOh8x6v5-rCQJl_IbM8wb7CSHvQ
 </pre><a href="#section-4.4-9" class="pilcrow">¶</a>
 </div>
 </div>
@@ -1916,14 +1917,14 @@ tlHN86eJDtuayGHr8aCr95EAaUnuMbcT_WzGc_ifhzDBLJ4U0MVNlfiyk9Fd8OgnwC11cE
 <div id="example-simple-combined-sd-jwt-sd-jwt-release">
 <div class="artwork art-text alignLeft" id="section-4.5-2">
 <pre>eyJhbGciOiAiUlMyNTYifQ.eyJpc3MiOiAiaHR0cHM6Ly9leGFtcGxlLmNvbS9pc3N1ZXI
-iLCAic3ViX2p3ayI6IHsia3R5IjogIlJTQSIsICJuIjogInRYMnhjV3ZqQWtMbDV1TjVnY
-VREZURWRnBldk9jTmpqUE0tcnlDV0tqYlVvaDVueURFYUZwcXZ2M1dEZUd3V2VCak1YZWQ
-0aHRvdlItM2ZKeVc1UzBkX3RVV2NkRW1TR2VxcmNVbmI4QzcxVlVfcENRWUQ2TUg5WWpSQ
-210M1JqbnVGZUhaaUp5bWJnVDhoN2NWTDBpdlRYN3FMOWZ0TUNONUpSb05ZRjVETUdCWGx
-2Q2dMQ0dJYmRLNy10a1B5aGRlR2dzRkphX2FNNGZ0NVNSU3NxenJQNzZ2eXY1NVZ4UE1tR
-G9HSnJBSm4zOEhsa3FvSUVYaGpqTWgwRUFDdUM4SFhNOVh3b3Z0T3FlWEFPNEdnSndLRXd
-XZ3lwYTVRd3FSZUhvUUljVVlxWVRKQ3dpa3J6a2h2dElscUlka1NSS1VTWC1BOWdqdFFfR
-S1neXQ5M05HUSIsICJlIjogIkFRQUIifSwgImlhdCI6IDE1MTYyMzkwMjIsICJleHAiOiA
+iLCAic3ViX2p3ayI6IHsia3R5IjogIlJTQSIsICJuIjogIjZHd1RUd2NqVnlPdEt0dUdmN
+2Z0NVBBVTBHaUR0bkQ0REdjbXRWckZRSFZodHgwNS1ESmlnZm1SLTNUZXR3LU9kNXN1NFR
+OWll6amgzdFE2QmoxSFJkT2ZHbVg5RTlZYlB3NGdvS2dfZDBrTTRvWk1VZDY0dG1sQVVGd
+FgwTllhWW5Sa2pRdG9rMkNKQlVxMjJ3dWNLOTNKVjExVDM4UFlEQVRxYks5VUZxTU0zdnU
+wN1hYbGFRR1hQMXZoNGlYMDR3NGRVNGQyeFRBQ1hob193S0tjVjg1eXZJR3JPMWVHd3duU
+2lsVGlxUWJhazMxX1ZuSEdOVlZaRWs0ZG5WTzdlT2M2TVZaYS1xUGtWajc3R2FJTE81M1R
+NcTY5VnAxZmFKb0dGSGpoYV9VZTVEOHpmcGlBRXgyQXNBZW90SXdOazJRVDBVWmtlWm9LM
+jNRLXM0cDFkUSIsICJlIjogIkFRQUIifSwgImlhdCI6IDE1MTYyMzkwMjIsICJleHAiOiA
 xNTE2MjQ3MDIyLCAiX3NkIjogeyJzdWIiOiAiTGJuaGtPcjVvUzdLamVVcnhlekF1OFRHM
 ENwV3owalNpeHk2dGZmdW8wNCIsICJnaXZlbl9uYW1lIjogImZVTWRuODhhYW95S1RIcnZ
 aZDZBdUxtUHJhR2hQSjB6RjVyX0poeENWWnMiLCAiZmFtaWx5X25hbWUiOiAiOWg1dmd2N
@@ -1932,24 +1933,24 @@ lRwRlY2R21uUHR1Z2lNTGw1dEhldEhlYjVYXzJjS0hqTjdjdyIsICJlbWFpbCI6ICJmUFo
 WJlciI6ICJRZFNmZnpOenpkMG42ME1zU211aUtqNlk2RW5rMmItQlMtS3RFZVBkZTVNIiw
 gImFkZHJlc3MiOiAiSkZ1OTlOVVhQcTU1ZjZERkJaMjJyTWt4TU5IYXlDcmZQRzBGRHNxY
 nlEcyIsICJiaXJ0aGRhdGUiOiAiSWExVGM2X1hudDVDSmMyTHRLY3U2V3ZxcjQyZ2xCR0d
-jakdPeWU4WmYzVSJ9fQ.IS4oc1f3XuxhNSnecIXbpT-3ZVwgbjpMSfpyqhFUEE2T_ij3uW
-Bqb1_zn0nLvIvXDs8rn6l10ilHwCgpMaPmYAE8_nfZtNwvfAFnwBFjzdrJOJWhZ5dp6UJe
-VULOZvjsCw1EpyRbBgIyZ9QiLzRJ_5JS1C1AelDDyXxI3FZYYc3-1MqQMnaXR7AWOct698
-t-LsookAA_LxXx-RYKG1wygEp9e9BzgCxQugsdGejMPTZyfaQewGrJalQm8bYvSXKcJ1DG
--T297kFEV_VTaeLCOoan1DS1DtaH48Q13yUUmdwil8jqjpVgf_lU0A7dO4AYmojgvdng-c
-MLWSp5YtL_Gw.eyJhbGciOiAiUlMyNTYifQ.eyJub25jZSI6ICIyR0xDNDJzS1F2ZUNmR2
+jakdPeWU4WmYzVSJ9fQ.rJmWAVghpour5wvdqw8xwdpSEEDMwGJKX1UZ-4mLxYUFv2qCJJ
+gQrwtXNccxHpR86F3_51zT9v2TffwZcuU3q4xi-YdyUrVtB6PHHo8F11qanGtnhxqAcFMM
+XXQRb7iO_P2Vr7j0Ad8yMcxLituyVLxwjJ0T1s3X-PTomH_zb2wsNsSgrltpjNdoVDHE9k
+K8uOWmvx8VMXlaxks74gWjFQoBpnySrlo6PDy2V8zGnj7qc93Qo2Ei01rLYua2jMZJQlRE
+ZEp1mI25WYGuz4lJMMjq_SsysLr_r1qGCk1YU12yVz9-xtgL7zVz7KEUY-8TjQEsr_UTbg
+vcSUDyd3Smgg.eyJhbGciOiAiUlMyNTYifQ.eyJub25jZSI6ICIyR0xDNDJzS1F2ZUNmR2
 ZyeU5STjl3IiwgImF1ZCI6ICJodHRwczovL2V4YW1wbGUuY29tL3ZlcmlmaWVyIiwgIl9z
 ZCI6IHsiZ2l2ZW5fbmFtZSI6ICJbXCI2SWo3dE0tYTVpVlBHYm9TNXRtdlZBXCIsIFwiSm
 9oblwiXSIsICJmYW1pbHlfbmFtZSI6ICJbXCJlSThaV205UW5LUHBOUGVOZW5IZGhRXCIs
 IFwiRG9lXCJdIiwgImFkZHJlc3MiOiAiW1wiUGMzM0pNMkxjaGNVX2xIZ2d2X3VmUVwiLC
 B7XCJzdHJlZXRfYWRkcmVzc1wiOiBcIjEyMyBNYWluIFN0XCIsIFwibG9jYWxpdHlcIjog
 XCJBbnl0b3duXCIsIFwicmVnaW9uXCI6IFwiQW55c3RhdGVcIiwgXCJjb3VudHJ5XCI6IF
-wiVVNcIn1dIn19.Z6l-sUfifRth6djDqvHng4Zm1TNkKGiQqC5P_5Nn0pSo5dMaClpheNc
-NAPiPSf39A0jB8HBFceUQ_dmfTxi1U4NGFxbp-gTB00rPCY_RzCR3J-jgGmilYGLt4g2D6
-BV1YuLmFLBgT_IW6GR5mq_RJYK6AANYrVbVPmBbMTfrYT9SAsDkKKWXWz4i0gScLhmz4yi
-7FoNsvGtgb7WMtlHN86eJDtuayGHr8aCr95EAaUnuMbcT_WzGc_ifhzDBLJ4U0MVNlfiyk
-9Fd8OgnwC11cE3QE3kKDUeQcNAAo81K_sCt-_AwvhMzSj1OK81L4frekUkfomzrCGbdVSC
-bXLCfEg
+wiVVNcIn1dIn19.b0hG3v71rzHvtoDTdroZ9m-lt9tf8nobFKb2YGiyGOjIklfcKc2KWj7
+2oi_tBKcOCqZhdX6IV4BRXIw-aspQfLh-xBrNLuGqiC-Y3rZBBlWw0WWnbbtsy1tj8yZOi
+XBr8vO6mCgZGAd4MgPYPd-QzOr9ukObYDRB4I24xHrqlAEYPJIzSw9MI_dEmIkNnAuIfLQ
+KiuyTqVVVp6LypBIz6fBLm6NOLC4-uVXlOzI91iT4zlkrhP0-vj8TmfB-XL9aD3-xqytvL
+BHTESct49OSRZFrwkLUKTM56_6KW3pG7Ucuv8VnpHXHIka0SGRaOh8x6v5-rCQJl_IbM8w
+b7CSHvQ
 </pre><a href="#section-4.5-2" class="pilcrow">¶</a>
 </div>
 </div>
@@ -2082,6 +2083,15 @@ This is because SD-JWT already reveals information about the issuer and the sche
 and revealing the claim names does not provide any additional information.<a href="#section-7.1-1" class="pilcrow">¶</a></p>
 </section>
 </div>
+<div id="unlinkability">
+<section id="section-7.2">
+        <h3 id="name-unlinkability">
+<a href="#section-7.2" class="section-number selfRef">7.2. </a><a href="#name-unlinkability" class="section-name selfRef">Unlinkability</a>
+        </h3>
+<p id="section-7.2-1">It is also important to note that this format enables selective disclosure of claims, but
+in itself it does not achieve unlinkability of the subject of a JWS document.<a href="#section-7.2-1" class="pilcrow">¶</a></p>
+</section>
+</div>
 </section>
 </div>
 <div id="Acknowledgements">
@@ -2105,18 +2115,18 @@ and revealing the claim names does not provide any additional information.<a hre
 <a href="#section-10" class="section-number selfRef">10. </a><a href="#name-normative-references" class="section-name selfRef">Normative References</a>
       </h2>
 <dl class="references">
-<dt id="RFC2119">[RFC2119]</dt>
-<dd>
-<span class="refAuthor">Bradner, S.</span>, <span class="refTitle">"Key words for use in RFCs to Indicate Requirement Levels"</span>, <span class="seriesInfo">BCP 14</span>, <span class="seriesInfo">RFC 2119</span>, <span class="seriesInfo">DOI 10.17487/RFC2119</span>, <time datetime="1997-03">March 1997</time>, <span>&lt;<a href="https://www.rfc-editor.org/info/rfc2119">https://www.rfc-editor.org/info/rfc2119</a>&gt;</span>. </dd>
-<dt id="RFC8174">[RFC8174]</dt>
-<dd>
-<span class="refAuthor">Leiba, B.</span>, <span class="refTitle">"Ambiguity of Uppercase vs Lowercase in RFC 2119 Key Words"</span>, <span class="seriesInfo">BCP 14</span>, <span class="seriesInfo">RFC 8174</span>, <span class="seriesInfo">DOI 10.17487/RFC8174</span>, <time datetime="2017-05">May 2017</time>, <span>&lt;<a href="https://www.rfc-editor.org/info/rfc8174">https://www.rfc-editor.org/info/rfc8174</a>&gt;</span>. </dd>
 <dt id="RFC7519">[RFC7519]</dt>
 <dd>
 <span class="refAuthor">Jones, M.</span><span class="refAuthor">, Bradley, J.</span><span class="refAuthor">, and N. Sakimura</span>, <span class="refTitle">"JSON Web Token (JWT)"</span>, <span class="seriesInfo">RFC 7519</span>, <span class="seriesInfo">DOI 10.17487/RFC7519</span>, <time datetime="2015-05">May 2015</time>, <span>&lt;<a href="https://www.rfc-editor.org/info/rfc7519">https://www.rfc-editor.org/info/rfc7519</a>&gt;</span>. </dd>
 <dt id="RFC7515">[RFC7515]</dt>
 <dd>
 <span class="refAuthor">Jones, M.</span><span class="refAuthor">, Bradley, J.</span><span class="refAuthor">, and N. Sakimura</span>, <span class="refTitle">"JSON Web Signature (JWS)"</span>, <span class="seriesInfo">RFC 7515</span>, <span class="seriesInfo">DOI 10.17487/RFC7515</span>, <time datetime="2015-05">May 2015</time>, <span>&lt;<a href="https://www.rfc-editor.org/info/rfc7515">https://www.rfc-editor.org/info/rfc7515</a>&gt;</span>. </dd>
+<dt id="RFC2119">[RFC2119]</dt>
+<dd>
+<span class="refAuthor">Bradner, S.</span>, <span class="refTitle">"Key words for use in RFCs to Indicate Requirement Levels"</span>, <span class="seriesInfo">BCP 14</span>, <span class="seriesInfo">RFC 2119</span>, <span class="seriesInfo">DOI 10.17487/RFC2119</span>, <time datetime="1997-03">March 1997</time>, <span>&lt;<a href="https://www.rfc-editor.org/info/rfc2119">https://www.rfc-editor.org/info/rfc2119</a>&gt;</span>. </dd>
+<dt id="RFC8174">[RFC8174]</dt>
+<dd>
+<span class="refAuthor">Leiba, B.</span>, <span class="refTitle">"Ambiguity of Uppercase vs Lowercase in RFC 2119 Key Words"</span>, <span class="seriesInfo">BCP 14</span>, <span class="seriesInfo">RFC 8174</span>, <span class="seriesInfo">DOI 10.17487/RFC8174</span>, <time datetime="2017-05">May 2017</time>, <span>&lt;<a href="https://www.rfc-editor.org/info/rfc8174">https://www.rfc-editor.org/info/rfc8174</a>&gt;</span>. </dd>
 </dl>
 </section>
 <section id="section-11">
@@ -2124,12 +2134,12 @@ and revealing the claim names does not provide any additional information.<a hre
 <a href="#section-11" class="section-number selfRef">11. </a><a href="#name-informative-references" class="section-name selfRef">Informative References</a>
       </h2>
 <dl class="references">
-<dt id="OIDC">[OIDC]</dt>
-<dd>
-<span class="refAuthor">Sakimura, N.</span><span class="refAuthor">, Bradley, J.</span><span class="refAuthor">, Jones, M.</span><span class="refAuthor">, de Medeiros, B.</span><span class="refAuthor">, and C. Mortimore</span>, <span class="refTitle">"OpenID Connect Core 1.0 incorporating errata set 1"</span>, <time datetime="2014-11-08">8 November 2014</time>, <span>&lt;<a href="https://openid.net/specs/openid-connect-core-1_0.html">https://openid.net/specs/openid-connect-core-1_0.html</a>&gt;</span>. </dd>
 <dt id="RFC8725">[RFC8725]</dt>
 <dd>
 <span class="refAuthor">Sheffer, Y.</span><span class="refAuthor">, Hardt, D.</span><span class="refAuthor">, and M. Jones</span>, <span class="refTitle">"JSON Web Token Best Current Practices"</span>, <span class="seriesInfo">BCP 225</span>, <span class="seriesInfo">RFC 8725</span>, <span class="seriesInfo">DOI 10.17487/RFC8725</span>, <time datetime="2020-02">February 2020</time>, <span>&lt;<a href="https://www.rfc-editor.org/info/rfc8725">https://www.rfc-editor.org/info/rfc8725</a>&gt;</span>. </dd>
+<dt id="OIDC">[OIDC]</dt>
+<dd>
+<span class="refAuthor">Sakimura, N.</span><span class="refAuthor">, Bradley, J.</span><span class="refAuthor">, Jones, M.</span><span class="refAuthor">, de Medeiros, B.</span><span class="refAuthor">, and C. Mortimore</span>, <span class="refTitle">"OpenID Connect Core 1.0 incorporating errata set 1"</span>, <time datetime="2014-11-08">8 November 2014</time>, <span>&lt;<a href="https://openid.net/specs/openid-connect-core-1_0.html">https://openid.net/specs/openid-connect-core-1_0.html</a>&gt;</span>. </dd>
 </dl>
 </section>
 <div id="additional-examples">
@@ -2203,7 +2213,7 @@ and revealing the claim names does not provide any additional information.<a hre
   "iss": "https://example.com/issuer",
   "sub_jwk": {
     "kty": "RSA",
-    "n": "0pyGviWMy34jiHS6a9wGP5uuHO2Y7CRwbaJ0GwmsXb7BJv1ZBzB06NruBfXFs7P_e9Imsr-SfH_IgYxw5RBJCQzdztgwHxIgH86R-Cm_q9K3k0SqYH7jDYvvVELqvU5V0l1Ve9qu9Z3mT2gy9zyH0cbLK_wOoEy4KIMnyR6Oy88cgU769MXmDe2tqUqRozfXYEvZ4jaDsbWBC5I7p8R9nYXqZYSK5SXEqUxDDH-h6VyiY1m7CWFuNZ09bk2A5xCTXjZVQYANjhkBr4m9urunuUsCjQEEv0kFnPBFbG8y5-76PWwIjs1okBK7-LR5rGihXZydIXsNBwo0RrQqZFetsw",
+    "n": "wlcpuJjcdshL2NqMsT2HMJiqyPFEPQZ2FMXKD_r3an-09_k-cdoJifVodKUZ8QBiU6w_JUYh3lScrJ-TSEueS-mGU9Kkn_9q5xzXbnTEy2P6N_4b7NNaeJe25DnklEPUJU5tRcjODtHDO7MIgsIPK-NtCW6x7YB2x6_3H2t6EfRtDjZe-adelOA09UQ8x9d8DBOR2rxaFm3_QAlAfHvD7lLlewAiGvjMTd614FkA8CEqlnSWl4gD2Pd3A5J3X_2UDK0IqIb8ed8_b2yToRIwqzU1g1p2VEZBJ0XGSbeSY9e-EN_ScrVT5YBwoIWovB0AeSsMj5K8ekedak9PwEfMvQ",
     "e": "AQAB"
   },
   "iat": 1516239022,
@@ -2256,14 +2266,14 @@ and revealing the claim names does not provide any additional information.<a hre
 <div id="example-complex_structured-sd-jwt-encoded">
 <div class="artwork art-text alignLeft" id="section-a.1-7">
 <pre>eyJhbGciOiAiUlMyNTYifQ.eyJpc3MiOiAiaHR0cHM6Ly9leGFtcGxlLmNvbS9pc3N1ZXI
-iLCAic3ViX2p3ayI6IHsia3R5IjogIlJTQSIsICJuIjogIjBweUd2aVdNeTM0amlIUzZhO
-XdHUDV1dUhPMlk3Q1J3YmFKMEd3bXNYYjdCSnYxWkJ6QjA2TnJ1QmZYRnM3UF9lOUltc3I
-tU2ZIX0lnWXh3NVJCSkNRemR6dGd3SHhJZ0g4NlItQ21fcTlLM2swU3FZSDdqRFl2dlZFT
-HF2VTVWMGwxVmU5cXU5WjNtVDJneTl6eUgwY2JMS193T29FeTRLSU1ueVI2T3k4OGNnVTc
-2OU1YbURlMnRxVXFSb3pmWFlFdlo0amFEc2JXQkM1STdwOFI5bllYcVpZU0s1U1hFcVV4R
-ERILWg2VnlpWTFtN0NXRnVOWjA5YmsyQTV4Q1RYalpWUVlBTmpoa0JyNG05dXJ1bnVVc0N
-qUUVFdjBrRm5QQkZiRzh5NS03NlBXd0lqczFva0JLNy1MUjVyR2loWFp5ZElYc05Cd28wU
-nJRcVpGZXRzdyIsICJlIjogIkFRQUIifSwgImlhdCI6IDE1MTYyMzkwMjIsICJleHAiOiA
+iLCAic3ViX2p3ayI6IHsia3R5IjogIlJTQSIsICJuIjogIndsY3B1SmpjZHNoTDJOcU1zV
+DJITUppcXlQRkVQUVoyRk1YS0RfcjNhbi0wOV9rLWNkb0ppZlZvZEtVWjhRQmlVNndfSlV
+ZaDNsU2NySi1UU0V1ZVMtbUdVOUtrbl85cTV4elhiblRFeTJQNk5fNGI3Tk5hZUplMjVEb
+mtsRVBVSlU1dFJjak9EdEhETzdNSWdzSVBLLU50Q1c2eDdZQjJ4Nl8zSDJ0NkVmUnREalp
+lLWFkZWxPQTA5VVE4eDlkOERCT1IycnhhRm0zX1FBbEFmSHZEN2xMbGV3QWlHdmpNVGQ2M
+TRGa0E4Q0VxbG5TV2w0Z0QyUGQzQTVKM1hfMlVESzBJcUliOGVkOF9iMnlUb1JJd3F6VTF
+nMXAyVkVaQkowWEdTYmVTWTllLUVOX1NjclZUNVlCd29JV292QjBBZVNzTWo1Szhla2VkY
+Ws5UHdFZk12USIsICJlIjogIkFRQUIifSwgImlhdCI6IDE1MTYyMzkwMjIsICJleHAiOiA
 xNTE2MjQ3MDIyLCAiX3NkIjogeyJ2ZXJpZmllZF9jbGFpbXMiOiB7InZlcmlmaWNhdGlvb
 iI6IHsidHJ1c3RfZnJhbWV3b3JrIjogIlVJLVNSTmxRRnktWUVGRTQ2eXlIS3FjNjRqbU0
 2NXE4bWE5Y3EyVl9lclkiLCAidGltZSI6ICJqSS1GWWx0ZXlkWHpzalJJclhCWnM5Zm9CU
@@ -2291,12 +2301,12 @@ yIsICJhZGRyZXNzIjogIjYzRXpQVjB5dlRwZU9nVjM0eUN3d2VDdk8tMnd4dHMyV3FiamF
 fU3V3UFEifX0sICJiaXJ0aF9taWRkbGVfbmFtZSI6ICJ2TTY4STZYbnJWbHl0MUx4Szl4e
 GdGeWNzanR3MnZMZEdwTmdrM0U4UVE0IiwgInNhbHV0YXRpb24iOiAiaVRoZkN1MnVsTG9
 lNWk2Z0NFcS0tWTZSLWd4SEh0SXVrWGI5cW5makg1ayIsICJtc2lzZG4iOiAieFVwVS1he
-kJZZFhlSmlkYzhZdzVNWHRmUHo0XzRrQXJKaGZsWGN4emt6cyJ9fQ.f6w58KAyROyRM6Kd
-lyweJCL5uIOJGDTIFaOP0gSEaPMqSliXdAs3XAmZWTZNwZQDNTyDGJwXlI0VusbLfzzaUU
-2NBq1YGCi8o4p91vgqizJa7GD7nl1-BiAEm1bDl5SOoh_Zm3DlmHUncruNECLsV8t7VfNL
-Zod1SgJ9Ia1F_B6vPovcAxVtRa1cQUkpiQsjwdkYA5MM-SCvOSR7aNM71HHScvZ6hapLpa
-ZSXXGt0s-rjhYX-3fI7ZCRK_n0ElIXev2Lv7qd8xYCpcaYUgkzi1gQ1PRv7DT4_VnWsjk7
-XwnRgwwPfXkkEdBLIhB3TDWtxGT5ZPBgoffgxHKxXyn3dQ.ewogICAgIl9zZCI6IHsKICA
+kJZZFhlSmlkYzhZdzVNWHRmUHo0XzRrQXJKaGZsWGN4emt6cyJ9fQ.PSEqS4wRCkLuFfGT
+gNjw63kewpAxNWu1kgo_tat17ElyetqMO49w3PL1D4Z67AeVbOMT3DhG7WiJB9UoKVs3XJ
+yJuZ0DBRkCQ8iqaIw3vyA-P_lkTw7EwSO-Klo0UHBUfHvvJhKOeZ6jhSvZhtlD0yYxoS9e
+fxOHM2tUnpm7gaWQ6OqXiTTLGrnuA-1k99IL_ag5oJJym2JvlWt2R1S8tLvKrKZumrPi5R
+LYskZlEiZ_l4h_n7FHva9S66R_tvZNcXRQqyXGKdp66rzmfHzxoHHYBIUfgxBZ0re3zkHm
+JcgAgoPLaIpXm3cR-4dmMpDHgntMOWP8s0hnBsYStArM4Q.ewogICAgIl9zZCI6IHsKICA
 gICAgICAidmVyaWZpZWRfY2xhaW1zIjogewogICAgICAgICAgICAidmVyaWZpY2F0aW9uI
 jogewogICAgICAgICAgICAgICAgInRydXN0X2ZyYW1ld29yayI6ICJbXCJlbHVWNU9nM2d
 TTklJOEVZbnN4QV9BXCIsIFwiZGVfYW1sXCJdIiwKICAgICAgICAgICAgICAgICJ0aW1lI

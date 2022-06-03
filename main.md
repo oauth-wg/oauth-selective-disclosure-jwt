@@ -1,6 +1,6 @@
 %%%
 title = "Selective Disclosure JWT (SD-JWT)"
-abbrev = "oauth-selective-disclosure-jwt"
+abbrev = "SD-JWT"
 ipr = "trust200902"
 area = "Security"
 workgroup = "Web Authorization Protocol"
@@ -8,7 +8,7 @@ keyword = ["security", "oauth2"]
 
 [seriesInfo]
 name = "Internet-Draft"
-value = "draft-fett-selective-disclosure-jwt-00"
+value = "draft-fett-oauth-selective-disclosure-jwt-00"
 stream = "IETF"
 status = "standard"
 
