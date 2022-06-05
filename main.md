@@ -120,7 +120,7 @@ Section 2 of [@!RFC7515].
    An entity that received SD-JWTs (2.1) from the issuer and has control over them.
 
 ## verifier 
-   An entity that entity that requests, checks and extracts the claims from SSD-JWT-R (2.2)
+   An entity that requests, checks and extracts the claims from SSD-JWT-R (2.2)
 
 Note: discuss if we want to include Client, Authorization Server for the purpose of
 ensuring continuity and separating the entity from the actor.
