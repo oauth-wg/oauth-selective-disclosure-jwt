@@ -234,6 +234,10 @@ holder and issuer MAY use pre-established key material.
 
 Note: need to define how holder public key is included, right now examples are using `sub_jwk` I think.
 
+#### Hash of an SVC
+* `svc_hash`
+  * REQUIRED. SVC hash value. Its value is the base64url encoding of the left-most half of the hash of the octets of the ASCII representation of the SVC value, where the hash algorithm used is the same hash algorithm that is used for the selectively disclosable claims in an SD-JWT. The svc_hash value is a case sensitive string.
+
 #### Other Claims
 
 The SD-JWT payload MAY contain other claims and will typically contain other JWT claims, such as `iss`, `iat`, etc. 
