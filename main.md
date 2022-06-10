@@ -53,12 +53,12 @@ can also read all of the claims.
 This document describes a format for JWTs that support selective
 disclosure (SD-JWT), enabling sharing only a subset of the claims included in 
 the original JWT instead of releasing all the claims to every verifier. 
-During issuance, SD-JWT is sent from the issuer to the holder alongside SD-JWT Salt/Value Container (SVC),
-a JSON object that contains mapping between raw claim values contained in the SD-JWT 
+During issuance, an SD-JWT is sent from the issuer to the holder alongside an SD-JWT Salt/Value Container (SVC),
+a JSON object that contains the mapping between raw claim values contained in the SD-JWT 
 and the salts for each claim value. 
 
 This document also defines a format for SD-JWT Releases (SD-JWT-R),
-which convey a subset of the claim values of an SD-JWT that the holder 
+which conveys a subset of the claim values of an SD-JWT that the holder 
 is selectively releasing to the verifier. During presentation, SD-JWT-R and SD-JWT are both sent
 to the verifier from the holder. To verify claim values received in SD-JWT-R, 
 verifier uses salts in SD-JWT-R to compute the hashes of the claim values and compare them to the hashes in SD-JWT.
