@@ -53,7 +53,15 @@ can also read all of the claims.
 This document describes a format for JWTs that support selective
 disclosure (SD-JWT), enabling sharing only a subset of the claims included in 
 the original JWT instead of releasing all the claims to every verifier. 
-This document also defines a format for so-called SD-JWT Releases (SD-JWT-R).
+During issuance, an SD-JWT is sent from the issuer to the holder alongside an SD-JWT Salt/Value Container (SVC),
+a JSON object that contains the mapping between raw claim values contained in the SD-JWT 
+and the salts for each claim value. 
+
+This document also defines a format for SD-JWT Releases (SD-JWT-R),
+which conveys a subset of the claim values of an SD-JWT that the holder 
+is selectively releasing to the verifier. During presentation, SD-JWT-R and SD-JWT are both sent
+to the verifier from the holder. To verify claim values received in SD-JWT-R, 
+verifier uses salts in SD-JWT-R to compute the hashes of the claim values and compare them to the hashes in SD-JWT.
 
 One of the common use cases of a signed JWT is representing a user's identity created by an issuer.
 In such a use case, there has been no privacy-related concerns with existing JOSE signature schemes,
@@ -95,7 +103,7 @@ Section 2 of [@!RFC7515].
 
 ## SD-JWT Salt/Value Container (SVC) 
    A JSON object created by the issuer that contains mapping between 
-   raw claim values that contained in the SD-JWT and the salts for each claim value.
+   raw claim values contained in the SD-JWT and the salts for each claim value.
 
 ## SD-JWT Release (SD-JWT-R) 
    A JWT created by the holder that contains a subset of the claim values of an SD-JWT in a verifiable way. 
@@ -112,7 +120,7 @@ Section 2 of [@!RFC7515].
    An entity that received SD-JWTs (2.1) from the issuer and has control over them.
 
 ## verifier 
-   An entity that entity that requests, checks and extracts the claims from SD-JWT-R (2.2)
+   An entity that requests, checks and extracts the claims from SSD-JWT-R (2.2)
 
 Note: discuss if we want to include Client, Authorization Server for the purpose of
 ensuring continuity and separating the entity from the actor.
