@@ -68,7 +68,7 @@ In such a use case, there has been no privacy-related concerns with existing JOS
 because when a signed JWT is one-time use, it contains only JWT claims that the user has consented
 in real time to release to the verifier. However, when a signed JWT is intended to be multi-use, 
 the ability to selectively disclose a subset of the claims depending on the verifier becomes crucial
-to ensure minimum disclosure and prevent verifier from obtaining claims irrelevant for the use case at hand. 
+to ensure minimum disclosure and prevent verifier from obtaining claims irrelevant for the transaction at hand.
 
 One example of such a multi-use JWT is a verifiable credential, or a
 tamper-evident credential with a cryptographically verifiable authorship that
@@ -81,7 +81,7 @@ well.
 
 Note: so far agreed to define holder binding (user's public key contained inside an SD-JWT) as an option.
 It is not mandatory since holder binding is use case specific and orthogonal to the general mechanism of 
-selective disclosure we are trying to define here.
+selective disclosure defined here.
 
 
 ## Conventions and Terminology
@@ -177,7 +177,7 @@ Just as `HS-CLAIMS`, `SALTS` can be more complex as well.
 The SD-JWT-R is sent together with the SD-JWT from the holder to the
 verifier.
 
-## Verifying an SD-JWWT Release
+## Verifying an SD-JWT Release
 
 A verifier checks that 
 
@@ -210,7 +210,7 @@ under the property `_sd`.
 The issuer MUST choose a unique salt value for each claim value. Each salt value
 MUST contain at least 128 bits of pseudorandom data, making it hard for an
 attacker to guess. The salt value MUST then be encoded as a string. It is
-RECOMMENDED to base64url encode at least 16 pseudorandom bytes.
+RECOMMENDED to base64url-encode at least 16 pseudorandom bytes.
 
 The issuer MUST build the hashes by hashing over a string that is formed by
 JSON-encoding an ordered array containing the salt and the claim value, e.g.:
@@ -381,7 +381,7 @@ The user claims are as in Example 1 above. The resulting SD-JWT payload is as fo
 Besides the SD-JWT itself, the holder needs to learn the raw claim values that
 are contained in the SD-JWT, along with the precise input to the hash
 calculation, and the salts. There MAY be other information the issuer needs to
-communicate to the holder, such as a private key key if the issuer selected the
+communicate to the holder, such as a private key if the issuer selected the
 holder key pair.
 
 ### Payload
@@ -440,7 +440,7 @@ The SVC for Example 2 is as follows:
 ## SD-JWT and SVC Combined Format
 
 For transporting the SVC together with the SD-JWT from the issuer to the holder,
-the SVC is base64ur-encoded and appended to the SD-JWT using `.` as the
+the SVC is base64url-encoded and appended to the SD-JWT using a period character `.` as the
 separator. For Example 1, the combined format looks as follows:
 
 {#example-simple-combined-sd-jwt-svc}
@@ -551,7 +551,7 @@ FrwkLUKTM56_6KW3pG7Ucuv8VnpHXHIka0SGRaOh8x6v5-rCQJl_IbM8wb7CSHvQ
 (Line breaks for presentation only.)
 ## Presentation Format
 
-The SD-JWT and the SD-JWT-R can be combined into one document using `.` as a separator (here for Example 1):
+The SD-JWT and the SD-JWT-R can be combined into one document using period character `.` as a separator (here for Example 1):
 
 {#example-simple-combined-sd-jwt-sd-jwt-release}
 ```
@@ -603,7 +603,7 @@ Verifiers MUST go through (at least) the following steps before
 trusting/using any of the contents of an SD-JWT:
 
  1. Determine if holder binding is to be checked for the SD-JWT. Refer to (#holder_binding_security) for details.
- 2. Check that the presentation consists of six `.`-separated elements; if holder binding is not required, the last element can be empty.
+ 2. Check that the presentation consists of six period-separated (`.`) elements; if holder binding is not required, the last element can be empty.
  3. Separate the SD-JWT from the SD-JWT Release.
  4. Validate the SD-JWT:
     1. Ensure that a signing algorithm was used that was deemed secure for the application. Refer to [@RFC8725], Sections 3.1 and 3.2 for details.
