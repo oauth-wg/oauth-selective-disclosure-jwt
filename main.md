@@ -194,7 +194,7 @@ This section defines a data format for SD-JWTs (containing hashes of the salted 
 and for SD-JWT Salt/Value Containers (containing the mapping of the plain-text claim values 
 and the salt values).
 
-## SD-JWT Format
+## Format of an SD-JWT
 
 An SD-JWT is a JWT that is optionally signed using the issuer's private key.
 
@@ -323,19 +323,7 @@ Bqb1_zn0nLvIvXDs8rn6l10ilHwCgpMaPmYAE8_nfZtNwvfAFnwBFjzdrJOJWhZ5dp6UJe
 VULOZvjsCw1EpyRbBgIyZ9QiLzRJ_5JS1C1AelDDyXxI3FZYYc3-1MqQMnaXR7AWOct698
 t-LsookAA_LxXx-RYKG1wygEp9e9BzgCxQugsdGejMPTZyfaQewGrJalQm8bYvSXKcJ1DG
 -T297kFEV_VTaeLCOoan1DS1DtaH48Q13yUUmdwil8jqjpVgf_lU0A7dO4AYmojgvdng-c
-MLWSp5YtL_Gw.ewogICAgIl9zZCI6IHsKICAgICAgICAic3ViIjogIltcImVsdVY1T2czZ
-1NOSUk4RVluc3hBX0FcIiwgXCI2YzVjMGE0OS1iNTg5LTQzMWQtYmFlNy0yMTkxMjJhOWV
-jMmNcIl0iLAogICAgICAgICJnaXZlbl9uYW1lIjogIltcIjZJajd0TS1hNWlWUEdib1M1d
-G12VkFcIiwgXCJKb2huXCJdIiwKICAgICAgICAiZmFtaWx5X25hbWUiOiAiW1wiZUk4Wld
-tOVFuS1BwTlBlTmVuSGRoUVwiLCBcIkRvZVwiXSIsCiAgICAgICAgImVtYWlsIjogIltcI
-lFnX082NHpxQXhlNDEyYTEwOGlyb0FcIiwgXCJqb2huZG9lQGV4YW1wbGUuY29tXCJdIiw
-KICAgICAgICAicGhvbmVfbnVtYmVyIjogIltcIkFKeC0wOTVWUHJwVHRONFFNT3FST0FcI
-iwgXCIrMS0yMDItNTU1LTAxMDFcIl0iLAogICAgICAgICJhZGRyZXNzIjogIltcIlBjMzN
-KTTJMY2hjVV9sSGdndl91ZlFcIiwge1wic3RyZWV0X2FkZHJlc3NcIjogXCIxMjMgTWFpb
-iBTdFwiLCBcImxvY2FsaXR5XCI6IFwiQW55dG93blwiLCBcInJlZ2lvblwiOiBcIkFueXN
-0YXRlXCIsIFwiY291bnRyeVwiOiBcIlVTXCJ9XSIsCiAgICAgICAgImJpcnRoZGF0ZSI6I
-CJbXCJHMDJOU3JRZmpGWFE3SW8wOXN5YWpBXCIsIFwiMTk0MC0wMS0wMVwiXSIKICAgIH0
-KfQ
+MLWSp5YtL_Gw
 ```
 
 (Line breaks for presentation only.)
@@ -376,7 +364,7 @@ The user claims are as in Example 1 above. The resulting SD-JWT payload is as fo
 }
 ```
 
-## SD-JWT Salt/Value Container (SVC)
+## Format of a SD-JWT Salt/Value Container (SVC)
 
 Besides the SD-JWT itself, the holder needs to learn the raw claim values that
 are contained in the SD-JWT, along with the precise input to the hash
@@ -437,7 +425,7 @@ The SVC for Example 2 is as follows:
 }
 ```
 
-## SD-JWT and SVC Combined Format
+## Sending SD-JWT and SVC during Issuance
 
 For transporting the SVC together with the SD-JWT from the issuer to the holder,
 the SVC is base64url-encoded and appended to the SD-JWT using a period character `.` as the
@@ -484,9 +472,21 @@ KfQ
 
 (Line breaks for presentation only.)
 
-## SD-JWT-R Format
+## Format of an SD-JWT Release
 
-The following shows the contents of an SD-JWT-R for Example 1:
+SD-JWT-R contains claim values and the salts of the claims that the holder 
+has consented to release to the Verifier. This enables the Verifier to verify 
+the claims received from the holder by computing the hash sof the claims
+values and the salts revealed in the SD-JWT-R using the hashing algorithm 
+specified in SD-JWT and comparing them to the hash valued included in SD-JWT.
+
+For each claim, an array of the salt and the claim value is contained in the
+`_sd` object. The structure of `_sd` object in the SD-JWT-R is the same as in SD-JWT. 
+
+The SD-JWT-R MAY contain further claims, for example, to ensure a binding
+to a concrete transaction (in the example the `nonce` and `aud` claims).
+
+The following is a non-normative example of the contents of an SD-JWT-R for Example 1:
 
 {#example-simple-release-payload}
 ```json
@@ -499,12 +499,10 @@ The following shows the contents of an SD-JWT-R for Example 1:
     "address": "[\"Pc33JM2LchcU_lHggv_ufQ\", {\"street_address\": \"123 Main St\", \"locality\": \"Anytown\", \"region\": \"Anystate\", \"country\": \"US\"}]"
   }
 }
-```
+``` 
 
-For each claim, an array of the salt and the claim value is contained in the
-`_sd` object. 
-
-Again, the SD-JWT-R follows the same structure as the `_sd` in the SD-JWT. For Example 2, a SD-JWT-R limiting `address` to `region` and `country` only could look as follows:
+The following is a non-normative example of an SD-JWT-R for SD-JWT in Example 2
+that discloses only `region` and `country` of an `address` property:
 
 {#example-simple_structured-release-payload}
 ```json
@@ -523,14 +521,16 @@ Again, the SD-JWT-R follows the same structure as the `_sd` in the SD-JWT. For E
 }
 ```
 
-The SD-JWT-R MAY contain further claims, for example, to ensure a binding
-to a concrete transaction (in the example the `nonce` and `aud` claims).
+When the holder sends SD-JWT-R to the Verifier, it MUST be a base64url-encoded 
+JWS as described in Section 5.1 of [@!RFC7515]. JWS Compact Serialization and 
+JWS JSON Serialization can be used.
 
 If holder binding is desired, the SD-JWT-R is signed by the holder. If no
 holder binding is to be used, the `none` algorithm is used, i.e., the document
 is not signed.
 
-In any case, the result is encoded as described in [@!RFC7519] (here for Example 1):
+Below is a non-normative example of a representation of SD-JWT-R for SD-JWT
+given in Example 1 using JWS Compact Serialization:
 
 {#example-simple-release-encoded}
 ```
@@ -549,7 +549,8 @@ FrwkLUKTM56_6KW3pG7Ucuv8VnpHXHIka0SGRaOh8x6v5-rCQJl_IbM8wb7CSHvQ
 ```
 
 (Line breaks for presentation only.)
-## Presentation Format
+
+## Sending SD-JWT and SD-JWT-R during Presentation
 
 The SD-JWT and the SD-JWT-R can be combined into one document using period character `.` as a separator (here for Example 1):
 
