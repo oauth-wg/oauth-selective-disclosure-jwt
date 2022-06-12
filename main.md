@@ -635,13 +635,19 @@ If any step fails, the input is not valid and processing MUST be aborted.
 
 # Security Considerations {#security_considerations}
 
-For the security of this scheme, the following properties are required of the hash function:
+## Entropy of the salt
 
-- Given a claim value, a salt, and the resulting hash, it is hard to find a second salt value so that HASH(salt | claim_value) equals the hash.
+The security model relies on the fact that the salt is not
+learned or guessed by the attacker. It is vitally important to
+adhere to this principle. As such, the salt has to be
+created in such a manner that it is cryptographically random, long enough and has
+high entropy that it is not practical for the attacker to guess.
 
-Add: The Salts must be random/long enough so that the attacker cannot brute force them.
+## Choice of a hash function
 
-Note: No need for the wallet-generated hashes? to prevent issuer-verifier collusion
+For the security of this scheme, the hash function is required to have the following property.
+Given a claim value, a salt, and the resulting hash, it is hard to find a second salt value 
+so that HASH(salt | claim_value) equals the hash.
 
 ## Holder Binding {#holder_binding_security}
 
