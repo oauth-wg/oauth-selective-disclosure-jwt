@@ -230,6 +230,16 @@ reference).
 Note that it is at the issuer's discretion whether to turn the payload of SD-JWT
 into a 'flat' or 'structured' `_sd` SD-JWT object.
 
+#### Hash Function
+
+* `hash_alg`: REQUIRED. Hash algorithm used by the Issuer to generate hashes 
+of the salted claim values. Hash algorithm identifier MUST be a value
+from the "Hash Name String" column in the IANA "Named Information
+Hash Algorithm" registry [IANA.Hash.Algorithms]. SD-JWTs
+with hash algorithm identifiers not found in this registry are not
+considered valid and applications will need to detect and handle this
+error, should it occur.
+
 #### Holder Public Key
 
 If the issuer wants to enable holder binding, it includes a public key
