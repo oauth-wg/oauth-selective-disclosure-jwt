@@ -109,6 +109,9 @@ if "--replace" in sys.argv:
     replacements = {
         "example-simple-sd-jwt-claims": dumps(FULL_USER_CLAIMS, indent=EXAMPLE_INDENT),
         "example-simple-sd-jwt-payload": dumps(sd_jwt_payload, indent=EXAMPLE_INDENT),
+        "example-simple-sd-jwt-encoded": fill(
+            serialized_sd_jwt, width=EXAMPLE_MAX_WIDTH, break_on_hyphens=False
+        ),
         "example-simple-combined-sd-jwt-svc": fill(
             combined_sd_jwt_svc, width=EXAMPLE_MAX_WIDTH, break_on_hyphens=False
         ),
