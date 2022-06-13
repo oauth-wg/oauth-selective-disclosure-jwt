@@ -230,6 +230,16 @@ reference).
 Note that it is at the issuer's discretion whether to turn the payload of SD-JWT
 into a 'flat' or 'structured' `_sd` SD-JWT object.
 
+#### Hash Function
+
+* `hash_alg`: REQUIRED. Hash algorithm used by the Issuer to generate hashes 
+of the salted claim values. Hash algorithm identifier MUST be a value
+from the "Hash Name String" column in the IANA "Named Information
+Hash Algorithm" registry [IANA.Hash.Algorithms]. SD-JWTs
+with hash algorithm identifiers not found in this registry are not
+considered valid and applications will need to detect and handle this
+error, should it occur.
+
 #### Holder Public Key
 
 If the issuer wants to enable holder binding, it includes a public key
@@ -599,6 +609,7 @@ trusting/using any of the contents of an SD-JWT:
     3. Validate the issuer of the SD-JWT and that the signing key belongs to this issuer.
     4. Check that the SD-JWT is valid using `nbf`, `iat`, and `exp` claims, if provided in the SD-JWT.
     5. Check that the claim `_sd` is present in the SD-JWT.
+    6. Check the `hash_alg` claim and MUST accept only when the hash_alg is understand and deemed secure.
  5. Validate the SD-JWT Release:
     1. If holder binding is required, validate the signature over the SD-JWT using the same steps as for the SD-JWT plus the following steps:
        1. Determine that the public key for the private key that used to sign the SD-JWT-R is bound to the SD-JWT, i.e., the SD-JWT either contains a reference to the public key or contains the public key itself.
@@ -607,12 +618,14 @@ trusting/using any of the contents of an SD-JWT:
        1. Ensure that the claim is present as well in `_sd` in the SD-JWT.
           If `_sd` is structured, the claim MUST be present at the same
           place within the structure.
-       2. Check that the base64url-encoded hash of the claim value in the SD-JWT-R
-          (which includes the salt and the actual claim value) matches
-          the hash provided in the SD-JWT.
-       3. Ensure that the claim value in the SD-JWT-R is a JSON-encoded
+       2. Compute the base64url-encoded hash of a claim revealed from the Holder
+          using the claim value and the salt included in the SD-JWT-R and 
+          the `hash_alg` in SD-JWT.
+       3. Compare the hah computed in the previous step with the hash of the same claim in SD-JWT. 
+          Accept the claim only when the two hashes match.
+       4. Ensure that the claim value in the SD-JWT-R is a JSON-encoded
           array of exactly two values.
-       4. Store the second of the two values. 
+       5. Store the second of the two values. 
     3. Once all necessary claims have been verified, their values can be
        validated and used according to the requirements of the application. It
        MUST be ensured that all claims required for the application have been
