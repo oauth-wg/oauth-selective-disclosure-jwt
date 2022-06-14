@@ -939,7 +939,15 @@ A SD-JWT-R for some of the claims:
 }
 ```
 
-## Example 4 - W3C VC
+## Example 4 - W3C Verifiable Credentials Data Model
+
+This example issustrates how this artifacts defined in this specification 
+can be represented using W3C Verifiable Credentials Data Model as defined in [@!VC-DATA-MODEL].
+
+Below is a non-normative example of an SD-JWT represented as a verifiable credential 
+encoded as JSON and signed as JWS compliant to [@!VC-DATA-MODEL].
+
+SVC sent alongside this SD-JWT as a JWT-VC is same as in Example 1.
 
 ```json
 {
@@ -949,7 +957,6 @@ A SD-JWT-R for some of the claims:
   "nbf": 1541493724,
   "iat": 1541493724,
   "exp": 1573029723,
-  "nonce": "660!6345FSer",
   "vc": {
     "@context": [
       "https://www.w3.org/2018/credentials/v1",
@@ -961,13 +968,40 @@ A SD-JWT-R for some of the claims:
     ]
   },
   "_sd": {
-    "given_name": "LbnhkOr5oS7KjeUrxezAu8TG0CpWz0jSixy6tffuo04",
+    "given_name": "fUMdn88aaoyKTHrvZd6AuLmPraGhPJ0zF5r_JhxCVZs",
     "family_name": "9h5vgv6TpFV6GmnPtugiMLl5tHetHeb5X_2cKHjN7cw",
-    "birthdate": "fPZ92dtYMCN2Nb-2ac_zSH19p4yakUXrZl_-wSgaazA"
+    "birthdate": "fvLCnDm3r4VSYcBF3pIlXP4ulEoHuHOfG_YmFZEuxpQ"
   }
 }
 ```
 
+Below is a non-normative example of an SD-JWT-R represented as a verifiable presentation
+encoded as JSON and signed as a JWS compliant to [@!VC-DATA-MODEL].
+
+```json
+{
+  "iss": "did:example:ebfeb1f712ebc6f1c276e12ec21",
+  "aud": "s6BhdRkqt3",
+  "nbf": 1560415047,
+  "iat": 1560415047,
+  "exp": 1573029723,
+  "nonce": "660!6345FSer",
+  "vp": {
+    "@context": [
+      "https://www.w3.org/2018/credentials/v1"
+    ],
+    "type": [
+      "VerifiablePresentation"
+    ],
+    "verifiableCredential": ["eyJhb...npyXw"]
+  },
+  "_sd": {
+    "given_name": "[\"6Ij7tM-a5iVPGboS5tmvVA\", \"John\"]",
+    "family_name": "[\"eI8ZWm9QnKPpNPeNenHdhQ\", \"Doe\"]",
+    "birthdate": "[\"5bPs1IquZNa0hkaFzzzZNw\", \"1940-01-01\"]"
+  }
+}
+```
 
 # Document History
 
