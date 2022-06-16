@@ -113,17 +113,30 @@ Section 2 of [@!RFC7515].
    control over the same private key during the issuance and presentation. SD-JWT signed by the issuer contains
    a public key or a reference to a public key that matches to the private key controlled by the holder.
 
-## issuer 
+## Issuer 
    An entity that creates SD-JWTs (2.1).
 
-## holder 
+## Holder 
    An entity that received SD-JWTs (2.1) from the issuer and has control over them.
 
-## verifier 
+## Verifier 
    An entity that requests, checks and extracts the claims from SSD-JWT-R (2.2)
 
 Note: discuss if we want to include Client, Authorization Server for the purpose of
 ensuring continuity and separating the entity from the actor.
+
+# Flow Diagram
+
+~~~ ascii-art
++------+                                                                     +----------+
+|        |                         +--------+                                |          |
+|        |                         |        |                                |          |
+| Issuer |--Issues SD-JWT and SVC->| Holder |--Presents SD-JWT-R and SD-JWT->| Verifier |
+|        |                         |        |                                |          |
+|        |                         +--------+                                |          |
++--------+                                                                   +----------+
+~~~
+Figure: SD-JWT Issuance and Presentation Flow
 
 # Concepts
 
