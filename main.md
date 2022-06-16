@@ -995,7 +995,7 @@ encoded as JSON and signed as a JWS compliant to [@!VC-DATA-MODEL].
     ],
     "verifiableCredential": ["eyJhb...npyXw"]
   },
-  "_sd": {
+  "sd_release": {
     "given_name": "[\"6Ij7tM-a5iVPGboS5tmvVA\", \"John\"]",
     "family_name": "[\"eI8ZWm9QnKPpNPeNenHdhQ\", \"Doe\"]",
     "birthdate": "[\"5bPs1IquZNa0hkaFzzzZNw\", \"1940-01-01\"]"
