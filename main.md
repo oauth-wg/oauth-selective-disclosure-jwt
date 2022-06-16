@@ -211,11 +211,11 @@ and the salt values).
 
 An SD-JWT is a JWT that is optionally signed using the issuer's private key.
 
-### Payload
+### SD-JWT Claims
 
 The payload of an SD-JWT can consist of the following claims.
 
-#### Selectively Disclosable Claims
+#### `_sd` (Selectively Disclosable) Claim
 
 An SD-JWT MUST include hashes of the salted claim values that are included by the issuer
 under the property `_sd`. 
@@ -231,18 +231,6 @@ JSON-encoding an ordered array containing the salt and the claim value, e.g.:
 the precise JSON encoding can vary, and therefore, the JSON encodings MUST be
 sent to the holder along with the SD-JWT, as described below. 
 
-The `_sd` object can be a 'flat' object, directly containing all claim names and
-hashed claim values without any deeper structure. The `_sd` object can also be a
-'structured' object, where some claims and their respective hashes are contained
-in places deeper in the structure. It is up to the issuer to decide how to
-structure the representation such that it is suitable for the use case. Examples
-1 and 2 below show this using the [@OIDC] `address` claim, a structured claim.
-Appendix 1 shows a more complex example using claims from eKYC (todo:
-reference).
-
-Note that it is at the issuer's discretion whether to turn the payload of SD-JWT
-into a 'flat' or 'structured' `_sd` SD-JWT object.
-
 #### Hash Function
 
 * `hash_alg`: REQUIRED. Hash algorithm used by the Issuer to generate hashes 
@@ -253,7 +241,7 @@ with hash algorithm identifiers not found in this registry are not
 considered valid and applications will need to detect and handle this
 error, should it occur.
 
-#### Holder Public Key
+#### Holder Public Key Claim
 
 If the issuer wants to enable holder binding, it includes a public key
 associated with the holder, or a reference thereto. 
@@ -267,15 +255,23 @@ Note: need to define how holder public key is included, right now examples are u
 
 #### Other Claims
 
-The SD-JWT payload MAY contain other claims and will typically contain other JWT claims, such as `iss`, `iat`, etc. 
+The payload of SD-JWT MAY contain other JWT claims, such as `iss`, `iat`, etc.
+as defined by the applications using SD-JWTs.
 
-### Example 1 - Flat SD-JWT
+### Flat and Structured `_sd` objects
 
-This example shows a simple SD-JWT containing user claims. The issuer here
-decided to use a completely flat structure, i.e., the `address` claim can only
-be disclosed in full.
+The `_sd` object can be a 'flat' object, directly containing all claim names and
+hashed claim values without any deeper structure. The `_sd` object can also be a
+'structured' object, where some claims and their respective hashes are contained
+in places deeper in the structure. it is at the issuer's discretion whether to use
+a 'flat' or 'structured' `_sd` SD-JWT object, and how to structure it such that
+it is suitable for the use case.
 
-In this example, these claims are the payload of the SD-JWT:
+Examples 1 is a non-normative example of an SD-JWT using a 'flat' `_sd` object
+and example 2 is a non-normative example of an SD-JWT using a 'structured' `_sd` object.
+The difference between the examples is how an `address` claim is disclosed.
+
+Both examples use a following object as a set of claims that the Issuer is issuing:
 
 {#example-simple-sd-jwt-claims}
 ```json
@@ -295,7 +291,13 @@ In this example, these claims are the payload of the SD-JWT:
 }
 ```
 
-The following shows the resulting SD-JWT payload:
+Appendix 1 shows a more complex example using claims from eKYC (todo:
+reference).
+
+### Example 1 - Flat SD-JWT
+
+The following is a non-normative example of the payload of an SD-JWT. The issuer 
+is using a flat structure, i.e. all of the claims the `address` claim can only be disclosed in full.
 
 {#example-simple-sd-jwt-payload}
 ```json
@@ -357,7 +359,7 @@ In this example, the issuer decided to create a structured object for the
 hashes. This allows for the release of individual members of the address claim
 separately.
 
-The user claims are as in Example 1 above. The resulting SD-JWT payload is as follows:
+The following is a non-normative example of the payload of an SD-JWT:
 
 {#example-simple_structured-sd-jwt-payload}
 ```json
@@ -395,7 +397,11 @@ calculation, and the salts. There MAY be other information the issuer needs to
 communicate to the holder, such as a private key if the issuer selected the
 holder key pair.
 
-### Payload
+### SVC Claims
+
+SVC can consist of the following claims.
+
+#### `_sd` (Selectively Disclosable) Claim
 
 A SD-JWT Salt/Value Container (SVC) is a JSON object containing at least the
 top-level property `_sd`. Its structure mirrors the one of `_sd` in
@@ -560,6 +566,7 @@ FrwkLUKTM56_6KW3pG7Ucuv8VnpHXHIka0SGRaOh8x6v5-rCQJl_IbM8wb7CSHvQ
 ```
 
 (Line breaks for presentation only.)
+
 ## Presentation Format
 
 The SD-JWT and the SD-JWT-R can be combined into one document using period character `.` as a separator (here for Example 1):
@@ -718,7 +725,7 @@ TBD
 
 In this example, a complex object such as those used for ekyc (todo reference) is used.
 
-These claims are the payload of the SD-JWT:
+In this example, the Issuer is using a following object as a set of claims to issue to the Holder:
 
 {#example-complex_structured-sd-jwt-claims}
 ```json
