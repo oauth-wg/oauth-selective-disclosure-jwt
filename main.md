@@ -205,7 +205,7 @@ The payload of an SD-JWT can consist of the following claims.
 #### Hashes of the Selectively Disclosable Claims
 
 An SD-JWT MUST include hashes of the salted claim values that are included by the issuer
-under the property `sd_hashes`. 
+under the property `sd_digests`. 
 
 The issuer MUST choose a unique salt value for each claim value. Each salt value
 MUST contain at least 128 bits of pseudorandom data, making it hard for an
@@ -218,8 +218,8 @@ JSON-encoding an ordered array containing the salt and the claim value, e.g.:
 the precise JSON encoding can vary, and therefore, the JSON encodings MUST be
 sent to the holder along with the SD-JWT, as described below. 
 
-The `sd_hashes` object can be a 'flat' object, directly containing all claim names and
-hashed claim values without any deeper structure. The `sd_hashes` object can also be a
+The `sd_digests` object can be a 'flat' object, directly containing all claim names and
+hashed claim values without any deeper structure. The `sd_digests` object can also be a
 'structured' object, where some claims and their respective hashes are contained
 in places deeper in the structure. It is up to the issuer to decide how to
 structure the representation such that it is suitable for the use case. Examples
@@ -228,7 +228,7 @@ Appendix 1 shows a more complex example using claims from eKYC (todo:
 reference).
 
 Note that it is at the issuer's discretion whether to turn the payload of SD-JWT
-into a 'flat' or 'structured' `sd_hashes` SD-JWT object.
+into a 'flat' or 'structured' `sd_digests` SD-JWT object.
 
 #### Holder Public Key
 
@@ -285,7 +285,7 @@ The following shows the resulting SD-JWT payload:
   },
   "iat": 1516239022,
   "exp": 1516247022,
-  "sd_hashes": {
+  "sd_digests": {
     "sub": "LbnhkOr5oS7KjeUrxezAu8TG0CpWz0jSixy6tffuo04",
     "given_name": "fUMdn88aaoyKTHrvZd6AuLmPraGhPJ0zF5r_JhxCVZs",
     "family_name": "9h5vgv6TpFV6GmnPtugiMLl5tHetHeb5X_2cKHjN7cw",
@@ -359,7 +359,7 @@ The user claims are as in Example 1 above. The resulting SD-JWT payload is as fo
   },
   "iat": 1516239022,
   "exp": 1516247022,
-  "sd_hashes": {
+  "sd_digests": {
     "sub": "LbnhkOr5oS7KjeUrxezAu8TG0CpWz0jSixy6tffuo04",
     "given_name": "fUMdn88aaoyKTHrvZd6AuLmPraGhPJ0zF5r_JhxCVZs",
     "family_name": "9h5vgv6TpFV6GmnPtugiMLl5tHetHeb5X_2cKHjN7cw",
@@ -387,7 +387,7 @@ holder key pair.
 ### Payload
 
 A SD-JWT Salt/Value Container (SVC) is a JSON object containing at least the
-top-level property `sd_container`. Its structure mirrors the one of `sd_hashes` in
+top-level property `sd_release`. Its structure mirrors the one of `sd_digests` in
 the SD-JWT, but the values are the inputs to the hash calculations the issuer
 used, as strings.
 
@@ -401,7 +401,7 @@ The SVC for Example 1 is as follows:
 {#example-simple-svc-payload}
 ```json
 {
-  "sd_container": {
+  "sd_release": {
     "sub": "[\"eluV5Og3gSNII8EYnsxA_A\", \"6c5c0a49-b589-431d-bae7-219122a9ec2c\"]",
     "given_name": "[\"6Ij7tM-a5iVPGboS5tmvVA\", \"John\"]",
     "family_name": "[\"eI8ZWm9QnKPpNPeNenHdhQ\", \"Doe\"]",
@@ -420,7 +420,7 @@ The SVC for Example 2 is as follows:
 {#example-simple_structured-svc-payload}
 ```json
 {
-  "sd_container": {
+  "sd_release": {
     "sub": "[\"eluV5Og3gSNII8EYnsxA_A\", \"6c5c0a49-b589-431d-bae7-219122a9ec2c\"]",
     "given_name": "[\"6Ij7tM-a5iVPGboS5tmvVA\", \"John\"]",
     "family_name": "[\"eI8ZWm9QnKPpNPeNenHdhQ\", \"Doe\"]",
@@ -493,7 +493,7 @@ The following shows the contents of an SD-JWT-R for Example 1:
 {
   "nonce": "2GLC42sKQveCfGfryNRN9w",
   "aud": "https://example.com/verifier",
-  "_sd_container": {
+  "sd_release": {
     "given_name": "[\"6Ij7tM-a5iVPGboS5tmvVA\", \"John\"]",
     "family_name": "[\"eI8ZWm9QnKPpNPeNenHdhQ\", \"Doe\"]",
     "address": "[\"Pc33JM2LchcU_lHggv_ufQ\", {\"street_address\": \"123 Main St\", \"locality\": \"Anytown\", \"region\": \"Anystate\", \"country\": \"US\"}]"
@@ -502,16 +502,16 @@ The following shows the contents of an SD-JWT-R for Example 1:
 ```
 
 For each claim, an array of the salt and the claim value is contained in the
-`_sd_container` object. 
+`sd_release` object. 
 
-Again, the SD-JWT-R follows the same structure as the `sd_hashes` in the SD-JWT. For Example 2, a SD-JWT-R limiting `address` to `region` and `country` only could look as follows:
+Again, the SD-JWT-R follows the same structure as the `sd_digests` in the SD-JWT. For Example 2, a SD-JWT-R limiting `address` to `region` and `country` only could look as follows:
 
 {#example-simple_structured-release-payload}
 ```json
 {
   "nonce": "2GLC42sKQveCfGfryNRN9w",
   "aud": "https://example.com/verifier",
-  "_sd_container": {
+  "sd_release": {
     "given_name": "[\"6Ij7tM-a5iVPGboS5tmvVA\", \"John\"]",
     "family_name": "[\"eI8ZWm9QnKPpNPeNenHdhQ\", \"Doe\"]",
     "birthdate": "[\"5bPs1IquZNa0hkaFzzzZNw\", \"1940-01-01\"]",
@@ -610,14 +610,14 @@ trusting/using any of the contents of an SD-JWT:
     2. Validate the signature over the SD-JWT. 
     3. Validate the issuer of the SD-JWT and that the signing key belongs to this issuer.
     4. Check that the SD-JWT is valid using `nbf`, `iat`, and `exp` claims, if provided in the SD-JWT.
-    5. Check that the claim `sd_hashes` is present in the SD-JWT.
+    5. Check that the claim `sd_digests` is present in the SD-JWT.
  5. Validate the SD-JWT Release:
     1. If holder binding is required, validate the signature over the SD-JWT using the same steps as for the SD-JWT plus the following steps:
        1. Determine that the public key for the private key that used to sign the SD-JWT-R is bound to the SD-JWT, i.e., the SD-JWT either contains a reference to the public key or contains the public key itself.
        2. Determine that the SD-JWT-R is bound to the current transaction and was created for this verifier (replay protection). This is usually achieved by a `nonce` and `aud` field within the SD-JWT Release.
     2. For each claim in the SD-JWT Release:
-       1. Ensure that the claim is present as well in `_sd_container` in the SD-JWT.
-          If `_sd_container` is structured, the claim MUST be present at the same
+       1. Ensure that the claim is present as well in `sd_release` in the SD-JWT.
+          If `sd_release` is structured, the claim MUST be present at the same
           place within the structure.
        2. Check that the base64url-encoded hash of the claim value in the SD-JWT-R
           (which includes the salt and the actual claim value) matches
@@ -764,7 +764,7 @@ The following shows the resulting SD-JWT payload:
   },
   "iat": 1516239022,
   "exp": 1516247022,
-  "sd_hashes": {
+  "sd_digests": {
     "verified_claims": {
       "verification": {
         "trust_framework": "UI-SRNlQFy-YEFE46yyHKqc64jmM65q8ma9cq2V_erY",
@@ -908,7 +908,7 @@ A SD-JWT-R for some of the claims:
 {
   "nonce": "2GLC42sKQveCfGfryNRN9w",
   "aud": "https://example.com/verifier",
-  "_sd_container": {
+  "sd_release": {
     "verified_claims": {
       "verification": {
         "trust_framework": "[\"eluV5Og3gSNII8EYnsxA_A\", \"de_aml\"]",
@@ -953,7 +953,7 @@ A SD-JWT-R for some of the claims:
       "UniversityDegreeCredential"
     ]
   },
-  "sd_hashes": {
+  "sd_digests": {
     "given_name": "LbnhkOr5oS7KjeUrxezAu8TG0CpWz0jSixy6tffuo04",
     "family_name": "9h5vgv6TpFV6GmnPtugiMLl5tHetHeb5X_2cKHjN7cw",
     "birthdate": "fPZ92dtYMCN2Nb-2ac_zSH19p4yakUXrZl_-wSgaazA"

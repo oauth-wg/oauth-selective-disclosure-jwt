@@ -11,7 +11,8 @@ from jwcrypto.jwk import JWK
 
 from .walk_by_structure import walk_by_structure
 
-SD_CLAIMS_KEY = "_sd"
+SD_DIGESTS_KEY = "sd_digests"
+SD_CLAIMS_KEY = "sd_release"
 
 # For the purpose of generating static examples for the spec, this command line
 # switch disables randomness. Using this in production is highly insecure!
@@ -99,7 +100,7 @@ def create_sd_jwt_and_svc(user_claims, issuer, issuer_key, claim_structure={}):
         "sub_jwk": issuer_key.export_public(as_dict=True),
         "iat": 1516239022,
         "exp": 1516247022,
-        SD_CLAIMS_KEY: walk_by_structure(salts, user_claims, _create_sd_claim_entry),
+        SD_DIGESTS_KEY: walk_by_structure(salts, user_claims, _create_sd_claim_entry),
     }
 
     # Sign the SD-JWT using the issuer's key
@@ -159,10 +160,10 @@ def _verify_sd_jwt(sd_jwt, issuer_public_key, expected_issuer):
 
     # TODO: Check exp/nbf/iat
 
-    if SD_CLAIMS_KEY not in sd_jwt_payload:
+    if SD_DIGESTS_KEY not in sd_jwt_payload:
         raise ValueError("No selective disclosure claims in SD-JWT")
 
-    return sd_jwt_payload[SD_CLAIMS_KEY]
+    return sd_jwt_payload[SD_DIGESTS_KEY]
 
 
 def _verify_sd_jwt_release(
