@@ -521,9 +521,9 @@ that discloses only `region` and `country` of an `address` property:
 }
 ```
 
-When the holder sends SD-JWT-R to the Verifier, it MUST be a base64url-encoded 
-JWS as described in Section 5.1 of [@!RFC7515]. JWS Compact Serialization and 
-JWS JSON Serialization can be used.
+When the holder sends SD-JWT-R to the Verifier, it MUST be a JWS 
+represented as the JWS Compact Serialization as described in 
+Section 7.1 of [@!RFC7515].
 
 If holder binding is desired, the SD-JWT-R is signed by the holder. If no
 holder binding is to be used, the `none` algorithm is used, i.e., the document
