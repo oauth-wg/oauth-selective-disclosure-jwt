@@ -50,9 +50,9 @@ receiving an unencrypted JWT can read all of the claims and likewise,
 anyone with the decryption key receiving an encrypted JWT
 can also read all of the claims.
 
-This document describes a format for JWTs that support selective
+This document describes a format for a signed JWT that support selective
 disclosure (SD-JWT), enabling sharing only a subset of the claims included in 
-the original JWT instead of releasing all the claims to every verifier. 
+the original signed JWT instead of releasing all the claims to every verifier. 
 During issuance, an SD-JWT is sent from the issuer to the holder alongside an SD-JWT Salt/Value Container (SVC),
 a JSON object that contains the mapping between raw claim values contained in the SD-JWT 
 and the salts for each claim value. 
@@ -98,7 +98,7 @@ Section 2 of [@!RFC7515].
 # Terms and Definitions
 
 ## Selective Disclosure JWT (SD-JWT) 
-   A JWT [@!RFC7515] created by the issuer, which can be signed as a JWS [@!RFC7515], 
+   A JWT [@!RFC7515] created by the issuer, which is signed as a JWS [@!RFC7515], 
    that supports selective disclosure as defined in this document.
 
 ## SD-JWT Salt/Value Container (SVC) 
@@ -146,7 +146,8 @@ conceptual level.
 ## Creating an SD-JWT
 
 An SD-JWT, at its core, is a digitally signed document containing hashes over the claim values with unique salts,
-optionally the holder's public key or a reference thereto and other metadata. It is digitally signed using the issuer's private key.
+optionally the holder's public key or a reference thereto and other metadata. 
+It MUST be digitally signed using the issuer's private key.
 
 ```
 SD-JWT-DOC = (METADATA, HOLDER-PUBLIC-KEY?, HS-CLAIMS)
@@ -166,7 +167,7 @@ The SD-JWT is sent from the issuer to the holder, together with the mapping of t
 
 ## Creating an SD-JWT Release
 
-To disclose to a verifier a subset of the SD-JWT claim values, a holder creates a JWS such as the
+To disclose to a verifier a subset of the SD-JWT claim values, a holder creates a JWT such as the
 following:
 
 ```
@@ -174,8 +175,7 @@ RELEASE-DOC = (METADATA, SALTS)
 RELEASE = RELEASE-DOC | SIG(RELEASE-DOC, HOLDER-PRIV-KEY)?
 ```
 
-Note that the signature over `RELEASE-DOC` is optional and required if, and only
-if, holder binding is desired.
+Note that the signature over `RELEASE-DOC` is optional and required only if holder binding is desired.
 
 `SALTS` is usually a simple object with claim names mapped to values and salts:
 
@@ -209,7 +209,7 @@ and the salt values).
 
 ## SD-JWT Format
 
-An SD-JWT is a JWT that is optionally signed using the issuer's private key.
+An SD-JWT is a JWT that MUST be signed using the issuer's private key.
 
 ### SD-JWT Claims
 
@@ -243,7 +243,7 @@ error, should it occur.
 
 #### Holder Public Key Claim
 
-If the issuer wants to enable holder binding, it includes a public key
+If the issuer wants to enable holder binding, it MAY include a public key
 associated with the holder, or a reference thereto. 
 
 It is out of the scope of this document to describe how the holder key pair is
@@ -684,7 +684,7 @@ and revealing the claim names does not provide any additional information.
 ## Unlinkability 
 
 It is also important to note that this format enables selective disclosure of claims, but
-in itself it does not achieve unlinkability of the subject of a JWS document.
+in itself it does not achieve unlinkability of the subject of an SD-SWT.
 
 
 # Acknowledgements {#Acknowledgements}
