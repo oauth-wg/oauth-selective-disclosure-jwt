@@ -53,14 +53,22 @@ can also read all of the claims.
 This document describes a format for JWTs that support selective
 disclosure (SD-JWT), enabling sharing only a subset of the claims included in 
 the original JWT instead of releasing all the claims to every verifier. 
-This document also defines a format for so-called SD-JWT Releases (SD-JWT-R).
+During issuance, an SD-JWT is sent from the issuer to the holder alongside an SD-JWT Salt/Value Container (SVC),
+a JSON object that contains the mapping between raw claim values contained in the SD-JWT 
+and the salts for each claim value. 
+
+This document also defines a format for SD-JWT Releases (SD-JWT-R),
+which conveys a subset of the claim values of an SD-JWT that the holder 
+is selectively releasing to the verifier. During presentation, SD-JWT-R and SD-JWT are both sent
+to the verifier from the holder. To verify claim values received in SD-JWT-R, 
+verifier uses salts in SD-JWT-R to compute the hashes of the claim values and compare them to the hashes in SD-JWT.
 
 One of the common use cases of a signed JWT is representing a user's identity created by an issuer.
 In such a use case, there has been no privacy-related concerns with existing JOSE signature schemes,
 because when a signed JWT is one-time use, it contains only JWT claims that the user has consented
 in real time to release to the verifier. However, when a signed JWT is intended to be multi-use, 
 the ability to selectively disclose a subset of the claims depending on the verifier becomes crucial
-to ensure minimum disclosure and prevent verifier from obtaining claims irrelevant for the use case at hand. 
+to ensure minimum disclosure and prevent verifier from obtaining claims irrelevant for the transaction at hand.
 
 One example of such a multi-use JWT is a verifiable credential, or a
 tamper-evident credential with a cryptographically verifiable authorship that
@@ -73,7 +81,7 @@ well.
 
 Note: so far agreed to define holder binding (user's public key contained inside an SD-JWT) as an option.
 It is not mandatory since holder binding is use case specific and orthogonal to the general mechanism of 
-selective disclosure we are trying to define here.
+selective disclosure defined here.
 
 
 ## Conventions and Terminology
@@ -95,7 +103,7 @@ Section 2 of [@!RFC7515].
 
 ## SD-JWT Salt/Value Container (SVC) 
    A JSON object created by the issuer that contains mapping between 
-   raw claim values that contained in the SD-JWT and the salts for each claim value.
+   raw claim values contained in the SD-JWT and the salts for each claim value.
 
 ## SD-JWT Release (SD-JWT-R) 
    A JWT created by the holder that contains a subset of the claim values of an SD-JWT in a verifiable way. 
@@ -112,7 +120,7 @@ Section 2 of [@!RFC7515].
    An entity that received SD-JWTs (2.1) from the issuer and has control over them.
 
 ## Verifier 
-   An entity that entity that requests, checks and extracts the claims from SSD-JWT-R (2.2)
+   An entity that requests, checks and extracts the claims from SSD-JWT-R (2.2)
 
 Note: discuss if we want to include Client, Authorization Server for the purpose of
 ensuring continuity and separating the entity from the actor.
@@ -182,7 +190,7 @@ Just as `HS-CLAIMS`, `SALTS` can be more complex as well.
 The SD-JWT-R is sent together with the SD-JWT from the holder to the
 verifier.
 
-## Verifying an SD-JWWT Release
+## Verifying an SD-JWT Release
 
 A verifier checks that 
 
@@ -215,7 +223,7 @@ under the property `_sd`.
 The issuer MUST choose a unique salt value for each claim value. Each salt value
 MUST contain at least 128 bits of pseudorandom data, making it hard for an
 attacker to guess. The salt value MUST then be encoded as a string. It is
-RECOMMENDED to base64url encode at least 16 pseudorandom bytes.
+RECOMMENDED to base64url-encode at least 16 pseudorandom bytes.
 
 The issuer MUST build the hashes by hashing over a string that is formed by
 JSON-encoding an ordered array containing the salt and the claim value, e.g.:
@@ -234,6 +242,16 @@ reference).
 
 Note that it is at the issuer's discretion whether to turn the payload of SD-JWT
 into a 'flat' or 'structured' `_sd` SD-JWT object.
+
+#### Hash Function
+
+* `hash_alg`: REQUIRED. Hash algorithm used by the Issuer to generate hashes 
+of the salted claim values. Hash algorithm identifier MUST be a value
+from the "Hash Name String" column in the IANA "Named Information
+Hash Algorithm" registry [IANA.Hash.Algorithms]. SD-JWTs
+with hash algorithm identifiers not found in this registry are not
+considered valid and applications will need to detect and handle this
+error, should it occur.
 
 #### Holder Public Key
 
@@ -307,14 +325,14 @@ The SD-JWT is then signed by the issuer to create a document like the following:
 {#example-simple-sd-jwt-encoded}
 ```
 eyJhbGciOiAiUlMyNTYifQ.eyJpc3MiOiAiaHR0cHM6Ly9leGFtcGxlLmNvbS9pc3N1ZXI
-iLCAic3ViX2p3ayI6IHsia3R5IjogIlJTQSIsICJuIjogInRYMnhjV3ZqQWtMbDV1TjVnY
-VREZURWRnBldk9jTmpqUE0tcnlDV0tqYlVvaDVueURFYUZwcXZ2M1dEZUd3V2VCak1YZWQ
-0aHRvdlItM2ZKeVc1UzBkX3RVV2NkRW1TR2VxcmNVbmI4QzcxVlVfcENRWUQ2TUg5WWpSQ
-210M1JqbnVGZUhaaUp5bWJnVDhoN2NWTDBpdlRYN3FMOWZ0TUNONUpSb05ZRjVETUdCWGx
-2Q2dMQ0dJYmRLNy10a1B5aGRlR2dzRkphX2FNNGZ0NVNSU3NxenJQNzZ2eXY1NVZ4UE1tR
-G9HSnJBSm4zOEhsa3FvSUVYaGpqTWgwRUFDdUM4SFhNOVh3b3Z0T3FlWEFPNEdnSndLRXd
-XZ3lwYTVRd3FSZUhvUUljVVlxWVRKQ3dpa3J6a2h2dElscUlka1NSS1VTWC1BOWdqdFFfR
-S1neXQ5M05HUSIsICJlIjogIkFRQUIifSwgImlhdCI6IDE1MTYyMzkwMjIsICJleHAiOiA
+iLCAic3ViX2p3ayI6IHsia3R5IjogIlJTQSIsICJuIjogIjZHd1RUd2NqVnlPdEt0dUdmN
+2Z0NVBBVTBHaUR0bkQ0REdjbXRWckZRSFZodHgwNS1ESmlnZm1SLTNUZXR3LU9kNXN1NFR
+OWll6amgzdFE2QmoxSFJkT2ZHbVg5RTlZYlB3NGdvS2dfZDBrTTRvWk1VZDY0dG1sQVVGd
+FgwTllhWW5Sa2pRdG9rMkNKQlVxMjJ3dWNLOTNKVjExVDM4UFlEQVRxYks5VUZxTU0zdnU
+wN1hYbGFRR1hQMXZoNGlYMDR3NGRVNGQyeFRBQ1hob193S0tjVjg1eXZJR3JPMWVHd3duU
+2lsVGlxUWJhazMxX1ZuSEdOVlZaRWs0ZG5WTzdlT2M2TVZaYS1xUGtWajc3R2FJTE81M1R
+NcTY5VnAxZmFKb0dGSGpoYV9VZTVEOHpmcGlBRXgyQXNBZW90SXdOazJRVDBVWmtlWm9LM
+jNRLXM0cDFkUSIsICJlIjogIkFRQUIifSwgImlhdCI6IDE1MTYyMzkwMjIsICJleHAiOiA
 xNTE2MjQ3MDIyLCAiX3NkIjogeyJzdWIiOiAiTGJuaGtPcjVvUzdLamVVcnhlekF1OFRHM
 ENwV3owalNpeHk2dGZmdW8wNCIsICJnaXZlbl9uYW1lIjogImZVTWRuODhhYW95S1RIcnZ
 aZDZBdUxtUHJhR2hQSjB6RjVyX0poeENWWnMiLCAiZmFtaWx5X25hbWUiOiAiOWg1dmd2N
@@ -323,24 +341,12 @@ lRwRlY2R21uUHR1Z2lNTGw1dEhldEhlYjVYXzJjS0hqTjdjdyIsICJlbWFpbCI6ICJmUFo
 WJlciI6ICJRZFNmZnpOenpkMG42ME1zU211aUtqNlk2RW5rMmItQlMtS3RFZVBkZTVNIiw
 gImFkZHJlc3MiOiAiSkZ1OTlOVVhQcTU1ZjZERkJaMjJyTWt4TU5IYXlDcmZQRzBGRHNxY
 nlEcyIsICJiaXJ0aGRhdGUiOiAiSWExVGM2X1hudDVDSmMyTHRLY3U2V3ZxcjQyZ2xCR0d
-jakdPeWU4WmYzVSJ9fQ.IS4oc1f3XuxhNSnecIXbpT-3ZVwgbjpMSfpyqhFUEE2T_ij3uW
-Bqb1_zn0nLvIvXDs8rn6l10ilHwCgpMaPmYAE8_nfZtNwvfAFnwBFjzdrJOJWhZ5dp6UJe
-VULOZvjsCw1EpyRbBgIyZ9QiLzRJ_5JS1C1AelDDyXxI3FZYYc3-1MqQMnaXR7AWOct698
-t-LsookAA_LxXx-RYKG1wygEp9e9BzgCxQugsdGejMPTZyfaQewGrJalQm8bYvSXKcJ1DG
--T297kFEV_VTaeLCOoan1DS1DtaH48Q13yUUmdwil8jqjpVgf_lU0A7dO4AYmojgvdng-c
-MLWSp5YtL_Gw.ewogICAgIl9zZCI6IHsKICAgICAgICAic3ViIjogIltcImVsdVY1T2czZ
-1NOSUk4RVluc3hBX0FcIiwgXCI2YzVjMGE0OS1iNTg5LTQzMWQtYmFlNy0yMTkxMjJhOWV
-jMmNcIl0iLAogICAgICAgICJnaXZlbl9uYW1lIjogIltcIjZJajd0TS1hNWlWUEdib1M1d
-G12VkFcIiwgXCJKb2huXCJdIiwKICAgICAgICAiZmFtaWx5X25hbWUiOiAiW1wiZUk4Wld
-tOVFuS1BwTlBlTmVuSGRoUVwiLCBcIkRvZVwiXSIsCiAgICAgICAgImVtYWlsIjogIltcI
-lFnX082NHpxQXhlNDEyYTEwOGlyb0FcIiwgXCJqb2huZG9lQGV4YW1wbGUuY29tXCJdIiw
-KICAgICAgICAicGhvbmVfbnVtYmVyIjogIltcIkFKeC0wOTVWUHJwVHRONFFNT3FST0FcI
-iwgXCIrMS0yMDItNTU1LTAxMDFcIl0iLAogICAgICAgICJhZGRyZXNzIjogIltcIlBjMzN
-KTTJMY2hjVV9sSGdndl91ZlFcIiwge1wic3RyZWV0X2FkZHJlc3NcIjogXCIxMjMgTWFpb
-iBTdFwiLCBcImxvY2FsaXR5XCI6IFwiQW55dG93blwiLCBcInJlZ2lvblwiOiBcIkFueXN
-0YXRlXCIsIFwiY291bnRyeVwiOiBcIlVTXCJ9XSIsCiAgICAgICAgImJpcnRoZGF0ZSI6I
-CJbXCJHMDJOU3JRZmpGWFE3SW8wOXN5YWpBXCIsIFwiMTk0MC0wMS0wMVwiXSIKICAgIH0
-KfQ
+jakdPeWU4WmYzVSJ9fQ.rJmWAVghpour5wvdqw8xwdpSEEDMwGJKX1UZ-4mLxYUFv2qCJJ
+gQrwtXNccxHpR86F3_51zT9v2TffwZcuU3q4xi-YdyUrVtB6PHHo8F11qanGtnhxqAcFMM
+XXQRb7iO_P2Vr7j0Ad8yMcxLituyVLxwjJ0T1s3X-PTomH_zb2wsNsSgrltpjNdoVDHE9k
+K8uOWmvx8VMXlaxks74gWjFQoBpnySrlo6PDy2V8zGnj7qc93Qo2Ei01rLYua2jMZJQlRE
+ZEp1mI25WYGuz4lJMMjq_SsysLr_r1qGCk1YU12yVz9-xtgL7zVz7KEUY-8TjQEsr_UTbg
+vcSUDyd3Smgg
 ```
 
 (Line breaks for presentation only.)
@@ -359,7 +365,7 @@ The user claims are as in Example 1 above. The resulting SD-JWT payload is as fo
   "iss": "https://example.com/issuer",
   "sub_jwk": {
     "kty": "RSA",
-    "n": "lg9Nie6g-pgoUrDK5Kyni4xZd5ILVnGtBcWx-caAq2FLmtGNIHD9qEzlcLjJCNhrGAUNYOBlkpS0ySJPBlGkdI45WfJLNQVIHwpp1IzgWXPuyM9NvHiPuxef-C6sPZsQeUXTP9YavMBPn0bMt6xi92PGk8KYT9ljajxd8ySbKN8VHsOi34Pdnxy4oe6pOOaoS5vCIFVENXmrTu8pSqWQUsXNju6qsS0wwG6ClifNqp-a6HkOz1UJjdn1w2NVT34LNqzIBuWxFvMQzdXfetgpICwRvj29fJvh9Z6E--b48CHNqppaAzH5DmhMY5DacTxsKwJJmUwo9J6AXrnCwouTdQ",
+    "n": "rbfsjjInLHWjKnReCPJ4HZcUPyhwnQN2hr3QYZhRlYej3RpE37ChHDkJ91zJULbwj6Lp3KotsC_9DWPaKTaBTltNZC26yEDk2TNBGR_eNOlAJXpdJAqWEO3PXQmWYJ1mAqYUwh_J4B0vUUF53jEyHS0xwyRRXko-yxu8k0JxhO_Gi4jC0drw2tOLMdAk4jWMTxV21XG8bLgD0-5yCrEg3ZxkRani_I9-dmmTpL3Qm9loU-1X9wsIcTqvyerljwVrae3MA8utPLag3NrMkZcD85MNxNsGWM37WSHbVhzx7ffWaLWB7WcNlU2ac1KH0doVwOA8Lyzn169-19bN81jbeQ",
     "e": "AQAB"
   },
   "iat": 1516239022,
@@ -386,7 +392,7 @@ The user claims are as in Example 1 above. The resulting SD-JWT payload is as fo
 Besides the SD-JWT itself, the holder needs to learn the raw claim values that
 are contained in the SD-JWT, along with the precise input to the hash
 calculation, and the salts. There MAY be other information the issuer needs to
-communicate to the holder, such as a private key key if the issuer selected the
+communicate to the holder, such as a private key if the issuer selected the
 holder key pair.
 
 ### Payload
@@ -445,7 +451,7 @@ The SVC for Example 2 is as follows:
 ## SD-JWT and SVC Combined Format
 
 For transporting the SVC together with the SD-JWT from the issuer to the holder,
-the SVC is base64ur-encoded and appended to the SD-JWT using `.` as the
+the SVC is base64url-encoded and appended to the SD-JWT using a period character `.` as the
 separator. For Example 1, the combined format looks as follows:
 
 {#example-simple-combined-sd-jwt-svc}
@@ -556,7 +562,7 @@ FrwkLUKTM56_6KW3pG7Ucuv8VnpHXHIka0SGRaOh8x6v5-rCQJl_IbM8wb7CSHvQ
 (Line breaks for presentation only.)
 ## Presentation Format
 
-The SD-JWT and the SD-JWT-R can be combined into one document using `.` as a separator (here for Example 1):
+The SD-JWT and the SD-JWT-R can be combined into one document using period character `.` as a separator (here for Example 1):
 
 {#example-simple-combined-sd-jwt-sd-jwt-release}
 ```
@@ -608,7 +614,7 @@ Verifiers MUST go through (at least) the following steps before
 trusting/using any of the contents of an SD-JWT:
 
  1. Determine if holder binding is to be checked for the SD-JWT. Refer to (#holder_binding_security) for details.
- 2. Check that the presentation consists of six `.`-separated elements; if holder binding is not required, the last element can be empty.
+ 2. Check that the presentation consists of six period-separated (`.`) elements; if holder binding is not required, the last element can be empty.
  3. Separate the SD-JWT from the SD-JWT Release.
  4. Validate the SD-JWT:
     1. Ensure that a signing algorithm was used that was deemed secure for the application. Refer to [@RFC8725], Sections 3.1 and 3.2 for details.
@@ -616,6 +622,7 @@ trusting/using any of the contents of an SD-JWT:
     3. Validate the issuer of the SD-JWT and that the signing key belongs to this issuer.
     4. Check that the SD-JWT is valid using `nbf`, `iat`, and `exp` claims, if provided in the SD-JWT.
     5. Check that the claim `_sd` is present in the SD-JWT.
+    6. Check the `hash_alg` claim and MUST accept only when the hash_alg is understand and deemed secure.
  5. Validate the SD-JWT Release:
     1. If holder binding is required, validate the signature over the SD-JWT using the same steps as for the SD-JWT plus the following steps:
        1. Determine that the public key for the private key that used to sign the SD-JWT-R is bound to the SD-JWT, i.e., the SD-JWT either contains a reference to the public key or contains the public key itself.
@@ -624,12 +631,14 @@ trusting/using any of the contents of an SD-JWT:
        1. Ensure that the claim is present as well in `_sd` in the SD-JWT.
           If `_sd` is structured, the claim MUST be present at the same
           place within the structure.
-       2. Check that the base64url-encoded hash of the claim value in the SD-JWT-R
-          (which includes the salt and the actual claim value) matches
-          the hash provided in the SD-JWT.
-       3. Ensure that the claim value in the SD-JWT-R is a JSON-encoded
+       2. Compute the base64url-encoded hash of a claim revealed from the Holder
+          using the claim value and the salt included in the SD-JWT-R and 
+          the `hash_alg` in SD-JWT.
+       3. Compare the hah computed in the previous step with the hash of the same claim in SD-JWT. 
+          Accept the claim only when the two hashes match.
+       4. Ensure that the claim value in the SD-JWT-R is a JSON-encoded
           array of exactly two values.
-       4. Store the second of the two values. 
+       5. Store the second of the two values. 
     3. Once all necessary claims have been verified, their values can be
        validated and used according to the requirements of the application. It
        MUST be ensured that all claims required for the application have been
@@ -640,13 +649,19 @@ If any step fails, the input is not valid and processing MUST be aborted.
 
 # Security Considerations {#security_considerations}
 
-For the security of this scheme, the following properties are required of the hash function:
+## Entropy of the salt
 
-- Given a claim value, a salt, and the resulting hash, it is hard to find a second salt value so that HASH(salt | claim_value) equals the hash.
+The security model relies on the fact that the salt is not
+learned or guessed by the attacker. It is vitally important to
+adhere to this principle. As such, the salt has to be
+created in such a manner that it is cryptographically random, long enough and has
+high entropy that it is not practical for the attacker to guess.
 
-Add: The Salts must be random/long enough so that the attacker cannot brute force them.
+## Choice of a hash function
 
-Note: No need for the wallet-generated hashes? to prevent issuer-verifier collusion
+For the security of this scheme, the hash function is required to have the following property.
+Given a claim value, a salt, and the resulting hash, it is hard to find a second salt value 
+so that HASH(salt | claim_value) equals the hash.
 
 ## Holder Binding {#holder_binding_security}
 
@@ -764,7 +779,7 @@ The following shows the resulting SD-JWT payload:
   "iss": "https://example.com/issuer",
   "sub_jwk": {
     "kty": "RSA",
-    "n": "wlcpuJjcdshL2NqMsT2HMJiqyPFEPQZ2FMXKD_r3an-09_k-cdoJifVodKUZ8QBiU6w_JUYh3lScrJ-TSEueS-mGU9Kkn_9q5xzXbnTEy2P6N_4b7NNaeJe25DnklEPUJU5tRcjODtHDO7MIgsIPK-NtCW6x7YB2x6_3H2t6EfRtDjZe-adelOA09UQ8x9d8DBOR2rxaFm3_QAlAfHvD7lLlewAiGvjMTd614FkA8CEqlnSWl4gD2Pd3A5J3X_2UDK0IqIb8ed8_b2yToRIwqzU1g1p2VEZBJ0XGSbeSY9e-EN_ScrVT5YBwoIWovB0AeSsMj5K8ekedak9PwEfMvQ",
+    "n": "yrve_zRMXEgysfSP2PDmi1sSRW6vtyHbub_y7i827GIRP51IP0T8vPoI0ms9kDmeUYLpser-YWvcxTJFH9vAzeFmsd1xeEBZCJhlhzrx1zfmOKnnX59x5EGxccalnUTyDidCbU57jPtGGPkzXkLD21Zb1TOdMu4vJOO8kEw8tqRJYE5fXWvri-pWVq9DOmC4fJDeDGfX3VZPp0jlkgOx5pmjQszAKbIKPw__-VX49HOCn73727K6K86lNJ6SCh4RSGmwNT6s1S1zF-HJQzErRW-qlZ-1nn7rb-rQGZrCqtUx83-ewsixYQgwUJQFAEdy89SsFCVjkZj0Wfr4Wmc-JQ",
     "e": "AQAB"
   },
   "iat": 1516239022,
@@ -817,14 +832,14 @@ The SD-JWT is then signed by the issuer to create a document like the following:
 {#example-complex_structured-sd-jwt-encoded}
 ```
 eyJhbGciOiAiUlMyNTYifQ.eyJpc3MiOiAiaHR0cHM6Ly9leGFtcGxlLmNvbS9pc3N1ZXI
-iLCAic3ViX2p3ayI6IHsia3R5IjogIlJTQSIsICJuIjogIndsY3B1SmpjZHNoTDJOcU1zV
-DJITUppcXlQRkVQUVoyRk1YS0RfcjNhbi0wOV9rLWNkb0ppZlZvZEtVWjhRQmlVNndfSlV
-ZaDNsU2NySi1UU0V1ZVMtbUdVOUtrbl85cTV4elhiblRFeTJQNk5fNGI3Tk5hZUplMjVEb
-mtsRVBVSlU1dFJjak9EdEhETzdNSWdzSVBLLU50Q1c2eDdZQjJ4Nl8zSDJ0NkVmUnREalp
-lLWFkZWxPQTA5VVE4eDlkOERCT1IycnhhRm0zX1FBbEFmSHZEN2xMbGV3QWlHdmpNVGQ2M
-TRGa0E4Q0VxbG5TV2w0Z0QyUGQzQTVKM1hfMlVESzBJcUliOGVkOF9iMnlUb1JJd3F6VTF
-nMXAyVkVaQkowWEdTYmVTWTllLUVOX1NjclZUNVlCd29JV292QjBBZVNzTWo1Szhla2VkY
-Ws5UHdFZk12USIsICJlIjogIkFRQUIifSwgImlhdCI6IDE1MTYyMzkwMjIsICJleHAiOiA
+iLCAic3ViX2p3ayI6IHsia3R5IjogIlJTQSIsICJuIjogInlydmVfelJNWEVneXNmU1AyU
+ERtaTFzU1JXNnZ0eUhidWJfeTdpODI3R0lSUDUxSVAwVDh2UG9JMG1zOWtEbWVVWUxwc2V
+yLVlXdmN4VEpGSDl2QXplRm1zZDF4ZUVCWkNKaGxoenJ4MXpmbU9Lbm5YNTl4NUVHeGNjY
+WxuVVR5RGlkQ2JVNTdqUHRHR1BrelhrTEQyMVpiMVRPZE11NHZKT084a0V3OHRxUkpZRTV
+mWFd2cmktcFdWcTlET21DNGZKRGVER2ZYM1ZaUHAwamxrZ094NXBtalFzekFLYklLUHdfX
+y1WWDQ5SE9DbjczNzI3SzZLODZsTko2U0NoNFJTR213TlQ2czFTMXpGLUhKUXpFclJXLXF
+sWi0xbm43cmItclFHWnJDcXRVeDgzLWV3c2l4WVFnd1VKUUZBRWR5ODlTc0ZDVmprWmowV
+2ZyNFdtYy1KUSIsICJlIjogIkFRQUIifSwgImlhdCI6IDE1MTYyMzkwMjIsICJleHAiOiA
 xNTE2MjQ3MDIyLCAiX3NkIjogeyJ2ZXJpZmllZF9jbGFpbXMiOiB7InZlcmlmaWNhdGlvb
 iI6IHsidHJ1c3RfZnJhbWV3b3JrIjogIlVJLVNSTmxRRnktWUVGRTQ2eXlIS3FjNjRqbU0
 2NXE4bWE5Y3EyVl9lclkiLCAidGltZSI6ICJqSS1GWWx0ZXlkWHpzalJJclhCWnM5Zm9CU
@@ -852,12 +867,12 @@ yIsICJhZGRyZXNzIjogIjYzRXpQVjB5dlRwZU9nVjM0eUN3d2VDdk8tMnd4dHMyV3FiamF
 fU3V3UFEifX0sICJiaXJ0aF9taWRkbGVfbmFtZSI6ICJ2TTY4STZYbnJWbHl0MUx4Szl4e
 GdGeWNzanR3MnZMZEdwTmdrM0U4UVE0IiwgInNhbHV0YXRpb24iOiAiaVRoZkN1MnVsTG9
 lNWk2Z0NFcS0tWTZSLWd4SEh0SXVrWGI5cW5makg1ayIsICJtc2lzZG4iOiAieFVwVS1he
-kJZZFhlSmlkYzhZdzVNWHRmUHo0XzRrQXJKaGZsWGN4emt6cyJ9fQ.PSEqS4wRCkLuFfGT
-gNjw63kewpAxNWu1kgo_tat17ElyetqMO49w3PL1D4Z67AeVbOMT3DhG7WiJB9UoKVs3XJ
-yJuZ0DBRkCQ8iqaIw3vyA-P_lkTw7EwSO-Klo0UHBUfHvvJhKOeZ6jhSvZhtlD0yYxoS9e
-fxOHM2tUnpm7gaWQ6OqXiTTLGrnuA-1k99IL_ag5oJJym2JvlWt2R1S8tLvKrKZumrPi5R
-LYskZlEiZ_l4h_n7FHva9S66R_tvZNcXRQqyXGKdp66rzmfHzxoHHYBIUfgxBZ0re3zkHm
-JcgAgoPLaIpXm3cR-4dmMpDHgntMOWP8s0hnBsYStArM4Q.ewogICAgIl9zZCI6IHsKICA
+kJZZFhlSmlkYzhZdzVNWHRmUHo0XzRrQXJKaGZsWGN4emt6cyJ9fQ.yYuxPD0yLHfRO9I-
+8imvotMip4Asmi04ZQS6N7sxjoRtUB5yiKjd8b0AG9Kkrx8iaRnc_SRs5AymIyTAr_PBmx
+or839Kit3_EROJ2AbEE8MalFeNRK8pAqMde1yPvfwea60FBAMSujhFcqqDhD5iWTR_p8ei
+AmKXQL3xTTHHR-EnX8Dr6QiwBSI0KTmCYyPpZ4cs59PweTiYAxSk0_TG1uMBug8YUnXSAB
+E5B_jPBCtcn0S3wVykPrzvViyIYZLvCqTGeaNOeuJ5SK8IhkGy9bwmC8-HckNfk9QDDzQR
+XZYX6id8LOst71mvC_KZfN3iYeoBXO0x-1TjCC2CqquB1w.ewogICAgIl9zZCI6IHsKICA
 gICAgICAidmVyaWZpZWRfY2xhaW1zIjogewogICAgICAgICAgICAidmVyaWZpY2F0aW9uI
 jogewogICAgICAgICAgICAgICAgInRydXN0X2ZyYW1ld29yayI6ICJbXCJlbHVWNU9nM2d
 TTklJOEVZbnN4QV9BXCIsIFwiZGVfYW1sXCJdIiwKICAgICAgICAgICAgICAgICJ0aW1lI
@@ -937,7 +952,15 @@ A SD-JWT-R for some of the claims:
 }
 ```
 
-## Example 4 - W3C VC
+## Example 4 - W3C Verifiable Credentials Data Model
+
+This example issustrates how this artifacts defined in this specification 
+can be represented using W3C Verifiable Credentials Data Model as defined in [@!VC-DATA-MODEL].
+
+Below is a non-normative example of an SD-JWT represented as a verifiable credential 
+encoded as JSON and signed as JWS compliant to [@!VC-DATA-MODEL].
+
+SVC sent alongside this SD-JWT as a JWT-VC is same as in Example 1.
 
 ```json
 {
@@ -947,7 +970,6 @@ A SD-JWT-R for some of the claims:
   "nbf": 1541493724,
   "iat": 1541493724,
   "exp": 1573029723,
-  "nonce": "660!6345FSer",
   "vc": {
     "@context": [
       "https://www.w3.org/2018/credentials/v1",
@@ -959,13 +981,40 @@ A SD-JWT-R for some of the claims:
     ]
   },
   "_sd": {
-    "given_name": "LbnhkOr5oS7KjeUrxezAu8TG0CpWz0jSixy6tffuo04",
+    "given_name": "fUMdn88aaoyKTHrvZd6AuLmPraGhPJ0zF5r_JhxCVZs",
     "family_name": "9h5vgv6TpFV6GmnPtugiMLl5tHetHeb5X_2cKHjN7cw",
-    "birthdate": "fPZ92dtYMCN2Nb-2ac_zSH19p4yakUXrZl_-wSgaazA"
+    "birthdate": "fvLCnDm3r4VSYcBF3pIlXP4ulEoHuHOfG_YmFZEuxpQ"
   }
 }
 ```
 
+Below is a non-normative example of an SD-JWT-R represented as a verifiable presentation
+encoded as JSON and signed as a JWS compliant to [@!VC-DATA-MODEL].
+
+```json
+{
+  "iss": "did:example:ebfeb1f712ebc6f1c276e12ec21",
+  "aud": "s6BhdRkqt3",
+  "nbf": 1560415047,
+  "iat": 1560415047,
+  "exp": 1573029723,
+  "nonce": "660!6345FSer",
+  "vp": {
+    "@context": [
+      "https://www.w3.org/2018/credentials/v1"
+    ],
+    "type": [
+      "VerifiablePresentation"
+    ],
+    "verifiableCredential": ["eyJhb...npyXw"]
+  },
+  "_sd": {
+    "given_name": "[\"6Ij7tM-a5iVPGboS5tmvVA\", \"John\"]",
+    "family_name": "[\"eI8ZWm9QnKPpNPeNenHdhQ\", \"Doe\"]",
+    "birthdate": "[\"5bPs1IquZNa0hkaFzzzZNw\", \"1940-01-01\"]"
+  }
+}
+```
 
 # Document History
 
