@@ -8,6 +8,8 @@ from secrets import compare_digest
 
 from jwcrypto.jws import JWS
 from jwcrypto.jwk import JWK
+from jwcrypto.jwe import JWE
+from jwcrypto.common import json_encode
 
 from .walk_by_structure import walk_by_structure
 
@@ -58,7 +60,6 @@ else:
 
 ISSUER_PUBLIC_KEY = JWK.from_json(ISSUER_KEY.export_public())
 
-
 # The salts will be selected by the server, of course.
 def generate_salt():
     return (
@@ -66,6 +67,11 @@ def generate_salt():
         .decode("ascii")
         .strip("=")
     )
+
+
+# use jwcrypto to generate JWE symmetric key
+def generate_symmetric_key():
+    return JWK.generate(kty="oct", size=128, kid="")
 
 
 def hash_raw(raw):
@@ -81,17 +87,25 @@ def hash_claim(salt, value, return_raw=False):
     return hash_raw(raw.encode("utf-8"))
 
 
-def create_sd_jwt_and_svc(user_claims, issuer, issuer_key, holder_key, claim_structure={}):
+def create_sd_jwt_and_svc(
+    user_claims, issuer, issuer_key, holder_key, claim_structure={}
+):
     """
     Create the SD-JWT
     """
 
-    salts = walk_by_structure(
-        claim_structure, user_claims, lambda _, __, ___=None: generate_salt()
+    sd_keys = walk_by_structure(
+        claim_structure, user_claims, lambda _, __, ___=None: generate_symmetric_key()
     )
 
-    def _create_sd_claim_entry(_, value, salt):
-        return hash_claim(salt, value)
+    def _create_sd_claim_entry(claim_name, claim_value, sd_key):
+        print(claim_name, sd_key, claim_value)
+        token = JWE(
+            json_encode(claim_value),
+            json_encode({"alg": "A128KW", "enc": "A128CBC-HS256"}),
+        )
+        token.add_recipient(sd_key)
+        return token.serialize(compact=True)
 
     # Create the JWS payload
     sd_jwt_payload = {
@@ -99,7 +113,7 @@ def create_sd_jwt_and_svc(user_claims, issuer, issuer_key, holder_key, claim_str
         "sub_jwk": holder_key.export_public(as_dict=True),
         "iat": 1516239022,
         "exp": 1516247022,
-        SD_CLAIMS_KEY: walk_by_structure(salts, user_claims, _create_sd_claim_entry),
+        SD_CLAIMS_KEY: walk_by_structure(sd_keys, user_claims, _create_sd_claim_entry),
     }
 
     # Sign the SD-JWT using the issuer's key
@@ -107,12 +121,11 @@ def create_sd_jwt_and_svc(user_claims, issuer, issuer_key, holder_key, claim_str
     sd_jwt.add_signature(issuer_key, alg="RS256", protected=dumps({"alg": "RS256"}))
     serialized_sd_jwt = sd_jwt.serialize(compact=True)
 
-    def _create_svc_entry(_, value, salt):
-        return hash_claim(salt, value, return_raw=True)
-
     # Create the SVC
     svc_payload = {
-        SD_CLAIMS_KEY: walk_by_structure(salts, user_claims, _create_svc_entry),
+        SD_CLAIMS_KEY: walk_by_structure(
+            claim_structure, sd_keys, lambda _, sd_key: sd_key.k
+        ),
         # "sub_jwk_private": issuer_key.export_private(as_dict=True),
     }
     serialized_svc = (
@@ -170,7 +183,11 @@ def _verify_sd_jwt(sd_jwt, issuer_public_key, expected_issuer):
 
 
 def _verify_sd_jwt_release(
-    sd_jwt_release, holder_public_key=None, expected_aud=None, expected_nonce=None, holder_public_key_payload = None
+    sd_jwt_release,
+    holder_public_key=None,
+    expected_aud=None,
+    expected_nonce=None,
+    holder_public_key_payload=None,
 ):
     parsed_input_sd_jwt_release = JWS()
     parsed_input_sd_jwt_release.deserialize(sd_jwt_release)
@@ -197,21 +214,10 @@ def _verify_sd_jwt_release(
 
 
 def _check_claim(claim_name, released_value, sd_jwt_claim_value):
-    # the hash of the release claim value must match the claim value in the sd_jwt
-    hashed_release_value = hash_raw(released_value.encode("utf-8"))
-    if not compare_digest(hashed_release_value, sd_jwt_claim_value):
-        raise ValueError(
-            "Claim release value does not match the claim value in the SD-JWT"
-        )
-
-    decoded = loads(released_value)
-    if not isinstance(decoded, list):
-        raise ValueError("Claim release value is not a list")
-
-    if len(decoded) != 2:
-        raise ValueError("Claim release value is not of length 2")
-
-    return decoded[1]
+    token = JWE()
+    token.deserialize(sd_jwt_claim_value)
+    token.decrypt(JWK(kty="oct", k=released_value))
+    return loads(token.payload)
 
 
 def verify(
@@ -233,12 +239,18 @@ def verify(
 
     # Verify the SD-JWT
     input_sd_jwt = ".".join(parts[:3])
-    sd_jwt_claims, holder_public_key_payload = _verify_sd_jwt(input_sd_jwt, issuer_public_key, expected_issuer)
+    sd_jwt_claims, holder_public_key_payload = _verify_sd_jwt(
+        input_sd_jwt, issuer_public_key, expected_issuer
+    )
 
     # Verify the SD-JWT-Release
     input_sd_jwt_release = ".".join(parts[3:])
     sd_jwt_release_claims = _verify_sd_jwt_release(
-        input_sd_jwt_release, holder_public_key, expected_aud, expected_nonce, holder_public_key_payload
+        input_sd_jwt_release,
+        holder_public_key,
+        expected_aud,
+        expected_nonce,
+        holder_public_key_payload,
     )
 
     return walk_by_structure(sd_jwt_claims, sd_jwt_release_claims, _check_claim)

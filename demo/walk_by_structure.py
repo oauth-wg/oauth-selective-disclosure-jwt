@@ -1,4 +1,5 @@
 import json
+from jwcrypto.jwk import JWK
 
 """
 This helper function allows traversing a nested dictionary using a given
@@ -12,7 +13,7 @@ def walk_by_structure(structure, obj, fn):
     out = {}
     for key, value in obj.items():
         if key in structure:
-            if isinstance(structure[key], dict):
+            if isinstance(structure[key], dict) and not isinstance(structure[key], JWK):
                 out[key] = walk_by_structure(structure[key], value, fn)
             elif isinstance(structure[key], list):
                 out[key] = list(
