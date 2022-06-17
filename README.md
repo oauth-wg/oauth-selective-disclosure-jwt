@@ -7,7 +7,7 @@ Written in markdown for the [mmark processor](https://github.com/mmarkdown/mmark
 
 ## Updating Examples
 
-All examples in the document are created from [actual running code](demo.py). To run this code, install jwcrypto library, e.g., like so:
+All examples in the document are created from [actual running code](demo/simple.py). To run this code, install jwcrypto library, e.g., like so:
 ```
 pip3 install jwcrypto
 ```
@@ -24,7 +24,7 @@ python3 -m demo.simple
 
 To update the examples in [main.md](main.md), use the provided script:
 ```
-./update-all-example.sh
+./update-all-examples.sh
 ```
 
 It calls the demos with the switch `--replace` to replace the example code in
