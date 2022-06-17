@@ -12,6 +12,9 @@ from jwcrypto.jwk import JWK
 from .walk_by_structure import walk_by_structure
 
 SD_CLAIMS_KEY = "_sd"
+HASH_ALG_KEY = "hash_alg"
+
+HASH_ALG = {"name": "sha-256", "fn": sha256}
 
 # For the purpose of generating static examples for the spec, this command line
 # switch disables randomness. Using this in production is highly insecure!
@@ -70,7 +73,7 @@ def generate_salt():
 
 def hash_raw(raw):
     # Calculate the SHA 256 hash and output it base64 encoded
-    return urlsafe_b64encode(sha256(raw).digest()).decode("ascii").strip("=")
+    return urlsafe_b64encode(HASH_ALG['fn'](raw).digest()).decode("ascii").strip("=")
 
 
 def hash_claim(salt, value, return_raw=False):
@@ -100,6 +103,7 @@ def create_sd_jwt_and_svc(user_claims, issuer, issuer_key, holder_key, claim_str
         "iat": 1516239022,
         "exp": 1516247022,
         SD_CLAIMS_KEY: walk_by_structure(salts, user_claims, _create_sd_claim_entry),
+        HASH_ALG_KEY: HASH_ALG["name"],
     }
 
     # Sign the SD-JWT using the issuer's key
@@ -158,6 +162,12 @@ def _verify_sd_jwt(sd_jwt, issuer_public_key, expected_issuer):
         raise ValueError("Invalid issuer")
 
     # TODO: Check exp/nbf/iat
+
+    if HASH_ALG_KEY not in sd_jwt_payload:
+        raise ValueError("Missing hash algorithm")
+
+    if sd_jwt_payload[HASH_ALG_KEY] != HASH_ALG["name"]:
+        raise ValueError("Invalid hash algorithm")
 
     if SD_CLAIMS_KEY not in sd_jwt_payload:
         raise ValueError("No selective disclosure claims in SD-JWT")
