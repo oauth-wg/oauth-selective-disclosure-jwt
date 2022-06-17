@@ -1,0 +1,317 @@
+#!/usr/bin/env python3
+import argparse
+import json
+import logging
+import random
+import sys
+
+from jwcrypto.jwk import JWK
+from sd_jwt import __version__
+from sd_jwt.operations import (
+    create_sd_jwt_and_svc,
+    create_release_jwt,
+    generate_salt,
+    verify
+)
+from typing import Union
+
+logger = logging.getLogger(__name__)
+
+
+def print_repr(values: Union[str,list], nlines=2):
+    value = '\n'.join(values) if isinstance(values, (list, tuple)) else values
+    _nlines = '\n' * nlines if nlines else ""
+    print(f"{value}{_nlines}")
+
+
+def get_jwk(no_randomness: bool = False):
+    """
+    returns static of random JWK
+    """
+    random.seed(0)
+    if no_randomness:
+        ISSUER_KEY = JWK.from_json(json.dumps(ISSUER_KEY_DICT))
+        HOLDER_KEY = JWK.from_json(json.dumps(HOLDER_KEY_DICT))
+        logger.warning("Using fixed randomness for demo purposes")
+    else:
+        ISSUER_KEY = JWK.generate(key_size=DEFAULT_KEY_SIZE, kty=DEFAULT_KTY)
+        HOLDER_KEY = JWK.generate(key_size=DEFAULT_KEY_SIZE, kty=DEFAULT_KTY)
+    
+    ISSUER_PUBLIC_KEY = JWK.from_json(ISSUER_KEY.export_public())
+
+    return dict(
+        ISSUER_KEY = ISSUER_KEY,
+        HOLDER_KEY = HOLDER_KEY,
+        ISSUER_PUBLIC_KEY = ISSUER_PUBLIC_KEY
+    )
+
+
+parser = argparse.ArgumentParser(
+    description=f"{__file__} demo.",
+    epilog=f"{__file__}",
+    formatter_class=argparse.RawTextHelpFormatter
+)
+parser.add_argument(
+    '-t', '--type', required=False,
+    choices=(
+        'simple', 
+        'structured',
+        'complex',
+    ),
+    default='structured',
+    help="Debug level, see python logging; defaults to INFO if omitted"
+)
+parser.add_argument(
+    '-d', '--debug', required=False,
+    choices=(
+        'CRITICAL', 
+        'ERROR',
+        'WARNING', 
+        'INFO', 
+        'DEBUG'
+    ),
+    default='INFO',
+    help="Debug level, see python logging; defaults to INFO if omitted"
+)
+parser.add_argument(
+    '-nr', '--no-randomness', required=False,
+    action="store_true",
+    default=False,
+    help=(
+        "For the purpose of generating static examples for the spec, this command line "
+        "switch disables randomness. Using this in production is highly insecure!"
+    )
+)
+parser.add_argument(
+    '--nonce', required=False,
+    type=str,
+    default=generate_salt(),
+    help=(
+        "given example of a salt: 'XZOUco1u_gEPknxS78sWWg'"
+    )
+)
+parser.add_argument(
+    '--iat', required=False,
+    type=int,
+    help=("issued at, UTC Timestamp")
+)
+parser.add_argument(
+    '--exp', required=False,
+    type=int,
+    help=("expire at, UTC Timestamp")
+)
+parser.add_argument(
+    '--settings-path', required=False,
+    type=str,
+    help=(
+        "path/to/settings.py"
+        ". This path/to requires a __init__.py file."
+    )
+)
+parser.add_argument(
+    '--indent', required=False,
+    type=int,
+    default=4,
+    help=("json output indentation level")
+)
+parser.add_argument(
+    '--replace-examples-in', required=False,
+    type=str,
+    help=(
+        "path/to/main.md"
+        " - replaces all the examples in the specs"
+    )
+)
+parser.add_argument(
+    '-v', '--version', required=False,
+    action="store_true",
+    help="Print version and exit"
+)
+
+_args = parser.parse_args()
+
+if _args.version:
+    sys.exit(f'{__version__}')
+
+# load settings
+if _args.settings_path:
+    sys.path.append(_args.settings_path)
+    from settings import *
+else:
+    from sd_jwt.demo_settings import *
+
+print("# Creating the SD-JWT")
+
+# TThey may came from a custom python settings file :-)
+_JWKS = get_jwk(_args.no_randomness)
+ISSUER_KEY = _JWKS["ISSUER_KEY"]
+HOLDER_KEY = _JWKS["HOLDER_KEY"]
+ISSUER_PUBLIC_KEY = _JWKS["ISSUER_PUBLIC_KEY"]
+#
+
+if _args.type == 'simple':
+    SD_JWT_SCG_ARGS = (SIMPLE_USER_CLAIMS, ISSUER, ISSUER_KEY, HOLDER_KEY)
+    DISCLOSED_CLAIMS = SIMPLE_DISCLOSED_CLAIMS
+
+elif _args.type == 'structured':
+    SD_JWT_SCG_ARGS = (
+        SIMPLE_USER_CLAIMS, ISSUER, ISSUER_KEY, HOLDER_KEY, STRUCTURED_CLAIMS_STRUCTURE
+    )
+    DISCLOSED_CLAIMS = STRUCTURED_DISCLOSED_CLAIMS
+
+elif _args.type == 'complex':
+    SD_JWT_SCG_ARGS = (
+        COMPLEX_USER_CLAIMS, ISSUER, ISSUER_KEY, HOLDER_KEY, COMPLEX_CLAIMS_STRUCTURE
+    )
+    DISCLOSED_CLAIMS = COMPLEX_DISCLOSED_CLAIMS
+
+else:
+    raise NotImplementedError(_args.type)
+
+
+print_repr(
+    ("User claims", json.dumps(SD_JWT_SCG_ARGS[0], indent=_args.indent))
+)
+
+sd_jwt_payload, serialized_sd_jwt, svc_payload, serialized_svc = create_sd_jwt_and_svc(
+    *SD_JWT_SCG_ARGS, iat = _args.iat, exp = _args.exp
+)
+
+print_repr(("Payload of the SD-JWT:", json.dumps(sd_jwt_payload, indent=_args.indent)))
+print_repr(("The serialized SD-JWT:", serialized_sd_jwt))
+print_repr(("Payload of the SD-JWT Salt/Value Container (SVC):", json.dumps(svc_payload, indent=_args.indent)))
+print_repr(("The serialized SD-JWT Salt/Value Container (SVC):", serialized_svc))
+combined_sd_jwt_svc = f"{serialized_sd_jwt}{serialized_svc}"
+
+#####
+print("# Creating the SD-JWT-Release")
+sd_jwt_release_payload, serialized_sd_jwt_release = create_release_jwt(
+    _args.nonce, ISSUER, DISCLOSED_CLAIMS, serialized_svc, HOLDER_KEY
+)
+
+print_repr(
+    (
+     "Payload of the SD-JWT-Release:",
+     json.dumps(sd_jwt_release_payload, indent=_args.indent)
+    )
+)
+print_repr(("The serialized SD-JWT-Release:", serialized_sd_jwt_release))
+
+#######################################################################
+
+print("# Creating the Combined Presentation")
+# Combine both documents!
+combined_sd_jwt_sd_jwt_release = f"{serialized_sd_jwt}.{serialized_sd_jwt_release}"
+print_repr(("Combined Presentation:", combined_sd_jwt_sd_jwt_release))
+
+#######################################################################
+
+print("# Verification")
+# input: combined_sd_jwt_sd_jwt_release, holder_key, issuer_key
+vc = verify(
+    combined_sd_jwt_sd_jwt_release,
+    ISSUER_PUBLIC_KEY,
+    ISSUER,
+    HOLDER_KEY,
+    ISSUER,
+    _args.nonce,
+)
+
+print(f"Verified claims: {json.dumps(vc, indent=_args.indent)}")
+
+
+if _args.replace_examples_in:
+    
+    import re
+    from textwrap import fill
+    
+    EXAMPLE_INDENT = 2
+    EXAMPLE_MAX_WIDTH = 70
+    
+    #######################################################################
+    # Helper functions to replace the examples in the markdown file
+    #######################################################################
+    def replace_code_in_markdown_source(file_contents, placeholder_id, new_code):
+        """
+        the markdown contains code blocks that look like this:
+        {#placeholder-id}
+        ```
+        some-code
+        ```
+    
+        This function replaces the code block with the replacement
+        """
+    
+        def replacement(match):
+            return match.group(1) + new_code + "\n```"
+    
+        new_string, count = re.subn(
+            r"({#" + placeholder_id + r"}\n```[a-z-_]*\n)(?:[\s\S]*?)\n```",
+            replacement,
+            file_contents,
+            flags=re.MULTILINE,
+        )
+        if count == 0:
+            raise ValueError(f"Could not find placeholder with id {placeholder_id}")
+    
+        return new_string
+    
+    
+    def replace_all_in_main(replacements, ignore_missing_placeholders=False):
+        """
+        Replaces all the placeholders in the main.md file
+        """
+        with open(_args.replace_examples_in, "r") as f:
+            file_contents = f.read()
+    
+        # create backup
+        with open(f"{_args.replace_examples_in}.bak", "w") as f:
+            f.write(file_contents)
+    
+        for placeholder_id, new_code in replacements.items():
+            try:
+                file_contents = replace_code_in_markdown_source(
+                    file_contents, placeholder_id, new_code
+                )
+            except ValueError:
+                if not ignore_missing_placeholders:
+                    raise
+                else:
+                    print(f"Could not find placeholder with id {placeholder_id}")
+    
+        with open(_args.replace_examples_in, "w") as f:
+            f.write(file_contents)
+    
+    
+    print("Replacing the placeholders in the main.md file")
+    replacements = {
+        "example-simple_structured-sd-jwt-claims": json.dumps(
+            SD_JWT_SCG_ARGS[0], indent=EXAMPLE_INDENT
+        ),
+        "example-simple_structured-sd-jwt-payload": json.dumps(
+            sd_jwt_payload, indent=EXAMPLE_INDENT
+        ),
+        "example-simple_structured-sd-jwt-encoded": fill(
+            combined_sd_jwt_svc, width=EXAMPLE_MAX_WIDTH, break_on_hyphens=False
+        ),
+        "example-simple_structured-svc-payload": json.dumps(
+            svc_payload, indent=EXAMPLE_INDENT
+        ),
+        "example-simple_structured-combined-encoded": fill(
+            combined_sd_jwt_sd_jwt_release,
+            width=EXAMPLE_MAX_WIDTH,
+            break_on_hyphens=False,
+        ),
+        "example-simple_structured-release-payload": json.dumps(
+            sd_jwt_release_payload, indent=EXAMPLE_INDENT
+        ),
+        "example-simple_structured-release-encoded": fill(
+            serialized_sd_jwt_release, width=EXAMPLE_MAX_WIDTH, break_on_hyphens=False
+        ),
+        "example-simple_structured-release-combined": fill(
+            combined_sd_jwt_sd_jwt_release,
+            width=EXAMPLE_MAX_WIDTH,
+            break_on_hyphens=False,
+        ),
+    }
+    replace_all_in_main(replacements, ignore_missing_placeholders=True)

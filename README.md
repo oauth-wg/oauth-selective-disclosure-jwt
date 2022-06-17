@@ -5,29 +5,45 @@ documents that support selective disclosure of claim values.
 
 Written in markdown for the [mmark processor](https://github.com/mmarkdown/mmark).
 
-## Updating Examples
-
-All examples in the document are created from [actual running code](demo/simple.py). To run this code, install jwcrypto library, e.g., like so:
-```
-pip3 install jwcrypto
-```
+## Running SD-JWT PoC
 
 On Debian/Ubuntu systems, you can instead use the packaged version:
 ```
 sudo apt install python3-jwcrypto
 ```
 
+All examples in the document are created from [actual running code](sd_jwt/bin/sd_jwt). To run this code, install sd_jwt:
+```
+pip3 install .
+```
+
+You can read the inline documentation:
+````
+sd_jwt -h
+````
+
 You can then run the code (from the root of this repository):
 ```
-python3 -m demo.simple
+sd_jwt --type simple
+sd_jwt --type structured
+sd_jwt --type complex
 ```
+You can create your custom setting file creating a folder with a copy of 
+[sd_jwt/demo_settings.py](sd_jwt/demo_settings.py) renamed to `settings.py` 
+and a `__init__.py` in it. Then run `sd_jwt` specifying the custom settings path:
+
+````
+sd_jwt -t simple --settings-path ./custom_settings/
+````
+
+## Updating Examples
 
 To update the examples in [main.md](main.md), use the provided script:
 ```
 ./update-all-examples.sh
 ```
 
-It calls the demos with the switch `--replace` to replace the example code in
+It calls the demos with the switch `--replace-examples-in` to replace the example code in
 [main.md](main.md) and `--no-randomness` to ensure that the examples are always
 generated in the same way (this minimizes the changes that need to be tracked).
 

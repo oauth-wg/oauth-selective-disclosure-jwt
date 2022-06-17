@@ -1,22 +1,21 @@
 import json
 
-"""
-This helper function allows traversing a nested dictionary using a given
-structure as the guide. A function that is passed as an argument is called for
-every leaf node in obj that is not contained in the structure object. See
-examples below!
-"""
 
-
-def walk_by_structure(structure, obj, fn):
+def by_structure(structure, obj, fn):
+    """
+    This helper function allows traversing a nested dictionary using a given
+    structure as the guide. A function that is passed as an argument is called for
+    every leaf node in obj that is not contained in the structure object. See
+    examples below!
+    """
     out = {}
     for key, value in obj.items():
         if key in structure:
             if isinstance(structure[key], dict):
-                out[key] = walk_by_structure(structure[key], value, fn)
+                out[key] = by_structure(structure[key], value, fn)
             elif isinstance(structure[key], list):
                 out[key] = list(
-                    walk_by_structure(structure[key][0], item, fn) for item in value
+                    by_structure(structure[key][0], item, fn) for item in value
                 )
             else:
                 out[key] = fn(key, value, structure[key])
