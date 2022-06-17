@@ -81,7 +81,7 @@ def hash_claim(salt, value, return_raw=False):
     return hash_raw(raw.encode("utf-8"))
 
 
-def create_sd_jwt_and_svc(user_claims, issuer, issuer_key, claim_structure={}):
+def create_sd_jwt_and_svc(user_claims, issuer, issuer_key, holder_key, claim_structure={}):
     """
     Create the SD-JWT
     """
@@ -96,7 +96,7 @@ def create_sd_jwt_and_svc(user_claims, issuer, issuer_key, claim_structure={}):
     # Create the JWS payload
     sd_jwt_payload = {
         "iss": issuer,
-        "sub_jwk": issuer_key.export_public(as_dict=True),
+        "sub_jwk": holder_key.export_public(as_dict=True),
         "iat": 1516239022,
         "exp": 1516247022,
         SD_CLAIMS_KEY: walk_by_structure(salts, user_claims, _create_sd_claim_entry),
@@ -162,14 +162,23 @@ def _verify_sd_jwt(sd_jwt, issuer_public_key, expected_issuer):
     if SD_CLAIMS_KEY not in sd_jwt_payload:
         raise ValueError("No selective disclosure claims in SD-JWT")
 
-    return sd_jwt_payload[SD_CLAIMS_KEY]
+    holder_public_key_payload = None
+    if "sub_jwk" in sd_jwt_payload:
+        holder_public_key_payload = sd_jwt_payload["sub_jwk"]
+
+    return sd_jwt_payload[SD_CLAIMS_KEY], holder_public_key_payload
 
 
 def _verify_sd_jwt_release(
-    sd_jwt_release, holder_public_key=None, expected_aud=None, expected_nonce=None
+    sd_jwt_release, holder_public_key=None, expected_aud=None, expected_nonce=None, holder_public_key_payload = None
 ):
     parsed_input_sd_jwt_release = JWS()
     parsed_input_sd_jwt_release.deserialize(sd_jwt_release)
+    if holder_public_key and holder_public_key_payload:
+        pubkey = JWK.from_json(dumps(holder_public_key_payload))
+        # Because of weird bug of failed != between two public keys
+        if not holder_public_key == pubkey:
+            raise ValueError("sub_jwk is not matching with HOLDER Public Key.")
     if holder_public_key:
         parsed_input_sd_jwt_release.verify(holder_public_key, alg="RS256")
 
@@ -224,12 +233,12 @@ def verify(
 
     # Verify the SD-JWT
     input_sd_jwt = ".".join(parts[:3])
-    sd_jwt_claims = _verify_sd_jwt(input_sd_jwt, issuer_public_key, expected_issuer)
+    sd_jwt_claims, holder_public_key_payload = _verify_sd_jwt(input_sd_jwt, issuer_public_key, expected_issuer)
 
     # Verify the SD-JWT-Release
     input_sd_jwt_release = ".".join(parts[3:])
     sd_jwt_release_claims = _verify_sd_jwt_release(
-        input_sd_jwt_release, holder_public_key, expected_aud, expected_nonce
+        input_sd_jwt_release, holder_public_key, expected_aud, expected_nonce, holder_public_key_payload
     )
 
     return walk_by_structure(sd_jwt_claims, sd_jwt_release_claims, _check_claim)
