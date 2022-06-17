@@ -656,6 +656,12 @@ If any step fails, the input is not valid and processing MUST be aborted.
 
 # Security Considerations {#security_considerations}
 
+## Mandatory signing of the SD-JWT
+
+The SD-JWT is MUST be signed by the issuer to protect integrity of the issued claims. An attacker may modify or add claims if an SD-JWT is not signed (e.g. change the "email" attribute to take over the victim's account, or add an attribute indicating a fake academic qualification).
+
+The verifier MUST always check the SD_JWT signature to ensure that the SD-JWT has not been tampered with since its issuance. If the signature on the SD-JWT cannot be verified the SD-JWT MUST be rejected. 
+
 ## Entropy of the salt
 
 The security model relies on the fact that the salt is not
