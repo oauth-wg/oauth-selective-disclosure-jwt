@@ -682,11 +682,19 @@ adhere to this principle. As such, the salt has to be
 created in such a manner that it is cryptographically random, long enough and has
 high entropy that it is not practical for the attacker to guess.
 
+## Minimum length of the salt
+
+The length of the randomly-generated portion of the salt shall be at least 128 bits.
+ 
+
 ## Choice of a hash function
 
 For the security of this scheme, the hash function is required to have the following property.
 Given a claim value, a salt, and the resulting hash, it is hard to find a second salt value 
 so that HASH(salt | claim_value) equals the hash.
+
+Furthermore the hash algorithms MD2, MD4, MD5, RIPEMD-160, and SHA-1 
+revealed fundamental weaknesses and they should no longer be used.
 
 ## Holder Binding {#holder_binding_security}
 
