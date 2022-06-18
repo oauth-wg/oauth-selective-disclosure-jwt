@@ -79,9 +79,8 @@ While JWTs for claims describing natural persons are a common use case, the
 mechanisms defined in this document can be used for many other use cases as
 well.
 
-Note: so far agreed to define holder binding (user's public key contained inside an SD-JWT) as an option.
-It is not mandatory since holder binding is use case specific and orthogonal to the general mechanism of 
-selective disclosure defined here.
+This document also describes holder binding, or the concept of binding SD-JWT to a key material controlled 
+by the subject of SD-JWT, which is optional to implement.
 
 
 ## Conventions and Terminology
@@ -190,14 +189,27 @@ Just as `HS-CLAIMS`, `SALTS` can be more complex as well.
 The SD-JWT-R is sent together with the SD-JWT from the holder to the
 verifier.
 
+## Holder Binding
+
+Some use-cases MAY require holder binding. 
+
+Information about the key material controlled by the holder MUST be communicated in SD-JWT.
+How the public key is included in SD-JWT is out of scope of this document. It can be passed
+by value or by reference. Examples in this document use `sub_jwt` Claim to include raw public key
+by value in SD-JWT.
+
+Holder MUST sign SD-JWT-R using the private key associated with the public key included in SD-JWT.
+
+Verifier MUST verify that the signature on SD-JWT-R using the public key information in SD-JWT.
+
 ## Verifying an SD-JWT Release
 
 A verifier checks that 
 
- * if holder binding is desired, the `RELEASE` was signed by
- the private key belonging to the public key contained in `SD-JWT-DOC`.
  * for each claim in `RELEASE`, the hash `HASH(DISCLOSED-SALT | DISCLOSED-VALUE)` 
  matches the hash under the given claim name in the SD-JWT.
+ * if holder binding is desired, the `RELEASE` was signed by
+ the private key belonging to the public key contained in `SD-JWT-DOC`.
 
 The detailed algorithm is described below.
 
