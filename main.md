@@ -308,6 +308,7 @@ is using a flat structure, i.e. all of the claims the `address` claim can only b
     "n": "6GwTTwcjVyOtKtuGf7ft5PAU0GiDtnD4DGcmtVrFQHVhtx05-DJigfmR-3Tetw-Od5su4TNZYzjh3tQ6Bj1HRdOfGmX9E9YbPw4goKg_d0kM4oZMUd64tmlAUFtX0NYaYnRkjQtok2CJBUq22wucK93JV11T38PYDATqbK9UFqMM3vu07XXlaQGXP1vh4iX04w4dU4d2xTACXho_wKKcV85yvIGrO1eGwwnSilTiqQbak31_VnHGNVVZEk4dnVO7eOc6MVZa-qPkVj77GaILO53TMq69Vp1faJoGFHjha_Ue5D8zfpiAEx2AsAeotIwNk2QT0UZkeZoK23Q-s4p1dQ",
     "e": "AQAB"
   },
+  "hash_alg": "sha-256",
   "iat": 1516239022,
   "exp": 1516247022,
   "_sd": {
@@ -370,6 +371,7 @@ The following is a non-normative example of the payload of an SD-JWT:
     "n": "rbfsjjInLHWjKnReCPJ4HZcUPyhwnQN2hr3QYZhRlYej3RpE37ChHDkJ91zJULbwj6Lp3KotsC_9DWPaKTaBTltNZC26yEDk2TNBGR_eNOlAJXpdJAqWEO3PXQmWYJ1mAqYUwh_J4B0vUUF53jEyHS0xwyRRXko-yxu8k0JxhO_Gi4jC0drw2tOLMdAk4jWMTxV21XG8bLgD0-5yCrEg3ZxkRani_I9-dmmTpL3Qm9loU-1X9wsIcTqvyerljwVrae3MA8utPLag3NrMkZcD85MNxNsGWM37WSHbVhzx7ffWaLWB7WcNlU2ac1KH0doVwOA8Lyzn169-19bN81jbeQ",
     "e": "AQAB"
   },
+  "hash_alg": "sha-256",
   "iat": 1516239022,
   "exp": 1516247022,
   "_sd": {
@@ -807,6 +809,7 @@ The following shows the resulting SD-JWT payload:
     "n": "yrve_zRMXEgysfSP2PDmi1sSRW6vtyHbub_y7i827GIRP51IP0T8vPoI0ms9kDmeUYLpser-YWvcxTJFH9vAzeFmsd1xeEBZCJhlhzrx1zfmOKnnX59x5EGxccalnUTyDidCbU57jPtGGPkzXkLD21Zb1TOdMu4vJOO8kEw8tqRJYE5fXWvri-pWVq9DOmC4fJDeDGfX3VZPp0jlkgOx5pmjQszAKbIKPw__-VX49HOCn73727K6K86lNJ6SCh4RSGmwNT6s1S1zF-HJQzErRW-qlZ-1nn7rb-rQGZrCqtUx83-ewsixYQgwUJQFAEdy89SsFCVjkZj0Wfr4Wmc-JQ",
     "e": "AQAB"
   },
+  "hash_alg": "sha-256",
   "iat": 1516239022,
   "exp": 1516247022,
   "_sd": {
