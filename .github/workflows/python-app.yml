@@ -41,5 +41,6 @@ jobs:
     #    flake8 ./spid_cie_oidc --count --exit-zero --statistics --max-line-length 120
     - name: demo test
       run: |
-        python3 -m demo.simple
+        python3 -m demo.simple --replace
         python3 -m demo.simple_structured
+        python3 -m demo.complex_structured
