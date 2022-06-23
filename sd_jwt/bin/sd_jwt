@@ -2,10 +2,8 @@
 import argparse
 import json
 import logging
-import random
 import sys
 
-from jwcrypto.jwk import JWK
 from sd_jwt import __version__
 from sd_jwt.operations import (
     create_sd_jwt_and_svc,
@@ -13,37 +11,10 @@ from sd_jwt.operations import (
     generate_salt,
     verify
 )
+from sd_jwt.demo_utils import get_jwk, print_repr
 from typing import Union
 
 logger = logging.getLogger(__name__)
-
-
-def print_repr(values: Union[str,list], nlines=2):
-    value = '\n'.join(values) if isinstance(values, (list, tuple)) else values
-    _nlines = '\n' * nlines if nlines else ""
-    print(f"{value}{_nlines}")
-
-
-def get_jwk(no_randomness: bool = False):
-    """
-    returns static of random JWK
-    """
-    random.seed(0)
-    if no_randomness:
-        ISSUER_KEY = JWK.from_json(json.dumps(ISSUER_KEY_DICT))
-        HOLDER_KEY = JWK.from_json(json.dumps(HOLDER_KEY_DICT))
-        logger.warning("Using fixed randomness for demo purposes")
-    else:
-        ISSUER_KEY = JWK.generate(key_size=DEFAULT_KEY_SIZE, kty=DEFAULT_KTY)
-        HOLDER_KEY = JWK.generate(key_size=DEFAULT_KEY_SIZE, kty=DEFAULT_KTY)
-    
-    ISSUER_PUBLIC_KEY = JWK.from_json(ISSUER_KEY.export_public())
-
-    return dict(
-        ISSUER_KEY = ISSUER_KEY,
-        HOLDER_KEY = HOLDER_KEY,
-        ISSUER_PUBLIC_KEY = ISSUER_PUBLIC_KEY
-    )
 
 
 parser = argparse.ArgumentParser(
@@ -143,7 +114,13 @@ else:
 print("# Creating the SD-JWT")
 
 # TThey may came from a custom python settings file :-)
-_JWKS = get_jwk(_args.no_randomness)
+jwk_kwargs = {
+    "iss_key": ISSUER_KEY_DICT,
+    "holder_key": HOLDER_KEY_DICT,
+    "key_size": DEFAULT_KEY_SIZE,
+    "kty": DEFAULT_KTY
+}
+_JWKS = get_jwk(jwk_kwargs, _args.no_randomness)
 ISSUER_KEY = _JWKS["ISSUER_KEY"]
 HOLDER_KEY = _JWKS["HOLDER_KEY"]
 ISSUER_PUBLIC_KEY = _JWKS["ISSUER_PUBLIC_KEY"]
