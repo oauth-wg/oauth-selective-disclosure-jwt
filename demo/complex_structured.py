@@ -102,7 +102,7 @@ print(f"User claims:\n{dumps(FULL_USER_CLAIMS, indent=4)}")
 
 
 sd_jwt_payload, serialized_sd_jwt, svc_payload, serialized_svc = create_sd_jwt_and_svc(
-    FULL_USER_CLAIMS, ISSUER, ISSUER_KEY, CLAIMS_STRUCTURE
+    FULL_USER_CLAIMS, ISSUER, ISSUER_KEY, HOLDER_KEY, CLAIMS_STRUCTURE
 )
 
 print("Payload of the SD-JWT:\n" + dumps(sd_jwt_payload, indent=4) + "\n\n")
