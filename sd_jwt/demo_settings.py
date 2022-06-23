@@ -1,9 +1,3 @@
-DEFAULT_SIGNIGN_ALG = "RS256"
-SD_DIGESTS_KEY = "sd_digests"
-SD_CLAIMS_KEY = "sd_release"
-HASH_ALG_KEY = "hash_alg"
-
-
 ISSUER = "https://example.com/issuer"
 
 DEFAULT_KEY_SIZE = 2048

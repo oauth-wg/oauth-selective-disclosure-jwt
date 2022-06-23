@@ -11,7 +11,7 @@ from jwcrypto.jws import JWS
 from jwcrypto.jwk import JWK
 
 from sd_jwt.walk import by_structure as walk_by_structure
-from sd_jwt.demo_settings import (
+from sd_jwt import (
     DEFAULT_SIGNIGN_ALG, 
     SD_CLAIMS_KEY,
     SD_DIGESTS_KEY,
@@ -66,7 +66,7 @@ def _create_svc_entry(key, value: str, salt: str) -> str:
 
 def create_sd_jwt_and_svc(
     user_claims: dict, issuer: str, issuer_key, holder_key, claim_structure: dict = {},
-    iat: Union[int, None] = None, exp: Union[int, None] = None
+    iat: Union[int, None] = None, exp: Union[int, None] = None, sign_alg = None
 ):
     """
     Create the SD-JWT
@@ -78,7 +78,8 @@ def create_sd_jwt_and_svc(
 
     _iat = iat or int(datetime.datetime.utcnow().timestamp())
     _exp = exp or _iat + (DEFAULT_EXP_MINS * 60)
-
+    _alg = sign_alg or DEFAULT_SIGNIGN_ALG
+    
     # Create the JWS payload
     sd_jwt_payload = {
         "iss": issuer,
@@ -93,8 +94,8 @@ def create_sd_jwt_and_svc(
     sd_jwt = JWS(payload=dumps(sd_jwt_payload))
     sd_jwt.add_signature(
         issuer_key,
-        alg=DEFAULT_SIGNIGN_ALG,
-        protected=dumps({"alg": DEFAULT_SIGNIGN_ALG}),
+        alg= _alg,
+        protected=dumps({"alg": _alg}),
     )
     serialized_sd_jwt = sd_jwt.serialize(compact=True)
 
@@ -113,12 +114,17 @@ def create_sd_jwt_and_svc(
     return sd_jwt_payload, serialized_sd_jwt, svc_payload, serialized_svc
 
 
-def create_release_jwt(nonce, aud, disclosed_claims, serialized_svc, holder_key):
+def create_release_jwt(
+    nonce:str, aud:str, disclosed_claims:dict, serialized_svc:dict, holder_key:dict,
+    sign_alg:str = None
+):
     # Reconstruct hash raw values (salt+claim value) from serialized_svc
 
     hash_raw_values = loads(urlsafe_b64decode(
         serialized_svc + "=="))[SD_CLAIMS_KEY]
-
+    
+    _alg = sign_alg or DEFAULT_SIGNIGN_ALG
+    
     sd_jwt_release_payload = {
         "nonce": nonce,
         "aud": aud,
@@ -131,18 +137,20 @@ def create_release_jwt(nonce, aud, disclosed_claims, serialized_svc, holder_key)
     sd_jwt_release = JWS(payload=dumps(sd_jwt_release_payload))
     sd_jwt_release.add_signature(
         holder_key,
-        alg=DEFAULT_SIGNIGN_ALG,
-        protected=dumps({"alg": DEFAULT_SIGNIGN_ALG}),
+        alg=_alg,
+        protected=dumps({"alg": _alg}),
     )
     serialized_sd_jwt_release = sd_jwt_release.serialize(compact=True)
 
     return sd_jwt_release_payload, serialized_sd_jwt_release
 
 
-def _verify_sd_jwt(sd_jwt, issuer_public_key, expected_issuer):
+def _verify_sd_jwt(
+    sd_jwt, issuer_public_key, expected_issuer, sign_alg:str = None
+):
     parsed_input_sd_jwt = JWS()
     parsed_input_sd_jwt.deserialize(sd_jwt)
-    parsed_input_sd_jwt.verify(issuer_public_key, alg=DEFAULT_SIGNIGN_ALG)
+    parsed_input_sd_jwt.verify(issuer_public_key, alg=sign_alg)
 
     sd_jwt_payload = loads(parsed_input_sd_jwt.payload)
     if sd_jwt_payload["iss"] != expected_issuer:
@@ -171,8 +179,9 @@ def _verify_sd_jwt_release(
     holder_public_key=None,
     expected_aud=None,
     expected_nonce=None,
-    holder_public_key_payload=None,
+    holder_public_key_payload=None, sign_alg = None
 ):
+    _alg = sign_alg or DEFAULT_SIGNIGN_ALG
     parsed_input_sd_jwt_release = JWS()
     parsed_input_sd_jwt_release.deserialize(sd_jwt_release)
     if holder_public_key and holder_public_key_payload:
@@ -182,7 +191,7 @@ def _verify_sd_jwt_release(
             raise ValueError("sub_jwk is not matching with HOLDER Public Key.")
     if holder_public_key:
         parsed_input_sd_jwt_release.verify(
-            holder_public_key, alg=DEFAULT_SIGNIGN_ALG)
+            holder_public_key, alg=_alg)
 
     sd_jwt_release_payload = loads(parsed_input_sd_jwt_release.payload)
 
