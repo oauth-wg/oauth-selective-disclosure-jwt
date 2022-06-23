@@ -11,9 +11,15 @@ from jwcrypto.jws import JWS
 from jwcrypto.jwk import JWK
 
 from sd_jwt.walk import by_structure as walk_by_structure
-from sd_jwt.demo_settings import DEFAULT_SIGNIGN_ALG, SD_CLAIMS_KEY
+from sd_jwt.demo_settings import (
+    DEFAULT_SIGNIGN_ALG, 
+    SD_CLAIMS_KEY,
+    SD_DIGESTS_KEY,
+    HASH_ALG_KEY
+)
 
 DEFAULT_EXP_MINS = 15
+HASH_ALG = {"name": "sha-256", "fn": sha256}
 logger = logging.getLogger(__name__)
 
 
@@ -28,7 +34,9 @@ def generate_salt():
 
 def hash_raw(raw):
     # Calculate the SHA 256 hash and output it base64 encoded
-    return urlsafe_b64encode(sha256(raw).digest()).decode("ascii").strip("=")
+    return urlsafe_b64encode(
+        HASH_ALG['fn'](raw).digest()
+    ).decode("ascii").strip("=")
 
 
 def hash_claim(salt, value, return_raw=False):
@@ -77,7 +85,8 @@ def create_sd_jwt_and_svc(
         "sub_jwk": holder_key.export_public(as_dict=True),
         "iat": _iat,
         "exp": _exp,
-        SD_CLAIMS_KEY: walk_by_structure(salts, user_claims, _create_sd_claim_entry),
+        SD_DIGESTS_KEY: walk_by_structure(salts, user_claims, _create_sd_claim_entry),
+        HASH_ALG_KEY: HASH_ALG["name"],
     }
 
     # Sign the SD-JWT using the issuer's key
@@ -141,14 +150,20 @@ def _verify_sd_jwt(sd_jwt, issuer_public_key, expected_issuer):
 
     # TODO: Check exp/nbf/iat
 
-    if SD_CLAIMS_KEY not in sd_jwt_payload:
+    if HASH_ALG_KEY not in sd_jwt_payload:
+        raise ValueError("Missing hash algorithm")
+
+    if sd_jwt_payload[HASH_ALG_KEY] != HASH_ALG["name"]:
+        raise ValueError("Invalid hash algorithm")
+
+    if SD_DIGESTS_KEY not in sd_jwt_payload:
         raise ValueError("No selective disclosure claims in SD-JWT")
 
     holder_public_key_payload = None
     if "sub_jwk" in sd_jwt_payload:
         holder_public_key_payload = sd_jwt_payload["sub_jwk"]
 
-    return sd_jwt_payload[SD_CLAIMS_KEY], holder_public_key_payload
+    return sd_jwt_payload[SD_DIGESTS_KEY], holder_public_key_payload
 
 
 def _verify_sd_jwt_release(
