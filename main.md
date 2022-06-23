@@ -124,7 +124,7 @@ Holder
 :  An entity that received SD-JWTs (2.1) from the issuer and has control over them.
 
 Verifier 
-:  An entity that requests, checks and extracts the claims from SSD-JWT-R (2.2)
+:  An entity that requests, checks and extracts the claims from SD-JWT-R (2.2)
 
 Note: discuss if we want to include Client, Authorization Server for the purpose of
 ensuring continuity and separating the entity from the actor.
@@ -820,7 +820,7 @@ the `address` property:
 
 ## Example 3 - Complex Structured SD-JWT
 
-In this example, a complex object such as those used for ekyc (todo reference) is used.
+In this example, a complex object such as those used for OIDC4IDA (todo reference) is used.
 
 In this example, the Issuer is using a following object as a set of claims to issue to the Holder:
 
