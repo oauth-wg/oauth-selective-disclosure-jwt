@@ -100,6 +100,7 @@ parser.add_argument(
 )
 
 _args = parser.parse_args()
+logger.setLevel(_args.debug)
 
 if _args.version:
     sys.exit(f'{__version__}')
