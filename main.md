@@ -1127,6 +1127,14 @@ encoded as JSON and signed as a JWS compliant to [@VC_DATA].
 
    [[ To be removed from the final specification ]]
 
+   -01
+   
+   *  Editorial fixes
+   *  Added hash_alg claim
+   *  Renamed _sd to sd_digests and sd_release
+   *  Added descriptions on holder binding - more work to do
+   *  Clarify that signing the SD-JWT is mandatory
+
    -00
 
    *  Renamed to SD-JWT (focus on JWT instead of JWS since signature is optional)
