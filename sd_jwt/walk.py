@@ -25,7 +25,7 @@ def by_structure(structure, obj, fn):
 
 
 if __name__ == "__main__":
-    #### Example 1
+    # Example 1
 
     def test_fn(key, value, value_in_structure=None):
         return f"called fn({key}, {value}, {value_in_structure})"
@@ -57,7 +57,7 @@ if __name__ == "__main__":
         "birthdate": "called fn(birthdate, 1940-01-01, None)",
     }
 
-    output0 = walk_by_structure(structure0, raw0, test_fn)
+    output0 = by_structure(structure0, raw0, test_fn)
     print(json.dumps(output0, indent=4))
     assert output0 == expected0
 
@@ -157,11 +157,11 @@ if __name__ == "__main__":
         "unverified_birthdate": "called fn(unverified_birthdate, 1956-01-28, None)",
     }
 
-    output1 = walk_by_structure(structure1, raw1, test_fn)
+    output1 = by_structure(structure1, raw1, test_fn)
     print(json.dumps(output1, indent=2))
     assert output1 == expected1
 
-    #### Example 2
+    # Example 2
 
     expected2 = {
         "verified_claims": {
@@ -204,7 +204,7 @@ if __name__ == "__main__":
     }
 
     # Take the output of example 1 as the structure this time.
-    output2 = walk_by_structure(output1, raw1, test_fn)
+    output2 = by_structure(output1, raw1, test_fn)
     print(json.dumps(output2, indent=2))
 
     assert output2 == expected2

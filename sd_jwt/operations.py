@@ -1,8 +1,6 @@
 import datetime
 import logging
 import random
-import re
-import sys
 from base64 import urlsafe_b64decode, urlsafe_b64encode
 from hashlib import sha256
 from json import dumps, loads
@@ -59,7 +57,7 @@ def _create_svc_entry(key, value: str, salt: str) -> str:
 
 
 def create_sd_jwt_and_svc(
-    user_claims:dict, issuer:str, issuer_key, holder_key, claim_structure:dict={},
+    user_claims: dict, issuer: str, issuer_key, holder_key, claim_structure: dict = {},
     iat: Union[int, None] = None, exp: Union[int, None] = None
 ):
     """
@@ -67,12 +65,12 @@ def create_sd_jwt_and_svc(
     """
     # something like: {'sub': 'zyZQuxk2AUv5_Z_RAMxh9Q', 'given_name': 'EpCuoArhQK6MjmO6D-Bi6w' ...
     salts = walk_by_structure(
-        claim_structure, user_claims, lambda _, __, ___= None: generate_salt()
+        claim_structure, user_claims, lambda _, __, ___=None: generate_salt()
     )
-    
+
     _iat = iat or int(datetime.datetime.utcnow().timestamp())
     _exp = exp or _iat + (DEFAULT_EXP_MINS * 60)
-    
+
     # Create the JWS payload
     sd_jwt_payload = {
         "iss": issuer,
@@ -109,7 +107,8 @@ def create_sd_jwt_and_svc(
 def create_release_jwt(nonce, aud, disclosed_claims, serialized_svc, holder_key):
     # Reconstruct hash raw values (salt+claim value) from serialized_svc
 
-    hash_raw_values = loads(urlsafe_b64decode(serialized_svc + "=="))[SD_CLAIMS_KEY]
+    hash_raw_values = loads(urlsafe_b64decode(
+        serialized_svc + "=="))[SD_CLAIMS_KEY]
 
     sd_jwt_release_payload = {
         "nonce": nonce,
@@ -167,7 +166,8 @@ def _verify_sd_jwt_release(
         if not holder_public_key == pubkey:
             raise ValueError("sub_jwk is not matching with HOLDER Public Key.")
     if holder_public_key:
-        parsed_input_sd_jwt_release.verify(holder_public_key, alg=DEFAULT_SIGNIGN_ALG)
+        parsed_input_sd_jwt_release.verify(
+            holder_public_key, alg=DEFAULT_SIGNIGN_ALG)
 
     sd_jwt_release_payload = loads(parsed_input_sd_jwt_release.payload)
 
@@ -216,7 +216,8 @@ def verify(
 
     parts = combined_presentation.split(".")
     if len(parts) != 6:
-        raise ValueError("Invalid number of parts in the combined presentation")
+        raise ValueError(
+            "Invalid number of parts in the combined presentation")
 
     # Verify the SD-JWT
     input_sd_jwt = ".".join(parts[:3])
