@@ -79,9 +79,8 @@ While JWTs for claims describing natural persons are a common use case, the
 mechanisms defined in this document can be used for many other use cases as
 well.
 
-Note: so far agreed to define holder binding (user's public key contained inside an SD-JWT) as an option.
-It is not mandatory since holder binding is use case specific and orthogonal to the general mechanism of 
-selective disclosure defined here.
+This document also describes holder binding, or the concept of binding SD-JWT to a key material controlled 
+by the subject of SD-JWT, which is optional to implement.
 
 
 ## Conventions and Terminology
@@ -190,14 +189,27 @@ Just as `HS-CLAIMS`, `SALTS` can be more complex as well.
 The SD-JWT-R is sent together with the SD-JWT from the holder to the
 verifier.
 
+## Holder Binding
+
+Some use-cases MAY require holder binding. 
+
+Information about the key material controlled by the holder MUST be communicated in SD-JWT.
+How the public key is included in SD-JWT is out of scope of this document. It can be passed
+by value or by reference. Examples in this document use `sub_jwt` Claim to include raw public key
+by value in SD-JWT.
+
+Holder MUST sign SD-JWT-R using the private key associated with the public key included in SD-JWT.
+
+Verifier MUST verify that the signature on SD-JWT-R using the public key information in SD-JWT.
+
 ## Verifying an SD-JWT Release
 
 A verifier checks that 
 
- * if holder binding is desired, the `RELEASE` was signed by
- the private key belonging to the public key contained in `SD-JWT-DOC`.
  * for each claim in `RELEASE`, the hash `HASH(DISCLOSED-SALT | DISCLOSED-VALUE)` 
  matches the hash under the given claim name in the SD-JWT.
+ * if holder binding is desired, the `RELEASE` was signed by
+ the private key belonging to the public key contained in `SD-JWT-DOC`.
 
 The detailed algorithm is described below.
 
@@ -308,6 +320,7 @@ is using a flat structure, i.e. all of the claims the `address` claim can only b
     "n": "pm4bOHBg-oYhAyPWzR56AWX3rUIXp11_ICDkGgS6W3ZWLts-hzwI3x65659kg4hVo9dbGoCJE3ZGF_eaetE30UhBUEgpGwrDrQiJ9zqprmcFfr3qvvkGjtth8Zgl1eM2bJcOwE7PCBHWTKWYs152R7g6Jg2OVph-a8rq-q79MhKG5QoW_mTz10QT_6H4c7PjWG1fjh8hpWNnbP_pv6d1zSwZfc5fl6yVRL0DV0V3lGHKe2Wqf_eNGjBrBLVklDTk8-stX_MWLcR-EGmXAOv0UBWitS_dXJKJu-vXJyw14nHSGuxTIK2hx1pttMft9CsvqimXKeDTU14qQL1eE7ihcw",
     "e": "AQAB"
   },
+  "hash_alg": "sha-256",
   "iat": 1516239022,
   "exp": 1516247022,
   "_sd": {
@@ -368,9 +381,9 @@ The following is a non-normative example of the payload of an SD-JWT:
   "iss": "https://example.com/issuer",
   "sub_jwk": {
     "kty": "RSA",
-    "n": "m9RLf0PBZI8REVDu3gFKr7cusIIbRRSp_kIg8MDoNcUVcJj_U9-duChtiH9o_0tl7oQcILB6GA7voMPrP7iUGayNbzhCqXWyrNeV7N5spM00xkW1WxRprkTsuhJiotyiJLOb-UZ1G_c5Xmp9kU3Uy1s_v5uqz9LGcefFyqVTJEqyKTli7HWPEcxM3nYvGe8IaoFbfOAZRRGETn0azmNrVmMt_BgDGkhbTXuO4gQgDTcvoL-auDAMufOiawShFPhYABOUQrdtPUoBXLMFowTfl0JroyvuIzL_P60mUWlr-9c9wl05hL4MXZnIFMZ62Lsq8p9YB1MrfgTjZjr-Uf6qLw",
-    "e": "AQAB"
+    "n": "pcHdUSmbR3A8_eJcxaOWtk8wmrsxP7Fpl1DYVeNJRRYBS2kHLewBLAG4CpZDAB-AuuIkaGRyJdcISfN0Ujk4dBryUtdDvpJ-h4en-Zurrn_aQxF4VApBtgdWjzRksrBnzmp64_S89rsl6h-We-yKsVtmm4IB9Jr-9VlVRg03EXWMAmwUaQkDiKEhXxQH2f8QhNfhTOKAKb58AYwgz-CtzOQjr6p7o9yisDu2LtFi9RkctE1MZ8If3PPs7G53-GBL_7lH9kKuqUsXZQzBvBJl5AYf3beKS6QH1aPnFgZ-2a5lsEuKp44NMIT2h-uQd5eQ0bhQkPVeH7Yi-tGxMnaDdQ",
   },
+  "hash_alg": "sha-256",
   "iat": 1516239022,
   "exp": 1516247022,
   "_sd": {
@@ -809,6 +822,7 @@ The following shows the resulting SD-JWT payload:
     "n": "6bh1cbaN-fyTUTfawCabGpTSeHOWmsHuB-VZ0aoAKBAfH6MOeLolLYLMcgP1VCNa1CenudLRzm8ULvinMicmfCOumvyhq8wsgH1jIJDG_TVrupS6iZvthOtXPpkSXxDiiLxgmnLR5AlpWBKjrzXmX1jQ2V1gQlC2S2eN7t_CR-Jfj3yb4rTW20UyvhpOpy649CaYsAo3Ulq2oJpnG6rInX_XzYH86plJmYDUq07SoGIcdYYK6IyudZBh2bVxZ9aBuvkYQy11AFvXk2BP0RbTP1aOwwzS-LWahQJdsK5OiPLRrfTZ399h2I24VW3qXT2Zusq9tUNAlOWvh1K7umnpMw",
     "e": "AQAB"
   },
+  "hash_alg": "sha-256",
   "iat": 1516239022,
   "exp": 1516247022,
   "_sd": {
