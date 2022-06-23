@@ -684,7 +684,7 @@ high entropy that it is not practical for the attacker to guess.
 
 ## Minimum length of the salt
 
-The length of the randomly-generated portion of the salt shall be at least 128 bits.
+The length of the randomly-generated portion of the salt MUST be at least 128 bits.
  
 
 ## Choice of a hash function
