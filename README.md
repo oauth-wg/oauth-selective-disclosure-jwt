@@ -60,3 +60,10 @@ docker run -v `pwd`:/data danielfett/markdown2rfc main.md
 
 ### without Docker
 compile using mmark and xml2rfc: `mmark main.md > draft.xml; xml2rfc --html draft.xml`
+
+# Implementations
+
+ * Python: [Reference/Demo Implementation](https://github.com/oauthstuff/draft-selective-disclosure-jwt)
+ * Kotlin: [SD-JWT-Kotlin](https://github.com/IDunion/SD-JWT-Kotlin)
+ * Rust: [sd_jwt](https://github.com/kushaldas/sd_jwt)
+
