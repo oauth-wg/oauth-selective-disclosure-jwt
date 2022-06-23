@@ -694,7 +694,7 @@ Given a claim value, a salt, and the resulting hash, it is hard to find a second
 so that HASH(salt | claim_value) equals the hash.
 
 Furthermore the hash algorithms MD2, MD4, MD5, RIPEMD-160, and SHA-1 
-revealed fundamental weaknesses and they should no longer be used.
+revealed fundamental weaknesses and they MUST NOT be used.
 
 ## Holder Binding {#holder_binding_security}
 
