@@ -11,9 +11,9 @@ from jwcrypto.jwk import JWK
 
 from .walk_by_structure import walk_by_structure
 
-SD_CLAIMS_KEY = "_sd"
+SD_DIGESTS_KEY = "sd_digests"
+SD_CLAIMS_KEY = "sd_release"
 HASH_ALG_KEY = "hash_alg"
-
 HASH_ALG = {"name": "sha-256", "fn": sha256}
 
 # For the purpose of generating static examples for the spec, this command line
@@ -102,7 +102,7 @@ def create_sd_jwt_and_svc(user_claims, issuer, issuer_key, holder_key, claim_str
         "sub_jwk": holder_key.export_public(as_dict=True),
         "iat": 1516239022,
         "exp": 1516247022,
-        SD_CLAIMS_KEY: walk_by_structure(salts, user_claims, _create_sd_claim_entry),
+        SD_DIGESTS_KEY: walk_by_structure(salts, user_claims, _create_sd_claim_entry),
         HASH_ALG_KEY: HASH_ALG["name"],
     }
 
@@ -169,14 +169,14 @@ def _verify_sd_jwt(sd_jwt, issuer_public_key, expected_issuer):
     if sd_jwt_payload[HASH_ALG_KEY] != HASH_ALG["name"]:
         raise ValueError("Invalid hash algorithm")
 
-    if SD_CLAIMS_KEY not in sd_jwt_payload:
+    if SD_DIGESTS_KEY not in sd_jwt_payload:
         raise ValueError("No selective disclosure claims in SD-JWT")
 
     holder_public_key_payload = None
     if "sub_jwk" in sd_jwt_payload:
         holder_public_key_payload = sd_jwt_payload["sub_jwk"]
 
-    return sd_jwt_payload[SD_CLAIMS_KEY], holder_public_key_payload
+    return sd_jwt_payload[SD_DIGESTS_KEY], holder_public_key_payload
 
 
 def _verify_sd_jwt_release(

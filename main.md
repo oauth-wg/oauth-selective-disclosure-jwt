@@ -227,10 +227,10 @@ An SD-JWT is a JWT that MUST be signed using the issuer's private key.
 
 The payload of an SD-JWT can consist of the following claims.
 
-#### `_sd` (Selectively Disclosable) Claim
+#### `sd_digests` Claim (Digests of Selectively Disclosable Claims)
 
 An SD-JWT MUST include hashes of the salted claim values that are included by the issuer
-under the property `_sd`. 
+under the property `sd_digests`. 
 
 The issuer MUST choose a unique salt value for each claim value. Each salt value
 MUST contain at least 128 bits of pseudorandom data, making it hard for an
@@ -270,17 +270,17 @@ Note: need to define how holder public key is included, right now examples are u
 The payload of SD-JWT MAY contain other JWT claims, such as `iss`, `iat`, etc.
 as defined by the applications using SD-JWTs.
 
-### Flat and Structured `_sd` objects
+### Flat and Structured `sd_digests` objects
 
-The `_sd` object can be a 'flat' object, directly containing all claim names and
-hashed claim values without any deeper structure. The `_sd` object can also be a
+The `sd_digests` object can be a 'flat' object, directly containing all claim names and
+hashed claim values without any deeper structure. The `sd_digests` object can also be a
 'structured' object, where some claims and their respective hashes are contained
 in places deeper in the structure. it is at the issuer's discretion whether to use
-a 'flat' or 'structured' `_sd` SD-JWT object, and how to structure it such that
+a 'flat' or 'structured' `sd_digests` SD-JWT object, and how to structure it such that
 it is suitable for the use case.
 
-Examples 1 is a non-normative example of an SD-JWT using a 'flat' `_sd` object
-and example 2 is a non-normative example of an SD-JWT using a 'structured' `_sd` object.
+Examples 1 is a non-normative example of an SD-JWT using a 'flat' `sd_digests` object
+and example 2 is a non-normative example of an SD-JWT using a 'structured' `sd_digests` object.
 The difference between the examples is how an `address` claim is disclosed.
 
 Both examples use a following object as a set of claims that the Issuer is issuing:
@@ -323,7 +323,7 @@ is using a flat structure, i.e. all of the claims the `address` claim can only b
   "hash_alg": "sha-256",
   "iat": 1516239022,
   "exp": 1516247022,
-  "_sd": {
+  "sd_digests": {
     "sub": "LbnhkOr5oS7KjeUrxezAu8TG0CpWz0jSixy6tffuo04",
     "given_name": "fUMdn88aaoyKTHrvZd6AuLmPraGhPJ0zF5r_JhxCVZs",
     "family_name": "9h5vgv6TpFV6GmnPtugiMLl5tHetHeb5X_2cKHjN7cw",
@@ -386,7 +386,7 @@ The following is a non-normative example of the payload of an SD-JWT:
   "hash_alg": "sha-256",
   "iat": 1516239022,
   "exp": 1516247022,
-  "_sd": {
+  "sd_digests": {
     "sub": "LbnhkOr5oS7KjeUrxezAu8TG0CpWz0jSixy6tffuo04",
     "given_name": "fUMdn88aaoyKTHrvZd6AuLmPraGhPJ0zF5r_JhxCVZs",
     "family_name": "9h5vgv6TpFV6GmnPtugiMLl5tHetHeb5X_2cKHjN7cw",
@@ -416,10 +416,10 @@ holder key pair.
 
 SVC can consist of the following claims.
 
-#### `_sd` (Selectively Disclosable) Claim
+#### `sd_release` Claim (Selectively Disclosed Claims)
 
 A SD-JWT Salt/Value Container (SVC) is a JSON object containing at least the
-top-level property `_sd`. Its structure mirrors the one of `_sd` in
+top-level property `sd_release`. Its structure mirrors the one of `sd_digests` in
 the SD-JWT, but the values are the inputs to the hash calculations the issuer
 used, as strings.
 
@@ -433,7 +433,7 @@ The SVC for Example 1 is as follows:
 {#example-simple-svc-payload}
 ```json
 {
-  "_sd": {
+  "sd_release": {
     "sub": "[\"eluV5Og3gSNII8EYnsxA_A\", \"6c5c0a49-b589-431d-bae7-219122a9ec2c\"]",
     "given_name": "[\"6Ij7tM-a5iVPGboS5tmvVA\", \"John\"]",
     "family_name": "[\"eI8ZWm9QnKPpNPeNenHdhQ\", \"Doe\"]",
@@ -452,7 +452,7 @@ The SVC for Example 2 is as follows:
 {#example-simple_structured-svc-payload}
 ```json
 {
-  "_sd": {
+  "sd_release": {
     "sub": "[\"eluV5Og3gSNII8EYnsxA_A\", \"6c5c0a49-b589-431d-bae7-219122a9ec2c\"]",
     "given_name": "[\"6Ij7tM-a5iVPGboS5tmvVA\", \"John\"]",
     "family_name": "[\"eI8ZWm9QnKPpNPeNenHdhQ\", \"Doe\"]",
@@ -537,23 +537,28 @@ The following is a non-normative example of the contents of an SD-JWT-R for Exam
 {
   "nonce": "2GLC42sKQveCfGfryNRN9w",
   "aud": "https://example.com/verifier",
-  "_sd": {
+  "sd_release": {
     "given_name": "[\"6Ij7tM-a5iVPGboS5tmvVA\", \"John\"]",
     "family_name": "[\"eI8ZWm9QnKPpNPeNenHdhQ\", \"Doe\"]",
     "address": "[\"Pc33JM2LchcU_lHggv_ufQ\", {\"street_address\": \"123 Main St\", \"locality\": \"Anytown\", \"region\": \"Anystate\", \"country\": \"US\"}]"
   }
 }
-``` 
+```
+
+For each claim, an array of the salt and the claim value is contained in the
+`sd_release` object. 
+
+Again, the SD-JWT-R follows the same structure as the `sd_digests` in the SD-JWT. 
 
 The following is a non-normative example of an SD-JWT-R for SD-JWT in Example 2
-that discloses only `region` and `country` of an `address` property:
+that discloses only `region` and `country` of the `address` property:
 
 {#example-simple_structured-release-payload}
 ```json
 {
   "nonce": "2GLC42sKQveCfGfryNRN9w",
   "aud": "https://example.com/verifier",
-  "_sd": {
+  "sd_release": {
     "given_name": "[\"6Ij7tM-a5iVPGboS5tmvVA\", \"John\"]",
     "family_name": "[\"eI8ZWm9QnKPpNPeNenHdhQ\", \"Doe\"]",
     "birthdate": "[\"5bPs1IquZNa0hkaFzzzZNw\", \"1940-01-01\"]",
@@ -655,15 +660,15 @@ trusting/using any of the contents of an SD-JWT:
     2. Validate the signature over the SD-JWT. 
     3. Validate the issuer of the SD-JWT and that the signing key belongs to this issuer.
     4. Check that the SD-JWT is valid using `nbf`, `iat`, and `exp` claims, if provided in the SD-JWT.
-    5. Check that the claim `_sd` is present in the SD-JWT.
+    5. Check that the claim `sd_digests` is present in the SD-JWT.
     6. Check the `hash_alg` claim and MUST accept only when the hash_alg is understand and deemed secure.
  5. Validate the SD-JWT Release:
     1. If holder binding is required, validate the signature over the SD-JWT using the same steps as for the SD-JWT plus the following steps:
        1. Determine that the public key for the private key that used to sign the SD-JWT-R is bound to the SD-JWT, i.e., the SD-JWT either contains a reference to the public key or contains the public key itself.
        2. Determine that the SD-JWT-R is bound to the current transaction and was created for this verifier (replay protection). This is usually achieved by a `nonce` and `aud` field within the SD-JWT Release.
     2. For each claim in the SD-JWT Release:
-       1. Ensure that the claim is present as well in `_sd` in the SD-JWT.
-          If `_sd` is structured, the claim MUST be present at the same
+       1. Ensure that the claim is present as well in `sd_release` in the SD-JWT.
+          If `sd_release` is structured, the claim MUST be present at the same
           place within the structure.
        2. Compute the base64url-encoded hash of a claim revealed from the Holder
           using the claim value and the salt included in the SD-JWT-R and 
@@ -825,7 +830,7 @@ The following shows the resulting SD-JWT payload:
   "hash_alg": "sha-256",
   "iat": 1516239022,
   "exp": 1516247022,
-  "_sd": {
+  "sd_digests": {
     "verified_claims": {
       "verification": {
         "trust_framework": "UI-SRNlQFy-YEFE46yyHKqc64jmM65q8ma9cq2V_erY",
@@ -970,7 +975,7 @@ A SD-JWT-R for some of the claims:
 {
   "nonce": "2GLC42sKQveCfGfryNRN9w",
   "aud": "https://example.com/verifier",
-  "_sd": {
+  "sd_release": {
     "verified_claims": {
       "verification": {
         "trust_framework": "[\"eluV5Og3gSNII8EYnsxA_A\", \"de_aml\"]",
@@ -1022,7 +1027,7 @@ SVC sent alongside this SD-JWT as a JWT-VC is same as in Example 1.
       "UniversityDegreeCredential"
     ]
   },
-  "_sd": {
+  "sd_digests": {
     "given_name": "fUMdn88aaoyKTHrvZd6AuLmPraGhPJ0zF5r_JhxCVZs",
     "family_name": "9h5vgv6TpFV6GmnPtugiMLl5tHetHeb5X_2cKHjN7cw",
     "birthdate": "fvLCnDm3r4VSYcBF3pIlXP4ulEoHuHOfG_YmFZEuxpQ"
@@ -1050,7 +1055,7 @@ encoded as JSON and signed as a JWS compliant to [@!VC-DATA-MODEL].
     ],
     "verifiableCredential": ["eyJhb...npyXw"]
   },
-  "_sd": {
+  "sd_release": {
     "given_name": "[\"6Ij7tM-a5iVPGboS5tmvVA\", \"John\"]",
     "family_name": "[\"eI8ZWm9QnKPpNPeNenHdhQ\", \"Doe\"]",
     "birthdate": "[\"5bPs1IquZNa0hkaFzzzZNw\", \"1940-01-01\"]"
