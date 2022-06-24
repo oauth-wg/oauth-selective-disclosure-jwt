@@ -222,7 +222,7 @@ If holder binding is desired, `SD-JWT` must contain information about key materi
 SD-JWT-DOC = (METADATA, HOLDER-PUBLIC-KEY, SD-CLAIMS)
 ```
 
-Note: How the public key is included in SD-JWT is out of scope of this document. It can be passed by value or by reference. Examples in this document use `sub_jwt` Claim to include raw public key by value in SD-JWT.
+Note: How the public key is included in SD-JWT is out of scope of this document. It can be passed by value or by reference. Examples in this document use `sub_jwk` Claim to include raw public key by value in SD-JWT.
 
 With holder binding, the `SD-JWT-RELEASE` is signed by the holder using its private key. It therefore looks as follows:
 
