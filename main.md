@@ -686,9 +686,10 @@ and revealing the claim names does not provide any additional information.
 
 ## Unlinkability 
 
-It is also important to note that this format enables selective disclosure of claims, but
-in itself it does not achieve unlinkability of the subject of an SD-SWT.
-
+Colluding issuer/verifier or verifier/verifier pairs could learn undisclosed holder claims by linking 
+issuance/presentation or two presentation sessions on the basis of unique values encoded in the SD-JWT
+(issuer signature, salts, digests, etc.) More advanced cryptographic schemes, outside the scope of
+this specification, can be used to prevent this type of linkability.
 
 # Acknowledgements {#Acknowledgements}
       
