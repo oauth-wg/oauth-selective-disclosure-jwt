@@ -662,14 +662,13 @@ guess.
 ## Minimum length of the salt
 
 The length of the randomly-generated portion of the salt SHOULD be at least 128 bits.
- 
 
 ## Choice of a hash function
 
-For the security of this scheme, the hash function is required to have the
-following property. Given a claim value, a salt, and the resulting hash, it is
-hard to find a second salt value so that `HASH(salt | claim_value)` equals the
-hash.
+For the security of this scheme, the hash function is required to be preimage and collision
+resistant, i.e., it is infeasible to calculate the salt and claim value that result in
+a particular digest, and it is infeasible to find a different salt and claim value pair that
+result in a matching digest, respectively.
 
 Furthermore the hash algorithms MD2, MD4, MD5, RIPEMD-160, and SHA-1 
 revealed fundamental weaknesses and they MUST NOT be used.
