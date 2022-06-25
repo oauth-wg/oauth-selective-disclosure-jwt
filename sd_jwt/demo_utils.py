@@ -1,8 +1,10 @@
+import base64
 import json
 import logging
 import random
 
 from jwcrypto.jwk import JWK
+from sd_jwt.utils import pad_urlsafe_b64
 from typing import Union
 
 logger = logging.getLogger(__name__)
@@ -12,6 +14,20 @@ def print_repr(values: Union[str, list], nlines=2):
     value = '\n'.join(values) if isinstance(values, (list, tuple)) else values
     _nlines = '\n' * nlines if nlines else ""
     print(f"{value}{_nlines}")
+
+
+def print_decoded_repr(value:str, nlines=2):
+    seq = []
+    for i in value.split('.'):
+        try:
+            seq.append(
+                f"{base64.urlsafe_b64decode(pad_urlsafe_b64(i)).decode()}"
+            )
+        except Exception as e:
+            logging.debug(f"{e} - for value: {i}")
+            seq.append(i)
+    _nlines = '\n' * nlines if nlines else ""
+    print(f"{'.'.join(seq)}{_nlines}")
 
 
 def get_jwk(jwk_kwargs: dict = {}, no_randomness: bool = False):

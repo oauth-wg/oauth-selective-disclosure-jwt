@@ -10,6 +10,7 @@ from typing import Union
 from jwcrypto.jws import JWS
 from jwcrypto.jwk import JWK
 
+from sd_jwt.utils import pad_urlsafe_b64
 from sd_jwt.walk import by_structure as walk_by_structure
 from sd_jwt import (
     DEFAULT_SIGNIGN_ALG, 
@@ -40,11 +41,13 @@ def hash_raw(raw):
 
 
 def hash_claim(salt, value, return_raw=False):
+    #raw = f"{salt}{value}"
     raw = dumps([salt, value])
     if return_raw:
         return raw
+        #return [salt, value]
     # Calculate the SHA 256 hash and output it base64 encoded
-    return hash_raw(raw.encode("utf-8"))
+    return hash_raw(raw.encode())
 
 
 def _create_sd_claim_entry(key, value: str, salt: str) -> str:
@@ -73,7 +76,7 @@ def create_sd_jwt_and_svc(
     """
     # something like: {'sub': 'zyZQuxk2AUv5_Z_RAMxh9Q', 'given_name': 'EpCuoArhQK6MjmO6D-Bi6w' ...
     salts = walk_by_structure(
-        claim_structure, user_claims, lambda _, __, ___=None: generate_salt()
+        claim_structure, user_claims, lambda _, __, ___ = None: generate_salt()
     )
 
     _iat = iat or int(datetime.datetime.utcnow().timestamp())
@@ -86,26 +89,25 @@ def create_sd_jwt_and_svc(
         "sub_jwk": holder_key.export_public(as_dict=True),
         "iat": _iat,
         "exp": _exp,
-        SD_DIGESTS_KEY: walk_by_structure(salts, user_claims, _create_sd_claim_entry),
         HASH_ALG_KEY: HASH_ALG["name"],
+        SD_DIGESTS_KEY: walk_by_structure(salts, user_claims, _create_sd_claim_entry)
     }
 
     # Sign the SD-JWT using the issuer's key
     sd_jwt = JWS(payload=dumps(sd_jwt_payload))
     sd_jwt.add_signature(
         issuer_key,
-        alg= _alg,
-        protected=dumps({"alg": _alg}),
+        alg = _alg,
+        protected = dumps({"alg": _alg}),
     )
     serialized_sd_jwt = sd_jwt.serialize(compact=True)
-
     # Create the SVC
     svc_payload = {
         SD_CLAIMS_KEY: walk_by_structure(salts, user_claims, _create_svc_entry),
         # "sub_jwk_private": issuer_key.export_private(as_dict=True),
     }
     serialized_svc = (
-        urlsafe_b64encode(dumps(svc_payload, indent=4).encode("utf-8"))
+        urlsafe_b64encode(dumps(svc_payload).encode())
         .decode("ascii")
         .strip("=")
     )
@@ -115,22 +117,24 @@ def create_sd_jwt_and_svc(
 
 
 def create_release_jwt(
-    nonce:str, aud:str, disclosed_claims:dict, serialized_svc:dict, holder_key:dict,
-    sign_alg:str = None
+    nonce:str, aud:str, disclosed_claims:dict, 
+    serialized_svc:dict, holder_key:dict, sign_alg:str = None
 ):
     # Reconstruct hash raw values (salt+claim value) from serialized_svc
-
-    hash_raw_values = loads(urlsafe_b64decode(
-        serialized_svc + "=="))[SD_CLAIMS_KEY]
+    hash_raw_values = loads(
+        urlsafe_b64decode(
+            pad_urlsafe_b64(serialized_svc)
+        )
+    )[SD_CLAIMS_KEY]
     
     _alg = sign_alg or DEFAULT_SIGNIGN_ALG
-    
+    sd_jwt_r_struct = walk_by_structure(
+        hash_raw_values, disclosed_claims, lambda _, __, raw: raw
+    )
     sd_jwt_release_payload = {
         "nonce": nonce,
         "aud": aud,
-        SD_CLAIMS_KEY: walk_by_structure(
-            hash_raw_values, disclosed_claims, lambda _, __, raw: raw
-        ),
+        SD_CLAIMS_KEY: sd_jwt_r_struct,
     }
 
     # Sign the SD-JWT-Release using the holder's key
