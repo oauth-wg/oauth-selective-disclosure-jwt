@@ -1,4 +1,7 @@
 import json
+import logging
+
+logger = logging.getLogger("sd_jwt")
 
 
 def by_structure(structure, obj, fn):
@@ -8,8 +11,10 @@ def by_structure(structure, obj, fn):
     every leaf node in obj that is not contained in the structure object. See
     examples below!
     """
+    logger.debug(f"Walking in: {structure} using {obj} on {fn}")
     out = {}
     for key, value in obj.items():
+        logger.debug(f"{key}: {value}")
         if key in structure:
             if isinstance(structure[key], dict):
                 out[key] = by_structure(structure[key], value, fn)

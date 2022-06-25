@@ -21,7 +21,7 @@ from sd_jwt import (
 
 DEFAULT_EXP_MINS = 15
 HASH_ALG = {"name": "sha-256", "fn": sha256}
-logger = logging.getLogger(__name__)
+logger = logging.getLogger("sd_jwt")
 
 
 # The salts will be selected by the server, of course.

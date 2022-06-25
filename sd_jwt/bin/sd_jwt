@@ -17,7 +17,7 @@ from sd_jwt.operations import (
     verify
 )
 
-logger = logging.getLogger(__name__)
+logger = logging.getLogger("sd_jwt")
 
 
 parser = argparse.ArgumentParser(
