@@ -95,10 +95,15 @@ def create_sd_jwt_and_svc(
 
     # Sign the SD-JWT using the issuer's key
     sd_jwt = JWS(payload=dumps(sd_jwt_payload))
+    _headers = {
+        "alg": _alg,
+        "typ": "sd-jwt",
+        "kid": issuer_key.thumbprint()
+    }
     sd_jwt.add_signature(
         issuer_key,
         alg = _alg,
-        protected = dumps({"alg": _alg}),
+        protected = dumps(_headers),
     )
     serialized_sd_jwt = sd_jwt.serialize(compact=True)
     # Create the SVC
@@ -142,7 +147,12 @@ def create_release_jwt(
     sd_jwt_release.add_signature(
         holder_key,
         alg=_alg,
-        protected=dumps({"alg": _alg}),
+        protected=dumps(
+            {
+                "alg": _alg,
+                "kid": holder_key.thumbprint()
+            }
+        ),
     )
     serialized_sd_jwt_release = sd_jwt_release.serialize(compact=True)
 
@@ -161,7 +171,6 @@ def _verify_sd_jwt(
         raise ValueError("Invalid issuer")
 
     # TODO: Check exp/nbf/iat
-
     if HASH_ALG_KEY not in sd_jwt_payload:
         raise ValueError("Missing hash algorithm")
 
