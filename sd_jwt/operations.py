@@ -150,7 +150,8 @@ def create_release_jwt(
         protected=dumps(
             {
                 "alg": _alg,
-                "kid": holder_key.thumbprint()
+                "kid": holder_key.thumbprint(),
+                "typ": "sd-r+jwt"
             }
         ),
     )
