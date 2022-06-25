@@ -257,6 +257,11 @@ described in the following, and MAY contain a holder's public key or a reference
 thereto, as well as further claims such as `iss`, `iat`, etc. as defined or
 required by the application using SD-JWTs.
 
+The SD-JWTs MUST be explicitly typed, by setting the `typ` header 
+parameter to `sd+jwt`. This is done to prevent cross-JWT 
+confusion (see "RFC8725", section 3.11).
+
+
 ### `sd_digests` Claim (Digests of Selectively Disclosable Claims)
 
 An SD-JWT MUST include hashes of the salted claim values that are included by the issuer
@@ -502,6 +507,10 @@ to a concrete transaction (in the example the `nonce` and `aud` claims).
 When the holder sends the SD-JWT-R to the Verifier, the SD-JWT-R MUST be a JWS 
 represented as the JWS Compact Serialization as described in 
 Section 7.1 of [@!RFC7515].
+
+The SD-JWT-R MUST be explicitly typed, by setting the `typ` header 
+parameter to `sd-r+jwt`. This is done to prevent cross-JWT 
+confusion (see "RFC8725", section 3.11).
 
 If holder binding is desired, the SD-JWT-R is signed by the holder. If no
 holder binding is to be used, the `none` algorithm is used, i.e., the document
