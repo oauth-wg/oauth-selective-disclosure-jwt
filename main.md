@@ -494,7 +494,7 @@ values and the salts revealed in the SD-JWT-R using the hashing algorithm
 specified in SD-JWT and comparing them to the hash valued included in SD-JWT.
 
 For each claim, an array of the salt and the claim value is contained in the
-`_sd` object. The structure of `_sd` object in the SD-JWT-R is the same as in SD-JWT. 
+`sd_release` object.
 
 The SD-JWT-R MAY contain further claims, for example, to ensure a binding
 to a concrete transaction (in the example the `nonce` and `aud` claims).
