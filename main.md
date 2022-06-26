@@ -679,16 +679,136 @@ TBD
 
 # Privacy Considerations {#privacy_considerations}
 
-## Claim Names
+Privacy protection can be considered from the following principles per ISO/IEC 29100.  
 
-Claim names are not hashed in the SD-JWT and are used as keys in a key-value pair, where the value is the hash.
-This is because SD-JWT already reveals information about the issuer and the schema,
-and revealing the claim names does not provide any additional information.
+	1.	Consent and choice 
+	2.	Purpose legitimacy and specification 
+	3.	Collection limitation 
+	4.	Data minimization 
+	5.	Use, retention and disclosure limitation 
+	6.	Accuracy and quality 
+	7.	Openness, transparency and notice 
+	8.	Individual participation and access 
+	9.	Accountability 
+	10.	Information security 
+	11.	Privacy compliance 
 
-## Unlinkability 
+Among them, this document is concerned directly with 3. Collection limitation and indirectly/partially with 1. Consent and choice, 2. Purpose legitimacy and specification, 6. Accuracy and quality, and 10. Information security.  
 
-It is also important to note that this format enables selective disclosure of claims, but
-in itself it does not achieve unlinkability of the subject of an SD-SWT.
+Often talked unlinkability is a subset of 3. Collection limitation as it amounts to providing unintended (by the holder) information such as the fact that the holder visited a verifier to another verifier. 
+
+## Collection limitation
+
+In this document, Collection limitation is considered from two aspects. 
+
+1. Uncoverability
+2. Unlinkability
+
+### Uncoverability
+
+The concept of uncoverability was discussed in clause 3. In this subclause, this document further discusses it in more detail. 
+
+#### Uncovering the values of non-existent claims from issuer identifier
+When an issuer issues only one type of SD-JWT, it is often possible to recover some attributes about the holder. 
+For example, if the issuer was an authority that only issues driver's licenses in this format, 
+then, just by looking at the issuer and the document itself, it can be deterministically recovered that the holder has a driving license. While revealing that the holder has a driving license may not have much privacy impact, 
+if it was other attributes, it could be quite a privacy-sensitive. 
+
+For example, suppose the case where the SD-JWT was issued by National Cancer Centre. 
+Then, by just looking at the issuer, it is possible to deduce that the holder is a cancer patient. 
+This may have a fair amount of privacy impact. 
+
+To mitigate this kind of issue, a group of issuers may elect to use a common issuer identifier and use a group signature scheme instead of an individual signature. 
+
+#### Uncovering the values of non-existent claims from the list of claim names
+Even if a group of issuers uses a common issuer identifier, if the claims used are unique from one issuer to another, 
+the list of the claim names would be enough to identify the real issuer. In this case, the values of non-existent claims can be uncovered in the same manner as described in the previous subclause. 
+
+To mitigate this kind of issue, the group of issuers may elect to use a common set of claims and always include them in the SD-JWT. 
+
+#### Uncovering the claim value where the number of possible values is limited
+
+When the number of possible values of the claim is limited, it is trivial to uncover the actual value from the salt and the hash. 
+It suffices to iterate over the possible values with the provided hash. 
+
+To mitigate this kind of issue, the issuer may add a random string to provide entropy at the end of the actual value with an appropriate delimiter in the case the value is a string. For other data types like boolean, some other mechanisms should be considered, e.g., defining a transform from boolean to a string using the entropy string. 
+
+
+### Unlinkability
+
+The notion of unlinkability cannot be defined precisely without specifying the role assumed by the adversary and the target of the attack. In ISO/IEC 27551, the following notation is used to describe a different kind of unlinkability. 
+
+    (Adversary)–(Target) Unlinkability
+
+NOTE: The notation is modified to group the Adversary and Target with a parenthesis to make it easier to read when adopted this document's entity name. 
+
+In the case two parties are colluding as the adversary, the colluding parties are concatenated with "+" sign to express it. 
+
+    (Adversar1+Adversary2)–(Target) Unlinkability
+
+The same applies to the target. 
+
+With this notation, ISO/IEC 27551 defines the following eight types of unlinkability. (Entity names are modified to match this document. Corresponding ISO/IEC 27551 unlinkability names are given in braces after it). 
+
+1. (Passive Outsider)–(Holder) Unlinkability [PO-U]
+2. (Active Outsider)–(Holder) Unlinkability [AO-U]
+3. (Verifier 1 + Verifier 2)–(Holder) Unlinkability [RP+RP'–U]
+4. (Issuer)–(Holder) Unlinkability [AP–U]
+5. (Verifier)–(Holder) Unlinkability [RP–U]
+6. (Issuer)–(Verifier) Unlinkability [AP–RP]
+7. (Issuer+Verifier)–(Holder) Unlinkability [AP+RP-U]
+8. (Issuer)–(Holder+Verifier) Unlinkability [AP-RP+U]
+
+#### (Passive Outsider)–(Holder) Unlinkability [PO-U]
+When all the protocol runs are encrypted, e.g., by TLS, then a Passive Outside cannot see the content of SD-JWT and SD-JWT-R. 
+In other words, the protocol runs should be encrypted to achieve this unlinkability. 
+
+####  (Active Outsider)–(Holder) Unlinkability [AO-U]
+
+(TBD)
+
+#### (Verifier 1 + Verifier 2)–(Holder) Unlinkability [RP+RP'–U]
+
+(TBD)
+
+#### (Issuer)–(Holder) Unlinkability [AP–U]
+
+(TBD)
+
+#### (Verifier)–(Holder) Unlinkability [RP–U]
+
+(TBD)
+
+#### (Issuer)–(Verifier) Unlinkability [AP–RP]
+
+(TBD)
+
+#### (Issuer+Verifier)–(Holder) Unlinkability [AP+RP-U]
+
+(TBD)
+
+#### (Issuer)–(Holder+Verifier) Unlinkability [AP-RP+U]
+
+(TBD)
+
+## Consent and choice
+
+(TBD)
+
+
+## Purpose legitimacy and specification
+
+(TBD)
+
+
+## Accuracy and quality
+
+(TBD)
+
+
+## Information security
+
+(TBD)
 
 
 # Acknowledgements {#Acknowledgements}
