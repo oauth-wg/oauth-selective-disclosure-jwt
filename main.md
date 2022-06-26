@@ -164,6 +164,47 @@ Figure: SD-JWT Issuance and Presentation Flow
 
 # Concepts
 
+From the point of view of the collection limitation, which is one of the main privacy principles, it is desirable to be able to provide only the claims necessary for the verifier to process. In the case of a standard JWT [RFC7519], however, this can only be achieved when the JWT is minted afresh each time and it is not possible to re-use the JWT that is pre-minted for other occasions. For example, a holder may want to re-use the document that contains name, address (municipality, street address, room number), date of birth, and National Identification Number to prove that he is a resident of the municipality so that he can receive the service to the resident. In the case of the normal JWT, this is not possible as the signature is over the entire claim set directly. To achieve it, a JWT that only contains the claim about the municipality needs to be minted. 
+
+Selective disclosure JWT (SD-JWT) aims to address this issue by introducing an indirection: sign the salted hash of the claims instead of the claim set and provide only the claim value of the claim that is required to be processed by the receiver, which assumes the verifier role. This way, while the claim names and the salted hash of the claim values of all the claims contained in the document issued by the issuer is disclosed, the claim values of other claims are not in principle. 
+
+In this document, a protocol is considered to fulfil the selective disclosure property when it has the following properties: 
+
+## R1. Strong uncoverability
+
+A protocol is said to achieve strong uncoverability if the adversary acting as the verifier cannot successfully find the claim values that were not intended to be disclosed to the verifier, with a probability significantly better than negligible. 
+
+## R2. Weak uncoverability
+
+While strong uncoverability is desirable, it is not trivial to achieve it. For example, if the original document was a passport that came with the signature of the national authority, then just by looking at the issuer and its signature, it is trivial to find the nationality of the subject in the release. Also, if the existence of the claim name in the release makes it possible for the verifier to guess the value with a probability significantly better than negligible, then it does not satisfy strong uncoverability. 
+
+With these considerations, weak uncoverability is defined as follows: 
+
+A protocol is said to achieve weak uncoverability if the adversary acting as the verifier cannot successfully find the claim values that were not intended to be disclosed to the verifier from the section of the release that directly corresponds with the claim, with a probability significantly better than negligible.  
+
+## R3. Release confidentiality
+
+A protocol is said to achieve release confidentiality if the adversary that can observe the content of all protocol exchanges between the holder agent and the verifier cannot find the claims with a probability significantly better than negligible. 
+
+## R4. Unforgeability
+
+Unforegeability ensures that an adversary acting as a holder (dishonest holder) cannot forge a release that makes the verifier believe the false value.  
+
+The game is defined as follows. Arbitrary entities play the role of issuer and verifier while the adversary plays the role of the holder at each stage of the protocol. A is subjected to the game where sequentially: 
+
+1. Issuer and verifier execute the setup/registration phase (if any). 
+2. Issuer and adversary playing the role of holder execute the issuance phase in which issuer issues claim set attached to the honest holder C to the adversary. 
+3. Adversary playing the role of holder and verifier executes the release phase for a policy P that is not satisfied by C. 
+4. The winning event for the adversary is defined as a successful authentication towards the verifier. 
+
+The protocol achieves unforgeability if it is unfeasible for the adversary to win with a probability significantly better than negligible. 
+
+## Security and privacy target of SD-JWT and SD-JWT release
+
+T1. SD-JWT, SD-JWT release with associated protocol execution fulfils R2, R3, and R4. 
+
+Note: See privacy consideration for more discussion.
+
 In the following, the contents of SD-JWTs and SD-JWT Releases are described at a
 conceptual level, abstracting from the data formats described afterwards.
 
