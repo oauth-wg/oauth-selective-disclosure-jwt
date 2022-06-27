@@ -729,9 +729,10 @@ To mitigate this kind of issue, the group of issuers may elect to use a common s
 #### Uncovering the claim value where the number of possible values is limited
 
 When the number of possible values of the claim is limited, it is trivial to uncover the actual value from the salt and the hash. 
-It suffices to iterate over the possible values with the provided hash. 
-
-To mitigate this kind of issue, the issuer may add a random string to provide entropy at the end of the actual value with an appropriate delimiter in the case the value is a string. For other data types like boolean, some other mechanisms should be considered, e.g., defining a transform from boolean to a string using the entropy string. 
+It suffices to iterate over the possible values with the provided hash. Therefore, it is critical to keep the secrecy of 
+the corresponding hash value for the claims of which values are not disclosed. This may be harder to do than said 
+as the hash values are sent to various parties and hashed claims values are available to all the parties that received SD-JWT-R. 
+Dynamically generating the claim set that only include the claims of which values are to be exposed is safer. 
 
 
 ### Unlinkability
