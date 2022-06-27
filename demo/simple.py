@@ -40,7 +40,7 @@ print(f"User claims:\n{dumps(FULL_USER_CLAIMS, indent=4)}")
 
 
 sd_jwt_payload, serialized_sd_jwt, svc_payload, serialized_svc = create_sd_jwt_and_svc(
-    FULL_USER_CLAIMS, ISSUER, ISSUER_KEY
+    FULL_USER_CLAIMS, ISSUER, ISSUER_KEY, HOLDER_KEY
 )
 
 print("Payload of the SD-JWT:\n" + dumps(sd_jwt_payload, indent=4) + "\n\n")
@@ -109,6 +109,9 @@ if "--replace" in sys.argv:
     replacements = {
         "example-simple-sd-jwt-claims": dumps(FULL_USER_CLAIMS, indent=EXAMPLE_INDENT),
         "example-simple-sd-jwt-payload": dumps(sd_jwt_payload, indent=EXAMPLE_INDENT),
+        "example-simple-sd-jwt-encoded": fill(
+            serialized_sd_jwt, width=EXAMPLE_MAX_WIDTH, break_on_hyphens=False
+        ),
         "example-simple-combined-sd-jwt-svc": fill(
             combined_sd_jwt_svc, width=EXAMPLE_MAX_WIDTH, break_on_hyphens=False
         ),
