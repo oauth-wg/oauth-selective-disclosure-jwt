@@ -445,10 +445,8 @@ separator.
 
 The SVC and SD-JWT are implicitly linked through the hash values of the claims
 in the SVC that is included in the SD-JWT. To ensure that the correct SVC and 
-SD-JWT pairings are being used, the holder should verify that all the claims 
-in the SVC are present in the SD-JWT, that there are no claims in the SD-JWT 
-that are not in the SVC and that the hashes of the claims in the SVC match 
-those in the SD-JWT.
+SD-JWT pairings are being used, the holder should verify the binding between
+SVC and SD-JWT, as defined in the Verification Section of this document.
 
 For Example 1, the combined format looks as follows:
 
