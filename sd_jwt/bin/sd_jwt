@@ -117,7 +117,7 @@ else:
 
 print("# Creating the SD-JWT")
 
-# TThey may came from a custom python settings file :-)
+# They may came from a custom python settings file :-)
 jwk_kwargs = {
     "iss_key": ISSUER_KEY_DICT,
     "holder_key": HOLDER_KEY_DICT,
