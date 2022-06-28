@@ -651,18 +651,18 @@ The verifier MUST always check the SD-JWT signature to ensure that the SD-JWT
 has not been tampered with since its issuance. If the signature on the SD-JWT
 cannot be verified, the SD-JWT MUST be rejected. 
 
-## Entropy of the salt
+## Entropy and Uniqueness of the salt
 
 The security model relies on the fact that the salt is not learned or guessed by
 the attacker. It is vitally important to adhere to this principle. As such, the
-salt has to be created in such a manner that it is cryptographically random,
+salt MUST be created in such a manner that it is cryptographically random,
 long enough and has high entropy that it is not practical for the attacker to
-guess.
+guess. Each salt value MUST be unique.
 
 ## Minimum length of the salt
 
 The length of the randomly-generated portion of the salt MUST be at least 128 bits.
- 
+
 
 ## Choice of a hash function
 
