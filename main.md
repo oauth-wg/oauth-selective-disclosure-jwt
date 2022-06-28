@@ -253,7 +253,7 @@ subset of the same mapping).
 
 An SD-JWT is a JWT that MUST be signed using the issuer's private key. The
 payload of an SD-JWT MUST contain the `sd_digests` and `hash_alg` claims
-described in the following sections, and MAY contain a holder's public key or a reference
+described in the following, and MAY contain a holder's public key or a reference
 thereto, as well as further claims such as `iss`, `iat`, etc. as defined or
 required by the application using SD-JWTs.
 
