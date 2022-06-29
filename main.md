@@ -312,7 +312,6 @@ holder and issuer MAY use pre-established key material.
 
 Note: need to define how holder public key is included, right now examples are using `sub_jwk` I think.
 
-
 ## Example 1: SD-JWT
 
 This example and Example 2 in the appendix use the following object as the set
@@ -442,7 +441,14 @@ values. The SVC therefore maps claim names to JSON-encoded arrays.
 
 For transporting the SVC together with the SD-JWT from the issuer to the holder,
 the SVC is base64url-encoded and appended to the SD-JWT using a period character `.` as the
-separator. For Example 1, the combined format looks as follows:
+separator. 
+
+The SVC and SD-JWT are implicitly linked through the hash values of the claims
+in the SVC that is included in the SD-JWT. To ensure that the correct SVC and 
+SD-JWT pairings are being used, the holder SHOULD verify the binding between
+SVC and SD-JWT as defined in the Verification Section of this document.
+
+For Example 1, the combined format looks as follows:
 
 {#example-simple-combined-sd-jwt-svc}
 ```
@@ -596,6 +602,14 @@ HXHIka0SGRaOh8x6v5-rCQJl_IbM8wb7CSHvQ
 (Line breaks for presentation only.)
 
 # Verification
+
+## Verification by the Holder when Receiving SD-JWT and SVC
+
+The holder SHOULD verify the binding between SD-JWT and SVC by performing the following steps:
+ 1. Check that all the claims in the SVC are present in the SD-JWT and that there are no claims in the SD-JWT that are not in the SVC
+ 2. Check that the hashes of the claims in the SVC match those in the SD-JWT
+
+## Verification by the Verifier when Receiving SD-JWT and SD-JWT-R
 
 Verifiers MUST follow [@RFC8725] for checking the SD-JWT and, if signed, the
 SD-JWT Release.
