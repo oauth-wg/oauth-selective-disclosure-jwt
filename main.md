@@ -605,9 +605,9 @@ HXHIka0SGRaOh8x6v5-rCQJl_IbM8wb7CSHvQ
 
 ## Verification by the Holder when Receiving SD-JWT and SVC
 
-The holder SHOULD verify the binding between SD-JWT and SVC by following the following steps:
+The holder SHOULD verify the binding between SD-JWT and SVC by performing the following steps:
  1. Check that all the claims in the SVC are present in the SD-JWT and that there are no claims in the SD-JWT that are not in the SVC
- 2. Check and that the hashes of the claims in the SVC match those in the SD-JWT
+ 2. Check that the hashes of the claims in the SVC match those in the SD-JWT
 
 ## Verification by the Verifier when Receiving SD-JWT and SD-JWT-R
 
