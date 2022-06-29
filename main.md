@@ -348,7 +348,6 @@ be disclosed in full.
     "n": "pm4bOHBg-oYhAyPWzR56AWX3rUIXp11_ICDkGgS6W3ZWLts-hzwI3x65659kg4hVo9dbGoCJE3ZGF_eaetE30UhBUEgpGwrDrQiJ9zqprmcFfr3qvvkGjtth8Zgl1eM2bJcOwE7PCBHWTKWYs152R7g6Jg2OVph-a8rq-q79MhKG5QoW_mTz10QT_6H4c7PjWG1fjh8hpWNnbP_pv6d1zSwZfc5fl6yVRL0DV0V3lGHKe2Wqf_eNGjBrBLVklDTk8-stX_MWLcR-EGmXAOv0UBWitS_dXJKJu-vXJyw14nHSGuxTIK2hx1pttMft9CsvqimXKeDTU14qQL1eE7ihcw",
     "e": "AQAB"
   },
-  "hash_alg": "sha-256",
   "iat": 1516239022,
   "exp": 1516247022,
   "sd_digests": {
@@ -777,7 +776,6 @@ allows for the release of individual members of the address claim separately.
     "kty": "RSA",
     "n": "pcHdUSmbR3A8_eJcxaOWtk8wmrsxP7Fpl1DYVeNJRRYBS2kHLewBLAG4CpZDAB-AuuIkaGRyJdcISfN0Ujk4dBryUtdDvpJ-h4en-Zurrn_aQxF4VApBtgdWjzRksrBnzmp64_S89rsl6h-We-yKsVtmm4IB9Jr-9VlVRg03EXWMAmwUaQkDiKEhXxQH2f8QhNfhTOKAKb58AYwgz-CtzOQjr6p7o9yisDu2LtFi9RkctE1MZ8If3PPs7G53-GBL_7lH9kKuqUsXZQzBvBJl5AYf3beKS6QH1aPnFgZ-2a5lsEuKp44NMIT2h-uQd5eQ0bhQkPVeH7Yi-tGxMnaDdQ",
   },
-  "hash_alg": "sha-256",
   "iat": 1516239022,
   "exp": 1516247022,
   "sd_digests": {
@@ -908,7 +906,6 @@ The following shows the resulting SD-JWT payload:
     "n": "6bh1cbaN-fyTUTfawCabGpTSeHOWmsHuB-VZ0aoAKBAfH6MOeLolLYLMcgP1VCNa1CenudLRzm8ULvinMicmfCOumvyhq8wsgH1jIJDG_TVrupS6iZvthOtXPpkSXxDiiLxgmnLR5AlpWBKjrzXmX1jQ2V1gQlC2S2eN7t_CR-Jfj3yb4rTW20UyvhpOpy649CaYsAo3Ulq2oJpnG6rInX_XzYH86plJmYDUq07SoGIcdYYK6IyudZBh2bVxZ9aBuvkYQy11AFvXk2BP0RbTP1aOwwzS-LWahQJdsK5OiPLRrfTZ399h2I24VW3qXT2Zusq9tUNAlOWvh1K7umnpMw",
     "e": "AQAB"
   },
-  "hash_alg": "sha-256",
   "iat": 1516239022,
   "exp": 1516247022,
   "sd_digests": {
