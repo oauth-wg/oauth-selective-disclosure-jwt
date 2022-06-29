@@ -7,7 +7,9 @@ Written in markdown for the [mmark processor](https://github.com/mmarkdown/mmark
 
 This is a GitHub repository for a draft specification in [IETF OAuth WG](https://datatracker.ietf.org/doc/draft-fett-oauth-selective-disclosure-jwt/)
 
-For a latest version of an htmlized draft, please see https://datatracker.ietf.org/doc/html/draft-fett-selective-disclosure-jwt
+For the latest version of the IETF draft, please see https://datatracker.ietf.org/doc/html/draft-fett-selective-disclosure-jwt
+
+For the current version in this repository, see [main.md](main.md).
 
 ## Updating Examples
 
