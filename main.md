@@ -313,7 +313,6 @@ holder and issuer MAY use pre-established key material.
 
 Note: need to define how holder public key is included, right now examples are using `sub_jwk` I think.
 
-
 ## Example 1: SD-JWT
 
 This example and Example 2 in the appendix use the following object as the set
@@ -350,7 +349,6 @@ be disclosed in full.
     "n": "pm4bOHBg-oYhAyPWzR56AWX3rUIXp11_ICDkGgS6W3ZWLts-hzwI3x65659kg4hVo9dbGoCJE3ZGF_eaetE30UhBUEgpGwrDrQiJ9zqprmcFfr3qvvkGjtth8Zgl1eM2bJcOwE7PCBHWTKWYs152R7g6Jg2OVph-a8rq-q79MhKG5QoW_mTz10QT_6H4c7PjWG1fjh8hpWNnbP_pv6d1zSwZfc5fl6yVRL0DV0V3lGHKe2Wqf_eNGjBrBLVklDTk8-stX_MWLcR-EGmXAOv0UBWitS_dXJKJu-vXJyw14nHSGuxTIK2hx1pttMft9CsvqimXKeDTU14qQL1eE7ihcw",
     "e": "AQAB"
   },
-  "hash_alg": "sha-256",
   "iat": 1516239022,
   "exp": 1516247022,
   "sd_digests": {
@@ -442,7 +440,14 @@ digests. The SVC therefore maps claim names to JSON-encoded arrays.
 
 For transporting the SVC together with the SD-JWT from the issuer to the holder,
 the SVC is base64url-encoded and appended to the SD-JWT using a period character `.` as the
-separator. For Example 1, the combined format looks as follows:
+separator. 
+
+The SVC and SD-JWT are implicitly linked through the hash values of the claims
+in the SVC that is included in the SD-JWT. To ensure that the correct SVC and 
+SD-JWT pairings are being used, the holder SHOULD verify the binding between
+SVC and SD-JWT as defined in the Verification Section of this document.
+
+For Example 1, the combined format looks as follows:
 
 {#example-simple-combined-sd-jwt-svc}
 ```
@@ -597,6 +602,14 @@ HXHIka0SGRaOh8x6v5-rCQJl_IbM8wb7CSHvQ
 
 # Verification
 
+## Verification by the Holder when Receiving SD-JWT and SVC
+
+The holder SHOULD verify the binding between SD-JWT and SVC by performing the following steps:
+ 1. Check that all the claims in the SVC are present in the SD-JWT and that there are no claims in the SD-JWT that are not in the SVC
+ 2. Check that the hashes of the claims in the SVC match those in the SD-JWT
+
+## Verification by the Verifier when Receiving SD-JWT and SD-JWT-R
+
 Verifiers MUST follow [@RFC8725] for checking the SD-JWT and, if signed, the
 SD-JWT Release.
 
@@ -651,17 +664,17 @@ The verifier MUST always check the SD-JWT signature to ensure that the SD-JWT
 has not been tampered with since its issuance. If the signature on the SD-JWT
 cannot be verified, the SD-JWT MUST be rejected. 
 
-## Entropy of the salt
+## Entropy and Uniqueness of the salt
 
 The security model relies on the fact that the salt is not learned or guessed by
 the attacker. It is vitally important to adhere to this principle. As such, the
-salt has to be created in such a manner that it is cryptographically random,
+salt MUST be created in such a manner that it is cryptographically random,
 long enough and has high entropy that it is not practical for the attacker to
-guess.
+guess. Each salt value MUST be unique.
 
 ## Minimum length of the salt
 
-The length of the randomly-generated portion of the salt SHOULD be at least 128 bits.
+The length of the randomly-generated portion of the salt MUST be at least 128 bits.
 
 ## Choice of a hash function
 
@@ -763,7 +776,6 @@ allows for the release of individual members of the address claim separately.
     "kty": "RSA",
     "n": "pcHdUSmbR3A8_eJcxaOWtk8wmrsxP7Fpl1DYVeNJRRYBS2kHLewBLAG4CpZDAB-AuuIkaGRyJdcISfN0Ujk4dBryUtdDvpJ-h4en-Zurrn_aQxF4VApBtgdWjzRksrBnzmp64_S89rsl6h-We-yKsVtmm4IB9Jr-9VlVRg03EXWMAmwUaQkDiKEhXxQH2f8QhNfhTOKAKb58AYwgz-CtzOQjr6p7o9yisDu2LtFi9RkctE1MZ8If3PPs7G53-GBL_7lH9kKuqUsXZQzBvBJl5AYf3beKS6QH1aPnFgZ-2a5lsEuKp44NMIT2h-uQd5eQ0bhQkPVeH7Yi-tGxMnaDdQ",
   },
-  "hash_alg": "sha-256",
   "iat": 1516239022,
   "exp": 1516247022,
   "sd_digests": {
@@ -894,7 +906,6 @@ The following shows the resulting SD-JWT payload:
     "n": "6bh1cbaN-fyTUTfawCabGpTSeHOWmsHuB-VZ0aoAKBAfH6MOeLolLYLMcgP1VCNa1CenudLRzm8ULvinMicmfCOumvyhq8wsgH1jIJDG_TVrupS6iZvthOtXPpkSXxDiiLxgmnLR5AlpWBKjrzXmX1jQ2V1gQlC2S2eN7t_CR-Jfj3yb4rTW20UyvhpOpy649CaYsAo3Ulq2oJpnG6rInX_XzYH86plJmYDUq07SoGIcdYYK6IyudZBh2bVxZ9aBuvkYQy11AFvXk2BP0RbTP1aOwwzS-LWahQJdsK5OiPLRrfTZ399h2I24VW3qXT2Zusq9tUNAlOWvh1K7umnpMw",
     "e": "AQAB"
   },
-  "hash_alg": "sha-256",
   "iat": 1516239022,
   "exp": 1516247022,
   "sd_digests": {
