@@ -1,3 +1,2 @@
 flake8
-autopep8
-autoflake
+black
