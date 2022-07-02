@@ -782,25 +782,26 @@ allows for the release of individual members of the address claim separately.
   "iss": "https://example.com/issuer",
   "sub_jwk": {
     "kty": "RSA",
-    "n": "pcHdUSmbR3A8_eJcxaOWtk8wmrsxP7Fpl1DYVeNJRRYBS2kHLewBLAG4CpZDAB-AuuIkaGRyJdcISfN0Ujk4dBryUtdDvpJ-h4en-Zurrn_aQxF4VApBtgdWjzRksrBnzmp64_S89rsl6h-We-yKsVtmm4IB9Jr-9VlVRg03EXWMAmwUaQkDiKEhXxQH2f8QhNfhTOKAKb58AYwgz-CtzOQjr6p7o9yisDu2LtFi9RkctE1MZ8If3PPs7G53-GBL_7lH9kKuqUsXZQzBvBJl5AYf3beKS6QH1aPnFgZ-2a5lsEuKp44NMIT2h-uQd5eQ0bhQkPVeH7Yi-tGxMnaDdQ",
+    "n": "pm4bOHBg-oYhAyPWzR56AWX3rUIXp11_ICDkGgS6W3ZWLts-hzwI3x65659kg4hVo9dbGoCJE3ZGF_eaetE30UhBUEgpGwrDrQiJ9zqprmcFfr3qvvkGjtth8Zgl1eM2bJcOwE7PCBHWTKWYs152R7g6Jg2OVph-a8rq-q79MhKG5QoW_mTz10QT_6H4c7PjWG1fjh8hpWNnbP_pv6d1zSwZfc5fl6yVRL0DV0V3lGHKe2Wqf_eNGjBrBLVklDTk8-stX_MWLcR-EGmXAOv0UBWitS_dXJKJu-vXJyw14nHSGuxTIK2hx1pttMft9CsvqimXKeDTU14qQL1eE7ihcw",
+    "e": "AQAB"
   },
-  "iat": 1516239022,
-  "exp": 1516247022,
+  "iat": 1656798541,
+  "exp": 1656799441,
+  "hash_alg": "sha-256",
   "sd_digests": {
-    "sub": "LbnhkOr5oS7KjeUrxezAu8TG0CpWz0jSixy6tffuo04",
-    "given_name": "fUMdn88aaoyKTHrvZd6AuLmPraGhPJ0zF5r_JhxCVZs",
-    "family_name": "9h5vgv6TpFV6GmnPtugiMLl5tHetHeb5X_2cKHjN7cw",
-    "email": "fPZ92dtYMCN2Nb-2ac_zSH19p4yakUXrZl_-wSgaazA",
-    "phone_number": "QdSffzNzzd0n60MsSmuiKj6Y6Enk2b-BS-KtEePde5M",
+    "sub": "z4xgEco94diTaSruISPiE7o_wtmcOfnH_8R7X9Pa578",
+    "given_name": "PvU7cWjuHUq6w-i9XFpQZhjT-uprQL3GH3mKsAJl0e0",
+    "family_name": "H-Relr4cEBMlenyK1gvyx16QVpnt4MEclT5tP0aTLFU",
+    "email": "ET2A1JQLF85ZpBulh6UFstGrSfR4B3KM-bjQVllhxqY",
+    "phone_number": "SJnciB2DIRVA5cXBrdKoH6n45788mZyUn2rnv74uMVU",
     "address": {
-      "street_address": "4FpVpd563Owh9G3HkGNTN9FiSHT0e6y9-Abk_IuG86M",
-      "locality": "Kr0BpdZz6yU8HMhjyYHh1EEgJxeUyLIpJEi47iXhp8Y",
-      "region": "QXxWKvcV4Bc9t3M7MF43W5vdCnWtA9hsYX8ycWLu1LQ",
-      "country": "3itkoMzrDrinn7T0MUbAmrMm1ya1LzbBgif_50WoFOs"
+      "street_address": "O7_Isd6CmZqcSobPVpMgmJwB41hPUHHG8jg5LJ8YzfY",
+      "locality": "w-zTF6ljkQLTvVyp_JNyD3t5Waj-B2vb0AXH1q8OsjI",
+      "region": "nTvoKpGA6YQwEZipVBIM4WVH9KWEnwiqsRjEhrxhQz4",
+      "country": "u-O1yDQqDTTqOgUBSjWilgkMLzg_QOTELMfZrRT5e6k"
     },
-    "birthdate": "fvLCnDm3r4VSYcBF3pIlXP4ulEoHuHOfG_YmFZEuxpQ"
-  },
-  "hash_alg": "sha-256"
+    "birthdate": "TipyoxD43PZJF8ZEmKPrbxMElpFX_M7aBLkUpC-W53o"
+  }
 }
 ```
 
@@ -810,18 +811,18 @@ The SVC for this SD-JWT is as follows:
 ```json
 {
   "sd_release": {
-    "sub": "[\"eluV5Og3gSNII8EYnsxA_A\", \"6c5c0a49-b589-431d-bae7-219122a9ec2c\"]",
-    "given_name": "[\"6Ij7tM-a5iVPGboS5tmvVA\", \"John\"]",
-    "family_name": "[\"eI8ZWm9QnKPpNPeNenHdhQ\", \"Doe\"]",
-    "email": "[\"Qg_O64zqAxe412a108iroA\", \"johndoe@example.com\"]",
-    "phone_number": "[\"AJx-095VPrpTtN4QMOqROA\", \"+1-202-555-0101\"]",
+    "sub": "[\"2GLC42sKQveCfGfryNRN9w\", \"6c5c0a49-b589-431d-bae7-219122a9ec2c\"]",
+    "given_name": "[\"eluV5Og3gSNII8EYnsxA_A\", \"John\"]",
+    "family_name": "[\"6Ij7tM-a5iVPGboS5tmvVA\", \"Doe\"]",
+    "email": "[\"eI8ZWm9QnKPpNPeNenHdhQ\", \"johndoe@example.com\"]",
+    "phone_number": "[\"Qg_O64zqAxe412a108iroA\", \"+1-202-555-0101\"]",
     "address": {
-      "street_address": "[\"Pc33JM2LchcU_lHggv_ufQ\", \"123 Main St\"]",
-      "locality": "[\"G02NSrQfjFXQ7Io09syajA\", \"Anytown\"]",
-      "region": "[\"lklxF5jMYlGTPUovMNIvCA\", \"Anystate\"]",
-      "country": "[\"nPuoQnkRFq3BIeAm7AnXFA\", \"US\"]"
+      "street_address": "[\"AJx-095VPrpTtN4QMOqROA\", \"123 Main St\"]",
+      "locality": "[\"Pc33JM2LchcU_lHggv_ufQ\", \"Anytown\"]",
+      "region": "[\"G02NSrQfjFXQ7Io09syajA\", \"Anystate\"]",
+      "country": "[\"lklxF5jMYlGTPUovMNIvCA\", \"US\"]"
     },
-    "birthdate": "[\"5bPs1IquZNa0hkaFzzzZNw\", \"1940-01-01\"]"
+    "birthdate": "[\"nPuoQnkRFq3BIeAm7AnXFA\", \"1940-01-01\"]"
   }
 }
 ```
@@ -832,15 +833,15 @@ the `address` property:
 {#example-simple_structured-release-payload}
 ```json
 {
-  "nonce": "2GLC42sKQveCfGfryNRN9w",
-  "aud": "https://example.com/verifier",
+  "nonce": "_XYz2toJ9Qj8bcRM-_DeBA",
+  "aud": "https://example.com/issuer",
   "sd_release": {
-    "given_name": "[\"6Ij7tM-a5iVPGboS5tmvVA\", \"John\"]",
-    "family_name": "[\"eI8ZWm9QnKPpNPeNenHdhQ\", \"Doe\"]",
-    "birthdate": "[\"5bPs1IquZNa0hkaFzzzZNw\", \"1940-01-01\"]",
+    "given_name": "[\"eluV5Og3gSNII8EYnsxA_A\", \"John\"]",
+    "family_name": "[\"6Ij7tM-a5iVPGboS5tmvVA\", \"Doe\"]",
+    "birthdate": "[\"nPuoQnkRFq3BIeAm7AnXFA\", \"1940-01-01\"]",
     "address": {
-      "region": "[\"lklxF5jMYlGTPUovMNIvCA\", \"Anystate\"]",
-      "country": "[\"nPuoQnkRFq3BIeAm7AnXFA\", \"US\"]"
+      "region": "[\"G02NSrQfjFXQ7Io09syajA\", \"Anystate\"]",
+      "country": "[\"lklxF5jMYlGTPUovMNIvCA\", \"US\"]"
     }
   }
 }
