@@ -609,13 +609,13 @@ trusting/using any of the contents of an SD-JWT:
  2. Check that the presentation consists of six period-separated (`.`) elements; if holder binding is not required, the last element can be empty.
  3. Separate the SD-JWT from the SD-JWT Release.
  4. Validate the SD-JWT:
-    1. Ensure that a signing algorithm was used that was deemed secure for the application. Refer to [@RFC8725], Sections 3.1 and 3.2 for details.
-    2. Validate the signature over the SD-JWT. 
-    3. Validate the issuer of the SD-JWT and that the signing key belongs to this issuer.
-    4. Check that the SD-JWT is valid using `nbf`, `iat`, and `exp` claims, if provided in the SD-JWT.
-    5. Check that the claim `sd_digests` is present in the SD-JWT.
-    6. Check that the `hash_alg` claim is present and its value is understand
-       and the hash algorithm deemed secure.
+    1. Check that the `typ` JOSE header parameter has the value sd+jwt
+    2. Ensure that a signing algorithm was used that was deemed secure for the application. Refer to [@RFC8725], Sections 3.1 and 3.2 for details.
+    3. Validate the signature over the SD-JWT. 
+    4. Validate the issuer of the SD-JWT and that the signing key belongs to this issuer.
+    5. Check that the SD-JWT is valid using `nbf`, `iat`, and `exp` claims, if provided in the SD-JWT.
+    6. Check that the claim `sd_digests` is present in the SD-JWT.
+    7. Check that the `hash_alg` claim is present and its value is understand and the hash algorithm deemed secure.
  5. Validate the SD-JWT Release:
     1. If holder binding is required, validate the signature over the SD-JWT using the same steps as for the SD-JWT plus the following steps:
        1. Determine that the public key for the private key that used to sign the SD-JWT-R is bound to the SD-JWT, i.e., the SD-JWT either contains a reference to the public key or contains the public key itself.
