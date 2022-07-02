@@ -257,11 +257,7 @@ described in the following, and MAY contain a holder's public key or a reference
 thereto, as well as further claims such as `iss`, `iat`, etc. as defined or
 required by the application using SD-JWTs.
 
-The SD-JWTs MUST be explicitly typed, by setting the `typ` header 
-parameter to `sd+jwt`. This is done to prevent cross-JWT 
-confusion (see "RFC8725", section 3.11).
-
-
+A `typ` parameter in the JOSE header of an SD-JWT MUST be set to the value `sd+jwt`.
 ### `sd_digests` Claim (Digests of Selectively Disclosable Claims)
 
 An SD-JWT MUST include hashes of the salted claim values that are included by the issuer
