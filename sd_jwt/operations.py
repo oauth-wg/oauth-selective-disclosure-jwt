@@ -13,7 +13,7 @@ from jwcrypto.jwk import JWK
 from sd_jwt.utils import pad_urlsafe_b64
 from sd_jwt.walk import by_structure as walk_by_structure
 from sd_jwt import (
-    DEFAULT_SIGNIGN_ALG, 
+    DEFAULT_SIGNING_ALG, 
     SD_CLAIMS_KEY,
     SD_DIGESTS_KEY,
     HASH_ALG_KEY
@@ -81,7 +81,7 @@ def create_sd_jwt_and_svc(
 
     _iat = iat or int(datetime.datetime.utcnow().timestamp())
     _exp = exp or _iat + (DEFAULT_EXP_MINS * 60)
-    _alg = sign_alg or DEFAULT_SIGNIGN_ALG
+    _alg = sign_alg or DEFAULT_SIGNING_ALG
     
     # Create the JWS payload
     sd_jwt_payload = {
@@ -132,7 +132,7 @@ def create_release_jwt(
         )
     )[SD_CLAIMS_KEY]
     
-    _alg = sign_alg or DEFAULT_SIGNIGN_ALG
+    _alg = sign_alg or DEFAULT_SIGNING_ALG
     sd_jwt_r_struct = walk_by_structure(
         hash_raw_values, disclosed_claims, lambda _, __, raw: raw
     )
@@ -195,7 +195,7 @@ def _verify_sd_jwt_release(
     expected_nonce=None,
     holder_public_key_payload=None, sign_alg = None
 ):
-    _alg = sign_alg or DEFAULT_SIGNIGN_ALG
+    _alg = sign_alg or DEFAULT_SIGNING_ALG
     parsed_input_sd_jwt_release = JWS()
     parsed_input_sd_jwt_release.deserialize(sd_jwt_release)
     if holder_public_key and holder_public_key_payload:
