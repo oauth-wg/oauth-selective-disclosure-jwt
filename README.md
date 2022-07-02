@@ -7,11 +7,6 @@ Written in markdown for the [mmark processor](https://github.com/mmarkdown/mmark
 
 ## Running SD-JWT PoC
 
-On Debian/Ubuntu systems, you can instead use the packaged version:
-```
-sudo apt install python3-jwcrypto
-```
-
 All examples in the document are created from [actual running code](sd_jwt/bin/sd_jwt). To run this code, install sd_jwt:
 ```
 pip3 install .

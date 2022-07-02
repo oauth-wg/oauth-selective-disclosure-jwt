@@ -33,7 +33,10 @@ parser.add_argument(
         'complex',
     ),
     default='structured',
-    help="Debug level, see python logging; defaults to INFO if omitted"
+    help=(
+        "Produces examples of SD-JWT with different structures, "
+        "see sd_jwt/demo_settings.py for a quick overview of these"
+    )
 )
 parser.add_argument(
     '-d', '--debug', required=False,
