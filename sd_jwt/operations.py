@@ -12,12 +12,7 @@ from jwcrypto.jwk import JWK
 
 from sd_jwt.utils import pad_urlsafe_b64
 from sd_jwt.walk import by_structure as walk_by_structure
-from sd_jwt import (
-    DEFAULT_SIGNING_ALG, 
-    SD_CLAIMS_KEY,
-    SD_DIGESTS_KEY,
-    HASH_ALG_KEY
-)
+from sd_jwt import DEFAULT_SIGNING_ALG, SD_CLAIMS_KEY, SD_DIGESTS_KEY, HASH_ALG_KEY
 
 DEFAULT_EXP_MINS = 15
 HASH_ALG = {"name": "sha-256", "fn": sha256}
@@ -35,17 +30,15 @@ def generate_salt():
 
 def hash_raw(raw):
     # Calculate the SHA 256 hash and output it base64 encoded
-    return urlsafe_b64encode(
-        HASH_ALG['fn'](raw).digest()
-    ).decode("ascii").strip("=")
+    return urlsafe_b64encode(HASH_ALG["fn"](raw).digest()).decode("ascii").strip("=")
 
 
 def hash_claim(salt, value, return_raw=False):
-    #raw = f"{salt}{value}"
+    # raw = f"{salt}{value}"
     raw = dumps([salt, value])
     if return_raw:
         return raw
-        #return [salt, value]
+        # return [salt, value]
     # Calculate the SHA 256 hash and output it base64 encoded
     return hash_raw(raw.encode())
 
@@ -68,21 +61,27 @@ def _create_svc_entry(key, value: str, salt: str) -> str:
 
 
 def create_sd_jwt_and_svc(
-    user_claims: dict, issuer: str, issuer_key, holder_key, claim_structure: dict = {},
-    iat: Union[int, None] = None, exp: Union[int, None] = None, sign_alg = None
+    user_claims: dict,
+    issuer: str,
+    issuer_key,
+    holder_key,
+    claim_structure: dict = {},
+    iat: Union[int, None] = None,
+    exp: Union[int, None] = None,
+    sign_alg=None,
 ):
     """
     Create the SD-JWT
     """
     # something like: {'sub': 'zyZQuxk2AUv5_Z_RAMxh9Q', 'given_name': 'EpCuoArhQK6MjmO6D-Bi6w' ...
     salts = walk_by_structure(
-        claim_structure, user_claims, lambda _, __, ___ = None: generate_salt()
+        claim_structure, user_claims, lambda _, __, ___=None: generate_salt()
     )
 
     _iat = iat or int(datetime.datetime.utcnow().timestamp())
     _exp = exp or _iat + (DEFAULT_EXP_MINS * 60)
     _alg = sign_alg or DEFAULT_SIGNING_ALG
-    
+
     # Create the JWS payload
     sd_jwt_payload = {
         "iss": issuer,
@@ -90,20 +89,16 @@ def create_sd_jwt_and_svc(
         "iat": _iat,
         "exp": _exp,
         HASH_ALG_KEY: HASH_ALG["name"],
-        SD_DIGESTS_KEY: walk_by_structure(salts, user_claims, _create_sd_claim_entry)
+        SD_DIGESTS_KEY: walk_by_structure(salts, user_claims, _create_sd_claim_entry),
     }
 
     # Sign the SD-JWT using the issuer's key
     sd_jwt = JWS(payload=dumps(sd_jwt_payload))
-    _headers = {
-        "alg": _alg,
-        "typ": "sd-jwt",
-        "kid": issuer_key.thumbprint()
-    }
+    _headers = {"alg": _alg, "typ": "sd-jwt", "kid": issuer_key.thumbprint()}
     sd_jwt.add_signature(
         issuer_key,
-        alg = _alg,
-        protected = dumps(_headers),
+        alg=_alg,
+        protected=dumps(_headers),
     )
     serialized_sd_jwt = sd_jwt.serialize(compact=True)
     # Create the SVC
@@ -112,9 +107,7 @@ def create_sd_jwt_and_svc(
         # "sub_jwk_private": issuer_key.export_private(as_dict=True),
     }
     serialized_svc = (
-        urlsafe_b64encode(dumps(svc_payload).encode())
-        .decode("ascii")
-        .strip("=")
+        urlsafe_b64encode(dumps(svc_payload).encode()).decode("ascii").strip("=")
     )
 
     # Return the JWS
@@ -122,16 +115,18 @@ def create_sd_jwt_and_svc(
 
 
 def create_release_jwt(
-    nonce:str, aud:str, disclosed_claims:dict, 
-    serialized_svc:dict, holder_key:dict, sign_alg:str = None
+    nonce: str,
+    aud: str,
+    disclosed_claims: dict,
+    serialized_svc: dict,
+    holder_key: dict,
+    sign_alg: str = None,
 ):
     # Reconstruct hash raw values (salt+claim value) from serialized_svc
-    hash_raw_values = loads(
-        urlsafe_b64decode(
-            pad_urlsafe_b64(serialized_svc)
-        )
-    )[SD_CLAIMS_KEY]
-    
+    hash_raw_values = loads(urlsafe_b64decode(pad_urlsafe_b64(serialized_svc)))[
+        SD_CLAIMS_KEY
+    ]
+
     _alg = sign_alg or DEFAULT_SIGNING_ALG
     sd_jwt_r_struct = walk_by_structure(
         hash_raw_values, disclosed_claims, lambda _, __, raw: raw
@@ -148,11 +143,7 @@ def create_release_jwt(
         holder_key,
         alg=_alg,
         protected=dumps(
-            {
-                "alg": _alg,
-                "kid": holder_key.thumbprint(),
-                "typ": "sd-r+jwt"
-            }
+            {"alg": _alg, "kid": holder_key.thumbprint(), "typ": "sd-r+jwt"}
         ),
     )
     serialized_sd_jwt_release = sd_jwt_release.serialize(compact=True)
@@ -160,9 +151,7 @@ def create_release_jwt(
     return sd_jwt_release_payload, serialized_sd_jwt_release
 
 
-def _verify_sd_jwt(
-    sd_jwt, issuer_public_key, expected_issuer, sign_alg:str = None
-):
+def _verify_sd_jwt(sd_jwt, issuer_public_key, expected_issuer, sign_alg: str = None):
     parsed_input_sd_jwt = JWS()
     parsed_input_sd_jwt.deserialize(sd_jwt)
     parsed_input_sd_jwt.verify(issuer_public_key, alg=sign_alg)
@@ -193,7 +182,8 @@ def _verify_sd_jwt_release(
     holder_public_key=None,
     expected_aud=None,
     expected_nonce=None,
-    holder_public_key_payload=None, sign_alg = None
+    holder_public_key_payload=None,
+    sign_alg=None,
 ):
     _alg = sign_alg or DEFAULT_SIGNING_ALG
     parsed_input_sd_jwt_release = JWS()
@@ -204,8 +194,7 @@ def _verify_sd_jwt_release(
         if not holder_public_key == pubkey:
             raise ValueError("sub_jwk is not matching with HOLDER Public Key.")
     if holder_public_key:
-        parsed_input_sd_jwt_release.verify(
-            holder_public_key, alg=_alg)
+        parsed_input_sd_jwt_release.verify(holder_public_key, alg=_alg)
 
     sd_jwt_release_payload = loads(parsed_input_sd_jwt_release.payload)
 
@@ -254,8 +243,7 @@ def verify(
 
     parts = combined_presentation.split(".")
     if len(parts) != 6:
-        raise ValueError(
-            "Invalid number of parts in the combined presentation")
+        raise ValueError("Invalid number of parts in the combined presentation")
 
     # Verify the SD-JWT
     input_sd_jwt = ".".join(parts[:3])

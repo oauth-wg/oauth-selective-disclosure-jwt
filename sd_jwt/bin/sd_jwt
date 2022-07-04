@@ -26,7 +26,7 @@ parser = argparse.ArgumentParser(
     formatter_class=argparse.RawTextHelpFormatter
 )
 parser.add_argument(
-    '-t', '--type', required=False,
+    '--example', required=False,
     choices=(
         'simple',
         'structured',
@@ -118,133 +118,136 @@ if _args.settings_path:
 else:
     from sd_jwt.demo_settings import *
 
-print("# Creating the SD-JWT")
+if _args.example:
 
-# They may came from a custom python settings file :-)
-jwk_kwargs = {
-    "iss_key": ISSUER_KEY_DICT,
-    "holder_key": HOLDER_KEY_DICT,
-    "key_size": DEFAULT_KEY_SIZE,
-    "kty": DEFAULT_KTY
-}
-_JWKS = get_jwk(jwk_kwargs, _args.no_randomness)
-ISSUER_KEY = _JWKS["ISSUER_KEY"]
-HOLDER_KEY = _JWKS["HOLDER_KEY"]
-ISSUER_PUBLIC_KEY = _JWKS["ISSUER_PUBLIC_KEY"]
-#
-
-if _args.type == 'simple':
-    SD_JWT_SCG_ARGS = (SIMPLE_USER_CLAIMS, ISSUER, ISSUER_KEY, HOLDER_KEY)
-    DISCLOSED_CLAIMS = SIMPLE_DISCLOSED_CLAIMS
-
-elif _args.type == 'structured':
-    SD_JWT_SCG_ARGS = (
-        SIMPLE_USER_CLAIMS, ISSUER, ISSUER_KEY, HOLDER_KEY, STRUCTURED_CLAIMS_STRUCTURE
-    )
-    DISCLOSED_CLAIMS = STRUCTURED_DISCLOSED_CLAIMS
-
-elif _args.type == 'complex':
-    SD_JWT_SCG_ARGS = (
-        COMPLEX_USER_CLAIMS, ISSUER, ISSUER_KEY, HOLDER_KEY, COMPLEX_CLAIMS_STRUCTURE
-    )
-    DISCLOSED_CLAIMS = COMPLEX_DISCLOSED_CLAIMS
-
-else:
-    raise NotImplementedError(_args.type)
-
-
-print_repr(
-    ("User claims", json.dumps(SD_JWT_SCG_ARGS[0], indent=_args.indent))
-)
-
-sd_jwt_payload, serialized_sd_jwt, svc_payload, serialized_svc = create_sd_jwt_and_svc(
-    *SD_JWT_SCG_ARGS, iat=_args.iat, exp=_args.exp
-)
-
-print_repr(("Payload of the SD-JWT:",
-           json.dumps(sd_jwt_payload, indent=_args.indent)))
-print_repr(("The serialized SD-JWT:", serialized_sd_jwt))
-print_repr(("Payload of the SD-JWT Salt/Value Container (SVC):",
-           json.dumps(svc_payload, indent=_args.indent)))
-print_repr(("The serialized SD-JWT Salt/Value Container (SVC):", serialized_svc))
-combined_sd_jwt_svc = f"{serialized_sd_jwt}{serialized_svc}"
-
-print("Serialized SD-JWT Salt/Value Container (SVC) decoded representation:")
-print_decoded_repr(serialized_sd_jwt)
-
-#####
-print("# Creating the SD-JWT-Release")
-sd_jwt_release_payload, serialized_sd_jwt_release = create_release_jwt(
-    _args.nonce, ISSUER, DISCLOSED_CLAIMS, serialized_svc, HOLDER_KEY
-)
-
-print_repr(
-    (
-        "Payload of the SD-JWT-Release:",
-        json.dumps(sd_jwt_release_payload, indent=_args.indent)
-    )
-)
-print_repr(("The serialized SD-JWT-Release:", serialized_sd_jwt_release))
-
-#######################################################################
-
-print("# Creating the Combined Presentation")
-# Combine both documents!
-combined_sd_jwt_sd_jwt_release = f"{serialized_sd_jwt}.{serialized_sd_jwt_release}"
-print_repr(("Combined Presentation:", combined_sd_jwt_sd_jwt_release))
-
-#######################################################################
-
-print("# Verification")
-# input: combined_sd_jwt_sd_jwt_release, holder_key, issuer_key
-vc = verify(
-    combined_sd_jwt_sd_jwt_release,
-    ISSUER_PUBLIC_KEY,
-    ISSUER,
-    HOLDER_KEY,
-    ISSUER,
-    _args.nonce,
-)
-
-print(f"Verified claims: {json.dumps(vc, indent=_args.indent)}")
-
-
-if _args.replace_examples_in:
-    from sd_jwt.replace_utils import *
-
-    logger.info("Replacing the placeholders in the main.md file")
-    replacements = {
-        "example-simple_structured-sd-jwt-claims": json.dumps(
-            SD_JWT_SCG_ARGS[0], indent=EXAMPLE_INDENT
-        ),
-        "example-simple_structured-sd-jwt-payload": json.dumps(
-            sd_jwt_payload, indent=EXAMPLE_INDENT
-        ),
-        "example-simple_structured-sd-jwt-encoded": fill(
-            combined_sd_jwt_svc, width=EXAMPLE_MAX_WIDTH, break_on_hyphens=False
-        ),
-        "example-simple_structured-svc-payload": json.dumps(
-            svc_payload, indent=EXAMPLE_INDENT
-        ),
-        "example-simple_structured-combined-encoded": fill(
-            combined_sd_jwt_sd_jwt_release,
-            width=EXAMPLE_MAX_WIDTH,
-            break_on_hyphens=False,
-        ),
-        "example-simple_structured-release-payload": json.dumps(
-            sd_jwt_release_payload, indent=EXAMPLE_INDENT
-        ),
-        "example-simple_structured-release-encoded": fill(
-            serialized_sd_jwt_release, width=EXAMPLE_MAX_WIDTH, break_on_hyphens=False
-        ),
-        "example-simple_structured-release-combined": fill(
-            combined_sd_jwt_sd_jwt_release,
-            width=EXAMPLE_MAX_WIDTH,
-            break_on_hyphens=False,
-        ),
+    print("# Creating the SD-JWT")
+    
+    # They may came from a custom python settings file :-)
+    jwk_kwargs = {
+        "iss_key": ISSUER_KEY_DICT,
+        "holder_key": HOLDER_KEY_DICT,
+        "key_size": DEFAULT_KEY_SIZE,
+        "kty": DEFAULT_KTY
     }
-    replace_all_in_main(
-        _args.replace_examples_in, 
-        replacements, 
-        ignore_missing_placeholders=True
+    _JWKS = get_jwk(jwk_kwargs, _args.no_randomness)
+    ISSUER_KEY = _JWKS["ISSUER_KEY"]
+    HOLDER_KEY = _JWKS["HOLDER_KEY"]
+    ISSUER_PUBLIC_KEY = _JWKS["ISSUER_PUBLIC_KEY"]
+    #
+    
+    if _args.example == 'simple':
+        SD_JWT_SCG_ARGS = (SIMPLE_USER_CLAIMS, ISSUER, ISSUER_KEY, HOLDER_KEY)
+        DISCLOSED_CLAIMS = SIMPLE_DISCLOSED_CLAIMS
+    
+    elif _args.example == 'structured':
+        SD_JWT_SCG_ARGS = (
+            SIMPLE_USER_CLAIMS, ISSUER, ISSUER_KEY, HOLDER_KEY, STRUCTURED_CLAIMS_STRUCTURE
+        )
+        DISCLOSED_CLAIMS = STRUCTURED_DISCLOSED_CLAIMS
+    
+    elif _args.example == 'complex':
+        SD_JWT_SCG_ARGS = (
+            COMPLEX_USER_CLAIMS, ISSUER, ISSUER_KEY, HOLDER_KEY, COMPLEX_CLAIMS_STRUCTURE
+        )
+        DISCLOSED_CLAIMS = COMPLEX_DISCLOSED_CLAIMS
+    
+    else:
+        raise NotImplementedError(_args.type)
+    
+    
+    print_repr(
+        ("User claims", json.dumps(SD_JWT_SCG_ARGS[0], indent=_args.indent))
     )
+    
+    sd_jwt_payload, serialized_sd_jwt, svc_payload, serialized_svc = create_sd_jwt_and_svc(
+        *SD_JWT_SCG_ARGS, iat=_args.iat, exp=_args.exp
+    )
+    
+    print_repr(("Payload of the SD-JWT:",
+               json.dumps(sd_jwt_payload, indent=_args.indent)))
+    print_repr(("The serialized SD-JWT:", serialized_sd_jwt))
+    print_repr(("Payload of the SD-JWT Salt/Value Container (SVC):",
+               json.dumps(svc_payload, indent=_args.indent)))
+    print_repr(("The serialized SD-JWT Salt/Value Container (SVC):", serialized_svc))
+    combined_sd_jwt_svc = f"{serialized_sd_jwt}{serialized_svc}"
+    
+    print("Serialized SD-JWT Salt/Value Container (SVC) decoded representation:")
+    print_decoded_repr(serialized_sd_jwt)
+    
+    #####
+    print("# Creating the SD-JWT-Release")
+    sd_jwt_release_payload, serialized_sd_jwt_release = create_release_jwt(
+        _args.nonce, ISSUER, DISCLOSED_CLAIMS, serialized_svc, HOLDER_KEY
+    )
+    
+    print_repr(
+        (
+            "Payload of the SD-JWT-Release:",
+            json.dumps(sd_jwt_release_payload, indent=_args.indent)
+        )
+    )
+    print_repr(("The serialized SD-JWT-Release:", serialized_sd_jwt_release))
+    
+    #######################################################################
+    
+    print("# Creating the Combined Presentation")
+    # Combine both documents!
+    combined_sd_jwt_sd_jwt_release = f"{serialized_sd_jwt}.{serialized_sd_jwt_release}"
+    print_repr(("Combined Presentation:", combined_sd_jwt_sd_jwt_release))
+    
+    #######################################################################
+    
+    print("# Verification")
+    # input: combined_sd_jwt_sd_jwt_release, holder_key, issuer_key
+    vc = verify(
+        combined_sd_jwt_sd_jwt_release,
+        ISSUER_PUBLIC_KEY,
+        ISSUER,
+        HOLDER_KEY,
+        ISSUER,
+        _args.nonce,
+    )
+    
+    print(f"Verified claims: {json.dumps(vc, indent=_args.indent)}")
+    
+    
+    if _args.replace_examples_in:
+        from sd_jwt.replace_utils import *
+    
+        logger.info("Replacing the placeholders in the main.md file")
+        replacements = {
+            "example-simple_structured-sd-jwt-claims": json.dumps(
+                SD_JWT_SCG_ARGS[0], indent=EXAMPLE_INDENT
+            ),
+            "example-simple_structured-sd-jwt-payload": json.dumps(
+                sd_jwt_payload, indent=EXAMPLE_INDENT
+            ),
+            "example-simple_structured-sd-jwt-encoded": fill(
+                combined_sd_jwt_svc, width=EXAMPLE_MAX_WIDTH, break_on_hyphens=False
+            ),
+            "example-simple_structured-svc-payload": json.dumps(
+                svc_payload, indent=EXAMPLE_INDENT
+            ),
+            "example-simple_structured-combined-encoded": fill(
+                combined_sd_jwt_sd_jwt_release,
+                width=EXAMPLE_MAX_WIDTH,
+                break_on_hyphens=False,
+            ),
+            "example-simple_structured-release-payload": json.dumps(
+                sd_jwt_release_payload, indent=EXAMPLE_INDENT
+            ),
+            "example-simple_structured-release-encoded": fill(
+                serialized_sd_jwt_release, width=EXAMPLE_MAX_WIDTH, break_on_hyphens=False
+            ),
+            "example-simple_structured-release-combined": fill(
+                combined_sd_jwt_sd_jwt_release,
+                width=EXAMPLE_MAX_WIDTH,
+                break_on_hyphens=False,
+            ),
+        }
+        replace_all_in_main(
+            _args.replace_examples_in, 
+            replacements, 
+            ignore_missing_placeholders=True
+        )
+    

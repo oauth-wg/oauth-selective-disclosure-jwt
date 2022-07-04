@@ -8,6 +8,7 @@ EXAMPLE_MAX_WIDTH = 70
 # Helper functions to replace the examples in the markdown file
 #######################################################################
 
+
 def replace_code_in_markdown_source(file_contents, placeholder_id, new_code):
     """
     the markdown contains code blocks that look like this:
@@ -18,9 +19,10 @@ def replace_code_in_markdown_source(file_contents, placeholder_id, new_code):
 
     This function replaces the code block with the replacement
     """
+
     def replacement(match):
         return match.group(1) + new_code + "\n```"
-    
+
     new_string, count = re.subn(
         r"({#" + placeholder_id + r"}\n```[a-z-_]*\n)(?:[\s\S]*?)\n```",
         replacement,
@@ -28,13 +30,12 @@ def replace_code_in_markdown_source(file_contents, placeholder_id, new_code):
         flags=re.MULTILINE,
     )
     if count == 0:
-        raise ValueError(
-            f"Could not find placeholder with id {placeholder_id}"
-        )
+        raise ValueError(f"Could not find placeholder with id {placeholder_id}")
 
     return new_string
 
-def replace_all_in_main(fname:str, replacements, ignore_missing_placeholders=False):
+
+def replace_all_in_main(fname: str, replacements, ignore_missing_placeholders=False):
     """
     Replaces all the placeholders in the main.md file
     """
@@ -54,8 +55,7 @@ def replace_all_in_main(fname:str, replacements, ignore_missing_placeholders=Fal
             if not ignore_missing_placeholders:
                 raise
             else:
-                print(
-                    f"Could not find placeholder with id {placeholder_id}")
+                print(f"Could not find placeholder with id {placeholder_id}")
 
     with open(fname, "w") as f:
         f.write(file_contents)

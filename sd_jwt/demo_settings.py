@@ -42,8 +42,7 @@ SIMPLE_USER_CLAIMS = {
     },
     "birthdate": "1940-01-01",
 }
-SIMPLE_DISCLOSED_CLAIMS = {"given_name": None,
-                           "family_name": None, "address": None}
+SIMPLE_DISCLOSED_CLAIMS = {"given_name": None, "family_name": None, "address": None}
 
 STRUCTURED_USER_CLAIMS = SIMPLE_USER_CLAIMS
 STRUCTURED_CLAIMS_STRUCTURE = {"address": {}}

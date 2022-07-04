@@ -24,16 +24,16 @@ sd_jwt -h
 
 You can then run the code (from the root of this repository):
 ```
-sd_jwt --type simple
-sd_jwt --type structured
-sd_jwt --type complex
+sd_jwt --example simple
+sd_jwt --example structured
+sd_jwt --example complex
 ```
 You can create your custom setting file creating a folder with a copy of 
 [sd_jwt/demo_settings.py](sd_jwt/demo_settings.py) renamed to `settings.py` 
 and a `__init__.py` in it. Then run `sd_jwt` specifying the custom settings path:
 
 ````
-sd_jwt -t simple --settings-path ./custom_settings/
+sd_jwt --example simple --settings-path ./custom_settings/
 ````
 
 ## Updating Examples
