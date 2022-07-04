@@ -509,7 +509,6 @@ When the holder sends the SD-JWT-R to the Verifier, the SD-JWT-R MUST be a JWS
 represented as the JWS Compact Serialization as described in 
 Section 7.1 of [@!RFC7515].
 
-When SD-JWT-R is signed, a `typ` parameter in the JOSE header of a signed SD-JWT MUST be set to the value `sd-r+jwt`.
 If holder binding is desired, the SD-JWT-R is signed by the holder. If no
 holder binding is to be used, the `none` algorithm is used, i.e., the document
 is not signed. TODO: Change to plain base64 to avoid alg=none issues
