@@ -210,7 +210,6 @@ if _args.example:
     
     print(f"Verified claims: {json.dumps(vc, indent=_args.indent)}")
     
-    
     if _args.replace_examples_in:
         from sd_jwt.replace_utils import *
     

@@ -15,7 +15,12 @@ from sd_jwt.walk import by_structure as walk_by_structure
 from sd_jwt import DEFAULT_SIGNING_ALG, SD_CLAIMS_KEY, SD_DIGESTS_KEY, HASH_ALG_KEY
 
 DEFAULT_EXP_MINS = 15
+# TODO: adopt a dynamic module/package loader, defs could be as string -> "fn": "hashlib.sha256"
 HASH_ALG = {"name": "sha-256", "fn": sha256}
+SD_JWT_HEADER = "sd-jwt"
+# WiP: https://github.com/oauthstuff/draft-selective-disclosure-jwt/issues/60
+SD_JWT_R_HEADER = None  # "sd-jwt-r"
+
 logger = logging.getLogger("sd_jwt")
 
 
@@ -94,7 +99,7 @@ def create_sd_jwt_and_svc(
 
     # Sign the SD-JWT using the issuer's key
     sd_jwt = JWS(payload=dumps(sd_jwt_payload))
-    _headers = {"alg": _alg, "typ": "sd-jwt", "kid": issuer_key.thumbprint()}
+    _headers = {"alg": _alg, "typ": SD_JWT_HEADER, "kid": issuer_key.thumbprint()}
     sd_jwt.add_signature(
         issuer_key,
         alg=_alg,
@@ -139,19 +144,23 @@ def create_release_jwt(
 
     # Sign the SD-JWT-Release using the holder's key
     sd_jwt_release = JWS(payload=dumps(sd_jwt_release_payload))
+
+    _data = {"alg": _alg, "kid": holder_key.thumbprint()}
+    if SD_JWT_R_HEADER:
+        _data["typ"] = SD_JWT_R_HEADER
+
     sd_jwt_release.add_signature(
         holder_key,
         alg=_alg,
-        protected=dumps(
-            {"alg": _alg, "kid": holder_key.thumbprint(), "typ": "sd-r+jwt"}
-        ),
+        protected=dumps(_data),
     )
     serialized_sd_jwt_release = sd_jwt_release.serialize(compact=True)
-
     return sd_jwt_release_payload, serialized_sd_jwt_release
 
 
-def _verify_sd_jwt(sd_jwt, issuer_public_key, expected_issuer, sign_alg: str = None):
+def _verify_sd_jwt(
+    sd_jwt: str, issuer_public_key: dict, expected_issuer: str, sign_alg: str = None
+):
     parsed_input_sd_jwt = JWS()
     parsed_input_sd_jwt.deserialize(sd_jwt)
     parsed_input_sd_jwt.verify(issuer_public_key, alg=sign_alg)
@@ -178,18 +187,19 @@ def _verify_sd_jwt(sd_jwt, issuer_public_key, expected_issuer, sign_alg: str = N
 
 
 def _verify_sd_jwt_release(
-    sd_jwt_release,
-    holder_public_key=None,
-    expected_aud=None,
-    expected_nonce=None,
-    holder_public_key_payload=None,
-    sign_alg=None,
+    sd_jwt_release: Union[dict, str],  # the release could be signed by the holder
+    holder_public_key: Union[dict, None] = None,
+    expected_aud: Union[str, None] = None,
+    expected_nonce: Union[str, None] = None,
+    holder_public_key_payload: Union[dict, None] = None,
+    sign_alg: Union[str, None] = None,
 ):
     _alg = sign_alg or DEFAULT_SIGNING_ALG
     parsed_input_sd_jwt_release = JWS()
     parsed_input_sd_jwt_release.deserialize(sd_jwt_release)
     if holder_public_key and holder_public_key_payload:
         pubkey = JWK.from_json(dumps(holder_public_key_payload))
+        # TODO: adopt an OrderedDict here
         # Because of weird bug of failed != between two public keys
         if not holder_public_key == pubkey:
             raise ValueError("sub_jwk is not matching with HOLDER Public Key.")
@@ -210,7 +220,7 @@ def _verify_sd_jwt_release(
     return sd_jwt_release_payload[SD_CLAIMS_KEY]
 
 
-def _check_claim(claim_name, released_value, sd_jwt_claim_value):
+def _check_claim(claim_name: str, released_value: str, sd_jwt_claim_value: str):
     # the hash of the release claim value must match the claim value in the sd_jwt
     hashed_release_value = hash_raw(released_value.encode("utf-8"))
     if not compare_digest(hashed_release_value, sd_jwt_claim_value):
@@ -229,12 +239,12 @@ def _check_claim(claim_name, released_value, sd_jwt_claim_value):
 
 
 def verify(
-    combined_presentation,
-    issuer_public_key,
-    expected_issuer,
-    holder_public_key=None,
-    expected_aud=None,
-    expected_nonce=None,
+    combined_presentation: str,
+    issuer_public_key: dict,
+    expected_issuer: str,
+    holder_public_key: Union[dict, None] = None,
+    expected_aud: Union[str, None] = None,
+    expected_nonce: Union[str, None] = None,
 ):
     if holder_public_key and (not expected_aud or not expected_nonce):
         raise ValueError(
