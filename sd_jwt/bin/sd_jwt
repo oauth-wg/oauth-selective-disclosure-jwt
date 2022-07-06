@@ -261,7 +261,7 @@ if _args.example:
                 examples_dict["simple"]["sd_jwt_release_payload"], indent=EXAMPLE_INDENT
             ),
             f"example-simple-release-encoded": fill(
-                examples_dict["simple"]["serialized_svc"], 
+                examples_dict["simple"]["serialized_sd_jwt_release"], 
                 width=EXAMPLE_MAX_WIDTH, 
                 break_on_hyphens=False
             ),
@@ -282,16 +282,27 @@ if _args.example:
                 examples_dict["complex"]["sd_jwt_payload"], indent=EXAMPLE_INDENT
             ),
             f"example-complex_structured-sd-jwt-encoded": fill(
+                examples_dict["complex"]["combined_sd_jwt_svc"], 
+                width=EXAMPLE_MAX_WIDTH, 
+                break_on_hyphens=False
+            ),
+            f"example-complex_structured-svc-payload": json.dumps(
+                examples_dict["complex"]["combined_sd_jwt_sd_jwt_release"], indent=EXAMPLE_INDENT
+            ),
+            f"example-complex_structured-release-payload": json.dumps(
+                examples_dict["complex"]["sd_jwt_release_payload"], indent=EXAMPLE_INDENT
+            ),
+            "example-complex_structured-release-encoded": fill(
+                examples_dict["complex"]["serialized_sd_jwt_release"], 
+                width=EXAMPLE_MAX_WIDTH, 
+                break_on_hyphens=False
+            ),
+            "example-complex_structured-release-combined": fill(
                 examples_dict["complex"]["combined_sd_jwt_sd_jwt_release"], 
                 width=EXAMPLE_MAX_WIDTH, 
                 break_on_hyphens=False
             ),
-            f"example-complex_structured-release-payload": json.dumps(
-                examples_dict["complex"]["svc_payload"], indent=EXAMPLE_INDENT
-            ),
-            f"example-complex_structured-release-payload": json.dumps(
-                examples_dict["complex"]["svc_payload"], indent=EXAMPLE_INDENT
-            ),
+
             ###
             
             f"example-simple_structured-sd-jwt-claims": json.dumps(
