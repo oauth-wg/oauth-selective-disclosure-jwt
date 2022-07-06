@@ -1,4 +1,3 @@
-
 name: selective-disclosure-jwt-demo
 
 on:
@@ -33,14 +32,18 @@ jobs:
         python -m pip install --upgrade pip
         # python -m pip install -r requirements-dev.txt
         pip3 install jwcrypto
-    # - name: Lint with flake8
-    # run: |
-    #   # stop the build if there are Python syntax errors or undefined names
-    #    flake8 ./spid_cie_oidc  --count --select=E9,F63,F7,F82 --show-source --statistics
-    #    # exit-zero treats all errors as warnings. The GitHub editor is 127 chars wide
-    #    flake8 ./spid_cie_oidc --count --exit-zero --statistics --max-line-length 120
+    - name: Lint with flake8
+      run: |
+        pip install flake8
+        # stop the build if there are Python syntax errors or undefined names
+        flake8 sd_jwt --count --select=E9,F63,F7,F82 --show-source --statistics
+        # exit-zero treats all errors as warnings. The GitHub editor is 127 chars wide
+        flake8 sd_jwt --count --exit-zero --statistics --max-line-length 120
+    - name: install sd_jwt
+      run: |
+        pip install -e .
     - name: demo test
       run: |
-        python3 -m demo.simple --replace
-        python3 -m demo.simple_structured
-        python3 -m demo.complex_structured
+        sd_jwt --example simple --replace-examples-in main.md
+        sd_jwt --example complex
+        sd_jwt --example structured

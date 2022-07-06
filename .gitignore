@@ -2,3 +2,9 @@ env
 .env
 venv
 .venv
+*egg-info
+*__pycache__*
+custom_settings/*
+build/*
+dist/*
+main.md.bak
