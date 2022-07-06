@@ -686,9 +686,6 @@ result in a matching digest, respectively.
 Furthermore the hash algorithms MD2, MD4, MD5, RIPEMD-160, and SHA-1 
 revealed fundamental weaknesses and they MUST NOT be used.
 
-Furthermore the hash algorithms MD2, MD4, MD5, RIPEMD-160, and SHA-1 
-revealed fundamental weaknesses and they MUST NOT be used.
-
 ## Holder Binding {#holder_binding_security}
 TBD
 
