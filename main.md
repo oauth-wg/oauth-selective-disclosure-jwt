@@ -777,8 +777,8 @@ allows for the release of individual members of the address claim separately.
     "n": "pm4bOHBg-oYhAyPWzR56AWX3rUIXp11_ICDkGgS6W3ZWLts-hzwI3x65659kg4hVo9dbGoCJE3ZGF_eaetE30UhBUEgpGwrDrQiJ9zqprmcFfr3qvvkGjtth8Zgl1eM2bJcOwE7PCBHWTKWYs152R7g6Jg2OVph-a8rq-q79MhKG5QoW_mTz10QT_6H4c7PjWG1fjh8hpWNnbP_pv6d1zSwZfc5fl6yVRL0DV0V3lGHKe2Wqf_eNGjBrBLVklDTk8-stX_MWLcR-EGmXAOv0UBWitS_dXJKJu-vXJyw14nHSGuxTIK2hx1pttMft9CsvqimXKeDTU14qQL1eE7ihcw",
     "e": "AQAB"
   },
-  "iat": 1656798541,
-  "exp": 1656799441,
+  "iat": 1516239022,
+  "exp": 1516247022,
   "hash_alg": "sha-256",
   "sd_digests": {
     "sub": "z4xgEco94diTaSruISPiE7o_wtmcOfnH_8R7X9Pa578",
@@ -786,13 +786,8 @@ allows for the release of individual members of the address claim separately.
     "family_name": "H-Relr4cEBMlenyK1gvyx16QVpnt4MEclT5tP0aTLFU",
     "email": "ET2A1JQLF85ZpBulh6UFstGrSfR4B3KM-bjQVllhxqY",
     "phone_number": "SJnciB2DIRVA5cXBrdKoH6n45788mZyUn2rnv74uMVU",
-    "address": {
-      "street_address": "O7_Isd6CmZqcSobPVpMgmJwB41hPUHHG8jg5LJ8YzfY",
-      "locality": "w-zTF6ljkQLTvVyp_JNyD3t5Waj-B2vb0AXH1q8OsjI",
-      "region": "nTvoKpGA6YQwEZipVBIM4WVH9KWEnwiqsRjEhrxhQz4",
-      "country": "u-O1yDQqDTTqOgUBSjWilgkMLzg_QOTELMfZrRT5e6k"
-    },
-    "birthdate": "TipyoxD43PZJF8ZEmKPrbxMElpFX_M7aBLkUpC-W53o"
+    "address": "0FldqLfGnERPPVDC17od9xb4w3iRJTEQbW_Yk9AmnDw",
+    "birthdate": "-L0kMgIbLXe3OEkKTUGwz_QKhjehDeofKGwoPrxLuo4"
   }
 }
 ```
@@ -808,13 +803,8 @@ The SVC for this SD-JWT is as follows:
     "family_name": "[\"6Ij7tM-a5iVPGboS5tmvVA\", \"Doe\"]",
     "email": "[\"eI8ZWm9QnKPpNPeNenHdhQ\", \"johndoe@example.com\"]",
     "phone_number": "[\"Qg_O64zqAxe412a108iroA\", \"+1-202-555-0101\"]",
-    "address": {
-      "street_address": "[\"AJx-095VPrpTtN4QMOqROA\", \"123 Main St\"]",
-      "locality": "[\"Pc33JM2LchcU_lHggv_ufQ\", \"Anytown\"]",
-      "region": "[\"G02NSrQfjFXQ7Io09syajA\", \"Anystate\"]",
-      "country": "[\"lklxF5jMYlGTPUovMNIvCA\", \"US\"]"
-    },
-    "birthdate": "[\"nPuoQnkRFq3BIeAm7AnXFA\", \"1940-01-01\"]"
+    "address": "[\"AJx-095VPrpTtN4QMOqROA\", {\"street_address\": \"123 Main St\", \"locality\": \"Anytown\", \"region\": \"Anystate\", \"country\": \"US\"}]",
+    "birthdate": "[\"Pc33JM2LchcU_lHggv_ufQ\", \"1940-01-01\"]"
   }
 }
 ```
@@ -825,16 +815,12 @@ the `address` property:
 {#example-simple_structured-release-payload}
 ```json
 {
-  "nonce": "_XYz2toJ9Qj8bcRM-_DeBA",
-  "aud": "https://example.com/issuer",
+  "nonce": "XZOUco1u_gEPknxS78sWWg",
+  "aud": "https://example.com/verifier",
   "sd_release": {
     "given_name": "[\"eluV5Og3gSNII8EYnsxA_A\", \"John\"]",
     "family_name": "[\"6Ij7tM-a5iVPGboS5tmvVA\", \"Doe\"]",
-    "birthdate": "[\"nPuoQnkRFq3BIeAm7AnXFA\", \"1940-01-01\"]",
-    "address": {
-      "region": "[\"G02NSrQfjFXQ7Io09syajA\", \"Anystate\"]",
-      "country": "[\"lklxF5jMYlGTPUovMNIvCA\", \"US\"]"
-    }
+    "address": "[\"AJx-095VPrpTtN4QMOqROA\", {\"street_address\": \"123 Main St\", \"locality\": \"Anytown\", \"region\": \"Anystate\", \"country\": \"US\"}]"
   }
 }
 ```

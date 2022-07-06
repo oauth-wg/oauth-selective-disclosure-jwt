@@ -1,4 +1,5 @@
 ISSUER = "https://example.com/issuer"
+VERIFIER = "https://example.com/verifier"
 
 DEFAULT_KEY_SIZE = 2048
 DEFAULT_KTY = "RSA"

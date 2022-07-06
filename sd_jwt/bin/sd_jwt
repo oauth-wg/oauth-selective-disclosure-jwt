@@ -165,7 +165,11 @@ if _args.example:
     
     print_repr(("Payload of the SD-JWT:",
                json.dumps(sd_jwt_payload, indent=_args.indent)))
+
     print_repr(("The serialized SD-JWT:", serialized_sd_jwt))
+    print("Serialized SD-JWT decoded representation:")
+    print_decoded_repr(serialized_sd_jwt)
+        
     print_repr(("Payload of the SD-JWT Salt/Value Container (SVC):",
                json.dumps(svc_payload, indent=_args.indent)))
     print_repr(("The serialized SD-JWT Salt/Value Container (SVC):", serialized_svc))
@@ -177,7 +181,7 @@ if _args.example:
     #####
     print("# Creating the SD-JWT-Release")
     sd_jwt_release_payload, serialized_sd_jwt_release = create_release_jwt(
-        _args.nonce, ISSUER, DISCLOSED_CLAIMS, serialized_svc, HOLDER_KEY
+        _args.nonce, VERIFIER, DISCLOSED_CLAIMS, serialized_svc, HOLDER_KEY
     )
     
     print_repr(
@@ -204,7 +208,7 @@ if _args.example:
         ISSUER_PUBLIC_KEY,
         ISSUER,
         HOLDER_KEY,
-        ISSUER,
+        VERIFIER,
         _args.nonce,
     )
     
