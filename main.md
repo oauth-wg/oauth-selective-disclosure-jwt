@@ -653,6 +653,16 @@ If any step fails, the input is not valid and processing MUST be aborted.
 
 # Security Considerations {#security_considerations}
 
+## Mandatory hash computation of the revealed claim values by the Verifier
+
+ToDo: add text explaining mechanisms that should be adopted to ensure that 
+  verifiers validate the claim values received in SD-JWT-R by calculating the
+  hashes of those values and comparing them with the hashes in the SD-JWT: 
+  - create a test suite that forces hash computation by the Verifiers, 
+    and includes negative test cases in test vectors
+  - use only implementations/libraries that are compliant to the test suite 
+  - etc.
+
 ## Mandatory signing of the SD-JWT
 
 The SD-JWT MUST be signed by the issuer to protect integrity of the issued
