@@ -17,9 +17,10 @@ from sd_jwt import DEFAULT_SIGNING_ALG, SD_CLAIMS_KEY, SD_DIGESTS_KEY, HASH_ALG_
 DEFAULT_EXP_MINS = 15
 # TODO: adopt a dynamic module/package loader, defs could be as string -> "fn": "hashlib.sha256"
 HASH_ALG = {"name": "sha-256", "fn": sha256}
-SD_JWT_HEADER = "sd-jwt"
+
+SD_JWT_HEADER = None # "sd+jwt"
 # WiP: https://github.com/oauthstuff/draft-selective-disclosure-jwt/issues/60
-SD_JWT_R_HEADER = None  # "sd-jwt-r"
+SD_JWT_R_HEADER = None  # "sd+jwt-r"
 
 logger = logging.getLogger("sd_jwt")
 
@@ -99,7 +100,9 @@ def create_sd_jwt_and_svc(
 
     # Sign the SD-JWT using the issuer's key
     sd_jwt = JWS(payload=dumps(sd_jwt_payload))
-    _headers = {"alg": _alg, "typ": SD_JWT_HEADER, "kid": issuer_key.thumbprint()}
+    _headers = {"alg": _alg, "kid": issuer_key.thumbprint()}
+    if SD_JWT_HEADER:
+        _headers["typ"] = SD_JWT_HEADER
     sd_jwt.add_signature(
         issuer_key,
         alg=_alg,
