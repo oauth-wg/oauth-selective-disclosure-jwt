@@ -781,13 +781,18 @@ allows for the release of individual members of the address claim separately.
   "exp": 1516247022,
   "hash_alg": "sha-256",
   "sd_digests": {
-    "sub": "z4xgEco94diTaSruISPiE7o_wtmcOfnH_8R7X9Pa578",
-    "given_name": "PvU7cWjuHUq6w-i9XFpQZhjT-uprQL3GH3mKsAJl0e0",
-    "family_name": "H-Relr4cEBMlenyK1gvyx16QVpnt4MEclT5tP0aTLFU",
-    "email": "ET2A1JQLF85ZpBulh6UFstGrSfR4B3KM-bjQVllhxqY",
-    "phone_number": "SJnciB2DIRVA5cXBrdKoH6n45788mZyUn2rnv74uMVU",
-    "address": "0FldqLfGnERPPVDC17od9xb4w3iRJTEQbW_Yk9AmnDw",
-    "birthdate": "-L0kMgIbLXe3OEkKTUGwz_QKhjehDeofKGwoPrxLuo4"
+    "sub": "Iuc2ft9sZwaw2yi_DZJKipiHMR_HbZP-5-WY8EKNqoA",
+    "given_name": "TemA6ZTvHYgNfC8nzPC1x8q-yQxp5FpZjz-GQlSuJm4",
+    "family_name": "Ro-RcqHFcflmKJ-YTnpL_roVgljLLJZuMoKiT714TpM",
+    "email": "61L69IeXAGZxaWJocXvcou9-07PS8Ows4HNFO1tWqcg",
+    "phone_number": "7WMDBVSk7vrJ4lBG0U6ze_5aCsK9N1UZD5Pwc1knOGY",
+    "address": {
+      "street_address": "O3YCyDFQkM4JdjRHWL78j_Z9Voi3RSYw3VBU0VJ4Lkk",
+      "locality": "BhZ5ZsxM39vej8aWP1l3_VdK6ErWIgaRsOBhiigsarc",
+      "region": "sns2ezJN5JHUPAvzSwxFIwPj_PrQbeiBGZujbwOYuJo",
+      "country": "rf-11mZmiYQOM7jRKqgNqqk_Zk1RbQJv7VVi9q2uU80"
+    },
+    "birthdate": "_gsBVx70--mLOaPOrl8POf5Vr3Coubg2yiz5pMrOLDc"
   }
 }
 ```
@@ -798,13 +803,18 @@ The SVC for this SD-JWT is as follows:
 ```json
 {
   "sd_release": {
-    "sub": "[\"2GLC42sKQveCfGfryNRN9w\", \"6c5c0a49-b589-431d-bae7-219122a9ec2c\"]",
-    "given_name": "[\"eluV5Og3gSNII8EYnsxA_A\", \"John\"]",
-    "family_name": "[\"6Ij7tM-a5iVPGboS5tmvVA\", \"Doe\"]",
-    "email": "[\"eI8ZWm9QnKPpNPeNenHdhQ\", \"johndoe@example.com\"]",
-    "phone_number": "[\"Qg_O64zqAxe412a108iroA\", \"+1-202-555-0101\"]",
-    "address": "[\"AJx-095VPrpTtN4QMOqROA\", {\"street_address\": \"123 Main St\", \"locality\": \"Anytown\", \"region\": \"Anystate\", \"country\": \"US\"}]",
-    "birthdate": "[\"Pc33JM2LchcU_lHggv_ufQ\", \"1940-01-01\"]"
+    "sub": "[\"G02NSrQfjFXQ7Io09syajA\", \"6c5c0a49-b589-431d-bae7-219122a9ec2c\"]",
+    "given_name": "[\"lklxF5jMYlGTPUovMNIvCA\", \"John\"]",
+    "family_name": "[\"nPuoQnkRFq3BIeAm7AnXFA\", \"Doe\"]",
+    "email": "[\"5bPs1IquZNa0hkaFzzzZNw\", \"johndoe@example.com\"]",
+    "phone_number": "[\"5a2W0_NrlEZzfqmk_7Pq-w\", \"+1-202-555-0101\"]",
+    "address": {
+      "street_address": "[\"y1sVU5wdfJahVdgwPgS7RQ\", \"123 Main St\"]",
+      "locality": "[\"HbQ4X8srVW3QDxnIJdqyOA\", \"Anytown\"]",
+      "region": "[\"C9GSoujviJquEgYfojCb1A\", \"Anystate\"]",
+      "country": "[\"kx5kF17V-x0JmwUx9vgvtw\", \"US\"]"
+    },
+    "birthdate": "[\"H3o1uswP760Fi2yeGdVCEQ\", \"1940-01-01\"]"
   }
 }
 ```
@@ -818,9 +828,13 @@ the `address` property:
   "nonce": "XZOUco1u_gEPknxS78sWWg",
   "aud": "https://example.com/verifier",
   "sd_release": {
-    "given_name": "[\"eluV5Og3gSNII8EYnsxA_A\", \"John\"]",
-    "family_name": "[\"6Ij7tM-a5iVPGboS5tmvVA\", \"Doe\"]",
-    "address": "[\"AJx-095VPrpTtN4QMOqROA\", {\"street_address\": \"123 Main St\", \"locality\": \"Anytown\", \"region\": \"Anystate\", \"country\": \"US\"}]"
+    "given_name": "[\"lklxF5jMYlGTPUovMNIvCA\", \"John\"]",
+    "family_name": "[\"nPuoQnkRFq3BIeAm7AnXFA\", \"Doe\"]",
+    "birthdate": "[\"H3o1uswP760Fi2yeGdVCEQ\", \"1940-01-01\"]",
+    "address": {
+      "region": "[\"C9GSoujviJquEgYfojCb1A\", \"Anystate\"]",
+      "country": "[\"kx5kF17V-x0JmwUx9vgvtw\", \"US\"]"
+    }
   }
 }
 ```

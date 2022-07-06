@@ -1,5 +1,8 @@
+import logging
 import re
 from textwrap import fill
+
+logger = logging.getLogger("sd_jwt")
 
 EXAMPLE_INDENT = 2
 EXAMPLE_MAX_WIDTH = 70
@@ -30,7 +33,7 @@ def replace_code_in_markdown_source(file_contents, placeholder_id, new_code):
         flags=re.MULTILINE,
     )
     if count == 0:
-        raise ValueError(f"Could not find placeholder with id {placeholder_id}")
+        raise ValueError
 
     return new_string
 
@@ -53,9 +56,12 @@ def replace_all_in_main(fname: str, replacements, ignore_missing_placeholders=Fa
             )
         except ValueError:
             if not ignore_missing_placeholders:
+                logger.error(f"Could not find placeholder with id {placeholder_id}")
                 raise
             else:
-                print(f"Could not find placeholder with id {placeholder_id}")
+                logger.info(
+                    f"Found and replace contents for placeholder {placeholder_id}"
+                )
 
     with open(fname, "w") as f:
         f.write(file_contents)

@@ -18,7 +18,7 @@ DEFAULT_EXP_MINS = 15
 # TODO: adopt a dynamic module/package loader, defs could be as string -> "fn": "hashlib.sha256"
 HASH_ALG = {"name": "sha-256", "fn": sha256}
 
-SD_JWT_HEADER = None # "sd+jwt"
+SD_JWT_HEADER = None  # "sd+jwt"
 # WiP: https://github.com/oauthstuff/draft-selective-disclosure-jwt/issues/60
 SD_JWT_R_HEADER = None  # "sd+jwt-r"
 
@@ -274,4 +274,5 @@ def verify(
         holder_public_key_payload,
     )
 
-    return walk_by_structure(sd_jwt_claims, sd_jwt_release_claims, _check_claim)
+    _wbs = walk_by_structure(sd_jwt_claims, sd_jwt_release_claims, _check_claim)
+    return _wbs
