@@ -55,4 +55,5 @@ compile using mmark and xml2rfc: `mmark main.md > draft.xml; xml2rfc --html draf
  * Python: [Reference/Demo Implementation](https://github.com/oauthstuff/draft-selective-disclosure-jwt)
  * Kotlin: [SD-JWT-Kotlin](https://github.com/IDunion/SD-JWT-Kotlin)
  * Rust: [sd_jwt](https://github.com/kushaldas/sd_jwt)
+ * TypeScript: [sd-jwt](https://github.com/christianpaquin/sd-jwt)
 
