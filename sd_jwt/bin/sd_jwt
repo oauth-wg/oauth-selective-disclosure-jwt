@@ -231,38 +231,98 @@ if _args.example:
     
     if _args.replace_examples_in:
         from sd_jwt.replace_utils import *
-    
+        
         logger.info(f"Replacing the placeholders in the '{_args.replace_examples_in}' file.")
         replacements = {
-            "example-simple_structured-sd-jwt-claims": json.dumps(
+        
+            f"example-simple-sd-jwt-claims": json.dumps(
+                examples_dict["simple"]["args"][0], indent=EXAMPLE_INDENT
+            ),
+            f"example-simple-sd-jwt-payload": json.dumps(
+                examples_dict["simple"]["sd_jwt_payload"], indent=EXAMPLE_INDENT
+            ),
+            f"example-simple-sd-jwt-encoded": fill(
+                examples_dict["simple"]["serialized_sd_jwt"], 
+                width=EXAMPLE_MAX_WIDTH, 
+                break_on_hyphens=False
+            ),
+            f"example-simple-svc-payload": json.dumps(
+                examples_dict["simple"]["svc_payload"], indent=EXAMPLE_INDENT
+            ),
+            f"example-simple-svc-payload": json.dumps(
+                examples_dict["simple"]["svc_payload"], indent=EXAMPLE_INDENT
+            ),
+            f"example-simple-combined-sd-jwt-svc": fill(
+                examples_dict["simple"]["combined_sd_jwt_svc"], 
+                width=EXAMPLE_MAX_WIDTH, 
+                break_on_hyphens=False
+            ),
+            f"example-simple-release-payload": json.dumps(
+                examples_dict["simple"]["sd_jwt_release_payload"], indent=EXAMPLE_INDENT
+            ),
+            f"example-simple-release-encoded": fill(
+                examples_dict["simple"]["serialized_svc"], 
+                width=EXAMPLE_MAX_WIDTH, 
+                break_on_hyphens=False
+            ),
+            f"example-simple-combined-sd-jwt-sd-jwt-release": fill(
+                examples_dict["simple"]["combined_sd_jwt_sd_jwt_release"], 
+                width=EXAMPLE_MAX_WIDTH, 
+                break_on_hyphens=False
+            ),
+            f"example-simple-release-encoded": fill(
+                examples_dict["simple"]["serialized_sd_jwt_release"], 
+                width=EXAMPLE_MAX_WIDTH, 
+                break_on_hyphens=False
+            ),
+            f"example-complex_structured-sd-jwt-claims": json.dumps(
+                COMPLEX_USER_CLAIMS, indent=EXAMPLE_INDENT
+            ),
+            f"example-complex_structured-sd-jwt-payload": json.dumps(
+                examples_dict["complex"]["sd_jwt_payload"], indent=EXAMPLE_INDENT
+            ),
+            f"example-complex_structured-sd-jwt-encoded": fill(
+                examples_dict["complex"]["combined_sd_jwt_sd_jwt_release"], 
+                width=EXAMPLE_MAX_WIDTH, 
+                break_on_hyphens=False
+            ),
+            f"example-complex_structured-release-payload": json.dumps(
+                examples_dict["complex"]["svc_payload"], indent=EXAMPLE_INDENT
+            ),
+            f"example-complex_structured-release-payload": json.dumps(
+                examples_dict["complex"]["svc_payload"], indent=EXAMPLE_INDENT
+            ),
+            ###
+            
+            f"example-simple_structured-sd-jwt-claims": json.dumps(
                 examples_dict["structured"]["args"][0], indent=EXAMPLE_INDENT
             ),
-            "example-simple_structured-sd-jwt-payload": json.dumps(
+            f"example-simple_structured-sd-jwt-payload": json.dumps(
                 examples_dict["structured"]["sd_jwt_payload"], indent=EXAMPLE_INDENT
             ),
-            "example-simple_structured-sd-jwt-encoded": fill(
+            f"example-simple_structured-sd-jwt-encoded": fill(
                 examples_dict["structured"]["combined_sd_jwt_svc"], 
                 width=EXAMPLE_MAX_WIDTH, 
                 break_on_hyphens=False
             ),
-            "example-simple_structured-svc-payload": json.dumps(
+            f"example-simple_structured-svc-payload": json.dumps(
                 examples_dict["structured"]["svc_payload"], indent=EXAMPLE_INDENT
             ),
-            "example-simple_structured-combined-encoded": fill(
+            f"example-simple_structured-combined-encoded": fill(
                 examples_dict["structured"]["combined_sd_jwt_sd_jwt_release"],
                 width=EXAMPLE_MAX_WIDTH,
                 break_on_hyphens=False,
             ),
-            "example-simple_structured-release-payload": json.dumps(
+            f"example-simple_structured-release-payload": json.dumps(
                 examples_dict["structured"]["sd_jwt_release_payload"], 
                 indent=EXAMPLE_INDENT
             ),
-            "example-simple_structured-release-encoded": fill(
+            f"example-simple_structured-release-encoded": fill(
                 examples_dict["structured"]["serialized_sd_jwt_release"], 
                 width=EXAMPLE_MAX_WIDTH, 
                 break_on_hyphens=False
             ),
-            "example-simple_structured-release-combined": fill(
+            f"example-simple_structured-release-combined": fill(
                 examples_dict["structured"]["combined_sd_jwt_sd_jwt_release"],
                 width=EXAMPLE_MAX_WIDTH,
                 break_on_hyphens=False,
