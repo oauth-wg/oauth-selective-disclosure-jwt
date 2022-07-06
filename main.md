@@ -676,11 +676,6 @@ guess. Each salt value MUST be unique.
 
 The length of the randomly-generated portion of the salt MUST be at least 128 bits.
 
-## Minimum length of the salt
-
-The length of the randomly-generated portion of the salt MUST be at least 128 bits.
- 
-
 ## Choice of a hash function
 
 For the security of this scheme, the hash function is required to be preimage and collision
