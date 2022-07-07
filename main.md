@@ -58,7 +58,7 @@ SD-JWT Salt/Value Container (SVC), a JSON object that contains the mapping
 between raw claim values contained in the SD-JWT and the salts for each claim
 value. 
 
-This document also defines a format for SD-JWT Releases (SD-JWT-R), which convey
+This document also defines a format for SD-JWT Releases (SD-JWT-R), which conveys
 a subset of the claim values of an SD-JWT to the verifier. For presentation, the
 holder creates an SD-JWT-R and sends it together with the SD-JWT to the
 verifier. To verify claim values received in SD-JWT-R, the verifier uses the
