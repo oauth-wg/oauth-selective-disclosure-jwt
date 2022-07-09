@@ -1,6 +1,7 @@
 import datetime
 import logging
-import random
+import os
+
 from base64 import urlsafe_b64decode, urlsafe_b64encode
 from hashlib import sha256
 from json import dumps, loads
@@ -26,9 +27,9 @@ logger = logging.getLogger("sd_jwt")
 
 
 # The salts will be selected by the server, of course.
-def generate_salt():
+def generate_salt(length:int = 16):
     return (
-        urlsafe_b64encode(bytes(random.getrandbits(8) for _ in range(16)))
+        urlsafe_b64encode(os.urandom(length))
         .decode("ascii")
         .strip("=")
     )
