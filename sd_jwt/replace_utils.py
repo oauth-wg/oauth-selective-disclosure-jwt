@@ -38,7 +38,9 @@ def replace_code_in_markdown_source(file_contents, placeholder_id, new_code):
     return new_string
 
 
-def replace_all_in_main(fname: str, replacements:dict, ignore_missing_placeholders:bool=False):
+def replace_all_in_main(
+    fname: str, replacements: dict, ignore_missing_placeholders: bool = False
+):
     """
     Replaces all the placeholders in the main.md file
     """
@@ -54,17 +56,13 @@ def replace_all_in_main(fname: str, replacements:dict, ignore_missing_placeholde
             file_contents = replace_code_in_markdown_source(
                 file_contents, placeholder_id, new_code
             )
-            logger.info(
-                f"Found and replace contents for placeholder {placeholder_id}"
-            )
+            logger.info(f"Found and replace contents for placeholder {placeholder_id}")
         except ValueError:
 
             if not ignore_missing_placeholders:
                 raise
             else:
-                logger.warning(
-                    f"Could not find placeholder with id {placeholder_id}"
-                )
+                logger.warning(f"Could not find placeholder with id {placeholder_id}")
 
     with open(fname, "w") as f:
         f.write(file_contents)
