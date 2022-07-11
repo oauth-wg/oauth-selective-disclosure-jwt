@@ -133,7 +133,7 @@ if _args.example:
     HOLDER_KEY = _JWKS["HOLDER_KEY"]
     ISSUER_PUBLIC_KEY = _JWKS["ISSUER_PUBLIC_KEY"]
     #
-    
+
     examples_dict = {
         "simple": {
             "args": (SIMPLE_USER_CLAIMS, ISSUER, ISSUER_KEY, HOLDER_KEY),
@@ -148,7 +148,7 @@ if _args.example:
             "disclosed_claims": COMPLEX_DISCLOSED_CLAIMS,
         }
     }
-    
+
     # produces all the examples
     for example_type in examples_dict.keys():
         _sel_exp = examples_dict[example_type]
@@ -219,15 +219,15 @@ if _args.example:
     print_repr(
         (
             "Payload of the SD-JWT-Release:",
-            json.dumps(_sel_exp["sd_jwt_release_payload"], indent=_args.indent)
+            json.dumps(_target["sd_jwt_release_payload"], indent=_args.indent)
         )
     )
-    print_repr(("The serialized SD-JWT-Release:", _sel_exp["serialized_sd_jwt_release"]))
+    print_repr(("The serialized SD-JWT-Release:", _target["serialized_sd_jwt_release"]))
     
     print("# Creating the Combined Presentation")
-    print_repr(("Combined Presentation:", _sel_exp["combined_sd_jwt_sd_jwt_release"]))
+    print_repr(("Combined Presentation:", _target["combined_sd_jwt_sd_jwt_release"]))
     
-    print(f"Verified claims: {json.dumps(_sel_exp['verify'], indent=_args.indent)}")
+    print(f"Verified claims: {json.dumps(_target['verify'], indent=_args.indent)}")
     
     if _args.replace_examples_in:
         from sd_jwt.replace_utils import *
@@ -302,7 +302,6 @@ if _args.example:
                 width=EXAMPLE_MAX_WIDTH, 
                 break_on_hyphens=False
             ),
-
             ###
             
             f"example-simple_structured-sd-jwt-claims": json.dumps(
