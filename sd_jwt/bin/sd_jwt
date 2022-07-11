@@ -80,8 +80,10 @@ parser.add_argument(
     "--replace-examples-in",
     required=False,
     type=pathlib.Path,
-    default=pathlib.Path('main.md'),
-    help=("path/to/main.md - Do not output examples, but replace all the examples in the specs"),
+    default=pathlib.Path("main.md"),
+    help=(
+        "path/to/main.md - Do not output examples, but replace all the examples in the specs"
+    ),
 )
 parser.add_argument(
     "-v",
@@ -101,9 +103,23 @@ if _args.version:
 
 if _args.settings_path:
     sys.path.append(_args.settings_path)
-    from settings import ISSUER, ISSUER_KEY_DICT, VERIFIER, HOLDER_KEY_DICT, DEFAULT_KEY_SIZE, DEFAULT_KTY
+    from settings import (
+        ISSUER,
+        ISSUER_KEY_DICT,
+        VERIFIER,
+        HOLDER_KEY_DICT,
+        DEFAULT_KEY_SIZE,
+        DEFAULT_KTY,
+    )
 else:
-    from sd_jwt.demo_settings import ISSUER, ISSUER_KEY_DICT, VERIFIER, HOLDER_KEY_DICT, DEFAULT_KEY_SIZE, DEFAULT_KTY
+    from sd_jwt.demo_settings import (
+        ISSUER,
+        ISSUER_KEY_DICT,
+        VERIFIER,
+        HOLDER_KEY_DICT,
+        DEFAULT_KEY_SIZE,
+        DEFAULT_KTY,
+    )
 
 # They may come from a custom python settings file
 jwk_kwargs = {
@@ -147,19 +163,22 @@ for property in ("user_claims", "claims_structure", "disclosed_claims"):
 )
 
 
-# _artifacts keeps track of the data produced during the example run. 
+# _artifacts keeps track of the data produced during the example run.
 # For each entry, the actual data plus a human-readable description is stored.
 #
-# _artifacts is later used to output the data to the command line and to update the 
+# _artifacts is later used to output the data to the command line and to update the
 # specification file, if requested.
 
 _artifacts = {
-    "user_claims": (example['user_claims'], "User Claims"),
-    "sd_jwt_payload": ( sd_jwt_payload, "Payload of the SD-JWT"),
+    "user_claims": (example["user_claims"], "User Claims"),
+    "sd_jwt_payload": (sd_jwt_payload, "Payload of the SD-JWT"),
     "serialized_sd_jwt": (serialized_sd_jwt, "Serialized SD-JWT"),
     "svc_payload": (svc_payload, "Payload of the Salt/Value Container (SVC)"),
     "serialized_svc": (serialized_svc, "Serialized SVC"),
-    "combined_sd_jwt_svc": (f"{serialized_sd_jwt}.{serialized_svc}", "Combined SD-JWT and SVC representation"),
+    "combined_sd_jwt_svc": (
+        f"{serialized_sd_jwt}.{serialized_svc}",
+        "Combined SD-JWT and SVC representation",
+    ),
 }
 
 
@@ -173,23 +192,34 @@ sd_jwt_release_payload, serialized_sd_jwt_release = create_release_jwt(
     HOLDER_KEY,
 )
 
-_combined = _artifacts['serialized_sd_jwt'][0] + "." + serialized_sd_jwt_release
+_combined = _artifacts["serialized_sd_jwt"][0] + "." + serialized_sd_jwt_release
 
 _artifacts.update(
     {
-        "sd_jwt_release_payload": (sd_jwt_release_payload, "Payload of the SD-JWT-Release"),
-        "serialized_sd_jwt_release": (serialized_sd_jwt_release, "Serialized SD-JWT-Release"),
-        "combined_sd_jwt_sd_jwt_release": (_combined, "Combined representation of SD-JWT and SD-JWT-R"),
+        "sd_jwt_release_payload": (
+            sd_jwt_release_payload,
+            "Payload of the SD-JWT-Release",
+        ),
+        "serialized_sd_jwt_release": (
+            serialized_sd_jwt_release,
+            "Serialized SD-JWT-Release",
+        ),
+        "combined_sd_jwt_sd_jwt_release": (
+            _combined,
+            "Combined representation of SD-JWT and SD-JWT-R",
+        ),
     }
 )
 
 ### Verify the SD-JWT using the SD-JWT-R
-vc = verify(_artifacts["combined_sd_jwt_sd_jwt_release"][0],
+vc = verify(
+    _artifacts["combined_sd_jwt_sd_jwt_release"][0],
     ISSUER_PUBLIC_KEY,
     ISSUER,
     HOLDER_KEY,
     VERIFIER,
-    _args.nonce,)
+    _args.nonce,
+)
 
 _artifacts["verified_contents"] = (vc, "Verified released contents of the SD-JWT")
 
@@ -209,7 +239,6 @@ if not _args.replace_examples_in:
             print(" - decodes to - ")
             print_decoded_repr(data)
 
-
     sys.exit(0)
 
 
@@ -217,10 +246,11 @@ if not _args.replace_examples_in:
 
 from sd_jwt.replace_utils import replace_all_in_file
 
-logger.info(
-    f"Replacing the placeholders in the '{_args.replace_examples_in}' file."
-)
+logger.info(f"Replacing the placeholders in the '{_args.replace_examples_in}' file.")
 
 replace_all_in_file(
-    _args.replace_examples_in, _artifacts, f"example-{example_identifer}-", ignore_missing_placeholders=True
+    _args.replace_examples_in,
+    _artifacts,
+    f"example-{example_identifer}-",
+    ignore_missing_placeholders=True,
 )

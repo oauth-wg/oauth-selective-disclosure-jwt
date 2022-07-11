@@ -25,7 +25,7 @@ def print_decoded_repr(value: str, nlines=2):
             logging.debug(f"{e} - for value: {i}")
             seq.append(i)
     _nlines = "\n" * nlines if nlines else ""
-    print('\n.\n'.join(seq), end=_nlines)
+    print("\n.\n".join(seq), end=_nlines)
 
 
 def get_jwk(jwk_kwargs: dict = {}, no_randomness: bool = False):
