@@ -722,7 +722,21 @@ this specification, can be used to prevent this type of linkability.
 
 # Acknowledgements {#Acknowledgements}
       
-We would like to thank ...
+We would like to thank 
+Alen Horvat, 
+Brian Campbell, 
+Christian Paquin, 
+Fabian Hauck,
+Giuseppe De Marco, 
+Kushal Das, 
+Mike Jones, 
+Nat Sakimura,
+Pieter Kasselman, and
+Torsten Lodderstedt
+for their contributions (some of which substantial) to this draft and to the initial set of implementations.
+
+The work on this draft was started at OAuth Security Workshop 2022 in Trondheim, Norway.
+
 
 # IANA Considerations {#iana_considerations}
 
