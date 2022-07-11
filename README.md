@@ -24,16 +24,17 @@ sd_jwt -h
 
 You can then run the code (from the root of this repository):
 ```
-sd_jwt --example simple
-sd_jwt --example structured
-sd_jwt --example complex
+sd_jwt sd_jwt/examples/simple.yml
+sd_jwt sd_jwt/examples/simple_structured.yml
+sd_jwt sd_jwt/examples/complex.yml
 ```
+
 You can create your custom setting file creating a folder with a copy of 
 [sd_jwt/demo_settings.py](sd_jwt/demo_settings.py) renamed to `settings.py` 
 and a `__init__.py` in it. Then run `sd_jwt` specifying the custom settings path:
 
 ````
-sd_jwt --example simple --settings-path ./custom_settings/
+sd_jwt sd_jwt/examples/simple.yml --settings-path ./custom_settings/
 ````
 
 ## Updating Examples
@@ -47,9 +48,9 @@ It calls the demos with the switch `--replace-examples-in` to replace the exampl
 [main.md](main.md) and `--no-randomness` to ensure that the examples are always
 generated in the same way (this minimizes the changes that need to be tracked).
 
-The code creates a backup before modifying [main.md](main.md) in [main.md.bak](main.md.bak).
+The code creates a backup before modifying [main.md](main.md) in [main.bak](main.bak).
 
-## Compiling
+## Compiling the Specification (Markdown to XML/HTML)
 
 ### Using Docker (recommended)
 From the root of this repository, run
