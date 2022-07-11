@@ -3,18 +3,17 @@ import argparse
 import json
 import logging
 import sys
+import pathlib
+
+import yaml
 
 from sd_jwt import __version__
-from sd_jwt.demo_utils import (
-    print_decoded_repr,
-    get_jwk, 
-    print_repr
-)
+from sd_jwt.demo_utils import print_decoded_repr, get_jwk, print_repr
 from sd_jwt.operations import (
     create_sd_jwt_and_svc,
     create_release_jwt,
     generate_salt,
-    verify
+    verify,
 )
 
 logger = logging.getLogger("sd_jwt")
@@ -23,325 +22,205 @@ logger = logging.getLogger("sd_jwt")
 parser = argparse.ArgumentParser(
     description=f"{__file__} demo.",
     epilog=f"{__file__}",
-    formatter_class=argparse.RawTextHelpFormatter
+    formatter_class=argparse.RawTextHelpFormatter,
 )
 parser.add_argument(
-    '--example', required=False,
-    choices=(
-        'simple',
-        'structured',
-        'complex',
-    ),
-    default='structured',
+    "example",
     help=(
-        "Produces examples of SD-JWT with different structures, "
-        "see sd_jwt/demo_settings.py for a quick overview of these"
-    )
-)
-parser.add_argument(
-    '-d', '--debug', required=False,
-    choices=(
-        'CRITICAL',
-        'ERROR',
-        'WARNING',
-        'INFO',
-        'DEBUG'
+        "Yaml file containing the SD-JWT demo to process. See examples/simple.yml for an example."
     ),
-    default='INFO',
-    help="Debug level, see python logging; defaults to INFO if omitted"
+    type=pathlib.Path,
 )
 parser.add_argument(
-    '-nr', '--no-randomness', required=False,
+    "-d",
+    "--debug",
+    required=False,
+    choices=("CRITICAL", "ERROR", "WARNING", "INFO", "DEBUG"),
+    default="INFO",
+    help="Debug level, see python logging; defaults to INFO if omitted",
+)
+parser.add_argument(
+    "-nr",
+    "--no-randomness",
+    required=False,
     action="store_true",
     default=False,
     help=(
         "For the purpose of generating static examples for the spec, this command line "
         "switch disables randomness. Using this in production is highly insecure!"
-    )
+    ),
 )
 parser.add_argument(
-    '--nonce', required=False,
+    "--nonce",
+    required=False,
     type=str,
     default=generate_salt(),
-    help=(
-        "given example of a salt: 'XZOUco1u_gEPknxS78sWWg'"
-    )
+    help=("given example of a salt: 'XZOUco1u_gEPknxS78sWWg'"),
 )
 parser.add_argument(
-    '--iat', required=False,
-    type=int,
-    help=("issued at, UTC Timestamp")
+    "--iat", required=False, type=int, help=("issued at, UTC Timestamp")
 )
 parser.add_argument(
-    '--exp', required=False,
-    type=int,
-    help=("expire at, UTC Timestamp")
+    "--exp", required=False, type=int, help=("expire at, UTC Timestamp")
 )
 parser.add_argument(
-    '--settings-path', required=False,
+    "--settings-path",
+    required=False,
     type=str,
-    help=(
-        "path/to/settings.py"
-        ". This path/to requires a __init__.py file."
-    )
+    help=("path/to/settings.py - this path/to requires a __init__.py file."),
 )
 parser.add_argument(
-    '--indent', required=False,
+    "--indent",
+    required=False,
     type=int,
     default=4,
-    help=("json output indentation level")
+    help=("json output indentation level"),
 )
 parser.add_argument(
-    '--replace-examples-in', required=False,
-    type=str,
-    help=(
-        "path/to/main.md"
-        " - replaces all the examples in the specs"
-    )
+    "--replace-examples-in",
+    required=False,
+    type=pathlib.Path,
+    default=pathlib.Path('main.md'),
+    help=("path/to/main.md - Do not output examples, but replace all the examples in the specs"),
 )
 parser.add_argument(
-    '-v', '--version', required=False,
+    "-v",
+    "--version",
+    required=False,
     action="store_true",
-    help="Print version and exit"
+    help="Print version and exit",
 )
 
 _args = parser.parse_args()
 logger.setLevel(_args.debug)
 
 if _args.version:
-    sys.exit(f'{__version__}')
+    sys.exit(f"{__version__}")
 
-# load settings
+### Load settings
+
 if _args.settings_path:
     sys.path.append(_args.settings_path)
-    from settings import *
+    from settings import ISSUER, ISSUER_KEY_DICT, VERIFIER, HOLDER_KEY_DICT, DEFAULT_KEY_SIZE, DEFAULT_KTY
 else:
-    from sd_jwt.demo_settings import *
+    from sd_jwt.demo_settings import ISSUER, ISSUER_KEY_DICT, VERIFIER, HOLDER_KEY_DICT, DEFAULT_KEY_SIZE, DEFAULT_KTY
 
-if _args.example:
+# They may come from a custom python settings file
+jwk_kwargs = {
+    "iss_key": ISSUER_KEY_DICT,
+    "holder_key": HOLDER_KEY_DICT,
+    "key_size": DEFAULT_KEY_SIZE,
+    "kty": DEFAULT_KTY,
+}
+_JWKS = get_jwk(jwk_kwargs, _args.no_randomness)
+ISSUER_KEY = _JWKS["ISSUER_KEY"]
+HOLDER_KEY = _JWKS["HOLDER_KEY"]
+ISSUER_PUBLIC_KEY = _JWKS["ISSUER_PUBLIC_KEY"]
 
-    print("# Creating the SD-JWT")
-    # They may came from a custom python settings file
-    jwk_kwargs = {
-        "iss_key": ISSUER_KEY_DICT,
-        "holder_key": HOLDER_KEY_DICT,
-        "key_size": DEFAULT_KEY_SIZE,
-        "kty": DEFAULT_KTY
+
+### Load example file
+
+example_identifer = _args.example.stem
+
+with open(_args.example, "r") as f:
+    example = yaml.load(f, Loader=yaml.FullLoader)
+
+for property in ("user_claims", "claims_structure", "disclosed_claims"):
+    if property not in example:
+        sys.exit(f"Example file must define '{property}'.")
+
+### Produce SD-JWT and SVC for selected example
+
+(
+    sd_jwt_payload,
+    serialized_sd_jwt,
+    svc_payload,
+    serialized_svc,
+) = create_sd_jwt_and_svc(
+    example["user_claims"],
+    ISSUER,
+    ISSUER_KEY,
+    HOLDER_KEY,
+    example["claims_structure"],
+    iat=_args.iat,
+    exp=_args.exp,
+)
+
+
+# _artifacts keeps track of the data produced during the example run. 
+# For each entry, the actual data plus a human-readable description is stored.
+#
+# _artifacts is later used to output the data to the command line and to update the 
+# specification file, if requested.
+
+_artifacts = {
+    "user_claims": (example['user_claims'], "User Claims"),
+    "sd_jwt_payload": ( sd_jwt_payload, "Payload of the SD-JWT"),
+    "serialized_sd_jwt": (serialized_sd_jwt, "Serialized SD-JWT"),
+    "svc_payload": (svc_payload, "Payload of the Salt/Value Container (SVC)"),
+    "serialized_svc": (serialized_svc, "Serialized SVC"),
+    "combined_sd_jwt_svc": (f"{serialized_sd_jwt}.{serialized_svc}", "Combined SD-JWT and SVC representation"),
+}
+
+
+### Produce SD-JWT-R for selected example
+
+sd_jwt_release_payload, serialized_sd_jwt_release = create_release_jwt(
+    _args.nonce,
+    VERIFIER,
+    example["disclosed_claims"],
+    _artifacts["serialized_svc"][0],
+    HOLDER_KEY,
+)
+
+_combined = _artifacts['serialized_sd_jwt'][0] + "." + serialized_sd_jwt_release
+
+_artifacts.update(
+    {
+        "sd_jwt_release_payload": (sd_jwt_release_payload, "Payload of the SD-JWT-Release"),
+        "serialized_sd_jwt_release": (serialized_sd_jwt_release, "Serialized SD-JWT-Release"),
+        "combined_sd_jwt_sd_jwt_release": (_combined, "Combined representation of SD-JWT and SD-JWT-R"),
     }
-    _JWKS = get_jwk(jwk_kwargs, _args.no_randomness)
-    ISSUER_KEY = _JWKS["ISSUER_KEY"]
-    HOLDER_KEY = _JWKS["HOLDER_KEY"]
-    ISSUER_PUBLIC_KEY = _JWKS["ISSUER_PUBLIC_KEY"]
-    #
-    
-    examples_dict = {
-        "simple": {
-            "args": (SIMPLE_USER_CLAIMS, ISSUER, ISSUER_KEY, HOLDER_KEY),
-            "disclosed_claims": SIMPLE_DISCLOSED_CLAIMS,
-        },
-        "structured": {
-            "args": (SIMPLE_USER_CLAIMS, ISSUER, ISSUER_KEY, HOLDER_KEY, STRUCTURED_CLAIMS_STRUCTURE),
-            "disclosed_claims": STRUCTURED_DISCLOSED_CLAIMS,
-        },
-        "complex": {
-            "args": (COMPLEX_USER_CLAIMS, ISSUER, ISSUER_KEY, HOLDER_KEY, COMPLEX_CLAIMS_STRUCTURE),
-            "disclosed_claims": COMPLEX_DISCLOSED_CLAIMS,
-        }
-    }
-    
-    # produces all the examples
-    for example_type in examples_dict.keys():
-        _sel_exp = examples_dict[example_type]
-        sd_jwt_payload, serialized_sd_jwt, svc_payload, serialized_svc = create_sd_jwt_and_svc(
-            *_sel_exp["args"], iat=_args.iat, exp=_args.exp
-        )
-        _sel_exp["sd_jwt_payload"] = sd_jwt_payload
-        _sel_exp["serialized_sd_jwt"] = serialized_sd_jwt
-        _sel_exp["svc_payload"] = svc_payload
-        _sel_exp["serialized_svc"] = serialized_svc
-        _sel_exp["combined_sd_jwt_svc"] = f'{serialized_sd_jwt}.{serialized_svc}'
+)
 
-    # print out only the selected example
-    _target = examples_dict[_args.example]
-    print_repr(
-        ("User claims", 
-         json.dumps(
-                _target["args"][0], indent=_args.indent
-                )
-        )
-    )
+### Verify the SD-JWT using the SD-JWT-R
+vc = verify(_artifacts["combined_sd_jwt_sd_jwt_release"][0],
+    ISSUER_PUBLIC_KEY,
+    ISSUER,
+    HOLDER_KEY,
+    VERIFIER,
+    _args.nonce,)
 
-    print_repr(
-        (
-            "Payload of the SD-JWT:",
-            json.dumps(_target["sd_jwt_payload"], indent=_args.indent)
-        )
-    )
+_artifacts["verified_contents"] = (vc, "Verified released contents of the SD-JWT")
 
-    print_repr(("The serialized SD-JWT:", _target["serialized_sd_jwt"]))
-    print("Serialized SD-JWT decoded representation:")
-    print_decoded_repr(_target["serialized_sd_jwt"])
+### Done - now output everything to CLI (unless --replace-examples-in was used)
 
-    print_repr(("Payload of the SD-JWT Salt/Value Container (SVC):",
-               json.dumps(_target["svc_payload"], indent=_args.indent)))
+if not _args.replace_examples_in:
 
-    print_repr(("The serialized SD-JWT Salt/Value Container (SVC):", _target["serialized_svc"]))
-    
-    print("Serialized SD-JWT Salt/Value Container (SVC) decoded representation:")
-    print_decoded_repr(_target["serialized_sd_jwt"])
-    
-    #####
-    for example_type in examples_dict.keys():
-        _sel_exp = examples_dict[example_type]
+    for key, (data, description) in _artifacts.items():
+        print(f"{description} ({key}):")
+        if isinstance(data, dict):
+            print_repr(json.dumps(data, indent=_args.indent))
+        else:
+            print_repr(data)
 
-        sd_jwt_release_payload, serialized_sd_jwt_release = create_release_jwt(
-            _args.nonce, 
-            VERIFIER, 
-            _sel_exp["disclosed_claims"], 
-            _sel_exp["serialized_svc"], 
-            HOLDER_KEY
-        )
-        _sel_exp["sd_jwt_release_payload"] = sd_jwt_release_payload
-        _sel_exp["serialized_sd_jwt_release"] = serialized_sd_jwt_release
-        _sel_exp["combined_sd_jwt_sd_jwt_release"] = f"{_sel_exp['serialized_sd_jwt']}.{serialized_sd_jwt_release}"
-        _ver_data = (
-            _sel_exp["combined_sd_jwt_sd_jwt_release"],
-            ISSUER_PUBLIC_KEY,
-            ISSUER,
-            HOLDER_KEY,
-            VERIFIER,
-            _args.nonce,
-        )
-        vc = verify(*_ver_data)
-        _sel_exp["verify"] = vc
-        
-    print("# Creating the SD-JWT-Release")
-    print_repr(
-        (
-            "Payload of the SD-JWT-Release:",
-            json.dumps(_sel_exp["sd_jwt_release_payload"], indent=_args.indent)
-        )
-    )
-    print_repr(("The serialized SD-JWT-Release:", _sel_exp["serialized_sd_jwt_release"]))
-    
-    print("# Creating the Combined Presentation")
-    print_repr(("Combined Presentation:", _sel_exp["combined_sd_jwt_sd_jwt_release"]))
-    
-    print(f"Verified claims: {json.dumps(_sel_exp['verify'], indent=_args.indent)}")
-    
-    if _args.replace_examples_in:
-        from sd_jwt.replace_utils import *
-        
-        logger.info(f"Replacing the placeholders in the '{_args.replace_examples_in}' file.")
-        replacements = {
-        
-            f"example-simple-sd-jwt-claims": json.dumps(
-                examples_dict["simple"]["args"][0], indent=EXAMPLE_INDENT
-            ),
-            f"example-simple-sd-jwt-payload": json.dumps(
-                examples_dict["simple"]["sd_jwt_payload"], indent=EXAMPLE_INDENT
-            ),
-            f"example-simple-sd-jwt-encoded": fill(
-                examples_dict["simple"]["serialized_sd_jwt"], 
-                width=EXAMPLE_MAX_WIDTH, 
-                break_on_hyphens=False
-            ),
-            f"example-simple-svc-payload": json.dumps(
-                examples_dict["simple"]["svc_payload"], indent=EXAMPLE_INDENT
-            ),
-            f"example-simple-svc-payload": json.dumps(
-                examples_dict["simple"]["svc_payload"], indent=EXAMPLE_INDENT
-            ),
-            f"example-simple-combined-sd-jwt-svc": fill(
-                examples_dict["simple"]["combined_sd_jwt_svc"], 
-                width=EXAMPLE_MAX_WIDTH, 
-                break_on_hyphens=False
-            ),
-            f"example-simple-release-payload": json.dumps(
-                examples_dict["simple"]["sd_jwt_release_payload"], indent=EXAMPLE_INDENT
-            ),
-            f"example-simple-release-encoded": fill(
-                examples_dict["simple"]["serialized_sd_jwt_release"], 
-                width=EXAMPLE_MAX_WIDTH, 
-                break_on_hyphens=False
-            ),
-            f"example-simple-combined-sd-jwt-sd-jwt-release": fill(
-                examples_dict["simple"]["combined_sd_jwt_sd_jwt_release"], 
-                width=EXAMPLE_MAX_WIDTH, 
-                break_on_hyphens=False
-            ),
-            f"example-simple-release-encoded": fill(
-                examples_dict["simple"]["serialized_sd_jwt_release"], 
-                width=EXAMPLE_MAX_WIDTH, 
-                break_on_hyphens=False
-            ),
-            f"example-complex_structured-sd-jwt-claims": json.dumps(
-                COMPLEX_USER_CLAIMS, indent=EXAMPLE_INDENT
-            ),
-            f"example-complex_structured-sd-jwt-payload": json.dumps(
-                examples_dict["complex"]["sd_jwt_payload"], indent=EXAMPLE_INDENT
-            ),
-            f"example-complex_structured-sd-jwt-encoded": fill(
-                examples_dict["complex"]["combined_sd_jwt_svc"], 
-                width=EXAMPLE_MAX_WIDTH, 
-                break_on_hyphens=False
-            ),
-            f"example-complex_structured-svc-payload": json.dumps(
-                examples_dict["complex"]["combined_sd_jwt_sd_jwt_release"], indent=EXAMPLE_INDENT
-            ),
-            f"example-complex_structured-release-payload": json.dumps(
-                examples_dict["complex"]["sd_jwt_release_payload"], indent=EXAMPLE_INDENT
-            ),
-            "example-complex_structured-release-encoded": fill(
-                examples_dict["complex"]["serialized_sd_jwt_release"], 
-                width=EXAMPLE_MAX_WIDTH, 
-                break_on_hyphens=False
-            ),
-            "example-complex_structured-release-combined": fill(
-                examples_dict["complex"]["combined_sd_jwt_sd_jwt_release"], 
-                width=EXAMPLE_MAX_WIDTH, 
-                break_on_hyphens=False
-            ),
+        # Small hack to display some values in decoded form
+        if key.startswith("serialized_"):
+            print(" - decodes to - ")
+            print_decoded_repr(data)
 
-            ###
-            
-            f"example-simple_structured-sd-jwt-claims": json.dumps(
-                examples_dict["structured"]["args"][0], indent=EXAMPLE_INDENT
-            ),
-            f"example-simple_structured-sd-jwt-payload": json.dumps(
-                examples_dict["structured"]["sd_jwt_payload"], indent=EXAMPLE_INDENT
-            ),
-            f"example-simple_structured-sd-jwt-encoded": fill(
-                examples_dict["structured"]["combined_sd_jwt_svc"], 
-                width=EXAMPLE_MAX_WIDTH, 
-                break_on_hyphens=False
-            ),
-            f"example-simple_structured-svc-payload": json.dumps(
-                examples_dict["structured"]["svc_payload"], indent=EXAMPLE_INDENT
-            ),
-            f"example-simple_structured-combined-encoded": fill(
-                examples_dict["structured"]["combined_sd_jwt_sd_jwt_release"],
-                width=EXAMPLE_MAX_WIDTH,
-                break_on_hyphens=False,
-            ),
-            f"example-simple_structured-release-payload": json.dumps(
-                examples_dict["structured"]["sd_jwt_release_payload"], 
-                indent=EXAMPLE_INDENT
-            ),
-            f"example-simple_structured-release-encoded": fill(
-                examples_dict["structured"]["serialized_sd_jwt_release"], 
-                width=EXAMPLE_MAX_WIDTH, 
-                break_on_hyphens=False
-            ),
-            f"example-simple_structured-release-combined": fill(
-                examples_dict["structured"]["combined_sd_jwt_sd_jwt_release"],
-                width=EXAMPLE_MAX_WIDTH,
-                break_on_hyphens=False,
-            ),
-        }
-        replace_all_in_main(
-            _args.replace_examples_in, 
-            replacements, 
-            ignore_missing_placeholders=True
-        )
-    
+
+    sys.exit(0)
+
+
+### Otherwise, update examples in the spec
+
+from sd_jwt.replace_utils import replace_all_in_file
+
+logger.info(
+    f"Replacing the placeholders in the '{_args.replace_examples_in}' file."
+)
+
+replace_all_in_file(
+    _args.replace_examples_in, _artifacts, f"example-{example_identifer}-", ignore_missing_placeholders=True
+)
