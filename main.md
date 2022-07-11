@@ -8,7 +8,7 @@ keyword = ["security", "oauth2"]
 
 [seriesInfo]
 name = "Internet-Draft"
-value = "draft-fett-oauth-selective-disclosure-jwt-01"
+value = "draft-fett-oauth-selective-disclosure-jwt-02"
 stream = "IETF"
 status = "standard"
 
@@ -1165,11 +1165,18 @@ encoded as JSON and signed as a JWS compliant to [@VC_DATA].
 
    [[ To be removed from the final specification ]]
 
+   -02
+
+   *  Added acknowledgements
+   *  Improved Security Considerations
+   *  Stressed uniqueness requirements for salts
+   *  Python reference implementation clean-up and refactoring
+
    -01
    
    *  Editorial fixes
-   *  Added hash_alg claim
-   *  Renamed `_sd` to `sd_digests` and sd_release
+   *  Added `hash_alg` claim
+   *  Renamed `_sd` to `sd_digests` and `sd_release`
    *  Added descriptions on holder binding - more work to do
    *  Clarify that signing the SD-JWT is mandatory
 
