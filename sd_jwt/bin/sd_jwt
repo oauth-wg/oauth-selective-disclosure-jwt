@@ -103,30 +103,16 @@ if _args.version:
 
 if _args.settings_path:
     sys.path.append(_args.settings_path)
-    from settings import (
-        ISSUER,
-        ISSUER_KEY_DICT,
-        VERIFIER,
-        HOLDER_KEY_DICT,
-        DEFAULT_KEY_SIZE,
-        DEFAULT_KTY,
-    )
+    import settings
 else:
-    from sd_jwt.demo_settings import (
-        ISSUER,
-        ISSUER_KEY_DICT,
-        VERIFIER,
-        HOLDER_KEY_DICT,
-        DEFAULT_KEY_SIZE,
-        DEFAULT_KTY,
-    )
+    import sd_jwt.demo_settings as settings
 
 # They may come from a custom python settings file
 jwk_kwargs = {
-    "iss_key": ISSUER_KEY_DICT,
-    "holder_key": HOLDER_KEY_DICT,
-    "key_size": DEFAULT_KEY_SIZE,
-    "kty": DEFAULT_KTY,
+    "iss_key": settings.ISSUER_KEY_DICT,
+    "holder_key": settings.HOLDER_KEY_DICT,
+    "key_size": settings.DEFAULT_KEY_SIZE,
+    "kty": settings.DEFAULT_KTY,
 }
 _JWKS = get_jwk(jwk_kwargs, _args.no_randomness)
 ISSUER_KEY = _JWKS["ISSUER_KEY"]
@@ -154,7 +140,7 @@ for property in ("user_claims", "claims_structure", "disclosed_claims"):
     serialized_svc,
 ) = create_sd_jwt_and_svc(
     example["user_claims"],
-    ISSUER,
+    settings.ISSUER,
     ISSUER_KEY,
     HOLDER_KEY,
     example["claims_structure"],
@@ -186,7 +172,7 @@ _artifacts = {
 
 sd_jwt_release_payload, serialized_sd_jwt_release = create_release_jwt(
     _args.nonce,
-    VERIFIER,
+    settings.VERIFIER,
     example["disclosed_claims"],
     _artifacts["serialized_svc"][0],
     HOLDER_KEY,
@@ -215,9 +201,9 @@ _artifacts.update(
 vc = verify(
     _artifacts["combined_sd_jwt_sd_jwt_release"][0],
     ISSUER_PUBLIC_KEY,
-    ISSUER,
+    settings.ISSUER,
     HOLDER_KEY,
-    VERIFIER,
+    settings.VERIFIER,
     _args.nonce,
 )
 
