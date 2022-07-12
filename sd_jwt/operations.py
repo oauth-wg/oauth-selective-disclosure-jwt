@@ -4,7 +4,7 @@ from base64 import urlsafe_b64decode, urlsafe_b64encode
 from hashlib import sha256
 from json import dumps, loads
 from secrets import compare_digest
-from typing import Dict, Optional, Union
+from typing import Dict, List, Optional, Tuple, Union
 
 from jwcrypto.jwk import JWK
 from jwcrypto.jws import JWS
@@ -44,6 +44,7 @@ class SDJWT:
         issuer_key,
         holder_key,
         claims_structure: Optional[Dict] = None,
+        blinded_claim_names: Optional[List] = None,
         iat: Optional[int] = None,
         exp: Optional[int] = None,
         sign_alg=None,
@@ -53,6 +54,7 @@ class SDJWT:
         self._issuer_key = issuer_key
         self._holder_key = holder_key
         self._claims_structure = claims_structure or {}
+        self._blinded_claim_names = blinded_claim_names or []
         self._iat = iat or int(datetime.datetime.utcnow().timestamp())
         self._exp = exp or self._iat + (self.DEFAULT_EXP_MINS * 60)
         self._sign_alg = sign_alg or DEFAULT_SIGNING_ALG
@@ -68,7 +70,7 @@ class SDJWT:
         self.salts = walk_by_structure(
             self._claims_structure,
             self._user_claims,
-            lambda _, __, ___=None: generate_salt(),
+            lambda key, __, ___=None: (key, generate_salt()),
         )
 
     def _assemble_sd_jwt_payload(self):
@@ -92,20 +94,20 @@ class SDJWT:
             .strip("=")
         )
 
-    def _hash_claim(self, salt, value, return_raw=False):
-        raw = dumps([salt, value])
+    def _hash_claim(self, salt, key, value, return_raw=False) -> Tuple[str, str]:
+        raw = dumps({"s": salt, "v": value})
         if return_raw:
-            return raw
+            return (key, raw)
             # return [salt, value]
         # Calculate the SHA 256 hash and output it base64 encoded
-        return self._hash_raw(raw.encode())
+        return (key, self._hash_raw(raw.encode()))
 
-    def _create_sd_claim_entry(self, key, value: str, salt: str) -> str:
+    def _create_sd_claim_entry(self, key, value: str, salt: str) -> Tuple[str, str]:
         """
         returns the hashed and salted value string
         key arg is not used here, it's just for compliance to other calls
         """
-        return self._hash_claim(salt, value)
+        return self._hash_claim(salt, key, value)
 
     def _create_signed_jwt(self):
         """
@@ -138,13 +140,13 @@ class SDJWT:
             .strip("=")
         )
 
-    def _create_svc_entry(self, key, value: str, salt: str) -> str:
+    def _create_svc_entry(self, key, value: str, salt: str) -> Tuple[str, str]:
         """
         returns a string representation of a list
         [hashed and salted value string, value string]
         key arg is not used here, it's just for compliances to other calls
         """
-        return self._hash_claim(salt, value, return_raw=True)
+        return self._hash_claim(salt, key, value, return_raw=True)
 
     def _create_combined(self):
         self.combined_sd_jwt_svc = self.serialized_sd_jwt + "." + self.serialized_svc
@@ -179,7 +181,7 @@ class SDJWT:
         _alg = sign_alg or DEFAULT_SIGNING_ALG
 
         sd_jwt_r_struct = walk_by_structure(
-            self._input_hash_raw_values, disclosed_claims, lambda _, __, raw: raw
+            self._input_hash_raw_values, disclosed_claims, lambda key, __, raw: (key, raw)
         )
 
         self.sd_jwt_release_payload = {
@@ -331,10 +333,7 @@ class SDJWT:
             )
 
         decoded = loads(released_value)
-        if not isinstance(decoded, list):
+        if not isinstance(decoded, dict):
             raise ValueError("Claim release value is not a list")
 
-        if len(decoded) != 2:
-            raise ValueError("Claim release value is not of length 2")
-
-        return decoded[1]
+        return (claim_name + "X", decoded["v"])

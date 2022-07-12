@@ -8,8 +8,18 @@ def by_structure(structure, obj, fn):
     """
     This helper function allows traversing a nested dictionary using a given
     structure as the guide. A function that is passed as an argument is called for
-    every leaf node in obj that is not contained in the structure object. See
-    examples below!
+    every leaf node in obj that is not contained in the structure object. 
+    
+    The function fn has the following signature:
+    fn(key: str, value: str, value_in_structure: Optional[Any]) -> Tuple[str, Any]
+
+    value_in_structure is only passed if the structure already contains a value at this
+    point in the structure.
+
+    The function must return a tuple consisting of a new key and a new value for the output
+    structure.
+
+    See examples below!
     """
     logger.debug(f"Walking in: {structure} using {obj} on {fn}")
     out = {}
@@ -23,9 +33,11 @@ def by_structure(structure, obj, fn):
                     by_structure(structure[key][0], item, fn) for item in value
                 )
             else:
-                out[key] = fn(key, value, structure[key])
+                new_key, new_value = fn(key, value, structure[key])
+                out[new_key] = new_value
         else:
-            out[key] = fn(key, value)
+            new_key, new_value = fn(key, value)
+            out[new_key] = new_value
     return out
 
 
@@ -33,7 +45,7 @@ if __name__ == "__main__":
     # Example 1
 
     def test_fn(key, value, value_in_structure=None):
-        return f"called fn({key}, {value}, {value_in_structure})"
+        return (key, f"called fn({key}, {value}, {value_in_structure})")
 
     structure0 = {}
 
@@ -213,3 +225,37 @@ if __name__ == "__main__":
     print(json.dumps(output2, indent=2))
 
     assert output2 == expected2
+
+    def test_fn_with_renaming(key, value, value_in_structure=None):
+        return (key + "X", f"called fn({key}, {value}, {value_in_structure})")
+
+    structure3 = {}
+
+    raw3 = {
+        "sub": "6c5c0a49-b589-431d-bae7-219122a9ec2c",
+        "given_name": "John",
+        "family_name": "Doe",
+        "email": "johndoe@example.com",
+        "phone_number": "+1-202-555-0101",
+        "address": {
+            "street_address": "123 Main St",
+            "locality": "Anytown",
+            "region": "Anystate",
+            "country": "US",
+        },
+        "birthdate": "1940-01-01",
+    }
+
+    expected3 = {
+        "subX": "called fn(sub, 6c5c0a49-b589-431d-bae7-219122a9ec2c, None)",
+        "given_nameX": "called fn(given_name, John, None)",
+        "family_nameX": "called fn(family_name, Doe, None)",
+        "emailX": "called fn(email, johndoe@example.com, None)",
+        "phone_numberX": "called fn(phone_number, +1-202-555-0101, None)",
+        "addressX": "called fn(address, {'street_address': '123 Main St', 'locality': 'Anytown', 'region': 'Anystate', 'country': 'US'}, None)",
+        "birthdateX": "called fn(birthdate, 1940-01-01, None)",
+    }
+
+    output3 = by_structure(structure3, raw3, test_fn_with_renaming)
+    print(json.dumps(output3, indent=4))
+    assert output3 == expected3
