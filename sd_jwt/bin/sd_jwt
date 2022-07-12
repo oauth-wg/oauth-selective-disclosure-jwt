@@ -76,7 +76,6 @@ parser.add_argument(
     "--replace-examples-in",
     required=False,
     type=pathlib.Path,
-    default=pathlib.Path("main.md"),
     help=(
         "path/to/main.md - Do not output examples, but replace all the examples in the specs"
     ),
