@@ -92,7 +92,7 @@ def create_sd_jwt_and_svc(
     # Create the JWS payload
     sd_jwt_payload = {
         "iss": issuer,
-        "sub_jwk": holder_key.export_public(as_dict=True),
+        "cnf": holder_key.export_public(as_dict=True),
         "iat": _iat,
         "exp": _exp,
         HASH_ALG_KEY: HASH_ALG["name"],
@@ -113,7 +113,7 @@ def create_sd_jwt_and_svc(
     # Create the SVC
     svc_payload = {
         SD_CLAIMS_KEY: walk_by_structure(salts, user_claims, _create_svc_entry),
-        # "sub_jwk_private": issuer_key.export_private(as_dict=True),
+        # "cnf_private": issuer_key.export_private(as_dict=True),
     }
     serialized_svc = (
         urlsafe_b64encode(dumps(svc_payload).encode()).decode("ascii").strip("=")
@@ -184,8 +184,8 @@ def _verify_sd_jwt(
         raise ValueError("No selective disclosure claims in SD-JWT")
 
     holder_public_key_payload = None
-    if "sub_jwk" in sd_jwt_payload:
-        holder_public_key_payload = sd_jwt_payload["sub_jwk"]
+    if "cnf" in sd_jwt_payload:
+        holder_public_key_payload = sd_jwt_payload["cnf"]
 
     return sd_jwt_payload[SD_DIGESTS_KEY], holder_public_key_payload
 
@@ -206,7 +206,7 @@ def _verify_sd_jwt_release(
         # TODO: adopt an OrderedDict here
         # Because of weird bug of failed != between two public keys
         if not holder_public_key == pubkey:
-            raise ValueError("sub_jwk is not matching with HOLDER Public Key.")
+            raise ValueError("cnf claim is not matching HOLDER Public Key.")
     if holder_public_key:
         parsed_input_sd_jwt_release.verify(holder_public_key, alg=_alg)
 
