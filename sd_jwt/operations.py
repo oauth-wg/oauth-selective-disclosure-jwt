@@ -336,4 +336,4 @@ class SDJWT:
         if not isinstance(decoded, dict):
             raise ValueError("Claim release value is not a list")
 
-        return (claim_name + "X", decoded["v"])
+        return (claim_name, decoded["v"])
