@@ -44,6 +44,6 @@ jobs:
         pip install -e .
     - name: demo test
       run: |
-        sd_jwt --example simple --replace-examples-in main.md
-        sd_jwt --example complex
-        sd_jwt --example structured
+        sd_jwt sd_jwt/examples/simple.yml --replace-examples-in main.md
+        sd_jwt sd_jwt/examples/complex.yml
+        sd_jwt sd_jwt/examples/simple_structured.yml

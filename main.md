@@ -318,7 +318,7 @@ Note: need to define how holder public key is included, right now examples are u
 This example and Example 2 in the appendix use the following object as the set
 of claims that the Issuer is issuing:
 
-{#example-simple-sd-jwt-claims}
+{#example-simple-user_claims}
 ```json
 {
   "sub": "6c5c0a49-b589-431d-bae7-219122a9ec2c",
@@ -340,7 +340,7 @@ The following non-normative example shows the payload of an SD-JWT. The issuer
 is using a flat structure, i.e., all of the claims the `address` claim can only
 be disclosed in full.
 
-{#example-simple-sd-jwt-payload}
+{#example-simple-sd_jwt_payload}
 ```json
 {
   "iss": "https://example.com/issuer",
@@ -366,7 +366,7 @@ be disclosed in full.
 
 The SD-JWT is then signed by the issuer to create a document like the following:
 
-{#example-simple-sd-jwt-encoded}
+{#example-simple-serialized_sd_jwt}
 ```
 eyJhbGciOiAiUlMyNTYiLCAia2lkIjogImNBRUlVcUowY21MekQxa3pHemhlaUJhZzBZUk
 F6VmRsZnhOMjgwTmdIYUEifQ.eyJpc3MiOiAiaHR0cHM6Ly9leGFtcGxlLmNvbS9pc3N1Z
@@ -417,7 +417,7 @@ private key.
 
 The SVC for Example 1 is as follows:
 
-{#example-simple-svc-payload}
+{#example-simple-svc_payload}
 ```json
 {
   "sd_release": {
@@ -451,7 +451,7 @@ SVC and SD-JWT as defined in the Verification Section of this document.
 
 For Example 1, the combined format looks as follows:
 
-{#example-simple-combined-sd-jwt-svc}
+{#example-simple-combined_sd_jwt_svc}
 ```
 eyJhbGciOiAiUlMyNTYiLCAia2lkIjogImNBRUlVcUowY21MekQxa3pHemhlaUJhZzBZUk
 F6VmRsZnhOMjgwTmdIYUEifQ.eyJpc3MiOiAiaHR0cHM6Ly9leGFtcGxlLmNvbS9pc3N1Z
@@ -518,7 +518,7 @@ is not signed. TODO: Change to plain base64 to avoid alg=none issues
 
 The following is a non-normative example of the contents of an SD-JWT-R for Example 1:
 
-{#example-simple-release-payload}
+{#example-simple-sd_jwt_release_payload}
 ```json
 {
   "nonce": "XZOUco1u_gEPknxS78sWWg",
@@ -539,7 +539,7 @@ Again, the SD-JWT-R follows the same structure as the `sd_digests` in the SD-JWT
 Below is a non-normative example of a representation of the SD-JWT-R JWS Compact
 Serialization:
 
-{#example-simple-release-encoded}
+{#example-simple-serialized_sd_jwt_release}
 ```
 eyJhbGciOiAiUlMyNTYiLCAia2lkIjogIkxkeVRYd0F5ZnJpcjRfVjZORzFSYzEwVThKZE
 xZVHJFQktKaF9oNWlfclUifQ.eyJub25jZSI6ICJYWk9VY28xdV9nRVBrbnhTNzhzV1dnI
@@ -563,7 +563,7 @@ d7F6kQ
 
 The SD-JWT and the SD-JWT-R can be combined into one document using period character `.` as a separator (here for Example 1):
 
-{#example-simple-combined-sd-jwt-sd-jwt-release}
+{#example-simple-combined_sd_jwt_sd_jwt_release}
 ```
 eyJhbGciOiAiUlMyNTYiLCAia2lkIjogImNBRUlVcUowY21MekQxa3pHemhlaUJhZzBZUk
 F6VmRsZnhOMjgwTmdIYUEifQ.eyJpc3MiOiAiaHR0cHM6Ly9leGFtcGxlLmNvbS9pc3N1Z
@@ -798,7 +798,7 @@ This non-normative example is based on the same claim values as Example 1, but
 this time the issuer decided to create a structured object for the hashes. This
 allows for the release of individual members of the address claim separately.
 
-{#example-simple_structured-sd-jwt-payload}
+{#example-simple_structured-sd_jwt_payload}
 ```json
 {
   "iss": "https://example.com/issuer",
@@ -811,40 +811,40 @@ allows for the release of individual members of the address claim separately.
   "exp": 1516247022,
   "hash_alg": "sha-256",
   "sd_digests": {
-    "sub": "Iuc2ft9sZwaw2yi_DZJKipiHMR_HbZP-5-WY8EKNqoA",
-    "given_name": "TemA6ZTvHYgNfC8nzPC1x8q-yQxp5FpZjz-GQlSuJm4",
-    "family_name": "Ro-RcqHFcflmKJ-YTnpL_roVgljLLJZuMoKiT714TpM",
-    "email": "61L69IeXAGZxaWJocXvcou9-07PS8Ows4HNFO1tWqcg",
-    "phone_number": "7WMDBVSk7vrJ4lBG0U6ze_5aCsK9N1UZD5Pwc1knOGY",
+    "sub": "z4xgEco94diTaSruISPiE7o_wtmcOfnH_8R7X9Pa578",
+    "given_name": "PvU7cWjuHUq6w-i9XFpQZhjT-uprQL3GH3mKsAJl0e0",
+    "family_name": "H-Relr4cEBMlenyK1gvyx16QVpnt4MEclT5tP0aTLFU",
+    "email": "ET2A1JQLF85ZpBulh6UFstGrSfR4B3KM-bjQVllhxqY",
+    "phone_number": "SJnciB2DIRVA5cXBrdKoH6n45788mZyUn2rnv74uMVU",
     "address": {
-      "street_address": "O3YCyDFQkM4JdjRHWL78j_Z9Voi3RSYw3VBU0VJ4Lkk",
-      "locality": "BhZ5ZsxM39vej8aWP1l3_VdK6ErWIgaRsOBhiigsarc",
-      "region": "sns2ezJN5JHUPAvzSwxFIwPj_PrQbeiBGZujbwOYuJo",
-      "country": "rf-11mZmiYQOM7jRKqgNqqk_Zk1RbQJv7VVi9q2uU80"
+      "street_address": "O7_Isd6CmZqcSobPVpMgmJwB41hPUHHG8jg5LJ8YzfY",
+      "locality": "w-zTF6ljkQLTvVyp_JNyD3t5Waj-B2vb0AXH1q8OsjI",
+      "region": "nTvoKpGA6YQwEZipVBIM4WVH9KWEnwiqsRjEhrxhQz4",
+      "country": "u-O1yDQqDTTqOgUBSjWilgkMLzg_QOTELMfZrRT5e6k"
     },
-    "birthdate": "_gsBVx70--mLOaPOrl8POf5Vr3Coubg2yiz5pMrOLDc"
+    "birthdate": "TipyoxD43PZJF8ZEmKPrbxMElpFX_M7aBLkUpC-W53o"
   }
 }
 ```
 
 The SVC for this SD-JWT is as follows:
 
-{#example-simple_structured-svc-payload}
+{#example-simple_structured-svc_payload}
 ```json
 {
   "sd_release": {
-    "sub": "[\"G02NSrQfjFXQ7Io09syajA\", \"6c5c0a49-b589-431d-bae7-219122a9ec2c\"]",
-    "given_name": "[\"lklxF5jMYlGTPUovMNIvCA\", \"John\"]",
-    "family_name": "[\"nPuoQnkRFq3BIeAm7AnXFA\", \"Doe\"]",
-    "email": "[\"5bPs1IquZNa0hkaFzzzZNw\", \"johndoe@example.com\"]",
-    "phone_number": "[\"5a2W0_NrlEZzfqmk_7Pq-w\", \"+1-202-555-0101\"]",
+    "sub": "[\"2GLC42sKQveCfGfryNRN9w\", \"6c5c0a49-b589-431d-bae7-219122a9ec2c\"]",
+    "given_name": "[\"eluV5Og3gSNII8EYnsxA_A\", \"John\"]",
+    "family_name": "[\"6Ij7tM-a5iVPGboS5tmvVA\", \"Doe\"]",
+    "email": "[\"eI8ZWm9QnKPpNPeNenHdhQ\", \"johndoe@example.com\"]",
+    "phone_number": "[\"Qg_O64zqAxe412a108iroA\", \"+1-202-555-0101\"]",
     "address": {
-      "street_address": "[\"y1sVU5wdfJahVdgwPgS7RQ\", \"123 Main St\"]",
-      "locality": "[\"HbQ4X8srVW3QDxnIJdqyOA\", \"Anytown\"]",
-      "region": "[\"C9GSoujviJquEgYfojCb1A\", \"Anystate\"]",
-      "country": "[\"kx5kF17V-x0JmwUx9vgvtw\", \"US\"]"
+      "street_address": "[\"AJx-095VPrpTtN4QMOqROA\", \"123 Main St\"]",
+      "locality": "[\"Pc33JM2LchcU_lHggv_ufQ\", \"Anytown\"]",
+      "region": "[\"G02NSrQfjFXQ7Io09syajA\", \"Anystate\"]",
+      "country": "[\"lklxF5jMYlGTPUovMNIvCA\", \"US\"]"
     },
-    "birthdate": "[\"H3o1uswP760Fi2yeGdVCEQ\", \"1940-01-01\"]"
+    "birthdate": "[\"nPuoQnkRFq3BIeAm7AnXFA\", \"1940-01-01\"]"
   }
 }
 ```
@@ -852,18 +852,18 @@ The SVC for this SD-JWT is as follows:
 An SD-JWT-R for the SD-JWT above that discloses only `region` and `country` of
 the `address` property:
 
-{#example-simple_structured-release-payload}
+{#example-simple_structured-sd_jwt_release_payload}
 ```json
 {
   "nonce": "XZOUco1u_gEPknxS78sWWg",
   "aud": "https://example.com/verifier",
   "sd_release": {
-    "given_name": "[\"lklxF5jMYlGTPUovMNIvCA\", \"John\"]",
-    "family_name": "[\"nPuoQnkRFq3BIeAm7AnXFA\", \"Doe\"]",
-    "birthdate": "[\"H3o1uswP760Fi2yeGdVCEQ\", \"1940-01-01\"]",
+    "given_name": "[\"eluV5Og3gSNII8EYnsxA_A\", \"John\"]",
+    "family_name": "[\"6Ij7tM-a5iVPGboS5tmvVA\", \"Doe\"]",
+    "birthdate": "[\"nPuoQnkRFq3BIeAm7AnXFA\", \"1940-01-01\"]",
     "address": {
-      "region": "[\"C9GSoujviJquEgYfojCb1A\", \"Anystate\"]",
-      "country": "[\"kx5kF17V-x0JmwUx9vgvtw\", \"US\"]"
+      "region": "[\"G02NSrQfjFXQ7Io09syajA\", \"Anystate\"]",
+      "country": "[\"lklxF5jMYlGTPUovMNIvCA\", \"US\"]"
     }
   }
 }
@@ -875,7 +875,7 @@ In this example, a complex object such as those used for OIDC4IDA (todo referenc
 
 In this example, the Issuer is using a following object as a set of claims to issue to the Holder:
 
-{#example-complex_structured-sd-jwt-claims}
+{#example-complex-user_claims}
 ```json
 {
   "verified_claims": {
@@ -928,7 +928,7 @@ In this example, the Issuer is using a following object as a set of claims to is
 
 The following shows the resulting SD-JWT payload:
 
-{#example-complex_structured-sd-jwt-payload}
+{#example-complex-sd_jwt_payload}
 ```json
 {
   "iss": "https://example.com/issuer",
@@ -943,49 +943,49 @@ The following shows the resulting SD-JWT payload:
   "sd_digests": {
     "verified_claims": {
       "verification": {
-        "trust_framework": "ulse4qfN0Jsw6MJaDRpE7s4QfC9jl5xRsAdtLu5y0Nw",
-        "time": "5erOXGVITtW2jAYqqZjgSKv9BDV64-ij7oxm70PH5mw",
-        "verification_process": "R2IWSNyqDsKcTv8wbJvHacrXvxH41M2o2XyBPXDdBMs",
+        "trust_framework": "w1mP4oPc_J9thBex0TaQi1vgxFmruQJxZYLFnkNFMaI",
+        "time": "Pu3i0CWrPVLJW-LT30yF1bFBPP15B6-uKk3PnGDflv8",
+        "verification_process": "8HqIXRmczsdYOZzGcLqI5-l9xN5QbK2XDtXmdfH7z-4",
         "evidence": [
           {
-            "type": "60D_WEYdd9fVIg4Yp5LYkF_bfm-CrPO0MD4afV53QxE",
-            "method": "k8rl0LZgxWhSeIY-Pgx7ElPbrThBEqqgEphCWOepQoY",
-            "time": "Dv2iv4WN2l-W5TjjRFGuD7q5-cpUg5h_QmD6oIHac6c",
+            "type": "TnLuqGGQm6jfeOoa5uX1diKANUPuh-zHrpBFdX9MR-g",
+            "method": "SagmakoSu-X-XUPIC3EgdrEEwIWxRWXX4-i68X9TyEo",
+            "time": "ld2c5oYDRtQcfU6PzogPkx_95WYqhqIJNVRMnfcsicY",
             "document": {
-              "type": "bboBy937YbIm5bteK-7RqM-8sC6v80bzJOjOHfnmSsc",
+              "type": "ufWjDaAa54MnHeji2ZUUHDdnpZ9zx6CUG6uR28VMtsQ",
               "issuer": {
-                "name": "Fd3FDJu1SNMUbUzRZzbANGoIlKvcK-nJJNlsO-Jcfzs",
-                "country": "Oe1_kHEITWW2XL0_mAZkdwKdr4oxE00fkDjYHHPb7Zk"
+                "name": "a4GMucU7Zb060r0Svd7huY6Qho1bIf3v1U5BvPR8q6Y",
+                "country": "135k9M0m2SCnYRuOfHuYScYVS2q3eeY7IItgyRsaBT8"
               },
-              "number": "EVf75JZoNwyubkCbGd3yg5TGOp3PFNPPd8IBJr4iC58",
-              "date_of_issuance": "H0dpfU5qe-oqAfqqLPYIb0uPm6x2ARIyVsOcOtsvfxg",
-              "date_of_expiry": "Qf39B8Li53nPLPfFCTiNP8fiSl3cVUL5nmVSgYG8bC4"
+              "number": "cUvOxLUp8RV7TTVliEiu-TQIel-LsE8E-XfUgfqk5gk",
+              "date_of_issuance": "NIs8olJnJOv4J1qIEBKuTs2sEFs4fgGJhNqM6xdQt7E",
+              "date_of_expiry": "HTR37vLtANT6MWk-9dBqekFpCvaTG7zNf1ze56rnV64"
             }
           }
         ]
       },
       "claims": {
-        "given_name": "YdDYUguv9oG-G8qrtwFQKEBpCqk6qcfgAEINzvuHcuI",
-        "family_name": "7meD-4eVxg9gtdgS4uFi5n2sCjY2szjLPJVJDFm5Zuk",
-        "birthdate": "iEPf4UDcUu-JYKSkuOQ50eL5sivCEvsVunHrywK8FcU",
+        "given_name": "NB9XH_yJKqKOhXDmXkZKpMCkRbOmOTd8bqJFYDJYQnQ",
+        "family_name": "hAUbJ66ZYL9VJLbjsDpmSs2e9Ff_Ohim_WR4bwZyvoQ",
+        "birthdate": "6XOR4k56BgWk5tnNismbmEHvoGX7RRfy6Z8HENl96cU",
         "place_of_birth": {
-          "country": "gOL8yL-y0eICAytKN13yijyivVf-7Tej4KULwXG_JaQ",
-          "locality": "pXVczldRi8FsPm5WuVaF-4Sw3E3WgcPtHuLOmIhMyYU"
+          "country": "CLTlhuy13WWc3_ISon1kEypFwvCmfhLSpGUMCyAUg68",
+          "locality": "AQoX8ixGpz-ipweEGlC-2umqwyQdhjIeiUB_TKWcE2E"
         },
-        "nationalities": "Nb6-_rHdYcq-4pfEvkZFNVa3FHn1LUiMrTeSyJ_d9rk",
-        "address": "-EfqJRS0_hpL031rOyszFeDrbEurLQb-oGD2kjeaKiE"
+        "nationalities": "nfoc__QKlMUHodmxwlY-Kp-6ewgX3CdK7Ia0RJHIXVo",
+        "address": "ngnO4uQeOktM7YdFD8x82doS7WJnlZnq-rQE_RfuBSI"
       }
     },
-    "birth_middle_name": "I51fdBdsVsfbH4FWgI3db4yVEfOgf2FSIjl8EDBfzl8",
-    "salutation": "YygVZ2yM6udZml4xl-APnKVhbOAVn38otn8btB-eFDU",
-    "msisdn": "4Abm9luJeisejT3a80C9BGXWX3MG1XF3UK94cVl4Mvg"
+    "birth_middle_name": "FeFSwd9drypEPtWVgIZ42N9j_yostt1Ds5PBpxT3Rng",
+    "salutation": "57CMhvASQMNuzuQ0a_B1_VX5XdH73TcuPxyWGiorj5g",
+    "msisdn": "leKbB0ro6q3jrVraCqt443uaGZVZisD3iGrKuKE2mqM"
   }
 }
 ```
 
 The SD-JWT is then signed by the issuer to create a document like the following:
 
-{#example-complex_structured-sd-jwt-encoded}
+{#example-complex-serialized_sd_jwt}
 ```
 eyJhbGciOiAiUlMyNTYiLCAia2lkIjogImNBRUlVcUowY21MekQxa3pHemhlaUJhZzBZUk
 F6VmRsZnhOMjgwTmdIYUEifQ.eyJpc3MiOiAiaHR0cHM6Ly9leGFtcGxlLmNvbS9pc3N1Z
@@ -999,75 +999,45 @@ wRFYwVjNsR0hLZTJXcWZfZU5HakJyQkxWa2xEVGs4LXN0WF9NV0xjUi1FR21YQU92MFVCV
 xUUwxZUU3aWhjdyIsICJlIjogIkFRQUIifSwgImlhdCI6IDE1MTYyMzkwMjIsICJleHAiO
 iAxNTE2MjQ3MDIyLCAiaGFzaF9hbGciOiAic2hhLTI1NiIsICJzZF9kaWdlc3RzIjogeyJ
 2ZXJpZmllZF9jbGFpbXMiOiB7InZlcmlmaWNhdGlvbiI6IHsidHJ1c3RfZnJhbWV3b3JrI
-jogInVsc2U0cWZOMEpzdzZNSmFEUnBFN3M0UWZDOWpsNXhSc0FkdEx1NXkwTnciLCAidGl
-tZSI6ICI1ZXJPWEdWSVR0VzJqQVlxcVpqZ1NLdjlCRFY2NC1pajdveG03MFBINW13IiwgI
-nZlcmlmaWNhdGlvbl9wcm9jZXNzIjogIlIySVdTTnlxRHNLY1R2OHdiSnZIYWNyWHZ4SDQ
-xTTJvMlh5QlBYRGRCTXMiLCAiZXZpZGVuY2UiOiBbeyJ0eXBlIjogIjYwRF9XRVlkZDlmV
-klnNFlwNUxZa0ZfYmZtLUNyUE8wTUQ0YWZWNTNReEUiLCAibWV0aG9kIjogIms4cmwwTFp
-neFdoU2VJWS1QZ3g3RWxQYnJUaEJFcXFnRXBoQ1dPZXBRb1kiLCAidGltZSI6ICJEdjJpd
-jRXTjJsLVc1VGpqUkZHdUQ3cTUtY3BVZzVoX1FtRDZvSUhhYzZjIiwgImRvY3VtZW50Ijo
-geyJ0eXBlIjogImJib0J5OTM3WWJJbTVidGVLLTdScU0tOHNDNnY4MGJ6Sk9qT0hmbm1Tc
-2MiLCAiaXNzdWVyIjogeyJuYW1lIjogIkZkM0ZESnUxU05NVWJVelJaemJBTkdvSWxLdmN
-LLW5KSk5sc08tSmNmenMiLCAiY291bnRyeSI6ICJPZTFfa0hFSVRXVzJYTDBfbUFaa2R3S
-2RyNG94RTAwZmtEallISFBiN1prIn0sICJudW1iZXIiOiAiRVZmNzVKWm9Od3l1YmtDYkd
-kM3lnNVRHT3AzUEZOUFBkOElCSnI0aUM1OCIsICJkYXRlX29mX2lzc3VhbmNlIjogIkgwZ
-HBmVTVxZS1vcUFmcXFMUFlJYjB1UG02eDJBUkl5VnNPY090c3ZmeGciLCAiZGF0ZV9vZl9
-leHBpcnkiOiAiUWYzOUI4TGk1M25QTFBmRkNUaU5QOGZpU2wzY1ZVTDVubVZTZ1lHOGJDN
-CJ9fV19LCAiY2xhaW1zIjogeyJnaXZlbl9uYW1lIjogIllkRFlVZ3V2OW9HLUc4cXJ0d0Z
-RS0VCcENxazZxY2ZnQUVJTnp2dUhjdUkiLCAiZmFtaWx5X25hbWUiOiAiN21lRC00ZVZ4Z
-zlndGRnUzR1Rmk1bjJzQ2pZMnN6akxQSlZKREZtNVp1ayIsICJiaXJ0aGRhdGUiOiAiaUV
-QZjRVRGNVdS1KWUtTa3VPUTUwZUw1c2l2Q0V2c1Z1bkhyeXdLOEZjVSIsICJwbGFjZV9vZ
-l9iaXJ0aCI6IHsiY291bnRyeSI6ICJnT0w4eUwteTBlSUNBeXRLTjEzeWlqeWl2VmYtN1R
-lajRLVUx3WEdfSmFRIiwgImxvY2FsaXR5IjogInBYVmN6bGRSaThGc1BtNVd1VmFGLTRTd
-zNFM1dnY1B0SHVMT21JaE15WVUifSwgIm5hdGlvbmFsaXRpZXMiOiAiTmI2LV9ySGRZY3E
-tNHBmRXZrWkZOVmEzRkhuMUxVaU1yVGVTeUpfZDlyayIsICJhZGRyZXNzIjogIi1FZnFKU
-lMwX2hwTDAzMXJPeXN6RmVEcmJFdXJMUWItb0dEMmtqZWFLaUUifX0sICJiaXJ0aF9taWR
-kbGVfbmFtZSI6ICJJNTFmZEJkc1ZzZmJINEZXZ0kzZGI0eVZFZk9nZjJGU0lqbDhFREJme
-mw4IiwgInNhbHV0YXRpb24iOiAiWXlnVloyeU02dWRabWw0eGwtQVBuS1ZoYk9BVm4zOG9
-0bjhidEItZUZEVSIsICJtc2lzZG4iOiAiNEFibTlsdUplaXNlalQzYTgwQzlCR1hXWDNNR
-zFYRjNVSzk0Y1ZsNE12ZyJ9fQ.p0sdyAUJPsuJGhwglGnk0wfREearQjwa3xoPv62fsBCw
-sxNrwtrOcFWigKLeIcsTJmdzCiJ-rknQFLtXBTsyZtrn_6bUq8lMQm4XB2VuXi6y5Dnz7r
-vvF5dwZZqhVQLD-sbTGMq5_kRus8c6lMgxVq2ndGq6PHcwA2FG7e8aK5DDyJj5RiD_4Z7R
-gwdlggT3uHNIMdXKu7oNyBXjwah7T9wv1jz8zrmAIDiEd2UyF31wbT3kMgMpi0bxqS4Tsa
-Obo9wzvmLvGJ3KBdjEDdseuNM3fKwUobcvKEsJqFG8a4u1uGkcg411tTSUM3RlpBfjZWSF
-BZTS65JaR6QQeRMBlA.eyJzZF9yZWxlYXNlIjogeyJ2ZXJpZmllZF9jbGFpbXMiOiB7InZ
-lcmlmaWNhdGlvbiI6IHsidHJ1c3RfZnJhbWV3b3JrIjogIltcIk9CS2xUVmx2TGctQWR3c
-VlHYlA4WkFcIiwgXCJkZV9hbWxcIl0iLCAidGltZSI6ICJbXCJNMEpiNTd0NDF1YnJrU3V
-5ckRUM3hBXCIsIFwiMjAxMi0wNC0yM1QxODoyNVpcIl0iLCAidmVyaWZpY2F0aW9uX3Byb
-2Nlc3MiOiAiW1wiRHNtdEtOZ3BWNGRBSHBqcmNhb3NBd1wiLCBcImYyNGM2Zi02ZDNmLTR
-lYzUtOTczZS1iMGQ4NTA2ZjNiYzdcIl0iLCAiZXZpZGVuY2UiOiBbeyJ0eXBlIjogIltcI
-mVLNW81cEhmZ3VwUHBsdGoxcWhBSndcIiwgXCJkb2N1bWVudFwiXSIsICJtZXRob2QiOiA
-iW1wiajdBRGRiMFVWYjBMaTBjaVBjUDBld1wiLCBcInBpcHBcIl0iLCAidGltZSI6ICJbX
-CJXcHhKckZ1WDh1U2kycDRodDA5anZ3XCIsIFwiMjAxMi0wNC0yMlQxMTozMFpcIl0iLCA
-iZG9jdW1lbnQiOiB7InR5cGUiOiAiW1wiYXRTbUZBQ1lNYkpWS0QwNW8zSmd0UVwiLCBcI
-mlkY2FyZFwiXSIsICJpc3N1ZXIiOiB7Im5hbWUiOiAiW1wiNEt5UjMyb0ladC16a1d2RnF
-iVUxLZ1wiLCBcIlN0YWR0IEF1Z3NidXJnXCJdIiwgImNvdW50cnkiOiAiW1wiY2hCQ3N5a
-HloLUo4NkktYXdRRGlDUVwiLCBcIkRFXCJdIn0sICJudW1iZXIiOiAiW1wiZmxOUDFuY01
-6OUxnLWM5cU1Jel85Z1wiLCBcIjUzNTU0NTU0XCJdIiwgImRhdGVfb2ZfaXNzdWFuY2UiO
-iAiW1wib3ZvVjFya2hfQU5tODYxcVVBQTJBd1wiLCBcIjIwMTAtMDMtMjNcIl0iLCAiZGF
-0ZV9vZl9leHBpcnkiOiAiW1widDhFQS10S3NoNXdaTUI2YnBqTGZUUVwiLCBcIjIwMjAtM
-DMtMjJcIl0ifX1dfSwgImNsYWltcyI6IHsiZ2l2ZW5fbmFtZSI6ICJbXCJSN0Q2TGhsNTJ
-1eGxvQlFGUnVsenpBXCIsIFwiTWF4XCJdIiwgImZhbWlseV9uYW1lIjogIltcInloM2NRU
-0tuaGRHbXBWZ2QzeWRIMlFcIiwgXCJNZWllclwiXSIsICJiaXJ0aGRhdGUiOiAiW1wiQkF
-vS05LNUNqbER5WGZDUjZOa0syQVwiLCBcIjE5NTYtMDEtMjhcIl0iLCAicGxhY2Vfb2ZfY
-mlydGgiOiB7ImNvdW50cnkiOiAiW1widl9hem02ZC10cVRuZGFOdlg5LUpMUVwiLCBcIkR
-FXCJdIiwgImxvY2FsaXR5IjogIltcIk5XQ1dTZ0lqSmtWVlZzcGV0eGRXeHdcIiwgXCJNd
-XN0ZXJzdGFkdFwiXSJ9LCAibmF0aW9uYWxpdGllcyI6ICJbXCJuZ2tLUlNrbS01VktYR1g
-5akNGTEhRXCIsIFtcIkRFXCJdXSIsICJhZGRyZXNzIjogIltcImVyczk3d3hPTGR1RnVoS
-k5aOVZVVEFcIiwge1wibG9jYWxpdHlcIjogXCJNYXhzdGFkdFwiLCBcInBvc3RhbF9jb2R
-lXCI6IFwiMTIzNDRcIiwgXCJjb3VudHJ5XCI6IFwiREVcIiwgXCJzdHJlZXRfYWRkcmVzc
-1wiOiBcIkFuIGRlciBXZWlkZSAyMlwifV0ifX0sICJiaXJ0aF9taWRkbGVfbmFtZSI6ICJ
-bXCJhaHNaai1oN2VWYlh6UG5QVng5NkhRXCIsIFwiVGltb3RoZXVzXCJdIiwgInNhbHV0Y
-XRpb24iOiAiW1wiczM5dENVMVZ2S19rSi1zcW9KQmd6Z1wiLCBcIkRyLlwiXSIsICJtc2l
-zZG4iOiAiW1wiLWYyakZoRE9GVEtfT0E5aUFobGtqZ1wiLCBcIjQ5MTIzNDU2Nzg5XCJdI
-n19
+jogIncxbVA0b1BjX0o5dGhCZXgwVGFRaTF2Z3hGbXJ1UUp4WllMRm5rTkZNYUkiLCAidGl
+tZSI6ICJQdTNpMENXclBWTEpXLUxUMzB5RjFiRkJQUDE1QjYtdUtrM1BuR0RmbHY4IiwgI
+nZlcmlmaWNhdGlvbl9wcm9jZXNzIjogIjhIcUlYUm1jenNkWU9aekdjTHFJNS1sOXhONVF
+iSzJYRHRYbWRmSDd6LTQiLCAiZXZpZGVuY2UiOiBbeyJ0eXBlIjogIlRuTHVxR0dRbTZqZ
+mVPb2E1dVgxZGlLQU5VUHVoLXpIcnBCRmRYOU1SLWciLCAibWV0aG9kIjogIlNhZ21ha29
+TdS1YLVhVUElDM0VnZHJFRXdJV3hSV1hYNC1pNjhYOVR5RW8iLCAidGltZSI6ICJsZDJjN
+W9ZRFJ0UWNmVTZQem9nUGt4Xzk1V1lxaHFJSk5WUk1uZmNzaWNZIiwgImRvY3VtZW50Ijo
+geyJ0eXBlIjogInVmV2pEYUFhNTRNbkhlamkyWlVVSERkbnBaOXp4NkNVRzZ1UjI4Vk10c
+1EiLCAiaXNzdWVyIjogeyJuYW1lIjogImE0R011Y1U3WmIwNjByMFN2ZDdodVk2UWhvMWJ
+JZjN2MVU1QnZQUjhxNlkiLCAiY291bnRyeSI6ICIxMzVrOU0wbTJTQ25ZUnVPZkh1WVNjW
+VZTMnEzZWVZN0lJdGd5UnNhQlQ4In0sICJudW1iZXIiOiAiY1V2T3hMVXA4UlY3VFRWbGl
+FaXUtVFFJZWwtTHNFOEUtWGZVZ2ZxazVnayIsICJkYXRlX29mX2lzc3VhbmNlIjogIk5Jc
+zhvbEpuSk92NEoxcUlFQkt1VHMyc0VGczRmZ0dKaE5xTTZ4ZFF0N0UiLCAiZGF0ZV9vZl9
+leHBpcnkiOiAiSFRSMzd2THRBTlQ2TVdrLTlkQnFla0ZwQ3ZhVEc3ek5mMXplNTZyblY2N
+CJ9fV19LCAiY2xhaW1zIjogeyJnaXZlbl9uYW1lIjogIk5COVhIX3lKS3FLT2hYRG1Ya1p
+LcE1Da1JiT21PVGQ4YnFKRllESllRblEiLCAiZmFtaWx5X25hbWUiOiAiaEFVYko2NlpZT
+DlWSkxianNEcG1TczJlOUZmX09oaW1fV1I0YndaeXZvUSIsICJiaXJ0aGRhdGUiOiAiNlh
+PUjRrNTZCZ1drNXRuTmlzbWJtRUh2b0dYN1JSZnk2WjhIRU5sOTZjVSIsICJwbGFjZV9vZ
+l9iaXJ0aCI6IHsiY291bnRyeSI6ICJDTFRsaHV5MTNXV2MzX0lTb24xa0V5cEZ3dkNtZmh
+MU3BHVU1DeUFVZzY4IiwgImxvY2FsaXR5IjogIkFRb1g4aXhHcHotaXB3ZUVHbEMtMnVtc
+Xd5UWRoakllaVVCX1RLV2NFMkUifSwgIm5hdGlvbmFsaXRpZXMiOiAibmZvY19fUUtsTVV
+Ib2RteHdsWS1LcC02ZXdnWDNDZEs3SWEwUkpISVhWbyIsICJhZGRyZXNzIjogIm5nbk80d
+VFlT2t0TTdZZEZEOHg4MmRvUzdXSm5sWm5xLXJRRV9SZnVCU0kifX0sICJiaXJ0aF9taWR
+kbGVfbmFtZSI6ICJGZUZTd2Q5ZHJ5cEVQdFdWZ0laNDJOOWpfeW9zdHQxRHM1UEJweFQzU
+m5nIiwgInNhbHV0YXRpb24iOiAiNTdDTWh2QVNRTU51enVRMGFfQjFfVlg1WGRINzNUY3V
+QeHlXR2lvcmo1ZyIsICJtc2lzZG4iOiAibGVLYkIwcm82cTNqclZyYUNxdDQ0M3VhR1pWW
+mlzRDNpR3JLdUtFMm1xTSJ9fQ.i6xjiYhdM0pnDamaDfvsLWrjD2JOQBYbkWpLAykGFenK
+B4nBN1E2gfbexMvlyRJc1AcU2wKdGQnRZsaNR-UYZ7yQPXrlBQH2RMkbRuQcI0K4n9KP8c
+I8JnUVgERRBQSbtrInYrgRDvQ9K7nlyj4y6ULvVybcZpbw2sUv5YJwdBsdB8kAvGWKCEkW
+NMvk-UGKZAKO78RPemWOTezLZq3Ubfj5GinITb6SN_Gu1rdLgA3ebKNkVqDBjI9q483d-9
+g_MP8owwGzE_tCd8oj2bjRlRE1YgwN1lxAAGVpDrIJwWbuivh7BqUArvblEHe4L0ZITMhz
+F5KKsEkYhkrr8q6qFg
 ```
 
 (Line breaks for presentation only.)
 
 A SD-JWT-R for some of the claims:
 
-{#example-complex_structured-release-payload}
+{#example-complex-sd_jwt_release_payload}
 ```json
 {
   "nonce": "XZOUco1u_gEPknxS78sWWg",
@@ -1075,20 +1045,20 @@ A SD-JWT-R for some of the claims:
   "sd_release": {
     "verified_claims": {
       "verification": {
-        "trust_framework": "[\"OBKlTVlvLg-AdwqYGbP8ZA\", \"de_aml\"]",
-        "time": "[\"M0Jb57t41ubrkSuyrDT3xA\", \"2012-04-23T18:25Z\"]",
+        "trust_framework": "[\"2GLC42sKQveCfGfryNRN9w\", \"de_aml\"]",
+        "time": "[\"eluV5Og3gSNII8EYnsxA_A\", \"2012-04-23T18:25Z\"]",
         "evidence": [
           {
-            "type": "[\"eK5o5pHfgupPpltj1qhAJw\", \"document\"]"
+            "type": "[\"eI8ZWm9QnKPpNPeNenHdhQ\", \"document\"]"
           }
         ]
       },
       "claims": {
-        "given_name": "[\"R7D6Lhl52uxloBQFRulzzA\", \"Max\"]",
-        "family_name": "[\"yh3cQSKnhdGmpVgd3ydH2Q\", \"Meier\"]",
-        "birthdate": "[\"BAoKNK5CjlDyXfCR6NkK2A\", \"1956-01-28\"]",
+        "given_name": "[\"y1sVU5wdfJahVdgwPgS7RQ\", \"Max\"]",
+        "family_name": "[\"HbQ4X8srVW3QDxnIJdqyOA\", \"Meier\"]",
+        "birthdate": "[\"C9GSoujviJquEgYfojCb1A\", \"1956-01-28\"]",
         "place_of_birth": {
-          "country": "[\"v_azm6d-tqTndaNvX9-JLQ\", \"DE\"]"
+          "country": "[\"kx5kF17V-x0JmwUx9vgvtw\", \"DE\"]"
         }
       }
     }
