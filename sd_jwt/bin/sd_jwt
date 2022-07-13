@@ -9,12 +9,8 @@ import yaml
 
 from sd_jwt import __version__
 from sd_jwt.demo_utils import print_decoded_repr, get_jwk, print_repr
-from sd_jwt.operations import (
-    create_sd_jwt_and_svc,
-    create_release_jwt,
-    generate_salt,
-    verify,
-)
+from sd_jwt.utils import generate_salt
+from sd_jwt.operations import SDJWT
 
 logger = logging.getLogger("sd_jwt")
 
@@ -80,7 +76,6 @@ parser.add_argument(
     "--replace-examples-in",
     required=False,
     type=pathlib.Path,
-    default=pathlib.Path("main.md"),
     help=(
         "path/to/main.md - Do not output examples, but replace all the examples in the specs"
     ),
@@ -133,12 +128,7 @@ for property in ("user_claims", "claims_structure", "disclosed_claims"):
 
 ### Produce SD-JWT and SVC for selected example
 
-(
-    sd_jwt_payload,
-    serialized_sd_jwt,
-    svc_payload,
-    serialized_svc,
-) = create_sd_jwt_and_svc(
+sdjwt_at_issuer = SDJWT(
     example["user_claims"],
     settings.ISSUER,
     ISSUER_KEY,
@@ -148,58 +138,28 @@ for property in ("user_claims", "claims_structure", "disclosed_claims"):
     exp=_args.exp,
 )
 
-
-# _artifacts keeps track of the data produced during the example run.
-# For each entry, the actual data plus a human-readable description is stored.
-#
-# _artifacts is later used to output the data to the command line and to update the
-# specification file, if requested.
-
-_artifacts = {
-    "user_claims": (example["user_claims"], "User Claims"),
-    "sd_jwt_payload": (sd_jwt_payload, "Payload of the SD-JWT"),
-    "serialized_sd_jwt": (serialized_sd_jwt, "Serialized SD-JWT"),
-    "svc_payload": (svc_payload, "Payload of the Salt/Value Container (SVC)"),
-    "serialized_svc": (serialized_svc, "Serialized SVC"),
-    "combined_sd_jwt_svc": (
-        f"{serialized_sd_jwt}.{serialized_svc}",
-        "Combined SD-JWT and SVC representation",
-    ),
-}
-
-
 ### Produce SD-JWT-R for selected example
 
-sd_jwt_release_payload, serialized_sd_jwt_release = create_release_jwt(
+# Note: The only input from the issuer is the combined SD-JWT and SVC!
+
+sdjwt_at_holder = SDJWT.from_combined_sd_jwt_svc(sdjwt_at_issuer.combined_sd_jwt_svc)
+
+sdjwt_at_holder.create_sd_jwt_release(
     _args.nonce,
     settings.VERIFIER,
     example["disclosed_claims"],
-    _artifacts["serialized_svc"][0],
     HOLDER_KEY,
 )
 
-_combined = _artifacts["serialized_sd_jwt"][0] + "." + serialized_sd_jwt_release
+### Verify the SD-JWT using the SD-JWT-R
 
-_artifacts.update(
-    {
-        "sd_jwt_release_payload": (
-            sd_jwt_release_payload,
-            "Payload of the SD-JWT-Release",
-        ),
-        "serialized_sd_jwt_release": (
-            serialized_sd_jwt_release,
-            "Serialized SD-JWT-Release",
-        ),
-        "combined_sd_jwt_sd_jwt_release": (
-            _combined,
-            "Combined representation of SD-JWT and SD-JWT-R",
-        ),
-    }
+# Note: The only input from the holder is the combined presentation!
+
+sdjwt_at_verifier = SDJWT.from_combined_presentation(
+    sdjwt_at_holder.combined_presentation
 )
 
-### Verify the SD-JWT using the SD-JWT-R
-vc = verify(
-    _artifacts["combined_sd_jwt_sd_jwt_release"][0],
+vc = sdjwt_at_verifier.verify(
     ISSUER_PUBLIC_KEY,
     settings.ISSUER,
     HOLDER_KEY,
@@ -207,9 +167,37 @@ vc = verify(
     _args.nonce,
 )
 
-_artifacts["verified_contents"] = (vc, "Verified released contents of the SD-JWT")
 
 ### Done - now output everything to CLI (unless --replace-examples-in was used)
+
+_artifacts = {
+    "user_claims": (example["user_claims"], "User Claims"),
+    "sd_jwt_payload": (sdjwt_at_issuer.sd_jwt_payload, "Payload of the SD-JWT"),
+    "serialized_sd_jwt": (sdjwt_at_issuer.serialized_sd_jwt, "Serialized SD-JWT"),
+    "svc_payload": (
+        sdjwt_at_issuer.svc_payload,
+        "Payload of the Salt/Value Container (SVC)",
+    ),
+    "serialized_svc": (sdjwt_at_issuer.serialized_svc, "Serialized SVC"),
+    "combined_sd_jwt_svc": (
+        sdjwt_at_issuer.combined_sd_jwt_svc,
+        "Combined SD-JWT and SVC representation",
+    ),
+    "sd_jwt_release_payload": (
+        sdjwt_at_holder.sd_jwt_release_payload,
+        "Payload of the SD-JWT-Release",
+    ),
+    "serialized_sd_jwt_release": (
+        sdjwt_at_holder.serialized_sd_jwt_release,
+        "Serialized SD-JWT-Release",
+    ),
+    "combined_sd_jwt_sd_jwt_release": (
+        sdjwt_at_holder.combined_presentation,
+        "Combined representation of SD-JWT and SD-JWT-R",
+    ),
+    "verified_contents": (vc, "Verified released contents of the SD-JWT"),
+}
+
 
 if not _args.replace_examples_in:
 
