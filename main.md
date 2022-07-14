@@ -252,7 +252,7 @@ subset of the same mapping).
 ## Format of an SD-JWT
 
 An SD-JWT is a JWT that MUST be signed using the issuer's private key. The
-payload of an SD-JWT MUST contain the `sd_digests` and `hash_alg` claims
+payload of an SD-JWT MUST contain the `sd_digests` and `sd_hash_alg` claims
 described in the following, and MAY contain a holder's public key or a reference
 thereto, as well as further claims such as `iss`, `iat`, etc. as defined or
 required by the application using SD-JWTs.
@@ -294,7 +294,7 @@ reference).
 
 ### Hash Function Claim
 
-The claim `hash_alg` indicates the hash algorithm used by the Issuer to generate
+The claim `sd_hash_alg` indicates the hash algorithm used by the Issuer to generate
 the hashes of the salted claim values. The hash algorithm identifier MUST be a
 value from the "Hash Name String" column in the IANA "Named Information Hash
 Algorithm" registry [IANA.Hash.Algorithms]. SD-JWTs with hash algorithm
@@ -351,7 +351,7 @@ be disclosed in full.
   },
   "iat": 1516239022,
   "exp": 1516247022,
-  "hash_alg": "sha-256",
+  "sd_hash_alg": "sha-256",
   "sd_digests": {
     "sub": "z4xgEco94diTaSruISPiE7o_wtmcOfnH_8R7X9Pa578",
     "given_name": "PvU7cWjuHUq6w-i9XFpQZhjT-uprQL3GH3mKsAJl0e0",
@@ -631,7 +631,7 @@ trusting/using any of the contents of an SD-JWT:
     3. Validate the issuer of the SD-JWT and that the signing key belongs to this issuer.
     4. Check that the SD-JWT is valid using `nbf`, `iat`, and `exp` claims, if provided in the SD-JWT.
     5. Check that the claim `sd_digests` is present in the SD-JWT.
-    6. Check that the `hash_alg` claim is present and its value is understand
+    6. Check that the `sd_hash_alg` claim is present and its value is understand
        and the hash algorithm is deemed secure.
  5. Validate the SD-JWT Release:
     1. If holder binding is required, validate the signature over the SD-JWT using the same steps as for the SD-JWT plus the following steps:
@@ -643,7 +643,7 @@ trusting/using any of the contents of an SD-JWT:
           place within the structure.
        2. Compute the base64url-encoded hash of a claim revealed from the Holder
           using the claim value and the salt included in the SD-JWT-R and 
-          the `hash_alg` in SD-JWT.
+          the `sd_hash_alg` in SD-JWT.
        3. Compare the hash digests computed in the previous step with the one of the same claim in the SD-JWT. 
           Accept the claim only when the two hash digests match.
        4. Ensure that the claim value in the SD-JWT-R is a JSON-encoded
@@ -809,7 +809,7 @@ allows for the release of individual members of the address claim separately.
   },
   "iat": 1516239022,
   "exp": 1516247022,
-  "hash_alg": "sha-256",
+  "sd_hash_alg": "sha-256",
   "sd_digests": {
     "sub": "z4xgEco94diTaSruISPiE7o_wtmcOfnH_8R7X9Pa578",
     "given_name": "PvU7cWjuHUq6w-i9XFpQZhjT-uprQL3GH3mKsAJl0e0",
@@ -939,7 +939,7 @@ The following shows the resulting SD-JWT payload:
   },
   "iat": 1516239022,
   "exp": 1516247022,
-  "hash_alg": "sha-256",
+  "sd_hash_alg": "sha-256",
   "sd_digests": {
     "verified_claims": {
       "verification": {
@@ -1141,6 +1141,7 @@ encoded as JSON and signed as a JWS compliant to [@VC_DATA].
    *  Improved Security Considerations
    *  Stressed uniqueness requirements for salts
    *  Python reference implementation clean-up and refactoring
+   *  hash_alg renamed to sd_hash_alg
 
    -01
    
