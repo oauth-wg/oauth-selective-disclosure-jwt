@@ -218,7 +218,7 @@ class SDJWT:
 
         def find_claim_by_blinded_name(structure, key):
             if key in structure:
-                return (key, structure[key])
+                return key
             for key_in_structure, value_in_structure in structure.items():
                 if not key_in_structure.startswith(self.HIDDEN_CLAIM_NAME_PREFIX):
                     continue
@@ -226,7 +226,7 @@ class SDJWT:
                     continue
                 parsed = loads(value_in_structure)
                 if parsed.get(self.SD_KEY_CLAIM_NAME, None) == key:
-                    return (key_in_structure, value_in_structure)
+                    return key_in_structure
             raise KeyError()
 
         sd_jwt_r_struct = walk_by_structure(
@@ -303,7 +303,7 @@ class SDJWT:
             expected_nonce,
             holder_public_key_payload,
         )
-        
+
         _wbs = walk_by_structure(
             sd_jwt_claims, sd_jwt_release_claims, self._check_claim
         )
@@ -386,7 +386,7 @@ class SDJWT:
 
         decoded = loads(released_value)
         if not isinstance(decoded, dict):
-            raise ValueError("Claim release value is not a list")
+            raise ValueError("Claim release value is not a dictionary")
 
         output_claim_name = decoded.get(self.SD_KEY_CLAIM_NAME, claim_name)
         return (output_claim_name, decoded[self.SD_KEY_VALUE])

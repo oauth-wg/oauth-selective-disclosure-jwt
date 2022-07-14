@@ -5,20 +5,39 @@ from typing import Any, Callable, Dict, Optional, Tuple
 logger = logging.getLogger("sd_jwt")
 
 
-def by_structure(structure: Dict, obj: Dict, fn: Callable[[str, str, Optional[Any]], Tuple[str, Any]], find_fn=lambda s, k: (k, s[k])):
+def simple_find_by_key(_: Dict, key: str):
+    """
+    This function defines the default behavior for find_fn (see below), which is
+    finding elements in the dictionary `structure` simply by looking up the key
+    `key`.
+    """
+    return key
+
+
+def by_structure(
+    structure: Dict,
+    obj: Dict,
+    fn: Callable[[str, str, Optional[Any]], Tuple[str, Any]],
+    find_fn=simple_find_by_key,
+):
     """
     This helper function allows traversing a nested dictionary using a given
-    structure as the guide. A function that is passed as an argument is called for
-    every leaf node in obj that is not contained in the structure object. 
-    
-    The function fn has the following signature:
-    fn(key: str, value: str, value_in_structure: Optional[Any]) -> Tuple[str, Any]
+    structure as the guide. A function that is passed as an argument is called
+    for every leaf node in obj that is not contained in the structure object.
 
-    value_in_structure is only passed if the structure already contains a value at this
-    point in the structure.
+    The function fn has the following signature: fn(key: str, value: str,
+    value_in_structure: Optional[Any]) -> Tuple[str, Any]
 
-    The function must return a tuple consisting of a new key and a new value for the output
-    structure.
+    value_in_structure is only passed if the structure already contains a value
+    at this point in the structure.
+
+    The function must return a tuple consisting of a new key and a new value for
+    the output structure.
+
+    The argument find_fn allows for a translation between keys in structure and
+    obj. It is called with structure and the key as found in obj as arguments
+    and is expected to return the key that is to be used to access the element
+    in structure.
 
     See examples below!
     """
@@ -27,16 +46,22 @@ def by_structure(structure: Dict, obj: Dict, fn: Callable[[str, str, Optional[An
     for key_in_obj, value_in_obj in obj.items():
         logger.debug(f"{key_in_obj}: {value_in_obj}")
         try:
-            key_in_structure, value_in_structure = find_fn(structure, key_in_obj)
+            key_in_structure = find_fn(structure, key_in_obj)
+            value_in_structure = structure[key_in_structure]
 
             if isinstance(value_in_structure, dict):
-                out[key_in_structure] = by_structure(value_in_structure, value_in_obj, fn, find_fn)
+                out[key_in_structure] = by_structure(
+                    value_in_structure, value_in_obj, fn, find_fn
+                )
             elif isinstance(value_in_structure, list):
                 out[key_in_structure] = list(
-                    by_structure(value_in_structure[0], item, fn, find_fn) for item in value_in_obj
+                    by_structure(value_in_structure[0], item, fn, find_fn)
+                    for item in value_in_obj
                 )
             else:
-                new_key, new_value = fn(key_in_structure, value_in_obj, value_in_structure)
+                new_key, new_value = fn(
+                    key_in_structure, value_in_obj, value_in_structure
+                )
                 out[new_key] = new_value
         except KeyError:
             new_key, new_value = fn(key_in_obj, value_in_obj)
