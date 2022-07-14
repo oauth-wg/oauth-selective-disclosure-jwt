@@ -1,4 +1,4 @@
-__version__ = "0.1.0"
+__version__ = "0.2.0"
 
 DEFAULT_SIGNING_ALG = "RS256"
 SD_DIGESTS_KEY = "sd_digests"
