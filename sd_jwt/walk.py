@@ -1,10 +1,11 @@
 import json
 import logging
+from typing import Any, Callable, Dict, Optional, Tuple
 
 logger = logging.getLogger("sd_jwt")
 
 
-def by_structure(structure, obj, fn):
+def by_structure(structure: Dict, obj: Dict, fn: Callable[[str, str, Optional[Any]], Tuple[str, Any]], find_fn=lambda s, k: (k, s[k])):
     """
     This helper function allows traversing a nested dictionary using a given
     structure as the guide. A function that is passed as an argument is called for
@@ -23,20 +24,22 @@ def by_structure(structure, obj, fn):
     """
     logger.debug(f"Walking in: {structure} using {obj} on {fn}")
     out = {}
-    for key, value in obj.items():
-        logger.debug(f"{key}: {value}")
-        if key in structure:
-            if isinstance(structure[key], dict):
-                out[key] = by_structure(structure[key], value, fn)
-            elif isinstance(structure[key], list):
-                out[key] = list(
-                    by_structure(structure[key][0], item, fn) for item in value
+    for key_in_obj, value_in_obj in obj.items():
+        logger.debug(f"{key_in_obj}: {value_in_obj}")
+        try:
+            key_in_structure, value_in_structure = find_fn(structure, key_in_obj)
+
+            if isinstance(value_in_structure, dict):
+                out[key_in_structure] = by_structure(value_in_structure, value_in_obj, fn, find_fn)
+            elif isinstance(value_in_structure, list):
+                out[key_in_structure] = list(
+                    by_structure(value_in_structure[0], item, fn, find_fn) for item in value_in_obj
                 )
             else:
-                new_key, new_value = fn(key, value, structure[key])
+                new_key, new_value = fn(key_in_structure, value_in_obj, value_in_structure)
                 out[new_key] = new_value
-        else:
-            new_key, new_value = fn(key, value)
+        except KeyError:
+            new_key, new_value = fn(key_in_obj, value_in_obj)
             out[new_key] = new_value
     return out
 
