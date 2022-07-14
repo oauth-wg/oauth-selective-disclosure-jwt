@@ -36,6 +36,7 @@ setup(
         ]
     },
     install_requires=[
-        "jwcrypto>=1.3.1"
+        "jwcrypto>=1.3.1",
+        "pyyaml>=5.4",
     ],
 )
