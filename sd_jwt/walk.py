@@ -1,31 +1,71 @@
 import json
 import logging
+from typing import Any, Callable, Dict, Optional, Tuple
 
 logger = logging.getLogger("sd_jwt")
 
 
-def by_structure(structure, obj, fn):
+def simple_find_by_key(_: Dict, key: str):
+    """
+    This function defines the default behavior for find_fn (see below), which is
+    finding elements in the dictionary `structure` simply by looking up the key
+    `key`.
+    """
+    return key
+
+
+def by_structure(
+    structure: Dict,
+    obj: Dict,
+    fn: Callable[[str, str, Optional[Any]], Tuple[str, Any]],
+    find_fn=simple_find_by_key,
+):
     """
     This helper function allows traversing a nested dictionary using a given
-    structure as the guide. A function that is passed as an argument is called for
-    every leaf node in obj that is not contained in the structure object. See
-    examples below!
+    structure as the guide. A function that is passed as an argument is called
+    for every leaf node in obj that is not contained in the structure object.
+
+    The function fn has the following signature: fn(key: str, value: str,
+    value_in_structure: Optional[Any]) -> Tuple[str, Any]
+
+    value_in_structure is only passed if the structure already contains a value
+    at this point in the structure.
+
+    The function must return a tuple consisting of a new key and a new value for
+    the output structure.
+
+    The argument find_fn allows for a translation between keys in structure and
+    obj. It is called with structure and the key as found in obj as arguments
+    and is expected to return the key that is to be used to access the element
+    in structure.
+
+    See examples below!
     """
     logger.debug(f"Walking in: {structure} using {obj} on {fn}")
     out = {}
-    for key, value in obj.items():
-        logger.debug(f"{key}: {value}")
-        if key in structure:
-            if isinstance(structure[key], dict):
-                out[key] = by_structure(structure[key], value, fn)
-            elif isinstance(structure[key], list):
-                out[key] = list(
-                    by_structure(structure[key][0], item, fn) for item in value
+    for key_in_obj, value_in_obj in obj.items():
+        logger.debug(f"{key_in_obj}: {value_in_obj}")
+        try:
+            key_in_structure = find_fn(structure, key_in_obj)
+            value_in_structure = structure[key_in_structure]
+
+            if isinstance(value_in_structure, dict):
+                out[key_in_structure] = by_structure(
+                    value_in_structure, value_in_obj, fn, find_fn
+                )
+            elif isinstance(value_in_structure, list):
+                out[key_in_structure] = list(
+                    by_structure(value_in_structure[0], item, fn, find_fn)
+                    for item in value_in_obj
                 )
             else:
-                out[key] = fn(key, value, structure[key])
-        else:
-            out[key] = fn(key, value)
+                new_key, new_value = fn(
+                    key_in_structure, value_in_obj, value_in_structure
+                )
+                out[new_key] = new_value
+        except KeyError:
+            new_key, new_value = fn(key_in_obj, value_in_obj)
+            out[new_key] = new_value
     return out
 
 
@@ -33,7 +73,7 @@ if __name__ == "__main__":
     # Example 1
 
     def test_fn(key, value, value_in_structure=None):
-        return f"called fn({key}, {value}, {value_in_structure})"
+        return (key, f"called fn({key}, {value}, {value_in_structure})")
 
     structure0 = {}
 
@@ -213,3 +253,37 @@ if __name__ == "__main__":
     print(json.dumps(output2, indent=2))
 
     assert output2 == expected2
+
+    def test_fn_with_renaming(key, value, value_in_structure=None):
+        return (key + "X", f"called fn({key}, {value}, {value_in_structure})")
+
+    structure3 = {}
+
+    raw3 = {
+        "sub": "6c5c0a49-b589-431d-bae7-219122a9ec2c",
+        "given_name": "John",
+        "family_name": "Doe",
+        "email": "johndoe@example.com",
+        "phone_number": "+1-202-555-0101",
+        "address": {
+            "street_address": "123 Main St",
+            "locality": "Anytown",
+            "region": "Anystate",
+            "country": "US",
+        },
+        "birthdate": "1940-01-01",
+    }
+
+    expected3 = {
+        "subX": "called fn(sub, 6c5c0a49-b589-431d-bae7-219122a9ec2c, None)",
+        "given_nameX": "called fn(given_name, John, None)",
+        "family_nameX": "called fn(family_name, Doe, None)",
+        "emailX": "called fn(email, johndoe@example.com, None)",
+        "phone_numberX": "called fn(phone_number, +1-202-555-0101, None)",
+        "addressX": "called fn(address, {'street_address': '123 Main St', 'locality': 'Anytown', 'region': 'Anystate', 'country': 'US'}, None)",
+        "birthdateX": "called fn(birthdate, 1940-01-01, None)",
+    }
+
+    output3 = by_structure(structure3, raw3, test_fn_with_renaming)
+    print(json.dumps(output3, indent=4))
+    assert output3 == expected3
