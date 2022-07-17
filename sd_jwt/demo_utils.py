@@ -13,7 +13,7 @@ logger = logging.getLogger(__name__)
 def print_repr(values: Union[str, list], nlines=2):
     value = "\n".join(values) if isinstance(values, (list, tuple)) else values
     _nlines = "\n" * nlines if nlines else ""
-    print(f"{value}{_nlines}")
+    print(value, end=_nlines)
 
 
 def print_decoded_repr(value: str, nlines=2):
@@ -25,7 +25,7 @@ def print_decoded_repr(value: str, nlines=2):
             logging.debug(f"{e} - for value: {i}")
             seq.append(i)
     _nlines = "\n" * nlines if nlines else ""
-    print(f"{'.'.join(seq)}{_nlines}")
+    print("\n.\n".join(seq), end=_nlines)
 
 
 def get_jwk(jwk_kwargs: dict = {}, no_randomness: bool = False):
@@ -39,8 +39,8 @@ def get_jwk(jwk_kwargs: dict = {}, no_randomness: bool = False):
 
     returns static or random JWK
     """
-    random.seed(0)
     if no_randomness:
+        random.seed(0)
         ISSUER_KEY = JWK.from_json(json.dumps(jwk_kwargs["iss_key"]))
         HOLDER_KEY = JWK.from_json(json.dumps(jwk_kwargs["holder_key"]))
         logger.warning("Using fixed randomness for demo purposes")

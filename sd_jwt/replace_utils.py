@@ -1,6 +1,8 @@
+import json
 import logging
 import re
 from textwrap import fill
+from pathlib import Path
 
 logger = logging.getLogger("sd_jwt")
 
@@ -38,20 +40,33 @@ def replace_code_in_markdown_source(file_contents, placeholder_id, new_code):
     return new_string
 
 
-def replace_all_in_main(
-    fname: str, replacements: dict, ignore_missing_placeholders: bool = False
+def replace_all_in_file(
+    file: Path,
+    replacements: dict,
+    prefix: str,
+    ignore_missing_placeholders: bool = False,
 ):
     """
     Replaces all the placeholders in the main.md file
     """
-    with open(fname, "r") as f:
-        file_contents = f.read()
+
+    file_contents = file.read_text()
 
     # create backup
-    with open(f"{fname}.bak", "w") as f:
-        f.write(file_contents)
+    file.with_suffix(".bak").write_text(file_contents)
 
-    for placeholder_id, new_code in replacements.items():
+    for key, (data, _) in replacements.items():
+        if isinstance(data, dict):
+            new_code = json.dumps(data, indent=EXAMPLE_INDENT)
+        else:
+            new_code = fill(
+                data,
+                width=EXAMPLE_MAX_WIDTH,
+                break_on_hyphens=False,
+            )
+
+        placeholder_id = prefix + key
+
         try:
             file_contents = replace_code_in_markdown_source(
                 file_contents, placeholder_id, new_code
@@ -64,5 +79,4 @@ def replace_all_in_main(
             else:
                 logger.warning(f"Could not find placeholder with id {placeholder_id}")
 
-    with open(fname, "w") as f:
-        f.write(file_contents)
+    file.write_text(file_contents)
