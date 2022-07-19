@@ -1,5 +1,5 @@
 %%%
-title = "Selective Disclosure JWT (SD-JWT)"
+title = "Selective Disclosure for JWTs (SD-JWT)"
 abbrev = "SD-JWT"
 ipr = "trust200902"
 area = "Security"
