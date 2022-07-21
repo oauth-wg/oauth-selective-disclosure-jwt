@@ -42,10 +42,10 @@ documents that support selective disclosure of JWT claim values.
 
 # Introduction {#Introduction}
 
-The JSON-based claims in a signed JSON Web Token (JWT) [@!RFC7519] document are
+The JSON-based representation of claims in a signed JSON Web Token (JWT) [@!RFC7519] is
 secured against modification using JSON Web Signature (JWS) [@!RFC7515] digital
-signatures. A consumer of a signed JWT document that has checked the document's
-signature can safely assume that the contents of the document have not been
+signatures. A consumer of a signed JWT that has checked the token's
+signature can safely assume that the contents of the token have not been
 modified.  However, anyone receiving an unencrypted JWT can read all of the
 claims and likewise, anyone with the decryption key receiving an encrypted JWT
 can also read all of the claims.
@@ -101,7 +101,7 @@ Section 2 of [@!RFC7515].
 
 # Terms and Definitions
 
-Selective Disclosure JWT (SD-JWT) 
+Selectively Disclosable JWT (SD-JWT) 
 :  A JWT [@!RFC7515] created by the issuer, which is signed as a JWS [@!RFC7515], 
    that supports selective disclosure as defined in this document.
 
