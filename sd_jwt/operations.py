@@ -89,7 +89,7 @@ class SDJWT:
         # Create the JWS payload
         self.sd_jwt_payload = {
             "iss": self._issuer,
-            "sub_jwk": self._holder_key.export_public(as_dict=True),
+            "cnf": self._holder_key.export_public(as_dict=True),
             "iat": self._iat,
             "exp": self._exp,
             HASH_ALG_KEY: self.HASH_ALG["name"],
@@ -164,7 +164,7 @@ class SDJWT:
                 self._user_claims,
                 self._create_svc_entry,
             ),
-            # "sub_jwk_private": issuer_key.export_private(as_dict=True),
+            # "cnf_private": issuer_key.export_private(as_dict=True),
         }
         self.serialized_svc = (
             urlsafe_b64encode(dumps(self.svc_payload).encode())
@@ -335,8 +335,8 @@ class SDJWT:
             raise ValueError("No selective disclosure claims in SD-JWT")
 
         holder_public_key_payload = None
-        if "sub_jwk" in sd_jwt_payload:
-            holder_public_key_payload = sd_jwt_payload["sub_jwk"]
+        if "cnf" in sd_jwt_payload:
+            holder_public_key_payload = sd_jwt_payload["cnf"]
 
         return sd_jwt_payload[SD_DIGESTS_KEY], holder_public_key_payload
 
@@ -357,7 +357,7 @@ class SDJWT:
             # TODO: adopt an OrderedDict here
             # Because of weird bug of failed != between two public keys
             if not holder_public_key == pubkey:
-                raise ValueError("sub_jwk is not matching with HOLDER Public Key.")
+                raise ValueError("cnf is not matching with HOLDER Public Key.")
         if holder_public_key:
             parsed_input_sd_jwt_release.verify(holder_public_key, alg=_alg)
 

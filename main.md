@@ -8,7 +8,7 @@ keyword = ["security", "oauth2"]
 
 [seriesInfo]
 name = "Internet-Draft"
-value = "draft-fett-oauth-selective-disclosure-jwt-01"
+value = "draft-fett-oauth-selective-disclosure-jwt-02"
 stream = "IETF"
 status = "standard"
 
@@ -228,7 +228,7 @@ If holder binding is desired, `SD-JWT` must contain information about key materi
 SD-JWT-DOC = (METADATA, HOLDER-PUBLIC-KEY, SD-CLAIMS)
 ```
 
-Note: How the public key is included in SD-JWT is out of scope of this document. It can be passed by value or by reference. Examples in this document use `sub_jwk` Claim to include raw public key by value in SD-JWT.
+Note: How the public key is included in SD-JWT is out of scope of this document. It can be passed by value or by reference.
 
 With holder binding, the `SD-JWT-RELEASE` is signed by the holder using its private key. It therefore looks as follows:
 
@@ -278,7 +278,7 @@ subset of the same mapping).
 ## Format of an SD-JWT
 
 An SD-JWT is a JWT that MUST be signed using the issuer's private key. The
-payload of an SD-JWT MUST contain the `sd_digests` and `hash_alg` claims
+payload of an SD-JWT MUST contain the `sd_digests` and `sd_hash_alg` claims
 described in the following, and MAY contain a holder's public key or a reference
 thereto, as well as further claims such as `iss`, `iat`, etc. as defined or
 required by the application using SD-JWTs.
@@ -344,7 +344,7 @@ reference).
 
 ### Hash Function Claim
 
-The claim `hash_alg` indicates the hash algorithm used by the Issuer to generate
+The claim `sd_hash_alg` indicates the hash algorithm used by the Issuer to generate
 the hashes of the salted claim values. The hash algorithm identifier MUST be a
 value from the "Hash Name String" column in the IANA "Named Information Hash
 Algorithm" registry [IANA.Hash.Algorithms]. SD-JWTs with hash algorithm
@@ -361,7 +361,7 @@ established. For example, the holder MAY provide a key pair to the issuer,
 the issuer MAY create the key pair for the holder, or
 holder and issuer MAY use pre-established key material.
 
-Note: need to define how holder public key is included, right now examples are using `sub_jwk` I think.
+Note: Examples in this document use `cnf` Claim defined in [@RFC7800] to include raw public key by value in SD-JWT.
 
 ## Example 1: SD-JWT
 
@@ -394,14 +394,16 @@ be disclosed in full.
 ```json
 {
   "iss": "https://example.com/issuer",
-  "sub_jwk": {
-    "kty": "RSA",
-    "n": "pm4bOHBg-oYhAyPWzR56AWX3rUIXp11_ICDkGgS6W3ZWLts-hzwI3x65659kg4hVo9dbGoCJE3ZGF_eaetE30UhBUEgpGwrDrQiJ9zqprmcFfr3qvvkGjtth8Zgl1eM2bJcOwE7PCBHWTKWYs152R7g6Jg2OVph-a8rq-q79MhKG5QoW_mTz10QT_6H4c7PjWG1fjh8hpWNnbP_pv6d1zSwZfc5fl6yVRL0DV0V3lGHKe2Wqf_eNGjBrBLVklDTk8-stX_MWLcR-EGmXAOv0UBWitS_dXJKJu-vXJyw14nHSGuxTIK2hx1pttMft9CsvqimXKeDTU14qQL1eE7ihcw",
-    "e": "AQAB"
+  "cnf": {
+    "jwk" : {
+        "kty": "RSA",
+        "n": "pm4bOHBg-oYhAyPWzR56AWX3rUIXp11_ICDkGgS6W3ZWLts-hzwI3x65659kg4hVo9dbGoCJE3ZGF_eaetE30UhBUEgpGwrDrQiJ9zqprmcFfr3qvvkGjtth8Zgl1eM2bJcOwE7PCBHWTKWYs152R7g6Jg2OVph-a8rq-q79MhKG5QoW_mTz10QT_6H4c7PjWG1fjh8hpWNnbP_pv6d1zSwZfc5fl6yVRL0DV0V3lGHKe2Wqf_eNGjBrBLVklDTk8-stX_MWLcR-EGmXAOv0UBWitS_dXJKJu-vXJyw14nHSGuxTIK2hx1pttMft9CsvqimXKeDTU14qQL1eE7ihcw",
+        "e": "AQAB"
+    }
   },
   "iat": 1516239022,
   "exp": 1516247022,
-  "hash_alg": "sha-256",
+  "sd_hash_alg": "sha-256",
   "sd_digests": {
     "sub": "OMdwkk2HPuiInPypWUWMxot1Y2tStGsLuIcDMjKdXMU",
     "given_name": "AfKKH4a0IZki8MFDythFaFS_Xqzn-wRvAMfiy_VjYpE",
@@ -685,18 +687,18 @@ trusting/using any of the contents of an SD-JWT:
     3. Validate the issuer of the SD-JWT and that the signing key belongs to this issuer.
     4. Check that the SD-JWT is valid using `nbf`, `iat`, and `exp` claims, if provided in the SD-JWT.
     5. Check that the claim `sd_digests` is present in the SD-JWT.
-    6. Check that the `hash_alg` claim is present and its value is understand
+    6. Check that the `sd_hash_alg` claim is present and its value is understand
        and the hash algorithm is deemed secure.
  5. Validate the SD-JWT Release:
     1. If holder binding is required, validate the signature over the SD-JWT using the same steps as for the SD-JWT plus the following steps:
        1. Determine that the public key for the private key that used to sign the SD-JWT-R is bound to the SD-JWT, i.e., the SD-JWT either contains a reference to the public key or contains the public key itself.
-       2. Determine that the SD-JWT-R is bound to the current transaction and was created for this verifier (replay protection). This is usually achieved by a `nonce` and `aud` field within the SD-JWT Release.
+       2. Determine that the Sse fossimo d'accordoD-JWT-R is bound to the current transaction and was created for this verifier (replay protection). This is usually achieved by a `nonce` and `aud` field within the SD-JWT Release.
     2. For each claim in the SD-JWT Release:
        1. Ensure that the claim is present as well in `sd_release` in the SD-JWT.
           If `sd_release` is structured, the claim MUST be present at the same
           place within the structure.
        2. Compute the base64url-encoded hash digest of the JSON literal released
-          by the Holder using the `hash_alg` in SD-JWT.
+          by the Holder using the `sd_hash_alg` in SD-JWT.
        3. Compare the hash digests computed in the previous step with the one of
           the same claim in the SD-JWT. Accept the claim only when the two hash
           digests match.
@@ -877,14 +879,16 @@ allows for the release of individual members of the address claim separately.
 ```json
 {
   "iss": "https://example.com/issuer",
-  "sub_jwk": {
-    "kty": "RSA",
-    "n": "pm4bOHBg-oYhAyPWzR56AWX3rUIXp11_ICDkGgS6W3ZWLts-hzwI3x65659kg4hVo9dbGoCJE3ZGF_eaetE30UhBUEgpGwrDrQiJ9zqprmcFfr3qvvkGjtth8Zgl1eM2bJcOwE7PCBHWTKWYs152R7g6Jg2OVph-a8rq-q79MhKG5QoW_mTz10QT_6H4c7PjWG1fjh8hpWNnbP_pv6d1zSwZfc5fl6yVRL0DV0V3lGHKe2Wqf_eNGjBrBLVklDTk8-stX_MWLcR-EGmXAOv0UBWitS_dXJKJu-vXJyw14nHSGuxTIK2hx1pttMft9CsvqimXKeDTU14qQL1eE7ihcw",
-    "e": "AQAB"
+  "cnf": {
+    "jwk" : {
+        "kty": "RSA",
+        "n": "pm4bOHBg-oYhAyPWzR56AWX3rUIXp11_ICDkGgS6W3ZWLts-hzwI3x65659kg4hVo9dbGoCJE3ZGF_eaetE30UhBUEgpGwrDrQiJ9zqprmcFfr3qvvkGjtth8Zgl1eM2bJcOwE7PCBHWTKWYs152R7g6Jg2OVph-a8rq-q79MhKG5QoW_mTz10QT_6H4c7PjWG1fjh8hpWNnbP_pv6d1zSwZfc5fl6yVRL0DV0V3lGHKe2Wqf_eNGjBrBLVklDTk8-stX_MWLcR-EGmXAOv0UBWitS_dXJKJu-vXJyw14nHSGuxTIK2hx1pttMft9CsvqimXKeDTU14qQL1eE7ihcw",
+        "e": "AQAB"
+    }
   },
   "iat": 1516239022,
   "exp": 1516247022,
-  "hash_alg": "sha-256",
+  "sd_hash_alg": "sha-256",
   "sd_digests": {
     "sub": "OMdwkk2HPuiInPypWUWMxot1Y2tStGsLuIcDMjKdXMU",
     "given_name": "AfKKH4a0IZki8MFDythFaFS_Xqzn-wRvAMfiy_VjYpE",
@@ -1007,14 +1011,16 @@ The following shows the resulting SD-JWT payload:
 ```json
 {
   "iss": "https://example.com/issuer",
-  "sub_jwk": {
-    "kty": "RSA",
-    "n": "pm4bOHBg-oYhAyPWzR56AWX3rUIXp11_ICDkGgS6W3ZWLts-hzwI3x65659kg4hVo9dbGoCJE3ZGF_eaetE30UhBUEgpGwrDrQiJ9zqprmcFfr3qvvkGjtth8Zgl1eM2bJcOwE7PCBHWTKWYs152R7g6Jg2OVph-a8rq-q79MhKG5QoW_mTz10QT_6H4c7PjWG1fjh8hpWNnbP_pv6d1zSwZfc5fl6yVRL0DV0V3lGHKe2Wqf_eNGjBrBLVklDTk8-stX_MWLcR-EGmXAOv0UBWitS_dXJKJu-vXJyw14nHSGuxTIK2hx1pttMft9CsvqimXKeDTU14qQL1eE7ihcw",
-    "e": "AQAB"
+  "cnf": {
+    "jwk" : {
+        "kty": "RSA",
+        "n": "pm4bOHBg-oYhAyPWzR56AWX3rUIXp11_ICDkGgS6W3ZWLts-hzwI3x65659kg4hVo9dbGoCJE3ZGF_eaetE30UhBUEgpGwrDrQiJ9zqprmcFfr3qvvkGjtth8Zgl1eM2bJcOwE7PCBHWTKWYs152R7g6Jg2OVph-a8rq-q79MhKG5QoW_mTz10QT_6H4c7PjWG1fjh8hpWNnbP_pv6d1zSwZfc5fl6yVRL0DV0V3lGHKe2Wqf_eNGjBrBLVklDTk8-stX_MWLcR-EGmXAOv0UBWitS_dXJKJu-vXJyw14nHSGuxTIK2hx1pttMft9CsvqimXKeDTU14qQL1eE7ihcw",
+        "e": "AQAB"
+    }
   },
   "iat": 1516239022,
   "exp": 1516247022,
-  "hash_alg": "sha-256",
+  "sd_hash_alg": "sha-256",
   "sd_digests": {
     "verified_claims": {
       "verification": {
@@ -1448,11 +1454,19 @@ The verifier would decode the SD-JWT-R and SD-JWT as follows:
 
    [[ To be removed from the final specification ]]
 
+   -02
+
+   *  Added acknowledgements
+   *  Improved Security Considerations
+   *  Stressed uniqueness requirements for salts
+   *  Python reference implementation clean-up and refactoring
+   *  hash_alg renamed to sd_hash_alg
+
    -01
    
    *  Editorial fixes
-   *  Added hash_alg claim
-   *  Renamed `_sd` to `sd_digests` and sd_release
+   *  Added `hash_alg` claim
+   *  Renamed `_sd` to `sd_digests` and `sd_release`
    *  Added descriptions on holder binding - more work to do
    *  Clarify that signing the SD-JWT is mandatory
 
