@@ -692,7 +692,7 @@ trusting/using any of the contents of an SD-JWT:
  5. Validate the SD-JWT Release:
     1. If holder binding is required, validate the signature over the SD-JWT using the same steps as for the SD-JWT plus the following steps:
        1. Determine that the public key for the private key that used to sign the SD-JWT-R is bound to the SD-JWT, i.e., the SD-JWT either contains a reference to the public key or contains the public key itself.
-       2. Determine that the Sse fossimo d'accordoD-JWT-R is bound to the current transaction and was created for this verifier (replay protection). This is usually achieved by a `nonce` and `aud` field within the SD-JWT Release.
+       2. Determine that the SD-JWT-R is bound to the current transaction and was created for this verifier (replay protection). This is usually achieved by a `nonce` and `aud` field within the SD-JWT Release.
     2. For each claim in the SD-JWT Release:
        1. Ensure that the claim is present as well in `sd_release` in the SD-JWT.
           If `sd_release` is structured, the claim MUST be present at the same
