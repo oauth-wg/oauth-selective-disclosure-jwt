@@ -44,7 +44,7 @@ documents that support selective disclosure of JWT claim values.
 
 The JSON-based representation of claims in a signed JSON Web Token (JWT) [@!RFC7519] is
 secured against modification using JSON Web Signature (JWS) [@!RFC7515] digital
-signatures. A consumer of a signed JWT that has checked the token's
+signatures. A consumer of a signed JWT that has checked the
 signature can safely assume that the contents of the token have not been
 modified.  However, anyone receiving an unencrypted JWT can read all of the
 claims and likewise, anyone with the decryption key receiving an encrypted JWT
