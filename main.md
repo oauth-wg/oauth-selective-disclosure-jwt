@@ -301,7 +301,7 @@ Algorithm" registry [IANA.Hash.Algorithms]. SD-JWTs with hash algorithm
 identifiers not found in this registry are not considered valid and MUST NOT be
 accepted by verifiers.
 
-To promote interoperability among implementations, the SHA-256 hash algorithm is mandatory to implement.
+To promote interoperability, implementations MUST support the SHA-256 hash algorithm.
 
 ### Holder Public Key Claim
 
