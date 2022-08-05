@@ -1,5 +1,5 @@
 %%%
-title = "Selective Disclosure JWT (SD-JWT)"
+title = "Selective Disclosure for JWTs (SD-JWT)"
 abbrev = "SD-JWT"
 ipr = "trust200902"
 area = "Security"
@@ -42,10 +42,10 @@ documents that support selective disclosure of JWT claim values.
 
 # Introduction {#Introduction}
 
-The JSON-based claims in a signed JSON Web Token (JWT) [@!RFC7519] document are
+The JSON-based representation of claims in a signed JSON Web Token (JWT) [@!RFC7519] is
 secured against modification using JSON Web Signature (JWS) [@!RFC7515] digital
-signatures. A consumer of a signed JWT document that has checked the document's
-signature can safely assume that the contents of the document have not been
+signatures. A consumer of a signed JWT that has checked the
+signature can safely assume that the contents of the token have not been
 modified.  However, anyone receiving an unencrypted JWT can read all of the
 claims and likewise, anyone with the decryption key receiving an encrypted JWT
 can also read all of the claims.
@@ -101,7 +101,7 @@ Section 2 of [@!RFC7515].
 
 # Terms and Definitions
 
-Selective Disclosure JWT (SD-JWT) 
+Selectively Disclosable JWT (SD-JWT) 
 :  A JWT [@!RFC7515] created by the issuer, which is signed as a JWS [@!RFC7515], 
    that supports selective disclosure as defined in this document.
 
@@ -222,7 +222,7 @@ If holder binding is desired, `SD-JWT` must contain information about key materi
 SD-JWT-DOC = (METADATA, HOLDER-PUBLIC-KEY, SD-CLAIMS)
 ```
 
-Note: How the public key is included in SD-JWT is out of scope of this document. It can be passed by value or by reference. Examples in this document use `sub_jwk` Claim to include raw public key by value in SD-JWT.
+Note: How the public key is included in SD-JWT is out of scope of this document. It can be passed by value or by reference.
 
 With holder binding, the `SD-JWT-RELEASE` is signed by the holder using its private key. It therefore looks as follows:
 
@@ -301,6 +301,8 @@ Algorithm" registry [IANA.Hash.Algorithms]. SD-JWTs with hash algorithm
 identifiers not found in this registry are not considered valid and MUST NOT be
 accepted by verifiers.
 
+To promote interoperability, implementations MUST support the SHA-256 hash algorithm.
+
 ### Holder Public Key Claim
 
 If the issuer wants to enable holder binding, it MAY include a public key
@@ -311,7 +313,7 @@ established. For example, the holder MAY provide a key pair to the issuer,
 the issuer MAY create the key pair for the holder, or
 holder and issuer MAY use pre-established key material.
 
-Note: need to define how holder public key is included, right now examples are using `sub_jwk` I think.
+Note: Examples in this document use `cnf` Claim defined in [@RFC7800] to include raw public key by value in SD-JWT.
 
 ## Example 1: SD-JWT
 
@@ -344,10 +346,12 @@ be disclosed in full.
 ```json
 {
   "iss": "https://example.com/issuer",
-  "sub_jwk": {
-    "kty": "RSA",
-    "n": "pm4bOHBg-oYhAyPWzR56AWX3rUIXp11_ICDkGgS6W3ZWLts-hzwI3x65659kg4hVo9dbGoCJE3ZGF_eaetE30UhBUEgpGwrDrQiJ9zqprmcFfr3qvvkGjtth8Zgl1eM2bJcOwE7PCBHWTKWYs152R7g6Jg2OVph-a8rq-q79MhKG5QoW_mTz10QT_6H4c7PjWG1fjh8hpWNnbP_pv6d1zSwZfc5fl6yVRL0DV0V3lGHKe2Wqf_eNGjBrBLVklDTk8-stX_MWLcR-EGmXAOv0UBWitS_dXJKJu-vXJyw14nHSGuxTIK2hx1pttMft9CsvqimXKeDTU14qQL1eE7ihcw",
-    "e": "AQAB"
+  "cnf": {
+    "jwk" : {
+        "kty": "RSA",
+        "n": "pm4bOHBg-oYhAyPWzR56AWX3rUIXp11_ICDkGgS6W3ZWLts-hzwI3x65659kg4hVo9dbGoCJE3ZGF_eaetE30UhBUEgpGwrDrQiJ9zqprmcFfr3qvvkGjtth8Zgl1eM2bJcOwE7PCBHWTKWYs152R7g6Jg2OVph-a8rq-q79MhKG5QoW_mTz10QT_6H4c7PjWG1fjh8hpWNnbP_pv6d1zSwZfc5fl6yVRL0DV0V3lGHKe2Wqf_eNGjBrBLVklDTk8-stX_MWLcR-EGmXAOv0UBWitS_dXJKJu-vXJyw14nHSGuxTIK2hx1pttMft9CsvqimXKeDTU14qQL1eE7ihcw",
+        "e": "AQAB"
+    }
   },
   "iat": 1516239022,
   "exp": 1516247022,
@@ -805,10 +809,12 @@ allows for the release of individual members of the address claim separately.
 ```json
 {
   "iss": "https://example.com/issuer",
-  "sub_jwk": {
-    "kty": "RSA",
-    "n": "pm4bOHBg-oYhAyPWzR56AWX3rUIXp11_ICDkGgS6W3ZWLts-hzwI3x65659kg4hVo9dbGoCJE3ZGF_eaetE30UhBUEgpGwrDrQiJ9zqprmcFfr3qvvkGjtth8Zgl1eM2bJcOwE7PCBHWTKWYs152R7g6Jg2OVph-a8rq-q79MhKG5QoW_mTz10QT_6H4c7PjWG1fjh8hpWNnbP_pv6d1zSwZfc5fl6yVRL0DV0V3lGHKe2Wqf_eNGjBrBLVklDTk8-stX_MWLcR-EGmXAOv0UBWitS_dXJKJu-vXJyw14nHSGuxTIK2hx1pttMft9CsvqimXKeDTU14qQL1eE7ihcw",
-    "e": "AQAB"
+  "cnf": {
+    "jwk" : {
+        "kty": "RSA",
+        "n": "pm4bOHBg-oYhAyPWzR56AWX3rUIXp11_ICDkGgS6W3ZWLts-hzwI3x65659kg4hVo9dbGoCJE3ZGF_eaetE30UhBUEgpGwrDrQiJ9zqprmcFfr3qvvkGjtth8Zgl1eM2bJcOwE7PCBHWTKWYs152R7g6Jg2OVph-a8rq-q79MhKG5QoW_mTz10QT_6H4c7PjWG1fjh8hpWNnbP_pv6d1zSwZfc5fl6yVRL0DV0V3lGHKe2Wqf_eNGjBrBLVklDTk8-stX_MWLcR-EGmXAOv0UBWitS_dXJKJu-vXJyw14nHSGuxTIK2hx1pttMft9CsvqimXKeDTU14qQL1eE7ihcw",
+        "e": "AQAB"
+    }
   },
   "iat": 1516239022,
   "exp": 1516247022,
@@ -935,10 +941,12 @@ The following shows the resulting SD-JWT payload:
 ```json
 {
   "iss": "https://example.com/issuer",
-  "sub_jwk": {
-    "kty": "RSA",
-    "n": "pm4bOHBg-oYhAyPWzR56AWX3rUIXp11_ICDkGgS6W3ZWLts-hzwI3x65659kg4hVo9dbGoCJE3ZGF_eaetE30UhBUEgpGwrDrQiJ9zqprmcFfr3qvvkGjtth8Zgl1eM2bJcOwE7PCBHWTKWYs152R7g6Jg2OVph-a8rq-q79MhKG5QoW_mTz10QT_6H4c7PjWG1fjh8hpWNnbP_pv6d1zSwZfc5fl6yVRL0DV0V3lGHKe2Wqf_eNGjBrBLVklDTk8-stX_MWLcR-EGmXAOv0UBWitS_dXJKJu-vXJyw14nHSGuxTIK2hx1pttMft9CsvqimXKeDTU14qQL1eE7ihcw",
-    "e": "AQAB"
+  "cnf": {
+    "jwk" : {
+        "kty": "RSA",
+        "n": "pm4bOHBg-oYhAyPWzR56AWX3rUIXp11_ICDkGgS6W3ZWLts-hzwI3x65659kg4hVo9dbGoCJE3ZGF_eaetE30UhBUEgpGwrDrQiJ9zqprmcFfr3qvvkGjtth8Zgl1eM2bJcOwE7PCBHWTKWYs152R7g6Jg2OVph-a8rq-q79MhKG5QoW_mTz10QT_6H4c7PjWG1fjh8hpWNnbP_pv6d1zSwZfc5fl6yVRL0DV0V3lGHKe2Wqf_eNGjBrBLVklDTk8-stX_MWLcR-EGmXAOv0UBWitS_dXJKJu-vXJyw14nHSGuxTIK2hx1pttMft9CsvqimXKeDTU14qQL1eE7ihcw",
+        "e": "AQAB"
+    }
   },
   "iat": 1516239022,
   "exp": 1516247022,
