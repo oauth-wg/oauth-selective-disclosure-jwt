@@ -118,8 +118,8 @@ Holder binding
    a public key or a reference to a public key that matches to the private key controlled by the holder.
 
 Claim name blinding
-:  Method to extend selective disclosure to claim names by hiding not only a claim's value
-   but also the claim name from verifiers to which the claim was not disclosed.
+:  Feature that enables to blind not only claim values, but also claim names of the claims 
+that are included in SD-JWT but are not disclosed to the verifier in the SD-JWT-Release.
 
 Issuer 
 :  An entity that creates SD-JWTs (2.1).
