@@ -790,6 +790,9 @@ cases, however, verifiers can already deduce this or similar information just
 from the identification of the issuer and the schema used for the SD-JWT.
 Blinding claim names might not provide additional privacy if this is the case.
 
+Furthermore, re-using the same value to blind a claim name may limit the privacy benefits.
+
+
 ## Unlinkability 
 
 Colluding issuer/verifier or verifier/verifier pairs could link issuance/presentation or two presentation sessions
