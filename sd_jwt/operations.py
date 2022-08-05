@@ -22,7 +22,7 @@ class SDJWT:
     # TODO: adopt a dynamic module/package loader, defs could be as string -> "fn": "hashlib.sha256"
     HASH_ALG = {"name": "sha-256", "fn": sha256}
 
-    HIDDEN_CLAIM_NAME_PREFIX = "h:"
+    HIDDEN_CLAIM_NAME_PREFIX = ""
 
     SD_KEY_SALT = "s"
     SD_KEY_VALUE = "v"
