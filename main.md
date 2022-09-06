@@ -1107,10 +1107,17 @@ SVC sent alongside this SD-JWT as a JWT-VC is same as in Example 1.
       "UniversityDegreeCredential"
     ],
     "credentialSubject": {
-      "sd_digests": {
-        "given_name": "fUMdn88aaoyKTHrvZd6AuLmPraGhPJ0zF5r_JhxCVZs",
-        "family_name": "9h5vgv6TpFV6GmnPtugiMLl5tHetHeb5X_2cKHjN7cw",
-        "birthdate": "fvLCnDm3r4VSYcBF3pIlXP4ulEoHuHOfG_YmFZEuxpQ"
+      "first_name": "Jane",
+      "last_name": "Doe"
+    }
+  },
+  "sd_digests": {
+    "vc": {
+      "credentialSubject": {
+        "email": "ET2A1JQLF85ZpBulh6UFstGrSfR4B3KM-bjQVllhxqY",
+        "phone_number": "SJnciB2DIRVA5cXBrdKoH6n45788mZyUn2rnv74uMVU",
+        "address": "0FldqLfGnERPPVDC17od9xb4w3iRJTEQbW_Yk9AmnDw",
+        "birthdate": "-L0kMgIbLXe3OEkKTUGwz_QKhjehDeofKGwoPrxLuo4"
       }
     }
   }
@@ -1151,9 +1158,10 @@ encoded as JSON and signed as a JWS compliant to [@VC_DATA].
     "verifiableCredential": ["eyJhb...npyXw"]
   },
   "sd_release": {
-    "given_name": "[\"6Ij7tM-a5iVPGboS5tmvVA\", \"John\"]",
-    "family_name": "[\"eI8ZWm9QnKPpNPeNenHdhQ\", \"Doe\"]",
-    "birthdate": "[\"5bPs1IquZNa0hkaFzzzZNw\", \"1940-01-01\"]"
+    "email": "[\"eI8ZWm9QnKPpNPeNenHdhQ\", \"johndoe@example.com\"]",
+    "phone_number": "[\"Qg_O64zqAxe412a108iroA\", \"+1-202-555-0101\"]",
+    "address": "[\"AJx-095VPrpTtN4QMOqROA\", {\"street_address\": \"123 Main St\", \"locality\": \"Anytown\", \"region\": \"Anystate\", \"country\": \"US\"}]",
+    "birthdate": "[\"Pc33JM2LchcU_lHggv_ufQ\", \"1940-01-01\"]"
   }
 }
 ```
