@@ -1079,7 +1079,7 @@ SVC sent alongside this SD-JWT as a JWT-VC is same as in Example 1.
 
 ```json
 {
-  "sub": "NzbLsXh8uDCcd-6MNwXF4W_7noWXFZAfHkxZsRGC9Xs",
+  "sub": "urn:ietf:params:oauth:jwk-thumbprint:sha-256:NzbLsXh8uDCcd-6MNwXF4W_7noWXFZAfHkxZsRGC9Xs",
   "jti": "http://example.edu/credentials/3732",
   "iss": "https://example.com/keys/foo.jwk",
   "nbf": 1541493724,
@@ -1142,7 +1142,7 @@ encoded as JSON and signed as a JWS compliant to [@VC_DATA].
       "e":"AQAB"
     }
 }.{
-  "iss": "NzbLsXh8uDCcd-6MNwXF4W_7noWXFZAfHkxZsRGC9Xs",
+  "iss": "urn:ietf:params:oauth:jwk-thumbprint:sha-256:NzbLsXh8uDCcd-6MNwXF4W_7noWXFZAfHkxZsRGC9Xs",
   "aud": "s6BhdRkqt3",
   "nbf": 1560415047,
   "iat": 1560415047,
