@@ -1072,6 +1072,12 @@ This example illustrates how the artifacts defined in this specification can be
 represented using W3C Verifiable Credentials Data Model as defined in
 [@VC_DATA].
 
+SD-JWT is equivalent to an issuer-signed W3C Verifiable Credential (VC). SVC is sent alongside a VC.
+
+SD-JWT-Release is equivalent to a holder-signed W3C Verifiable Presentation (VP).
+
+SD-JWT-Release as a VP contains a `verifiableCredential` claim inside a `vp` claim that is a string array of an SD-JWT as a VC using JWT compact serialization.
+
 Below is a non-normative example of an SD-JWT represented as a verifiable credential 
 encoded as JSON and signed as JWS compliant to [@VC_DATA].
 
