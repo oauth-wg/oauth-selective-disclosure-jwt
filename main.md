@@ -505,7 +505,7 @@ values and the salts revealed in the SD-JWT-R using the hashing algorithm
 specified in SD-JWT and comparing them to the hash digests included in SD-JWT.
 
 For each claim, an array of the salt and the claim value is contained in the
-`sd_release` object. The structure of `sd_release` object in the SD-JWT-R is the same as in SD-JWT. 
+`sd_release` object. The structure of an `sd_release` object in the SD-JWT-R is the same as the structure of an `sd_release` object in SVC. 
 
 The SD-JWT-R MAY contain further claims, for example, to ensure a binding
 to a concrete transaction (in the example the `nonce` and `aud` claims).
