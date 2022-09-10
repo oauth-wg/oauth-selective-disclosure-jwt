@@ -1080,6 +1080,12 @@ This example illustrates how the artifacts defined in this specification can be
 represented using W3C Verifiable Credentials Data Model as defined in
 [@VC_DATA].
 
+SD-JWT is equivalent to an issuer-signed W3C Verifiable Credential (VC). SVC is sent alongside a VC.
+
+SD-JWT-Release is equivalent to a holder-signed W3C Verifiable Presentation (VP).
+
+SD-JWT-Release as a VP contains a `verifiableCredential` claim inside a `vp` claim that is a string array of an SD-JWT as a VC using JWT compact serialization.
+
 Below is a non-normative example of an SD-JWT represented as a verifiable credential 
 encoded as JSON and signed as JWS compliant to [@VC_DATA].
 
@@ -1087,12 +1093,24 @@ SVC sent alongside this SD-JWT as a JWT-VC is same as in Example 1.
 
 ```json
 {
-  "sub": "did:example:ebfeb1f712ebc6f1c276e12ec21",
+  "sub": "urn:ietf:params:oauth:jwk-thumbprint:sha-256:NzbLsXh8uDCcd-6MNwXF4W_7noWXFZAfHkxZsRGC9Xs",
   "jti": "http://example.edu/credentials/3732",
   "iss": "https://example.com/keys/foo.jwk",
   "nbf": 1541493724,
   "iat": 1541493724,
   "exp": 1573029723,
+  "cnf": {
+    "jwk": {
+      "kty":"RSA",
+      "n": "0vx7agoebGcQSuuPiLJXZptN9nndrQmbXEps2aiAFbWhM78LhWx
+     4cbbfAAtVT86zwu1RK7aPFFxuhDR1L6tSoc_BJECPebWKRXjBZCiFV4n3oknjhMs
+     tn64tZ_2W-5JsGY4Hc5n9yBXArwl93lqt7_RN5w6Cf0h4QyQ5v-65YGjQR0_FDW2
+     QvzqY368QQMicAtaSqzs8KJZgnYb9c7d0zgdAZHzu6qMQvRL5hajrn1n91CbOpbI
+     SD08qNLyrdkt-bFTWhAI4vMQFh6WeZu0fM4lFd2NcRwr3XPksINHaQ-G_xBniIqb
+     w0Ls1jF44-csFCur-kEgU8awapJzKnqDKgw",
+      "e":"AQAB"
+    }
+  },
   "vc": {
     "@context": [
       "https://www.w3.org/2018/credentials/v1",
@@ -1101,12 +1119,21 @@ SVC sent alongside this SD-JWT as a JWT-VC is same as in Example 1.
     "type": [
       "VerifiableCredential",
       "UniversityDegreeCredential"
-    ]
+    ],
+    "credentialSubject": {
+      "first_name": "Jane",
+      "last_name": "Doe"
+    }
   },
   "sd_digests": {
-    "given_name": "fUMdn88aaoyKTHrvZd6AuLmPraGhPJ0zF5r_JhxCVZs",
-    "family_name": "9h5vgv6TpFV6GmnPtugiMLl5tHetHeb5X_2cKHjN7cw",
-    "birthdate": "fvLCnDm3r4VSYcBF3pIlXP4ulEoHuHOfG_YmFZEuxpQ"
+    "vc": {
+      "credentialSubject": {
+        "email": "ET2A1JQLF85ZpBulh6UFstGrSfR4B3KM-bjQVllhxqY",
+        "phone_number": "SJnciB2DIRVA5cXBrdKoH6n45788mZyUn2rnv74uMVU",
+        "address": "0FldqLfGnERPPVDC17od9xb4w3iRJTEQbW_Yk9AmnDw",
+        "birthdate": "-L0kMgIbLXe3OEkKTUGwz_QKhjehDeofKGwoPrxLuo4"
+      }
+    }
   }
 }
 ```
@@ -1116,7 +1143,20 @@ encoded as JSON and signed as a JWS compliant to [@VC_DATA].
 
 ```json
 {
-  "iss": "did:example:ebfeb1f712ebc6f1c276e12ec21",
+  "alg": "RS256",
+  "typ": "JWT",
+  "jwk": {
+      "kty":"RSA",
+      "n": "0vx7agoebGcQSuuPiLJXZptN9nndrQmbXEps2aiAFbWhM78LhWx
+     4cbbfAAtVT86zwu1RK7aPFFxuhDR1L6tSoc_BJECPebWKRXjBZCiFV4n3oknjhMs
+     tn64tZ_2W-5JsGY4Hc5n9yBXArwl93lqt7_RN5w6Cf0h4QyQ5v-65YGjQR0_FDW2
+     QvzqY368QQMicAtaSqzs8KJZgnYb9c7d0zgdAZHzu6qMQvRL5hajrn1n91CbOpbI
+     SD08qNLyrdkt-bFTWhAI4vMQFh6WeZu0fM4lFd2NcRwr3XPksINHaQ-G_xBniIqb
+     w0Ls1jF44-csFCur-kEgU8awapJzKnqDKgw",
+      "e":"AQAB"
+    }
+}.{
+  "iss": "urn:ietf:params:oauth:jwk-thumbprint:sha-256:NzbLsXh8uDCcd-6MNwXF4W_7noWXFZAfHkxZsRGC9Xs",
   "aud": "s6BhdRkqt3",
   "nbf": 1560415047,
   "iat": 1560415047,
@@ -1132,9 +1172,10 @@ encoded as JSON and signed as a JWS compliant to [@VC_DATA].
     "verifiableCredential": ["eyJhb...npyXw"]
   },
   "sd_release": {
-    "given_name": "[\"6Ij7tM-a5iVPGboS5tmvVA\", \"John\"]",
-    "family_name": "[\"eI8ZWm9QnKPpNPeNenHdhQ\", \"Doe\"]",
-    "birthdate": "[\"5bPs1IquZNa0hkaFzzzZNw\", \"1940-01-01\"]"
+    "email": "[\"eI8ZWm9QnKPpNPeNenHdhQ\", \"johndoe@example.com\"]",
+    "phone_number": "[\"Qg_O64zqAxe412a108iroA\", \"+1-202-555-0101\"]",
+    "address": "[\"AJx-095VPrpTtN4QMOqROA\", {\"street_address\": \"123 Main St\", \"locality\": \"Anytown\", \"region\": \"Anystate\", \"country\": \"US\"}]",
+    "birthdate": "[\"Pc33JM2LchcU_lHggv_ufQ\", \"1940-01-01\"]"
   }
 }
 ```
