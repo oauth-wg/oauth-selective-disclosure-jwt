@@ -238,6 +238,14 @@ JSON-encoding an ordered array containing the salt and the claim value, e.g.:
 the precise JSON encoding can vary, and therefore, the JSON encodings MUST be
 sent to the holder along with the SD-JWT, as described below.</t>
 
+<<<<<<< HEAD
+=======
+<aside><t>The use of
+Test
+Bla</t>
+</aside>
+
+>>>>>>> 3f4d47c (Explain JSON string literals and processing model)
 <section anchor="flat-and-structured-sd-digests-objects"><name>Flat and Structured <tt>sd_digests</tt> objects</name>
 <t>The <tt>sd_digests</tt> object can be a 'flat' object, directly containing all claim
 names and hashed claim values without any deeper structure. The <tt>sd_digests</tt>
@@ -301,10 +309,17 @@ be disclosed in full.</t>
 <sourcecode anchor="example-simple-sd_jwt_payload" type="json">{
   &quot;iss&quot;: &quot;https://example.com/issuer&quot;,
   &quot;cnf&quot;: {
+<<<<<<< HEAD
     &quot;jwk&quot; : {
         &quot;kty&quot;: &quot;RSA&quot;,
         &quot;n&quot;: &quot;pm4bOHBg-oYhAyPWzR56AWX3rUIXp11_ICDkGgS6W3ZWLts-hzwI3x65659kg4hVo9dbGoCJE3ZGF_eaetE30UhBUEgpGwrDrQiJ9zqprmcFfr3qvvkGjtth8Zgl1eM2bJcOwE7PCBHWTKWYs152R7g6Jg2OVph-a8rq-q79MhKG5QoW_mTz10QT_6H4c7PjWG1fjh8hpWNnbP_pv6d1zSwZfc5fl6yVRL0DV0V3lGHKe2Wqf_eNGjBrBLVklDTk8-stX_MWLcR-EGmXAOv0UBWitS_dXJKJu-vXJyw14nHSGuxTIK2hx1pttMft9CsvqimXKeDTU14qQL1eE7ihcw&quot;,
         &quot;e&quot;: &quot;AQAB&quot;
+=======
+    &quot;jwk&quot;: {
+      &quot;kty&quot;: &quot;RSA&quot;,
+      &quot;n&quot;: &quot;pm4bOHBg-oYhAyPWzR56AWX3rUIXp11_ICDkGgS6W3ZWLts-hzwI3x65659kg4hVo9dbGoCJE3ZGF_eaetE30UhBUEgpGwrDrQiJ9zqprmcFfr3qvvkGjtth8Zgl1eM2bJcOwE7PCBHWTKWYs152R7g6Jg2OVph-a8rq-q79MhKG5QoW_mTz10QT_6H4c7PjWG1fjh8hpWNnbP_pv6d1zSwZfc5fl6yVRL0DV0V3lGHKe2Wqf_eNGjBrBLVklDTk8-stX_MWLcR-EGmXAOv0UBWitS_dXJKJu-vXJyw14nHSGuxTIK2hx1pttMft9CsvqimXKeDTU14qQL1eE7ihcw&quot;,
+      &quot;e&quot;: &quot;AQAB&quot;
+>>>>>>> 3f4d47c (Explain JSON string literals and processing model)
     }
   },
   &quot;iat&quot;: 1516239022,
@@ -325,6 +340,7 @@ be disclosed in full.</t>
 
 <artwork anchor="example-simple-serialized_sd_jwt">eyJhbGciOiAiUlMyNTYiLCAia2lkIjogImNBRUlVcUowY21MekQxa3pHemhlaUJhZzBZUk
 F6VmRsZnhOMjgwTmdIYUEifQ.eyJpc3MiOiAiaHR0cHM6Ly9leGFtcGxlLmNvbS9pc3N1Z
+<<<<<<< HEAD
 XIiLCAic3ViX2p3ayI6IHsia3R5IjogIlJTQSIsICJuIjogInBtNGJPSEJnLW9ZaEF5UFd
 6UjU2QVdYM3JVSVhwMTFfSUNEa0dnUzZXM1pXTHRzLWh6d0kzeDY1NjU5a2c0aFZvOWRiR
 29DSkUzWkdGX2VhZXRFMzBVaEJVRWdwR3dyRHJRaUo5enFwcm1jRmZyM3F2dmtHanR0aDh
@@ -347,6 +363,30 @@ Nlt_drWLqQuzz9Sc19Bo5r-cgXZ0to8PfadImEJuPbhfkxCSt1xCT5IWQJrD6p_47h8Ac-
 5jQxBNFmL582n_uJR31ANBO45Jc_pgp4iSTn2vf1lxxwU7B3bgrad0vHmvwmv1lu17Ov79
 SGmT_fTjoybIJfHavTq61xCJ3UrMAGCEqm-_laOTxB1HRbPF38va0iuhqSSk2QaUpfDsVb
 9VsPBVIx_MsGlK3kYUWcHzkJ0BBPIVu0xnVcLkg1_SO_5gPSxFWZ4g
+=======
+XIiLCAiY25mIjogeyJqd2siOiB7Imt0eSI6ICJSU0EiLCAibiI6ICJwbTRiT0hCZy1vWWh
+BeVBXelI1NkFXWDNyVUlYcDExX0lDRGtHZ1M2VzNaV0x0cy1oendJM3g2NTY1OWtnNGhWb
+zlkYkdvQ0pFM1pHRl9lYWV0RTMwVWhCVUVncEd3ckRyUWlKOXpxcHJtY0ZmcjNxdnZrR2p
+0dGg4WmdsMWVNMmJKY093RTdQQ0JIV1RLV1lzMTUyUjdnNkpnMk9WcGgtYThycS1xNzlNa
+EtHNVFvV19tVHoxMFFUXzZINGM3UGpXRzFmamg4aHBXTm5iUF9wdjZkMXpTd1pmYzVmbDZ
+5VlJMMERWMFYzbEdIS2UyV3FmX2VOR2pCckJMVmtsRFRrOC1zdFhfTVdMY1ItRUdtWEFPd
+jBVQldpdFNfZFhKS0p1LXZYSnl3MTRuSFNHdXhUSUsyaHgxcHR0TWZ0OUNzdnFpbVhLZUR
+UVTE0cVFMMWVFN2loY3ciLCAiZSI6ICJBUUFCIn19LCAiaWF0IjogMTUxNjIzOTAyMiwgI
+mV4cCI6IDE1MTYyNDcwMjIsICJzZF9oYXNoX2FsZyI6ICJzaGEtMjU2IiwgInNkX2RpZ2V
+zdHMiOiB7InN1YiI6ICJ6NHhnRWNvOTRkaVRhU3J1SVNQaUU3b193dG1jT2ZuSF84UjdYO
+VBhNTc4IiwgImdpdmVuX25hbWUiOiAiUHZVN2NXanVIVXE2dy1pOVhGcFFaaGpULXVwclF
+MM0dIM21Lc0FKbDBlMCIsICJmYW1pbHlfbmFtZSI6ICJILVJlbHI0Y0VCTWxlbnlLMWd2e
+XgxNlFWcG50NE1FY2xUNXRQMGFUTEZVIiwgImVtYWlsIjogIkVUMkExSlFMRjg1WnBCdWx
+oNlVGc3RHclNmUjRCM0tNLWJqUVZsbGh4cVkiLCAicGhvbmVfbnVtYmVyIjogIlNKbmNpQ
+jJESVJWQTVjWEJyZEtvSDZuNDU3ODhtWnlVbjJybnY3NHVNVlUiLCAiYWRkcmVzcyI6ICI
+wRmxkcUxmR25FUlBQVkRDMTdvZDl4YjR3M2lSSlRFUWJXX1lrOUFtbkR3IiwgImJpcnRoZ
+GF0ZSI6ICItTDBrTWdJYkxYZTNPRWtLVFVHd3pfUUtoamVoRGVvZktHd29QcnhMdW80In1
+9.b0tAGzn4SMc94CN215lS0Ut2J_JBFZlJ3Wu5Ghi1tk0nEwJMMT2xk0Jf5GuQq4WHwPcT
+kV4wV7XNFC_-WP_NHVVrMV32q5dxn4G3MLNqRWSyVTZACLaP6Wx8OYIhDTsxPI-HZSdgjl
+bRj1QIE-AMZVDAtOEs9bPkweooAFM0moYoQHbTry1Gqgilw5CEQsDrtTZBbDXK3GlT_K4C
+bo4O9xMY8NbUgYct5Ix-sEpUBXpCd-o14rYvWnDsGcVxri4Jz453fMgFINi2Vz1skLtQmq
+RRgRLgILYetPOZqpVxfsCtgzDN_OGoSUq3pdvLJ3bFAzrt8dHenOvlz_CvlMXx2A
+>>>>>>> 3f4d47c (Explain JSON string literals and processing model)
 </artwork>
 <t>(Line breaks for presentation only.)</t>
 </section>
@@ -399,6 +439,7 @@ SVC and SD-JWT as defined in the Verification Section of this document.</t>
 
 <artwork anchor="example-simple-combined_sd_jwt_svc">eyJhbGciOiAiUlMyNTYiLCAia2lkIjogImNBRUlVcUowY21MekQxa3pHemhlaUJhZzBZUk
 F6VmRsZnhOMjgwTmdIYUEifQ.eyJpc3MiOiAiaHR0cHM6Ly9leGFtcGxlLmNvbS9pc3N1Z
+<<<<<<< HEAD
 XIiLCAic3ViX2p3ayI6IHsia3R5IjogIlJTQSIsICJuIjogInBtNGJPSEJnLW9ZaEF5UFd
 6UjU2QVdYM3JVSVhwMTFfSUNEa0dnUzZXM1pXTHRzLWh6d0kzeDY1NjU5a2c0aFZvOWRiR
 29DSkUzWkdGX2VhZXRFMzBVaEJVRWdwR3dyRHJRaUo5enFwcm1jRmZyM3F2dmtHanR0aDh
@@ -432,6 +473,41 @@ k9BXCIsIHtcInN0cmVldF9hZGRyZXNzXCI6IFwiMTIzIE1haW4gU3RcIiwgXCJsb2NhbGl
 0eVwiOiBcIkFueXRvd25cIiwgXCJyZWdpb25cIjogXCJBbnlzdGF0ZVwiLCBcImNvdW50c
 nlcIjogXCJVU1wifV0iLCAiYmlydGhkYXRlIjogIltcIlBjMzNKTTJMY2hjVV9sSGdndl9
 1ZlFcIiwgXCIxOTQwLTAxLTAxXCJdIn19
+=======
+XIiLCAiY25mIjogeyJqd2siOiB7Imt0eSI6ICJSU0EiLCAibiI6ICJwbTRiT0hCZy1vWWh
+BeVBXelI1NkFXWDNyVUlYcDExX0lDRGtHZ1M2VzNaV0x0cy1oendJM3g2NTY1OWtnNGhWb
+zlkYkdvQ0pFM1pHRl9lYWV0RTMwVWhCVUVncEd3ckRyUWlKOXpxcHJtY0ZmcjNxdnZrR2p
+0dGg4WmdsMWVNMmJKY093RTdQQ0JIV1RLV1lzMTUyUjdnNkpnMk9WcGgtYThycS1xNzlNa
+EtHNVFvV19tVHoxMFFUXzZINGM3UGpXRzFmamg4aHBXTm5iUF9wdjZkMXpTd1pmYzVmbDZ
+5VlJMMERWMFYzbEdIS2UyV3FmX2VOR2pCckJMVmtsRFRrOC1zdFhfTVdMY1ItRUdtWEFPd
+jBVQldpdFNfZFhKS0p1LXZYSnl3MTRuSFNHdXhUSUsyaHgxcHR0TWZ0OUNzdnFpbVhLZUR
+UVTE0cVFMMWVFN2loY3ciLCAiZSI6ICJBUUFCIn19LCAiaWF0IjogMTUxNjIzOTAyMiwgI
+mV4cCI6IDE1MTYyNDcwMjIsICJzZF9oYXNoX2FsZyI6ICJzaGEtMjU2IiwgInNkX2RpZ2V
+zdHMiOiB7InN1YiI6ICJ6NHhnRWNvOTRkaVRhU3J1SVNQaUU3b193dG1jT2ZuSF84UjdYO
+VBhNTc4IiwgImdpdmVuX25hbWUiOiAiUHZVN2NXanVIVXE2dy1pOVhGcFFaaGpULXVwclF
+MM0dIM21Lc0FKbDBlMCIsICJmYW1pbHlfbmFtZSI6ICJILVJlbHI0Y0VCTWxlbnlLMWd2e
+XgxNlFWcG50NE1FY2xUNXRQMGFUTEZVIiwgImVtYWlsIjogIkVUMkExSlFMRjg1WnBCdWx
+oNlVGc3RHclNmUjRCM0tNLWJqUVZsbGh4cVkiLCAicGhvbmVfbnVtYmVyIjogIlNKbmNpQ
+jJESVJWQTVjWEJyZEtvSDZuNDU3ODhtWnlVbjJybnY3NHVNVlUiLCAiYWRkcmVzcyI6ICI
+wRmxkcUxmR25FUlBQVkRDMTdvZDl4YjR3M2lSSlRFUWJXX1lrOUFtbkR3IiwgImJpcnRoZ
+GF0ZSI6ICItTDBrTWdJYkxYZTNPRWtLVFVHd3pfUUtoamVoRGVvZktHd29QcnhMdW80In1
+9.b0tAGzn4SMc94CN215lS0Ut2J_JBFZlJ3Wu5Ghi1tk0nEwJMMT2xk0Jf5GuQq4WHwPcT
+kV4wV7XNFC_-WP_NHVVrMV32q5dxn4G3MLNqRWSyVTZACLaP6Wx8OYIhDTsxPI-HZSdgjl
+bRj1QIE-AMZVDAtOEs9bPkweooAFM0moYoQHbTry1Gqgilw5CEQsDrtTZBbDXK3GlT_K4C
+bo4O9xMY8NbUgYct5Ix-sEpUBXpCd-o14rYvWnDsGcVxri4Jz453fMgFINi2Vz1skLtQmq
+RRgRLgILYetPOZqpVxfsCtgzDN_OGoSUq3pdvLJ3bFAzrt8dHenOvlz_CvlMXx2A.eyJzZ
+F9yZWxlYXNlIjogeyJzdWIiOiAiW1wiMkdMQzQyc0tRdmVDZkdmcnlOUk45d1wiLCBcIjZ
+jNWMwYTQ5LWI1ODktNDMxZC1iYWU3LTIxOTEyMmE5ZWMyY1wiXSIsICJnaXZlbl9uYW1lI
+jogIltcImVsdVY1T2czZ1NOSUk4RVluc3hBX0FcIiwgXCJKb2huXCJdIiwgImZhbWlseV9
+uYW1lIjogIltcIjZJajd0TS1hNWlWUEdib1M1dG12VkFcIiwgXCJEb2VcIl0iLCAiZW1ha
+WwiOiAiW1wiZUk4WldtOVFuS1BwTlBlTmVuSGRoUVwiLCBcImpvaG5kb2VAZXhhbXBsZS5
+jb21cIl0iLCAicGhvbmVfbnVtYmVyIjogIltcIlFnX082NHpxQXhlNDEyYTEwOGlyb0FcI
+iwgXCIrMS0yMDItNTU1LTAxMDFcIl0iLCAiYWRkcmVzcyI6ICJbXCJBSngtMDk1VlBycFR
+0TjRRTU9xUk9BXCIsIHtcInN0cmVldF9hZGRyZXNzXCI6IFwiMTIzIE1haW4gU3RcIiwgX
+CJsb2NhbGl0eVwiOiBcIkFueXRvd25cIiwgXCJyZWdpb25cIjogXCJBbnlzdGF0ZVwiLCB
+cImNvdW50cnlcIjogXCJVU1wifV0iLCAiYmlydGhkYXRlIjogIltcIlBjMzNKTTJMY2hjV
+V9sSGdndl91ZlFcIiwgXCIxOTQwLTAxLTAxXCJdIn19
+>>>>>>> 3f4d47c (Explain JSON string literals and processing model)
 </artwork>
 <t>(Line breaks for presentation only.)</t>
 </section>
@@ -443,7 +519,11 @@ the claims received from the holder by computing the hash digests of the claim
 values and the salts revealed in the SD-JWT-R using the hashing algorithm
 specified in SD-JWT and comparing them to the hash digests included in SD-JWT.</t>
 <t>For each claim, an array of the salt and the claim value is contained in the
+<<<<<<< HEAD
 <tt>sd_release</tt> object. The structure of <tt>sd_release</tt> object in the SD-JWT-R is the same as in SD-JWT.</t>
+=======
+<tt>sd_release</tt> object. The structure of an <tt>sd_release</tt> object in the SD-JWT-R is the same as the structure of an <tt>sd_release</tt> object in SVC.</t>
+>>>>>>> 3f4d47c (Explain JSON string literals and processing model)
 <t>The SD-JWT-R MAY contain further claims, for example, to ensure a binding
 to a concrete transaction (in the example the <tt>nonce</tt> and <tt>aud</tt> claims).</t>
 <t>When the holder sends the SD-JWT-R to the Verifier, the SD-JWT-R MUST be a JWS
@@ -496,6 +576,7 @@ d7F6kQ
 
 <artwork anchor="example-simple-combined_sd_jwt_sd_jwt_release">eyJhbGciOiAiUlMyNTYiLCAia2lkIjogImNBRUlVcUowY21MekQxa3pHemhlaUJhZzBZUk
 F6VmRsZnhOMjgwTmdIYUEifQ.eyJpc3MiOiAiaHR0cHM6Ly9leGFtcGxlLmNvbS9pc3N1Z
+<<<<<<< HEAD
 XIiLCAic3ViX2p3ayI6IHsia3R5IjogIlJTQSIsICJuIjogInBtNGJPSEJnLW9ZaEF5UFd
 6UjU2QVdYM3JVSVhwMTFfSUNEa0dnUzZXM1pXTHRzLWh6d0kzeDY1NjU5a2c0aFZvOWRiR
 29DSkUzWkdGX2VhZXRFMzBVaEJVRWdwR3dyRHJRaUo5enFwcm1jRmZyM3F2dmtHanR0aDh
@@ -531,6 +612,44 @@ GTmdEEtmscWxweFfGQoddObPTDiapjWiR1bUMMqPDKNNkRe0CBkU-pWieYWN-fQxlRa4BK
 Uqs18jcvGtTGA8Ye-i6t2xLROeXf2U_Seko8b7MQWIFHdbc0LvEFt_-JAcqeshH5wjVkwh
 HofVuZq1vGLlINKBveKA2dmn6wuEzi6XRceTwFrG_hTECagfobdO-bYMF3FSiCQM2KxC_6
 _aLApYo0aH3zjBv9rm0qNmnL_JGN5FIu6YqwhvPzfdsfkjMd68o8LTWd7F6kQ
+=======
+XIiLCAiY25mIjogeyJqd2siOiB7Imt0eSI6ICJSU0EiLCAibiI6ICJwbTRiT0hCZy1vWWh
+BeVBXelI1NkFXWDNyVUlYcDExX0lDRGtHZ1M2VzNaV0x0cy1oendJM3g2NTY1OWtnNGhWb
+zlkYkdvQ0pFM1pHRl9lYWV0RTMwVWhCVUVncEd3ckRyUWlKOXpxcHJtY0ZmcjNxdnZrR2p
+0dGg4WmdsMWVNMmJKY093RTdQQ0JIV1RLV1lzMTUyUjdnNkpnMk9WcGgtYThycS1xNzlNa
+EtHNVFvV19tVHoxMFFUXzZINGM3UGpXRzFmamg4aHBXTm5iUF9wdjZkMXpTd1pmYzVmbDZ
+5VlJMMERWMFYzbEdIS2UyV3FmX2VOR2pCckJMVmtsRFRrOC1zdFhfTVdMY1ItRUdtWEFPd
+jBVQldpdFNfZFhKS0p1LXZYSnl3MTRuSFNHdXhUSUsyaHgxcHR0TWZ0OUNzdnFpbVhLZUR
+UVTE0cVFMMWVFN2loY3ciLCAiZSI6ICJBUUFCIn19LCAiaWF0IjogMTUxNjIzOTAyMiwgI
+mV4cCI6IDE1MTYyNDcwMjIsICJzZF9oYXNoX2FsZyI6ICJzaGEtMjU2IiwgInNkX2RpZ2V
+zdHMiOiB7InN1YiI6ICJ6NHhnRWNvOTRkaVRhU3J1SVNQaUU3b193dG1jT2ZuSF84UjdYO
+VBhNTc4IiwgImdpdmVuX25hbWUiOiAiUHZVN2NXanVIVXE2dy1pOVhGcFFaaGpULXVwclF
+MM0dIM21Lc0FKbDBlMCIsICJmYW1pbHlfbmFtZSI6ICJILVJlbHI0Y0VCTWxlbnlLMWd2e
+XgxNlFWcG50NE1FY2xUNXRQMGFUTEZVIiwgImVtYWlsIjogIkVUMkExSlFMRjg1WnBCdWx
+oNlVGc3RHclNmUjRCM0tNLWJqUVZsbGh4cVkiLCAicGhvbmVfbnVtYmVyIjogIlNKbmNpQ
+jJESVJWQTVjWEJyZEtvSDZuNDU3ODhtWnlVbjJybnY3NHVNVlUiLCAiYWRkcmVzcyI6ICI
+wRmxkcUxmR25FUlBQVkRDMTdvZDl4YjR3M2lSSlRFUWJXX1lrOUFtbkR3IiwgImJpcnRoZ
+GF0ZSI6ICItTDBrTWdJYkxYZTNPRWtLVFVHd3pfUUtoamVoRGVvZktHd29QcnhMdW80In1
+9.b0tAGzn4SMc94CN215lS0Ut2J_JBFZlJ3Wu5Ghi1tk0nEwJMMT2xk0Jf5GuQq4WHwPcT
+kV4wV7XNFC_-WP_NHVVrMV32q5dxn4G3MLNqRWSyVTZACLaP6Wx8OYIhDTsxPI-HZSdgjl
+bRj1QIE-AMZVDAtOEs9bPkweooAFM0moYoQHbTry1Gqgilw5CEQsDrtTZBbDXK3GlT_K4C
+bo4O9xMY8NbUgYct5Ix-sEpUBXpCd-o14rYvWnDsGcVxri4Jz453fMgFINi2Vz1skLtQmq
+RRgRLgILYetPOZqpVxfsCtgzDN_OGoSUq3pdvLJ3bFAzrt8dHenOvlz_CvlMXx2A.eyJhb
+GciOiAiUlMyNTYiLCAia2lkIjogIkxkeVRYd0F5ZnJpcjRfVjZORzFSYzEwVThKZExZVHJ
+FQktKaF9oNWlfclUifQ.eyJub25jZSI6ICJYWk9VY28xdV9nRVBrbnhTNzhzV1dnIiwgIm
+F1ZCI6ICJodHRwczovL2V4YW1wbGUuY29tL3ZlcmlmaWVyIiwgInNkX3JlbGVhc2UiOiB7
+ImdpdmVuX25hbWUiOiAiW1wiZWx1VjVPZzNnU05JSThFWW5zeEFfQVwiLCBcIkpvaG5cIl
+0iLCAiZmFtaWx5X25hbWUiOiAiW1wiNklqN3RNLWE1aVZQR2JvUzV0bXZWQVwiLCBcIkRv
+ZVwiXSIsICJhZGRyZXNzIjogIltcIkFKeC0wOTVWUHJwVHRONFFNT3FST0FcIiwge1wic3
+RyZWV0X2FkZHJlc3NcIjogXCIxMjMgTWFpbiBTdFwiLCBcImxvY2FsaXR5XCI6IFwiQW55
+dG93blwiLCBcInJlZ2lvblwiOiBcIkFueXN0YXRlXCIsIFwiY291bnRyeVwiOiBcIlVTXC
+J9XSJ9fQ.j5jtArW1QDK1BNM13sJbQaE00GsAhhiPRYi6oK-iJRtLWE6DAgcWxDirTvxTn
+uo7Mbb6gSqGTmdEEtmscWxweFfGQoddObPTDiapjWiR1bUMMqPDKNNkRe0CBkU-pWieYWN
+-fQxlRa4BKUqs18jcvGtTGA8Ye-i6t2xLROeXf2U_Seko8b7MQWIFHdbc0LvEFt_-JAcqe
+shH5wjVkwhHofVuZq1vGLlINKBveKA2dmn6wuEzi6XRceTwFrG_hTECagfobdO-bYMF3FS
+iCQM2KxC_6_aLApYo0aH3zjBv9rm0qNmnL_JGN5FIu6YqwhvPzfdsfkjMd68o8LTWd7F6k
+Q
+>>>>>>> 3f4d47c (Explain JSON string literals and processing model)
 </artwork>
 <t>(Line breaks for presentation only.)</t>
 </section>
@@ -704,10 +823,17 @@ for their contributions (some of which substantial) to this draft and to the ini
 
 <back>
 <references><name>Normative References</name>
+<<<<<<< HEAD
 <xi:include href="https://xml2rfc.ietf.org/public/rfc/bibxml/reference.RFC.8174.xml"/>
 <xi:include href="https://xml2rfc.ietf.org/public/rfc/bibxml/reference.RFC.7519.xml"/>
 <xi:include href="https://xml2rfc.ietf.org/public/rfc/bibxml/reference.RFC.7515.xml"/>
 <xi:include href="https://xml2rfc.ietf.org/public/rfc/bibxml/reference.RFC.2119.xml"/>
+=======
+<xi:include href="https://xml2rfc.ietf.org/public/rfc/bibxml/reference.RFC.7519.xml"/>
+<xi:include href="https://xml2rfc.ietf.org/public/rfc/bibxml/reference.RFC.7515.xml"/>
+<xi:include href="https://xml2rfc.ietf.org/public/rfc/bibxml/reference.RFC.2119.xml"/>
+<xi:include href="https://xml2rfc.ietf.org/public/rfc/bibxml/reference.RFC.8174.xml"/>
+>>>>>>> 3f4d47c (Explain JSON string literals and processing model)
 </references>
 <references><name>Informative References</name>
 <xi:include href="https://xml2rfc.ietf.org/public/rfc/bibxml/reference.RFC.7800.xml"/>
@@ -748,10 +874,17 @@ allows for the release of individual members of the address claim separately.</t
 <sourcecode anchor="example-simple_structured-sd_jwt_payload" type="json">{
   &quot;iss&quot;: &quot;https://example.com/issuer&quot;,
   &quot;cnf&quot;: {
+<<<<<<< HEAD
     &quot;jwk&quot; : {
         &quot;kty&quot;: &quot;RSA&quot;,
         &quot;n&quot;: &quot;pm4bOHBg-oYhAyPWzR56AWX3rUIXp11_ICDkGgS6W3ZWLts-hzwI3x65659kg4hVo9dbGoCJE3ZGF_eaetE30UhBUEgpGwrDrQiJ9zqprmcFfr3qvvkGjtth8Zgl1eM2bJcOwE7PCBHWTKWYs152R7g6Jg2OVph-a8rq-q79MhKG5QoW_mTz10QT_6H4c7PjWG1fjh8hpWNnbP_pv6d1zSwZfc5fl6yVRL0DV0V3lGHKe2Wqf_eNGjBrBLVklDTk8-stX_MWLcR-EGmXAOv0UBWitS_dXJKJu-vXJyw14nHSGuxTIK2hx1pttMft9CsvqimXKeDTU14qQL1eE7ihcw&quot;,
         &quot;e&quot;: &quot;AQAB&quot;
+=======
+    &quot;jwk&quot;: {
+      &quot;kty&quot;: &quot;RSA&quot;,
+      &quot;n&quot;: &quot;pm4bOHBg-oYhAyPWzR56AWX3rUIXp11_ICDkGgS6W3ZWLts-hzwI3x65659kg4hVo9dbGoCJE3ZGF_eaetE30UhBUEgpGwrDrQiJ9zqprmcFfr3qvvkGjtth8Zgl1eM2bJcOwE7PCBHWTKWYs152R7g6Jg2OVph-a8rq-q79MhKG5QoW_mTz10QT_6H4c7PjWG1fjh8hpWNnbP_pv6d1zSwZfc5fl6yVRL0DV0V3lGHKe2Wqf_eNGjBrBLVklDTk8-stX_MWLcR-EGmXAOv0UBWitS_dXJKJu-vXJyw14nHSGuxTIK2hx1pttMft9CsvqimXKeDTU14qQL1eE7ihcw&quot;,
+      &quot;e&quot;: &quot;AQAB&quot;
+>>>>>>> 3f4d47c (Explain JSON string literals and processing model)
     }
   },
   &quot;iat&quot;: 1516239022,
@@ -868,10 +1001,17 @@ the <tt>address</tt> property:</t>
 <sourcecode anchor="example-complex-sd_jwt_payload" type="json">{
   &quot;iss&quot;: &quot;https://example.com/issuer&quot;,
   &quot;cnf&quot;: {
+<<<<<<< HEAD
     &quot;jwk&quot; : {
         &quot;kty&quot;: &quot;RSA&quot;,
         &quot;n&quot;: &quot;pm4bOHBg-oYhAyPWzR56AWX3rUIXp11_ICDkGgS6W3ZWLts-hzwI3x65659kg4hVo9dbGoCJE3ZGF_eaetE30UhBUEgpGwrDrQiJ9zqprmcFfr3qvvkGjtth8Zgl1eM2bJcOwE7PCBHWTKWYs152R7g6Jg2OVph-a8rq-q79MhKG5QoW_mTz10QT_6H4c7PjWG1fjh8hpWNnbP_pv6d1zSwZfc5fl6yVRL0DV0V3lGHKe2Wqf_eNGjBrBLVklDTk8-stX_MWLcR-EGmXAOv0UBWitS_dXJKJu-vXJyw14nHSGuxTIK2hx1pttMft9CsvqimXKeDTU14qQL1eE7ihcw&quot;,
         &quot;e&quot;: &quot;AQAB&quot;
+=======
+    &quot;jwk&quot;: {
+      &quot;kty&quot;: &quot;RSA&quot;,
+      &quot;n&quot;: &quot;pm4bOHBg-oYhAyPWzR56AWX3rUIXp11_ICDkGgS6W3ZWLts-hzwI3x65659kg4hVo9dbGoCJE3ZGF_eaetE30UhBUEgpGwrDrQiJ9zqprmcFfr3qvvkGjtth8Zgl1eM2bJcOwE7PCBHWTKWYs152R7g6Jg2OVph-a8rq-q79MhKG5QoW_mTz10QT_6H4c7PjWG1fjh8hpWNnbP_pv6d1zSwZfc5fl6yVRL0DV0V3lGHKe2Wqf_eNGjBrBLVklDTk8-stX_MWLcR-EGmXAOv0UBWitS_dXJKJu-vXJyw14nHSGuxTIK2hx1pttMft9CsvqimXKeDTU14qQL1eE7ihcw&quot;,
+      &quot;e&quot;: &quot;AQAB&quot;
+>>>>>>> 3f4d47c (Explain JSON string literals and processing model)
     }
   },
   &quot;iat&quot;: 1516239022,
@@ -923,6 +1063,7 @@ the <tt>address</tt> property:</t>
 
 <artwork anchor="example-complex-serialized_sd_jwt">eyJhbGciOiAiUlMyNTYiLCAia2lkIjogImNBRUlVcUowY21MekQxa3pHemhlaUJhZzBZUk
 F6VmRsZnhOMjgwTmdIYUEifQ.eyJpc3MiOiAiaHR0cHM6Ly9leGFtcGxlLmNvbS9pc3N1Z
+<<<<<<< HEAD
 XIiLCAic3ViX2p3ayI6IHsia3R5IjogIlJTQSIsICJuIjogInBtNGJPSEJnLW9ZaEF5UFd
 6UjU2QVdYM3JVSVhwMTFfSUNEa0dnUzZXM1pXTHRzLWh6d0kzeDY1NjU5a2c0aFZvOWRiR
 29DSkUzWkdGX2VhZXRFMzBVaEJVRWdwR3dyRHJRaUo5enFwcm1jRmZyM3F2dmtHanR0aDh
@@ -965,6 +1106,50 @@ I8JnUVgERRBQSbtrInYrgRDvQ9K7nlyj4y6ULvVybcZpbw2sUv5YJwdBsdB8kAvGWKCEkW
 NMvk-UGKZAKO78RPemWOTezLZq3Ubfj5GinITb6SN_Gu1rdLgA3ebKNkVqDBjI9q483d-9
 g_MP8owwGzE_tCd8oj2bjRlRE1YgwN1lxAAGVpDrIJwWbuivh7BqUArvblEHe4L0ZITMhz
 F5KKsEkYhkrr8q6qFg
+=======
+XIiLCAiY25mIjogeyJqd2siOiB7Imt0eSI6ICJSU0EiLCAibiI6ICJwbTRiT0hCZy1vWWh
+BeVBXelI1NkFXWDNyVUlYcDExX0lDRGtHZ1M2VzNaV0x0cy1oendJM3g2NTY1OWtnNGhWb
+zlkYkdvQ0pFM1pHRl9lYWV0RTMwVWhCVUVncEd3ckRyUWlKOXpxcHJtY0ZmcjNxdnZrR2p
+0dGg4WmdsMWVNMmJKY093RTdQQ0JIV1RLV1lzMTUyUjdnNkpnMk9WcGgtYThycS1xNzlNa
+EtHNVFvV19tVHoxMFFUXzZINGM3UGpXRzFmamg4aHBXTm5iUF9wdjZkMXpTd1pmYzVmbDZ
+5VlJMMERWMFYzbEdIS2UyV3FmX2VOR2pCckJMVmtsRFRrOC1zdFhfTVdMY1ItRUdtWEFPd
+jBVQldpdFNfZFhKS0p1LXZYSnl3MTRuSFNHdXhUSUsyaHgxcHR0TWZ0OUNzdnFpbVhLZUR
+UVTE0cVFMMWVFN2loY3ciLCAiZSI6ICJBUUFCIn19LCAiaWF0IjogMTUxNjIzOTAyMiwgI
+mV4cCI6IDE1MTYyNDcwMjIsICJzZF9oYXNoX2FsZyI6ICJzaGEtMjU2IiwgInNkX2RpZ2V
+zdHMiOiB7InZlcmlmaWVkX2NsYWltcyI6IHsidmVyaWZpY2F0aW9uIjogeyJ0cnVzdF9mc
+mFtZXdvcmsiOiAidzFtUDRvUGNfSjl0aEJleDBUYVFpMXZneEZtcnVRSnhaWUxGbmtORk1
+hSSIsICJ0aW1lIjogIlB1M2kwQ1dyUFZMSlctTFQzMHlGMWJGQlBQMTVCNi11S2szUG5HR
+GZsdjgiLCAidmVyaWZpY2F0aW9uX3Byb2Nlc3MiOiAiOEhxSVhSbWN6c2RZT1p6R2NMcUk
+1LWw5eE41UWJLMlhEdFhtZGZIN3otNCIsICJldmlkZW5jZSI6IFt7InR5cGUiOiAiVG5Md
+XFHR1FtNmpmZU9vYTV1WDFkaUtBTlVQdWgtekhycEJGZFg5TVItZyIsICJtZXRob2QiOiA
+iU2FnbWFrb1N1LVgtWFVQSUMzRWdkckVFd0lXeFJXWFg0LWk2OFg5VHlFbyIsICJ0aW1lI
+jogImxkMmM1b1lEUnRRY2ZVNlB6b2dQa3hfOTVXWXFocUlKTlZSTW5mY3NpY1kiLCAiZG9
+jdW1lbnQiOiB7InR5cGUiOiAidWZXakRhQWE1NE1uSGVqaTJaVVVIRGRucFo5eng2Q1VHN
+nVSMjhWTXRzUSIsICJpc3N1ZXIiOiB7Im5hbWUiOiAiYTRHTXVjVTdaYjA2MHIwU3ZkN2h
+1WTZRaG8xYklmM3YxVTVCdlBSOHE2WSIsICJjb3VudHJ5IjogIjEzNWs5TTBtMlNDbllSd
+U9mSHVZU2NZVlMycTNlZVk3SUl0Z3lSc2FCVDgifSwgIm51bWJlciI6ICJjVXZPeExVcDh
+SVjdUVFZsaUVpdS1UUUllbC1Mc0U4RS1YZlVnZnFrNWdrIiwgImRhdGVfb2ZfaXNzdWFuY
+2UiOiAiTklzOG9sSm5KT3Y0SjFxSUVCS3VUczJzRUZzNGZnR0poTnFNNnhkUXQ3RSIsICJ
+kYXRlX29mX2V4cGlyeSI6ICJIVFIzN3ZMdEFOVDZNV2stOWRCcWVrRnBDdmFURzd6TmYxe
+mU1NnJuVjY0In19XX0sICJjbGFpbXMiOiB7ImdpdmVuX25hbWUiOiAiTkI5WEhfeUpLcUt
+PaFhEbVhrWktwTUNrUmJPbU9UZDhicUpGWURKWVFuUSIsICJmYW1pbHlfbmFtZSI6ICJoQ
+VViSjY2WllMOVZKTGJqc0RwbVNzMmU5RmZfT2hpbV9XUjRid1p5dm9RIiwgImJpcnRoZGF
+0ZSI6ICI2WE9SNGs1NkJnV2s1dG5OaXNtYm1FSHZvR1g3UlJmeTZaOEhFTmw5NmNVIiwgI
+nBsYWNlX29mX2JpcnRoIjogeyJjb3VudHJ5IjogIkNMVGxodXkxM1dXYzNfSVNvbjFrRXl
+wRnd2Q21maExTcEdVTUN5QVVnNjgiLCAibG9jYWxpdHkiOiAiQVFvWDhpeEdwei1pcHdlR
+UdsQy0ydW1xd3lRZGhqSWVpVUJfVEtXY0UyRSJ9LCAibmF0aW9uYWxpdGllcyI6ICJuZm9
+jX19RS2xNVUhvZG14d2xZLUtwLTZld2dYM0NkSzdJYTBSSkhJWFZvIiwgImFkZHJlc3MiO
+iAibmduTzR1UWVPa3RNN1lkRkQ4eDgyZG9TN1dKbmxabnEtclFFX1JmdUJTSSJ9fSwgImJ
+pcnRoX21pZGRsZV9uYW1lIjogIkZlRlN3ZDlkcnlwRVB0V1ZnSVo0Mk45al95b3N0dDFEc
+zVQQnB4VDNSbmciLCAic2FsdXRhdGlvbiI6ICI1N0NNaHZBU1FNTnV6dVEwYV9CMV9WWDV
+YZEg3M1RjdVB4eVdHaW9yajVnIiwgIm1zaXNkbiI6ICJsZUtiQjBybzZxM2pyVnJhQ3F0N
+DQzdWFHWlZaaXNEM2lHckt1S0UybXFNIn19.HmoKHnHVbGadegrlrLGWrJfcrc_4AweZ2L
+NCPdpj6LSiSoTVI1Ze_VHBShFkD4Na7njkOFdcKgddBYOckq6b5oBiQvkX8LCb9maEwvXV
+cxyBcQ1h4oT23yud2LE_kuXFLCE-wGu97dFj0n3pojTNBA6fU8mb62q_CUKQuPvsWSJBfY
+PoGSOQjec_bB9VgjWE6S3wXGYQ3E_HIQk--GFIbRBP_cf78ZWeFr0hIJzm5mgYfbDGpY3k
+2msqdih4xhneRPgnJGp-PRhB16nxtpgfYY7Ux8uOB_cNgsAEKvZQ8Zu2UaELWnFG9P0McQ
+RyF-uzo2u2a6P5SXC3qUkROb8lOA
+>>>>>>> 3f4d47c (Explain JSON string literals and processing model)
 </artwork>
 <t>(Line breaks for presentation only.)</t>
 <t>A SD-JWT-R for some of the claims:</t>
@@ -1001,17 +1186,42 @@ F5KKsEkYhkrr8q6qFg
 <t>This example illustrates how the artifacts defined in this specification can be
 represented using W3C Verifiable Credentials Data Model as defined in
 <xref target="VC_DATA"></xref>.</t>
+<<<<<<< HEAD
+=======
+<t>SD-JWT is equivalent to an issuer-signed W3C Verifiable Credential (VC). SVC is sent alongside a VC.</t>
+<t>SD-JWT-Release is equivalent to a holder-signed W3C Verifiable Presentation (VP).</t>
+<t>SD-JWT-Release as a VP contains a <tt>verifiableCredential</tt> claim inside a <tt>vp</tt> claim that is a string array of an SD-JWT as a VC using JWT compact serialization.</t>
+>>>>>>> 3f4d47c (Explain JSON string literals and processing model)
 <t>Below is a non-normative example of an SD-JWT represented as a verifiable credential
 encoded as JSON and signed as JWS compliant to <xref target="VC_DATA"></xref>.</t>
 <t>SVC sent alongside this SD-JWT as a JWT-VC is same as in Example 1.</t>
 
 <sourcecode type="json">{
+<<<<<<< HEAD
   &quot;sub&quot;: &quot;did:example:ebfeb1f712ebc6f1c276e12ec21&quot;,
+=======
+  &quot;sub&quot;: &quot;urn:ietf:params:oauth:jwk-thumbprint:sha-256:NzbLsXh8uDCcd-6MNwXF4W_7noWXFZAfHkxZsRGC9Xs&quot;,
+>>>>>>> 3f4d47c (Explain JSON string literals and processing model)
   &quot;jti&quot;: &quot;http://example.edu/credentials/3732&quot;,
   &quot;iss&quot;: &quot;https://example.com/keys/foo.jwk&quot;,
   &quot;nbf&quot;: 1541493724,
   &quot;iat&quot;: 1541493724,
   &quot;exp&quot;: 1573029723,
+<<<<<<< HEAD
+=======
+  &quot;cnf&quot;: {
+    &quot;jwk&quot;: {
+      &quot;kty&quot;:&quot;RSA&quot;,
+      &quot;n&quot;: &quot;0vx7agoebGcQSuuPiLJXZptN9nndrQmbXEps2aiAFbWhM78LhWx
+     4cbbfAAtVT86zwu1RK7aPFFxuhDR1L6tSoc_BJECPebWKRXjBZCiFV4n3oknjhMs
+     tn64tZ_2W-5JsGY4Hc5n9yBXArwl93lqt7_RN5w6Cf0h4QyQ5v-65YGjQR0_FDW2
+     QvzqY368QQMicAtaSqzs8KJZgnYb9c7d0zgdAZHzu6qMQvRL5hajrn1n91CbOpbI
+     SD08qNLyrdkt-bFTWhAI4vMQFh6WeZu0fM4lFd2NcRwr3XPksINHaQ-G_xBniIqb
+     w0Ls1jF44-csFCur-kEgU8awapJzKnqDKgw&quot;,
+      &quot;e&quot;:&quot;AQAB&quot;
+    }
+  },
+>>>>>>> 3f4d47c (Explain JSON string literals and processing model)
   &quot;vc&quot;: {
     &quot;@context&quot;: [
       &quot;https://www.w3.org/2018/credentials/v1&quot;,
@@ -1020,12 +1230,30 @@ encoded as JSON and signed as JWS compliant to <xref target="VC_DATA"></xref>.</
     &quot;type&quot;: [
       &quot;VerifiableCredential&quot;,
       &quot;UniversityDegreeCredential&quot;
+<<<<<<< HEAD
     ]
   },
   &quot;sd_digests&quot;: {
     &quot;given_name&quot;: &quot;fUMdn88aaoyKTHrvZd6AuLmPraGhPJ0zF5r_JhxCVZs&quot;,
     &quot;family_name&quot;: &quot;9h5vgv6TpFV6GmnPtugiMLl5tHetHeb5X_2cKHjN7cw&quot;,
     &quot;birthdate&quot;: &quot;fvLCnDm3r4VSYcBF3pIlXP4ulEoHuHOfG_YmFZEuxpQ&quot;
+=======
+    ],
+    &quot;credentialSubject&quot;: {
+      &quot;first_name&quot;: &quot;Jane&quot;,
+      &quot;last_name&quot;: &quot;Doe&quot;
+    }
+  },
+  &quot;sd_digests&quot;: {
+    &quot;vc&quot;: {
+      &quot;credentialSubject&quot;: {
+        &quot;email&quot;: &quot;ET2A1JQLF85ZpBulh6UFstGrSfR4B3KM-bjQVllhxqY&quot;,
+        &quot;phone_number&quot;: &quot;SJnciB2DIRVA5cXBrdKoH6n45788mZyUn2rnv74uMVU&quot;,
+        &quot;address&quot;: &quot;0FldqLfGnERPPVDC17od9xb4w3iRJTEQbW_Yk9AmnDw&quot;,
+        &quot;birthdate&quot;: &quot;-L0kMgIbLXe3OEkKTUGwz_QKhjehDeofKGwoPrxLuo4&quot;
+      }
+    }
+>>>>>>> 3f4d47c (Explain JSON string literals and processing model)
   }
 }
 </sourcecode>
@@ -1033,7 +1261,24 @@ encoded as JSON and signed as JWS compliant to <xref target="VC_DATA"></xref>.</
 encoded as JSON and signed as a JWS compliant to <xref target="VC_DATA"></xref>.</t>
 
 <sourcecode type="json">{
+<<<<<<< HEAD
   &quot;iss&quot;: &quot;did:example:ebfeb1f712ebc6f1c276e12ec21&quot;,
+=======
+  &quot;alg&quot;: &quot;RS256&quot;,
+  &quot;typ&quot;: &quot;JWT&quot;,
+  &quot;jwk&quot;: {
+      &quot;kty&quot;:&quot;RSA&quot;,
+      &quot;n&quot;: &quot;0vx7agoebGcQSuuPiLJXZptN9nndrQmbXEps2aiAFbWhM78LhWx
+     4cbbfAAtVT86zwu1RK7aPFFxuhDR1L6tSoc_BJECPebWKRXjBZCiFV4n3oknjhMs
+     tn64tZ_2W-5JsGY4Hc5n9yBXArwl93lqt7_RN5w6Cf0h4QyQ5v-65YGjQR0_FDW2
+     QvzqY368QQMicAtaSqzs8KJZgnYb9c7d0zgdAZHzu6qMQvRL5hajrn1n91CbOpbI
+     SD08qNLyrdkt-bFTWhAI4vMQFh6WeZu0fM4lFd2NcRwr3XPksINHaQ-G_xBniIqb
+     w0Ls1jF44-csFCur-kEgU8awapJzKnqDKgw&quot;,
+      &quot;e&quot;:&quot;AQAB&quot;
+    }
+}.{
+  &quot;iss&quot;: &quot;urn:ietf:params:oauth:jwk-thumbprint:sha-256:NzbLsXh8uDCcd-6MNwXF4W_7noWXFZAfHkxZsRGC9Xs&quot;,
+>>>>>>> 3f4d47c (Explain JSON string literals and processing model)
   &quot;aud&quot;: &quot;s6BhdRkqt3&quot;,
   &quot;nbf&quot;: 1560415047,
   &quot;iat&quot;: 1560415047,
@@ -1049,9 +1294,16 @@ encoded as JSON and signed as a JWS compliant to <xref target="VC_DATA"></xref>.
     &quot;verifiableCredential&quot;: [&quot;eyJhb...npyXw&quot;]
   },
   &quot;sd_release&quot;: {
+<<<<<<< HEAD
     &quot;given_name&quot;: &quot;[\&quot;6Ij7tM-a5iVPGboS5tmvVA\&quot;, \&quot;John\&quot;]&quot;,
     &quot;family_name&quot;: &quot;[\&quot;eI8ZWm9QnKPpNPeNenHdhQ\&quot;, \&quot;Doe\&quot;]&quot;,
     &quot;birthdate&quot;: &quot;[\&quot;5bPs1IquZNa0hkaFzzzZNw\&quot;, \&quot;1940-01-01\&quot;]&quot;
+=======
+    &quot;email&quot;: &quot;[\&quot;eI8ZWm9QnKPpNPeNenHdhQ\&quot;, \&quot;johndoe@example.com\&quot;]&quot;,
+    &quot;phone_number&quot;: &quot;[\&quot;Qg_O64zqAxe412a108iroA\&quot;, \&quot;+1-202-555-0101\&quot;]&quot;,
+    &quot;address&quot;: &quot;[\&quot;AJx-095VPrpTtN4QMOqROA\&quot;, {\&quot;street_address\&quot;: \&quot;123 Main St\&quot;, \&quot;locality\&quot;: \&quot;Anytown\&quot;, \&quot;region\&quot;: \&quot;Anystate\&quot;, \&quot;country\&quot;: \&quot;US\&quot;}]&quot;,
+    &quot;birthdate&quot;: &quot;[\&quot;Pc33JM2LchcU_lHggv_ufQ\&quot;, \&quot;1940-01-01\&quot;]&quot;
+>>>>>>> 3f4d47c (Explain JSON string literals and processing model)
   }
 }
 </sourcecode>
