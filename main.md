@@ -58,18 +58,18 @@ Disclosure Document, a JSON object that contains the mapping
 between raw claim values contained in the SD-JWT and the salts for each claim
 value. 
 
-This document also defines a format for SD-JWT Releases (SD-JWT-R), which convey
+This document also defines a format for SD-JWT-Disclosures (SD-JWT-D), which convey
 a subset of the claim values of an SD-JWT to the verifier. For presentation, the
-holder creates an SD-JWT-R and sends it together with the SD-JWT to the
-verifier. To verify claim values received in SD-JWT-R, the verifier uses the
-salts values in the SD-JWT-R to compute the hash digests of the claim values and
+holder creates an SD-JWT-D and sends it together with the SD-JWT to the
+verifier. To verify claim values received in SD-JWT-D, the verifier uses the
+salts values in the SD-JWT-D to compute the hash digests of the claim values and
 compare them to the ones in the SD-JWT.
 
 One of the common use cases of a signed JWT is representing a user's identity
 created by an issuer. As long as the signed JWT is one-time use, it typically
-only contains those claims the user has consented to release to a specific
+only contains those claims the user has consented to disclose to a specific
 verifier. However, when a signed JWT is intended to be multi-use, it needs to
-contain the superset of all claims the user might want to release to verifiers
+contain the superset of all claims the user might want to disclose to verifiers
 at some point. The ability to selectively disclose a subset of these claims
 depending on the verifier becomes crucial to ensure minimum disclosure and
 prevent verifiers from obtaining claims irrelevant for the transaction at hand.
@@ -109,7 +109,7 @@ Disclosure Document
 :  A JSON object created by the issuer that contains mapping between 
    raw claim values contained in the SD-JWT and the salts for each claim value.
 
-SD-JWT Release (SD-JWT-R) 
+SD-JWT Disclosure (SD-JWT-D) 
 :  A JWT created by the holder that contains a subset of the claim values of an SD-JWT in a verifiable way. 
 
 Holder binding 
@@ -119,7 +119,7 @@ Holder binding
 
 Claim name blinding
 :  Feature that enables to blind not only claim values, but also claim names of the claims 
-that are included in SD-JWT but are not disclosed to the verifier in the SD-JWT-Release.
+that are included in SD-JWT but are not disclosed to the verifier in the SD-JWT-Disclosure.
 
 Issuer 
 :  An entity that creates SD-JWTs (2.1).
@@ -128,7 +128,7 @@ Holder
 :  An entity that received SD-JWTs (2.1) from the issuer and has control over them.
 
 Verifier 
-:  An entity that requests, checks and extracts the claims from SD-JWT-R (2.2)
+:  An entity that requests, checks and extracts the claims from SD-JWT-D (2.2)
 
 Note: discuss if we want to include Client, Authorization Server for the purpose of
 ensuring continuity and separating the entity from the actor.
@@ -153,7 +153,7 @@ ensuring continuity and separating the entity from the actor.
            +------------+
                  |
               Presents
-         SD-JWT-R and SD-JWT
+         SD-JWT-D and SD-JWT
                  |
                  v
            +-------------+
@@ -168,7 +168,7 @@ Figure: SD-JWT Issuance and Presentation Flow
 
 # Concepts
 
-In the following, the contents of SD-JWTs and SD-JWT Releases are described at a
+In the following, the contents of SD-JWTs and SD-JWT-Disclosures are described at a
 conceptual level, abstracting from the data formats described afterwards.
 
 ## Creating an SD-JWT
@@ -194,28 +194,28 @@ The claim name (`CLAIM-NAME`) is an optional
 
 `SD-JWT` is sent from the issuer to the holder, together with the mapping of the plain-text claim values, the salt values, and potentially some other information. 
 
-## Creating an SD-JWT Release
+## Creating an SD-JWT-Disclosure
 
 To disclose to a verifier a subset of the SD-JWT claim values, a holder creates a JWT such as the
 following:
 
 ```
-SD-JWT-RELEASE-DOC = (METADATA, SD-RELEASES)
-SD-JWT-RELEASE = SD-JWT-RELEASE-DOC
+SD-JWT-DISCLOSURE-DOC = (METADATA, SD-DISCLOSURES)
+SD-JWT-DISCLOSURE = SD-JWT-DISCLOSURE-DOC
 ```
 
 
-`SD-RELEASES` follows the structure of `SD-CLAIMS` and can be a simple object with claim names mapped to values and salts:
+`SD-DISCLOSURES` follows the structure of `SD-CLAIMS` and can be a simple object with claim names mapped to values and salts:
 
 ```
-SD-RELEASES = (
+SD-DISCLOSURES = (
     CLAIM-NAME: (DISCLOSED-SALT, DISCLOSED-VALUE)
 )
 ```
 
-Just as `SD-CLAIMS`, `SD-RELEASES` can be more complex as well.
+Just as `SD-CLAIMS`, `SD-DISCLOSURES` can be more complex as well.
 
-`SD-JWT-RELEASE` is sent together with `SD-JWT` from the holder to the
+`SD-JWT-DISCLOSURE` is sent together with `SD-JWT` from the holder to the
 verifier.
 
 ## Optional Holder Binding
@@ -230,10 +230,10 @@ SD-JWT-DOC = (METADATA, HOLDER-PUBLIC-KEY, SD-CLAIMS)
 
 Note: How the public key is included in SD-JWT is out of scope of this document. It can be passed by value or by reference.
 
-With holder binding, the `SD-JWT-RELEASE` is signed by the holder using its private key. It therefore looks as follows:
+With holder binding, the `SD-JWT-DISCLOSURE` is signed by the holder using its private key. It therefore looks as follows:
 
 ```
-SD-JWT-RELEASE = SD-JWT-RELEASE-DOC | SIG(SD-JWT-RELEASE-DOC, HOLDER-PRIV-KEY)
+SD-JWT-DISCLOSURE = SD-JWT-DISCLOSURE-DOC | SIG(SD-JWT-DISCLOSURE-DOC, HOLDER-PRIV-KEY)
 ```
 
 ## Optional Claim Name Blinding
@@ -249,21 +249,21 @@ SD-CLAIMS = (
 name, chosen such that it does not leak information about the claim name (e.g.,
 randomly).
 
-The contents of `SD-RELEASES` are modified as follows:
+The contents of `SD-DISCLOSURES` are modified as follows:
 ```
-SD-RELEASES = (
+SD-DISCLOSURES = (
     CLAIM-NAME-PLACEHOLDER: (DISCLOSED-SALT, DISCLOSED-VALUE, DISCLOSED-CLAIM-NAME)
 )
 ```
-Note that blinded and unblinded claim names can be mixed in `SD-CLAIMS` and accordingly in `SD-RELEASES`.
+Note that blinded and unblinded claim names can be mixed in `SD-CLAIMS` and accordingly in `SD-DISCLOSURES`.
 
-## Verifying an SD-JWT Release
+## Verifying an SD-JWT-Disclosure
 
 A verifier checks that 
 
- * for each claim in `SD-JWT-RELEASE`, the hash digest over the disclosed values
+ * for each claim in `SD-JWT-DISCLOSURE`, the hash digest over the disclosed values
    matches the hash digest under the given claim name in `SD-JWT`,
- * if holder binding is used, the `SD-JWT-RELEASE` was signed by the private key
+ * if holder binding is used, the `SD-JWT-DISCLOSURE` was signed by the private key
  belonging to `HOLDER-PUBLIC-KEY`.
 
 The detailed algorithm is described below.
@@ -272,7 +272,7 @@ The detailed algorithm is described below.
 
 This section defines data formats for SD-JWTs (containing hash digests of the salted
 claim values), SD-JWT Salt/Value Containers (containing the mapping of the
-plain-text claim values and the salt values), and SD-JWT Releases (containing a
+plain-text claim values and the salt values), and SD-JWT-Disclosures (containing a
 subset of the same mapping).
 
 ## Format of an SD-JWT
@@ -322,7 +322,7 @@ JSON literal to the holder along with the SD-JWT, as described below.
 The `sd_digests` claim contains an object where claim names are mapped to the
 respective digests. If a claim name is to be blinded, the digests MUST contain
 the `n` key as described above and the claim name in `sd_digests` MUST be
-replaced by a placeholder value that does not leak information about the claim's original name. The same placeholder value is to be used in the Disclosure Document and SD-JWT-R described below.
+replaced by a placeholder value that does not leak information about the claim's original name. The same placeholder value is to be used in the Disclosure Document and SD-JWT-D described below.
 
 
 #### Flat and Structured `sd_digests` objects
@@ -460,7 +460,7 @@ communicate to the holder, such as a private key if the issuer selected the
 holder key pair.
 
 A Disclosure Document is a JSON object containing at least the
-top-level property `sd_release`. Its structure mirrors the one of `sd_digests` in
+top-level property `sd_disclosure`. Its structure mirrors the one of `sd_digests` in
 the SD-JWT, but the values are the inputs to the hash calculations the issuer
 used, as strings.
 
@@ -474,7 +474,7 @@ The Disclosure Document for Example 1 is as follows:
 {#example-simple-svc_payload}
 ```json
 {
-  "sd_release": {
+  "sd_disclosure": {
     "sub": "{\"s\": \"2GLC42sKQveCfGfryNRN9w\", \"v\": \"6c5c0a49-b589-431d-bae7-219122a9ec2c\"}",
     "given_name": "{\"s\": \"6Ij7tM-a5iVPGboS5tmvVA\", \"v\": \"John\"}",
     "family_name": "{\"s\": \"Qg_O64zqAxe412a108iroA\", \"v\": \"Doe\"}",
@@ -547,38 +547,38 @@ V9sSGdndl91ZlFcIiwgXCIxOTQwLTAxLTAxXCJdIn19
 
 (Line breaks for presentation only.)
 
-## Format of an SD-JWT Release
+## Format of an SD-JWT-Disclosure
 
-SD-JWT-R contains claim values and the salts of the claims that the holder 
-has consented to release to the Verifier. This enables the Verifier to verify 
+SD-JWT-D contains claim values and the salts of the claims that the holder 
+has consented to disclose to the Verifier. This enables the Verifier to verify 
 the claims received from the holder by computing the hash digests of the claim
-values and the salts revealed in the SD-JWT-R using the hashing algorithm 
+values and the salts revealed in the SD-JWT-D using the hashing algorithm 
 specified in SD-JWT and comparing them to the hash digests included in SD-JWT.
 
 For each claim, an array of the salt and the claim value is contained in the
-`sd_release` object. The structure of an `sd_release` object in the SD-JWT-R is the same as the structure of an `sd_release` object in Disclosure Document. 
+`sd_disclosure` object. The structure of an `sd_disclosure` object in the SD-JWT-D is the same as the structure of an `sd_disclosure` object in Disclosure Document. 
 
-The SD-JWT-R MAY contain further claims, for example, to ensure a binding
+The SD-JWT-D MAY contain further claims, for example, to ensure a binding
 to a concrete transaction (in the example the `nonce` and `aud` claims).
 
-When the holder sends the SD-JWT-R to the Verifier, the SD-JWT-R MUST be a JWS 
+When the holder sends the SD-JWT-D to the Verifier, the SD-JWT-D MUST be a JWS 
 represented as the JWS Compact Serialization as described in 
 Section 7.1 of [@!RFC7515].
 
-If holder binding is desired, the SD-JWT-R is signed by the holder. If no
+If holder binding is desired, the SD-JWT-D is signed by the holder. If no
 holder binding is to be used, the `none` algorithm is used, i.e., the document
 is not signed. TODO: Change to plain base64 to avoid alg=none issues
 
-## Example: SD-JWT Release for Example 1
+## Example: SD-JWT-Disclosure for Example 1
 
-The following is a non-normative example of the contents of an SD-JWT-R for Example 1:
+The following is a non-normative example of the contents of an SD-JWT-D for Example 1:
 
 {#example-simple-sd_jwt_release_payload}
 ```json
 {
   "nonce": "XZOUco1u_gEPknxS78sWWg",
   "aud": "https://example.com/verifier",
-  "sd_release": {
+  "sd_disclosure": {
     "given_name": "{\"s\": \"6Ij7tM-a5iVPGboS5tmvVA\", \"v\": \"John\"}",
     "family_name": "{\"s\": \"Qg_O64zqAxe412a108iroA\", \"v\": \"Doe\"}",
     "address": "{\"s\": \"5bPs1IquZNa0hkaFzzzZNw\", \"v\": {\"street_address\": \"123 Main St\", \"locality\": \"Anytown\", \"region\": \"Anystate\", \"country\": \"US\"}}"
@@ -587,11 +587,11 @@ The following is a non-normative example of the contents of an SD-JWT-R for Exam
 ```
 
 For each claim, a JSON literal that decodes to an object with the and the claim
-value (plus optionally the claim name) is contained in the `sd_release` object. 
+value (plus optionally the claim name) is contained in the `sd_disclosure` object. 
 
-Again, the SD-JWT-R follows the same structure as the `sd_digests` in the SD-JWT. 
+Again, the SD-JWT-D follows the same structure as the `sd_digests` in the SD-JWT. 
 
-Below is a non-normative example of a representation of the SD-JWT-R JWS Compact
+Below is a non-normative example of a representation of the SD-JWT-D JWS Compact
 Serialization:
 
 {#example-simple-serialized_sd_jwt_release}
@@ -614,9 +614,9 @@ ScIkluPPcrXBZGYyX2zYUbGQs2RRXnBmox_yl6CvLbb0qTTYhDnDEo_MH-ZtWw
 
 (Line breaks for presentation only.)
 
-## Sending SD-JWT and SD-JWT-R during Presentation
+## Sending SD-JWT and SD-JWT-D during Presentation
 
-The SD-JWT and the SD-JWT-R can be combined into one document using period character `.` as a separator (here for Example 1):
+The SD-JWT and the SD-JWT-D can be combined into one document using period character `.` as a separator (here for Example 1):
 
 {#example-simple-combined_sd_jwt_sd_jwt_release}
 ```
@@ -670,17 +670,17 @@ The holder SHOULD verify the binding between SD-JWT and Disclosure Document by p
  1. Check that all the claims in the Disclosure Document are present in the SD-JWT and that there are no claims in the SD-JWT that are not in the Disclosure Document
  2. Check that the hashes of the claims in the Disclosure Document match those in the SD-JWT
 
-## Verification by the Verifier when Receiving SD-JWT and SD-JWT-R
+## Verification by the Verifier when Receiving SD-JWT and SD-JWT-D
 
 Verifiers MUST follow [@RFC8725] for checking the SD-JWT and, if signed, the
-SD-JWT Release.
+SD-JWT-Disclosure.
 
 Verifiers MUST go through (at least) the following steps before
 trusting/using any of the contents of an SD-JWT:
 
  1. Determine if holder binding is to be checked for the SD-JWT. Refer to (#holder_binding_security) for details.
  2. Check that the presentation consists of six period-separated (`.`) elements; if holder binding is not required, the last element can be empty.
- 3. Separate the SD-JWT from the SD-JWT Release.
+ 3. Separate the SD-JWT from the SD-JWT-Disclosure.
  4. Validate the SD-JWT:
     1. Ensure that a signing algorithm was used that was deemed secure for the application. Refer to [@RFC8725], Sections 3.1 and 3.2 for details.
     2. Validate the signature over the SD-JWT. 
@@ -689,27 +689,27 @@ trusting/using any of the contents of an SD-JWT:
     5. Check that the claim `sd_digests` is present in the SD-JWT.
     6. Check that the `sd_hash_alg` claim is present and its value is understand
        and the hash algorithm is deemed secure.
- 5. Validate the SD-JWT Release:
+ 5. Validate the SD-JWT-Disclosure:
     1. If holder binding is required, validate the signature over the SD-JWT using the same steps as for the SD-JWT plus the following steps:
-       1. Determine that the public key for the private key that used to sign the SD-JWT-R is bound to the SD-JWT, i.e., the SD-JWT either contains a reference to the public key or contains the public key itself.
-       2. Determine that the SD-JWT-R is bound to the current transaction and was created for this verifier (replay protection). This is usually achieved by a `nonce` and `aud` field within the SD-JWT Release.
-    2. For each claim in the SD-JWT Release:
-       1. Ensure that the claim is present as well in `sd_release` in the SD-JWT.
-          If `sd_release` is structured, the claim MUST be present at the same
+       1. Determine that the public key for the private key that used to sign the SD-JWT-D is bound to the SD-JWT, i.e., the SD-JWT either contains a reference to the public key or contains the public key itself.
+       2. Determine that the SD-JWT-D is bound to the current transaction and was created for this verifier (replay protection). This is usually achieved by a `nonce` and `aud` field within the SD-JWT-Disclosure.
+    2. For each claim in the SD-JWT-Disclosure:
+       1. Ensure that the claim is present as well in `sd_disclosure` in the SD-JWT.
+          If `sd_disclosure` is structured, the claim MUST be present at the same
           place within the structure.
-       2. Compute the base64url-encoded hash digest of the JSON literal released
+       2. Compute the base64url-encoded hash digest of the JSON literal disclosured
           by the Holder using the `sd_hash_alg` in SD-JWT.
        3. Compare the hash digests computed in the previous step with the one of
           the same claim in the SD-JWT. Accept the claim only when the two hash
           digests match.
-       4. Ensure that the claim value in the SD-JWT-R is a JSON-encoded
+       4. Ensure that the claim value in the SD-JWT-D is a JSON-encoded
           object containing at least the keys `s` and `v`, and optionally `n`.
        5. Store the value of the key `v` as the claim value. If `n` is contained
           in the object, use the value of the key `n` as the claim name.
     3. Once all necessary claims have been verified, their values can be
        validated and used according to the requirements of the application. It
        MUST be ensured that all claims required for the application have been
-       released.
+       disclosured.
 
 If any step fails, the input is not valid and processing MUST be aborted.
 
@@ -719,7 +719,7 @@ If any step fails, the input is not valid and processing MUST be aborted.
 ## Mandatory hash computation of the revealed claim values by the Verifier
 
 ToDo: add text explaining mechanisms that should be adopted to ensure that 
-  verifiers validate the claim values received in SD-JWT-R by calculating the
+  verifiers validate the claim values received in SD-JWT-D by calculating the
   hashes of those values and comparing them with the hashes in the SD-JWT: 
   - create a test suite that forces hash computation by the Verifiers, 
     and includes negative test cases in test vectors
@@ -876,7 +876,7 @@ TBD
 ## Example 2 - Structured SD-JWT
 This non-normative example is based on the same claim values as Example 1, but
 this time the issuer decided to create a structured object for the hashes. This
-allows for the release of individual members of the address claim separately.
+allows for the disclosure of individual members of the address claim separately.
 
 {#example-simple_structured-sd_jwt_payload}
 ```json
@@ -914,7 +914,7 @@ The Disclosure Document for this SD-JWT is as follows:
 {#example-simple_structured-svc_payload}
 ```json
 {
-  "sd_release": {
+  "sd_disclosure": {
     "sub": "{\"s\": \"2GLC42sKQveCfGfryNRN9w\", \"v\": \"6c5c0a49-b589-431d-bae7-219122a9ec2c\"}",
     "given_name": "{\"s\": \"6Ij7tM-a5iVPGboS5tmvVA\", \"v\": \"John\"}",
     "family_name": "{\"s\": \"Qg_O64zqAxe412a108iroA\", \"v\": \"Doe\"}",
@@ -931,7 +931,7 @@ The Disclosure Document for this SD-JWT is as follows:
 }
 ```
 
-An SD-JWT-R for the SD-JWT above that discloses only `region` and `country` of
+An SD-JWT-D for the SD-JWT above that discloses only `region` and `country` of
 the `address` property:
 
 {#example-simple_structured-sd_jwt_release_payload}
@@ -939,7 +939,7 @@ the `address` property:
 {
   "nonce": "XZOUco1u_gEPknxS78sWWg",
   "aud": "https://example.com/verifier",
-  "sd_release": {
+  "sd_disclosure": {
     "given_name": "{\"s\": \"6Ij7tM-a5iVPGboS5tmvVA\", \"v\": \"John\"}",
     "family_name": "{\"s\": \"Qg_O64zqAxe412a108iroA\", \"v\": \"Doe\"}",
     "birthdate": "{\"s\": \"M0Jb57t41ubrkSuyrDT3xA\", \"v\": \"1940-01-01\"}",
@@ -1119,14 +1119,14 @@ RyF-uzo2u2a6P5SXC3qUkROb8lOA
 
 (Line breaks for presentation only.)
 
-A SD-JWT-R for some of the claims:
+A SD-JWT-D for some of the claims:
 
 {#example-complex-sd_jwt_release_payload}
 ```json
 {
   "nonce": "XZOUco1u_gEPknxS78sWWg",
   "aud": "https://example.com/verifier",
-  "sd_release": {
+  "sd_disclosure": {
     "verified_claims": {
       "verification": {
         "trust_framework": "{\"s\": \"2GLC42sKQveCfGfryNRN9w\", \"v\": \"de_aml\"}",
@@ -1158,9 +1158,9 @@ represented using W3C Verifiable Credentials Data Model as defined in
 
 SD-JWT is equivalent to an issuer-signed W3C Verifiable Credential (VC). Disclosure Document is sent alongside a VC.
 
-SD-JWT-Release is equivalent to a holder-signed W3C Verifiable Presentation (VP).
+SD-JWT-Disclosure is equivalent to a holder-signed W3C Verifiable Presentation (VP).
 
-SD-JWT-Release as a VP contains a `verifiableCredential` claim inside a `vp` claim that is a string array of an SD-JWT as a VC using JWT compact serialization.
+SD-JWT-Disclosure as a VP contains a `verifiableCredential` claim inside a `vp` claim that is a string array of an SD-JWT as a VC using JWT compact serialization.
 
 Below is a non-normative example of an SD-JWT represented as a verifiable credential 
 encoded as JSON and signed as JWS compliant to [@VC_DATA].
@@ -1214,7 +1214,7 @@ Disclosure Document sent alongside this SD-JWT as a JWT-VC is same as in Example
 }
 ```
 
-Below is a non-normative example of an SD-JWT-R represented as a verifiable presentation
+Below is a non-normative example of an SD-JWT-D represented as a verifiable presentation
 encoded as JSON and signed as a JWS compliant to [@VC_DATA].
 
 ```json
@@ -1247,7 +1247,7 @@ encoded as JSON and signed as a JWS compliant to [@VC_DATA].
     ],
     "verifiableCredential": ["eyJhb...npyXw"]
   },
-  "sd_release": {
+  "sd_disclosure": {
     "email": "[\"eI8ZWm9QnKPpNPeNenHdhQ\", \"johndoe@example.com\"]",
     "phone_number": "[\"Qg_O64zqAxe412a108iroA\", \"+1-202-555-0101\"]",
     "address": "[\"AJx-095VPrpTtN4QMOqROA\", {\"street_address\": \"123 Main St\", \"locality\": \"Anytown\", \"region\": \"Anystate\", \"country\": \"US\"}]",
@@ -1321,7 +1321,7 @@ In the Disclosure Document it can be seen that the blinded claim's original name
 {#example-simple_structured_some_blinded-svc_payload}
 ```json
 {
-  "sd_release": {
+  "sd_disclosure": {
     "sub": "{\"s\": \"2GLC42sKQveCfGfryNRN9w\", \"v\": \"6c5c0a49-b589-431d-bae7-219122a9ec2c\"}",
     "given_name": "{\"s\": \"6Ij7tM-a5iVPGboS5tmvVA\", \"v\": \"John\"}",
     "family_name": "{\"s\": \"Qg_O64zqAxe412a108iroA\", \"v\": \"Doe\"}",
@@ -1340,14 +1340,14 @@ In the Disclosure Document it can be seen that the blinded claim's original name
 }
 ```
 
-The verifier would learn this information via the SD-JWT-R:
+The verifier would learn this information via the SD-JWT-D:
 
 {#example-simple_structured_some_blinded-sd_jwt_release_payload}
 ```json
 {
   "nonce": "XZOUco1u_gEPknxS78sWWg",
   "aud": "https://example.com/verifier",
-  "sd_release": {
+  "sd_disclosure": {
     "given_name": "{\"s\": \"6Ij7tM-a5iVPGboS5tmvVA\", \"v\": \"John\"}",
     "family_name": "{\"s\": \"Qg_O64zqAxe412a108iroA\", \"v\": \"Doe\"}",
     "birthdate": "{\"s\": \"WpxJrFuX8uSi2p4ht09jvw\", \"v\": \"1940-01-01\"}",
@@ -1437,7 +1437,7 @@ The Disclosure Document:
 {#example-simple_structured_all_blinded-svc_payload}
 ```json
 {
-  "sd_release": {
+  "sd_disclosure": {
     "eluV5Og3gSNII8EYnsxA_A": "{\"s\": \"2GLC42sKQveCfGfryNRN9w\", \"v\": \"6c5c0a49-b589-431d-bae7-219122a9ec2c\", \"n\": \"sub\"}",
     "eI8ZWm9QnKPpNPeNenHdhQ": "{\"s\": \"6Ij7tM-a5iVPGboS5tmvVA\", \"v\": \"John\", \"n\": \"given_name\"}",
     "AJx-095VPrpTtN4QMOqROA": "{\"s\": \"Qg_O64zqAxe412a108iroA\", \"v\": \"Doe\", \"n\": \"family_name\"}",
@@ -1455,14 +1455,14 @@ The Disclosure Document:
 }
 ```
 
-Here, the holder decided only to release a subset of the claims to the verifier:
+Here, the holder decided only to disclose a subset of the claims to the verifier:
 
 {#example-simple_structured_all_blinded-sd_jwt_release_payload}
 ```json
 {
   "nonce": "XZOUco1u_gEPknxS78sWWg",
   "aud": "https://example.com/verifier",
-  "sd_release": {
+  "sd_disclosure": {
     "eI8ZWm9QnKPpNPeNenHdhQ": "{\"s\": \"6Ij7tM-a5iVPGboS5tmvVA\", \"v\": \"John\", \"n\": \"given_name\"}",
     "AJx-095VPrpTtN4QMOqROA": "{\"s\": \"Qg_O64zqAxe412a108iroA\", \"v\": \"Doe\", \"n\": \"family_name\"}",
     "j7ADdb0UVb0Li0ciPcP0ew": "{\"s\": \"eK5o5pHfgupPpltj1qhAJw\", \"v\": \"1940-01-01\", \"n\": \"birthdate\"}",
@@ -1474,7 +1474,7 @@ Here, the holder decided only to release a subset of the claims to the verifier:
 }
 ```
 
-The verifier would decode the SD-JWT-R and SD-JWT as follows:
+The verifier would decode the SD-JWT-D and SD-JWT as follows:
 
 
 {#example-simple_structured_all_blinded-verified_contents}
