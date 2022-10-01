@@ -53,8 +53,8 @@ can also read all of the claims.
 This document describes a format for signed JWTs that supports selective
 disclosure (SD-JWT), enabling sharing only a subset of the claims included in
 the original signed JWT instead of releasing all the claims to every verifier.
-During issuance, an SD-JWT is sent from the issuer to the holder alongside an
-SD-JWT Salt/Value Container (SVC), a JSON object that contains the mapping
+During issuance, an SD-JWT is sent from the issuer to the holder alongside a
+Disclosure Document, a JSON object that contains the mapping
 between raw claim values contained in the SD-JWT and the salts for each claim
 value. 
 
@@ -105,7 +105,7 @@ Selectively Disclosable JWT (SD-JWT)
 :  A JWT [@!RFC7515] created by the issuer, which is signed as a JWS [@!RFC7515], 
    that supports selective disclosure as defined in this document.
 
-SD-JWT Salt/Value Container (SVC) 
+Disclosure Document
 :  A JSON object created by the issuer that contains mapping between 
    raw claim values contained in the SD-JWT and the salts for each claim value.
 
@@ -143,7 +143,7 @@ ensuring continuity and separating the entity from the actor.
            +------------+
                  |
                Issues
-           SD-JWT and SVC
+           SD-JWT and Disclosure Document
                  |
                  v
            +------------+
@@ -322,7 +322,7 @@ JSON literal to the holder along with the SD-JWT, as described below.
 The `sd_digests` claim contains an object where claim names are mapped to the
 respective digests. If a claim name is to be blinded, the digests MUST contain
 the `n` key as described above and the claim name in `sd_digests` MUST be
-replaced by a placeholder value that does not leak information about the claim's original name. The same placeholder value is to be used in the SVC and SD-JWT-R described below.
+replaced by a placeholder value that does not leak information about the claim's original name. The same placeholder value is to be used in the Disclosure Document and SD-JWT-R described below.
 
 
 #### Flat and Structured `sd_digests` objects
@@ -451,7 +451,7 @@ RRgRLgILYetPOZqpVxfsCtgzDN_OGoSUq3pdvLJ3bFAzrt8dHenOvlz_CvlMXx2A
 (Line breaks for presentation only.)
 
 
-## Format of a SD-JWT Salt/Value Container (SVC)
+## Format of a Disclosure Document
 
 Besides the SD-JWT itself, the holder needs to learn the raw claim values that
 are contained in the SD-JWT, along with the precise input to the hash
@@ -459,17 +459,17 @@ calculation, and the salts. There MAY be other information the issuer needs to
 communicate to the holder, such as a private key if the issuer selected the
 holder key pair.
 
-A SD-JWT Salt/Value Container (SVC) is a JSON object containing at least the
+A Disclosure Document is a JSON object containing at least the
 top-level property `sd_release`. Its structure mirrors the one of `sd_digests` in
 the SD-JWT, but the values are the inputs to the hash calculations the issuer
 used, as strings.
 
-The SVC MAY contain further properties, for example, to transport the holder
+The Disclosure Document MAY contain further properties, for example, to transport the holder
 private key.
 
-## Example: SVC for the Flat SD-JWT in Example 1
+## Example: Disclosure Document for the Flat SD-JWT in Example 1
 
-The SVC for Example 1 is as follows:
+The Disclosure Document for Example 1 is as follows:
 
 {#example-simple-svc_payload}
 ```json
@@ -490,19 +490,19 @@ Important: As described above, hash digests are calculated over the JSON literal
 formed by serializing an object containing the salt, the claim value, and
 optionally the claim name. This ensures that issuer and verifier use the same
 input to their hash functions and avoids issues with canonicalization of JSON
-values that would lead to different hash digests. The SVC therefore maps claim
+values that would lead to different hash digests. The Disclosure Document therefore maps claim
 names to JSON-encoded arrays. 
 
-## Sending SD-JWT and SVC during Issuance
+## Sending SD-JWT and Disclosure Document during Issuance
 
-For transporting the SVC together with the SD-JWT from the issuer to the holder,
-the SVC is base64url-encoded and appended to the SD-JWT using a period character `.` as the
+For transporting the Disclosure Document together with the SD-JWT from the issuer to the holder,
+the Disclosure Document is base64url-encoded and appended to the SD-JWT using a period character `.` as the
 separator. 
 
-The SVC and SD-JWT are implicitly linked through the hash values of the claims
-in the SVC that is included in the SD-JWT. To ensure that the correct SVC and 
+The Disclosure Document and SD-JWT are implicitly linked through the hash values of the claims
+in the Disclosure Document that is included in the SD-JWT. To ensure that the correct Disclosure Document and 
 SD-JWT pairings are being used, the holder SHOULD verify the binding between
-SVC and SD-JWT as defined in the Verification Section of this document.
+Disclosure Document and SD-JWT as defined in the Verification Section of this document.
 
 For Example 1, the combined format looks as follows:
 
@@ -556,7 +556,7 @@ values and the salts revealed in the SD-JWT-R using the hashing algorithm
 specified in SD-JWT and comparing them to the hash digests included in SD-JWT.
 
 For each claim, an array of the salt and the claim value is contained in the
-`sd_release` object. The structure of an `sd_release` object in the SD-JWT-R is the same as the structure of an `sd_release` object in SVC. 
+`sd_release` object. The structure of an `sd_release` object in the SD-JWT-R is the same as the structure of an `sd_release` object in Disclosure Document. 
 
 The SD-JWT-R MAY contain further claims, for example, to ensure a binding
 to a concrete transaction (in the example the `nonce` and `aud` claims).
@@ -664,11 +664,11 @@ Q
 
 # Verification
 
-## Verification by the Holder when Receiving SD-JWT and SVC
+## Verification by the Holder when Receiving SD-JWT and Disclosure Document
 
-The holder SHOULD verify the binding between SD-JWT and SVC by performing the following steps:
- 1. Check that all the claims in the SVC are present in the SD-JWT and that there are no claims in the SD-JWT that are not in the SVC
- 2. Check that the hashes of the claims in the SVC match those in the SD-JWT
+The holder SHOULD verify the binding between SD-JWT and Disclosure Document by performing the following steps:
+ 1. Check that all the claims in the Disclosure Document are present in the SD-JWT and that there are no claims in the SD-JWT that are not in the Disclosure Document
+ 2. Check that the hashes of the claims in the Disclosure Document match those in the SD-JWT
 
 ## Verification by the Verifier when Receiving SD-JWT and SD-JWT-R
 
@@ -909,7 +909,7 @@ allows for the release of individual members of the address claim separately.
 }
 ```
 
-The SVC for this SD-JWT is as follows:
+The Disclosure Document for this SD-JWT is as follows:
 
 {#example-simple_structured-svc_payload}
 ```json
@@ -1156,7 +1156,7 @@ This example illustrates how the artifacts defined in this specification can be
 represented using W3C Verifiable Credentials Data Model as defined in
 [@VC_DATA].
 
-SD-JWT is equivalent to an issuer-signed W3C Verifiable Credential (VC). SVC is sent alongside a VC.
+SD-JWT is equivalent to an issuer-signed W3C Verifiable Credential (VC). Disclosure Document is sent alongside a VC.
 
 SD-JWT-Release is equivalent to a holder-signed W3C Verifiable Presentation (VP).
 
@@ -1165,7 +1165,7 @@ SD-JWT-Release as a VP contains a `verifiableCredential` claim inside a `vp` cla
 Below is a non-normative example of an SD-JWT represented as a verifiable credential 
 encoded as JSON and signed as JWS compliant to [@VC_DATA].
 
-SVC sent alongside this SD-JWT as a JWT-VC is same as in Example 1.
+Disclosure Document sent alongside this SD-JWT as a JWT-VC is same as in Example 1.
 
 ```json
 {
@@ -1315,7 +1315,7 @@ Hiding just this claim, the following SD-JWT payload would result:
 }
 ```
 
-In the SVC it can be seen that the blinded claim's original name is `secret_club_membership_no`:
+In the Disclosure Document it can be seen that the blinded claim's original name is `secret_club_membership_no`:
 
 
 {#example-simple_structured_some_blinded-svc_payload}
@@ -1432,8 +1432,7 @@ The resulting SD-JWT payload:
 }
 ```
 
-The SVC:
-
+The Disclosure Document:
 
 {#example-simple_structured_all_blinded-svc_payload}
 ```json
