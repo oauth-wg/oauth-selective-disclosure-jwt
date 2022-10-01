@@ -159,7 +159,6 @@ sdjwt_at_holder.create_sd_jwt_release(
 sdjwt_at_verifier = SDJWT.from_combined_presentation(
     sdjwt_at_holder.combined_presentation
 )
-
 vc = sdjwt_at_verifier.verify(
     ISSUER_PUBLIC_KEY,
     settings.ISSUER,

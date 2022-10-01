@@ -41,7 +41,8 @@ def by_structure(
 
     See examples below!
     """
-    logger.debug(f"Walking in: {structure} using {obj} on {fn}")
+    logger.debug(f"Walking in: {obj} using {structure} on {fn}")
+    # was logger.debug(f"Walking in: {structure} using {obj} on {fn}")
     out = {}
     for key_in_obj, value_in_obj in obj.items():
         logger.debug(f"{key_in_obj}: {value_in_obj}")

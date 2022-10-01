@@ -89,7 +89,7 @@ class SDJWT:
         # Create the JWS payload
         self.sd_jwt_payload = {
             "iss": self._issuer,
-            "cnf": self._holder_key.export_public(as_dict=True),
+            "cnf": {"jwk": self._holder_key.export_public(as_dict=True)},
             "iat": self._iat,
             "exp": self._exp,
             HASH_ALG_KEY: self.HASH_ALG["name"],
@@ -352,8 +352,17 @@ class SDJWT:
         _alg = sign_alg or DEFAULT_SIGNING_ALG
         parsed_input_sd_jwt_release = JWS()
         parsed_input_sd_jwt_release.deserialize(sd_jwt_release)
+
         if holder_public_key and holder_public_key_payload:
-            pubkey = JWK.from_json(dumps(holder_public_key_payload))
+            holder_public_key_payload_jwk = holder_public_key_payload.get('jwk', None)
+            if not holder_public_key_payload_jwk:
+                raise ValueError(
+                    "The holder_public_key_payload is malformed. "
+                    "It doesn't contain the claim jwk: "
+                    f"{holder_public_key_payload}"
+                )
+            
+            pubkey = JWK.from_json(dumps(holder_public_key_payload_jwk))
             # TODO: adopt an OrderedDict here
             # Because of weird bug of failed != between two public keys
             if not holder_public_key == pubkey:
