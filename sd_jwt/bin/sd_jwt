@@ -134,6 +134,7 @@ sdjwt_at_issuer = SDJWT(
     ISSUER_KEY,
     HOLDER_KEY,
     example["claims_structure"],
+    example.get("blinded_claim_names", []),
     iat=_args.iat,
     exp=_args.exp,
 )

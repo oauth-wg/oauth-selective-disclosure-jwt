@@ -4,7 +4,7 @@ from base64 import urlsafe_b64decode, urlsafe_b64encode
 from hashlib import sha256
 from json import dumps, loads
 from secrets import compare_digest
-from typing import Dict, Optional, Union
+from typing import Dict, List, Optional, Tuple, Union
 
 from jwcrypto.jwk import JWK
 from jwcrypto.jws import JWS
@@ -22,8 +22,14 @@ class SDJWT:
     # TODO: adopt a dynamic module/package loader, defs could be as string -> "fn": "hashlib.sha256"
     HASH_ALG = {"name": "sha-256", "fn": sha256}
 
+    HIDDEN_CLAIM_NAME_PREFIX = ""
+
+    SD_KEY_SALT = "s"
+    SD_KEY_VALUE = "v"
+    SD_KEY_CLAIM_NAME = "n"
+
     # Issuer produces:
-    salts: Dict
+    salts_and_blinded_claim_names: Dict
     sd_jwt_payload: Dict
     sd_jwt: JWS
     serialized_sd_jwt: str
@@ -44,6 +50,7 @@ class SDJWT:
         issuer_key,
         holder_key,
         claims_structure: Optional[Dict] = None,
+        blinded_claim_names: Optional[List] = None,
         iat: Optional[int] = None,
         exp: Optional[int] = None,
         sign_alg=None,
@@ -53,22 +60,29 @@ class SDJWT:
         self._issuer_key = issuer_key
         self._holder_key = holder_key
         self._claims_structure = claims_structure or {}
+        self._blinded_claim_names = blinded_claim_names or []
         self._iat = iat or int(datetime.datetime.utcnow().timestamp())
         self._exp = exp or self._iat + (self.DEFAULT_EXP_MINS * 60)
         self._sign_alg = sign_alg or DEFAULT_SIGNING_ALG
 
-        self._create_salts()
+        self._create_salts_and_blinded_claim_names()
         self._assemble_sd_jwt_payload()
         self._create_signed_jwt()
         self._create_svc()
         self._create_combined()
 
-    def _create_salts(self):
-        # something like: {'sub': 'zyZQuxk2AUv5_Z_RAMxh9Q', 'given_name': 'EpCuoArhQK6MjmO6D-Bi6w' ...
-        self.salts = walk_by_structure(
+    def _create_salts_and_blinded_claim_names(self):
+        """
+        This function generates a structure that follows the claims structure, but for
+        each entry contains a tuple: the salt value plus a random string that can become
+        the blinded claim name.
+        """
+
+        # something like: {'sub': ('zyZQuxk2AUv5_Z_RAMxh9Q', 'EpCuoArhQK6MjmO6D-Bi6w'), 'given_name': ('EpCuoArhQK6MjmO6D-Bi6w', 'ArhQK6MjmO6D-Bi6wud62k'). ...
+        self.salts_and_blinded_claim_names = walk_by_structure(
             self._claims_structure,
             self._user_claims,
-            lambda _, __, ___=None: generate_salt(),
+            lambda key, __, ___=None: (key, (generate_salt(), generate_salt())),
         )
 
     def _assemble_sd_jwt_payload(self):
@@ -80,7 +94,9 @@ class SDJWT:
             "exp": self._exp,
             HASH_ALG_KEY: self.HASH_ALG["name"],
             SD_DIGESTS_KEY: walk_by_structure(
-                self.salts, self._user_claims, self._create_sd_claim_entry
+                self.salts_and_blinded_claim_names,
+                self._user_claims,
+                self._create_sd_claim_entry,
             ),
         }
 
@@ -92,20 +108,36 @@ class SDJWT:
             .strip("=")
         )
 
-    def _hash_claim(self, salt, value, return_raw=False):
-        raw = dumps([salt, value])
-        if return_raw:
-            return raw
-            # return [salt, value]
-        # Calculate the SHA 256 hash and output it base64 encoded
-        return self._hash_raw(raw.encode())
+    def _hash_claim(
+        self, key, value, salt_and_blinded_claim_name, return_raw=False
+    ) -> Tuple[str, str]:
+        salt, blinded_claim_name = salt_and_blinded_claim_name
+        if key in self._blinded_claim_names:
+            raw = dumps(
+                {
+                    self.SD_KEY_SALT: salt,
+                    self.SD_KEY_VALUE: value,
+                    self.SD_KEY_CLAIM_NAME: key,
+                }
+            )
+            output_key = self.HIDDEN_CLAIM_NAME_PREFIX + blinded_claim_name
+        else:
+            raw = dumps({self.SD_KEY_SALT: salt, self.SD_KEY_VALUE: value})
+            output_key = key
 
-    def _create_sd_claim_entry(self, key, value: str, salt: str) -> str:
+        if return_raw:
+            return (output_key, raw)
+        # Calculate the SHA 256 hash and output it base64 encoded
+        return (output_key, self._hash_raw(raw.encode()))
+
+    def _create_sd_claim_entry(
+        self, key, value: str, salt_and_blinded_claim_name: str
+    ) -> Tuple[str, str]:
         """
         returns the hashed and salted value string
         key arg is not used here, it's just for compliance to other calls
         """
-        return self._hash_claim(salt, value)
+        return self._hash_claim(key, value, salt_and_blinded_claim_name)
 
     def _create_signed_jwt(self):
         """
@@ -128,7 +160,9 @@ class SDJWT:
         # Create the SVC
         self.svc_payload = {
             SD_CLAIMS_KEY: walk_by_structure(
-                self.salts, self._user_claims, self._create_svc_entry
+                self.salts_and_blinded_claim_names,
+                self._user_claims,
+                self._create_svc_entry,
             ),
             # "cnf_private": issuer_key.export_private(as_dict=True),
         }
@@ -138,13 +172,17 @@ class SDJWT:
             .strip("=")
         )
 
-    def _create_svc_entry(self, key, value: str, salt: str) -> str:
+    def _create_svc_entry(
+        self, key, value: str, salt_and_blinded_claim_name: str
+    ) -> Tuple[str, str]:
         """
         returns a string representation of a list
         [hashed and salted value string, value string]
         key arg is not used here, it's just for compliances to other calls
         """
-        return self._hash_claim(salt, value, return_raw=True)
+        return self._hash_claim(
+            key, value, salt_and_blinded_claim_name, return_raw=True
+        )
 
     def _create_combined(self):
         self.combined_sd_jwt_svc = self.serialized_sd_jwt + "." + self.serialized_svc
@@ -178,8 +216,24 @@ class SDJWT:
     ):
         _alg = sign_alg or DEFAULT_SIGNING_ALG
 
+        def find_claim_by_blinded_name(structure, key):
+            if key in structure:
+                return key
+            for key_in_structure, value_in_structure in structure.items():
+                if not key_in_structure.startswith(self.HIDDEN_CLAIM_NAME_PREFIX):
+                    continue
+                if not isinstance(value_in_structure, str):
+                    continue
+                parsed = loads(value_in_structure)
+                if parsed.get(self.SD_KEY_CLAIM_NAME, None) == key:
+                    return key_in_structure
+            raise KeyError()
+
         sd_jwt_r_struct = walk_by_structure(
-            self._input_hash_raw_values, disclosed_claims, lambda _, __, raw: raw
+            self._input_hash_raw_values,
+            disclosed_claims,
+            lambda key, __, raw="???": (key, raw),
+            find_claim_by_blinded_name,
         )
 
         self.sd_jwt_release_payload = {
@@ -340,10 +394,8 @@ class SDJWT:
             )
 
         decoded = loads(released_value)
-        if not isinstance(decoded, list):
-            raise ValueError("Claim release value is not a list")
+        if not isinstance(decoded, dict):
+            raise ValueError("Claim release value is not a dictionary")
 
-        if len(decoded) != 2:
-            raise ValueError("Claim release value is not of length 2")
-
-        return decoded[1]
+        output_claim_name = decoded.get(self.SD_KEY_CLAIM_NAME, claim_name)
+        return (output_claim_name, decoded[self.SD_KEY_VALUE])

@@ -117,6 +117,10 @@ Holder binding
    control over the same private key during the issuance and presentation. SD-JWT signed by the issuer contains
    a public key or a reference to a public key that matches to the private key controlled by the holder.
 
+Claim name blinding
+:  Feature that enables to blind not only claim values, but also claim names of the claims 
+that are included in SD-JWT but are not disclosed to the verifier in the SD-JWT-Release.
+
 Issuer 
 :  An entity that creates SD-JWTs (2.1).
 
@@ -184,6 +188,8 @@ SD-CLAIMS = (
 )*
 ```
 
+The claim name (`CLAIM-NAME`) is an optional 
+
 `SD-CLAIMS` can also be nested deeper to capture more complex objects, as will be shown later.
 
 `SD-JWT` is sent from the issuer to the holder, together with the mapping of the plain-text claim values, the salt values, and potentially some other information. 
@@ -230,15 +236,35 @@ With holder binding, the `SD-JWT-RELEASE` is signed by the holder using its priv
 SD-JWT-RELEASE = SD-JWT-RELEASE-DOC | SIG(SD-JWT-RELEASE-DOC, HOLDER-PRIV-KEY)
 ```
 
+## Optional Claim Name Blinding
+
+If claim name blinding is used, `SD-CLAIMS` is created as follows:
+```
+SD-CLAIMS = (
+    CLAIM-NAME-PLACEHOLDER: HASH(SALT | CLAIM-VALUE | CLAIM-NAME)
+)*
+```
+
+`CLAIM-NAME-PLACEHOLDER` is a placeholder used instead of the original claim
+name, chosen such that it does not leak information about the claim name (e.g.,
+randomly).
+
+The contents of `SD-RELEASES` are modified as follows:
+```
+SD-RELEASES = (
+    CLAIM-NAME-PLACEHOLDER: (DISCLOSED-SALT, DISCLOSED-VALUE, DISCLOSED-CLAIM-NAME)
+)
+```
+Note that blinded and unblinded claim names can be mixed in `SD-CLAIMS` and accordingly in `SD-RELEASES`.
 
 ## Verifying an SD-JWT Release
 
 A verifier checks that 
 
- * for each claim in `SD-JWT-RELEASE`, the hash digest `HASH(DISCLOSED-SALT | DISCLOSED-VALUE)` 
- matches the one under the given claim name in `SD-JWT`.
- * if holder binding is used, the `SD-JWT-RELEASE` was signed by
- the private key belonging to `HOLDER-PUBLIC-KEY`.
+ * for each claim in `SD-JWT-RELEASE`, the hash digest over the disclosed values
+   matches the hash digest under the given claim name in `SD-JWT`,
+ * if holder binding is used, the `SD-JWT-RELEASE` was signed by the private key
+ belonging to `HOLDER-PUBLIC-KEY`.
 
 The detailed algorithm is described below.
 
@@ -268,11 +294,35 @@ SHOULD contain at least 128 bits of pseudorandom data, making it hard for an
 attacker to guess. The salt value MUST then be encoded as a string. It is
 RECOMMENDED to base64url-encode the salt value.
 
-The issuer MUST build the digests by hashing over a string that is formed by
-JSON-encoding an ordered array containing the salt and the claim value, e.g.:
-`["6qMQvRL5haj","Peter"]`. The digest value is then base64url-encoded. Note that
-the precise JSON encoding can vary, and therefore, the JSON encodings MUST be
-sent to the holder along with the SD-JWT, as described below. 
+The issuer MUST build the digests by hashing over a JSON literal according to
+[@!RFC8259] that is formed by
+JSON-encoding an object with the following contents:
+
+ * REQUIRED with the key `s`: the salt value,
+ * REQUIRED with the key `v`: the claim value (either a string or a more complex object, e.g., for the [@OIDC] `address` claim),
+ * OPTIONAL, with the key `n`: the claim name (if claim name blinding is to be used for this claim).
+
+The following is an example for a JSON literal without claim name blinding:
+
+```
+{"s": "6qMQvRL5haj", "v": "Peter"}
+```
+
+The following is an example for a JSON literal with claim name blinding:
+
+```
+{"s": "6qMQvRL5haj", "v": "Peter", "n": "given_name"}
+```
+
+IMPORTANT: JSON encoding according to [@!RFC8259] allows for white space
+characters and other variations in the encoded representation. To ensure that
+issuer and verifier produce the same hash digest, the issuer therefore sends the
+JSON literal to the holder along with the SD-JWT, as described below.
+
+The `sd_digests` claim contains an object where claim names are mapped to the
+respective digests. If a claim name is to be blinded, the digests MUST contain
+the `n` key as described above and the claim name in `sd_digests` MUST be
+replaced by a placeholder value that does not leak information about the claim's original name. The same placeholder value is to be used in the SVC and SD-JWT-R described below.
 
 
 #### Flat and Structured `sd_digests` objects
@@ -357,13 +407,13 @@ be disclosed in full.
   "exp": 1516247022,
   "sd_hash_alg": "sha-256",
   "sd_digests": {
-    "sub": "z4xgEco94diTaSruISPiE7o_wtmcOfnH_8R7X9Pa578",
-    "given_name": "PvU7cWjuHUq6w-i9XFpQZhjT-uprQL3GH3mKsAJl0e0",
-    "family_name": "H-Relr4cEBMlenyK1gvyx16QVpnt4MEclT5tP0aTLFU",
-    "email": "ET2A1JQLF85ZpBulh6UFstGrSfR4B3KM-bjQVllhxqY",
-    "phone_number": "SJnciB2DIRVA5cXBrdKoH6n45788mZyUn2rnv74uMVU",
-    "address": "0FldqLfGnERPPVDC17od9xb4w3iRJTEQbW_Yk9AmnDw",
-    "birthdate": "-L0kMgIbLXe3OEkKTUGwz_QKhjehDeofKGwoPrxLuo4"
+    "sub": "OMdwkk2HPuiInPypWUWMxot1Y2tStGsLuIcDMjKdXMU",
+    "given_name": "AfKKH4a0IZki8MFDythFaFS_Xqzn-wRvAMfiy_VjYpE",
+    "family_name": "eUmXmry32JiK_76xMasagkAQQsmSVdW57Ajk18riSF0",
+    "email": "-Rcr4fDyjwlM_itcMxoQZCE1QAEwyLJcibEpH114KiE",
+    "phone_number": "Jv2nw0C1wP5ASutYNAxrWEnaDRIpiF0eTUAkUOp8F6Y",
+    "address": "ZrjKs-RmEAVeAYSzSw6GPFrMpcgctCfaJ6t9qQhbfJ4",
+    "birthdate": "qXPRRPdpNaebP8jtbEpO-skF4n7v7ASTh8oLg0mkAdQ"
   }
 }
 ```
@@ -425,22 +475,23 @@ The SVC for Example 1 is as follows:
 ```json
 {
   "sd_release": {
-    "sub": "[\"2GLC42sKQveCfGfryNRN9w\", \"6c5c0a49-b589-431d-bae7-219122a9ec2c\"]",
-    "given_name": "[\"eluV5Og3gSNII8EYnsxA_A\", \"John\"]",
-    "family_name": "[\"6Ij7tM-a5iVPGboS5tmvVA\", \"Doe\"]",
-    "email": "[\"eI8ZWm9QnKPpNPeNenHdhQ\", \"johndoe@example.com\"]",
-    "phone_number": "[\"Qg_O64zqAxe412a108iroA\", \"+1-202-555-0101\"]",
-    "address": "[\"AJx-095VPrpTtN4QMOqROA\", {\"street_address\": \"123 Main St\", \"locality\": \"Anytown\", \"region\": \"Anystate\", \"country\": \"US\"}]",
-    "birthdate": "[\"Pc33JM2LchcU_lHggv_ufQ\", \"1940-01-01\"]"
+    "sub": "{\"s\": \"2GLC42sKQveCfGfryNRN9w\", \"v\": \"6c5c0a49-b589-431d-bae7-219122a9ec2c\"}",
+    "given_name": "{\"s\": \"6Ij7tM-a5iVPGboS5tmvVA\", \"v\": \"John\"}",
+    "family_name": "{\"s\": \"Qg_O64zqAxe412a108iroA\", \"v\": \"Doe\"}",
+    "email": "{\"s\": \"Pc33JM2LchcU_lHggv_ufQ\", \"v\": \"johndoe@example.com\"}",
+    "phone_number": "{\"s\": \"lklxF5jMYlGTPUovMNIvCA\", \"v\": \"+1-202-555-0101\"}",
+    "address": "{\"s\": \"5bPs1IquZNa0hkaFzzzZNw\", \"v\": {\"street_address\": \"123 Main St\", \"locality\": \"Anytown\", \"region\": \"Anystate\", \"country\": \"US\"}}",
+    "birthdate": "{\"s\": \"y1sVU5wdfJahVdgwPgS7RQ\", \"v\": \"1940-01-01\"}"
   }
 }
 ```
 
-Important: As described above, hash digests are calculated over the string formed by
-serializing a JSON array containing the salt and the claim value. This ensures
-that issuer and verifier use the same input to their hash functions and avoids
-issues with canonicalization of JSON values that would lead to different hash
-digests. The SVC therefore maps claim names to JSON-encoded arrays. 
+Important: As described above, hash digests are calculated over the JSON literal
+formed by serializing an object containing the salt, the claim value, and
+optionally the claim name. This ensures that issuer and verifier use the same
+input to their hash functions and avoids issues with canonicalization of JSON
+values that would lead to different hash digests. The SVC therefore maps claim
+names to JSON-encoded arrays. 
 
 ## Sending SD-JWT and SVC during Issuance
 
@@ -528,15 +579,15 @@ The following is a non-normative example of the contents of an SD-JWT-R for Exam
   "nonce": "XZOUco1u_gEPknxS78sWWg",
   "aud": "https://example.com/verifier",
   "sd_release": {
-    "given_name": "[\"eluV5Og3gSNII8EYnsxA_A\", \"John\"]",
-    "family_name": "[\"6Ij7tM-a5iVPGboS5tmvVA\", \"Doe\"]",
-    "address": "[\"AJx-095VPrpTtN4QMOqROA\", {\"street_address\": \"123 Main St\", \"locality\": \"Anytown\", \"region\": \"Anystate\", \"country\": \"US\"}]"
+    "given_name": "{\"s\": \"6Ij7tM-a5iVPGboS5tmvVA\", \"v\": \"John\"}",
+    "family_name": "{\"s\": \"Qg_O64zqAxe412a108iroA\", \"v\": \"Doe\"}",
+    "address": "{\"s\": \"5bPs1IquZNa0hkaFzzzZNw\", \"v\": {\"street_address\": \"123 Main St\", \"locality\": \"Anytown\", \"region\": \"Anystate\", \"country\": \"US\"}}"
   }
 }
 ```
 
-For each claim, an array of the salt and the claim value is contained in the
-`sd_release` object. 
+For each claim, a JSON literal that decodes to an object with the and the claim
+value (plus optionally the claim name) is contained in the `sd_release` object. 
 
 Again, the SD-JWT-R follows the same structure as the `sd_digests` in the SD-JWT. 
 
@@ -548,17 +599,17 @@ Serialization:
 eyJhbGciOiAiUlMyNTYiLCAia2lkIjogIkxkeVRYd0F5ZnJpcjRfVjZORzFSYzEwVThKZE
 xZVHJFQktKaF9oNWlfclUifQ.eyJub25jZSI6ICJYWk9VY28xdV9nRVBrbnhTNzhzV1dnI
 iwgImF1ZCI6ICJodHRwczovL2V4YW1wbGUuY29tL3ZlcmlmaWVyIiwgInNkX3JlbGVhc2U
-iOiB7ImdpdmVuX25hbWUiOiAiW1wiZWx1VjVPZzNnU05JSThFWW5zeEFfQVwiLCBcIkpva
-G5cIl0iLCAiZmFtaWx5X25hbWUiOiAiW1wiNklqN3RNLWE1aVZQR2JvUzV0bXZWQVwiLCB
-cIkRvZVwiXSIsICJhZGRyZXNzIjogIltcIkFKeC0wOTVWUHJwVHRONFFNT3FST0FcIiwge
-1wic3RyZWV0X2FkZHJlc3NcIjogXCIxMjMgTWFpbiBTdFwiLCBcImxvY2FsaXR5XCI6IFw
-iQW55dG93blwiLCBcInJlZ2lvblwiOiBcIkFueXN0YXRlXCIsIFwiY291bnRyeVwiOiBcI
-lVTXCJ9XSJ9fQ.j5jtArW1QDK1BNM13sJbQaE00GsAhhiPRYi6oK-iJRtLWE6DAgcWxDir
-TvxTnuo7Mbb6gSqGTmdEEtmscWxweFfGQoddObPTDiapjWiR1bUMMqPDKNNkRe0CBkU-pW
-ieYWN-fQxlRa4BKUqs18jcvGtTGA8Ye-i6t2xLROeXf2U_Seko8b7MQWIFHdbc0LvEFt_-
-JAcqeshH5wjVkwhHofVuZq1vGLlINKBveKA2dmn6wuEzi6XRceTwFrG_hTECagfobdO-bY
-MF3FSiCQM2KxC_6_aLApYo0aH3zjBv9rm0qNmnL_JGN5FIu6YqwhvPzfdsfkjMd68o8LTW
-d7F6kQ
+iOiB7ImdpdmVuX25hbWUiOiAie1wic1wiOiBcIjZJajd0TS1hNWlWUEdib1M1dG12VkFcI
+iwgXCJ2XCI6IFwiSm9oblwifSIsICJmYW1pbHlfbmFtZSI6ICJ7XCJzXCI6IFwiUWdfTzY
+0enFBeGU0MTJhMTA4aXJvQVwiLCBcInZcIjogXCJEb2VcIn0iLCAiYWRkcmVzcyI6ICJ7X
+CJzXCI6IFwiNWJQczFJcXVaTmEwaGthRnp6elpOd1wiLCBcInZcIjoge1wic3RyZWV0X2F
+kZHJlc3NcIjogXCIxMjMgTWFpbiBTdFwiLCBcImxvY2FsaXR5XCI6IFwiQW55dG93blwiL
+CBcInJlZ2lvblwiOiBcIkFueXN0YXRlXCIsIFwiY291bnRyeVwiOiBcIlVTXCJ9fSJ9fQ.
+fw4xRl7m1mDPCZvCTn3GOr2PgBZ--fTKfy7s-GuEifNvzW5KsJaBBFvzdZztm25XGhk29u
+w-XwEw00r0hyxXLBvWfA0XbDK3JBmdpOSW1bEyNBdSHPJoeq9Xyts2JN40vJzU2UxNaLKD
+aEheWf3F_E52yhHxvMLNdvZJ9FksJdSMK6ZCyGfRJadPN2GhNltqph52sWiFKUyUk_4Rtw
+XmT_lF49tWOMZqtG-akN9wrBoMsleM0soA0BXIK10rG5cKZoSNr-u2luzbdZx3CFdAenaq
+ScIkluPPcrXBZGYyX2zYUbGQs2RRXnBmox_yl6CvLbb0qTTYhDnDEo_MH-ZtWw
 ```
 
 (Line breaks for presentation only.)
@@ -646,14 +697,15 @@ trusting/using any of the contents of an SD-JWT:
        1. Ensure that the claim is present as well in `sd_release` in the SD-JWT.
           If `sd_release` is structured, the claim MUST be present at the same
           place within the structure.
-       2. Compute the base64url-encoded hash of a claim revealed from the Holder
-          using the claim value and the salt included in the SD-JWT-R and 
-          the `sd_hash_alg` in SD-JWT.
-       3. Compare the hash digests computed in the previous step with the one of the same claim in the SD-JWT. 
-          Accept the claim only when the two hash digests match.
+       2. Compute the base64url-encoded hash digest of the JSON literal released
+          by the Holder using the `sd_hash_alg` in SD-JWT.
+       3. Compare the hash digests computed in the previous step with the one of
+          the same claim in the SD-JWT. Accept the claim only when the two hash
+          digests match.
        4. Ensure that the claim value in the SD-JWT-R is a JSON-encoded
-          array of exactly two values.
-       5. Store the second of the two values. 
+          object containing at least the keys `s` and `v`, and optionally `n`.
+       5. Store the value of the key `v` as the claim value. If `n` is contained
+          in the object, use the value of the key `n` as the claim name.
     3. Once all necessary claims have been verified, their values can be
        validated and used according to the requirements of the application. It
        MUST be ensured that all claims required for the application have been
@@ -710,13 +762,36 @@ revealed fundamental weaknesses and they MUST NOT be used.
 ## Holder Binding {#holder_binding_security}
 TBD
 
+## Blinding Claim Names
+
+Issuers that chose to blind claim names MUST ensure not to inadvertently leak
+information about the blinded claim names to verifiers. In particular, issuers
+MUST choose placeholder claim names accordingly. It is RECOMMENDED to use
+cryptographically random values with at least 128 bits of entropy as placeholder
+claim names.
+
+The order of elements in JSON-encoded objects is not relevant to applications,
+but the order may reveal information about the blinded claim name to the
+verifier. It is therefore RECOMMENDED to ensure that the order is shuffled or
+otherwise hidden (e.g., alphabetically ordered using the blinded claim names).
+
 # Privacy Considerations {#privacy_considerations}
 
 ## Claim Names
 
-Claim names are not hashed in the SD-JWT and are used as keys in a key-value pair, where the value is the hash.
-This is because SD-JWT already reveals information about the issuer and the schema,
-and revealing the claim names does not provide any additional information.
+By default, claim names are not blinded in an SD-JWT. In this case, even when
+the claim's value is not known to a verifier, the claim name can disclose some
+information to the verifier. For example, if the SD-JWT contains a claim named
+`super_secret_club_membership_no`, the verifier might assume that the end-user
+is a member of the Super Secret Club. 
+
+Blinding claim names can help to avoid this potential privacy issue. In many
+cases, however, verifiers can already deduce this or similar information just
+from the identification of the issuer and the schema used for the SD-JWT.
+Blinding claim names might not provide additional privacy if this is the case.
+
+Furthermore, re-using the same value to blind a claim name may limit the privacy benefits.
+
 
 ## Unlinkability 
 
@@ -818,18 +893,18 @@ allows for the release of individual members of the address claim separately.
   "exp": 1516247022,
   "sd_hash_alg": "sha-256",
   "sd_digests": {
-    "sub": "z4xgEco94diTaSruISPiE7o_wtmcOfnH_8R7X9Pa578",
-    "given_name": "PvU7cWjuHUq6w-i9XFpQZhjT-uprQL3GH3mKsAJl0e0",
-    "family_name": "H-Relr4cEBMlenyK1gvyx16QVpnt4MEclT5tP0aTLFU",
-    "email": "ET2A1JQLF85ZpBulh6UFstGrSfR4B3KM-bjQVllhxqY",
-    "phone_number": "SJnciB2DIRVA5cXBrdKoH6n45788mZyUn2rnv74uMVU",
+    "sub": "OMdwkk2HPuiInPypWUWMxot1Y2tStGsLuIcDMjKdXMU",
+    "given_name": "AfKKH4a0IZki8MFDythFaFS_Xqzn-wRvAMfiy_VjYpE",
+    "family_name": "eUmXmry32JiK_76xMasagkAQQsmSVdW57Ajk18riSF0",
+    "email": "-Rcr4fDyjwlM_itcMxoQZCE1QAEwyLJcibEpH114KiE",
+    "phone_number": "Jv2nw0C1wP5ASutYNAxrWEnaDRIpiF0eTUAkUOp8F6Y",
     "address": {
-      "street_address": "O7_Isd6CmZqcSobPVpMgmJwB41hPUHHG8jg5LJ8YzfY",
-      "locality": "w-zTF6ljkQLTvVyp_JNyD3t5Waj-B2vb0AXH1q8OsjI",
-      "region": "nTvoKpGA6YQwEZipVBIM4WVH9KWEnwiqsRjEhrxhQz4",
-      "country": "u-O1yDQqDTTqOgUBSjWilgkMLzg_QOTELMfZrRT5e6k"
+      "street_address": "n25N6kth9N0CwjZXHeth1gfovg8_I8fGyzeY0qeLp0k",
+      "locality": "gJVL_TKoT_SbA4_sv0klLTkg-YEGzVUkC-6egxegsz0",
+      "region": "zXbstGPuPq2cPJfyD_-HlmqVyFMf03xH-FbeotXxdbo",
+      "country": "pN-5CZ5hbumsPvLKUADm4Ott6gu0E4xj09s4Z51yb8U"
     },
-    "birthdate": "TipyoxD43PZJF8ZEmKPrbxMElpFX_M7aBLkUpC-W53o"
+    "birthdate": "UxsvgkUgPnawP6wY4hmxJ_jqiNNKni62zrX7hQOUsys"
   }
 }
 ```
@@ -840,18 +915,18 @@ The SVC for this SD-JWT is as follows:
 ```json
 {
   "sd_release": {
-    "sub": "[\"2GLC42sKQveCfGfryNRN9w\", \"6c5c0a49-b589-431d-bae7-219122a9ec2c\"]",
-    "given_name": "[\"eluV5Og3gSNII8EYnsxA_A\", \"John\"]",
-    "family_name": "[\"6Ij7tM-a5iVPGboS5tmvVA\", \"Doe\"]",
-    "email": "[\"eI8ZWm9QnKPpNPeNenHdhQ\", \"johndoe@example.com\"]",
-    "phone_number": "[\"Qg_O64zqAxe412a108iroA\", \"+1-202-555-0101\"]",
+    "sub": "{\"s\": \"2GLC42sKQveCfGfryNRN9w\", \"v\": \"6c5c0a49-b589-431d-bae7-219122a9ec2c\"}",
+    "given_name": "{\"s\": \"6Ij7tM-a5iVPGboS5tmvVA\", \"v\": \"John\"}",
+    "family_name": "{\"s\": \"Qg_O64zqAxe412a108iroA\", \"v\": \"Doe\"}",
+    "email": "{\"s\": \"Pc33JM2LchcU_lHggv_ufQ\", \"v\": \"johndoe@example.com\"}",
+    "phone_number": "{\"s\": \"lklxF5jMYlGTPUovMNIvCA\", \"v\": \"+1-202-555-0101\"}",
     "address": {
-      "street_address": "[\"AJx-095VPrpTtN4QMOqROA\", \"123 Main St\"]",
-      "locality": "[\"Pc33JM2LchcU_lHggv_ufQ\", \"Anytown\"]",
-      "region": "[\"G02NSrQfjFXQ7Io09syajA\", \"Anystate\"]",
-      "country": "[\"lklxF5jMYlGTPUovMNIvCA\", \"US\"]"
+      "street_address": "{\"s\": \"5bPs1IquZNa0hkaFzzzZNw\", \"v\": \"123 Main St\"}",
+      "locality": "{\"s\": \"y1sVU5wdfJahVdgwPgS7RQ\", \"v\": \"Anytown\"}",
+      "region": "{\"s\": \"C9GSoujviJquEgYfojCb1A\", \"v\": \"Anystate\"}",
+      "country": "{\"s\": \"H3o1uswP760Fi2yeGdVCEQ\", \"v\": \"US\"}"
     },
-    "birthdate": "[\"nPuoQnkRFq3BIeAm7AnXFA\", \"1940-01-01\"]"
+    "birthdate": "{\"s\": \"M0Jb57t41ubrkSuyrDT3xA\", \"v\": \"1940-01-01\"}"
   }
 }
 ```
@@ -865,12 +940,12 @@ the `address` property:
   "nonce": "XZOUco1u_gEPknxS78sWWg",
   "aud": "https://example.com/verifier",
   "sd_release": {
-    "given_name": "[\"eluV5Og3gSNII8EYnsxA_A\", \"John\"]",
-    "family_name": "[\"6Ij7tM-a5iVPGboS5tmvVA\", \"Doe\"]",
-    "birthdate": "[\"nPuoQnkRFq3BIeAm7AnXFA\", \"1940-01-01\"]",
+    "given_name": "{\"s\": \"6Ij7tM-a5iVPGboS5tmvVA\", \"v\": \"John\"}",
+    "family_name": "{\"s\": \"Qg_O64zqAxe412a108iroA\", \"v\": \"Doe\"}",
+    "birthdate": "{\"s\": \"M0Jb57t41ubrkSuyrDT3xA\", \"v\": \"1940-01-01\"}",
     "address": {
-      "region": "[\"G02NSrQfjFXQ7Io09syajA\", \"Anystate\"]",
-      "country": "[\"lklxF5jMYlGTPUovMNIvCA\", \"US\"]"
+      "region": "{\"s\": \"C9GSoujviJquEgYfojCb1A\", \"v\": \"Anystate\"}",
+      "country": "{\"s\": \"H3o1uswP760Fi2yeGdVCEQ\", \"v\": \"US\"}"
     }
   }
 }
@@ -952,42 +1027,42 @@ The following shows the resulting SD-JWT payload:
   "sd_digests": {
     "verified_claims": {
       "verification": {
-        "trust_framework": "w1mP4oPc_J9thBex0TaQi1vgxFmruQJxZYLFnkNFMaI",
-        "time": "Pu3i0CWrPVLJW-LT30yF1bFBPP15B6-uKk3PnGDflv8",
-        "verification_process": "8HqIXRmczsdYOZzGcLqI5-l9xN5QbK2XDtXmdfH7z-4",
+        "trust_framework": "T7ivxsfuy-nAuECeh0utPEX8cSlc7QflJDE0RqtWDMU",
+        "time": "_ecCQoXSR8t9esur66ZwWwC6u4xLuVELjmwFgpRZqcQ",
+        "verification_process": "BolwKKvU8N7uUhjN2aGH2T54wjXpkcOz5sC9PkIP4s4",
         "evidence": [
           {
-            "type": "TnLuqGGQm6jfeOoa5uX1diKANUPuh-zHrpBFdX9MR-g",
-            "method": "SagmakoSu-X-XUPIC3EgdrEEwIWxRWXX4-i68X9TyEo",
-            "time": "ld2c5oYDRtQcfU6PzogPkx_95WYqhqIJNVRMnfcsicY",
+            "type": "7jBlUZkZn1Gfj9mybqlJGzTb2z8KcNNHU0IV4B8MxOM",
+            "method": "BRQgcT09gdBqO-MLTka8d6dlCshZCUNpFgsZoet5I-o",
+            "time": "-PVLNSmbkCHLp8S7i077YnHZV0yE8gyKWLpWV2o8FJE",
             "document": {
-              "type": "ufWjDaAa54MnHeji2ZUUHDdnpZ9zx6CUG6uR28VMtsQ",
+              "type": "vzDHD-6hQqZ5lSw_7acK1lErxSh3E6dO0zlUYM2hDvw",
               "issuer": {
-                "name": "a4GMucU7Zb060r0Svd7huY6Qho1bIf3v1U5BvPR8q6Y",
-                "country": "135k9M0m2SCnYRuOfHuYScYVS2q3eeY7IItgyRsaBT8"
+                "name": "us9T9ufVdSmytSmjrtdN_TUI0ai3_JNM3q-0qx0CXk4",
+                "country": "uItKtPRZQBB9v5THHOdi02ALjD0MH0U6jjHDLe91NnY"
               },
-              "number": "cUvOxLUp8RV7TTVliEiu-TQIel-LsE8E-XfUgfqk5gk",
-              "date_of_issuance": "NIs8olJnJOv4J1qIEBKuTs2sEFs4fgGJhNqM6xdQt7E",
-              "date_of_expiry": "HTR37vLtANT6MWk-9dBqekFpCvaTG7zNf1ze56rnV64"
+              "number": "QNNXwo3siOWdqNivKBnFsD4X8gZxVIgu3tv6dfpZhUc",
+              "date_of_issuance": "AYWQphnOlFFN9oSVvtBr_iYCKYlucTi3lsMrXebebgc",
+              "date_of_expiry": "JIk-APYHW3qy60rvGyFswDCTMfAbBXZyyrZEn8NsBhU"
             }
           }
         ]
       },
       "claims": {
-        "given_name": "NB9XH_yJKqKOhXDmXkZKpMCkRbOmOTd8bqJFYDJYQnQ",
-        "family_name": "hAUbJ66ZYL9VJLbjsDpmSs2e9Ff_Ohim_WR4bwZyvoQ",
-        "birthdate": "6XOR4k56BgWk5tnNismbmEHvoGX7RRfy6Z8HENl96cU",
+        "given_name": "hZtT6FZBzxAeByDUkFJTeqTCpTd2cQKx6MDPkGvVCRE",
+        "family_name": "5yLYGVxPSfXynhcopbIcrFe0_sMGxv_-6THZAu4eWnU",
+        "birthdate": "aB3eabkYkRF2DJiFyYtkcC12VECREaqR8UofmXyHhcU",
         "place_of_birth": {
-          "country": "CLTlhuy13WWc3_ISon1kEypFwvCmfhLSpGUMCyAUg68",
-          "locality": "AQoX8ixGpz-ipweEGlC-2umqwyQdhjIeiUB_TKWcE2E"
+          "country": "m7zAMJASE0TJkMRHhCfC8QEXAZhS_8DGdLqOsm8Zp7k",
+          "locality": "iLkBIeq-3PD7pxeMz99Of12IIH7WqXFrgHxvdCJz5Sk"
         },
-        "nationalities": "nfoc__QKlMUHodmxwlY-Kp-6ewgX3CdK7Ia0RJHIXVo",
-        "address": "ngnO4uQeOktM7YdFD8x82doS7WJnlZnq-rQE_RfuBSI"
+        "nationalities": "lQjcMf0lXA-IPW5aQHEX2Ln-Xz5ZE8oG3RY7ZVM4sTw",
+        "address": "1H0qniEo7vEP_SLiVOEx5F5oiPS-IEoCW_L9wj1IYWA"
       }
     },
-    "birth_middle_name": "FeFSwd9drypEPtWVgIZ42N9j_yostt1Ds5PBpxT3Rng",
-    "salutation": "57CMhvASQMNuzuQ0a_B1_VX5XdH73TcuPxyWGiorj5g",
-    "msisdn": "leKbB0ro6q3jrVraCqt443uaGZVZisD3iGrKuKE2mqM"
+    "birth_middle_name": "KpRjGCm3uykvCGFIDrVJ7iTMQhWakBmCItHbAa6vnZE",
+    "salutation": "IoY5e03e65CUrnaMcRDmPCm0RWPEFE4mVkoCsK86agA",
+    "msisdn": "XupJick4P8bxaz20kx_VOwbGU1cgslhAUG6IE-tDjms"
   }
 }
 ```
@@ -1054,20 +1129,20 @@ A SD-JWT-R for some of the claims:
   "sd_release": {
     "verified_claims": {
       "verification": {
-        "trust_framework": "[\"2GLC42sKQveCfGfryNRN9w\", \"de_aml\"]",
-        "time": "[\"eluV5Og3gSNII8EYnsxA_A\", \"2012-04-23T18:25Z\"]",
+        "trust_framework": "{\"s\": \"2GLC42sKQveCfGfryNRN9w\", \"v\": \"de_aml\"}",
+        "time": "{\"s\": \"6Ij7tM-a5iVPGboS5tmvVA\", \"v\": \"2012-04-23T18:25Z\"}",
         "evidence": [
           {
-            "type": "[\"eI8ZWm9QnKPpNPeNenHdhQ\", \"document\"]"
+            "type": "{\"s\": \"Pc33JM2LchcU_lHggv_ufQ\", \"v\": \"document\"}"
           }
         ]
       },
       "claims": {
-        "given_name": "[\"y1sVU5wdfJahVdgwPgS7RQ\", \"Max\"]",
-        "family_name": "[\"HbQ4X8srVW3QDxnIJdqyOA\", \"Meier\"]",
-        "birthdate": "[\"C9GSoujviJquEgYfojCb1A\", \"1956-01-28\"]",
+        "given_name": "{\"s\": \"4KyR32oIZt-zkWvFqbULKg\", \"v\": \"Max\"}",
+        "family_name": "{\"s\": \"flNP1ncMz9Lg-c9qMIz_9g\", \"v\": \"Meier\"}",
+        "birthdate": "{\"s\": \"t8EA-tKsh5wZMB6bpjLfTQ\", \"v\": \"1956-01-28\"}",
         "place_of_birth": {
-          "country": "[\"kx5kF17V-x0JmwUx9vgvtw\", \"DE\"]"
+          "country": "{\"s\": \"yh3cQSKnhdGmpVgd3ydH2Q\", \"v\": \"DE\"}"
         }
       }
     }
@@ -1180,6 +1255,244 @@ encoded as JSON and signed as a JWS compliant to [@VC_DATA].
   }
 }
 ```
+
+# Blinding Claim Names
+
+## Example 5: Some Blinded Claims
+
+The following shows the user information used in this example, included a claim named `secret_club_membership_no`:
+
+{#example-simple_structured_some_blinded-user_claims}
+```json
+{
+  "sub": "6c5c0a49-b589-431d-bae7-219122a9ec2c",
+  "given_name": "John",
+  "family_name": "Doe",
+  "email": "johndoe@example.com",
+  "phone_number": "+1-202-555-0101",
+  "secret_club_membership_no": "23",
+  "other_secret_club_membership_no": "42",
+  "address": {
+    "street_address": "123 Main St",
+    "locality": "Anytown",
+    "region": "Anystate",
+    "country": "US"
+  },
+  "birthdate": "1940-01-01"
+}
+```
+
+Hiding just this claim, the following SD-JWT payload would result:
+
+{#example-simple_structured_some_blinded-sd_jwt_payload}
+```json
+{
+  "iss": "https://example.com/issuer",
+  "sub_jwk": {
+    "kty": "RSA",
+    "n": "pm4bOHBg-oYhAyPWzR56AWX3rUIXp11_ICDkGgS6W3ZWLts-hzwI3x65659kg4hVo9dbGoCJE3ZGF_eaetE30UhBUEgpGwrDrQiJ9zqprmcFfr3qvvkGjtth8Zgl1eM2bJcOwE7PCBHWTKWYs152R7g6Jg2OVph-a8rq-q79MhKG5QoW_mTz10QT_6H4c7PjWG1fjh8hpWNnbP_pv6d1zSwZfc5fl6yVRL0DV0V3lGHKe2Wqf_eNGjBrBLVklDTk8-stX_MWLcR-EGmXAOv0UBWitS_dXJKJu-vXJyw14nHSGuxTIK2hx1pttMft9CsvqimXKeDTU14qQL1eE7ihcw",
+    "e": "AQAB"
+  },
+  "iat": 1516239022,
+  "exp": 1516247022,
+  "hash_alg": "sha-256",
+  "sd_digests": {
+    "sub": "OMdwkk2HPuiInPypWUWMxot1Y2tStGsLuIcDMjKdXMU",
+    "given_name": "AfKKH4a0IZki8MFDythFaFS_Xqzn-wRvAMfiy_VjYpE",
+    "family_name": "eUmXmry32JiK_76xMasagkAQQsmSVdW57Ajk18riSF0",
+    "email": "-Rcr4fDyjwlM_itcMxoQZCE1QAEwyLJcibEpH114KiE",
+    "phone_number": "Jv2nw0C1wP5ASutYNAxrWEnaDRIpiF0eTUAkUOp8F6Y",
+    "5a2W0_NrlEZzfqmk_7Pq-w": "gc8VzGTImYRXzP6j7q5RomXt2C_wtsOJ3hAHJdTuEIY",
+    "other_secret_club_membership_no": "IirAwgN-MubteYvJ4fmq04p9PnpRTf7hqg0dzSWRboA",
+    "address": {
+      "street_address": "o_yJIdfhKuKVzOF7i1EuakzC5ghd99CX8_nitm-DsRM",
+      "locality": "ogNqsvRqK0-ZPZc9C3Z4_6APvywm-lrm0oF2gcVtl_4",
+      "region": "8kFihRLSkEheK0zbEsQ3zKXt8csE6OXJE_jv3032BbU",
+      "country": "11IMcoA18LrFSpbysx-uqe7N3I3-QZKwCJqYeQuOUY4"
+    },
+    "birthdate": "PNtcyxm0Q5PyiBuG4f6eAbK6h4tF2FffwG3xqknZ_5A"
+  }
+}
+```
+
+In the SVC it can be seen that the blinded claim's original name is `secret_club_membership_no`:
+
+
+{#example-simple_structured_some_blinded-svc_payload}
+```json
+{
+  "sd_release": {
+    "sub": "{\"s\": \"2GLC42sKQveCfGfryNRN9w\", \"v\": \"6c5c0a49-b589-431d-bae7-219122a9ec2c\"}",
+    "given_name": "{\"s\": \"6Ij7tM-a5iVPGboS5tmvVA\", \"v\": \"John\"}",
+    "family_name": "{\"s\": \"Qg_O64zqAxe412a108iroA\", \"v\": \"Doe\"}",
+    "email": "{\"s\": \"Pc33JM2LchcU_lHggv_ufQ\", \"v\": \"johndoe@example.com\"}",
+    "phone_number": "{\"s\": \"lklxF5jMYlGTPUovMNIvCA\", \"v\": \"+1-202-555-0101\"}",
+    "5a2W0_NrlEZzfqmk_7Pq-w": "{\"s\": \"5bPs1IquZNa0hkaFzzzZNw\", \"v\": \"23\", \"n\": \"secret_club_membership_no\"}",
+    "other_secret_club_membership_no": "{\"s\": \"y1sVU5wdfJahVdgwPgS7RQ\", \"v\": \"42\"}",
+    "address": {
+      "street_address": "{\"s\": \"C9GSoujviJquEgYfojCb1A\", \"v\": \"123 Main St\"}",
+      "locality": "{\"s\": \"H3o1uswP760Fi2yeGdVCEQ\", \"v\": \"Anytown\"}",
+      "region": "{\"s\": \"M0Jb57t41ubrkSuyrDT3xA\", \"v\": \"Anystate\"}",
+      "country": "{\"s\": \"eK5o5pHfgupPpltj1qhAJw\", \"v\": \"US\"}"
+    },
+    "birthdate": "{\"s\": \"WpxJrFuX8uSi2p4ht09jvw\", \"v\": \"1940-01-01\"}"
+  }
+}
+```
+
+The verifier would learn this information via the SD-JWT-R:
+
+{#example-simple_structured_some_blinded-sd_jwt_release_payload}
+```json
+{
+  "nonce": "XZOUco1u_gEPknxS78sWWg",
+  "aud": "https://example.com/verifier",
+  "sd_release": {
+    "given_name": "{\"s\": \"6Ij7tM-a5iVPGboS5tmvVA\", \"v\": \"John\"}",
+    "family_name": "{\"s\": \"Qg_O64zqAxe412a108iroA\", \"v\": \"Doe\"}",
+    "birthdate": "{\"s\": \"WpxJrFuX8uSi2p4ht09jvw\", \"v\": \"1940-01-01\"}",
+    "address": {
+      "region": "{\"s\": \"M0Jb57t41ubrkSuyrDT3xA\", \"v\": \"Anystate\"}",
+      "country": "{\"s\": \"eK5o5pHfgupPpltj1qhAJw\", \"v\": \"US\"}"
+    },
+    "5a2W0_NrlEZzfqmk_7Pq-w": "{\"s\": \"5bPs1IquZNa0hkaFzzzZNw\", \"v\": \"23\", \"n\": \"secret_club_membership_no\"}"
+  }
+}
+```
+
+The verifier would decode the data as follows:
+
+
+{#example-simple_structured_some_blinded-verified_contents}
+```json
+{
+  "given_name": "John",
+  "family_name": "Doe",
+  "birthdate": "1940-01-01",
+  "address": {
+    "region": "Anystate",
+    "country": "US"
+  },
+  "secret_club_membership_no": "23"
+}
+```
+## Example 6: All Claim Names Blinded
+
+In this example, all claim names are blinded. The following user data is used:
+
+{#example-simple_structured_all_blinded-user_claims}
+```json
+{
+  "sub": "6c5c0a49-b589-431d-bae7-219122a9ec2c",
+  "given_name": "John",
+  "family_name": "Doe",
+  "email": "johndoe@example.com",
+  "phone_number": "+1-202-555-0101",
+  "secret_club_membership_no": "23",
+  "address": {
+    "street_address": "123 Main St",
+    "locality": "Anytown",
+    "region": "Anystate",
+    "country": "US"
+  },
+  "birthdate": "1940-01-01"
+}
+```
+
+
+The resulting SD-JWT payload:
+
+{#example-simple_structured_all_blinded-sd_jwt_payload}
+```json
+{
+  "iss": "https://example.com/issuer",
+  "sub_jwk": {
+    "kty": "RSA",
+    "n": "pm4bOHBg-oYhAyPWzR56AWX3rUIXp11_ICDkGgS6W3ZWLts-hzwI3x65659kg4hVo9dbGoCJE3ZGF_eaetE30UhBUEgpGwrDrQiJ9zqprmcFfr3qvvkGjtth8Zgl1eM2bJcOwE7PCBHWTKWYs152R7g6Jg2OVph-a8rq-q79MhKG5QoW_mTz10QT_6H4c7PjWG1fjh8hpWNnbP_pv6d1zSwZfc5fl6yVRL0DV0V3lGHKe2Wqf_eNGjBrBLVklDTk8-stX_MWLcR-EGmXAOv0UBWitS_dXJKJu-vXJyw14nHSGuxTIK2hx1pttMft9CsvqimXKeDTU14qQL1eE7ihcw",
+    "e": "AQAB"
+  },
+  "iat": 1516239022,
+  "exp": 1516247022,
+  "hash_alg": "sha-256",
+  "sd_digests": {
+    "eluV5Og3gSNII8EYnsxA_A": "bvPLqohL5ROmk2UsuNffH8C1wx9o-ipm-G4SkUwrpAE",
+    "eI8ZWm9QnKPpNPeNenHdhQ": "pCtjs0hC2Klhsnpe7BIqnGAsXlyXXC-lAEgX6isoYVM",
+    "AJx-095VPrpTtN4QMOqROA": "HS1Ht-bTrXsSTw9JdcHIbTFDkEI_IY52_cmzUgxWZ0k",
+    "G02NSrQfjFXQ7Io09syajA": "M2YQ_j8OPPBK3ZLhPPP6_AdSa2-rug2urYjgk_ML_QM",
+    "nPuoQnkRFq3BIeAm7AnXFA": "-Brzrp2cs-8nLs7rQI89YJ76s3PrbVe3n_5hlYCy1cE",
+    "5a2W0_NrlEZzfqmk_7Pq-w": "gc8VzGTImYRXzP6j7q5RomXt2C_wtsOJ3hAHJdTuEIY",
+    "address": {
+      "HbQ4X8srVW3QDxnIJdqyOA": "39o5dKobVi8c0dLpg4sjd7zW18UONRra0ht9mgu4hec",
+      "kx5kF17V-x0JmwUx9vgvtw": "wqueD5ABJ3bTyGSckOMpzI7YUvcCO2l-40vi6JMYsYY",
+      "OBKlTVlvLg-AdwqYGbP8ZA": "S11dsdFN97YtrA2o3yZ0eBbf1zn-izejORU-fyMtynI",
+      "DsmtKNgpV4dAHpjrcaosAw": "-0XEQHSNzMu244QaOpLmPD3JkdZN8SrqbEQ4VDufu9A"
+    },
+    "j7ADdb0UVb0Li0ciPcP0ew": "X_v1hrkQIH_0LBM8TncMMTBzYN9UJc8FmJRda7yfY8g"
+  }
+}
+```
+
+The SVC:
+
+
+{#example-simple_structured_all_blinded-svc_payload}
+```json
+{
+  "sd_release": {
+    "eluV5Og3gSNII8EYnsxA_A": "{\"s\": \"2GLC42sKQveCfGfryNRN9w\", \"v\": \"6c5c0a49-b589-431d-bae7-219122a9ec2c\", \"n\": \"sub\"}",
+    "eI8ZWm9QnKPpNPeNenHdhQ": "{\"s\": \"6Ij7tM-a5iVPGboS5tmvVA\", \"v\": \"John\", \"n\": \"given_name\"}",
+    "AJx-095VPrpTtN4QMOqROA": "{\"s\": \"Qg_O64zqAxe412a108iroA\", \"v\": \"Doe\", \"n\": \"family_name\"}",
+    "G02NSrQfjFXQ7Io09syajA": "{\"s\": \"Pc33JM2LchcU_lHggv_ufQ\", \"v\": \"johndoe@example.com\", \"n\": \"email\"}",
+    "nPuoQnkRFq3BIeAm7AnXFA": "{\"s\": \"lklxF5jMYlGTPUovMNIvCA\", \"v\": \"+1-202-555-0101\", \"n\": \"phone_number\"}",
+    "5a2W0_NrlEZzfqmk_7Pq-w": "{\"s\": \"5bPs1IquZNa0hkaFzzzZNw\", \"v\": \"23\", \"n\": \"secret_club_membership_no\"}",
+    "address": {
+      "HbQ4X8srVW3QDxnIJdqyOA": "{\"s\": \"y1sVU5wdfJahVdgwPgS7RQ\", \"v\": \"123 Main St\", \"n\": \"street_address\"}",
+      "kx5kF17V-x0JmwUx9vgvtw": "{\"s\": \"C9GSoujviJquEgYfojCb1A\", \"v\": \"Anytown\", \"n\": \"locality\"}",
+      "OBKlTVlvLg-AdwqYGbP8ZA": "{\"s\": \"H3o1uswP760Fi2yeGdVCEQ\", \"v\": \"Anystate\", \"n\": \"region\"}",
+      "DsmtKNgpV4dAHpjrcaosAw": "{\"s\": \"M0Jb57t41ubrkSuyrDT3xA\", \"v\": \"US\", \"n\": \"country\"}"
+    },
+    "j7ADdb0UVb0Li0ciPcP0ew": "{\"s\": \"eK5o5pHfgupPpltj1qhAJw\", \"v\": \"1940-01-01\", \"n\": \"birthdate\"}"
+  }
+}
+```
+
+Here, the holder decided only to release a subset of the claims to the verifier:
+
+{#example-simple_structured_all_blinded-sd_jwt_release_payload}
+```json
+{
+  "nonce": "XZOUco1u_gEPknxS78sWWg",
+  "aud": "https://example.com/verifier",
+  "sd_release": {
+    "eI8ZWm9QnKPpNPeNenHdhQ": "{\"s\": \"6Ij7tM-a5iVPGboS5tmvVA\", \"v\": \"John\", \"n\": \"given_name\"}",
+    "AJx-095VPrpTtN4QMOqROA": "{\"s\": \"Qg_O64zqAxe412a108iroA\", \"v\": \"Doe\", \"n\": \"family_name\"}",
+    "j7ADdb0UVb0Li0ciPcP0ew": "{\"s\": \"eK5o5pHfgupPpltj1qhAJw\", \"v\": \"1940-01-01\", \"n\": \"birthdate\"}",
+    "address": {
+      "OBKlTVlvLg-AdwqYGbP8ZA": "{\"s\": \"H3o1uswP760Fi2yeGdVCEQ\", \"v\": \"Anystate\", \"n\": \"region\"}",
+      "DsmtKNgpV4dAHpjrcaosAw": "{\"s\": \"M0Jb57t41ubrkSuyrDT3xA\", \"v\": \"US\", \"n\": \"country\"}"
+    }
+  }
+}
+```
+
+The verifier would decode the SD-JWT-R and SD-JWT as follows:
+
+
+{#example-simple_structured_all_blinded-verified_contents}
+```json
+{
+  "given_name": "John",
+  "family_name": "Doe",
+  "birthdate": "1940-01-01",
+  "address": {
+    "region": "Anystate",
+    "country": "US"
+  }
+}
+```
+
+
+
 
 # Document History
 
