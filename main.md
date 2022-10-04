@@ -278,8 +278,8 @@ subset of the same mapping).
 ## The Challenge of Canonicalization
 
 When receiving an SD-JWT with an associated Release, a verifier must be able to
-derive all claim values that are to be disclosed (in cleartext) and must be able
-to check that each claim value's hash was signed by the issuer.
+re-compute digests of the disclosed claim value and, given the same input values,
+obtain the same digest values as signed by the issuer.
 
 Usually, JSON-based formats transport claim values as simple properties of a JSON object such as this:
 
