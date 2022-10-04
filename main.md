@@ -934,7 +934,7 @@ If any step fails, the input is not valid and processing MUST be aborted.
 
 Neither an SD-JWT nor an SD-JWT-R is suitable for direct use by an application.
 Besides the REQUIRED verification steps listed above, it is further RECOMMENDED
-that tan application-consumable format is generated from the data released in
+that an application-consumable format is generated from the data released in
 the SD-JWT-Release. The RECOMMENDED way is to merge the released claims and any
 plaintext claims in the SD-JWT recursively:
 
