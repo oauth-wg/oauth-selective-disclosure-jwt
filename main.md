@@ -55,14 +55,14 @@ disclosure (SD-JWT), enabling sharing only a subset of the claims included in
 the original signed JWT instead of releasing all the claims to every verifier.
 During issuance, an SD-JWT is sent from the issuer to the holder alongside an
 SD-JWT Salt/Value Container (SVC), a JSON object that contains the mapping
-between raw claim values contained in the SD-JWT and the salts for each claim
+between raw claim values contained in the SD-JWT and the random values for each claim
 value. 
 
 This document also defines a format for SD-JWT Releases (SD-JWT-R), which convey
 a subset of the claim values of an SD-JWT to the verifier. For presentation, the
 holder creates an SD-JWT-R and sends it together with the SD-JWT to the
 verifier. To verify claim values received in SD-JWT-R, the verifier uses the
-salts values in the SD-JWT-R to compute the hash digests of the claim values and
+random values in the SD-JWT-R to compute the hash digests of the claim values and
 compare them to the ones in the SD-JWT.
 
 One of the common use cases of a signed JWT is representing a user's identity
@@ -107,7 +107,7 @@ Selectively Disclosable JWT (SD-JWT)
 
 SD-JWT Salt/Value Container (SVC) 
 :  A JSON object created by the issuer that contains mapping between 
-   raw claim values contained in the SD-JWT and the salts for each claim value.
+   raw claim values contained in the SD-JWT and the random values for each claim value.
 
 SD-JWT Release (SD-JWT-R) 
 :  A JWT created by the holder that contains a subset of the claim values of an SD-JWT in a verifiable way. 
@@ -173,7 +173,7 @@ conceptual level, abstracting from the data formats described afterwards.
 
 ## Creating an SD-JWT
 
-An SD-JWT, at its core, is a digitally signed document containing hash digests over the claim values with unique random salts and other metadata. 
+An SD-JWT, at its core, is a digitally signed document containing hash digests over the claim values with unique random values and other metadata. 
 It MUST be digitally signed using the issuer's private key.
 
 ```
@@ -181,18 +181,27 @@ SD-JWT-DOC = (METADATA, SD-CLAIMS)
 SD-JWT = SD-JWT-DOC | SIG(SD-JWT-DOC, ISSUER-PRIV-KEY)
 ```
 
-`SD-CLAIMS` can be a simple object with claim names mapped to hash digests over the claim values with unique random salts:
+`SD-CLAIMS` can be a simple object with claim names mapped to hash digests over the claim values with unique random values:
+
 ```
 SD-CLAIMS = (
-    CLAIM-NAME: HASH(SALT | CLAIM-VALUE)
-)*
+    CLAIM-NAME: HASH(RANDOM | CLAIM-VALUE)
+)
+```
+
+`SD-CLAIMS` can also be an object with claim names mapped to HMAC digests over the claim values with unique random values:
+
+```
+SD-CLAIMS = (
+    CLAIM-NAME: HMAC-HASH(RANDOM | CLAIM-VALUE)
+)
 ```
 
 The claim name (`CLAIM-NAME`) is an optional 
 
 `SD-CLAIMS` can also be nested deeper to capture more complex objects, as will be shown later.
 
-`SD-JWT` is sent from the issuer to the holder, together with the mapping of the plain-text claim values, the salt values, and potentially some other information. 
+`SD-JWT` is sent from the issuer to the holder, together with the mapping of the plain-text claim values, the random values, and potentially some other information. 
 
 ## Creating an SD-JWT Release
 
@@ -205,11 +214,11 @@ SD-JWT-RELEASE = SD-JWT-RELEASE-DOC
 ```
 
 
-`SD-RELEASES` follows the structure of `SD-CLAIMS` and can be a simple object with claim names mapped to values and salts:
+`SD-RELEASES` follows the structure of `SD-CLAIMS` and can be a simple object with claim names mapped to values and random values:
 
 ```
 SD-RELEASES = (
-    CLAIM-NAME: (DISCLOSED-SALT, DISCLOSED-VALUE)
+    CLAIM-NAME: (DISCLOSED-RANDOM, DISCLOSED-VALUE)
 )
 ```
 
@@ -241,8 +250,8 @@ SD-JWT-RELEASE = SD-JWT-RELEASE-DOC | SIG(SD-JWT-RELEASE-DOC, HOLDER-PRIV-KEY)
 If claim name blinding is used, `SD-CLAIMS` is created as follows:
 ```
 SD-CLAIMS = (
-    CLAIM-NAME-PLACEHOLDER: HASH(SALT | CLAIM-VALUE | CLAIM-NAME)
-)*
+    CLAIM-NAME-PLACEHOLDER: HASH(RANDOM | CLAIM-VALUE | CLAIM-NAME)
+)
 ```
 
 `CLAIM-NAME-PLACEHOLDER` is a placeholder used instead of the original claim
@@ -252,7 +261,7 @@ randomly).
 The contents of `SD-RELEASES` are modified as follows:
 ```
 SD-RELEASES = (
-    CLAIM-NAME-PLACEHOLDER: (DISCLOSED-SALT, DISCLOSED-VALUE, DISCLOSED-CLAIM-NAME)
+    CLAIM-NAME-PLACEHOLDER: (DISCLOSED-RANDOM, DISCLOSED-VALUE, DISCLOSED-CLAIM-NAME)
 )
 ```
 Note that blinded and unblinded claim names can be mixed in `SD-CLAIMS` and accordingly in `SD-RELEASES`.
@@ -270,9 +279,9 @@ The detailed algorithm is described below.
 
 # Data Formats
 
-This section defines data formats for SD-JWTs (containing hash digests of the salted
+This section defines data formats for SD-JWTs (containing hash digests over the random values and the
 claim values), SD-JWT Salt/Value Containers (containing the mapping of the
-plain-text claim values and the salt values), and SD-JWT Releases (containing a
+plain-text claim values and the random values), and SD-JWT Releases (containing a
 subset of the same mapping).
 
 ## Format of an SD-JWT
@@ -285,20 +294,21 @@ required by the application using SD-JWTs.
 
 ### `sd_digests` Claim (Digests of Selectively Disclosable Claims)
 
-An SD-JWT MUST include hash digests of the salted claim values that are included by the issuer
+An SD-JWT MUST include hash digests over the random values and the
+claim values that are included by the issuer
 under the property `sd_digests`. 
 
-The issuer MUST choose a unique and cryptographically random salt value
-for each claim value. Each salt value
+The issuer MUST choose a unique and cryptographically random value
+for each claim value. Each random value
 SHOULD contain at least 128 bits of pseudorandom data, making it hard for an
-attacker to guess. The salt value MUST then be encoded as a string. It is
-RECOMMENDED to base64url-encode the salt value.
+attacker to guess. The random value MUST then be encoded as a string. It is
+RECOMMENDED to base64url-encode the random value.
 
 The issuer MUST build the digests by hashing over a JSON literal according to
 [@!RFC8259] that is formed by
 JSON-encoding an object with the following contents:
 
- * REQUIRED with the key `s`: the salt value,
+ * REQUIRED with the key `s`: the random value,
  * REQUIRED with the key `v`: the claim value (either a string or a more complex object, e.g., for the [@OIDC] `address` claim),
  * OPTIONAL, with the key `n`: the claim name (if claim name blinding is to be used for this claim).
 
@@ -342,16 +352,19 @@ the examples is how the `address` claim is disclosed.
 Appendix 2 shows a more complex example using claims from eKYC (todo:
 reference).
 
-### Hash Function Claim
+### Digest Derivaction Function Claim
 
-The claim `sd_hash_alg` indicates the hash algorithm used by the Issuer to generate
-the hashes of the salted claim values. The hash algorithm identifier MUST be a
-value from the "Hash Name String" column in the IANA "Named Information Hash
-Algorithm" registry [IANA.Hash.Algorithms]. SD-JWTs with hash algorithm
-identifiers not found in this registry are not considered valid and MUST NOT be
-accepted by verifiers.
+The claim `sd_hash_alg` indicates the hash algorithm function 
+used by the Issuer to generate the hashes over the random values and the
+claim values. 
+
+The hash algorithm identifier MUST be a value from the "Hash Name String" column 
+in the IANA "Named Information Hash Algorithm" registry [IANA.Hash.Algorithms] or
+HMAC algorithms in "Algorithmn Name" column in the IANA "JSON Web Signature and Encryption Algorithms" registry [IANA.JWS.Algorithms]. 
 
 To promote interoperability, implementations MUST support the SHA-256 hash algorithm.
+
+Other specifications and/or profiles of this specification may register additional algorithm identifiers.
 
 ### Holder Public Key Claim
 
@@ -455,7 +468,7 @@ RRgRLgILYetPOZqpVxfsCtgzDN_OGoSUq3pdvLJ3bFAzrt8dHenOvlz_CvlMXx2A
 
 Besides the SD-JWT itself, the holder needs to learn the raw claim values that
 are contained in the SD-JWT, along with the precise input to the hash
-calculation, and the salts. There MAY be other information the issuer needs to
+calculation, and the random values. There MAY be other information the issuer needs to
 communicate to the holder, such as a private key if the issuer selected the
 holder key pair.
 
@@ -487,7 +500,7 @@ The SVC for Example 1 is as follows:
 ```
 
 Important: As described above, hash digests are calculated over the JSON literal
-formed by serializing an object containing the salt, the claim value, and
+formed by serializing an object containing the random value, the claim value, and
 optionally the claim name. This ensures that issuer and verifier use the same
 input to their hash functions and avoids issues with canonicalization of JSON
 values that would lead to different hash digests. The SVC therefore maps claim
@@ -549,13 +562,13 @@ V9sSGdndl91ZlFcIiwgXCIxOTQwLTAxLTAxXCJdIn19
 
 ## Format of an SD-JWT Release
 
-SD-JWT-R contains claim values and the salts of the claims that the holder 
+SD-JWT-R contains claim values and the random values of the claims that the holder 
 has consented to release to the Verifier. This enables the Verifier to verify 
 the claims received from the holder by computing the hash digests of the claim
-values and the salts revealed in the SD-JWT-R using the hashing algorithm 
+values and the random values revealed in the SD-JWT-R using the hashing algorithm 
 specified in SD-JWT and comparing them to the hash digests included in SD-JWT.
 
-For each claim, an array of the salt and the claim value is contained in the
+For each claim, an array of the random value and the claim value is contained in the
 `sd_release` object. The structure of an `sd_release` object in the SD-JWT-R is the same as the structure of an `sd_release` object in SVC. 
 
 The SD-JWT-R MAY contain further claims, for example, to ensure a binding
@@ -737,29 +750,30 @@ The verifier MUST always check the SD-JWT signature to ensure that the SD-JWT
 has not been tampered with since its issuance. If the signature on the SD-JWT
 cannot be verified, the SD-JWT MUST be rejected. 
 
-## Entropy and Uniqueness of the salt
+## Entropy and Uniqueness of the random value
 
-The security model relies on the fact that the salt is not learned or guessed by
+The security model relies on the fact that the random value is not learned or guessed by
 the attacker. It is vitally important to adhere to this principle. As such, the
-salt MUST be created in such a manner that it is cryptographically random,
+random value MUST be created in such a manner that it is cryptographically random,
 long enough and has high entropy that it is not practical for the attacker to
-guess. Each salt value MUST be unique.
+guess. Each random value MUST be unique.
 
-## Minimum length of the salt
+## Minimum length of the random value
 
-The length of the randomly-generated portion of the salt MUST be at least 128 bits.
+The length of the randomly-generated portion of the random value MUST be at least 128 bits.
 
 ## Choice of a hash function
 
 For the security of this scheme, the hash function is required to be preimage and collision
-resistant, i.e., it is infeasible to calculate the salt and claim value that result in
-a particular digest, and it is infeasible to find a different salt and claim value pair that
+resistant, i.e., it is infeasible to calculate the random value and claim value that result in
+a particular digest, and it is infeasible to find a different random value and claim value pair that
 result in a matching digest, respectively.
 
-Furthermore the hash algorithms MD2, MD4, MD5, RIPEMD-160, and SHA-1 
+Furthermore, the hash algorithms MD2, MD4, MD5, RIPEMD-160, and SHA-1 
 revealed fundamental weaknesses and they MUST NOT be used.
 
 ## Holder Binding {#holder_binding_security}
+
 TBD
 
 ## Blinding Claim Names
@@ -797,7 +811,7 @@ Furthermore, re-using the same value to blind a claim name may limit the privacy
 
 Colluding issuer/verifier or verifier/verifier pairs could link issuance/presentation or two presentation sessions
 to the same user on the basis of unique values encoded in the SD-JWT
-(issuer signature, salts, digests, etc.). More advanced cryptographic schemes, outside the scope of
+(issuer signature, random values, digests, etc.). More advanced cryptographic schemes, outside the scope of
 this specification, can be used to prevent this type of linkability.
 
 # Acknowledgements {#Acknowledgements}
@@ -1505,6 +1519,7 @@ The verifier would decode the SD-JWT-R and SD-JWT as follows:
    *  Stressed uniqueness requirements for salts
    *  Python reference implementation clean-up and refactoring
    *  hash_alg renamed to sd_hash_alg
+   *  clarified that HMAC is supported
 
    -01
    
