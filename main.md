@@ -350,9 +350,9 @@ the examples is how the `address` claim is disclosed.
 Appendix 2 shows a more complex example using claims from eKYC (todo:
 reference).
 
-### Digest Derivaction Function Claim
+### Digest Derivation Function Claim
 
-The claim `sd_hash_alg` indicates the hash algorithm function 
+The claim `digest_derivation_alg` indicates the hash algorithm function 
 used by the Issuer to generate the hashes over the random values and the
 claim values. 
 
