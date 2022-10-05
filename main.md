@@ -181,19 +181,11 @@ SD-JWT-DOC = (METADATA, SD-CLAIMS)
 SD-JWT = SD-JWT-DOC | SIG(SD-JWT-DOC, ISSUER-PRIV-KEY)
 ```
 
-`SD-CLAIMS` can be a simple object with claim names mapped to hash digests over the claim values with random values:
+`SD-CLAIMS` is an object with claim names mapped to the digests over the claim values with random salts calculated using digest derivation function such as hash function, HMAC, or other:
 
 ```
 SD-CLAIMS = (
-    CLAIM-NAME: HASH(RANDOM | CLAIM-VALUE)
-)
-```
-
-`SD-CLAIMS` can also be an object with claim names mapped to HMAC digests over the claim values with random values:
-
-```
-SD-CLAIMS = (
-    CLAIM-NAME: HMAC-HASH(RANDOM | CLAIM-VALUE)
+    CLAIM-NAME: DIVEST-DERIVATION(SALT | CLAIM-VALUE)
 )
 ```
 
