@@ -342,16 +342,18 @@ the examples is how the `address` claim is disclosed.
 Appendix 2 shows a more complex example using claims from eKYC (todo:
 reference).
 
-### Hash Function Claim
+### Digest Derivaction Function Claim
 
-The claim `sd_hash_alg` indicates the hash algorithm used by the Issuer to generate
-the hashes of the salted claim values. The hash algorithm identifier MUST be a
-value from the "Hash Name String" column in the IANA "Named Information Hash
-Algorithm" registry [IANA.Hash.Algorithms]. SD-JWTs with hash algorithm
-identifiers not found in this registry are not considered valid and MUST NOT be
-accepted by verifiers.
+The claim `sd_hash_alg` indicates the hash algorithm function 
+used by the Issuer to generate the hashes over the random values and the
+claim values. 
+
+The hash algorithm identifier MUST be a value from the "Hash Name String" column 
+in the IANA "Named Information Hash Algorithm" registry [IANA.Hash.Algorithms] or
+HMAC algorithms in "Algorithmn Name" column in the IANA "JSON Web Signature and Encryption Algorithms" registry [IANA.JWS.Algorithms]. 
 
 To promote interoperability, implementations MUST support the SHA-256 hash algorithm.
+Other specifications and/or profiles of this specification may register additional algorithm identifiers.
 
 ### Holder Public Key Claim
 
@@ -1505,6 +1507,7 @@ The verifier would decode the SD-JWT-R and SD-JWT as follows:
    *  Stressed uniqueness requirements for salts
    *  Python reference implementation clean-up and refactoring
    *  hash_alg renamed to sd_hash_alg
+   * clarified that HMAC is supported
 
    -01
    
