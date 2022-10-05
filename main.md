@@ -297,9 +297,7 @@ An SD-JWT MUST include hash digests of the salted claim values that are included
 under the property `sd_digests`. 
 
 The issuer MUST choose a cryptographically random salt value
-for each claim value. Each salt value
-SHOULD contain at least 128 bits of pseudorandom data, making it hard for an
-attacker to guess. The salt value MUST then be encoded as a string. It is
+for each claim value. The salt value MUST then be encoded as a string. It is
 RECOMMENDED to base64url-encode the salt value.
 
 The issuer MUST build the digests by hashing over a JSON literal according to
@@ -332,7 +330,6 @@ respective digests. If a claim name is to be blinded, the digests MUST contain
 the `n` key as described above and the claim name in `sd_digests` MUST be
 replaced by a placeholder value that does not leak information about the claim's original name. The same placeholder value is to be used in the SVC and SD-JWT-R described below.
 
-
 #### Flat and Structured `sd_digests` objects
 
 The `sd_digests` object can be a 'flat' object, directly containing all claim
@@ -362,6 +359,8 @@ HMAC algorithms in "Algorithmn Name" column in the IANA "JSON Web Signature and 
 
 To promote interoperability, implementations MUST support the SHA-256 hash algorithm.
 Other specifications and/or profiles of this specification may register additional algorithm identifiers.
+
+See (#security_considerations) for requirements regarding entropy of the salt, minimum length of the salt, and choice of a hash function.
 
 ### Holder Public Key Claim
 
@@ -757,7 +756,7 @@ guess. A new random value MUST be chosen for each claim.
 
 ## Minimum length of the salt
 
-The length of the randomly-generated portion of the salt MUST be at least 128 bits.
+The RECOMMENDED length of the randomly-generated portion of the salt is at least 128 bits.
 
 ## Choice of a hash function
 
@@ -776,9 +775,10 @@ TBD
 
 Issuers that chose to blind claim names MUST ensure not to inadvertently leak
 information about the blinded claim names to verifiers. In particular, issuers
-MUST choose placeholder claim names accordingly. It is RECOMMENDED to use
-cryptographically random values with at least 128 bits of entropy as placeholder
-claim names.
+MUST choose placeholder claim names accordingly. 
+
+It is RECOMMENDED to use cryptographically random values with at least 128 bits
+of entropy as placeholder claim names.
 
 The order of elements in JSON-encoded objects is not relevant to applications,
 but the order may reveal information about the blinded claim name to the
