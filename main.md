@@ -173,7 +173,7 @@ conceptual level, abstracting from the data formats described afterwards.
 
 ## Creating an SD-JWT
 
-An SD-JWT, at its core, is a digitally signed document containing hash digests over the claim values with unique random salts and other metadata. 
+An SD-JWT, at its core, is a digitally signed document containing hash digests over the claim values with random salts and other metadata. 
 It MUST be digitally signed using the issuer's private key.
 
 ```
@@ -181,11 +181,20 @@ SD-JWT-DOC = (METADATA, SD-CLAIMS)
 SD-JWT = SD-JWT-DOC | SIG(SD-JWT-DOC, ISSUER-PRIV-KEY)
 ```
 
-`SD-CLAIMS` can be a simple object with claim names mapped to hash digests over the claim values with unique random salts:
+`SD-CLAIMS` can be a simple object with claim names mapped to hash digests over the claim values with random values:
+
 ```
 SD-CLAIMS = (
-    CLAIM-NAME: HASH(SALT | CLAIM-VALUE)
-)*
+    CLAIM-NAME: HASH(RANDOM | CLAIM-VALUE)
+)
+```
+
+`SD-CLAIMS` can also be an object with claim names mapped to HMAC digests over the claim values with random values:
+
+```
+SD-CLAIMS = (
+    CLAIM-NAME: HMAC-HASH(RANDOM | CLAIM-VALUE)
+)
 ```
 
 The claim name (`CLAIM-NAME`) is an optional 
@@ -203,7 +212,6 @@ following:
 SD-JWT-RELEASE-DOC = (METADATA, SD-RELEASES)
 SD-JWT-RELEASE = SD-JWT-RELEASE-DOC
 ```
-
 
 `SD-RELEASES` follows the structure of `SD-CLAIMS` and can be a simple object with claim names mapped to values and salts:
 
@@ -288,7 +296,7 @@ required by the application using SD-JWTs.
 An SD-JWT MUST include hash digests of the salted claim values that are included by the issuer
 under the property `sd_digests`. 
 
-The issuer MUST choose a unique and cryptographically random salt value
+The issuer MUST choose a cryptographically random salt value
 for each claim value. Each salt value
 SHOULD contain at least 128 bits of pseudorandom data, making it hard for an
 attacker to guess. The salt value MUST then be encoded as a string. It is
@@ -739,13 +747,13 @@ The verifier MUST always check the SD-JWT signature to ensure that the SD-JWT
 has not been tampered with since its issuance. If the signature on the SD-JWT
 cannot be verified, the SD-JWT MUST be rejected. 
 
-## Entropy and Uniqueness of the salt
+## Entropy of the salt
 
 The security model relies on the fact that the salt is not learned or guessed by
 the attacker. It is vitally important to adhere to this principle. As such, the
 salt MUST be created in such a manner that it is cryptographically random,
 long enough and has high entropy that it is not practical for the attacker to
-guess. Each salt value MUST be unique.
+guess. A new random value MUST be chosen for each claim.
 
 ## Minimum length of the salt
 
@@ -1504,7 +1512,7 @@ The verifier would decode the SD-JWT-R and SD-JWT as follows:
 
    *  Added acknowledgements
    *  Improved Security Considerations
-   *  Stressed uniqueness requirements for salts
+   *  Stressed entropy requirements for salts
    *  Python reference implementation clean-up and refactoring
    *  hash_alg renamed to sd_hash_alg
    * clarified that HMAC is supported
