@@ -414,7 +414,7 @@ The issuer MUST build the digests by hashing over a JSON literal according to
 JSON-encoding an object with the following contents:
 
  * REQUIRED with the key `s`: the salt value,
- * REQUIRED with the key `v`: the claim value (either a string or a more complex object, e.g., for the x@OIDCx `address` claim),
+ * REQUIRED with the key `v`: the claim value (either a string or a more complex object, e.g., for the [@OIDC] `address` claim),
  * OPTIONAL, with the key `n`: the claim name (if claim name blinding is to be used for this claim).
 
 The following is an example for a JSON literal without claim name blinding:
