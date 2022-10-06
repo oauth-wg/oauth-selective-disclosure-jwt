@@ -96,6 +96,10 @@ raw claim values contained in the SD-JWT and the salts for each claim value.</t>
 control over the same private key during the issuance and presentation. SD-JWT signed by the issuer contains
 a public key or a reference to a public key that matches to the private key controlled by the holder.</t>
 </dd>
+<dt>Claim name blinding</dt>
+<dd><t>Feature that enables to blind not only claim values, but also claim names of the claims
+that are included in SD-JWT but are not disclosed to the verifier in the SD-JWT-Release.</t>
+</dd>
 <dt>Issuer</dt>
 <dd><t>An entity that creates SD-JWTs (2.1).</t>
 </dd>
@@ -161,6 +165,7 @@ SD-JWT = SD-JWT-DOC | SIG(SD-JWT-DOC, ISSUER-PRIV-KEY)
     CLAIM-NAME: HASH(SALT | CLAIM-VALUE)
 )*
 </artwork>
+<t>The claim name (<tt>CLAIM-NAME</tt>) is an optional</t>
 <t><tt>SD-CLAIMS</tt> can also be nested deeper to capture more complex objects, as will be shown later.</t>
 <t><tt>SD-JWT</tt> is sent from the issuer to the holder, together with the mapping of the plain-text claim values, the salt values, and potentially some other information.</t>
 </section>
@@ -196,15 +201,34 @@ verifier.</t>
 </artwork>
 </section>
 
+<section anchor="optional-claim-name-blinding"><name>Optional Claim Name Blinding</name>
+<t>If claim name blinding is used, <tt>SD-CLAIMS</tt> is created as follows:</t>
+
+<artwork>SD-CLAIMS = (
+    CLAIM-NAME-PLACEHOLDER: HASH(SALT | CLAIM-VALUE | CLAIM-NAME)
+)*
+</artwork>
+<t><tt>CLAIM-NAME-PLACEHOLDER</tt> is a placeholder used instead of the original claim
+name, chosen such that it does not leak information about the claim name (e.g.,
+randomly).</t>
+<t>The contents of <tt>SD-RELEASES</tt> are modified as follows:</t>
+
+<artwork>SD-RELEASES = (
+    CLAIM-NAME-PLACEHOLDER: (DISCLOSED-SALT, DISCLOSED-VALUE, DISCLOSED-CLAIM-NAME)
+)
+</artwork>
+<t>Note that blinded and unblinded claim names can be mixed in <tt>SD-CLAIMS</tt> and accordingly in <tt>SD-RELEASES</tt>.</t>
+</section>
+
 <section anchor="verifying-an-sd-jwt-release"><name>Verifying an SD-JWT Release</name>
 <t>A verifier checks that</t>
 
 <ul>
-<li><t>for each claim in <tt>SD-JWT-RELEASE</tt>, the hash digest <tt>HASH(DISCLOSED-SALT | DISCLOSED-VALUE)</tt>
-matches the one under the given claim name in <tt>SD-JWT</tt>.</t>
+<li><t>for each claim in <tt>SD-JWT-RELEASE</tt>, the hash digest over the disclosed values
+matches the hash digest under the given claim name in <tt>SD-JWT</tt>,</t>
 </li>
-<li><t>if holder binding is used, the <tt>SD-JWT-RELEASE</tt> was signed by
-the private key belonging to <tt>HOLDER-PUBLIC-KEY</tt>.</t>
+<li><t>if holder binding is used, the <tt>SD-JWT-RELEASE</tt> was signed by the private key
+belonging to <tt>HOLDER-PUBLIC-KEY</tt>.</t>
 </li>
 </ul>
 <t>The detailed algorithm is described below.</t>
@@ -217,6 +241,104 @@ claim values), SD-JWT Salt/Value Containers (containing the mapping of the
 plain-text claim values and the salt values), and SD-JWT Releases (containing a
 subset of the same mapping).</t>
 
+<section anchor="the-challenge-of-canonicalization"><name>The Challenge of Canonicalization</name>
+<t>When receiving an SD-JWT with an associated Release, a verifier must be able to
+re-compute digests of the disclosed claim value and, given the same input values,
+obtain the same digest values as signed by the issuer.</t>
+<t>Usually, JSON-based formats transport claim values as simple properties of a JSON object such as this:</t>
+
+<artwork>...
+  &quot;family_name&quot;: &quot;Möbius&quot;,
+  &quot;address&quot;: {
+    &quot;street_address&quot;: &quot;Schulstr. 12&quot;,
+    &quot;locality&quot;: &quot;Schulpforta&quot;
+  }
+...
+</artwork>
+<t>However, a problem arises when signatures over the data need to be computed and
+verified. Common signature schemes require the same byte string as input to the
+signature verification as was used for creating the signature. In the salted
+hash approach outlined above, the same problem exists: For the issuer and the
+verifier to arrive at the same hash digest, the same byte string must be hashed.</t>
+<t>JSON, however, does not prescribe a unique encoding for data, but allows for variations in the encoded string. The data above, for example, can be encoded as</t>
+
+<artwork>...
+&quot;family_name&quot;: &quot;M\u00f6bius&quot;, 
+&quot;address&quot;: {&quot;street_address&quot;: &quot;Schulstr. 12&quot;, &quot;locality&quot;: &quot;Schulpforta&quot;}
+...
+</artwork>
+<t>or as</t>
+
+<artwork>...
+&quot;family_name&quot;: &quot;Möbius&quot;,
+&quot;address&quot;: {&quot;locality&quot;:&quot;Schulpforta&quot;, &quot;street_address&quot;:&quot;Schulstr. 12&quot;}
+...
+</artwork>
+<t>The two representations <tt>&quot;M\u00f6bius&quot;</tt> and <tt>&quot;Möbius&quot;</tt> are very different on the byte-level, but yield
+equivalent objects. Same for the representations <tt>{&quot;street_address&quot;: &quot;Schulstr. 12&quot;, &quot;locality&quot;: &quot;Schulpforta&quot;}</tt> and <tt>{&quot;locality&quot;:&quot;Schulpforta&quot;, &quot;street_address&quot;:&quot;Schulstr. 12&quot;}</tt>.</t>
+<t>The variations in white space, ordering of object properties, and encoding of
+Unicode characters are all allowed by the JSON specification. Other variations,
+e.g., concerning floating-point numbers, are described in <xref target="RFC8785"></xref>. Variations
+can be introduced whenever JSON data is serialized or deserialized and unless
+dealt with, will lead to different hashes and the inability to verify
+signatures.</t>
+<t>There are generally two approaches to deal with this problem:</t>
+
+<ol>
+<li><t>Canonicalization: The data is transferred in JSON format, potentially
+introducing variations in its representation, but is transformed into a
+canonical form before hashing. Both the issuer and the verifier
+must use the same canonicalization algorithm to arrive at the same byte
+string for hashing.</t>
+</li>
+<li><t>Source-string encoding: Instead of transferring data in JSON format that may
+introduce variations, the serialized data that is used as the hash input is
+transferred from the issuer to the verifier. This means that the verifier can
+easily check the hash over the byte string before deserializing the data.</t>
+</li>
+</ol>
+<t>Mixed approaches are conceivable, i.e., transferring both the original JSON data
+plus a string suitable for hashing, but such approaches can easily lead to
+undetected inconsistencies resulting in time-of-check-time-of-use type security
+vulnerabilities.</t>
+<t>In this specification, the source-string encoding approach is used, as it allows
+for simple and reliable interoperability without the requirement for a
+canonicalization library. To encode the source string, JSON itself is used. To
+produce a source-string for hashing, the data is put into a JSON object together
+with the salt value, like so (non-normative example, see <xref target="sd_digests_claim"></xref> for
+details):</t>
+
+<artwork>{&quot;s&quot;: &quot;6qMQvRL5haj&quot;, &quot;v&quot;: &quot;Möbius&quot;}
+</artwork>
+<t>Or, for the address example above:</t>
+
+<artwork>{&quot;s&quot;: &quot;al1N3Zom221&quot;, &quot;v&quot;: {&quot;locality&quot;:&quot;Schulpforta&quot;, &quot;street_address&quot;:&quot;Schulstr. 12&quot;}}
+</artwork>
+<t>This object is then JSON-encoded and used as the source string. The JSON-encoded value is transferred in the SD-JWT-Release instead of the original JSON data:</t>
+
+<artwork>&quot;family_name&quot;: &quot;{\&quot;s\&quot;: \&quot;6qMQvRL5haj\&quot;, \&quot;v\&quot;: \&quot;M\\u00f6bius\&quot;}&quot;
+</artwork>
+<t>Or, for the address example:</t>
+
+<artwork>&quot;address&quot;: &quot;{\&quot;s\&quot;: \&quot;al1N3Zom221\&quot;, \&quot;v\&quot;: {\&quot;locality\&quot;: \&quot;Schulpforta\&quot;, \&quot;street_address\&quot;: \&quot;Schulstr. 12\&quot;}}&quot;
+</artwork>
+<t>A verifier can then easily check the hash over the source string before
+extracting the original JSON data. Variations in the encoding of the source
+string are implicitly tolerated by the verifier, as the hash is computed over a
+predefined byte string and not over a JSON object.</t>
+<t>Since the encoding is based on JSON, all value types that are allowed in JSON
+are also allowed in the <tt>v</tt> property in the source string. This includes
+numbers, strings, booleans, arrays, and objects.</t>
+<t>It is important to note that the SD-JWT-Release containing the source string is
+neither intended nor suitable for direct consumption by an application that
+needs to access the disclosed claim values. The SD-JWT-Release is only intended
+to be used by a verifier to check the hash over the source string and to extract
+the original JSON data. The original JSON data is then used by the application.
+See <xref target="processing_model"></xref> for details.</t>
+<t>Using this approach, SD-JWTs can be implemented purely based on widely available
+JSON encoding and decoding libraries.</t>
+</section>
+
 <section anchor="format-of-an-sd-jwt"><name>Format of an SD-JWT</name>
 <t>An SD-JWT is a JWT that MUST be signed using the issuer's private key. The
 payload of an SD-JWT MUST contain the <tt>sd_digests</tt> and <tt>sd_hash_alg</tt> claims
@@ -224,7 +346,7 @@ described in the following, and MAY contain a holder's public key or a reference
 thereto, as well as further claims such as <tt>iss</tt>, <tt>iat</tt>, etc. as defined or
 required by the application using SD-JWTs.</t>
 
-<section anchor="sd-digests-claim-digests-of-selectively-disclosable-claims"><name><tt>sd_digests</tt> Claim (Digests of Selectively Disclosable Claims)</name>
+<section anchor="sd_digests_claim"><name><tt>sd_digests</tt> Claim (Digests of Selectively Disclosable Claims)</name>
 <t>An SD-JWT MUST include hash digests of the salted claim values that are included by the issuer
 under the property <tt>sd_digests</tt>.</t>
 <t>The issuer MUST choose a unique and cryptographically random salt value
@@ -232,20 +354,31 @@ for each claim value. Each salt value
 SHOULD contain at least 128 bits of pseudorandom data, making it hard for an
 attacker to guess. The salt value MUST then be encoded as a string. It is
 RECOMMENDED to base64url-encode the salt value.</t>
-<t>The issuer MUST build the digests by hashing over a string that is formed by
-JSON-encoding an ordered array containing the salt and the claim value, e.g.:
-<tt>[&quot;6qMQvRL5haj&quot;,&quot;Peter&quot;]</tt>. The digest value is then base64url-encoded. Note that
-the precise JSON encoding can vary, and therefore, the JSON encodings MUST be
-sent to the holder along with the SD-JWT, as described below.</t>
+<t>The issuer MUST build the digests by hashing over a JSON literal according to
+<xref target="RFC8259"></xref> that is formed by
+JSON-encoding an object with the following contents:</t>
 
-<<<<<<< HEAD
-=======
-<aside><t>The use of
-Test
-Bla</t>
-</aside>
+<ul>
+<li><t>REQUIRED with the key <tt>s</tt>: the salt value,</t>
+</li>
+<li><t>REQUIRED with the key <tt>v</tt>: the claim value (either a string or a more complex object, e.g., for the x@OIDCx <tt>address</tt> claim),</t>
+</li>
+<li><t>OPTIONAL, with the key <tt>n</tt>: the claim name (if claim name blinding is to be used for this claim).</t>
+</li>
+</ul>
+<t>The following is an example for a JSON literal without claim name blinding:</t>
 
->>>>>>> 3f4d47c (Explain JSON string literals and processing model)
+<artwork>{&quot;s&quot;: &quot;6qMQvRL5haj&quot;, &quot;v&quot;: &quot;Peter&quot;}
+</artwork>
+<t>The following is an example for a JSON literal with claim name blinding:</t>
+
+<artwork>{&quot;s&quot;: &quot;6qMQvRL5haj&quot;, &quot;v&quot;: &quot;Peter&quot;, &quot;n&quot;: &quot;given_name&quot;}
+</artwork>
+<t>The <tt>sd_digests</tt> claim contains an object where claim names are mapped to the
+respective digests. If a claim name is to be blinded, the digests MUST contain
+the <tt>n</tt> key as described above and the claim name in <tt>sd_digests</tt> MUST be
+replaced by a placeholder value that does not leak information about the claim's original name. The same placeholder value is to be used in the SVC and SD-JWT-R described below.</t>
+
 <section anchor="flat-and-structured-sd-digests-objects"><name>Flat and Structured <tt>sd_digests</tt> objects</name>
 <t>The <tt>sd_digests</tt> object can be a 'flat' object, directly containing all claim
 names and hashed claim values without any deeper structure. The <tt>sd_digests</tt>
@@ -309,30 +442,23 @@ be disclosed in full.</t>
 <sourcecode anchor="example-simple-sd_jwt_payload" type="json">{
   &quot;iss&quot;: &quot;https://example.com/issuer&quot;,
   &quot;cnf&quot;: {
-<<<<<<< HEAD
-    &quot;jwk&quot; : {
-        &quot;kty&quot;: &quot;RSA&quot;,
-        &quot;n&quot;: &quot;pm4bOHBg-oYhAyPWzR56AWX3rUIXp11_ICDkGgS6W3ZWLts-hzwI3x65659kg4hVo9dbGoCJE3ZGF_eaetE30UhBUEgpGwrDrQiJ9zqprmcFfr3qvvkGjtth8Zgl1eM2bJcOwE7PCBHWTKWYs152R7g6Jg2OVph-a8rq-q79MhKG5QoW_mTz10QT_6H4c7PjWG1fjh8hpWNnbP_pv6d1zSwZfc5fl6yVRL0DV0V3lGHKe2Wqf_eNGjBrBLVklDTk8-stX_MWLcR-EGmXAOv0UBWitS_dXJKJu-vXJyw14nHSGuxTIK2hx1pttMft9CsvqimXKeDTU14qQL1eE7ihcw&quot;,
-        &quot;e&quot;: &quot;AQAB&quot;
-=======
     &quot;jwk&quot;: {
       &quot;kty&quot;: &quot;RSA&quot;,
       &quot;n&quot;: &quot;pm4bOHBg-oYhAyPWzR56AWX3rUIXp11_ICDkGgS6W3ZWLts-hzwI3x65659kg4hVo9dbGoCJE3ZGF_eaetE30UhBUEgpGwrDrQiJ9zqprmcFfr3qvvkGjtth8Zgl1eM2bJcOwE7PCBHWTKWYs152R7g6Jg2OVph-a8rq-q79MhKG5QoW_mTz10QT_6H4c7PjWG1fjh8hpWNnbP_pv6d1zSwZfc5fl6yVRL0DV0V3lGHKe2Wqf_eNGjBrBLVklDTk8-stX_MWLcR-EGmXAOv0UBWitS_dXJKJu-vXJyw14nHSGuxTIK2hx1pttMft9CsvqimXKeDTU14qQL1eE7ihcw&quot;,
       &quot;e&quot;: &quot;AQAB&quot;
->>>>>>> 3f4d47c (Explain JSON string literals and processing model)
     }
   },
   &quot;iat&quot;: 1516239022,
   &quot;exp&quot;: 1516247022,
   &quot;sd_hash_alg&quot;: &quot;sha-256&quot;,
   &quot;sd_digests&quot;: {
-    &quot;sub&quot;: &quot;z4xgEco94diTaSruISPiE7o_wtmcOfnH_8R7X9Pa578&quot;,
-    &quot;given_name&quot;: &quot;PvU7cWjuHUq6w-i9XFpQZhjT-uprQL3GH3mKsAJl0e0&quot;,
-    &quot;family_name&quot;: &quot;H-Relr4cEBMlenyK1gvyx16QVpnt4MEclT5tP0aTLFU&quot;,
-    &quot;email&quot;: &quot;ET2A1JQLF85ZpBulh6UFstGrSfR4B3KM-bjQVllhxqY&quot;,
-    &quot;phone_number&quot;: &quot;SJnciB2DIRVA5cXBrdKoH6n45788mZyUn2rnv74uMVU&quot;,
-    &quot;address&quot;: &quot;0FldqLfGnERPPVDC17od9xb4w3iRJTEQbW_Yk9AmnDw&quot;,
-    &quot;birthdate&quot;: &quot;-L0kMgIbLXe3OEkKTUGwz_QKhjehDeofKGwoPrxLuo4&quot;
+    &quot;sub&quot;: &quot;OMdwkk2HPuiInPypWUWMxot1Y2tStGsLuIcDMjKdXMU&quot;,
+    &quot;given_name&quot;: &quot;AfKKH4a0IZki8MFDythFaFS_Xqzn-wRvAMfiy_VjYpE&quot;,
+    &quot;family_name&quot;: &quot;eUmXmry32JiK_76xMasagkAQQsmSVdW57Ajk18riSF0&quot;,
+    &quot;email&quot;: &quot;-Rcr4fDyjwlM_itcMxoQZCE1QAEwyLJcibEpH114KiE&quot;,
+    &quot;phone_number&quot;: &quot;Jv2nw0C1wP5ASutYNAxrWEnaDRIpiF0eTUAkUOp8F6Y&quot;,
+    &quot;address&quot;: &quot;ZrjKs-RmEAVeAYSzSw6GPFrMpcgctCfaJ6t9qQhbfJ4&quot;,
+    &quot;birthdate&quot;: &quot;qXPRRPdpNaebP8jtbEpO-skF4n7v7ASTh8oLg0mkAdQ&quot;
   }
 }
 </sourcecode>
@@ -340,30 +466,6 @@ be disclosed in full.</t>
 
 <artwork anchor="example-simple-serialized_sd_jwt">eyJhbGciOiAiUlMyNTYiLCAia2lkIjogImNBRUlVcUowY21MekQxa3pHemhlaUJhZzBZUk
 F6VmRsZnhOMjgwTmdIYUEifQ.eyJpc3MiOiAiaHR0cHM6Ly9leGFtcGxlLmNvbS9pc3N1Z
-<<<<<<< HEAD
-XIiLCAic3ViX2p3ayI6IHsia3R5IjogIlJTQSIsICJuIjogInBtNGJPSEJnLW9ZaEF5UFd
-6UjU2QVdYM3JVSVhwMTFfSUNEa0dnUzZXM1pXTHRzLWh6d0kzeDY1NjU5a2c0aFZvOWRiR
-29DSkUzWkdGX2VhZXRFMzBVaEJVRWdwR3dyRHJRaUo5enFwcm1jRmZyM3F2dmtHanR0aDh
-aZ2wxZU0yYkpjT3dFN1BDQkhXVEtXWXMxNTJSN2c2SmcyT1ZwaC1hOHJxLXE3OU1oS0c1U
-W9XX21UejEwUVRfNkg0YzdQaldHMWZqaDhocFdObmJQX3B2NmQxelN3WmZjNWZsNnlWUkw
-wRFYwVjNsR0hLZTJXcWZfZU5HakJyQkxWa2xEVGs4LXN0WF9NV0xjUi1FR21YQU92MFVCV
-2l0U19kWEpLSnUtdlhKeXcxNG5IU0d1eFRJSzJoeDFwdHRNZnQ5Q3N2cWltWEtlRFRVMTR
-xUUwxZUU3aWhjdyIsICJlIjogIkFRQUIifSwgImlhdCI6IDE1MTYyMzkwMjIsICJleHAiO
-iAxNTE2MjQ3MDIyLCAiaGFzaF9hbGciOiAic2hhLTI1NiIsICJzZF9kaWdlc3RzIjogeyJ
-zdWIiOiAiejR4Z0Vjbzk0ZGlUYVNydUlTUGlFN29fd3RtY09mbkhfOFI3WDlQYTU3OCIsI
-CJnaXZlbl9uYW1lIjogIlB2VTdjV2p1SFVxNnctaTlYRnBRWmhqVC11cHJRTDNHSDNtS3N
-BSmwwZTAiLCAiZmFtaWx5X25hbWUiOiAiSC1SZWxyNGNFQk1sZW55SzFndnl4MTZRVnBud
-DRNRWNsVDV0UDBhVExGVSIsICJlbWFpbCI6ICJFVDJBMUpRTEY4NVpwQnVsaDZVRnN0R3J
-TZlI0QjNLTS1ialFWbGxoeHFZIiwgInBob25lX251bWJlciI6ICJTSm5jaUIyRElSVkE1Y
-1hCcmRLb0g2bjQ1Nzg4bVp5VW4ycm52NzR1TVZVIiwgImFkZHJlc3MiOiAiMEZsZHFMZkd
-uRVJQUFZEQzE3b2Q5eGI0dzNpUkpURVFiV19ZazlBbW5EdyIsICJiaXJ0aGRhdGUiOiAiL
-Uwwa01nSWJMWGUzT0VrS1RVR3d6X1FLaGplaERlb2ZLR3dvUHJ4THVvNCJ9fQ.TSxRFVMl
-Nlt_drWLqQuzz9Sc19Bo5r-cgXZ0to8PfadImEJuPbhfkxCSt1xCT5IWQJrD6p_47h8Ac-
-5yOtuu8s-wxrQzCUAU7OS2ThQGKiDKsGv0oiH3KQX4QyCAOIIaWOLxO6VQRxI7Kn6RFT0M
-5jQxBNFmL582n_uJR31ANBO45Jc_pgp4iSTn2vf1lxxwU7B3bgrad0vHmvwmv1lu17Ov79
-SGmT_fTjoybIJfHavTq61xCJ3UrMAGCEqm-_laOTxB1HRbPF38va0iuhqSSk2QaUpfDsVb
-9VsPBVIx_MsGlK3kYUWcHzkJ0BBPIVu0xnVcLkg1_SO_5gPSxFWZ4g
-=======
 XIiLCAiY25mIjogeyJqd2siOiB7Imt0eSI6ICJSU0EiLCAibiI6ICJwbTRiT0hCZy1vWWh
 BeVBXelI1NkFXWDNyVUlYcDExX0lDRGtHZ1M2VzNaV0x0cy1oendJM3g2NTY1OWtnNGhWb
 zlkYkdvQ0pFM1pHRl9lYWV0RTMwVWhCVUVncEd3ckRyUWlKOXpxcHJtY0ZmcjNxdnZrR2p
@@ -373,20 +475,19 @@ EtHNVFvV19tVHoxMFFUXzZINGM3UGpXRzFmamg4aHBXTm5iUF9wdjZkMXpTd1pmYzVmbDZ
 jBVQldpdFNfZFhKS0p1LXZYSnl3MTRuSFNHdXhUSUsyaHgxcHR0TWZ0OUNzdnFpbVhLZUR
 UVTE0cVFMMWVFN2loY3ciLCAiZSI6ICJBUUFCIn19LCAiaWF0IjogMTUxNjIzOTAyMiwgI
 mV4cCI6IDE1MTYyNDcwMjIsICJzZF9oYXNoX2FsZyI6ICJzaGEtMjU2IiwgInNkX2RpZ2V
-zdHMiOiB7InN1YiI6ICJ6NHhnRWNvOTRkaVRhU3J1SVNQaUU3b193dG1jT2ZuSF84UjdYO
-VBhNTc4IiwgImdpdmVuX25hbWUiOiAiUHZVN2NXanVIVXE2dy1pOVhGcFFaaGpULXVwclF
-MM0dIM21Lc0FKbDBlMCIsICJmYW1pbHlfbmFtZSI6ICJILVJlbHI0Y0VCTWxlbnlLMWd2e
-XgxNlFWcG50NE1FY2xUNXRQMGFUTEZVIiwgImVtYWlsIjogIkVUMkExSlFMRjg1WnBCdWx
-oNlVGc3RHclNmUjRCM0tNLWJqUVZsbGh4cVkiLCAicGhvbmVfbnVtYmVyIjogIlNKbmNpQ
-jJESVJWQTVjWEJyZEtvSDZuNDU3ODhtWnlVbjJybnY3NHVNVlUiLCAiYWRkcmVzcyI6ICI
-wRmxkcUxmR25FUlBQVkRDMTdvZDl4YjR3M2lSSlRFUWJXX1lrOUFtbkR3IiwgImJpcnRoZ
-GF0ZSI6ICItTDBrTWdJYkxYZTNPRWtLVFVHd3pfUUtoamVoRGVvZktHd29QcnhMdW80In1
-9.b0tAGzn4SMc94CN215lS0Ut2J_JBFZlJ3Wu5Ghi1tk0nEwJMMT2xk0Jf5GuQq4WHwPcT
-kV4wV7XNFC_-WP_NHVVrMV32q5dxn4G3MLNqRWSyVTZACLaP6Wx8OYIhDTsxPI-HZSdgjl
-bRj1QIE-AMZVDAtOEs9bPkweooAFM0moYoQHbTry1Gqgilw5CEQsDrtTZBbDXK3GlT_K4C
-bo4O9xMY8NbUgYct5Ix-sEpUBXpCd-o14rYvWnDsGcVxri4Jz453fMgFINi2Vz1skLtQmq
-RRgRLgILYetPOZqpVxfsCtgzDN_OGoSUq3pdvLJ3bFAzrt8dHenOvlz_CvlMXx2A
->>>>>>> 3f4d47c (Explain JSON string literals and processing model)
+zdHMiOiB7InN1YiI6ICJPTWR3a2sySFB1aUluUHlwV1VXTXhvdDFZMnRTdEdzTHVJY0RNa
+ktkWE1VIiwgImdpdmVuX25hbWUiOiAiQWZLS0g0YTBJWmtpOE1GRHl0aEZhRlNfWHF6bi1
+3UnZBTWZpeV9WallwRSIsICJmYW1pbHlfbmFtZSI6ICJlVW1YbXJ5MzJKaUtfNzZ4TWFzY
+WdrQVFRc21TVmRXNTdBamsxOHJpU0YwIiwgImVtYWlsIjogIi1SY3I0ZkR5andsTV9pdGN
+NeG9RWkNFMVFBRXd5TEpjaWJFcEgxMTRLaUUiLCAicGhvbmVfbnVtYmVyIjogIkp2Mm53M
+EMxd1A1QVN1dFlOQXhyV0VuYURSSXBpRjBlVFVBa1VPcDhGNlkiLCAiYWRkcmVzcyI6ICJ
+acmpLcy1SbUVBVmVBWVN6U3c2R1BGck1wY2djdENmYUo2dDlxUWhiZko0IiwgImJpcnRoZ
+GF0ZSI6ICJxWFBSUlBkcE5hZWJQOGp0YkVwTy1za0Y0bjd2N0FTVGg4b0xnMG1rQWRRIn1
+9.QgoJn9wkjFvM9bAr0hTDHLspuqdA21WzfBRVHkASa2ck4PFD3TC9MiZSi3AiRytRbYT4
+ZzvkH3BSbm6vy68y62gj0A6OYvZ1Z60Wxho14bxZQveJZgw3u_lMvYj6GKiUtskypFEHU-
+Kd-LoDVqEpf6lPQHdpsac__yQ_JL24oCEBlVQRXB-T-6ZNZfID6JafSkNNCYQbI8nXbzIE
+p1LBFm0fE8eUd4G4yPYOj1SeuR6Gy92T0vAoL5QtpIAHo49oAmiSIj6DQNl2cNYs74jhrB
+IcNZyt4l8H1lV20wS5OS3T0vXaYD13fgm0p4iWD9cVg3HKShUVulEyrSbq94jIKg
 </artwork>
 <t>(Line breaks for presentation only.)</t>
 </section>
@@ -410,21 +511,22 @@ private key.</t>
 
 <sourcecode anchor="example-simple-svc_payload" type="json">{
   &quot;sd_release&quot;: {
-    &quot;sub&quot;: &quot;[\&quot;2GLC42sKQveCfGfryNRN9w\&quot;, \&quot;6c5c0a49-b589-431d-bae7-219122a9ec2c\&quot;]&quot;,
-    &quot;given_name&quot;: &quot;[\&quot;eluV5Og3gSNII8EYnsxA_A\&quot;, \&quot;John\&quot;]&quot;,
-    &quot;family_name&quot;: &quot;[\&quot;6Ij7tM-a5iVPGboS5tmvVA\&quot;, \&quot;Doe\&quot;]&quot;,
-    &quot;email&quot;: &quot;[\&quot;eI8ZWm9QnKPpNPeNenHdhQ\&quot;, \&quot;johndoe@example.com\&quot;]&quot;,
-    &quot;phone_number&quot;: &quot;[\&quot;Qg_O64zqAxe412a108iroA\&quot;, \&quot;+1-202-555-0101\&quot;]&quot;,
-    &quot;address&quot;: &quot;[\&quot;AJx-095VPrpTtN4QMOqROA\&quot;, {\&quot;street_address\&quot;: \&quot;123 Main St\&quot;, \&quot;locality\&quot;: \&quot;Anytown\&quot;, \&quot;region\&quot;: \&quot;Anystate\&quot;, \&quot;country\&quot;: \&quot;US\&quot;}]&quot;,
-    &quot;birthdate&quot;: &quot;[\&quot;Pc33JM2LchcU_lHggv_ufQ\&quot;, \&quot;1940-01-01\&quot;]&quot;
+    &quot;sub&quot;: &quot;{\&quot;s\&quot;: \&quot;2GLC42sKQveCfGfryNRN9w\&quot;, \&quot;v\&quot;: \&quot;6c5c0a49-b589-431d-bae7-219122a9ec2c\&quot;}&quot;,
+    &quot;given_name&quot;: &quot;{\&quot;s\&quot;: \&quot;6Ij7tM-a5iVPGboS5tmvVA\&quot;, \&quot;v\&quot;: \&quot;John\&quot;}&quot;,
+    &quot;family_name&quot;: &quot;{\&quot;s\&quot;: \&quot;Qg_O64zqAxe412a108iroA\&quot;, \&quot;v\&quot;: \&quot;Doe\&quot;}&quot;,
+    &quot;email&quot;: &quot;{\&quot;s\&quot;: \&quot;Pc33JM2LchcU_lHggv_ufQ\&quot;, \&quot;v\&quot;: \&quot;johndoe@example.com\&quot;}&quot;,
+    &quot;phone_number&quot;: &quot;{\&quot;s\&quot;: \&quot;lklxF5jMYlGTPUovMNIvCA\&quot;, \&quot;v\&quot;: \&quot;+1-202-555-0101\&quot;}&quot;,
+    &quot;address&quot;: &quot;{\&quot;s\&quot;: \&quot;5bPs1IquZNa0hkaFzzzZNw\&quot;, \&quot;v\&quot;: {\&quot;street_address\&quot;: \&quot;123 Main St\&quot;, \&quot;locality\&quot;: \&quot;Anytown\&quot;, \&quot;region\&quot;: \&quot;Anystate\&quot;, \&quot;country\&quot;: \&quot;US\&quot;}}&quot;,
+    &quot;birthdate&quot;: &quot;{\&quot;s\&quot;: \&quot;y1sVU5wdfJahVdgwPgS7RQ\&quot;, \&quot;v\&quot;: \&quot;1940-01-01\&quot;}&quot;
   }
 }
 </sourcecode>
-<t>Important: As described above, hash digests are calculated over the string formed by
-serializing a JSON array containing the salt and the claim value. This ensures
-that issuer and verifier use the same input to their hash functions and avoids
-issues with canonicalization of JSON values that would lead to different hash
-digests. The SVC therefore maps claim names to JSON-encoded arrays.</t>
+<t>Important: As described above, hash digests are calculated over the JSON literal
+formed by serializing an object containing the salt, the claim value, and
+optionally the claim name. This ensures that issuer and verifier use the same
+input to their hash functions and avoids issues with canonicalization of JSON
+values that would lead to different hash digests. The SVC therefore maps claim
+names to JSON-encoded arrays.</t>
 </section>
 
 <section anchor="sending-sd-jwt-and-svc-during-issuance"><name>Sending SD-JWT and SVC during Issuance</name>
@@ -439,41 +541,6 @@ SVC and SD-JWT as defined in the Verification Section of this document.</t>
 
 <artwork anchor="example-simple-combined_sd_jwt_svc">eyJhbGciOiAiUlMyNTYiLCAia2lkIjogImNBRUlVcUowY21MekQxa3pHemhlaUJhZzBZUk
 F6VmRsZnhOMjgwTmdIYUEifQ.eyJpc3MiOiAiaHR0cHM6Ly9leGFtcGxlLmNvbS9pc3N1Z
-<<<<<<< HEAD
-XIiLCAic3ViX2p3ayI6IHsia3R5IjogIlJTQSIsICJuIjogInBtNGJPSEJnLW9ZaEF5UFd
-6UjU2QVdYM3JVSVhwMTFfSUNEa0dnUzZXM1pXTHRzLWh6d0kzeDY1NjU5a2c0aFZvOWRiR
-29DSkUzWkdGX2VhZXRFMzBVaEJVRWdwR3dyRHJRaUo5enFwcm1jRmZyM3F2dmtHanR0aDh
-aZ2wxZU0yYkpjT3dFN1BDQkhXVEtXWXMxNTJSN2c2SmcyT1ZwaC1hOHJxLXE3OU1oS0c1U
-W9XX21UejEwUVRfNkg0YzdQaldHMWZqaDhocFdObmJQX3B2NmQxelN3WmZjNWZsNnlWUkw
-wRFYwVjNsR0hLZTJXcWZfZU5HakJyQkxWa2xEVGs4LXN0WF9NV0xjUi1FR21YQU92MFVCV
-2l0U19kWEpLSnUtdlhKeXcxNG5IU0d1eFRJSzJoeDFwdHRNZnQ5Q3N2cWltWEtlRFRVMTR
-xUUwxZUU3aWhjdyIsICJlIjogIkFRQUIifSwgImlhdCI6IDE1MTYyMzkwMjIsICJleHAiO
-iAxNTE2MjQ3MDIyLCAiaGFzaF9hbGciOiAic2hhLTI1NiIsICJzZF9kaWdlc3RzIjogeyJ
-zdWIiOiAiejR4Z0Vjbzk0ZGlUYVNydUlTUGlFN29fd3RtY09mbkhfOFI3WDlQYTU3OCIsI
-CJnaXZlbl9uYW1lIjogIlB2VTdjV2p1SFVxNnctaTlYRnBRWmhqVC11cHJRTDNHSDNtS3N
-BSmwwZTAiLCAiZmFtaWx5X25hbWUiOiAiSC1SZWxyNGNFQk1sZW55SzFndnl4MTZRVnBud
-DRNRWNsVDV0UDBhVExGVSIsICJlbWFpbCI6ICJFVDJBMUpRTEY4NVpwQnVsaDZVRnN0R3J
-TZlI0QjNLTS1ialFWbGxoeHFZIiwgInBob25lX251bWJlciI6ICJTSm5jaUIyRElSVkE1Y
-1hCcmRLb0g2bjQ1Nzg4bVp5VW4ycm52NzR1TVZVIiwgImFkZHJlc3MiOiAiMEZsZHFMZkd
-uRVJQUFZEQzE3b2Q5eGI0dzNpUkpURVFiV19ZazlBbW5EdyIsICJiaXJ0aGRhdGUiOiAiL
-Uwwa01nSWJMWGUzT0VrS1RVR3d6X1FLaGplaERlb2ZLR3dvUHJ4THVvNCJ9fQ.TSxRFVMl
-Nlt_drWLqQuzz9Sc19Bo5r-cgXZ0to8PfadImEJuPbhfkxCSt1xCT5IWQJrD6p_47h8Ac-
-5yOtuu8s-wxrQzCUAU7OS2ThQGKiDKsGv0oiH3KQX4QyCAOIIaWOLxO6VQRxI7Kn6RFT0M
-5jQxBNFmL582n_uJR31ANBO45Jc_pgp4iSTn2vf1lxxwU7B3bgrad0vHmvwmv1lu17Ov79
-SGmT_fTjoybIJfHavTq61xCJ3UrMAGCEqm-_laOTxB1HRbPF38va0iuhqSSk2QaUpfDsVb
-9VsPBVIx_MsGlK3kYUWcHzkJ0BBPIVu0xnVcLkg1_SO_5gPSxFWZ4g.eyJzZF9yZWxlYXN
-lIjogeyJzdWIiOiAiW1wiMkdMQzQyc0tRdmVDZkdmcnlOUk45d1wiLCBcIjZjNWMwYTQ5L
-WI1ODktNDMxZC1iYWU3LTIxOTEyMmE5ZWMyY1wiXSIsICJnaXZlbl9uYW1lIjogIltcImV
-sdVY1T2czZ1NOSUk4RVluc3hBX0FcIiwgXCJKb2huXCJdIiwgImZhbWlseV9uYW1lIjogI
-ltcIjZJajd0TS1hNWlWUEdib1M1dG12VkFcIiwgXCJEb2VcIl0iLCAiZW1haWwiOiAiW1w
-iZUk4WldtOVFuS1BwTlBlTmVuSGRoUVwiLCBcImpvaG5kb2VAZXhhbXBsZS5jb21cIl0iL
-CAicGhvbmVfbnVtYmVyIjogIltcIlFnX082NHpxQXhlNDEyYTEwOGlyb0FcIiwgXCIrMS0
-yMDItNTU1LTAxMDFcIl0iLCAiYWRkcmVzcyI6ICJbXCJBSngtMDk1VlBycFR0TjRRTU9xU
-k9BXCIsIHtcInN0cmVldF9hZGRyZXNzXCI6IFwiMTIzIE1haW4gU3RcIiwgXCJsb2NhbGl
-0eVwiOiBcIkFueXRvd25cIiwgXCJyZWdpb25cIjogXCJBbnlzdGF0ZVwiLCBcImNvdW50c
-nlcIjogXCJVU1wifV0iLCAiYmlydGhkYXRlIjogIltcIlBjMzNKTTJMY2hjVV9sSGdndl9
-1ZlFcIiwgXCIxOTQwLTAxLTAxXCJdIn19
-=======
 XIiLCAiY25mIjogeyJqd2siOiB7Imt0eSI6ICJSU0EiLCAibiI6ICJwbTRiT0hCZy1vWWh
 BeVBXelI1NkFXWDNyVUlYcDExX0lDRGtHZ1M2VzNaV0x0cy1oendJM3g2NTY1OWtnNGhWb
 zlkYkdvQ0pFM1pHRl9lYWV0RTMwVWhCVUVncEd3ckRyUWlKOXpxcHJtY0ZmcjNxdnZrR2p
@@ -483,31 +550,32 @@ EtHNVFvV19tVHoxMFFUXzZINGM3UGpXRzFmamg4aHBXTm5iUF9wdjZkMXpTd1pmYzVmbDZ
 jBVQldpdFNfZFhKS0p1LXZYSnl3MTRuSFNHdXhUSUsyaHgxcHR0TWZ0OUNzdnFpbVhLZUR
 UVTE0cVFMMWVFN2loY3ciLCAiZSI6ICJBUUFCIn19LCAiaWF0IjogMTUxNjIzOTAyMiwgI
 mV4cCI6IDE1MTYyNDcwMjIsICJzZF9oYXNoX2FsZyI6ICJzaGEtMjU2IiwgInNkX2RpZ2V
-zdHMiOiB7InN1YiI6ICJ6NHhnRWNvOTRkaVRhU3J1SVNQaUU3b193dG1jT2ZuSF84UjdYO
-VBhNTc4IiwgImdpdmVuX25hbWUiOiAiUHZVN2NXanVIVXE2dy1pOVhGcFFaaGpULXVwclF
-MM0dIM21Lc0FKbDBlMCIsICJmYW1pbHlfbmFtZSI6ICJILVJlbHI0Y0VCTWxlbnlLMWd2e
-XgxNlFWcG50NE1FY2xUNXRQMGFUTEZVIiwgImVtYWlsIjogIkVUMkExSlFMRjg1WnBCdWx
-oNlVGc3RHclNmUjRCM0tNLWJqUVZsbGh4cVkiLCAicGhvbmVfbnVtYmVyIjogIlNKbmNpQ
-jJESVJWQTVjWEJyZEtvSDZuNDU3ODhtWnlVbjJybnY3NHVNVlUiLCAiYWRkcmVzcyI6ICI
-wRmxkcUxmR25FUlBQVkRDMTdvZDl4YjR3M2lSSlRFUWJXX1lrOUFtbkR3IiwgImJpcnRoZ
-GF0ZSI6ICItTDBrTWdJYkxYZTNPRWtLVFVHd3pfUUtoamVoRGVvZktHd29QcnhMdW80In1
-9.b0tAGzn4SMc94CN215lS0Ut2J_JBFZlJ3Wu5Ghi1tk0nEwJMMT2xk0Jf5GuQq4WHwPcT
-kV4wV7XNFC_-WP_NHVVrMV32q5dxn4G3MLNqRWSyVTZACLaP6Wx8OYIhDTsxPI-HZSdgjl
-bRj1QIE-AMZVDAtOEs9bPkweooAFM0moYoQHbTry1Gqgilw5CEQsDrtTZBbDXK3GlT_K4C
-bo4O9xMY8NbUgYct5Ix-sEpUBXpCd-o14rYvWnDsGcVxri4Jz453fMgFINi2Vz1skLtQmq
-RRgRLgILYetPOZqpVxfsCtgzDN_OGoSUq3pdvLJ3bFAzrt8dHenOvlz_CvlMXx2A.eyJzZ
-F9yZWxlYXNlIjogeyJzdWIiOiAiW1wiMkdMQzQyc0tRdmVDZkdmcnlOUk45d1wiLCBcIjZ
-jNWMwYTQ5LWI1ODktNDMxZC1iYWU3LTIxOTEyMmE5ZWMyY1wiXSIsICJnaXZlbl9uYW1lI
-jogIltcImVsdVY1T2czZ1NOSUk4RVluc3hBX0FcIiwgXCJKb2huXCJdIiwgImZhbWlseV9
-uYW1lIjogIltcIjZJajd0TS1hNWlWUEdib1M1dG12VkFcIiwgXCJEb2VcIl0iLCAiZW1ha
-WwiOiAiW1wiZUk4WldtOVFuS1BwTlBlTmVuSGRoUVwiLCBcImpvaG5kb2VAZXhhbXBsZS5
-jb21cIl0iLCAicGhvbmVfbnVtYmVyIjogIltcIlFnX082NHpxQXhlNDEyYTEwOGlyb0FcI
-iwgXCIrMS0yMDItNTU1LTAxMDFcIl0iLCAiYWRkcmVzcyI6ICJbXCJBSngtMDk1VlBycFR
-0TjRRTU9xUk9BXCIsIHtcInN0cmVldF9hZGRyZXNzXCI6IFwiMTIzIE1haW4gU3RcIiwgX
-CJsb2NhbGl0eVwiOiBcIkFueXRvd25cIiwgXCJyZWdpb25cIjogXCJBbnlzdGF0ZVwiLCB
-cImNvdW50cnlcIjogXCJVU1wifV0iLCAiYmlydGhkYXRlIjogIltcIlBjMzNKTTJMY2hjV
-V9sSGdndl91ZlFcIiwgXCIxOTQwLTAxLTAxXCJdIn19
->>>>>>> 3f4d47c (Explain JSON string literals and processing model)
+zdHMiOiB7InN1YiI6ICJPTWR3a2sySFB1aUluUHlwV1VXTXhvdDFZMnRTdEdzTHVJY0RNa
+ktkWE1VIiwgImdpdmVuX25hbWUiOiAiQWZLS0g0YTBJWmtpOE1GRHl0aEZhRlNfWHF6bi1
+3UnZBTWZpeV9WallwRSIsICJmYW1pbHlfbmFtZSI6ICJlVW1YbXJ5MzJKaUtfNzZ4TWFzY
+WdrQVFRc21TVmRXNTdBamsxOHJpU0YwIiwgImVtYWlsIjogIi1SY3I0ZkR5andsTV9pdGN
+NeG9RWkNFMVFBRXd5TEpjaWJFcEgxMTRLaUUiLCAicGhvbmVfbnVtYmVyIjogIkp2Mm53M
+EMxd1A1QVN1dFlOQXhyV0VuYURSSXBpRjBlVFVBa1VPcDhGNlkiLCAiYWRkcmVzcyI6ICJ
+acmpLcy1SbUVBVmVBWVN6U3c2R1BGck1wY2djdENmYUo2dDlxUWhiZko0IiwgImJpcnRoZ
+GF0ZSI6ICJxWFBSUlBkcE5hZWJQOGp0YkVwTy1za0Y0bjd2N0FTVGg4b0xnMG1rQWRRIn1
+9.QgoJn9wkjFvM9bAr0hTDHLspuqdA21WzfBRVHkASa2ck4PFD3TC9MiZSi3AiRytRbYT4
+ZzvkH3BSbm6vy68y62gj0A6OYvZ1Z60Wxho14bxZQveJZgw3u_lMvYj6GKiUtskypFEHU-
+Kd-LoDVqEpf6lPQHdpsac__yQ_JL24oCEBlVQRXB-T-6ZNZfID6JafSkNNCYQbI8nXbzIE
+p1LBFm0fE8eUd4G4yPYOj1SeuR6Gy92T0vAoL5QtpIAHo49oAmiSIj6DQNl2cNYs74jhrB
+IcNZyt4l8H1lV20wS5OS3T0vXaYD13fgm0p4iWD9cVg3HKShUVulEyrSbq94jIKg.eyJzZ
+F9yZWxlYXNlIjogeyJzdWIiOiAie1wic1wiOiBcIjJHTEM0MnNLUXZlQ2ZHZnJ5TlJOOXd
+cIiwgXCJ2XCI6IFwiNmM1YzBhNDktYjU4OS00MzFkLWJhZTctMjE5MTIyYTllYzJjXCJ9I
+iwgImdpdmVuX25hbWUiOiAie1wic1wiOiBcIjZJajd0TS1hNWlWUEdib1M1dG12VkFcIiw
+gXCJ2XCI6IFwiSm9oblwifSIsICJmYW1pbHlfbmFtZSI6ICJ7XCJzXCI6IFwiUWdfTzY0e
+nFBeGU0MTJhMTA4aXJvQVwiLCBcInZcIjogXCJEb2VcIn0iLCAiZW1haWwiOiAie1wic1w
+iOiBcIlBjMzNKTTJMY2hjVV9sSGdndl91ZlFcIiwgXCJ2XCI6IFwiam9obmRvZUBleGFtc
+GxlLmNvbVwifSIsICJwaG9uZV9udW1iZXIiOiAie1wic1wiOiBcImxrbHhGNWpNWWxHVFB
+Vb3ZNTkl2Q0FcIiwgXCJ2XCI6IFwiKzEtMjAyLTU1NS0wMTAxXCJ9IiwgImFkZHJlc3MiO
+iAie1wic1wiOiBcIjViUHMxSXF1Wk5hMGhrYUZ6enpaTndcIiwgXCJ2XCI6IHtcInN0cmV
+ldF9hZGRyZXNzXCI6IFwiMTIzIE1haW4gU3RcIiwgXCJsb2NhbGl0eVwiOiBcIkFueXRvd
+25cIiwgXCJyZWdpb25cIjogXCJBbnlzdGF0ZVwiLCBcImNvdW50cnlcIjogXCJVU1wifX0
+iLCAiYmlydGhkYXRlIjogIntcInNcIjogXCJ5MXNWVTV3ZGZKYWhWZGd3UGdTN1JRXCIsI
+FwidlwiOiBcIjE5NDAtMDEtMDFcIn0ifX0
 </artwork>
 <t>(Line breaks for presentation only.)</t>
 </section>
@@ -519,11 +587,7 @@ the claims received from the holder by computing the hash digests of the claim
 values and the salts revealed in the SD-JWT-R using the hashing algorithm
 specified in SD-JWT and comparing them to the hash digests included in SD-JWT.</t>
 <t>For each claim, an array of the salt and the claim value is contained in the
-<<<<<<< HEAD
-<tt>sd_release</tt> object. The structure of <tt>sd_release</tt> object in the SD-JWT-R is the same as in SD-JWT.</t>
-=======
 <tt>sd_release</tt> object. The structure of an <tt>sd_release</tt> object in the SD-JWT-R is the same as the structure of an <tt>sd_release</tt> object in SVC.</t>
->>>>>>> 3f4d47c (Explain JSON string literals and processing model)
 <t>The SD-JWT-R MAY contain further claims, for example, to ensure a binding
 to a concrete transaction (in the example the <tt>nonce</tt> and <tt>aud</tt> claims).</t>
 <t>When the holder sends the SD-JWT-R to the Verifier, the SD-JWT-R MUST be a JWS
@@ -541,14 +605,14 @@ is not signed. TODO: Change to plain base64 to avoid alg=none issues</t>
   &quot;nonce&quot;: &quot;XZOUco1u_gEPknxS78sWWg&quot;,
   &quot;aud&quot;: &quot;https://example.com/verifier&quot;,
   &quot;sd_release&quot;: {
-    &quot;given_name&quot;: &quot;[\&quot;eluV5Og3gSNII8EYnsxA_A\&quot;, \&quot;John\&quot;]&quot;,
-    &quot;family_name&quot;: &quot;[\&quot;6Ij7tM-a5iVPGboS5tmvVA\&quot;, \&quot;Doe\&quot;]&quot;,
-    &quot;address&quot;: &quot;[\&quot;AJx-095VPrpTtN4QMOqROA\&quot;, {\&quot;street_address\&quot;: \&quot;123 Main St\&quot;, \&quot;locality\&quot;: \&quot;Anytown\&quot;, \&quot;region\&quot;: \&quot;Anystate\&quot;, \&quot;country\&quot;: \&quot;US\&quot;}]&quot;
+    &quot;given_name&quot;: &quot;{\&quot;s\&quot;: \&quot;6Ij7tM-a5iVPGboS5tmvVA\&quot;, \&quot;v\&quot;: \&quot;John\&quot;}&quot;,
+    &quot;family_name&quot;: &quot;{\&quot;s\&quot;: \&quot;Qg_O64zqAxe412a108iroA\&quot;, \&quot;v\&quot;: \&quot;Doe\&quot;}&quot;,
+    &quot;address&quot;: &quot;{\&quot;s\&quot;: \&quot;5bPs1IquZNa0hkaFzzzZNw\&quot;, \&quot;v\&quot;: {\&quot;street_address\&quot;: \&quot;123 Main St\&quot;, \&quot;locality\&quot;: \&quot;Anytown\&quot;, \&quot;region\&quot;: \&quot;Anystate\&quot;, \&quot;country\&quot;: \&quot;US\&quot;}}&quot;
   }
 }
 </sourcecode>
-<t>For each claim, an array of the salt and the claim value is contained in the
-<tt>sd_release</tt> object.</t>
+<t>For each claim, a JSON literal that decodes to an object with the and the claim
+value (plus optionally the claim name) is contained in the <tt>sd_release</tt> object.</t>
 <t>Again, the SD-JWT-R follows the same structure as the <tt>sd_digests</tt> in the SD-JWT.</t>
 <t>Below is a non-normative example of a representation of the SD-JWT-R JWS Compact
 Serialization:</t>
@@ -556,17 +620,17 @@ Serialization:</t>
 <artwork anchor="example-simple-serialized_sd_jwt_release">eyJhbGciOiAiUlMyNTYiLCAia2lkIjogIkxkeVRYd0F5ZnJpcjRfVjZORzFSYzEwVThKZE
 xZVHJFQktKaF9oNWlfclUifQ.eyJub25jZSI6ICJYWk9VY28xdV9nRVBrbnhTNzhzV1dnI
 iwgImF1ZCI6ICJodHRwczovL2V4YW1wbGUuY29tL3ZlcmlmaWVyIiwgInNkX3JlbGVhc2U
-iOiB7ImdpdmVuX25hbWUiOiAiW1wiZWx1VjVPZzNnU05JSThFWW5zeEFfQVwiLCBcIkpva
-G5cIl0iLCAiZmFtaWx5X25hbWUiOiAiW1wiNklqN3RNLWE1aVZQR2JvUzV0bXZWQVwiLCB
-cIkRvZVwiXSIsICJhZGRyZXNzIjogIltcIkFKeC0wOTVWUHJwVHRONFFNT3FST0FcIiwge
-1wic3RyZWV0X2FkZHJlc3NcIjogXCIxMjMgTWFpbiBTdFwiLCBcImxvY2FsaXR5XCI6IFw
-iQW55dG93blwiLCBcInJlZ2lvblwiOiBcIkFueXN0YXRlXCIsIFwiY291bnRyeVwiOiBcI
-lVTXCJ9XSJ9fQ.j5jtArW1QDK1BNM13sJbQaE00GsAhhiPRYi6oK-iJRtLWE6DAgcWxDir
-TvxTnuo7Mbb6gSqGTmdEEtmscWxweFfGQoddObPTDiapjWiR1bUMMqPDKNNkRe0CBkU-pW
-ieYWN-fQxlRa4BKUqs18jcvGtTGA8Ye-i6t2xLROeXf2U_Seko8b7MQWIFHdbc0LvEFt_-
-JAcqeshH5wjVkwhHofVuZq1vGLlINKBveKA2dmn6wuEzi6XRceTwFrG_hTECagfobdO-bY
-MF3FSiCQM2KxC_6_aLApYo0aH3zjBv9rm0qNmnL_JGN5FIu6YqwhvPzfdsfkjMd68o8LTW
-d7F6kQ
+iOiB7ImdpdmVuX25hbWUiOiAie1wic1wiOiBcIjZJajd0TS1hNWlWUEdib1M1dG12VkFcI
+iwgXCJ2XCI6IFwiSm9oblwifSIsICJmYW1pbHlfbmFtZSI6ICJ7XCJzXCI6IFwiUWdfTzY
+0enFBeGU0MTJhMTA4aXJvQVwiLCBcInZcIjogXCJEb2VcIn0iLCAiYWRkcmVzcyI6ICJ7X
+CJzXCI6IFwiNWJQczFJcXVaTmEwaGthRnp6elpOd1wiLCBcInZcIjoge1wic3RyZWV0X2F
+kZHJlc3NcIjogXCIxMjMgTWFpbiBTdFwiLCBcImxvY2FsaXR5XCI6IFwiQW55dG93blwiL
+CBcInJlZ2lvblwiOiBcIkFueXN0YXRlXCIsIFwiY291bnRyeVwiOiBcIlVTXCJ9fSJ9fQ.
+fw4xRl7m1mDPCZvCTn3GOr2PgBZ--fTKfy7s-GuEifNvzW5KsJaBBFvzdZztm25XGhk29u
+w-XwEw00r0hyxXLBvWfA0XbDK3JBmdpOSW1bEyNBdSHPJoeq9Xyts2JN40vJzU2UxNaLKD
+aEheWf3F_E52yhHxvMLNdvZJ9FksJdSMK6ZCyGfRJadPN2GhNltqph52sWiFKUyUk_4Rtw
+XmT_lF49tWOMZqtG-akN9wrBoMsleM0soA0BXIK10rG5cKZoSNr-u2luzbdZx3CFdAenaq
+ScIkluPPcrXBZGYyX2zYUbGQs2RRXnBmox_yl6CvLbb0qTTYhDnDEo_MH-ZtWw
 </artwork>
 <t>(Line breaks for presentation only.)</t>
 </section>
@@ -576,43 +640,6 @@ d7F6kQ
 
 <artwork anchor="example-simple-combined_sd_jwt_sd_jwt_release">eyJhbGciOiAiUlMyNTYiLCAia2lkIjogImNBRUlVcUowY21MekQxa3pHemhlaUJhZzBZUk
 F6VmRsZnhOMjgwTmdIYUEifQ.eyJpc3MiOiAiaHR0cHM6Ly9leGFtcGxlLmNvbS9pc3N1Z
-<<<<<<< HEAD
-XIiLCAic3ViX2p3ayI6IHsia3R5IjogIlJTQSIsICJuIjogInBtNGJPSEJnLW9ZaEF5UFd
-6UjU2QVdYM3JVSVhwMTFfSUNEa0dnUzZXM1pXTHRzLWh6d0kzeDY1NjU5a2c0aFZvOWRiR
-29DSkUzWkdGX2VhZXRFMzBVaEJVRWdwR3dyRHJRaUo5enFwcm1jRmZyM3F2dmtHanR0aDh
-aZ2wxZU0yYkpjT3dFN1BDQkhXVEtXWXMxNTJSN2c2SmcyT1ZwaC1hOHJxLXE3OU1oS0c1U
-W9XX21UejEwUVRfNkg0YzdQaldHMWZqaDhocFdObmJQX3B2NmQxelN3WmZjNWZsNnlWUkw
-wRFYwVjNsR0hLZTJXcWZfZU5HakJyQkxWa2xEVGs4LXN0WF9NV0xjUi1FR21YQU92MFVCV
-2l0U19kWEpLSnUtdlhKeXcxNG5IU0d1eFRJSzJoeDFwdHRNZnQ5Q3N2cWltWEtlRFRVMTR
-xUUwxZUU3aWhjdyIsICJlIjogIkFRQUIifSwgImlhdCI6IDE1MTYyMzkwMjIsICJleHAiO
-iAxNTE2MjQ3MDIyLCAiaGFzaF9hbGciOiAic2hhLTI1NiIsICJzZF9kaWdlc3RzIjogeyJ
-zdWIiOiAiejR4Z0Vjbzk0ZGlUYVNydUlTUGlFN29fd3RtY09mbkhfOFI3WDlQYTU3OCIsI
-CJnaXZlbl9uYW1lIjogIlB2VTdjV2p1SFVxNnctaTlYRnBRWmhqVC11cHJRTDNHSDNtS3N
-BSmwwZTAiLCAiZmFtaWx5X25hbWUiOiAiSC1SZWxyNGNFQk1sZW55SzFndnl4MTZRVnBud
-DRNRWNsVDV0UDBhVExGVSIsICJlbWFpbCI6ICJFVDJBMUpRTEY4NVpwQnVsaDZVRnN0R3J
-TZlI0QjNLTS1ialFWbGxoeHFZIiwgInBob25lX251bWJlciI6ICJTSm5jaUIyRElSVkE1Y
-1hCcmRLb0g2bjQ1Nzg4bVp5VW4ycm52NzR1TVZVIiwgImFkZHJlc3MiOiAiMEZsZHFMZkd
-uRVJQUFZEQzE3b2Q5eGI0dzNpUkpURVFiV19ZazlBbW5EdyIsICJiaXJ0aGRhdGUiOiAiL
-Uwwa01nSWJMWGUzT0VrS1RVR3d6X1FLaGplaERlb2ZLR3dvUHJ4THVvNCJ9fQ.TSxRFVMl
-Nlt_drWLqQuzz9Sc19Bo5r-cgXZ0to8PfadImEJuPbhfkxCSt1xCT5IWQJrD6p_47h8Ac-
-5yOtuu8s-wxrQzCUAU7OS2ThQGKiDKsGv0oiH3KQX4QyCAOIIaWOLxO6VQRxI7Kn6RFT0M
-5jQxBNFmL582n_uJR31ANBO45Jc_pgp4iSTn2vf1lxxwU7B3bgrad0vHmvwmv1lu17Ov79
-SGmT_fTjoybIJfHavTq61xCJ3UrMAGCEqm-_laOTxB1HRbPF38va0iuhqSSk2QaUpfDsVb
-9VsPBVIx_MsGlK3kYUWcHzkJ0BBPIVu0xnVcLkg1_SO_5gPSxFWZ4g.eyJhbGciOiAiUlM
-yNTYiLCAia2lkIjogIkxkeVRYd0F5ZnJpcjRfVjZORzFSYzEwVThKZExZVHJFQktKaF9oN
-WlfclUifQ.eyJub25jZSI6ICJYWk9VY28xdV9nRVBrbnhTNzhzV1dnIiwgImF1ZCI6ICJo
-dHRwczovL2V4YW1wbGUuY29tL3ZlcmlmaWVyIiwgInNkX3JlbGVhc2UiOiB7ImdpdmVuX2
-5hbWUiOiAiW1wiZWx1VjVPZzNnU05JSThFWW5zeEFfQVwiLCBcIkpvaG5cIl0iLCAiZmFt
-aWx5X25hbWUiOiAiW1wiNklqN3RNLWE1aVZQR2JvUzV0bXZWQVwiLCBcIkRvZVwiXSIsIC
-JhZGRyZXNzIjogIltcIkFKeC0wOTVWUHJwVHRONFFNT3FST0FcIiwge1wic3RyZWV0X2Fk
-ZHJlc3NcIjogXCIxMjMgTWFpbiBTdFwiLCBcImxvY2FsaXR5XCI6IFwiQW55dG93blwiLC
-BcInJlZ2lvblwiOiBcIkFueXN0YXRlXCIsIFwiY291bnRyeVwiOiBcIlVTXCJ9XSJ9fQ.j
-5jtArW1QDK1BNM13sJbQaE00GsAhhiPRYi6oK-iJRtLWE6DAgcWxDirTvxTnuo7Mbb6gSq
-GTmdEEtmscWxweFfGQoddObPTDiapjWiR1bUMMqPDKNNkRe0CBkU-pWieYWN-fQxlRa4BK
-Uqs18jcvGtTGA8Ye-i6t2xLROeXf2U_Seko8b7MQWIFHdbc0LvEFt_-JAcqeshH5wjVkwh
-HofVuZq1vGLlINKBveKA2dmn6wuEzi6XRceTwFrG_hTECagfobdO-bYMF3FSiCQM2KxC_6
-_aLApYo0aH3zjBv9rm0qNmnL_JGN5FIu6YqwhvPzfdsfkjMd68o8LTWd7F6kQ
-=======
 XIiLCAiY25mIjogeyJqd2siOiB7Imt0eSI6ICJSU0EiLCAibiI6ICJwbTRiT0hCZy1vWWh
 BeVBXelI1NkFXWDNyVUlYcDExX0lDRGtHZ1M2VzNaV0x0cy1oendJM3g2NTY1OWtnNGhWb
 zlkYkdvQ0pFM1pHRl9lYWV0RTMwVWhCVUVncEd3ckRyUWlKOXpxcHJtY0ZmcjNxdnZrR2p
@@ -622,40 +649,39 @@ EtHNVFvV19tVHoxMFFUXzZINGM3UGpXRzFmamg4aHBXTm5iUF9wdjZkMXpTd1pmYzVmbDZ
 jBVQldpdFNfZFhKS0p1LXZYSnl3MTRuSFNHdXhUSUsyaHgxcHR0TWZ0OUNzdnFpbVhLZUR
 UVTE0cVFMMWVFN2loY3ciLCAiZSI6ICJBUUFCIn19LCAiaWF0IjogMTUxNjIzOTAyMiwgI
 mV4cCI6IDE1MTYyNDcwMjIsICJzZF9oYXNoX2FsZyI6ICJzaGEtMjU2IiwgInNkX2RpZ2V
-zdHMiOiB7InN1YiI6ICJ6NHhnRWNvOTRkaVRhU3J1SVNQaUU3b193dG1jT2ZuSF84UjdYO
-VBhNTc4IiwgImdpdmVuX25hbWUiOiAiUHZVN2NXanVIVXE2dy1pOVhGcFFaaGpULXVwclF
-MM0dIM21Lc0FKbDBlMCIsICJmYW1pbHlfbmFtZSI6ICJILVJlbHI0Y0VCTWxlbnlLMWd2e
-XgxNlFWcG50NE1FY2xUNXRQMGFUTEZVIiwgImVtYWlsIjogIkVUMkExSlFMRjg1WnBCdWx
-oNlVGc3RHclNmUjRCM0tNLWJqUVZsbGh4cVkiLCAicGhvbmVfbnVtYmVyIjogIlNKbmNpQ
-jJESVJWQTVjWEJyZEtvSDZuNDU3ODhtWnlVbjJybnY3NHVNVlUiLCAiYWRkcmVzcyI6ICI
-wRmxkcUxmR25FUlBQVkRDMTdvZDl4YjR3M2lSSlRFUWJXX1lrOUFtbkR3IiwgImJpcnRoZ
-GF0ZSI6ICItTDBrTWdJYkxYZTNPRWtLVFVHd3pfUUtoamVoRGVvZktHd29QcnhMdW80In1
-9.b0tAGzn4SMc94CN215lS0Ut2J_JBFZlJ3Wu5Ghi1tk0nEwJMMT2xk0Jf5GuQq4WHwPcT
-kV4wV7XNFC_-WP_NHVVrMV32q5dxn4G3MLNqRWSyVTZACLaP6Wx8OYIhDTsxPI-HZSdgjl
-bRj1QIE-AMZVDAtOEs9bPkweooAFM0moYoQHbTry1Gqgilw5CEQsDrtTZBbDXK3GlT_K4C
-bo4O9xMY8NbUgYct5Ix-sEpUBXpCd-o14rYvWnDsGcVxri4Jz453fMgFINi2Vz1skLtQmq
-RRgRLgILYetPOZqpVxfsCtgzDN_OGoSUq3pdvLJ3bFAzrt8dHenOvlz_CvlMXx2A.eyJhb
+zdHMiOiB7InN1YiI6ICJPTWR3a2sySFB1aUluUHlwV1VXTXhvdDFZMnRTdEdzTHVJY0RNa
+ktkWE1VIiwgImdpdmVuX25hbWUiOiAiQWZLS0g0YTBJWmtpOE1GRHl0aEZhRlNfWHF6bi1
+3UnZBTWZpeV9WallwRSIsICJmYW1pbHlfbmFtZSI6ICJlVW1YbXJ5MzJKaUtfNzZ4TWFzY
+WdrQVFRc21TVmRXNTdBamsxOHJpU0YwIiwgImVtYWlsIjogIi1SY3I0ZkR5andsTV9pdGN
+NeG9RWkNFMVFBRXd5TEpjaWJFcEgxMTRLaUUiLCAicGhvbmVfbnVtYmVyIjogIkp2Mm53M
+EMxd1A1QVN1dFlOQXhyV0VuYURSSXBpRjBlVFVBa1VPcDhGNlkiLCAiYWRkcmVzcyI6ICJ
+acmpLcy1SbUVBVmVBWVN6U3c2R1BGck1wY2djdENmYUo2dDlxUWhiZko0IiwgImJpcnRoZ
+GF0ZSI6ICJxWFBSUlBkcE5hZWJQOGp0YkVwTy1za0Y0bjd2N0FTVGg4b0xnMG1rQWRRIn1
+9.QgoJn9wkjFvM9bAr0hTDHLspuqdA21WzfBRVHkASa2ck4PFD3TC9MiZSi3AiRytRbYT4
+ZzvkH3BSbm6vy68y62gj0A6OYvZ1Z60Wxho14bxZQveJZgw3u_lMvYj6GKiUtskypFEHU-
+Kd-LoDVqEpf6lPQHdpsac__yQ_JL24oCEBlVQRXB-T-6ZNZfID6JafSkNNCYQbI8nXbzIE
+p1LBFm0fE8eUd4G4yPYOj1SeuR6Gy92T0vAoL5QtpIAHo49oAmiSIj6DQNl2cNYs74jhrB
+IcNZyt4l8H1lV20wS5OS3T0vXaYD13fgm0p4iWD9cVg3HKShUVulEyrSbq94jIKg.eyJhb
 GciOiAiUlMyNTYiLCAia2lkIjogIkxkeVRYd0F5ZnJpcjRfVjZORzFSYzEwVThKZExZVHJ
 FQktKaF9oNWlfclUifQ.eyJub25jZSI6ICJYWk9VY28xdV9nRVBrbnhTNzhzV1dnIiwgIm
 F1ZCI6ICJodHRwczovL2V4YW1wbGUuY29tL3ZlcmlmaWVyIiwgInNkX3JlbGVhc2UiOiB7
-ImdpdmVuX25hbWUiOiAiW1wiZWx1VjVPZzNnU05JSThFWW5zeEFfQVwiLCBcIkpvaG5cIl
-0iLCAiZmFtaWx5X25hbWUiOiAiW1wiNklqN3RNLWE1aVZQR2JvUzV0bXZWQVwiLCBcIkRv
-ZVwiXSIsICJhZGRyZXNzIjogIltcIkFKeC0wOTVWUHJwVHRONFFNT3FST0FcIiwge1wic3
-RyZWV0X2FkZHJlc3NcIjogXCIxMjMgTWFpbiBTdFwiLCBcImxvY2FsaXR5XCI6IFwiQW55
-dG93blwiLCBcInJlZ2lvblwiOiBcIkFueXN0YXRlXCIsIFwiY291bnRyeVwiOiBcIlVTXC
-J9XSJ9fQ.j5jtArW1QDK1BNM13sJbQaE00GsAhhiPRYi6oK-iJRtLWE6DAgcWxDirTvxTn
-uo7Mbb6gSqGTmdEEtmscWxweFfGQoddObPTDiapjWiR1bUMMqPDKNNkRe0CBkU-pWieYWN
--fQxlRa4BKUqs18jcvGtTGA8Ye-i6t2xLROeXf2U_Seko8b7MQWIFHdbc0LvEFt_-JAcqe
-shH5wjVkwhHofVuZq1vGLlINKBveKA2dmn6wuEzi6XRceTwFrG_hTECagfobdO-bYMF3FS
-iCQM2KxC_6_aLApYo0aH3zjBv9rm0qNmnL_JGN5FIu6YqwhvPzfdsfkjMd68o8LTWd7F6k
-Q
->>>>>>> 3f4d47c (Explain JSON string literals and processing model)
+ImdpdmVuX25hbWUiOiAie1wic1wiOiBcIjZJajd0TS1hNWlWUEdib1M1dG12VkFcIiwgXC
+J2XCI6IFwiSm9oblwifSIsICJmYW1pbHlfbmFtZSI6ICJ7XCJzXCI6IFwiUWdfTzY0enFB
+eGU0MTJhMTA4aXJvQVwiLCBcInZcIjogXCJEb2VcIn0iLCAiYWRkcmVzcyI6ICJ7XCJzXC
+I6IFwiNWJQczFJcXVaTmEwaGthRnp6elpOd1wiLCBcInZcIjoge1wic3RyZWV0X2FkZHJl
+c3NcIjogXCIxMjMgTWFpbiBTdFwiLCBcImxvY2FsaXR5XCI6IFwiQW55dG93blwiLCBcIn
+JlZ2lvblwiOiBcIkFueXN0YXRlXCIsIFwiY291bnRyeVwiOiBcIlVTXCJ9fSJ9fQ.fw4xR
+l7m1mDPCZvCTn3GOr2PgBZ--fTKfy7s-GuEifNvzW5KsJaBBFvzdZztm25XGhk29uw-XwE
+w00r0hyxXLBvWfA0XbDK3JBmdpOSW1bEyNBdSHPJoeq9Xyts2JN40vJzU2UxNaLKDaEheW
+f3F_E52yhHxvMLNdvZJ9FksJdSMK6ZCyGfRJadPN2GhNltqph52sWiFKUyUk_4RtwXmT_l
+F49tWOMZqtG-akN9wrBoMsleM0soA0BXIK10rG5cKZoSNr-u2luzbdZx3CFdAenaqScIkl
+uPPcrXBZGYyX2zYUbGQs2RRXnBmox_yl6CvLbb0qTTYhDnDEo_MH-ZtWw
 </artwork>
 <t>(Line breaks for presentation only.)</t>
 </section>
 </section>
 
-<section anchor="verification"><name>Verification</name>
+<section anchor="verification-and-processing"><name>Verification and Processing</name>
 
 <section anchor="verification-by-the-holder-when-receiving-sd-jwt-and-svc"><name>Verification by the Holder when Receiving SD-JWT and SVC</name>
 <t>The holder SHOULD verify the binding between SD-JWT and SVC by performing the following steps:
@@ -711,17 +737,18 @@ and the hash algorithm is deemed secure.</t>
 If <tt>sd_release</tt> is structured, the claim MUST be present at the same
 place within the structure.</t>
 </li>
-<li><t>Compute the base64url-encoded hash of a claim revealed from the Holder
-using the claim value and the salt included in the SD-JWT-R and
-the <tt>sd_hash_alg</tt> in SD-JWT.</t>
+<li><t>Compute the base64url-encoded hash digest of the JSON literal released
+by the Holder using the <tt>sd_hash_alg</tt> in SD-JWT.</t>
 </li>
-<li><t>Compare the hash digests computed in the previous step with the one of the same claim in the SD-JWT.
-Accept the claim only when the two hash digests match.</t>
+<li><t>Compare the hash digests computed in the previous step with the one of
+the same claim in the SD-JWT. Accept the claim only when the two hash
+digests match.</t>
 </li>
 <li><t>Ensure that the claim value in the SD-JWT-R is a JSON-encoded
-array of exactly two values.</t>
+object containing at least the keys <tt>s</tt> and <tt>v</tt>, and optionally <tt>n</tt>.</t>
 </li>
-<li><t>Store the second of the two values.</t>
+<li><t>Store the value of the key <tt>v</tt> as the claim value. If <tt>n</tt> is contained
+in the object, use the value of the key <tt>n</tt> as the claim name.</t>
 </li>
 </ol></li>
 <li><t>Once all necessary claims have been verified, their values can be
@@ -732,6 +759,31 @@ released.</t>
 </ol></li>
 </ol>
 <t>If any step fails, the input is not valid and processing MUST be aborted.</t>
+</section>
+
+<section anchor="processing_model"><name>Processing Model</name>
+<t>Neither an SD-JWT nor an SD-JWT-R is suitable for direct use by an application.
+Besides the REQUIRED verification steps listed above, it is further RECOMMENDED
+that an application-consumable format is generated from the data released in
+the SD-JWT-Release. The RECOMMENDED way is to merge the released claims and any
+plaintext claims in the SD-JWT recursively:</t>
+
+<ul>
+<li><t>Objects from the released claims must be merged into existing objects from the SD-JWT.</t>
+</li>
+<li><t>If a key is present in both objects:</t>
+
+<ul>
+<li><t>If the value in the released claims is and object and the value in the
+SD-JWT claims is an object, the two objects MUST be merged recursively.</t>
+</li>
+<li><t>Else, the value in the released claims MUST be used.</t>
+</li>
+</ul></li>
+</ul>
+<t>The keys <tt>sd_digests</tt> and <tt>sd_hash_alg</tt> SHOULD be removed prior to further
+processing.</t>
+<t>An example can be seen in Example 3 in the Appendix.</t>
 </section>
 </section>
 
@@ -781,14 +833,33 @@ revealed fundamental weaknesses and they MUST NOT be used.</t>
 <section anchor="holder_binding_security"><name>Holder Binding</name>
 <t>TBD</t>
 </section>
+
+<section anchor="blinding-claim-names"><name>Blinding Claim Names</name>
+<t>Issuers that chose to blind claim names MUST ensure not to inadvertently leak
+information about the blinded claim names to verifiers. In particular, issuers
+MUST choose placeholder claim names accordingly. It is RECOMMENDED to use
+cryptographically random values with at least 128 bits of entropy as placeholder
+claim names.</t>
+<t>The order of elements in JSON-encoded objects is not relevant to applications,
+but the order may reveal information about the blinded claim name to the
+verifier. It is therefore RECOMMENDED to ensure that the order is shuffled or
+otherwise hidden (e.g., alphabetically ordered using the blinded claim names).</t>
+</section>
 </section>
 
 <section anchor="privacy_considerations"><name>Privacy Considerations</name>
 
 <section anchor="claim-names"><name>Claim Names</name>
-<t>Claim names are not hashed in the SD-JWT and are used as keys in a key-value pair, where the value is the hash.
-This is because SD-JWT already reveals information about the issuer and the schema,
-and revealing the claim names does not provide any additional information.</t>
+<t>By default, claim names are not blinded in an SD-JWT. In this case, even when
+the claim's value is not known to a verifier, the claim name can disclose some
+information to the verifier. For example, if the SD-JWT contains a claim named
+<tt>super_secret_club_membership_no</tt>, the verifier might assume that the end-user
+is a member of the Super Secret Club.</t>
+<t>Blinding claim names can help to avoid this potential privacy issue. In many
+cases, however, verifiers can already deduce this or similar information just
+from the identification of the issuer and the schema used for the SD-JWT.
+Blinding claim names might not provide additional privacy if this is the case.</t>
+<t>Furthermore, re-using the same value to blind a claim name may limit the privacy benefits.</t>
 </section>
 
 <section anchor="unlinkability"><name>Unlinkability</name>
@@ -823,20 +894,13 @@ for their contributions (some of which substantial) to this draft and to the ini
 
 <back>
 <references><name>Normative References</name>
-<<<<<<< HEAD
-<xi:include href="https://xml2rfc.ietf.org/public/rfc/bibxml/reference.RFC.8174.xml"/>
 <xi:include href="https://xml2rfc.ietf.org/public/rfc/bibxml/reference.RFC.7519.xml"/>
+<xi:include href="https://xml2rfc.ietf.org/public/rfc/bibxml/reference.RFC.8174.xml"/>
+<xi:include href="https://xml2rfc.ietf.org/public/rfc/bibxml/reference.RFC.8259.xml"/>
 <xi:include href="https://xml2rfc.ietf.org/public/rfc/bibxml/reference.RFC.7515.xml"/>
 <xi:include href="https://xml2rfc.ietf.org/public/rfc/bibxml/reference.RFC.2119.xml"/>
-=======
-<xi:include href="https://xml2rfc.ietf.org/public/rfc/bibxml/reference.RFC.7519.xml"/>
-<xi:include href="https://xml2rfc.ietf.org/public/rfc/bibxml/reference.RFC.7515.xml"/>
-<xi:include href="https://xml2rfc.ietf.org/public/rfc/bibxml/reference.RFC.2119.xml"/>
-<xi:include href="https://xml2rfc.ietf.org/public/rfc/bibxml/reference.RFC.8174.xml"/>
->>>>>>> 3f4d47c (Explain JSON string literals and processing model)
 </references>
 <references><name>Informative References</name>
-<xi:include href="https://xml2rfc.ietf.org/public/rfc/bibxml/reference.RFC.7800.xml"/>
 <xi:include href="https://xml2rfc.ietf.org/public/rfc/bibxml/reference.RFC.8725.xml"/>
 <reference anchor="VC_DATA" target="https://www.w3.org/TR/vc_data">
   <front>
@@ -862,6 +926,8 @@ for their contributions (some of which substantial) to this draft and to the ini
     <date year="2019" month="Nov" day="19"></date>
   </front>
 </reference>
+<xi:include href="https://xml2rfc.ietf.org/public/rfc/bibxml/reference.RFC.7800.xml"/>
+<xi:include href="https://xml2rfc.ietf.org/public/rfc/bibxml/reference.RFC.8785.xml"/>
 </references>
 
 <section anchor="additional-examples"><name>Additional Examples</name>
@@ -874,35 +940,28 @@ allows for the release of individual members of the address claim separately.</t
 <sourcecode anchor="example-simple_structured-sd_jwt_payload" type="json">{
   &quot;iss&quot;: &quot;https://example.com/issuer&quot;,
   &quot;cnf&quot;: {
-<<<<<<< HEAD
-    &quot;jwk&quot; : {
-        &quot;kty&quot;: &quot;RSA&quot;,
-        &quot;n&quot;: &quot;pm4bOHBg-oYhAyPWzR56AWX3rUIXp11_ICDkGgS6W3ZWLts-hzwI3x65659kg4hVo9dbGoCJE3ZGF_eaetE30UhBUEgpGwrDrQiJ9zqprmcFfr3qvvkGjtth8Zgl1eM2bJcOwE7PCBHWTKWYs152R7g6Jg2OVph-a8rq-q79MhKG5QoW_mTz10QT_6H4c7PjWG1fjh8hpWNnbP_pv6d1zSwZfc5fl6yVRL0DV0V3lGHKe2Wqf_eNGjBrBLVklDTk8-stX_MWLcR-EGmXAOv0UBWitS_dXJKJu-vXJyw14nHSGuxTIK2hx1pttMft9CsvqimXKeDTU14qQL1eE7ihcw&quot;,
-        &quot;e&quot;: &quot;AQAB&quot;
-=======
     &quot;jwk&quot;: {
       &quot;kty&quot;: &quot;RSA&quot;,
       &quot;n&quot;: &quot;pm4bOHBg-oYhAyPWzR56AWX3rUIXp11_ICDkGgS6W3ZWLts-hzwI3x65659kg4hVo9dbGoCJE3ZGF_eaetE30UhBUEgpGwrDrQiJ9zqprmcFfr3qvvkGjtth8Zgl1eM2bJcOwE7PCBHWTKWYs152R7g6Jg2OVph-a8rq-q79MhKG5QoW_mTz10QT_6H4c7PjWG1fjh8hpWNnbP_pv6d1zSwZfc5fl6yVRL0DV0V3lGHKe2Wqf_eNGjBrBLVklDTk8-stX_MWLcR-EGmXAOv0UBWitS_dXJKJu-vXJyw14nHSGuxTIK2hx1pttMft9CsvqimXKeDTU14qQL1eE7ihcw&quot;,
       &quot;e&quot;: &quot;AQAB&quot;
->>>>>>> 3f4d47c (Explain JSON string literals and processing model)
     }
   },
   &quot;iat&quot;: 1516239022,
   &quot;exp&quot;: 1516247022,
   &quot;sd_hash_alg&quot;: &quot;sha-256&quot;,
   &quot;sd_digests&quot;: {
-    &quot;sub&quot;: &quot;z4xgEco94diTaSruISPiE7o_wtmcOfnH_8R7X9Pa578&quot;,
-    &quot;given_name&quot;: &quot;PvU7cWjuHUq6w-i9XFpQZhjT-uprQL3GH3mKsAJl0e0&quot;,
-    &quot;family_name&quot;: &quot;H-Relr4cEBMlenyK1gvyx16QVpnt4MEclT5tP0aTLFU&quot;,
-    &quot;email&quot;: &quot;ET2A1JQLF85ZpBulh6UFstGrSfR4B3KM-bjQVllhxqY&quot;,
-    &quot;phone_number&quot;: &quot;SJnciB2DIRVA5cXBrdKoH6n45788mZyUn2rnv74uMVU&quot;,
+    &quot;sub&quot;: &quot;OMdwkk2HPuiInPypWUWMxot1Y2tStGsLuIcDMjKdXMU&quot;,
+    &quot;given_name&quot;: &quot;AfKKH4a0IZki8MFDythFaFS_Xqzn-wRvAMfiy_VjYpE&quot;,
+    &quot;family_name&quot;: &quot;eUmXmry32JiK_76xMasagkAQQsmSVdW57Ajk18riSF0&quot;,
+    &quot;email&quot;: &quot;-Rcr4fDyjwlM_itcMxoQZCE1QAEwyLJcibEpH114KiE&quot;,
+    &quot;phone_number&quot;: &quot;Jv2nw0C1wP5ASutYNAxrWEnaDRIpiF0eTUAkUOp8F6Y&quot;,
     &quot;address&quot;: {
-      &quot;street_address&quot;: &quot;O7_Isd6CmZqcSobPVpMgmJwB41hPUHHG8jg5LJ8YzfY&quot;,
-      &quot;locality&quot;: &quot;w-zTF6ljkQLTvVyp_JNyD3t5Waj-B2vb0AXH1q8OsjI&quot;,
-      &quot;region&quot;: &quot;nTvoKpGA6YQwEZipVBIM4WVH9KWEnwiqsRjEhrxhQz4&quot;,
-      &quot;country&quot;: &quot;u-O1yDQqDTTqOgUBSjWilgkMLzg_QOTELMfZrRT5e6k&quot;
+      &quot;street_address&quot;: &quot;n25N6kth9N0CwjZXHeth1gfovg8_I8fGyzeY0qeLp0k&quot;,
+      &quot;locality&quot;: &quot;gJVL_TKoT_SbA4_sv0klLTkg-YEGzVUkC-6egxegsz0&quot;,
+      &quot;region&quot;: &quot;zXbstGPuPq2cPJfyD_-HlmqVyFMf03xH-FbeotXxdbo&quot;,
+      &quot;country&quot;: &quot;pN-5CZ5hbumsPvLKUADm4Ott6gu0E4xj09s4Z51yb8U&quot;
     },
-    &quot;birthdate&quot;: &quot;TipyoxD43PZJF8ZEmKPrbxMElpFX_M7aBLkUpC-W53o&quot;
+    &quot;birthdate&quot;: &quot;UxsvgkUgPnawP6wY4hmxJ_jqiNNKni62zrX7hQOUsys&quot;
   }
 }
 </sourcecode>
@@ -910,18 +969,18 @@ allows for the release of individual members of the address claim separately.</t
 
 <sourcecode anchor="example-simple_structured-svc_payload" type="json">{
   &quot;sd_release&quot;: {
-    &quot;sub&quot;: &quot;[\&quot;2GLC42sKQveCfGfryNRN9w\&quot;, \&quot;6c5c0a49-b589-431d-bae7-219122a9ec2c\&quot;]&quot;,
-    &quot;given_name&quot;: &quot;[\&quot;eluV5Og3gSNII8EYnsxA_A\&quot;, \&quot;John\&quot;]&quot;,
-    &quot;family_name&quot;: &quot;[\&quot;6Ij7tM-a5iVPGboS5tmvVA\&quot;, \&quot;Doe\&quot;]&quot;,
-    &quot;email&quot;: &quot;[\&quot;eI8ZWm9QnKPpNPeNenHdhQ\&quot;, \&quot;johndoe@example.com\&quot;]&quot;,
-    &quot;phone_number&quot;: &quot;[\&quot;Qg_O64zqAxe412a108iroA\&quot;, \&quot;+1-202-555-0101\&quot;]&quot;,
+    &quot;sub&quot;: &quot;{\&quot;s\&quot;: \&quot;2GLC42sKQveCfGfryNRN9w\&quot;, \&quot;v\&quot;: \&quot;6c5c0a49-b589-431d-bae7-219122a9ec2c\&quot;}&quot;,
+    &quot;given_name&quot;: &quot;{\&quot;s\&quot;: \&quot;6Ij7tM-a5iVPGboS5tmvVA\&quot;, \&quot;v\&quot;: \&quot;John\&quot;}&quot;,
+    &quot;family_name&quot;: &quot;{\&quot;s\&quot;: \&quot;Qg_O64zqAxe412a108iroA\&quot;, \&quot;v\&quot;: \&quot;Doe\&quot;}&quot;,
+    &quot;email&quot;: &quot;{\&quot;s\&quot;: \&quot;Pc33JM2LchcU_lHggv_ufQ\&quot;, \&quot;v\&quot;: \&quot;johndoe@example.com\&quot;}&quot;,
+    &quot;phone_number&quot;: &quot;{\&quot;s\&quot;: \&quot;lklxF5jMYlGTPUovMNIvCA\&quot;, \&quot;v\&quot;: \&quot;+1-202-555-0101\&quot;}&quot;,
     &quot;address&quot;: {
-      &quot;street_address&quot;: &quot;[\&quot;AJx-095VPrpTtN4QMOqROA\&quot;, \&quot;123 Main St\&quot;]&quot;,
-      &quot;locality&quot;: &quot;[\&quot;Pc33JM2LchcU_lHggv_ufQ\&quot;, \&quot;Anytown\&quot;]&quot;,
-      &quot;region&quot;: &quot;[\&quot;G02NSrQfjFXQ7Io09syajA\&quot;, \&quot;Anystate\&quot;]&quot;,
-      &quot;country&quot;: &quot;[\&quot;lklxF5jMYlGTPUovMNIvCA\&quot;, \&quot;US\&quot;]&quot;
+      &quot;street_address&quot;: &quot;{\&quot;s\&quot;: \&quot;5bPs1IquZNa0hkaFzzzZNw\&quot;, \&quot;v\&quot;: \&quot;123 Main St\&quot;}&quot;,
+      &quot;locality&quot;: &quot;{\&quot;s\&quot;: \&quot;y1sVU5wdfJahVdgwPgS7RQ\&quot;, \&quot;v\&quot;: \&quot;Anytown\&quot;}&quot;,
+      &quot;region&quot;: &quot;{\&quot;s\&quot;: \&quot;C9GSoujviJquEgYfojCb1A\&quot;, \&quot;v\&quot;: \&quot;Anystate\&quot;}&quot;,
+      &quot;country&quot;: &quot;{\&quot;s\&quot;: \&quot;H3o1uswP760Fi2yeGdVCEQ\&quot;, \&quot;v\&quot;: \&quot;US\&quot;}&quot;
     },
-    &quot;birthdate&quot;: &quot;[\&quot;nPuoQnkRFq3BIeAm7AnXFA\&quot;, \&quot;1940-01-01\&quot;]&quot;
+    &quot;birthdate&quot;: &quot;{\&quot;s\&quot;: \&quot;M0Jb57t41ubrkSuyrDT3xA\&quot;, \&quot;v\&quot;: \&quot;1940-01-01\&quot;}&quot;
   }
 }
 </sourcecode>
@@ -932,12 +991,12 @@ the <tt>address</tt> property:</t>
   &quot;nonce&quot;: &quot;XZOUco1u_gEPknxS78sWWg&quot;,
   &quot;aud&quot;: &quot;https://example.com/verifier&quot;,
   &quot;sd_release&quot;: {
-    &quot;given_name&quot;: &quot;[\&quot;eluV5Og3gSNII8EYnsxA_A\&quot;, \&quot;John\&quot;]&quot;,
-    &quot;family_name&quot;: &quot;[\&quot;6Ij7tM-a5iVPGboS5tmvVA\&quot;, \&quot;Doe\&quot;]&quot;,
-    &quot;birthdate&quot;: &quot;[\&quot;nPuoQnkRFq3BIeAm7AnXFA\&quot;, \&quot;1940-01-01\&quot;]&quot;,
+    &quot;given_name&quot;: &quot;{\&quot;s\&quot;: \&quot;6Ij7tM-a5iVPGboS5tmvVA\&quot;, \&quot;v\&quot;: \&quot;John\&quot;}&quot;,
+    &quot;family_name&quot;: &quot;{\&quot;s\&quot;: \&quot;Qg_O64zqAxe412a108iroA\&quot;, \&quot;v\&quot;: \&quot;Doe\&quot;}&quot;,
+    &quot;birthdate&quot;: &quot;{\&quot;s\&quot;: \&quot;M0Jb57t41ubrkSuyrDT3xA\&quot;, \&quot;v\&quot;: \&quot;1940-01-01\&quot;}&quot;,
     &quot;address&quot;: {
-      &quot;region&quot;: &quot;[\&quot;G02NSrQfjFXQ7Io09syajA\&quot;, \&quot;Anystate\&quot;]&quot;,
-      &quot;country&quot;: &quot;[\&quot;lklxF5jMYlGTPUovMNIvCA\&quot;, \&quot;US\&quot;]&quot;
+      &quot;region&quot;: &quot;{\&quot;s\&quot;: \&quot;C9GSoujviJquEgYfojCb1A\&quot;, \&quot;v\&quot;: \&quot;Anystate\&quot;}&quot;,
+      &quot;country&quot;: &quot;{\&quot;s\&quot;: \&quot;H3o1uswP760Fi2yeGdVCEQ\&quot;, \&quot;v\&quot;: \&quot;US\&quot;}&quot;
     }
   }
 }
@@ -946,7 +1005,7 @@ the <tt>address</tt> property:</t>
 
 <section anchor="example-3-complex-structured-sd-jwt"><name>Example 3 - Complex Structured SD-JWT</name>
 <t>In this example, a complex object such as those used for OIDC4IDA (todo reference) is used.</t>
-<t>In this example, the Issuer is using a following object as a set of claims to issue to the Holder:</t>
+<t>In this example, the Issuer is using a following object as a set of selective disclosure claims to issue to the Holder:</t>
 
 <sourcecode anchor="example-complex-user_claims" type="json">{
   &quot;verified_claims&quot;: {
@@ -975,11 +1034,6 @@ the <tt>address</tt> property:</t>
     &quot;claims&quot;: {
       &quot;given_name&quot;: &quot;Max&quot;,
       &quot;family_name&quot;: &quot;Meier&quot;,
-      &quot;birthdate&quot;: &quot;1956-01-28&quot;,
-      &quot;place_of_birth&quot;: {
-        &quot;country&quot;: &quot;DE&quot;,
-        &quot;locality&quot;: &quot;Musterstadt&quot;
-      },
       &quot;nationalities&quot;: [
         &quot;DE&quot;
       ],
@@ -996,22 +1050,15 @@ the <tt>address</tt> property:</t>
   &quot;msisdn&quot;: &quot;49123456789&quot;
 }
 </sourcecode>
-<t>The following shows the resulting SD-JWT payload:</t>
+<t>The issuer in this example further adds the two claims <tt>birthdate</tt> and <tt>place_of_birth</tt> to the <tt>claims</tt> element in plain text. The following shows the resulting SD-JWT payload:</t>
 
 <sourcecode anchor="example-complex-sd_jwt_payload" type="json">{
   &quot;iss&quot;: &quot;https://example.com/issuer&quot;,
   &quot;cnf&quot;: {
-<<<<<<< HEAD
-    &quot;jwk&quot; : {
-        &quot;kty&quot;: &quot;RSA&quot;,
-        &quot;n&quot;: &quot;pm4bOHBg-oYhAyPWzR56AWX3rUIXp11_ICDkGgS6W3ZWLts-hzwI3x65659kg4hVo9dbGoCJE3ZGF_eaetE30UhBUEgpGwrDrQiJ9zqprmcFfr3qvvkGjtth8Zgl1eM2bJcOwE7PCBHWTKWYs152R7g6Jg2OVph-a8rq-q79MhKG5QoW_mTz10QT_6H4c7PjWG1fjh8hpWNnbP_pv6d1zSwZfc5fl6yVRL0DV0V3lGHKe2Wqf_eNGjBrBLVklDTk8-stX_MWLcR-EGmXAOv0UBWitS_dXJKJu-vXJyw14nHSGuxTIK2hx1pttMft9CsvqimXKeDTU14qQL1eE7ihcw&quot;,
-        &quot;e&quot;: &quot;AQAB&quot;
-=======
     &quot;jwk&quot;: {
       &quot;kty&quot;: &quot;RSA&quot;,
       &quot;n&quot;: &quot;pm4bOHBg-oYhAyPWzR56AWX3rUIXp11_ICDkGgS6W3ZWLts-hzwI3x65659kg4hVo9dbGoCJE3ZGF_eaetE30UhBUEgpGwrDrQiJ9zqprmcFfr3qvvkGjtth8Zgl1eM2bJcOwE7PCBHWTKWYs152R7g6Jg2OVph-a8rq-q79MhKG5QoW_mTz10QT_6H4c7PjWG1fjh8hpWNnbP_pv6d1zSwZfc5fl6yVRL0DV0V3lGHKe2Wqf_eNGjBrBLVklDTk8-stX_MWLcR-EGmXAOv0UBWitS_dXJKJu-vXJyw14nHSGuxTIK2hx1pttMft9CsvqimXKeDTU14qQL1eE7ihcw&quot;,
       &quot;e&quot;: &quot;AQAB&quot;
->>>>>>> 3f4d47c (Explain JSON string literals and processing model)
     }
   },
   &quot;iat&quot;: 1516239022,
@@ -1020,42 +1067,51 @@ the <tt>address</tt> property:</t>
   &quot;sd_digests&quot;: {
     &quot;verified_claims&quot;: {
       &quot;verification&quot;: {
-        &quot;trust_framework&quot;: &quot;w1mP4oPc_J9thBex0TaQi1vgxFmruQJxZYLFnkNFMaI&quot;,
-        &quot;time&quot;: &quot;Pu3i0CWrPVLJW-LT30yF1bFBPP15B6-uKk3PnGDflv8&quot;,
-        &quot;verification_process&quot;: &quot;8HqIXRmczsdYOZzGcLqI5-l9xN5QbK2XDtXmdfH7z-4&quot;,
+        &quot;trust_framework&quot;: &quot;T7ivxsfuy-nAuECeh0utPEX8cSlc7QflJDE0RqtWDMU&quot;,
+        &quot;time&quot;: &quot;_ecCQoXSR8t9esur66ZwWwC6u4xLuVELjmwFgpRZqcQ&quot;,
+        &quot;verification_process&quot;: &quot;BolwKKvU8N7uUhjN2aGH2T54wjXpkcOz5sC9PkIP4s4&quot;,
         &quot;evidence&quot;: [
           {
-            &quot;type&quot;: &quot;TnLuqGGQm6jfeOoa5uX1diKANUPuh-zHrpBFdX9MR-g&quot;,
-            &quot;method&quot;: &quot;SagmakoSu-X-XUPIC3EgdrEEwIWxRWXX4-i68X9TyEo&quot;,
-            &quot;time&quot;: &quot;ld2c5oYDRtQcfU6PzogPkx_95WYqhqIJNVRMnfcsicY&quot;,
+            &quot;type&quot;: &quot;7jBlUZkZn1Gfj9mybqlJGzTb2z8KcNNHU0IV4B8MxOM&quot;,
+            &quot;method&quot;: &quot;BRQgcT09gdBqO-MLTka8d6dlCshZCUNpFgsZoet5I-o&quot;,
+            &quot;time&quot;: &quot;-PVLNSmbkCHLp8S7i077YnHZV0yE8gyKWLpWV2o8FJE&quot;,
             &quot;document&quot;: {
-              &quot;type&quot;: &quot;ufWjDaAa54MnHeji2ZUUHDdnpZ9zx6CUG6uR28VMtsQ&quot;,
+              &quot;type&quot;: &quot;vzDHD-6hQqZ5lSw_7acK1lErxSh3E6dO0zlUYM2hDvw&quot;,
               &quot;issuer&quot;: {
-                &quot;name&quot;: &quot;a4GMucU7Zb060r0Svd7huY6Qho1bIf3v1U5BvPR8q6Y&quot;,
-                &quot;country&quot;: &quot;135k9M0m2SCnYRuOfHuYScYVS2q3eeY7IItgyRsaBT8&quot;
+                &quot;name&quot;: &quot;us9T9ufVdSmytSmjrtdN_TUI0ai3_JNM3q-0qx0CXk4&quot;,
+                &quot;country&quot;: &quot;uItKtPRZQBB9v5THHOdi02ALjD0MH0U6jjHDLe91NnY&quot;
               },
-              &quot;number&quot;: &quot;cUvOxLUp8RV7TTVliEiu-TQIel-LsE8E-XfUgfqk5gk&quot;,
-              &quot;date_of_issuance&quot;: &quot;NIs8olJnJOv4J1qIEBKuTs2sEFs4fgGJhNqM6xdQt7E&quot;,
-              &quot;date_of_expiry&quot;: &quot;HTR37vLtANT6MWk-9dBqekFpCvaTG7zNf1ze56rnV64&quot;
+              &quot;number&quot;: &quot;QNNXwo3siOWdqNivKBnFsD4X8gZxVIgu3tv6dfpZhUc&quot;,
+              &quot;date_of_issuance&quot;: &quot;AYWQphnOlFFN9oSVvtBr_iYCKYlucTi3lsMrXebebgc&quot;,
+              &quot;date_of_expiry&quot;: &quot;JIk-APYHW3qy60rvGyFswDCTMfAbBXZyyrZEn8NsBhU&quot;
             }
           }
         ]
       },
       &quot;claims&quot;: {
-        &quot;given_name&quot;: &quot;NB9XH_yJKqKOhXDmXkZKpMCkRbOmOTd8bqJFYDJYQnQ&quot;,
-        &quot;family_name&quot;: &quot;hAUbJ66ZYL9VJLbjsDpmSs2e9Ff_Ohim_WR4bwZyvoQ&quot;,
-        &quot;birthdate&quot;: &quot;6XOR4k56BgWk5tnNismbmEHvoGX7RRfy6Z8HENl96cU&quot;,
-        &quot;place_of_birth&quot;: {
-          &quot;country&quot;: &quot;CLTlhuy13WWc3_ISon1kEypFwvCmfhLSpGUMCyAUg68&quot;,
-          &quot;locality&quot;: &quot;AQoX8ixGpz-ipweEGlC-2umqwyQdhjIeiUB_TKWcE2E&quot;
-        },
-        &quot;nationalities&quot;: &quot;nfoc__QKlMUHodmxwlY-Kp-6ewgX3CdK7Ia0RJHIXVo&quot;,
-        &quot;address&quot;: &quot;ngnO4uQeOktM7YdFD8x82doS7WJnlZnq-rQE_RfuBSI&quot;
+        &quot;given_name&quot;: &quot;hZtT6FZBzxAeByDUkFJTeqTCpTd2cQKx6MDPkGvVCRE&quot;,
+        &quot;family_name&quot;: &quot;5yLYGVxPSfXynhcopbIcrFe0_sMGxv_-6THZAu4eWnU&quot;,
+        &quot;nationalities&quot;: &quot;BxCtneHl-RQoL24tS8AaywfyHpnZSq9tUsNDyrYFLYY&quot;,
+        &quot;address&quot;: {
+          &quot;locality&quot;: &quot;ah6QI8ceduHKP7uiHbwZ2a2LYkxjibHaoWG3M6x1ip4&quot;,
+          &quot;postal_code&quot;: &quot;Auci5Y0jrp_3ahg_IW_Z-mqBaE9BrrItR6o7ekhEGBo&quot;,
+          &quot;country&quot;: &quot;RAKTJg_m1tcoyGI1O2qgQm4KD2d2abXhU4IS7c6RVjU&quot;,
+          &quot;street_address&quot;: &quot;iKkk1nJHTBKTkEt2TNMkZf69WYkiDYaQL6ZzDZmGO1M&quot;
+        }
       }
     },
-    &quot;birth_middle_name&quot;: &quot;FeFSwd9drypEPtWVgIZ42N9j_yostt1Ds5PBpxT3Rng&quot;,
-    &quot;salutation&quot;: &quot;57CMhvASQMNuzuQ0a_B1_VX5XdH73TcuPxyWGiorj5g&quot;,
-    &quot;msisdn&quot;: &quot;leKbB0ro6q3jrVraCqt443uaGZVZisD3iGrKuKE2mqM&quot;
+    &quot;birth_middle_name&quot;: &quot;KpRjGCm3uykvCGFIDrVJ7iTMQhWakBmCItHbAa6vnZE&quot;,
+    &quot;salutation&quot;: &quot;IoY5e03e65CUrnaMcRDmPCm0RWPEFE4mVkoCsK86agA&quot;,
+    &quot;msisdn&quot;: &quot;XupJick4P8bxaz20kx_VOwbGU1cgslhAUG6IE-tDjms&quot;
+  },
+  &quot;verified_claims&quot;: {
+    &quot;claims&quot;: {
+      &quot;birthdate&quot;: &quot;1956-01-28&quot;,
+      &quot;place_of_birth&quot;: {
+        &quot;country&quot;: &quot;DE&quot;,
+        &quot;locality&quot;: &quot;Musterstadt&quot;
+      }
+    }
   }
 }
 </sourcecode>
@@ -1063,50 +1119,6 @@ the <tt>address</tt> property:</t>
 
 <artwork anchor="example-complex-serialized_sd_jwt">eyJhbGciOiAiUlMyNTYiLCAia2lkIjogImNBRUlVcUowY21MekQxa3pHemhlaUJhZzBZUk
 F6VmRsZnhOMjgwTmdIYUEifQ.eyJpc3MiOiAiaHR0cHM6Ly9leGFtcGxlLmNvbS9pc3N1Z
-<<<<<<< HEAD
-XIiLCAic3ViX2p3ayI6IHsia3R5IjogIlJTQSIsICJuIjogInBtNGJPSEJnLW9ZaEF5UFd
-6UjU2QVdYM3JVSVhwMTFfSUNEa0dnUzZXM1pXTHRzLWh6d0kzeDY1NjU5a2c0aFZvOWRiR
-29DSkUzWkdGX2VhZXRFMzBVaEJVRWdwR3dyRHJRaUo5enFwcm1jRmZyM3F2dmtHanR0aDh
-aZ2wxZU0yYkpjT3dFN1BDQkhXVEtXWXMxNTJSN2c2SmcyT1ZwaC1hOHJxLXE3OU1oS0c1U
-W9XX21UejEwUVRfNkg0YzdQaldHMWZqaDhocFdObmJQX3B2NmQxelN3WmZjNWZsNnlWUkw
-wRFYwVjNsR0hLZTJXcWZfZU5HakJyQkxWa2xEVGs4LXN0WF9NV0xjUi1FR21YQU92MFVCV
-2l0U19kWEpLSnUtdlhKeXcxNG5IU0d1eFRJSzJoeDFwdHRNZnQ5Q3N2cWltWEtlRFRVMTR
-xUUwxZUU3aWhjdyIsICJlIjogIkFRQUIifSwgImlhdCI6IDE1MTYyMzkwMjIsICJleHAiO
-iAxNTE2MjQ3MDIyLCAiaGFzaF9hbGciOiAic2hhLTI1NiIsICJzZF9kaWdlc3RzIjogeyJ
-2ZXJpZmllZF9jbGFpbXMiOiB7InZlcmlmaWNhdGlvbiI6IHsidHJ1c3RfZnJhbWV3b3JrI
-jogIncxbVA0b1BjX0o5dGhCZXgwVGFRaTF2Z3hGbXJ1UUp4WllMRm5rTkZNYUkiLCAidGl
-tZSI6ICJQdTNpMENXclBWTEpXLUxUMzB5RjFiRkJQUDE1QjYtdUtrM1BuR0RmbHY4IiwgI
-nZlcmlmaWNhdGlvbl9wcm9jZXNzIjogIjhIcUlYUm1jenNkWU9aekdjTHFJNS1sOXhONVF
-iSzJYRHRYbWRmSDd6LTQiLCAiZXZpZGVuY2UiOiBbeyJ0eXBlIjogIlRuTHVxR0dRbTZqZ
-mVPb2E1dVgxZGlLQU5VUHVoLXpIcnBCRmRYOU1SLWciLCAibWV0aG9kIjogIlNhZ21ha29
-TdS1YLVhVUElDM0VnZHJFRXdJV3hSV1hYNC1pNjhYOVR5RW8iLCAidGltZSI6ICJsZDJjN
-W9ZRFJ0UWNmVTZQem9nUGt4Xzk1V1lxaHFJSk5WUk1uZmNzaWNZIiwgImRvY3VtZW50Ijo
-geyJ0eXBlIjogInVmV2pEYUFhNTRNbkhlamkyWlVVSERkbnBaOXp4NkNVRzZ1UjI4Vk10c
-1EiLCAiaXNzdWVyIjogeyJuYW1lIjogImE0R011Y1U3WmIwNjByMFN2ZDdodVk2UWhvMWJ
-JZjN2MVU1QnZQUjhxNlkiLCAiY291bnRyeSI6ICIxMzVrOU0wbTJTQ25ZUnVPZkh1WVNjW
-VZTMnEzZWVZN0lJdGd5UnNhQlQ4In0sICJudW1iZXIiOiAiY1V2T3hMVXA4UlY3VFRWbGl
-FaXUtVFFJZWwtTHNFOEUtWGZVZ2ZxazVnayIsICJkYXRlX29mX2lzc3VhbmNlIjogIk5Jc
-zhvbEpuSk92NEoxcUlFQkt1VHMyc0VGczRmZ0dKaE5xTTZ4ZFF0N0UiLCAiZGF0ZV9vZl9
-leHBpcnkiOiAiSFRSMzd2THRBTlQ2TVdrLTlkQnFla0ZwQ3ZhVEc3ek5mMXplNTZyblY2N
-CJ9fV19LCAiY2xhaW1zIjogeyJnaXZlbl9uYW1lIjogIk5COVhIX3lKS3FLT2hYRG1Ya1p
-LcE1Da1JiT21PVGQ4YnFKRllESllRblEiLCAiZmFtaWx5X25hbWUiOiAiaEFVYko2NlpZT
-DlWSkxianNEcG1TczJlOUZmX09oaW1fV1I0YndaeXZvUSIsICJiaXJ0aGRhdGUiOiAiNlh
-PUjRrNTZCZ1drNXRuTmlzbWJtRUh2b0dYN1JSZnk2WjhIRU5sOTZjVSIsICJwbGFjZV9vZ
-l9iaXJ0aCI6IHsiY291bnRyeSI6ICJDTFRsaHV5MTNXV2MzX0lTb24xa0V5cEZ3dkNtZmh
-MU3BHVU1DeUFVZzY4IiwgImxvY2FsaXR5IjogIkFRb1g4aXhHcHotaXB3ZUVHbEMtMnVtc
-Xd5UWRoakllaVVCX1RLV2NFMkUifSwgIm5hdGlvbmFsaXRpZXMiOiAibmZvY19fUUtsTVV
-Ib2RteHdsWS1LcC02ZXdnWDNDZEs3SWEwUkpISVhWbyIsICJhZGRyZXNzIjogIm5nbk80d
-VFlT2t0TTdZZEZEOHg4MmRvUzdXSm5sWm5xLXJRRV9SZnVCU0kifX0sICJiaXJ0aF9taWR
-kbGVfbmFtZSI6ICJGZUZTd2Q5ZHJ5cEVQdFdWZ0laNDJOOWpfeW9zdHQxRHM1UEJweFQzU
-m5nIiwgInNhbHV0YXRpb24iOiAiNTdDTWh2QVNRTU51enVRMGFfQjFfVlg1WGRINzNUY3V
-QeHlXR2lvcmo1ZyIsICJtc2lzZG4iOiAibGVLYkIwcm82cTNqclZyYUNxdDQ0M3VhR1pWW
-mlzRDNpR3JLdUtFMm1xTSJ9fQ.i6xjiYhdM0pnDamaDfvsLWrjD2JOQBYbkWpLAykGFenK
-B4nBN1E2gfbexMvlyRJc1AcU2wKdGQnRZsaNR-UYZ7yQPXrlBQH2RMkbRuQcI0K4n9KP8c
-I8JnUVgERRBQSbtrInYrgRDvQ9K7nlyj4y6ULvVybcZpbw2sUv5YJwdBsdB8kAvGWKCEkW
-NMvk-UGKZAKO78RPemWOTezLZq3Ubfj5GinITb6SN_Gu1rdLgA3ebKNkVqDBjI9q483d-9
-g_MP8owwGzE_tCd8oj2bjRlRE1YgwN1lxAAGVpDrIJwWbuivh7BqUArvblEHe4L0ZITMhz
-F5KKsEkYhkrr8q6qFg
-=======
 XIiLCAiY25mIjogeyJqd2siOiB7Imt0eSI6ICJSU0EiLCAibiI6ICJwbTRiT0hCZy1vWWh
 BeVBXelI1NkFXWDNyVUlYcDExX0lDRGtHZ1M2VzNaV0x0cy1oendJM3g2NTY1OWtnNGhWb
 zlkYkdvQ0pFM1pHRl9lYWV0RTMwVWhCVUVncEd3ckRyUWlKOXpxcHJtY0ZmcjNxdnZrR2p
@@ -1117,42 +1129,43 @@ jBVQldpdFNfZFhKS0p1LXZYSnl3MTRuSFNHdXhUSUsyaHgxcHR0TWZ0OUNzdnFpbVhLZUR
 UVTE0cVFMMWVFN2loY3ciLCAiZSI6ICJBUUFCIn19LCAiaWF0IjogMTUxNjIzOTAyMiwgI
 mV4cCI6IDE1MTYyNDcwMjIsICJzZF9oYXNoX2FsZyI6ICJzaGEtMjU2IiwgInNkX2RpZ2V
 zdHMiOiB7InZlcmlmaWVkX2NsYWltcyI6IHsidmVyaWZpY2F0aW9uIjogeyJ0cnVzdF9mc
-mFtZXdvcmsiOiAidzFtUDRvUGNfSjl0aEJleDBUYVFpMXZneEZtcnVRSnhaWUxGbmtORk1
-hSSIsICJ0aW1lIjogIlB1M2kwQ1dyUFZMSlctTFQzMHlGMWJGQlBQMTVCNi11S2szUG5HR
-GZsdjgiLCAidmVyaWZpY2F0aW9uX3Byb2Nlc3MiOiAiOEhxSVhSbWN6c2RZT1p6R2NMcUk
-1LWw5eE41UWJLMlhEdFhtZGZIN3otNCIsICJldmlkZW5jZSI6IFt7InR5cGUiOiAiVG5Md
-XFHR1FtNmpmZU9vYTV1WDFkaUtBTlVQdWgtekhycEJGZFg5TVItZyIsICJtZXRob2QiOiA
-iU2FnbWFrb1N1LVgtWFVQSUMzRWdkckVFd0lXeFJXWFg0LWk2OFg5VHlFbyIsICJ0aW1lI
-jogImxkMmM1b1lEUnRRY2ZVNlB6b2dQa3hfOTVXWXFocUlKTlZSTW5mY3NpY1kiLCAiZG9
-jdW1lbnQiOiB7InR5cGUiOiAidWZXakRhQWE1NE1uSGVqaTJaVVVIRGRucFo5eng2Q1VHN
-nVSMjhWTXRzUSIsICJpc3N1ZXIiOiB7Im5hbWUiOiAiYTRHTXVjVTdaYjA2MHIwU3ZkN2h
-1WTZRaG8xYklmM3YxVTVCdlBSOHE2WSIsICJjb3VudHJ5IjogIjEzNWs5TTBtMlNDbllSd
-U9mSHVZU2NZVlMycTNlZVk3SUl0Z3lSc2FCVDgifSwgIm51bWJlciI6ICJjVXZPeExVcDh
-SVjdUVFZsaUVpdS1UUUllbC1Mc0U4RS1YZlVnZnFrNWdrIiwgImRhdGVfb2ZfaXNzdWFuY
-2UiOiAiTklzOG9sSm5KT3Y0SjFxSUVCS3VUczJzRUZzNGZnR0poTnFNNnhkUXQ3RSIsICJ
-kYXRlX29mX2V4cGlyeSI6ICJIVFIzN3ZMdEFOVDZNV2stOWRCcWVrRnBDdmFURzd6TmYxe
-mU1NnJuVjY0In19XX0sICJjbGFpbXMiOiB7ImdpdmVuX25hbWUiOiAiTkI5WEhfeUpLcUt
-PaFhEbVhrWktwTUNrUmJPbU9UZDhicUpGWURKWVFuUSIsICJmYW1pbHlfbmFtZSI6ICJoQ
-VViSjY2WllMOVZKTGJqc0RwbVNzMmU5RmZfT2hpbV9XUjRid1p5dm9RIiwgImJpcnRoZGF
-0ZSI6ICI2WE9SNGs1NkJnV2s1dG5OaXNtYm1FSHZvR1g3UlJmeTZaOEhFTmw5NmNVIiwgI
-nBsYWNlX29mX2JpcnRoIjogeyJjb3VudHJ5IjogIkNMVGxodXkxM1dXYzNfSVNvbjFrRXl
-wRnd2Q21maExTcEdVTUN5QVVnNjgiLCAibG9jYWxpdHkiOiAiQVFvWDhpeEdwei1pcHdlR
-UdsQy0ydW1xd3lRZGhqSWVpVUJfVEtXY0UyRSJ9LCAibmF0aW9uYWxpdGllcyI6ICJuZm9
-jX19RS2xNVUhvZG14d2xZLUtwLTZld2dYM0NkSzdJYTBSSkhJWFZvIiwgImFkZHJlc3MiO
-iAibmduTzR1UWVPa3RNN1lkRkQ4eDgyZG9TN1dKbmxabnEtclFFX1JmdUJTSSJ9fSwgImJ
-pcnRoX21pZGRsZV9uYW1lIjogIkZlRlN3ZDlkcnlwRVB0V1ZnSVo0Mk45al95b3N0dDFEc
-zVQQnB4VDNSbmciLCAic2FsdXRhdGlvbiI6ICI1N0NNaHZBU1FNTnV6dVEwYV9CMV9WWDV
-YZEg3M1RjdVB4eVdHaW9yajVnIiwgIm1zaXNkbiI6ICJsZUtiQjBybzZxM2pyVnJhQ3F0N
-DQzdWFHWlZaaXNEM2lHckt1S0UybXFNIn19.HmoKHnHVbGadegrlrLGWrJfcrc_4AweZ2L
-NCPdpj6LSiSoTVI1Ze_VHBShFkD4Na7njkOFdcKgddBYOckq6b5oBiQvkX8LCb9maEwvXV
-cxyBcQ1h4oT23yud2LE_kuXFLCE-wGu97dFj0n3pojTNBA6fU8mb62q_CUKQuPvsWSJBfY
-PoGSOQjec_bB9VgjWE6S3wXGYQ3E_HIQk--GFIbRBP_cf78ZWeFr0hIJzm5mgYfbDGpY3k
-2msqdih4xhneRPgnJGp-PRhB16nxtpgfYY7Ux8uOB_cNgsAEKvZQ8Zu2UaELWnFG9P0McQ
-RyF-uzo2u2a6P5SXC3qUkROb8lOA
->>>>>>> 3f4d47c (Explain JSON string literals and processing model)
+mFtZXdvcmsiOiAiVDdpdnhzZnV5LW5BdUVDZWgwdXRQRVg4Y1NsYzdRZmxKREUwUnF0V0R
+NVSIsICJ0aW1lIjogIl9lY0NRb1hTUjh0OWVzdXI2Nlp3V3dDNnU0eEx1VkVMam13RmdwU
+lpxY1EiLCAidmVyaWZpY2F0aW9uX3Byb2Nlc3MiOiAiQm9sd0tLdlU4Tjd1VWhqTjJhR0g
+yVDU0d2pYcGtjT3o1c0M5UGtJUDRzNCIsICJldmlkZW5jZSI6IFt7InR5cGUiOiAiN2pCb
+FVaa1puMUdmajlteWJxbEpHelRiMno4S2NOTkhVMElWNEI4TXhPTSIsICJtZXRob2QiOiA
+iQlJRZ2NUMDlnZEJxTy1NTFRrYThkNmRsQ3NoWkNVTnBGZ3Nab2V0NUktbyIsICJ0aW1lI
+jogIi1QVkxOU21ia0NITHA4UzdpMDc3WW5IWlYweUU4Z3lLV0xwV1YybzhGSkUiLCAiZG9
+jdW1lbnQiOiB7InR5cGUiOiAidnpESEQtNmhRcVo1bFN3XzdhY0sxbEVyeFNoM0U2ZE8we
+mxVWU0yaER2dyIsICJpc3N1ZXIiOiB7Im5hbWUiOiAidXM5VDl1ZlZkU215dFNtanJ0ZE5
+fVFVJMGFpM19KTk0zcS0wcXgwQ1hrNCIsICJjb3VudHJ5IjogInVJdEt0UFJaUUJCOXY1V
+EhIT2RpMDJBTGpEME1IMFU2ampIRExlOTFOblkifSwgIm51bWJlciI6ICJRTk5Yd28zc2l
+PV2RxTml2S0JuRnNENFg4Z1p4VklndTN0djZkZnBaaFVjIiwgImRhdGVfb2ZfaXNzdWFuY
+2UiOiAiQVlXUXBobk9sRkZOOW9TVnZ0QnJfaVlDS1lsdWNUaTNsc01yWGViZWJnYyIsICJ
+kYXRlX29mX2V4cGlyeSI6ICJKSWstQVBZSFczcXk2MHJ2R3lGc3dEQ1RNZkFiQlhaeXlyW
+kVuOE5zQmhVIn19XX0sICJjbGFpbXMiOiB7ImdpdmVuX25hbWUiOiAiaFp0VDZGWkJ6eEF
+lQnlEVWtGSlRlcVRDcFRkMmNRS3g2TURQa0d2VkNSRSIsICJmYW1pbHlfbmFtZSI6ICI1e
+UxZR1Z4UFNmWHluaGNvcGJJY3JGZTBfc01HeHZfLTZUSFpBdTRlV25VIiwgIm5hdGlvbmF
+saXRpZXMiOiAiQnhDdG5lSGwtUlFvTDI0dFM4QWF5d2Z5SHBuWlNxOXRVc05EeXJZRkxZW
+SIsICJhZGRyZXNzIjogeyJsb2NhbGl0eSI6ICJhaDZRSThjZWR1SEtQN3VpSGJ3WjJhMkx
+Za3hqaWJIYW9XRzNNNngxaXA0IiwgInBvc3RhbF9jb2RlIjogIkF1Y2k1WTBqcnBfM2FoZ
+19JV19aLW1xQmFFOUJyckl0UjZvN2VraEVHQm8iLCAiY291bnRyeSI6ICJSQUtUSmdfbTF
+0Y295R0kxTzJxZ1FtNEtEMmQyYWJYaFU0SVM3YzZSVmpVIiwgInN0cmVldF9hZGRyZXNzI
+jogImlLa2sxbkpIVEJLVGtFdDJUTk1rWmY2OVdZa2lEWWFRTDZaekRabUdPMU0ifX19LCA
+iYmlydGhfbWlkZGxlX25hbWUiOiAiS3BSakdDbTN1eWt2Q0dGSURyVko3aVRNUWhXYWtCb
+UNJdEhiQWE2dm5aRSIsICJzYWx1dGF0aW9uIjogIklvWTVlMDNlNjVDVXJuYU1jUkRtUEN
+tMFJXUEVGRTRtVmtvQ3NLODZhZ0EiLCAibXNpc2RuIjogIlh1cEppY2s0UDhieGF6MjBre
+F9WT3diR1UxY2dzbGhBVUc2SUUtdERqbXMifSwgInZlcmlmaWVkX2NsYWltcyI6IHsiY2x
+haW1zIjogeyJiaXJ0aGRhdGUiOiAiMTk1Ni0wMS0yOCIsICJwbGFjZV9vZl9iaXJ0aCI6I
+HsiY291bnRyeSI6ICJERSIsICJsb2NhbGl0eSI6ICJNdXN0ZXJzdGFkdCJ9fX19.h3d682
+fP_x2tqYiUR4y2ftsWE8DHOyg0VFY4q9jUAH7yCk7KExyDUBaiyLrFhgFmJHWzkFoggcST
+LsvOAM1QB7kgOilwNW8KKtZpSQV2Db7WEmXi-Q2QblSNGVNXAcZMobLnl6j4QJJaW-5xLb
+H-6S1Fe2Vw2hn3rQ2VLzPTUZjzCWk3OdLWTI5MlaYr9GleK9ZDErlrCXtfsXRY6M-Smvb8
+ZvIDs95vGxsJW-6SbasuonTunzZGdt2WqXFRtXuaCb-Vw9wPXuytHmH_1vuyROhH8ITzqY
+bTZ-4H6eS5BLjx8HXWQDk3r-M_g9htP9G3ezhDi3uzLQ2dSAbNqOWiXQ
 </artwork>
 <t>(Line breaks for presentation only.)</t>
-<t>A SD-JWT-R for some of the claims:</t>
+<t>An SD-JWT-R for some of the claims may look as follows:</t>
 
 <sourcecode anchor="example-complex-sd_jwt_release_payload" type="json">{
   &quot;nonce&quot;: &quot;XZOUco1u_gEPknxS78sWWg&quot;,
@@ -1160,24 +1173,57 @@ RyF-uzo2u2a6P5SXC3qUkROb8lOA
   &quot;sd_release&quot;: {
     &quot;verified_claims&quot;: {
       &quot;verification&quot;: {
-        &quot;trust_framework&quot;: &quot;[\&quot;2GLC42sKQveCfGfryNRN9w\&quot;, \&quot;de_aml\&quot;]&quot;,
-        &quot;time&quot;: &quot;[\&quot;eluV5Og3gSNII8EYnsxA_A\&quot;, \&quot;2012-04-23T18:25Z\&quot;]&quot;,
+        &quot;trust_framework&quot;: &quot;{\&quot;s\&quot;: \&quot;2GLC42sKQveCfGfryNRN9w\&quot;, \&quot;v\&quot;: \&quot;de_aml\&quot;}&quot;,
+        &quot;time&quot;: &quot;{\&quot;s\&quot;: \&quot;6Ij7tM-a5iVPGboS5tmvVA\&quot;, \&quot;v\&quot;: \&quot;2012-04-23T18:25Z\&quot;}&quot;,
         &quot;evidence&quot;: [
           {
-            &quot;type&quot;: &quot;[\&quot;eI8ZWm9QnKPpNPeNenHdhQ\&quot;, \&quot;document\&quot;]&quot;
+            &quot;type&quot;: &quot;{\&quot;s\&quot;: \&quot;Pc33JM2LchcU_lHggv_ufQ\&quot;, \&quot;v\&quot;: \&quot;document\&quot;}&quot;
           }
         ]
       },
       &quot;claims&quot;: {
-        &quot;given_name&quot;: &quot;[\&quot;y1sVU5wdfJahVdgwPgS7RQ\&quot;, \&quot;Max\&quot;]&quot;,
-        &quot;family_name&quot;: &quot;[\&quot;HbQ4X8srVW3QDxnIJdqyOA\&quot;, \&quot;Meier\&quot;]&quot;,
-        &quot;birthdate&quot;: &quot;[\&quot;C9GSoujviJquEgYfojCb1A\&quot;, \&quot;1956-01-28\&quot;]&quot;,
-        &quot;place_of_birth&quot;: {
-          &quot;country&quot;: &quot;[\&quot;kx5kF17V-x0JmwUx9vgvtw\&quot;, \&quot;DE\&quot;]&quot;
-        }
+        &quot;given_name&quot;: &quot;{\&quot;s\&quot;: \&quot;4KyR32oIZt-zkWvFqbULKg\&quot;, \&quot;v\&quot;: \&quot;Max\&quot;}&quot;,
+        &quot;family_name&quot;: &quot;{\&quot;s\&quot;: \&quot;flNP1ncMz9Lg-c9qMIz_9g\&quot;, \&quot;v\&quot;: \&quot;Meier\&quot;}&quot;
       }
     }
   }
+}
+</sourcecode>
+<t>After verifying the SD-JWT and SD-JWT-R, the verifier merges the selectively
+disclosed claims into the other data contained in the JWT. The verifier will
+then pass the result on to the application for further processing:</t>
+
+<sourcecode anchor="example-complex-merged" type="json">{
+  &quot;verified_claims&quot;: {
+    &quot;verification&quot;: {
+      &quot;trust_framework&quot;: &quot;de_aml&quot;,
+      &quot;time&quot;: &quot;2012-04-23T18:25Z&quot;,
+      &quot;evidence&quot;: [
+        {
+          &quot;type&quot;: &quot;document&quot;
+        }
+      ]
+    },
+    &quot;claims&quot;: {
+      &quot;given_name&quot;: &quot;Max&quot;,
+      &quot;family_name&quot;: &quot;Meier&quot;,
+      &quot;birthdate&quot;: &quot;1956-01-28&quot;,
+      &quot;place_of_birth&quot;: {
+        &quot;country&quot;: &quot;DE&quot;,
+        &quot;locality&quot;: &quot;Musterstadt&quot;
+      }
+    }
+  },
+  &quot;iss&quot;: &quot;https://example.com/issuer&quot;,
+  &quot;cnf&quot;: {
+    &quot;jwk&quot;: {
+      &quot;kty&quot;: &quot;RSA&quot;,
+      &quot;n&quot;: &quot;pm4bOHBg-oYhAyPWzR56AWX3rUIXp11_ICDkGgS6W3ZWLts-hzwI3x65659kg4hVo9dbGoCJE3ZGF_eaetE30UhBUEgpGwrDrQiJ9zqprmcFfr3qvvkGjtth8Zgl1eM2bJcOwE7PCBHWTKWYs152R7g6Jg2OVph-a8rq-q79MhKG5QoW_mTz10QT_6H4c7PjWG1fjh8hpWNnbP_pv6d1zSwZfc5fl6yVRL0DV0V3lGHKe2Wqf_eNGjBrBLVklDTk8-stX_MWLcR-EGmXAOv0UBWitS_dXJKJu-vXJyw14nHSGuxTIK2hx1pttMft9CsvqimXKeDTU14qQL1eE7ihcw&quot;,
+      &quot;e&quot;: &quot;AQAB&quot;
+    }
+  },
+  &quot;iat&quot;: 1516239022,
+  &quot;exp&quot;: 1516247022
 }
 </sourcecode>
 </section>
@@ -1186,29 +1232,20 @@ RyF-uzo2u2a6P5SXC3qUkROb8lOA
 <t>This example illustrates how the artifacts defined in this specification can be
 represented using W3C Verifiable Credentials Data Model as defined in
 <xref target="VC_DATA"></xref>.</t>
-<<<<<<< HEAD
-=======
 <t>SD-JWT is equivalent to an issuer-signed W3C Verifiable Credential (VC). SVC is sent alongside a VC.</t>
 <t>SD-JWT-Release is equivalent to a holder-signed W3C Verifiable Presentation (VP).</t>
 <t>SD-JWT-Release as a VP contains a <tt>verifiableCredential</tt> claim inside a <tt>vp</tt> claim that is a string array of an SD-JWT as a VC using JWT compact serialization.</t>
->>>>>>> 3f4d47c (Explain JSON string literals and processing model)
 <t>Below is a non-normative example of an SD-JWT represented as a verifiable credential
 encoded as JSON and signed as JWS compliant to <xref target="VC_DATA"></xref>.</t>
 <t>SVC sent alongside this SD-JWT as a JWT-VC is same as in Example 1.</t>
 
 <sourcecode type="json">{
-<<<<<<< HEAD
-  &quot;sub&quot;: &quot;did:example:ebfeb1f712ebc6f1c276e12ec21&quot;,
-=======
   &quot;sub&quot;: &quot;urn:ietf:params:oauth:jwk-thumbprint:sha-256:NzbLsXh8uDCcd-6MNwXF4W_7noWXFZAfHkxZsRGC9Xs&quot;,
->>>>>>> 3f4d47c (Explain JSON string literals and processing model)
   &quot;jti&quot;: &quot;http://example.edu/credentials/3732&quot;,
   &quot;iss&quot;: &quot;https://example.com/keys/foo.jwk&quot;,
   &quot;nbf&quot;: 1541493724,
   &quot;iat&quot;: 1541493724,
   &quot;exp&quot;: 1573029723,
-<<<<<<< HEAD
-=======
   &quot;cnf&quot;: {
     &quot;jwk&quot;: {
       &quot;kty&quot;:&quot;RSA&quot;,
@@ -1221,7 +1258,6 @@ encoded as JSON and signed as JWS compliant to <xref target="VC_DATA"></xref>.</
       &quot;e&quot;:&quot;AQAB&quot;
     }
   },
->>>>>>> 3f4d47c (Explain JSON string literals and processing model)
   &quot;vc&quot;: {
     &quot;@context&quot;: [
       &quot;https://www.w3.org/2018/credentials/v1&quot;,
@@ -1230,14 +1266,6 @@ encoded as JSON and signed as JWS compliant to <xref target="VC_DATA"></xref>.</
     &quot;type&quot;: [
       &quot;VerifiableCredential&quot;,
       &quot;UniversityDegreeCredential&quot;
-<<<<<<< HEAD
-    ]
-  },
-  &quot;sd_digests&quot;: {
-    &quot;given_name&quot;: &quot;fUMdn88aaoyKTHrvZd6AuLmPraGhPJ0zF5r_JhxCVZs&quot;,
-    &quot;family_name&quot;: &quot;9h5vgv6TpFV6GmnPtugiMLl5tHetHeb5X_2cKHjN7cw&quot;,
-    &quot;birthdate&quot;: &quot;fvLCnDm3r4VSYcBF3pIlXP4ulEoHuHOfG_YmFZEuxpQ&quot;
-=======
     ],
     &quot;credentialSubject&quot;: {
       &quot;first_name&quot;: &quot;Jane&quot;,
@@ -1253,7 +1281,6 @@ encoded as JSON and signed as JWS compliant to <xref target="VC_DATA"></xref>.</
         &quot;birthdate&quot;: &quot;-L0kMgIbLXe3OEkKTUGwz_QKhjehDeofKGwoPrxLuo4&quot;
       }
     }
->>>>>>> 3f4d47c (Explain JSON string literals and processing model)
   }
 }
 </sourcecode>
@@ -1261,9 +1288,6 @@ encoded as JSON and signed as JWS compliant to <xref target="VC_DATA"></xref>.</
 encoded as JSON and signed as a JWS compliant to <xref target="VC_DATA"></xref>.</t>
 
 <sourcecode type="json">{
-<<<<<<< HEAD
-  &quot;iss&quot;: &quot;did:example:ebfeb1f712ebc6f1c276e12ec21&quot;,
-=======
   &quot;alg&quot;: &quot;RS256&quot;,
   &quot;typ&quot;: &quot;JWT&quot;,
   &quot;jwk&quot;: {
@@ -1278,7 +1302,6 @@ encoded as JSON and signed as a JWS compliant to <xref target="VC_DATA"></xref>.
     }
 }.{
   &quot;iss&quot;: &quot;urn:ietf:params:oauth:jwk-thumbprint:sha-256:NzbLsXh8uDCcd-6MNwXF4W_7noWXFZAfHkxZsRGC9Xs&quot;,
->>>>>>> 3f4d47c (Explain JSON string literals and processing model)
   &quot;aud&quot;: &quot;s6BhdRkqt3&quot;,
   &quot;nbf&quot;: 1560415047,
   &quot;iat&quot;: 1560415047,
@@ -1294,16 +1317,218 @@ encoded as JSON and signed as a JWS compliant to <xref target="VC_DATA"></xref>.
     &quot;verifiableCredential&quot;: [&quot;eyJhb...npyXw&quot;]
   },
   &quot;sd_release&quot;: {
-<<<<<<< HEAD
-    &quot;given_name&quot;: &quot;[\&quot;6Ij7tM-a5iVPGboS5tmvVA\&quot;, \&quot;John\&quot;]&quot;,
-    &quot;family_name&quot;: &quot;[\&quot;eI8ZWm9QnKPpNPeNenHdhQ\&quot;, \&quot;Doe\&quot;]&quot;,
-    &quot;birthdate&quot;: &quot;[\&quot;5bPs1IquZNa0hkaFzzzZNw\&quot;, \&quot;1940-01-01\&quot;]&quot;
-=======
     &quot;email&quot;: &quot;[\&quot;eI8ZWm9QnKPpNPeNenHdhQ\&quot;, \&quot;johndoe@example.com\&quot;]&quot;,
     &quot;phone_number&quot;: &quot;[\&quot;Qg_O64zqAxe412a108iroA\&quot;, \&quot;+1-202-555-0101\&quot;]&quot;,
     &quot;address&quot;: &quot;[\&quot;AJx-095VPrpTtN4QMOqROA\&quot;, {\&quot;street_address\&quot;: \&quot;123 Main St\&quot;, \&quot;locality\&quot;: \&quot;Anytown\&quot;, \&quot;region\&quot;: \&quot;Anystate\&quot;, \&quot;country\&quot;: \&quot;US\&quot;}]&quot;,
     &quot;birthdate&quot;: &quot;[\&quot;Pc33JM2LchcU_lHggv_ufQ\&quot;, \&quot;1940-01-01\&quot;]&quot;
->>>>>>> 3f4d47c (Explain JSON string literals and processing model)
+  }
+}
+</sourcecode>
+</section>
+</section>
+
+<section anchor="blinding-claim-names-1"><name>Blinding Claim Names</name>
+
+<section anchor="example-5-some-blinded-claims"><name>Example 5: Some Blinded Claims</name>
+<t>The following shows the user information used in this example, included a claim named <tt>secret_club_membership_no</tt>:</t>
+
+<sourcecode anchor="example-simple_structured_some_blinded-user_claims" type="json">{
+  &quot;sub&quot;: &quot;6c5c0a49-b589-431d-bae7-219122a9ec2c&quot;,
+  &quot;given_name&quot;: &quot;John&quot;,
+  &quot;family_name&quot;: &quot;Doe&quot;,
+  &quot;email&quot;: &quot;johndoe@example.com&quot;,
+  &quot;phone_number&quot;: &quot;+1-202-555-0101&quot;,
+  &quot;secret_club_membership_no&quot;: &quot;23&quot;,
+  &quot;other_secret_club_membership_no&quot;: &quot;42&quot;,
+  &quot;address&quot;: {
+    &quot;street_address&quot;: &quot;123 Main St&quot;,
+    &quot;locality&quot;: &quot;Anytown&quot;,
+    &quot;region&quot;: &quot;Anystate&quot;,
+    &quot;country&quot;: &quot;US&quot;
+  },
+  &quot;birthdate&quot;: &quot;1940-01-01&quot;
+}
+</sourcecode>
+<t>Hiding just this claim, the following SD-JWT payload would result:</t>
+
+<sourcecode anchor="example-simple_structured_some_blinded-sd_jwt_payload" type="json">{
+  &quot;iss&quot;: &quot;https://example.com/issuer&quot;,
+  &quot;cnf&quot;: {
+    &quot;jwk&quot;: {
+      &quot;kty&quot;: &quot;RSA&quot;,
+      &quot;n&quot;: &quot;pm4bOHBg-oYhAyPWzR56AWX3rUIXp11_ICDkGgS6W3ZWLts-hzwI3x65659kg4hVo9dbGoCJE3ZGF_eaetE30UhBUEgpGwrDrQiJ9zqprmcFfr3qvvkGjtth8Zgl1eM2bJcOwE7PCBHWTKWYs152R7g6Jg2OVph-a8rq-q79MhKG5QoW_mTz10QT_6H4c7PjWG1fjh8hpWNnbP_pv6d1zSwZfc5fl6yVRL0DV0V3lGHKe2Wqf_eNGjBrBLVklDTk8-stX_MWLcR-EGmXAOv0UBWitS_dXJKJu-vXJyw14nHSGuxTIK2hx1pttMft9CsvqimXKeDTU14qQL1eE7ihcw&quot;,
+      &quot;e&quot;: &quot;AQAB&quot;
+    }
+  },
+  &quot;iat&quot;: 1516239022,
+  &quot;exp&quot;: 1516247022,
+  &quot;sd_hash_alg&quot;: &quot;sha-256&quot;,
+  &quot;sd_digests&quot;: {
+    &quot;sub&quot;: &quot;OMdwkk2HPuiInPypWUWMxot1Y2tStGsLuIcDMjKdXMU&quot;,
+    &quot;given_name&quot;: &quot;AfKKH4a0IZki8MFDythFaFS_Xqzn-wRvAMfiy_VjYpE&quot;,
+    &quot;family_name&quot;: &quot;eUmXmry32JiK_76xMasagkAQQsmSVdW57Ajk18riSF0&quot;,
+    &quot;email&quot;: &quot;-Rcr4fDyjwlM_itcMxoQZCE1QAEwyLJcibEpH114KiE&quot;,
+    &quot;phone_number&quot;: &quot;Jv2nw0C1wP5ASutYNAxrWEnaDRIpiF0eTUAkUOp8F6Y&quot;,
+    &quot;5a2W0_NrlEZzfqmk_7Pq-w&quot;: &quot;gc8VzGTImYRXzP6j7q5RomXt2C_wtsOJ3hAHJdTuEIY&quot;,
+    &quot;other_secret_club_membership_no&quot;: &quot;IirAwgN-MubteYvJ4fmq04p9PnpRTf7hqg0dzSWRboA&quot;,
+    &quot;address&quot;: {
+      &quot;street_address&quot;: &quot;o_yJIdfhKuKVzOF7i1EuakzC5ghd99CX8_nitm-DsRM&quot;,
+      &quot;locality&quot;: &quot;ogNqsvRqK0-ZPZc9C3Z4_6APvywm-lrm0oF2gcVtl_4&quot;,
+      &quot;region&quot;: &quot;8kFihRLSkEheK0zbEsQ3zKXt8csE6OXJE_jv3032BbU&quot;,
+      &quot;country&quot;: &quot;11IMcoA18LrFSpbysx-uqe7N3I3-QZKwCJqYeQuOUY4&quot;
+    },
+    &quot;birthdate&quot;: &quot;PNtcyxm0Q5PyiBuG4f6eAbK6h4tF2FffwG3xqknZ_5A&quot;
+  }
+}
+</sourcecode>
+<t>In the SVC it can be seen that the blinded claim's original name is <tt>secret_club_membership_no</tt>:</t>
+
+<sourcecode anchor="example-simple_structured_some_blinded-svc_payload" type="json">{
+  &quot;sd_release&quot;: {
+    &quot;sub&quot;: &quot;{\&quot;s\&quot;: \&quot;2GLC42sKQveCfGfryNRN9w\&quot;, \&quot;v\&quot;: \&quot;6c5c0a49-b589-431d-bae7-219122a9ec2c\&quot;}&quot;,
+    &quot;given_name&quot;: &quot;{\&quot;s\&quot;: \&quot;6Ij7tM-a5iVPGboS5tmvVA\&quot;, \&quot;v\&quot;: \&quot;John\&quot;}&quot;,
+    &quot;family_name&quot;: &quot;{\&quot;s\&quot;: \&quot;Qg_O64zqAxe412a108iroA\&quot;, \&quot;v\&quot;: \&quot;Doe\&quot;}&quot;,
+    &quot;email&quot;: &quot;{\&quot;s\&quot;: \&quot;Pc33JM2LchcU_lHggv_ufQ\&quot;, \&quot;v\&quot;: \&quot;johndoe@example.com\&quot;}&quot;,
+    &quot;phone_number&quot;: &quot;{\&quot;s\&quot;: \&quot;lklxF5jMYlGTPUovMNIvCA\&quot;, \&quot;v\&quot;: \&quot;+1-202-555-0101\&quot;}&quot;,
+    &quot;5a2W0_NrlEZzfqmk_7Pq-w&quot;: &quot;{\&quot;s\&quot;: \&quot;5bPs1IquZNa0hkaFzzzZNw\&quot;, \&quot;v\&quot;: \&quot;23\&quot;, \&quot;n\&quot;: \&quot;secret_club_membership_no\&quot;}&quot;,
+    &quot;other_secret_club_membership_no&quot;: &quot;{\&quot;s\&quot;: \&quot;y1sVU5wdfJahVdgwPgS7RQ\&quot;, \&quot;v\&quot;: \&quot;42\&quot;}&quot;,
+    &quot;address&quot;: {
+      &quot;street_address&quot;: &quot;{\&quot;s\&quot;: \&quot;C9GSoujviJquEgYfojCb1A\&quot;, \&quot;v\&quot;: \&quot;123 Main St\&quot;}&quot;,
+      &quot;locality&quot;: &quot;{\&quot;s\&quot;: \&quot;H3o1uswP760Fi2yeGdVCEQ\&quot;, \&quot;v\&quot;: \&quot;Anytown\&quot;}&quot;,
+      &quot;region&quot;: &quot;{\&quot;s\&quot;: \&quot;M0Jb57t41ubrkSuyrDT3xA\&quot;, \&quot;v\&quot;: \&quot;Anystate\&quot;}&quot;,
+      &quot;country&quot;: &quot;{\&quot;s\&quot;: \&quot;eK5o5pHfgupPpltj1qhAJw\&quot;, \&quot;v\&quot;: \&quot;US\&quot;}&quot;
+    },
+    &quot;birthdate&quot;: &quot;{\&quot;s\&quot;: \&quot;WpxJrFuX8uSi2p4ht09jvw\&quot;, \&quot;v\&quot;: \&quot;1940-01-01\&quot;}&quot;
+  }
+}
+</sourcecode>
+<t>The verifier would learn this information via the SD-JWT-R:</t>
+
+<sourcecode anchor="example-simple_structured_some_blinded-sd_jwt_release_payload" type="json">{
+  &quot;nonce&quot;: &quot;XZOUco1u_gEPknxS78sWWg&quot;,
+  &quot;aud&quot;: &quot;https://example.com/verifier&quot;,
+  &quot;sd_release&quot;: {
+    &quot;given_name&quot;: &quot;{\&quot;s\&quot;: \&quot;6Ij7tM-a5iVPGboS5tmvVA\&quot;, \&quot;v\&quot;: \&quot;John\&quot;}&quot;,
+    &quot;family_name&quot;: &quot;{\&quot;s\&quot;: \&quot;Qg_O64zqAxe412a108iroA\&quot;, \&quot;v\&quot;: \&quot;Doe\&quot;}&quot;,
+    &quot;birthdate&quot;: &quot;{\&quot;s\&quot;: \&quot;WpxJrFuX8uSi2p4ht09jvw\&quot;, \&quot;v\&quot;: \&quot;1940-01-01\&quot;}&quot;,
+    &quot;address&quot;: {
+      &quot;region&quot;: &quot;{\&quot;s\&quot;: \&quot;M0Jb57t41ubrkSuyrDT3xA\&quot;, \&quot;v\&quot;: \&quot;Anystate\&quot;}&quot;,
+      &quot;country&quot;: &quot;{\&quot;s\&quot;: \&quot;eK5o5pHfgupPpltj1qhAJw\&quot;, \&quot;v\&quot;: \&quot;US\&quot;}&quot;
+    },
+    &quot;5a2W0_NrlEZzfqmk_7Pq-w&quot;: &quot;{\&quot;s\&quot;: \&quot;5bPs1IquZNa0hkaFzzzZNw\&quot;, \&quot;v\&quot;: \&quot;23\&quot;, \&quot;n\&quot;: \&quot;secret_club_membership_no\&quot;}&quot;
+  }
+}
+</sourcecode>
+<t>The verifier would decode the data as follows:</t>
+
+<sourcecode anchor="example-simple_structured_some_blinded-verified_contents" type="json">{
+  &quot;given_name&quot;: &quot;John&quot;,
+  &quot;family_name&quot;: &quot;Doe&quot;,
+  &quot;birthdate&quot;: &quot;1940-01-01&quot;,
+  &quot;address&quot;: {
+    &quot;region&quot;: &quot;Anystate&quot;,
+    &quot;country&quot;: &quot;US&quot;
+  },
+  &quot;secret_club_membership_no&quot;: &quot;23&quot;
+}
+</sourcecode>
+</section>
+
+<section anchor="example-6-all-claim-names-blinded"><name>Example 6: All Claim Names Blinded</name>
+<t>In this example, all claim names are blinded. The following user data is used:</t>
+
+<sourcecode anchor="example-simple_structured_all_blinded-user_claims" type="json">{
+  &quot;sub&quot;: &quot;6c5c0a49-b589-431d-bae7-219122a9ec2c&quot;,
+  &quot;given_name&quot;: &quot;John&quot;,
+  &quot;family_name&quot;: &quot;Doe&quot;,
+  &quot;email&quot;: &quot;johndoe@example.com&quot;,
+  &quot;phone_number&quot;: &quot;+1-202-555-0101&quot;,
+  &quot;secret_club_membership_no&quot;: &quot;23&quot;,
+  &quot;address&quot;: {
+    &quot;street_address&quot;: &quot;123 Main St&quot;,
+    &quot;locality&quot;: &quot;Anytown&quot;,
+    &quot;region&quot;: &quot;Anystate&quot;,
+    &quot;country&quot;: &quot;US&quot;
+  },
+  &quot;birthdate&quot;: &quot;1940-01-01&quot;
+}
+</sourcecode>
+<t>The resulting SD-JWT payload:</t>
+
+<sourcecode anchor="example-simple_structured_all_blinded-sd_jwt_payload" type="json">{
+  &quot;iss&quot;: &quot;https://example.com/issuer&quot;,
+  &quot;cnf&quot;: {
+    &quot;jwk&quot;: {
+      &quot;kty&quot;: &quot;RSA&quot;,
+      &quot;n&quot;: &quot;pm4bOHBg-oYhAyPWzR56AWX3rUIXp11_ICDkGgS6W3ZWLts-hzwI3x65659kg4hVo9dbGoCJE3ZGF_eaetE30UhBUEgpGwrDrQiJ9zqprmcFfr3qvvkGjtth8Zgl1eM2bJcOwE7PCBHWTKWYs152R7g6Jg2OVph-a8rq-q79MhKG5QoW_mTz10QT_6H4c7PjWG1fjh8hpWNnbP_pv6d1zSwZfc5fl6yVRL0DV0V3lGHKe2Wqf_eNGjBrBLVklDTk8-stX_MWLcR-EGmXAOv0UBWitS_dXJKJu-vXJyw14nHSGuxTIK2hx1pttMft9CsvqimXKeDTU14qQL1eE7ihcw&quot;,
+      &quot;e&quot;: &quot;AQAB&quot;
+    }
+  },
+  &quot;iat&quot;: 1516239022,
+  &quot;exp&quot;: 1516247022,
+  &quot;sd_hash_alg&quot;: &quot;sha-256&quot;,
+  &quot;sd_digests&quot;: {
+    &quot;eluV5Og3gSNII8EYnsxA_A&quot;: &quot;bvPLqohL5ROmk2UsuNffH8C1wx9o-ipm-G4SkUwrpAE&quot;,
+    &quot;eI8ZWm9QnKPpNPeNenHdhQ&quot;: &quot;pCtjs0hC2Klhsnpe7BIqnGAsXlyXXC-lAEgX6isoYVM&quot;,
+    &quot;AJx-095VPrpTtN4QMOqROA&quot;: &quot;HS1Ht-bTrXsSTw9JdcHIbTFDkEI_IY52_cmzUgxWZ0k&quot;,
+    &quot;G02NSrQfjFXQ7Io09syajA&quot;: &quot;M2YQ_j8OPPBK3ZLhPPP6_AdSa2-rug2urYjgk_ML_QM&quot;,
+    &quot;nPuoQnkRFq3BIeAm7AnXFA&quot;: &quot;-Brzrp2cs-8nLs7rQI89YJ76s3PrbVe3n_5hlYCy1cE&quot;,
+    &quot;5a2W0_NrlEZzfqmk_7Pq-w&quot;: &quot;gc8VzGTImYRXzP6j7q5RomXt2C_wtsOJ3hAHJdTuEIY&quot;,
+    &quot;address&quot;: {
+      &quot;HbQ4X8srVW3QDxnIJdqyOA&quot;: &quot;39o5dKobVi8c0dLpg4sjd7zW18UONRra0ht9mgu4hec&quot;,
+      &quot;kx5kF17V-x0JmwUx9vgvtw&quot;: &quot;wqueD5ABJ3bTyGSckOMpzI7YUvcCO2l-40vi6JMYsYY&quot;,
+      &quot;OBKlTVlvLg-AdwqYGbP8ZA&quot;: &quot;S11dsdFN97YtrA2o3yZ0eBbf1zn-izejORU-fyMtynI&quot;,
+      &quot;DsmtKNgpV4dAHpjrcaosAw&quot;: &quot;-0XEQHSNzMu244QaOpLmPD3JkdZN8SrqbEQ4VDufu9A&quot;
+    },
+    &quot;j7ADdb0UVb0Li0ciPcP0ew&quot;: &quot;X_v1hrkQIH_0LBM8TncMMTBzYN9UJc8FmJRda7yfY8g&quot;
+  }
+}
+</sourcecode>
+<t>The SVC:</t>
+
+<sourcecode anchor="example-simple_structured_all_blinded-svc_payload" type="json">{
+  &quot;sd_release&quot;: {
+    &quot;eluV5Og3gSNII8EYnsxA_A&quot;: &quot;{\&quot;s\&quot;: \&quot;2GLC42sKQveCfGfryNRN9w\&quot;, \&quot;v\&quot;: \&quot;6c5c0a49-b589-431d-bae7-219122a9ec2c\&quot;, \&quot;n\&quot;: \&quot;sub\&quot;}&quot;,
+    &quot;eI8ZWm9QnKPpNPeNenHdhQ&quot;: &quot;{\&quot;s\&quot;: \&quot;6Ij7tM-a5iVPGboS5tmvVA\&quot;, \&quot;v\&quot;: \&quot;John\&quot;, \&quot;n\&quot;: \&quot;given_name\&quot;}&quot;,
+    &quot;AJx-095VPrpTtN4QMOqROA&quot;: &quot;{\&quot;s\&quot;: \&quot;Qg_O64zqAxe412a108iroA\&quot;, \&quot;v\&quot;: \&quot;Doe\&quot;, \&quot;n\&quot;: \&quot;family_name\&quot;}&quot;,
+    &quot;G02NSrQfjFXQ7Io09syajA&quot;: &quot;{\&quot;s\&quot;: \&quot;Pc33JM2LchcU_lHggv_ufQ\&quot;, \&quot;v\&quot;: \&quot;johndoe@example.com\&quot;, \&quot;n\&quot;: \&quot;email\&quot;}&quot;,
+    &quot;nPuoQnkRFq3BIeAm7AnXFA&quot;: &quot;{\&quot;s\&quot;: \&quot;lklxF5jMYlGTPUovMNIvCA\&quot;, \&quot;v\&quot;: \&quot;+1-202-555-0101\&quot;, \&quot;n\&quot;: \&quot;phone_number\&quot;}&quot;,
+    &quot;5a2W0_NrlEZzfqmk_7Pq-w&quot;: &quot;{\&quot;s\&quot;: \&quot;5bPs1IquZNa0hkaFzzzZNw\&quot;, \&quot;v\&quot;: \&quot;23\&quot;, \&quot;n\&quot;: \&quot;secret_club_membership_no\&quot;}&quot;,
+    &quot;address&quot;: {
+      &quot;HbQ4X8srVW3QDxnIJdqyOA&quot;: &quot;{\&quot;s\&quot;: \&quot;y1sVU5wdfJahVdgwPgS7RQ\&quot;, \&quot;v\&quot;: \&quot;123 Main St\&quot;, \&quot;n\&quot;: \&quot;street_address\&quot;}&quot;,
+      &quot;kx5kF17V-x0JmwUx9vgvtw&quot;: &quot;{\&quot;s\&quot;: \&quot;C9GSoujviJquEgYfojCb1A\&quot;, \&quot;v\&quot;: \&quot;Anytown\&quot;, \&quot;n\&quot;: \&quot;locality\&quot;}&quot;,
+      &quot;OBKlTVlvLg-AdwqYGbP8ZA&quot;: &quot;{\&quot;s\&quot;: \&quot;H3o1uswP760Fi2yeGdVCEQ\&quot;, \&quot;v\&quot;: \&quot;Anystate\&quot;, \&quot;n\&quot;: \&quot;region\&quot;}&quot;,
+      &quot;DsmtKNgpV4dAHpjrcaosAw&quot;: &quot;{\&quot;s\&quot;: \&quot;M0Jb57t41ubrkSuyrDT3xA\&quot;, \&quot;v\&quot;: \&quot;US\&quot;, \&quot;n\&quot;: \&quot;country\&quot;}&quot;
+    },
+    &quot;j7ADdb0UVb0Li0ciPcP0ew&quot;: &quot;{\&quot;s\&quot;: \&quot;eK5o5pHfgupPpltj1qhAJw\&quot;, \&quot;v\&quot;: \&quot;1940-01-01\&quot;, \&quot;n\&quot;: \&quot;birthdate\&quot;}&quot;
+  }
+}
+</sourcecode>
+<t>Here, the holder decided only to release a subset of the claims to the verifier:</t>
+
+<sourcecode anchor="example-simple_structured_all_blinded-sd_jwt_release_payload" type="json">{
+  &quot;nonce&quot;: &quot;XZOUco1u_gEPknxS78sWWg&quot;,
+  &quot;aud&quot;: &quot;https://example.com/verifier&quot;,
+  &quot;sd_release&quot;: {
+    &quot;eI8ZWm9QnKPpNPeNenHdhQ&quot;: &quot;{\&quot;s\&quot;: \&quot;6Ij7tM-a5iVPGboS5tmvVA\&quot;, \&quot;v\&quot;: \&quot;John\&quot;, \&quot;n\&quot;: \&quot;given_name\&quot;}&quot;,
+    &quot;AJx-095VPrpTtN4QMOqROA&quot;: &quot;{\&quot;s\&quot;: \&quot;Qg_O64zqAxe412a108iroA\&quot;, \&quot;v\&quot;: \&quot;Doe\&quot;, \&quot;n\&quot;: \&quot;family_name\&quot;}&quot;,
+    &quot;j7ADdb0UVb0Li0ciPcP0ew&quot;: &quot;{\&quot;s\&quot;: \&quot;eK5o5pHfgupPpltj1qhAJw\&quot;, \&quot;v\&quot;: \&quot;1940-01-01\&quot;, \&quot;n\&quot;: \&quot;birthdate\&quot;}&quot;,
+    &quot;address&quot;: {
+      &quot;OBKlTVlvLg-AdwqYGbP8ZA&quot;: &quot;{\&quot;s\&quot;: \&quot;H3o1uswP760Fi2yeGdVCEQ\&quot;, \&quot;v\&quot;: \&quot;Anystate\&quot;, \&quot;n\&quot;: \&quot;region\&quot;}&quot;,
+      &quot;DsmtKNgpV4dAHpjrcaosAw&quot;: &quot;{\&quot;s\&quot;: \&quot;M0Jb57t41ubrkSuyrDT3xA\&quot;, \&quot;v\&quot;: \&quot;US\&quot;, \&quot;n\&quot;: \&quot;country\&quot;}&quot;
+    }
+  }
+}
+</sourcecode>
+<t>The verifier would decode the SD-JWT-R and SD-JWT as follows:</t>
+
+<sourcecode anchor="example-simple_structured_all_blinded-verified_contents" type="json">{
+  &quot;given_name&quot;: &quot;John&quot;,
+  &quot;family_name&quot;: &quot;Doe&quot;,
+  &quot;birthdate&quot;: &quot;1940-01-01&quot;,
+  &quot;address&quot;: {
+    &quot;region&quot;: &quot;Anystate&quot;,
+    &quot;country&quot;: &quot;US&quot;
   }
 }
 </sourcecode>
@@ -1312,6 +1537,25 @@ encoded as JSON and signed as a JWS compliant to <xref target="VC_DATA"></xref>.
 
 <section anchor="document-history"><name>Document History</name>
 <t>[[ To be removed from the final specification ]]</t>
+<t>-01</t>
+
+<ul>
+<li><t>clarified relationship between <tt>sd_release</tt> in the Release and SD-JWT</t>
+</li>
+<li><t>updated examples</t>
+</li>
+<li><t>clarifications</t>
+</li>
+<li><t>fix <tt>cnf</tt> structure in examples</t>
+</li>
+</ul>
+<t>-00</t>
+
+<ul>
+<li><t>Upload as draft-ietf-oauth-selective-disclosure-jwt-00</t>
+</li>
+</ul>
+<t>[[ pre Working Group Adoption: ]]</t>
 <t>-02</t>
 
 <ul>
