@@ -1754,7 +1754,7 @@ JSON-encoding an object with the following contents:<a href="#section-5.2.1-3" c
               <p id="section-5.2.1-4.1.1">REQUIRED with the key <code>s</code>: the salt value,<a href="#section-5.2.1-4.1.1" class="pilcrow">¶</a></p>
 </li>
 <li id="section-5.2.1-4.2">
-              <p id="section-5.2.1-4.2.1">REQUIRED with the key <code>v</code>: the claim value (either a string or a more complex object, e.g., for the x@OIDCx <code>address</code> claim),<a href="#section-5.2.1-4.2.1" class="pilcrow">¶</a></p>
+              <p id="section-5.2.1-4.2.1">REQUIRED with the key <code>v</code>: the claim value (either a string or a more complex object, e.g., for the <span>[<a href="#OIDC" class="xref">OIDC</a>]</span> <code>address</code> claim),<a href="#section-5.2.1-4.2.1" class="pilcrow">¶</a></p>
 </li>
 <li id="section-5.2.1-4.3">
               <p id="section-5.2.1-4.3.1">OPTIONAL, with the key <code>n</code>: the claim name (if claim name blinding is to be used for this claim).<a href="#section-5.2.1-4.3.1" class="pilcrow">¶</a></p>
@@ -2448,21 +2448,21 @@ for their contributions (some of which substantial) to this draft and to the ini
 <a href="#section-11" class="section-number selfRef">11. </a><a href="#name-normative-references" class="section-name selfRef">Normative References</a>
       </h2>
 <dl class="references">
-<dt id="RFC7519">[RFC7519]</dt>
+<dt id="RFC2119">[RFC2119]</dt>
 <dd>
-<span class="refAuthor">Jones, M.</span><span class="refAuthor">, Bradley, J.</span><span class="refAuthor">, and N. Sakimura</span>, <span class="refTitle">"JSON Web Token (JWT)"</span>, <span class="seriesInfo">RFC 7519</span>, <span class="seriesInfo">DOI 10.17487/RFC7519</span>, <time datetime="2015-05">May 2015</time>, <span>&lt;<a href="https://www.rfc-editor.org/info/rfc7519">https://www.rfc-editor.org/info/rfc7519</a>&gt;</span>. </dd>
+<span class="refAuthor">Bradner, S.</span>, <span class="refTitle">"Key words for use in RFCs to Indicate Requirement Levels"</span>, <span class="seriesInfo">BCP 14</span>, <span class="seriesInfo">RFC 2119</span>, <span class="seriesInfo">DOI 10.17487/RFC2119</span>, <time datetime="1997-03">March 1997</time>, <span>&lt;<a href="https://www.rfc-editor.org/info/rfc2119">https://www.rfc-editor.org/info/rfc2119</a>&gt;</span>. </dd>
 <dt id="RFC8174">[RFC8174]</dt>
 <dd>
 <span class="refAuthor">Leiba, B.</span>, <span class="refTitle">"Ambiguity of Uppercase vs Lowercase in RFC 2119 Key Words"</span>, <span class="seriesInfo">BCP 14</span>, <span class="seriesInfo">RFC 8174</span>, <span class="seriesInfo">DOI 10.17487/RFC8174</span>, <time datetime="2017-05">May 2017</time>, <span>&lt;<a href="https://www.rfc-editor.org/info/rfc8174">https://www.rfc-editor.org/info/rfc8174</a>&gt;</span>. </dd>
 <dt id="RFC8259">[RFC8259]</dt>
 <dd>
 <span class="refAuthor">Bray, T., Ed.</span>, <span class="refTitle">"The JavaScript Object Notation (JSON) Data Interchange Format"</span>, <span class="seriesInfo">STD 90</span>, <span class="seriesInfo">RFC 8259</span>, <span class="seriesInfo">DOI 10.17487/RFC8259</span>, <time datetime="2017-12">December 2017</time>, <span>&lt;<a href="https://www.rfc-editor.org/info/rfc8259">https://www.rfc-editor.org/info/rfc8259</a>&gt;</span>. </dd>
+<dt id="RFC7519">[RFC7519]</dt>
+<dd>
+<span class="refAuthor">Jones, M.</span><span class="refAuthor">, Bradley, J.</span><span class="refAuthor">, and N. Sakimura</span>, <span class="refTitle">"JSON Web Token (JWT)"</span>, <span class="seriesInfo">RFC 7519</span>, <span class="seriesInfo">DOI 10.17487/RFC7519</span>, <time datetime="2015-05">May 2015</time>, <span>&lt;<a href="https://www.rfc-editor.org/info/rfc7519">https://www.rfc-editor.org/info/rfc7519</a>&gt;</span>. </dd>
 <dt id="RFC7515">[RFC7515]</dt>
 <dd>
 <span class="refAuthor">Jones, M.</span><span class="refAuthor">, Bradley, J.</span><span class="refAuthor">, and N. Sakimura</span>, <span class="refTitle">"JSON Web Signature (JWS)"</span>, <span class="seriesInfo">RFC 7515</span>, <span class="seriesInfo">DOI 10.17487/RFC7515</span>, <time datetime="2015-05">May 2015</time>, <span>&lt;<a href="https://www.rfc-editor.org/info/rfc7515">https://www.rfc-editor.org/info/rfc7515</a>&gt;</span>. </dd>
-<dt id="RFC2119">[RFC2119]</dt>
-<dd>
-<span class="refAuthor">Bradner, S.</span>, <span class="refTitle">"Key words for use in RFCs to Indicate Requirement Levels"</span>, <span class="seriesInfo">BCP 14</span>, <span class="seriesInfo">RFC 2119</span>, <span class="seriesInfo">DOI 10.17487/RFC2119</span>, <time datetime="1997-03">March 1997</time>, <span>&lt;<a href="https://www.rfc-editor.org/info/rfc2119">https://www.rfc-editor.org/info/rfc2119</a>&gt;</span>. </dd>
 </dl>
 </section>
 <section id="section-12">
@@ -2473,15 +2473,18 @@ for their contributions (some of which substantial) to this draft and to the ini
 <dt id="RFC8725">[RFC8725]</dt>
 <dd>
 <span class="refAuthor">Sheffer, Y.</span><span class="refAuthor">, Hardt, D.</span><span class="refAuthor">, and M. Jones</span>, <span class="refTitle">"JSON Web Token Best Current Practices"</span>, <span class="seriesInfo">BCP 225</span>, <span class="seriesInfo">RFC 8725</span>, <span class="seriesInfo">DOI 10.17487/RFC8725</span>, <time datetime="2020-02">February 2020</time>, <span>&lt;<a href="https://www.rfc-editor.org/info/rfc8725">https://www.rfc-editor.org/info/rfc8725</a>&gt;</span>. </dd>
-<dt id="VC_DATA">[VC_DATA]</dt>
-<dd>
-<span class="refAuthor">Sporny, M.</span><span class="refAuthor">, Noble, G.</span><span class="refAuthor">, Longley, D.</span><span class="refAuthor">, Burnett, D. C.</span><span class="refAuthor">, Zundel, B.</span><span class="refAuthor">, and D. Chadwick</span>, <span class="refTitle">"Verifiable Credentials Data Model 1.0"</span>, <time datetime="2019-11-19">19 November 2019</time>, <span>&lt;<a href="https://www.w3.org/TR/vc_data">https://www.w3.org/TR/vc_data</a>&gt;</span>. </dd>
-<dt id="RFC7800">[RFC7800]</dt>
-<dd>
-<span class="refAuthor">Jones, M.</span><span class="refAuthor">, Bradley, J.</span><span class="refAuthor">, and H. Tschofenig</span>, <span class="refTitle">"Proof-of-Possession Key Semantics for JSON Web Tokens (JWTs)"</span>, <span class="seriesInfo">RFC 7800</span>, <span class="seriesInfo">DOI 10.17487/RFC7800</span>, <time datetime="2016-04">April 2016</time>, <span>&lt;<a href="https://www.rfc-editor.org/info/rfc7800">https://www.rfc-editor.org/info/rfc7800</a>&gt;</span>. </dd>
 <dt id="RFC8785">[RFC8785]</dt>
 <dd>
 <span class="refAuthor">Rundgren, A.</span><span class="refAuthor">, Jordan, B.</span><span class="refAuthor">, and S. Erdtman</span>, <span class="refTitle">"JSON Canonicalization Scheme (JCS)"</span>, <span class="seriesInfo">RFC 8785</span>, <span class="seriesInfo">DOI 10.17487/RFC8785</span>, <time datetime="2020-06">June 2020</time>, <span>&lt;<a href="https://www.rfc-editor.org/info/rfc8785">https://www.rfc-editor.org/info/rfc8785</a>&gt;</span>. </dd>
+<dt id="OIDC">[OIDC]</dt>
+<dd>
+<span class="refAuthor">Sakimura, N.</span><span class="refAuthor">, Bradley, J.</span><span class="refAuthor">, Jones, M.</span><span class="refAuthor">, de Medeiros, B.</span><span class="refAuthor">, and C. Mortimore</span>, <span class="refTitle">"OpenID Connect Core 1.0 incorporating errata set 1"</span>, <time datetime="2014-11-08">8 November 2014</time>, <span>&lt;<a href="https://openid.net/specs/openid-connect-core-1_0.html">https://openid.net/specs/openid-connect-core-1_0.html</a>&gt;</span>. </dd>
+<dt id="RFC7800">[RFC7800]</dt>
+<dd>
+<span class="refAuthor">Jones, M.</span><span class="refAuthor">, Bradley, J.</span><span class="refAuthor">, and H. Tschofenig</span>, <span class="refTitle">"Proof-of-Possession Key Semantics for JSON Web Tokens (JWTs)"</span>, <span class="seriesInfo">RFC 7800</span>, <span class="seriesInfo">DOI 10.17487/RFC7800</span>, <time datetime="2016-04">April 2016</time>, <span>&lt;<a href="https://www.rfc-editor.org/info/rfc7800">https://www.rfc-editor.org/info/rfc7800</a>&gt;</span>. </dd>
+<dt id="VC_DATA">[VC_DATA]</dt>
+<dd>
+<span class="refAuthor">Sporny, M.</span><span class="refAuthor">, Noble, G.</span><span class="refAuthor">, Longley, D.</span><span class="refAuthor">, Burnett, D. C.</span><span class="refAuthor">, Zundel, B.</span><span class="refAuthor">, and D. Chadwick</span>, <span class="refTitle">"Verifiable Credentials Data Model 1.0"</span>, <time datetime="2019-11-19">19 November 2019</time>, <span>&lt;<a href="https://www.w3.org/TR/vc_data">https://www.w3.org/TR/vc_data</a>&gt;</span>. </dd>
 </dl>
 </section>
 <div id="additional-examples">

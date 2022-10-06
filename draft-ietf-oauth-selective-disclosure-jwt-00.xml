@@ -361,7 +361,7 @@ JSON-encoding an object with the following contents:</t>
 <ul>
 <li><t>REQUIRED with the key <tt>s</tt>: the salt value,</t>
 </li>
-<li><t>REQUIRED with the key <tt>v</tt>: the claim value (either a string or a more complex object, e.g., for the x@OIDCx <tt>address</tt> claim),</t>
+<li><t>REQUIRED with the key <tt>v</tt>: the claim value (either a string or a more complex object, e.g., for the <xref target="OIDC"></xref> <tt>address</tt> claim),</t>
 </li>
 <li><t>OPTIONAL, with the key <tt>n</tt>: the claim name (if claim name blinding is to be used for this claim).</t>
 </li>
@@ -894,14 +894,37 @@ for their contributions (some of which substantial) to this draft and to the ini
 
 <back>
 <references><name>Normative References</name>
-<xi:include href="https://xml2rfc.ietf.org/public/rfc/bibxml/reference.RFC.7519.xml"/>
+<xi:include href="https://xml2rfc.ietf.org/public/rfc/bibxml/reference.RFC.2119.xml"/>
 <xi:include href="https://xml2rfc.ietf.org/public/rfc/bibxml/reference.RFC.8174.xml"/>
 <xi:include href="https://xml2rfc.ietf.org/public/rfc/bibxml/reference.RFC.8259.xml"/>
+<xi:include href="https://xml2rfc.ietf.org/public/rfc/bibxml/reference.RFC.7519.xml"/>
 <xi:include href="https://xml2rfc.ietf.org/public/rfc/bibxml/reference.RFC.7515.xml"/>
-<xi:include href="https://xml2rfc.ietf.org/public/rfc/bibxml/reference.RFC.2119.xml"/>
 </references>
 <references><name>Informative References</name>
 <xi:include href="https://xml2rfc.ietf.org/public/rfc/bibxml/reference.RFC.8725.xml"/>
+<xi:include href="https://xml2rfc.ietf.org/public/rfc/bibxml/reference.RFC.8785.xml"/>
+<reference anchor="OIDC" target="https://openid.net/specs/openid-connect-core-1_0.html">
+  <front>
+    <title>OpenID Connect Core 1.0 incorporating errata set 1</title>
+    <author fullname="Nat Sakimura" initials="N." surname="Sakimura">
+      <organization>NRI</organization>
+    </author>
+    <author fullname="John Bradley" initials="J." surname="Bradley">
+      <organization>Ping Identity</organization>
+    </author>
+    <author fullname="Mike Jones" initials="M." surname="Jones">
+      <organization>Microsoft</organization>
+    </author>
+    <author fullname="Breno de Medeiros" initials="B." surname="de Medeiros">
+      <organization>Google</organization>
+    </author>
+    <author fullname="Chuck Mortimore" initials="C." surname="Mortimore">
+      <organization>Salesforce</organization>
+    </author>
+    <date year="2014" month="Nov" day="8"></date>
+  </front>
+</reference>
+<xi:include href="https://xml2rfc.ietf.org/public/rfc/bibxml/reference.RFC.7800.xml"/>
 <reference anchor="VC_DATA" target="https://www.w3.org/TR/vc_data">
   <front>
     <title>Verifiable Credentials Data Model 1.0</title>
@@ -926,8 +949,6 @@ for their contributions (some of which substantial) to this draft and to the ini
     <date year="2019" month="Nov" day="19"></date>
   </front>
 </reference>
-<xi:include href="https://xml2rfc.ietf.org/public/rfc/bibxml/reference.RFC.7800.xml"/>
-<xi:include href="https://xml2rfc.ietf.org/public/rfc/bibxml/reference.RFC.8785.xml"/>
 </references>
 
 <section anchor="additional-examples"><name>Additional Examples</name>
