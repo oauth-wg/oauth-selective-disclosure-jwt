@@ -333,7 +333,7 @@ There are generally two approaches to deal with this problem:
    canonical form before hashing. Both the issuer and the verifier
    must use the same canonicalization algorithm to arrive at the same byte
    string for hashing.
-2. Source-string encoding: Instead of transferring data in JSON format that may
+2. Source string encoding: Instead of transferring data in JSON format that may
    introduce variations, the serialized data that is used as the hash input is
    transferred from the issuer to the verifier. This means that the verifier can
    easily check the hash over the byte string before deserializing the data.
@@ -343,12 +343,16 @@ plus a string suitable for hashing, but such approaches can easily lead to
 undetected inconsistencies resulting in time-of-check-time-of-use type security
 vulnerabilities.
 
-In this specification, the source-string encoding approach is used, as it allows
+In this specification, the source string encoding approach is used, as it allows
 for simple and reliable interoperability without the requirement for a
-canonicalization library. To encode the source string, JSON itself is used. To
-produce a source-string for hashing, the data is put into a JSON object together
-with the salt value, like so (non-normative example, see (#sd_digests_claim) for
-details):
+canonicalization library. To encode the source string, JSON itself is used. This
+approach means that SD-JWTs can be implemented purely based on widely available
+JSON encoding and decoding libraries without the need for a custom data format
+for encoding data. 
+
+To produce a source string for hashing, the data is put into a JSON object
+together with the salt value, like so (non-normative example, see
+(#sd_digests_claim) for details):
 
 ```
 {"s": "6qMQvRL5haj", "v": "Möbius"}
@@ -385,9 +389,6 @@ needs to access the disclosed claim values. The SD-JWT-Release is only intended
 to be used by a verifier to check the hash over the source string and to extract
 the original JSON data. The original JSON data is then used by the application.
 See (#processing_model) for details.
-
-Using this approach, SD-JWTs can be implemented purely based on widely available
-JSON encoding and decoding libraries. 
 
 ## Format of an SD-JWT
 
@@ -1680,6 +1681,9 @@ The verifier would decode the SD-JWT-R and SD-JWT as follows:
    * updated examples
    * clarifications
    * fix `cnf` structure in examples
+   * introduce blinded claim names
+   * explain why JSON-encoding of values is needed
+   * explain merging algorithm ("processing model")
 
    -00
 
