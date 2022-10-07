@@ -1,0 +1,32 @@
+user_claims:
+  {
+    "sub": "6c5c0a49-b589-431d-bae7-219122a9ec2c",
+    "given_name": "John",
+    "family_name": "Doe",
+    "email": "johndoe@example.com",
+    "phone_number": "+1-202-555-0101",
+    "secret_club_membership_no": "23",
+    "other_secret_club_membership_no": "42",
+    "address":
+      {
+        "street_address": "123 Main St",
+        "locality": "Anytown",
+        "region": "Anystate",
+        "country": "US",
+      },
+    "birthdate": "1940-01-01",
+  }
+
+claims_structure: { "address": {} }
+
+blinded_claim_names: 
+  - secret_club_membership_no
+
+disclosed_claims:
+  {
+    "given_name": null,
+    "family_name": null,
+    "birthdate": null,
+    "address": { "region": null, "country": null },
+    "secret_club_membership_no": null,
+  }
