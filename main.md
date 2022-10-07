@@ -293,8 +293,7 @@ Usually, JSON-based formats transport claim values as simple properties of a JSO
 ...
 ```
 
-However, a problem arises when signatures over the data need to be computed and
-verified. Common signature schemes require the same byte string as input to the
+However, a problem arises when computation over the data need to be performed and verified, like signing or hashing. Common signature schemes require the same byte string as input to the
 signature verification as was used for creating the signature. In the salted
 hash approach outlined above, the same problem exists: For the issuer and the
 verifier to arrive at the same hash digest, the same byte string must be hashed.
