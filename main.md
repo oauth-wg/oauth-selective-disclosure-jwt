@@ -1086,7 +1086,7 @@ the `address` property:
 
 In this example, a complex object such as those used for OIDC4IDA (todo reference) is used.
 
-In this example, the Issuer is using a following object as a set of selective disclosure claims to issue to the Holder:
+In this example, the Issuer is using a following object as a set of selectively disclosable claims to issue to the Holder:
 
 {#example-complex-user_claims}
 ```json
