@@ -444,7 +444,7 @@ discretion whether to use a 'flat' or 'structured' `sd_digests` SD-JWT object,
 and how to structure it such that it is suitable for the use case. 
 
 Example 1 below is a non-normative example of an SD-JWT using a 'flat'
-`sd_digests` object and Example 2 in the appendix shows a non-normative example
+`sd_digests` object and Example 2a in the appendix shows a non-normative example
 of an SD-JWT using a 'structured' `sd_digests` object. The difference between
 the examples is how the `address` claim is disclosed.
 
@@ -476,7 +476,7 @@ Note: Examples in this document use `cnf` Claim defined in [@RFC7800] to include
 
 ## Example 1: SD-JWT
 
-This example and Example 2 in the appendix use the following object as the set
+This example and Example 2a in the appendix use the following object as the set
 of claims that the Issuer is issuing:
 
 {#example-simple-user_claims}
@@ -841,7 +841,7 @@ plaintext claims in the SD-JWT recursively:
 The keys `sd_digests` and `sd_hash_alg` SHOULD be removed prior to further
 processing. 
 
-An example can be seen in Example 3 in the Appendix.
+The processing is shown in Examples 2b and 3 in the Appendix.
 
 # Security Considerations {#security_considerations}
 
@@ -1002,7 +1002,7 @@ TBD
 
 # Additional Examples
 
-## Example 2 - Structured SD-JWT
+## Example 2a - Structured SD-JWT
 This non-normative example is based on the same claim values as Example 1, but
 this time the issuer decided to create a structured object for the hashes. This
 allows for the release of individual members of the address claim separately.
@@ -1080,6 +1080,101 @@ the `address` property:
 }
 ```
 
+## Example 2b - Mixing SD and Non-SD Claims
+
+In this example, a variant of Example 2a, the issuer decided to apply selective
+disclosure only to some of the claims. In particular, the `country` component of
+the `address` is contained in the JWT as a regular claim, whereas the rest of
+the claims can be disclosed selectively. Note that the processing model
+described in (#processing_model) allows for merging the selectively disclosable
+claims with the regular claims. 
+
+The JSON-payload of the JWT would look as follows:
+
+{#example-simple_structured_merging-sd_jwt_payload}
+```json
+{
+  "iss": "https://example.com/issuer",
+  "cnf": {
+    "jwk": {
+      "kty": "RSA",
+      "n": "pm4bOHBg-oYhAyPWzR56AWX3rUIXp11_ICDkGgS6W3ZWLts-hzwI3x65659kg4hVo9dbGoCJE3ZGF_eaetE30UhBUEgpGwrDrQiJ9zqprmcFfr3qvvkGjtth8Zgl1eM2bJcOwE7PCBHWTKWYs152R7g6Jg2OVph-a8rq-q79MhKG5QoW_mTz10QT_6H4c7PjWG1fjh8hpWNnbP_pv6d1zSwZfc5fl6yVRL0DV0V3lGHKe2Wqf_eNGjBrBLVklDTk8-stX_MWLcR-EGmXAOv0UBWitS_dXJKJu-vXJyw14nHSGuxTIK2hx1pttMft9CsvqimXKeDTU14qQL1eE7ihcw",
+      "e": "AQAB"
+    }
+  },
+  "iat": 1516239022,
+  "exp": 1516247022,
+  "sd_hash_alg": "sha-256",
+  "sd_digests": {
+    "sub": "OMdwkk2HPuiInPypWUWMxot1Y2tStGsLuIcDMjKdXMU",
+    "given_name": "AfKKH4a0IZki8MFDythFaFS_Xqzn-wRvAMfiy_VjYpE",
+    "family_name": "eUmXmry32JiK_76xMasagkAQQsmSVdW57Ajk18riSF0",
+    "email": "-Rcr4fDyjwlM_itcMxoQZCE1QAEwyLJcibEpH114KiE",
+    "phone_number": "Jv2nw0C1wP5ASutYNAxrWEnaDRIpiF0eTUAkUOp8F6Y",
+    "address": {
+      "street_address": "n25N6kth9N0CwjZXHeth1gfovg8_I8fGyzeY0qeLp0k",
+      "locality": "gJVL_TKoT_SbA4_sv0klLTkg-YEGzVUkC-6egxegsz0",
+      "region": "zXbstGPuPq2cPJfyD_-HlmqVyFMf03xH-FbeotXxdbo",
+      "country": "pN-5CZ5hbumsPvLKUADm4Ott6gu0E4xj09s4Z51yb8U"
+    },
+    "birthdate": "UxsvgkUgPnawP6wY4hmxJ_jqiNNKni62zrX7hQOUsys"
+  },
+  "address": {
+    "country": "US"
+  }
+}
+```
+
+The holder can now, for example, release the rest of the components of the `address` claim:
+
+
+{#example-simple_structured_merging-sd_jwt_release_payload}
+```json
+{
+  "nonce": "XZOUco1u_gEPknxS78sWWg",
+  "aud": "https://example.com/verifier",
+  "sd_release": {
+    "given_name": "{\"s\": \"6Ij7tM-a5iVPGboS5tmvVA\", \"v\": \"John\"}",
+    "family_name": "{\"s\": \"Qg_O64zqAxe412a108iroA\", \"v\": \"Doe\"}",
+    "birthdate": "{\"s\": \"M0Jb57t41ubrkSuyrDT3xA\", \"v\": \"1940-01-01\"}",
+    "address": {
+      "region": "{\"s\": \"C9GSoujviJquEgYfojCb1A\", \"v\": \"Anystate\"}",
+      "street_address": "{\"s\": \"5bPs1IquZNa0hkaFzzzZNw\", \"v\": \"123 Main St\"}",
+      "locality": "{\"s\": \"y1sVU5wdfJahVdgwPgS7RQ\", \"v\": \"Anytown\"}"
+    }
+  }
+}
+```
+
+The verifier, after verifying the SD-JWT and applying the SD-JWT-Release, would
+process the result according to (#processing_model) and pass the following data
+to the application: 
+
+
+{#example-simple_structured_merging-merged}
+```json
+{
+  "given_name": "John",
+  "family_name": "Doe",
+  "birthdate": "1940-01-01",
+  "address": {
+    "region": "Anystate",
+    "street_address": "123 Main St",
+    "locality": "Anytown",
+    "country": "US"
+  },
+  "iss": "https://example.com/issuer",
+  "cnf": {
+    "jwk": {
+      "kty": "RSA",
+      "n": "pm4bOHBg-oYhAyPWzR56AWX3rUIXp11_ICDkGgS6W3ZWLts-hzwI3x65659kg4hVo9dbGoCJE3ZGF_eaetE30UhBUEgpGwrDrQiJ9zqprmcFfr3qvvkGjtth8Zgl1eM2bJcOwE7PCBHWTKWYs152R7g6Jg2OVph-a8rq-q79MhKG5QoW_mTz10QT_6H4c7PjWG1fjh8hpWNnbP_pv6d1zSwZfc5fl6yVRL0DV0V3lGHKe2Wqf_eNGjBrBLVklDTk8-stX_MWLcR-EGmXAOv0UBWitS_dXJKJu-vXJyw14nHSGuxTIK2hx1pttMft9CsvqimXKeDTU14qQL1eE7ihcw",
+      "e": "AQAB"
+    }
+  },
+  "iat": 1516239022,
+  "exp": 1516247022
+}
+```
 
 
 ## Example 3 - Complex Structured SD-JWT
