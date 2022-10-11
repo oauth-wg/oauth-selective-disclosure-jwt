@@ -130,6 +130,9 @@ Holder
 Verifier 
 :  An entity that requests, checks and extracts the claims from SD-JWT-R (2.2)
 
+Selective disclosure
+: Process of a Holder disclosing to a Verifier a subset of claims contained in a claim set issued by an Issuer.
+
 Note: discuss if we want to include Client, Authorization Server for the purpose of
 ensuring continuity and separating the entity from the actor.
 
@@ -1499,6 +1502,19 @@ The verifier would decode the SD-JWT-R and SD-JWT as follows:
 # Document History
 
    [[ To be removed from the final specification ]]
+  
+   -01
+
+   * clarified relationship between `sd_release` in the Release and SD-JWT
+   * updated examples
+   * clarifications
+   * fix `cnf` structure in examples
+
+   -00
+
+   * Upload as draft-ietf-oauth-selective-disclosure-jwt-00
+
+   [[ pre Working Group Adoption: ]]
 
    -02
 
