@@ -192,6 +192,8 @@ SD-CLAIMS = (
 )
 ```
 
+When HMAC is used, a secret cryptographic key is used as a salt value.
+
 The claim name (`CLAIM-NAME`) is an optional 
 
 `SD-CLAIMS` can also be nested deeper to capture more complex objects, as will be shown later.
@@ -752,6 +754,8 @@ guess. A new random value MUST be chosen for each claim.
 ## Minimum length of the salt
 
 The RECOMMENDED length of the randomly-generated portion of the salt is at least 128 bits.
+
+Note that minimum 128 bits would be necessary when SHA-256, HMAC-SHA256, or a function of similar strength is used, but a smaller salt size might achieve similar level of security if a stronger iterative derivation function is used.
 
 ## Choice of a hash function
 
