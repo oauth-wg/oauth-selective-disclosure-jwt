@@ -1089,7 +1089,7 @@ the claims can be disclosed selectively. Note that the processing model
 described in (#processing_model) allows for merging the selectively disclosable
 claims with the regular claims. 
 
-The JSON-payload of the JWT would look as follows:
+The JSON-payload of the SD-JWT that contains both selectively disclosable claims in the `sd_digests` object and not selectively disclosable claims in a top-level JWT claim would look as follows:
 
 {#example-simple_structured_merging-sd_jwt_payload}
 ```json
