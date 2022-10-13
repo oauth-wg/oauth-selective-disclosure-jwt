@@ -1125,7 +1125,7 @@ The JSON-payload of the JWT would look as follows:
 }
 ```
 
-The holder can now, for example, release the rest of the components of the `address` claim:
+The holder can now, for example, release the rest of the components of the `address` claim in the SD-JWT-Release:
 
 
 {#example-simple_structured_merging-sd_jwt_release_payload}
