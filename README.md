@@ -5,9 +5,9 @@ documents that support selective disclosure of claim values.
 
 Written in markdown for the [mmark processor](https://github.com/mmarkdown/mmark).
 
-This is a GitHub repository for a draft specification in the [IETF OAuth WG](https://datatracker.ietf.org/doc/draft-fett-oauth-selective-disclosure-jwt/). For the latest published version of this IETF draft, please see https://datatracker.ietf.org/doc/html/draft-fett-selective-disclosure-jwt
+This is a GitHub repository for a draft specification in the [IETF OAuth WG](https://datatracker.ietf.org/doc/draft-ietf-oauth-selective-disclosure-jwt/). For the latest published version of this IETF draft, please see https://datatracker.ietf.org/doc/html/draft-ietf-oauth-selective-disclosure-jwt
 
-For the current version in this repository, see [main.md](main.md).
+For the current version in this repository, see [draft-ietf-oauth-selective-disclosure-jwt.md](draft-ietf-oauth-selective-disclosure-jwt.md).
 
 ## Running SD-JWT PoC
 
