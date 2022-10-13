@@ -1,70 +1,30 @@
 # Selective Disclosure for JWTs (SD-JWT)
 
-This document specifies conventions for creating JSON Web Token (JWT)
-documents that support selective disclosure of claim values. 
+This is the working area for the IETF [OAUTH Working Group](https://datatracker.ietf.org/wg/oauth/documents/) Internet-Draft, "Selective Disclosure for JWTs (SD-JWT)".
 
-Written in markdown for the [mmark processor](https://github.com/mmarkdown/mmark).
+* [Editor's Copy](https://oauth-wg.github.io/oauth-selective-disclosure-jwt/#go.draft-ietf-oauth-selective-disclosure-jwt.html)
+* [Datatracker Page](https://datatracker.ietf.org/doc/draft-ietf-oauth-selective-disclosure-jwt)
+* [Working Group Draft](https://datatracker.ietf.org/doc/html/draft-ietf-oauth-selective-disclosure-jwt)
+* [Compare Editor's Copy to Working Group Draft](https://oauth-wg.github.io/oauth-selective-disclosure-jwt/#go.draft-ietf-oauth-selective-disclosure-jwt.diff)
 
-This is a GitHub repository for a draft specification in the [IETF OAuth WG](https://datatracker.ietf.org/doc/draft-ietf-oauth-selective-disclosure-jwt/). For the latest published version of this IETF draft, please see https://datatracker.ietf.org/doc/html/draft-ietf-oauth-selective-disclosure-jwt
 
-For the current version in this repository, see [draft-ietf-oauth-selective-disclosure-jwt.md](draft-ietf-oauth-selective-disclosure-jwt.md).
+## Contributing
 
-## Running SD-JWT PoC
+See the
+[guidelines for contributions](https://github.com/oauth-wg/oauth-selective-disclosure-jwt/blob/master/CONTRIBUTING.md).
 
-All examples in the document are created from [actual running code](sd_jwt/bin/sd_jwt). To run this code, install sd_jwt:
-```
-pip3 install .
-```
+Contributions can be made by creating pull requests.
+The GitHub interface supports creating pull requests using the Edit (✏) button.
 
-You can read the inline documentation:
-````
-sd_jwt -h
-````
 
-You can then run the code (from the root of this repository):
-```
-sd_jwt sd_jwt/examples/simple.yml
-sd_jwt sd_jwt/examples/simple_structured.yml
-sd_jwt sd_jwt/examples/complex.yml
+## Command Line Usage
+
+Formatted text and HTML versions of the draft can be built using `make`.
+
+```sh
+$ make
 ```
 
-You can create your custom setting file creating a folder with a copy of 
-[sd_jwt/demo_settings.py](sd_jwt/demo_settings.py) renamed to `settings.py` 
-and a `__init__.py` in it. Then run `sd_jwt` specifying the custom settings path:
-
-````
-sd_jwt sd_jwt/examples/simple.yml --settings-path ./custom_settings/
-````
-
-## Updating Examples
-
-To update the examples in [main.md](main.md), use the provided script:
-```
-./update-all-examples.sh
-```
-
-It calls the demos with the switch `--replace-examples-in` to replace the example code in
-[main.md](main.md) and `--no-randomness` to ensure that the examples are always
-generated in the same way (this minimizes the changes that need to be tracked).
-
-The code creates a backup before modifying [main.md](main.md) in [main.bak](main.bak).
-
-## Compiling the Specification (Markdown to XML/HTML)
-
-### Using Docker (recommended)
-From the root of this repository, run
-```bash
-docker run -v `pwd`:/data danielfett/markdown2rfc main.md
-```
-(see https://github.com/oauthstuff/markdown2rfc)
-
-### without Docker
-compile using mmark and xml2rfc: `mmark main.md > draft.xml; xml2rfc --html draft.xml`
-
-# Implementations
-
- * Python: [Reference/Demo Implementation](https://github.com/oauthstuff/draft-selective-disclosure-jwt)
- * Kotlin: [SD-JWT-Kotlin](https://github.com/IDunion/SD-JWT-Kotlin)
- * Rust: [sd_jwt](https://github.com/kushaldas/sd_jwt)
- * TypeScript: [sd-jwt](https://github.com/christianpaquin/sd-jwt)
+Command line usage requires that you have the necessary software installed.  See
+[the instructions](https://github.com/martinthomson/i-d-template/blob/main/doc/SETUP.md).
 
