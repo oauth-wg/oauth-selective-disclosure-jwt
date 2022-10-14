@@ -1,7 +1,7 @@
 import json
 import logging
 import re
-from textwrap import fill
+from textwrap import fill, wrap
 from pathlib import Path
 
 logger = logging.getLogger("sd_jwt")
@@ -12,6 +12,36 @@ EXAMPLE_MAX_WIDTH = 70
 #######################################################################
 # Helper functions to replace the examples in the markdown file
 #######################################################################
+
+
+def textwrap_json(text, width=70):
+    output = []
+    for line in text.splitlines():
+        if len(line) <= width:
+            output.append(line)
+        else:
+            # Check if line is of the form "key": "value"
+            if not line.strip().startswith('"') or ":" not in line:
+                print("WARNING: unexpected line " + line)
+                output.append(line)
+                continue
+            # Determine number of spaces before the value
+            ##spaces = line.index(":") + 2
+            spaces = line.index('"') + EXAMPLE_INDENT
+            # Wrap the value
+            wrapped = wrap(
+                line[spaces:],
+                width=width - spaces,
+                break_on_hyphens=False,
+                replace_whitespace=False,
+            )
+            # Add the wrapped value to the output
+            output.append(line[:spaces] + wrapped[0])
+            for line in wrapped[1:]:
+                output.append(" " * spaces + line)
+    output = "\n".join(text for text in output)
+
+    return output
 
 
 def replace_code_in_markdown_source(file_contents, placeholder_id, new_code):
@@ -57,7 +87,11 @@ def replace_all_in_file(
 
     for key, (data, _) in replacements.items():
         if isinstance(data, dict):
-            new_code = json.dumps(data, indent=EXAMPLE_INDENT)
+            new_code = textwrap_json(
+                json.dumps(data, indent=EXAMPLE_INDENT),
+                width=EXAMPLE_MAX_WIDTH,
+            )
+
         else:
             new_code = fill(
                 data,

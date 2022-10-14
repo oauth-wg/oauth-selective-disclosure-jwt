@@ -255,7 +255,9 @@ randomly).
 The contents of `SD-RELEASES` are modified as follows:
 ```
 SD-RELEASES = (
-    CLAIM-NAME-PLACEHOLDER: (DISCLOSED-SALT, DISCLOSED-VALUE, DISCLOSED-CLAIM-NAME)
+    CLAIM-NAME-PLACEHOLDER: (
+      DISCLOSED-SALT, DISCLOSED-VALUE, DISCLOSED-CLAIM-NAME
+    )
 )
 ```
 Note that blinded and unblinded claim names can be mixed in `SD-CLAIMS` and accordingly in `SD-RELEASES`.
@@ -306,7 +308,10 @@ JSON, however, does not prescribe a unique encoding for data, but allows for var
 ```
 ...
 "family_name": "M\u00f6bius", 
-"address": {"street_address": "Schulstr. 12", "locality": "Schulpforta"}
+"address": {
+  "street_address": "Schulstr. 12", 
+  "locality": "Schulpforta"
+}
 ...
 ```
 
@@ -320,7 +325,7 @@ or as
 ```
 
 The two representations `"M\u00f6bius"` and `"Möbius"` are very different on the byte-level, but yield
-equivalent objects. Same for the representations `{"street_address": "Schulstr. 12", "locality": "Schulpforta"}` and `{"locality":"Schulpforta", "street_address":"Schulstr. 12"}`.
+equivalent objects. Same for the representations of `address`, varying in white space and order of elements in the object.
 
 The variations in white space, ordering of object properties, and encoding of
 Unicode characters are all allowed by the JSON specification. Other variations,
@@ -363,8 +368,10 @@ together with the salt value, like so (non-normative example, see
 
 Or, for the address example above:
 ```
-{"s": "al1N3Zom221", "v": {"locality":"Schulpforta", "street_address":"Schulstr. 12"}}
+{"s": "al1N3Zom221", "v": 
+  {"locality": "Schulpforta", "street_address": "Schulstr. 12"}}
 ```
+(Line break and indentation of the second line for presentation only!)
 
 This object is then JSON-encoded and used as the source string. The JSON-encoded value is transferred in the SD-JWT-Release instead of the original JSON data:
 
@@ -374,8 +381,10 @@ This object is then JSON-encoded and used as the source string. The JSON-encoded
 
 Or, for the address example:
 ```
-"address": "{\"s\": \"al1N3Zom221\", \"v\": {\"locality\": \"Schulpforta\", \"street_address\": \"Schulstr. 12\"}}"
+"address": "{\"s\": \"al1N3Zom221\", \"v\": 
+  {\"locality\": \"Schulpforta\", \"street_address\": \"Schulstr. 12\"}}"
 ```
+(Line break and indentation of the second line for presentation only!)
 
 A verifier can then easily check the hash over the source string before
 extracting the original JSON data. Variations in the encoding of the source
@@ -511,7 +520,12 @@ be disclosed in full.
   "cnf": {
     "jwk": {
       "kty": "RSA",
-      "n": "pm4bOHBg-oYhAyPWzR56AWX3rUIXp11_ICDkGgS6W3ZWLts-hzwI3x65659kg4hVo9dbGoCJE3ZGF_eaetE30UhBUEgpGwrDrQiJ9zqprmcFfr3qvvkGjtth8Zgl1eM2bJcOwE7PCBHWTKWYs152R7g6Jg2OVph-a8rq-q79MhKG5QoW_mTz10QT_6H4c7PjWG1fjh8hpWNnbP_pv6d1zSwZfc5fl6yVRL0DV0V3lGHKe2Wqf_eNGjBrBLVklDTk8-stX_MWLcR-EGmXAOv0UBWitS_dXJKJu-vXJyw14nHSGuxTIK2hx1pttMft9CsvqimXKeDTU14qQL1eE7ihcw",
+      "n": "pm4bOHBg-oYhAyPWzR56AWX3rUIXp11_ICDkGgS6W3ZWLts-hzwI3x6565
+        9kg4hVo9dbGoCJE3ZGF_eaetE30UhBUEgpGwrDrQiJ9zqprmcFfr3qvvkGjtth
+        8Zgl1eM2bJcOwE7PCBHWTKWYs152R7g6Jg2OVph-a8rq-q79MhKG5QoW_mTz10
+        QT_6H4c7PjWG1fjh8hpWNnbP_pv6d1zSwZfc5fl6yVRL0DV0V3lGHKe2Wqf_eN
+        GjBrBLVklDTk8-stX_MWLcR-EGmXAOv0UBWitS_dXJKJu-vXJyw14nHSGuxTIK
+        2hx1pttMft9CsvqimXKeDTU14qQL1eE7ihcw",
       "e": "AQAB"
     }
   },
@@ -529,6 +543,11 @@ be disclosed in full.
   }
 }
 ```
+
+Important: Throughout the examples in this document, line breaks had to
+be added to JSON strings and base64-encoded strings (as shown in the
+next example) to adhere to the 72 character limit for lines in RFCs and
+for readability. JSON does not allow line breaks in strings.
 
 The SD-JWT is then signed by the issuer to create a document like the following:
 
@@ -560,8 +579,6 @@ p1LBFm0fE8eUd4G4yPYOj1SeuR6Gy92T0vAoL5QtpIAHo49oAmiSIj6DQNl2cNYs74jhrB
 IcNZyt4l8H1lV20wS5OS3T0vXaYD13fgm0p4iWD9cVg3HKShUVulEyrSbq94jIKg
 ```
 
-(Line breaks for presentation only.)
-
 
 ## Format of a SD-JWT Salt/Value Container (SVC)
 
@@ -587,13 +604,21 @@ The SVC for Example 1 is as follows:
 ```json
 {
   "sd_release": {
-    "sub": "{\"s\": \"2GLC42sKQveCfGfryNRN9w\", \"v\": \"6c5c0a49-b589-431d-bae7-219122a9ec2c\"}",
-    "given_name": "{\"s\": \"6Ij7tM-a5iVPGboS5tmvVA\", \"v\": \"John\"}",
-    "family_name": "{\"s\": \"Qg_O64zqAxe412a108iroA\", \"v\": \"Doe\"}",
-    "email": "{\"s\": \"Pc33JM2LchcU_lHggv_ufQ\", \"v\": \"johndoe@example.com\"}",
-    "phone_number": "{\"s\": \"lklxF5jMYlGTPUovMNIvCA\", \"v\": \"+1-202-555-0101\"}",
-    "address": "{\"s\": \"5bPs1IquZNa0hkaFzzzZNw\", \"v\": {\"street_address\": \"123 Main St\", \"locality\": \"Anytown\", \"region\": \"Anystate\", \"country\": \"US\"}}",
-    "birthdate": "{\"s\": \"y1sVU5wdfJahVdgwPgS7RQ\", \"v\": \"1940-01-01\"}"
+    "sub": "{\"s\": \"2GLC42sKQveCfGfryNRN9w\", \"v\":
+      \"6c5c0a49-b589-431d-bae7-219122a9ec2c\"}",
+    "given_name": "{\"s\": \"6Ij7tM-a5iVPGboS5tmvVA\", \"v\":
+      \"John\"}",
+    "family_name": "{\"s\": \"Qg_O64zqAxe412a108iroA\", \"v\":
+      \"Doe\"}",
+    "email": "{\"s\": \"Pc33JM2LchcU_lHggv_ufQ\", \"v\":
+      \"johndoe@example.com\"}",
+    "phone_number": "{\"s\": \"lklxF5jMYlGTPUovMNIvCA\", \"v\":
+      \"+1-202-555-0101\"}",
+    "address": "{\"s\": \"5bPs1IquZNa0hkaFzzzZNw\", \"v\":
+      {\"street_address\": \"123 Main St\", \"locality\": \"Anytown\",
+      \"region\": \"Anystate\", \"country\": \"US\"}}",
+    "birthdate": "{\"s\": \"y1sVU5wdfJahVdgwPgS7RQ\", \"v\":
+      \"1940-01-01\"}"
   }
 }
 ```
@@ -659,8 +684,6 @@ iLCAiYmlydGhkYXRlIjogIntcInNcIjogXCJ5MXNWVTV3ZGZKYWhWZGd3UGdTN1JRXCIsI
 FwidlwiOiBcIjE5NDAtMDEtMDFcIn0ifX0
 ```
 
-(Line breaks for presentation only.)
-
 ## Format of an SD-JWT Release
 
 SD-JWT-R contains claim values and the salts of the claims that the holder
@@ -693,9 +716,13 @@ The following is a non-normative example of the contents of an SD-JWT-R for Exam
   "nonce": "XZOUco1u_gEPknxS78sWWg",
   "aud": "https://example.com/verifier",
   "sd_release": {
-    "given_name": "{\"s\": \"6Ij7tM-a5iVPGboS5tmvVA\", \"v\": \"John\"}",
-    "family_name": "{\"s\": \"Qg_O64zqAxe412a108iroA\", \"v\": \"Doe\"}",
-    "address": "{\"s\": \"5bPs1IquZNa0hkaFzzzZNw\", \"v\": {\"street_address\": \"123 Main St\", \"locality\": \"Anytown\", \"region\": \"Anystate\", \"country\": \"US\"}}"
+    "given_name": "{\"s\": \"6Ij7tM-a5iVPGboS5tmvVA\", \"v\":
+      \"John\"}",
+    "family_name": "{\"s\": \"Qg_O64zqAxe412a108iroA\", \"v\":
+      \"Doe\"}",
+    "address": "{\"s\": \"5bPs1IquZNa0hkaFzzzZNw\", \"v\":
+      {\"street_address\": \"123 Main St\", \"locality\": \"Anytown\",
+      \"region\": \"Anystate\", \"country\": \"US\"}}"
   }
 }
 ```
@@ -725,8 +752,6 @@ aEheWf3F_E52yhHxvMLNdvZJ9FksJdSMK6ZCyGfRJadPN2GhNltqph52sWiFKUyUk_4Rtw
 XmT_lF49tWOMZqtG-akN9wrBoMsleM0soA0BXIK10rG5cKZoSNr-u2luzbdZx3CFdAenaq
 ScIkluPPcrXBZGYyX2zYUbGQs2RRXnBmox_yl6CvLbb0qTTYhDnDEo_MH-ZtWw
 ```
-
-(Line breaks for presentation only.)
 
 ## Sending SD-JWT and SD-JWT-R during Presentation
 
@@ -773,8 +798,6 @@ f3F_E52yhHxvMLNdvZJ9FksJdSMK6ZCyGfRJadPN2GhNltqph52sWiFKUyUk_4RtwXmT_l
 F49tWOMZqtG-akN9wrBoMsleM0soA0BXIK10rG5cKZoSNr-u2luzbdZx3CFdAenaqScIkl
 uPPcrXBZGYyX2zYUbGQs2RRXnBmox_yl6CvLbb0qTTYhDnDEo_MH-ZtWw
 ```
-
-(Line breaks for presentation only.)
 
 # Verification and Processing
 
@@ -1017,7 +1040,12 @@ allows for the release of individual members of the address claim separately.
   "cnf": {
     "jwk": {
       "kty": "RSA",
-      "n": "pm4bOHBg-oYhAyPWzR56AWX3rUIXp11_ICDkGgS6W3ZWLts-hzwI3x65659kg4hVo9dbGoCJE3ZGF_eaetE30UhBUEgpGwrDrQiJ9zqprmcFfr3qvvkGjtth8Zgl1eM2bJcOwE7PCBHWTKWYs152R7g6Jg2OVph-a8rq-q79MhKG5QoW_mTz10QT_6H4c7PjWG1fjh8hpWNnbP_pv6d1zSwZfc5fl6yVRL0DV0V3lGHKe2Wqf_eNGjBrBLVklDTk8-stX_MWLcR-EGmXAOv0UBWitS_dXJKJu-vXJyw14nHSGuxTIK2hx1pttMft9CsvqimXKeDTU14qQL1eE7ihcw",
+      "n": "pm4bOHBg-oYhAyPWzR56AWX3rUIXp11_ICDkGgS6W3ZWLts-hzwI3x6565
+        9kg4hVo9dbGoCJE3ZGF_eaetE30UhBUEgpGwrDrQiJ9zqprmcFfr3qvvkGjtth
+        8Zgl1eM2bJcOwE7PCBHWTKWYs152R7g6Jg2OVph-a8rq-q79MhKG5QoW_mTz10
+        QT_6H4c7PjWG1fjh8hpWNnbP_pv6d1zSwZfc5fl6yVRL0DV0V3lGHKe2Wqf_eN
+        GjBrBLVklDTk8-stX_MWLcR-EGmXAOv0UBWitS_dXJKJu-vXJyw14nHSGuxTIK
+        2hx1pttMft9CsvqimXKeDTU14qQL1eE7ihcw",
       "e": "AQAB"
     }
   },
@@ -1047,18 +1075,27 @@ The SVC for this SD-JWT is as follows:
 ```json
 {
   "sd_release": {
-    "sub": "{\"s\": \"2GLC42sKQveCfGfryNRN9w\", \"v\": \"6c5c0a49-b589-431d-bae7-219122a9ec2c\"}",
-    "given_name": "{\"s\": \"6Ij7tM-a5iVPGboS5tmvVA\", \"v\": \"John\"}",
-    "family_name": "{\"s\": \"Qg_O64zqAxe412a108iroA\", \"v\": \"Doe\"}",
-    "email": "{\"s\": \"Pc33JM2LchcU_lHggv_ufQ\", \"v\": \"johndoe@example.com\"}",
-    "phone_number": "{\"s\": \"lklxF5jMYlGTPUovMNIvCA\", \"v\": \"+1-202-555-0101\"}",
+    "sub": "{\"s\": \"2GLC42sKQveCfGfryNRN9w\", \"v\":
+      \"6c5c0a49-b589-431d-bae7-219122a9ec2c\"}",
+    "given_name": "{\"s\": \"6Ij7tM-a5iVPGboS5tmvVA\", \"v\":
+      \"John\"}",
+    "family_name": "{\"s\": \"Qg_O64zqAxe412a108iroA\", \"v\":
+      \"Doe\"}",
+    "email": "{\"s\": \"Pc33JM2LchcU_lHggv_ufQ\", \"v\":
+      \"johndoe@example.com\"}",
+    "phone_number": "{\"s\": \"lklxF5jMYlGTPUovMNIvCA\", \"v\":
+      \"+1-202-555-0101\"}",
     "address": {
-      "street_address": "{\"s\": \"5bPs1IquZNa0hkaFzzzZNw\", \"v\": \"123 Main St\"}",
-      "locality": "{\"s\": \"y1sVU5wdfJahVdgwPgS7RQ\", \"v\": \"Anytown\"}",
-      "region": "{\"s\": \"C9GSoujviJquEgYfojCb1A\", \"v\": \"Anystate\"}",
+      "street_address": "{\"s\": \"5bPs1IquZNa0hkaFzzzZNw\", \"v\":
+        \"123 Main St\"}",
+      "locality": "{\"s\": \"y1sVU5wdfJahVdgwPgS7RQ\", \"v\":
+        \"Anytown\"}",
+      "region": "{\"s\": \"C9GSoujviJquEgYfojCb1A\", \"v\":
+        \"Anystate\"}",
       "country": "{\"s\": \"H3o1uswP760Fi2yeGdVCEQ\", \"v\": \"US\"}"
     },
-    "birthdate": "{\"s\": \"M0Jb57t41ubrkSuyrDT3xA\", \"v\": \"1940-01-01\"}"
+    "birthdate": "{\"s\": \"M0Jb57t41ubrkSuyrDT3xA\", \"v\":
+      \"1940-01-01\"}"
   }
 }
 ```
@@ -1072,11 +1109,15 @@ the `address` property:
   "nonce": "XZOUco1u_gEPknxS78sWWg",
   "aud": "https://example.com/verifier",
   "sd_release": {
-    "given_name": "{\"s\": \"6Ij7tM-a5iVPGboS5tmvVA\", \"v\": \"John\"}",
-    "family_name": "{\"s\": \"Qg_O64zqAxe412a108iroA\", \"v\": \"Doe\"}",
-    "birthdate": "{\"s\": \"M0Jb57t41ubrkSuyrDT3xA\", \"v\": \"1940-01-01\"}",
+    "given_name": "{\"s\": \"6Ij7tM-a5iVPGboS5tmvVA\", \"v\":
+      \"John\"}",
+    "family_name": "{\"s\": \"Qg_O64zqAxe412a108iroA\", \"v\":
+      \"Doe\"}",
+    "birthdate": "{\"s\": \"M0Jb57t41ubrkSuyrDT3xA\", \"v\":
+      \"1940-01-01\"}",
     "address": {
-      "region": "{\"s\": \"C9GSoujviJquEgYfojCb1A\", \"v\": \"Anystate\"}",
+      "region": "{\"s\": \"C9GSoujviJquEgYfojCb1A\", \"v\":
+        \"Anystate\"}",
       "country": "{\"s\": \"H3o1uswP760Fi2yeGdVCEQ\", \"v\": \"US\"}"
     }
   }
@@ -1101,7 +1142,12 @@ The JSON-payload of the SD-JWT that contains both selectively disclosable claims
   "cnf": {
     "jwk": {
       "kty": "RSA",
-      "n": "pm4bOHBg-oYhAyPWzR56AWX3rUIXp11_ICDkGgS6W3ZWLts-hzwI3x65659kg4hVo9dbGoCJE3ZGF_eaetE30UhBUEgpGwrDrQiJ9zqprmcFfr3qvvkGjtth8Zgl1eM2bJcOwE7PCBHWTKWYs152R7g6Jg2OVph-a8rq-q79MhKG5QoW_mTz10QT_6H4c7PjWG1fjh8hpWNnbP_pv6d1zSwZfc5fl6yVRL0DV0V3lGHKe2Wqf_eNGjBrBLVklDTk8-stX_MWLcR-EGmXAOv0UBWitS_dXJKJu-vXJyw14nHSGuxTIK2hx1pttMft9CsvqimXKeDTU14qQL1eE7ihcw",
+      "n": "pm4bOHBg-oYhAyPWzR56AWX3rUIXp11_ICDkGgS6W3ZWLts-hzwI3x6565
+        9kg4hVo9dbGoCJE3ZGF_eaetE30UhBUEgpGwrDrQiJ9zqprmcFfr3qvvkGjtth
+        8Zgl1eM2bJcOwE7PCBHWTKWYs152R7g6Jg2OVph-a8rq-q79MhKG5QoW_mTz10
+        QT_6H4c7PjWG1fjh8hpWNnbP_pv6d1zSwZfc5fl6yVRL0DV0V3lGHKe2Wqf_eN
+        GjBrBLVklDTk8-stX_MWLcR-EGmXAOv0UBWitS_dXJKJu-vXJyw14nHSGuxTIK
+        2hx1pttMft9CsvqimXKeDTU14qQL1eE7ihcw",
       "e": "AQAB"
     }
   },
@@ -1137,13 +1183,19 @@ The holder can now, for example, release the rest of the components of the `addr
   "nonce": "XZOUco1u_gEPknxS78sWWg",
   "aud": "https://example.com/verifier",
   "sd_release": {
-    "given_name": "{\"s\": \"6Ij7tM-a5iVPGboS5tmvVA\", \"v\": \"John\"}",
-    "family_name": "{\"s\": \"Qg_O64zqAxe412a108iroA\", \"v\": \"Doe\"}",
-    "birthdate": "{\"s\": \"M0Jb57t41ubrkSuyrDT3xA\", \"v\": \"1940-01-01\"}",
+    "given_name": "{\"s\": \"6Ij7tM-a5iVPGboS5tmvVA\", \"v\":
+      \"John\"}",
+    "family_name": "{\"s\": \"Qg_O64zqAxe412a108iroA\", \"v\":
+      \"Doe\"}",
+    "birthdate": "{\"s\": \"M0Jb57t41ubrkSuyrDT3xA\", \"v\":
+      \"1940-01-01\"}",
     "address": {
-      "region": "{\"s\": \"C9GSoujviJquEgYfojCb1A\", \"v\": \"Anystate\"}",
-      "street_address": "{\"s\": \"5bPs1IquZNa0hkaFzzzZNw\", \"v\": \"123 Main St\"}",
-      "locality": "{\"s\": \"y1sVU5wdfJahVdgwPgS7RQ\", \"v\": \"Anytown\"}"
+      "region": "{\"s\": \"C9GSoujviJquEgYfojCb1A\", \"v\":
+        \"Anystate\"}",
+      "street_address": "{\"s\": \"5bPs1IquZNa0hkaFzzzZNw\", \"v\":
+        \"123 Main St\"}",
+      "locality": "{\"s\": \"y1sVU5wdfJahVdgwPgS7RQ\", \"v\":
+        \"Anytown\"}"
     }
   }
 }
@@ -1170,7 +1222,12 @@ to the application:
   "cnf": {
     "jwk": {
       "kty": "RSA",
-      "n": "pm4bOHBg-oYhAyPWzR56AWX3rUIXp11_ICDkGgS6W3ZWLts-hzwI3x65659kg4hVo9dbGoCJE3ZGF_eaetE30UhBUEgpGwrDrQiJ9zqprmcFfr3qvvkGjtth8Zgl1eM2bJcOwE7PCBHWTKWYs152R7g6Jg2OVph-a8rq-q79MhKG5QoW_mTz10QT_6H4c7PjWG1fjh8hpWNnbP_pv6d1zSwZfc5fl6yVRL0DV0V3lGHKe2Wqf_eNGjBrBLVklDTk8-stX_MWLcR-EGmXAOv0UBWitS_dXJKJu-vXJyw14nHSGuxTIK2hx1pttMft9CsvqimXKeDTU14qQL1eE7ihcw",
+      "n": "pm4bOHBg-oYhAyPWzR56AWX3rUIXp11_ICDkGgS6W3ZWLts-hzwI3x6565
+        9kg4hVo9dbGoCJE3ZGF_eaetE30UhBUEgpGwrDrQiJ9zqprmcFfr3qvvkGjtth
+        8Zgl1eM2bJcOwE7PCBHWTKWYs152R7g6Jg2OVph-a8rq-q79MhKG5QoW_mTz10
+        QT_6H4c7PjWG1fjh8hpWNnbP_pv6d1zSwZfc5fl6yVRL0DV0V3lGHKe2Wqf_eN
+        GjBrBLVklDTk8-stX_MWLcR-EGmXAOv0UBWitS_dXJKJu-vXJyw14nHSGuxTIK
+        2hx1pttMft9CsvqimXKeDTU14qQL1eE7ihcw",
       "e": "AQAB"
     }
   },
@@ -1241,7 +1298,12 @@ The issuer in this example further adds the two claims `birthdate` and `place_of
   "cnf": {
     "jwk": {
       "kty": "RSA",
-      "n": "pm4bOHBg-oYhAyPWzR56AWX3rUIXp11_ICDkGgS6W3ZWLts-hzwI3x65659kg4hVo9dbGoCJE3ZGF_eaetE30UhBUEgpGwrDrQiJ9zqprmcFfr3qvvkGjtth8Zgl1eM2bJcOwE7PCBHWTKWYs152R7g6Jg2OVph-a8rq-q79MhKG5QoW_mTz10QT_6H4c7PjWG1fjh8hpWNnbP_pv6d1zSwZfc5fl6yVRL0DV0V3lGHKe2Wqf_eNGjBrBLVklDTk8-stX_MWLcR-EGmXAOv0UBWitS_dXJKJu-vXJyw14nHSGuxTIK2hx1pttMft9CsvqimXKeDTU14qQL1eE7ihcw",
+      "n": "pm4bOHBg-oYhAyPWzR56AWX3rUIXp11_ICDkGgS6W3ZWLts-hzwI3x6565
+        9kg4hVo9dbGoCJE3ZGF_eaetE30UhBUEgpGwrDrQiJ9zqprmcFfr3qvvkGjtth
+        8Zgl1eM2bJcOwE7PCBHWTKWYs152R7g6Jg2OVph-a8rq-q79MhKG5QoW_mTz10
+        QT_6H4c7PjWG1fjh8hpWNnbP_pv6d1zSwZfc5fl6yVRL0DV0V3lGHKe2Wqf_eN
+        GjBrBLVklDTk8-stX_MWLcR-EGmXAOv0UBWitS_dXJKJu-vXJyw14nHSGuxTIK
+        2hx1pttMft9CsvqimXKeDTU14qQL1eE7ihcw",
       "e": "AQAB"
     }
   },
@@ -1251,9 +1313,11 @@ The issuer in this example further adds the two claims `birthdate` and `place_of
   "sd_digests": {
     "verified_claims": {
       "verification": {
-        "trust_framework": "T7ivxsfuy-nAuECeh0utPEX8cSlc7QflJDE0RqtWDMU",
+        "trust_framework":
+          "T7ivxsfuy-nAuECeh0utPEX8cSlc7QflJDE0RqtWDMU",
         "time": "_ecCQoXSR8t9esur66ZwWwC6u4xLuVELjmwFgpRZqcQ",
-        "verification_process": "BolwKKvU8N7uUhjN2aGH2T54wjXpkcOz5sC9PkIP4s4",
+        "verification_process":
+          "BolwKKvU8N7uUhjN2aGH2T54wjXpkcOz5sC9PkIP4s4",
         "evidence": [
           {
             "type": "7jBlUZkZn1Gfj9mybqlJGzTb2z8KcNNHU0IV4B8MxOM",
@@ -1263,11 +1327,14 @@ The issuer in this example further adds the two claims `birthdate` and `place_of
               "type": "vzDHD-6hQqZ5lSw_7acK1lErxSh3E6dO0zlUYM2hDvw",
               "issuer": {
                 "name": "us9T9ufVdSmytSmjrtdN_TUI0ai3_JNM3q-0qx0CXk4",
-                "country": "uItKtPRZQBB9v5THHOdi02ALjD0MH0U6jjHDLe91NnY"
+                "country":
+                  "uItKtPRZQBB9v5THHOdi02ALjD0MH0U6jjHDLe91NnY"
               },
               "number": "QNNXwo3siOWdqNivKBnFsD4X8gZxVIgu3tv6dfpZhUc",
-              "date_of_issuance": "AYWQphnOlFFN9oSVvtBr_iYCKYlucTi3lsMrXebebgc",
-              "date_of_expiry": "JIk-APYHW3qy60rvGyFswDCTMfAbBXZyyrZEn8NsBhU"
+              "date_of_issuance":
+                "AYWQphnOlFFN9oSVvtBr_iYCKYlucTi3lsMrXebebgc",
+              "date_of_expiry":
+                "JIk-APYHW3qy60rvGyFswDCTMfAbBXZyyrZEn8NsBhU"
             }
           }
         ]
@@ -1275,16 +1342,20 @@ The issuer in this example further adds the two claims `birthdate` and `place_of
       "claims": {
         "given_name": "hZtT6FZBzxAeByDUkFJTeqTCpTd2cQKx6MDPkGvVCRE",
         "family_name": "5yLYGVxPSfXynhcopbIcrFe0_sMGxv_-6THZAu4eWnU",
-        "nationalities": "BxCtneHl-RQoL24tS8AaywfyHpnZSq9tUsNDyrYFLYY",
+        "nationalities":
+          "BxCtneHl-RQoL24tS8AaywfyHpnZSq9tUsNDyrYFLYY",
         "address": {
           "locality": "ah6QI8ceduHKP7uiHbwZ2a2LYkxjibHaoWG3M6x1ip4",
-          "postal_code": "Auci5Y0jrp_3ahg_IW_Z-mqBaE9BrrItR6o7ekhEGBo",
+          "postal_code":
+            "Auci5Y0jrp_3ahg_IW_Z-mqBaE9BrrItR6o7ekhEGBo",
           "country": "RAKTJg_m1tcoyGI1O2qgQm4KD2d2abXhU4IS7c6RVjU",
-          "street_address": "iKkk1nJHTBKTkEt2TNMkZf69WYkiDYaQL6ZzDZmGO1M"
+          "street_address":
+            "iKkk1nJHTBKTkEt2TNMkZf69WYkiDYaQL6ZzDZmGO1M"
         }
       }
     },
-    "birth_middle_name": "KpRjGCm3uykvCGFIDrVJ7iTMQhWakBmCItHbAa6vnZE",
+    "birth_middle_name":
+      "KpRjGCm3uykvCGFIDrVJ7iTMQhWakBmCItHbAa6vnZE",
     "salutation": "IoY5e03e65CUrnaMcRDmPCm0RWPEFE4mVkoCsK86agA",
     "msisdn": "XupJick4P8bxaz20kx_VOwbGU1cgslhAUG6IE-tDjms"
   },
@@ -1352,8 +1423,6 @@ ZvIDs95vGxsJW-6SbasuonTunzZGdt2WqXFRtXuaCb-Vw9wPXuytHmH_1vuyROhH8ITzqY
 bTZ-4H6eS5BLjx8HXWQDk3r-M_g9htP9G3ezhDi3uzLQ2dSAbNqOWiXQ
 ```
 
-(Line breaks for presentation only.)
-
 An SD-JWT-R for some of the claims may look as follows:
 
 {#example-complex-sd_jwt_release_payload}
@@ -1364,17 +1433,22 @@ An SD-JWT-R for some of the claims may look as follows:
   "sd_release": {
     "verified_claims": {
       "verification": {
-        "trust_framework": "{\"s\": \"2GLC42sKQveCfGfryNRN9w\", \"v\": \"de_aml\"}",
-        "time": "{\"s\": \"6Ij7tM-a5iVPGboS5tmvVA\", \"v\": \"2012-04-23T18:25Z\"}",
+        "trust_framework": "{\"s\": \"2GLC42sKQveCfGfryNRN9w\", \"v\":
+          \"de_aml\"}",
+        "time": "{\"s\": \"6Ij7tM-a5iVPGboS5tmvVA\", \"v\":
+          \"2012-04-23T18:25Z\"}",
         "evidence": [
           {
-            "type": "{\"s\": \"Pc33JM2LchcU_lHggv_ufQ\", \"v\": \"document\"}"
+            "type": "{\"s\": \"Pc33JM2LchcU_lHggv_ufQ\", \"v\":
+              \"document\"}"
           }
         ]
       },
       "claims": {
-        "given_name": "{\"s\": \"4KyR32oIZt-zkWvFqbULKg\", \"v\": \"Max\"}",
-        "family_name": "{\"s\": \"flNP1ncMz9Lg-c9qMIz_9g\", \"v\": \"Meier\"}"
+        "given_name": "{\"s\": \"4KyR32oIZt-zkWvFqbULKg\", \"v\":
+          \"Max\"}",
+        "family_name": "{\"s\": \"flNP1ncMz9Lg-c9qMIz_9g\", \"v\":
+          \"Meier\"}"
       }
     }
   }
@@ -1412,7 +1486,12 @@ then pass the result on to the application for further processing:
   "cnf": {
     "jwk": {
       "kty": "RSA",
-      "n": "pm4bOHBg-oYhAyPWzR56AWX3rUIXp11_ICDkGgS6W3ZWLts-hzwI3x65659kg4hVo9dbGoCJE3ZGF_eaetE30UhBUEgpGwrDrQiJ9zqprmcFfr3qvvkGjtth8Zgl1eM2bJcOwE7PCBHWTKWYs152R7g6Jg2OVph-a8rq-q79MhKG5QoW_mTz10QT_6H4c7PjWG1fjh8hpWNnbP_pv6d1zSwZfc5fl6yVRL0DV0V3lGHKe2Wqf_eNGjBrBLVklDTk8-stX_MWLcR-EGmXAOv0UBWitS_dXJKJu-vXJyw14nHSGuxTIK2hx1pttMft9CsvqimXKeDTU14qQL1eE7ihcw",
+      "n": "pm4bOHBg-oYhAyPWzR56AWX3rUIXp11_ICDkGgS6W3ZWLts-hzwI3x6565
+        9kg4hVo9dbGoCJE3ZGF_eaetE30UhBUEgpGwrDrQiJ9zqprmcFfr3qvvkGjtth
+        8Zgl1eM2bJcOwE7PCBHWTKWYs152R7g6Jg2OVph-a8rq-q79MhKG5QoW_mTz10
+        QT_6H4c7PjWG1fjh8hpWNnbP_pv6d1zSwZfc5fl6yVRL0DV0V3lGHKe2Wqf_eN
+        GjBrBLVklDTk8-stX_MWLcR-EGmXAOv0UBWitS_dXJKJu-vXJyw14nHSGuxTIK
+        2hx1pttMft9CsvqimXKeDTU14qQL1eE7ihcw",
       "e": "AQAB"
     }
   },
@@ -1440,7 +1519,8 @@ SVC sent alongside this SD-JWT as a JWT-VC is same as in Example 1.
 
 ```json
 {
-  "sub": "urn:ietf:params:oauth:jwk-thumbprint:sha-256:NzbLsXh8uDCcd-6MNwXF4W_7noWXFZAfHkxZsRGC9Xs",
+  "sub": "urn:ietf:params:oauth:jwk-thumbprint:sha-256:NzbLsXh8uDCc
+    d-6MNwXF4W_7noWXFZAfHkxZsRGC9Xs",
   "jti": "http://example.edu/credentials/3732",
   "iss": "https://example.com/keys/foo.jwk",
   "nbf": 1541493724,
@@ -1503,7 +1583,8 @@ encoded as JSON and signed as a JWS compliant to [@VC_DATA].
       "e":"AQAB"
     }
 }.{
-  "iss": "urn:ietf:params:oauth:jwk-thumbprint:sha-256:NzbLsXh8uDCcd-6MNwXF4W_7noWXFZAfHkxZsRGC9Xs",
+  "iss": "urn:ietf:params:oauth:jwk-thumbprint:sha-256:NzbLsXh8uDCc
+    d-6MNwXF4W_7noWXFZAfHkxZsRGC9Xs",
   "aud": "s6BhdRkqt3",
   "nbf": 1560415047,
   "iat": 1560415047,
@@ -1521,12 +1602,13 @@ encoded as JSON and signed as a JWS compliant to [@VC_DATA].
   "sd_release": {
     "email": "[\"eI8ZWm9QnKPpNPeNenHdhQ\", \"johndoe@example.com\"]",
     "phone_number": "[\"Qg_O64zqAxe412a108iroA\", \"+1-202-555-0101\"]",
-    "address": "[\"AJx-095VPrpTtN4QMOqROA\", {\"street_address\": \"123 Main St\", \"locality\": \"Anytown\", \"region\": \"Anystate\", \"country\": \"US\"}]",
+    "address": "[\"AJx-095VPrpTtN4QMOqROA\", {\"street_address\": 
+      \"123 Main St\", \"locality\": \"Anytown\", \"region\": 
+      \"Anystate\", \"country\": \"US\"}]",
     "birthdate": "[\"Pc33JM2LchcU_lHggv_ufQ\", \"1940-01-01\"]"
   }
 }
 ```
-
 # Blinding Claim Names
 
 ## Example 5: Some Blinded Claims
@@ -1562,7 +1644,12 @@ Hiding just this claim, the following SD-JWT payload would result:
   "cnf": {
     "jwk": {
       "kty": "RSA",
-      "n": "pm4bOHBg-oYhAyPWzR56AWX3rUIXp11_ICDkGgS6W3ZWLts-hzwI3x65659kg4hVo9dbGoCJE3ZGF_eaetE30UhBUEgpGwrDrQiJ9zqprmcFfr3qvvkGjtth8Zgl1eM2bJcOwE7PCBHWTKWYs152R7g6Jg2OVph-a8rq-q79MhKG5QoW_mTz10QT_6H4c7PjWG1fjh8hpWNnbP_pv6d1zSwZfc5fl6yVRL0DV0V3lGHKe2Wqf_eNGjBrBLVklDTk8-stX_MWLcR-EGmXAOv0UBWitS_dXJKJu-vXJyw14nHSGuxTIK2hx1pttMft9CsvqimXKeDTU14qQL1eE7ihcw",
+      "n": "pm4bOHBg-oYhAyPWzR56AWX3rUIXp11_ICDkGgS6W3ZWLts-hzwI3x6565
+        9kg4hVo9dbGoCJE3ZGF_eaetE30UhBUEgpGwrDrQiJ9zqprmcFfr3qvvkGjtth
+        8Zgl1eM2bJcOwE7PCBHWTKWYs152R7g6Jg2OVph-a8rq-q79MhKG5QoW_mTz10
+        QT_6H4c7PjWG1fjh8hpWNnbP_pv6d1zSwZfc5fl6yVRL0DV0V3lGHKe2Wqf_eN
+        GjBrBLVklDTk8-stX_MWLcR-EGmXAOv0UBWitS_dXJKJu-vXJyw14nHSGuxTIK
+        2hx1pttMft9CsvqimXKeDTU14qQL1eE7ihcw",
       "e": "AQAB"
     }
   },
@@ -1575,8 +1662,10 @@ Hiding just this claim, the following SD-JWT payload would result:
     "family_name": "eUmXmry32JiK_76xMasagkAQQsmSVdW57Ajk18riSF0",
     "email": "-Rcr4fDyjwlM_itcMxoQZCE1QAEwyLJcibEpH114KiE",
     "phone_number": "Jv2nw0C1wP5ASutYNAxrWEnaDRIpiF0eTUAkUOp8F6Y",
-    "5a2W0_NrlEZzfqmk_7Pq-w": "gc8VzGTImYRXzP6j7q5RomXt2C_wtsOJ3hAHJdTuEIY",
-    "other_secret_club_membership_no": "IirAwgN-MubteYvJ4fmq04p9PnpRTf7hqg0dzSWRboA",
+    "5a2W0_NrlEZzfqmk_7Pq-w":
+      "gc8VzGTImYRXzP6j7q5RomXt2C_wtsOJ3hAHJdTuEIY",
+    "other_secret_club_membership_no":
+      "IirAwgN-MubteYvJ4fmq04p9PnpRTf7hqg0dzSWRboA",
     "address": {
       "street_address": "o_yJIdfhKuKVzOF7i1EuakzC5ghd99CX8_nitm-DsRM",
       "locality": "ogNqsvRqK0-ZPZc9C3Z4_6APvywm-lrm0oF2gcVtl_4",
@@ -1595,20 +1684,31 @@ In the SVC it can be seen that the blinded claim's original name is `secret_club
 ```json
 {
   "sd_release": {
-    "sub": "{\"s\": \"2GLC42sKQveCfGfryNRN9w\", \"v\": \"6c5c0a49-b589-431d-bae7-219122a9ec2c\"}",
-    "given_name": "{\"s\": \"6Ij7tM-a5iVPGboS5tmvVA\", \"v\": \"John\"}",
-    "family_name": "{\"s\": \"Qg_O64zqAxe412a108iroA\", \"v\": \"Doe\"}",
-    "email": "{\"s\": \"Pc33JM2LchcU_lHggv_ufQ\", \"v\": \"johndoe@example.com\"}",
-    "phone_number": "{\"s\": \"lklxF5jMYlGTPUovMNIvCA\", \"v\": \"+1-202-555-0101\"}",
-    "5a2W0_NrlEZzfqmk_7Pq-w": "{\"s\": \"5bPs1IquZNa0hkaFzzzZNw\", \"v\": \"23\", \"n\": \"secret_club_membership_no\"}",
-    "other_secret_club_membership_no": "{\"s\": \"y1sVU5wdfJahVdgwPgS7RQ\", \"v\": \"42\"}",
+    "sub": "{\"s\": \"2GLC42sKQveCfGfryNRN9w\", \"v\":
+      \"6c5c0a49-b589-431d-bae7-219122a9ec2c\"}",
+    "given_name": "{\"s\": \"6Ij7tM-a5iVPGboS5tmvVA\", \"v\":
+      \"John\"}",
+    "family_name": "{\"s\": \"Qg_O64zqAxe412a108iroA\", \"v\":
+      \"Doe\"}",
+    "email": "{\"s\": \"Pc33JM2LchcU_lHggv_ufQ\", \"v\":
+      \"johndoe@example.com\"}",
+    "phone_number": "{\"s\": \"lklxF5jMYlGTPUovMNIvCA\", \"v\":
+      \"+1-202-555-0101\"}",
+    "5a2W0_NrlEZzfqmk_7Pq-w": "{\"s\": \"5bPs1IquZNa0hkaFzzzZNw\",
+      \"v\": \"23\", \"n\": \"secret_club_membership_no\"}",
+    "other_secret_club_membership_no": "{\"s\":
+      \"y1sVU5wdfJahVdgwPgS7RQ\", \"v\": \"42\"}",
     "address": {
-      "street_address": "{\"s\": \"C9GSoujviJquEgYfojCb1A\", \"v\": \"123 Main St\"}",
-      "locality": "{\"s\": \"H3o1uswP760Fi2yeGdVCEQ\", \"v\": \"Anytown\"}",
-      "region": "{\"s\": \"M0Jb57t41ubrkSuyrDT3xA\", \"v\": \"Anystate\"}",
+      "street_address": "{\"s\": \"C9GSoujviJquEgYfojCb1A\", \"v\":
+        \"123 Main St\"}",
+      "locality": "{\"s\": \"H3o1uswP760Fi2yeGdVCEQ\", \"v\":
+        \"Anytown\"}",
+      "region": "{\"s\": \"M0Jb57t41ubrkSuyrDT3xA\", \"v\":
+        \"Anystate\"}",
       "country": "{\"s\": \"eK5o5pHfgupPpltj1qhAJw\", \"v\": \"US\"}"
     },
-    "birthdate": "{\"s\": \"WpxJrFuX8uSi2p4ht09jvw\", \"v\": \"1940-01-01\"}"
+    "birthdate": "{\"s\": \"WpxJrFuX8uSi2p4ht09jvw\", \"v\":
+      \"1940-01-01\"}"
   }
 }
 ```
@@ -1621,14 +1721,19 @@ The verifier would learn this information via the SD-JWT-R:
   "nonce": "XZOUco1u_gEPknxS78sWWg",
   "aud": "https://example.com/verifier",
   "sd_release": {
-    "given_name": "{\"s\": \"6Ij7tM-a5iVPGboS5tmvVA\", \"v\": \"John\"}",
-    "family_name": "{\"s\": \"Qg_O64zqAxe412a108iroA\", \"v\": \"Doe\"}",
-    "birthdate": "{\"s\": \"WpxJrFuX8uSi2p4ht09jvw\", \"v\": \"1940-01-01\"}",
+    "given_name": "{\"s\": \"6Ij7tM-a5iVPGboS5tmvVA\", \"v\":
+      \"John\"}",
+    "family_name": "{\"s\": \"Qg_O64zqAxe412a108iroA\", \"v\":
+      \"Doe\"}",
+    "birthdate": "{\"s\": \"WpxJrFuX8uSi2p4ht09jvw\", \"v\":
+      \"1940-01-01\"}",
     "address": {
-      "region": "{\"s\": \"M0Jb57t41ubrkSuyrDT3xA\", \"v\": \"Anystate\"}",
+      "region": "{\"s\": \"M0Jb57t41ubrkSuyrDT3xA\", \"v\":
+        \"Anystate\"}",
       "country": "{\"s\": \"eK5o5pHfgupPpltj1qhAJw\", \"v\": \"US\"}"
     },
-    "5a2W0_NrlEZzfqmk_7Pq-w": "{\"s\": \"5bPs1IquZNa0hkaFzzzZNw\", \"v\": \"23\", \"n\": \"secret_club_membership_no\"}"
+    "5a2W0_NrlEZzfqmk_7Pq-w": "{\"s\": \"5bPs1IquZNa0hkaFzzzZNw\",
+      \"v\": \"23\", \"n\": \"secret_club_membership_no\"}"
   }
 }
 ```
@@ -1682,7 +1787,12 @@ The resulting SD-JWT payload:
   "cnf": {
     "jwk": {
       "kty": "RSA",
-      "n": "pm4bOHBg-oYhAyPWzR56AWX3rUIXp11_ICDkGgS6W3ZWLts-hzwI3x65659kg4hVo9dbGoCJE3ZGF_eaetE30UhBUEgpGwrDrQiJ9zqprmcFfr3qvvkGjtth8Zgl1eM2bJcOwE7PCBHWTKWYs152R7g6Jg2OVph-a8rq-q79MhKG5QoW_mTz10QT_6H4c7PjWG1fjh8hpWNnbP_pv6d1zSwZfc5fl6yVRL0DV0V3lGHKe2Wqf_eNGjBrBLVklDTk8-stX_MWLcR-EGmXAOv0UBWitS_dXJKJu-vXJyw14nHSGuxTIK2hx1pttMft9CsvqimXKeDTU14qQL1eE7ihcw",
+      "n": "pm4bOHBg-oYhAyPWzR56AWX3rUIXp11_ICDkGgS6W3ZWLts-hzwI3x6565
+        9kg4hVo9dbGoCJE3ZGF_eaetE30UhBUEgpGwrDrQiJ9zqprmcFfr3qvvkGjtth
+        8Zgl1eM2bJcOwE7PCBHWTKWYs152R7g6Jg2OVph-a8rq-q79MhKG5QoW_mTz10
+        QT_6H4c7PjWG1fjh8hpWNnbP_pv6d1zSwZfc5fl6yVRL0DV0V3lGHKe2Wqf_eN
+        GjBrBLVklDTk8-stX_MWLcR-EGmXAOv0UBWitS_dXJKJu-vXJyw14nHSGuxTIK
+        2hx1pttMft9CsvqimXKeDTU14qQL1eE7ihcw",
       "e": "AQAB"
     }
   },
@@ -1690,43 +1800,65 @@ The resulting SD-JWT payload:
   "exp": 1516247022,
   "sd_hash_alg": "sha-256",
   "sd_digests": {
-    "eluV5Og3gSNII8EYnsxA_A": "bvPLqohL5ROmk2UsuNffH8C1wx9o-ipm-G4SkUwrpAE",
-    "eI8ZWm9QnKPpNPeNenHdhQ": "pCtjs0hC2Klhsnpe7BIqnGAsXlyXXC-lAEgX6isoYVM",
-    "AJx-095VPrpTtN4QMOqROA": "HS1Ht-bTrXsSTw9JdcHIbTFDkEI_IY52_cmzUgxWZ0k",
-    "G02NSrQfjFXQ7Io09syajA": "M2YQ_j8OPPBK3ZLhPPP6_AdSa2-rug2urYjgk_ML_QM",
-    "nPuoQnkRFq3BIeAm7AnXFA": "-Brzrp2cs-8nLs7rQI89YJ76s3PrbVe3n_5hlYCy1cE",
-    "5a2W0_NrlEZzfqmk_7Pq-w": "gc8VzGTImYRXzP6j7q5RomXt2C_wtsOJ3hAHJdTuEIY",
+    "eluV5Og3gSNII8EYnsxA_A":
+      "bvPLqohL5ROmk2UsuNffH8C1wx9o-ipm-G4SkUwrpAE",
+    "eI8ZWm9QnKPpNPeNenHdhQ":
+      "pCtjs0hC2Klhsnpe7BIqnGAsXlyXXC-lAEgX6isoYVM",
+    "AJx-095VPrpTtN4QMOqROA":
+      "HS1Ht-bTrXsSTw9JdcHIbTFDkEI_IY52_cmzUgxWZ0k",
+    "G02NSrQfjFXQ7Io09syajA":
+      "M2YQ_j8OPPBK3ZLhPPP6_AdSa2-rug2urYjgk_ML_QM",
+    "nPuoQnkRFq3BIeAm7AnXFA":
+      "-Brzrp2cs-8nLs7rQI89YJ76s3PrbVe3n_5hlYCy1cE",
+    "5a2W0_NrlEZzfqmk_7Pq-w":
+      "gc8VzGTImYRXzP6j7q5RomXt2C_wtsOJ3hAHJdTuEIY",
     "address": {
-      "HbQ4X8srVW3QDxnIJdqyOA": "39o5dKobVi8c0dLpg4sjd7zW18UONRra0ht9mgu4hec",
-      "kx5kF17V-x0JmwUx9vgvtw": "wqueD5ABJ3bTyGSckOMpzI7YUvcCO2l-40vi6JMYsYY",
-      "OBKlTVlvLg-AdwqYGbP8ZA": "S11dsdFN97YtrA2o3yZ0eBbf1zn-izejORU-fyMtynI",
-      "DsmtKNgpV4dAHpjrcaosAw": "-0XEQHSNzMu244QaOpLmPD3JkdZN8SrqbEQ4VDufu9A"
+      "HbQ4X8srVW3QDxnIJdqyOA":
+        "39o5dKobVi8c0dLpg4sjd7zW18UONRra0ht9mgu4hec",
+      "kx5kF17V-x0JmwUx9vgvtw":
+        "wqueD5ABJ3bTyGSckOMpzI7YUvcCO2l-40vi6JMYsYY",
+      "OBKlTVlvLg-AdwqYGbP8ZA":
+        "S11dsdFN97YtrA2o3yZ0eBbf1zn-izejORU-fyMtynI",
+      "DsmtKNgpV4dAHpjrcaosAw":
+        "-0XEQHSNzMu244QaOpLmPD3JkdZN8SrqbEQ4VDufu9A"
     },
-    "j7ADdb0UVb0Li0ciPcP0ew": "X_v1hrkQIH_0LBM8TncMMTBzYN9UJc8FmJRda7yfY8g"
+    "j7ADdb0UVb0Li0ciPcP0ew":
+      "X_v1hrkQIH_0LBM8TncMMTBzYN9UJc8FmJRda7yfY8g"
   }
 }
 ```
 
 The SVC:
 
-
 {#example-simple_structured_all_blinded-svc_payload}
 ```json
 {
   "sd_release": {
-    "eluV5Og3gSNII8EYnsxA_A": "{\"s\": \"2GLC42sKQveCfGfryNRN9w\", \"v\": \"6c5c0a49-b589-431d-bae7-219122a9ec2c\", \"n\": \"sub\"}",
-    "eI8ZWm9QnKPpNPeNenHdhQ": "{\"s\": \"6Ij7tM-a5iVPGboS5tmvVA\", \"v\": \"John\", \"n\": \"given_name\"}",
-    "AJx-095VPrpTtN4QMOqROA": "{\"s\": \"Qg_O64zqAxe412a108iroA\", \"v\": \"Doe\", \"n\": \"family_name\"}",
-    "G02NSrQfjFXQ7Io09syajA": "{\"s\": \"Pc33JM2LchcU_lHggv_ufQ\", \"v\": \"johndoe@example.com\", \"n\": \"email\"}",
-    "nPuoQnkRFq3BIeAm7AnXFA": "{\"s\": \"lklxF5jMYlGTPUovMNIvCA\", \"v\": \"+1-202-555-0101\", \"n\": \"phone_number\"}",
-    "5a2W0_NrlEZzfqmk_7Pq-w": "{\"s\": \"5bPs1IquZNa0hkaFzzzZNw\", \"v\": \"23\", \"n\": \"secret_club_membership_no\"}",
+    "eluV5Og3gSNII8EYnsxA_A": "{\"s\": \"2GLC42sKQveCfGfryNRN9w\",
+      \"v\": \"6c5c0a49-b589-431d-bae7-219122a9ec2c\", \"n\":
+      \"sub\"}",
+    "eI8ZWm9QnKPpNPeNenHdhQ": "{\"s\": \"6Ij7tM-a5iVPGboS5tmvVA\",
+      \"v\": \"John\", \"n\": \"given_name\"}",
+    "AJx-095VPrpTtN4QMOqROA": "{\"s\": \"Qg_O64zqAxe412a108iroA\",
+      \"v\": \"Doe\", \"n\": \"family_name\"}",
+    "G02NSrQfjFXQ7Io09syajA": "{\"s\": \"Pc33JM2LchcU_lHggv_ufQ\",
+      \"v\": \"johndoe@example.com\", \"n\": \"email\"}",
+    "nPuoQnkRFq3BIeAm7AnXFA": "{\"s\": \"lklxF5jMYlGTPUovMNIvCA\",
+      \"v\": \"+1-202-555-0101\", \"n\": \"phone_number\"}",
+    "5a2W0_NrlEZzfqmk_7Pq-w": "{\"s\": \"5bPs1IquZNa0hkaFzzzZNw\",
+      \"v\": \"23\", \"n\": \"secret_club_membership_no\"}",
     "address": {
-      "HbQ4X8srVW3QDxnIJdqyOA": "{\"s\": \"y1sVU5wdfJahVdgwPgS7RQ\", \"v\": \"123 Main St\", \"n\": \"street_address\"}",
-      "kx5kF17V-x0JmwUx9vgvtw": "{\"s\": \"C9GSoujviJquEgYfojCb1A\", \"v\": \"Anytown\", \"n\": \"locality\"}",
-      "OBKlTVlvLg-AdwqYGbP8ZA": "{\"s\": \"H3o1uswP760Fi2yeGdVCEQ\", \"v\": \"Anystate\", \"n\": \"region\"}",
-      "DsmtKNgpV4dAHpjrcaosAw": "{\"s\": \"M0Jb57t41ubrkSuyrDT3xA\", \"v\": \"US\", \"n\": \"country\"}"
+      "HbQ4X8srVW3QDxnIJdqyOA": "{\"s\": \"y1sVU5wdfJahVdgwPgS7RQ\",
+        \"v\": \"123 Main St\", \"n\": \"street_address\"}",
+      "kx5kF17V-x0JmwUx9vgvtw": "{\"s\": \"C9GSoujviJquEgYfojCb1A\",
+        \"v\": \"Anytown\", \"n\": \"locality\"}",
+      "OBKlTVlvLg-AdwqYGbP8ZA": "{\"s\": \"H3o1uswP760Fi2yeGdVCEQ\",
+        \"v\": \"Anystate\", \"n\": \"region\"}",
+      "DsmtKNgpV4dAHpjrcaosAw": "{\"s\": \"M0Jb57t41ubrkSuyrDT3xA\",
+        \"v\": \"US\", \"n\": \"country\"}"
     },
-    "j7ADdb0UVb0Li0ciPcP0ew": "{\"s\": \"eK5o5pHfgupPpltj1qhAJw\", \"v\": \"1940-01-01\", \"n\": \"birthdate\"}"
+    "j7ADdb0UVb0Li0ciPcP0ew": "{\"s\": \"eK5o5pHfgupPpltj1qhAJw\",
+      \"v\": \"1940-01-01\", \"n\": \"birthdate\"}"
   }
 }
 ```
@@ -1739,12 +1871,17 @@ Here, the holder decided only to release a subset of the claims to the verifier:
   "nonce": "XZOUco1u_gEPknxS78sWWg",
   "aud": "https://example.com/verifier",
   "sd_release": {
-    "eI8ZWm9QnKPpNPeNenHdhQ": "{\"s\": \"6Ij7tM-a5iVPGboS5tmvVA\", \"v\": \"John\", \"n\": \"given_name\"}",
-    "AJx-095VPrpTtN4QMOqROA": "{\"s\": \"Qg_O64zqAxe412a108iroA\", \"v\": \"Doe\", \"n\": \"family_name\"}",
-    "j7ADdb0UVb0Li0ciPcP0ew": "{\"s\": \"eK5o5pHfgupPpltj1qhAJw\", \"v\": \"1940-01-01\", \"n\": \"birthdate\"}",
+    "eI8ZWm9QnKPpNPeNenHdhQ": "{\"s\": \"6Ij7tM-a5iVPGboS5tmvVA\",
+      \"v\": \"John\", \"n\": \"given_name\"}",
+    "AJx-095VPrpTtN4QMOqROA": "{\"s\": \"Qg_O64zqAxe412a108iroA\",
+      \"v\": \"Doe\", \"n\": \"family_name\"}",
+    "j7ADdb0UVb0Li0ciPcP0ew": "{\"s\": \"eK5o5pHfgupPpltj1qhAJw\",
+      \"v\": \"1940-01-01\", \"n\": \"birthdate\"}",
     "address": {
-      "OBKlTVlvLg-AdwqYGbP8ZA": "{\"s\": \"H3o1uswP760Fi2yeGdVCEQ\", \"v\": \"Anystate\", \"n\": \"region\"}",
-      "DsmtKNgpV4dAHpjrcaosAw": "{\"s\": \"M0Jb57t41ubrkSuyrDT3xA\", \"v\": \"US\", \"n\": \"country\"}"
+      "OBKlTVlvLg-AdwqYGbP8ZA": "{\"s\": \"H3o1uswP760Fi2yeGdVCEQ\",
+        \"v\": \"Anystate\", \"n\": \"region\"}",
+      "DsmtKNgpV4dAHpjrcaosAw": "{\"s\": \"M0Jb57t41ubrkSuyrDT3xA\",
+        \"v\": \"US\", \"n\": \"country\"}"
     }
   }
 }
