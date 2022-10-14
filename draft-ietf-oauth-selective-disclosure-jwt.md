@@ -204,7 +204,7 @@ However, the term "salt" is used throughout this document for brevity.
 If claim name blinding is used, `SD-CLAIMS` is created as follows:
 ```
 SD-CLAIMS = (
-    CLAIM-NAME-PLACEHOLDER: DIGEST-DERIVATION(SALT | CLAIM-VALUE | CLAIM-NAME)
+    CLAIM-NAME-PLACEHOLDER: DIGEST-DERIVATION(SALT, CLAIM-VALUE, CLAIM-NAME)
 )*
 ```
 
