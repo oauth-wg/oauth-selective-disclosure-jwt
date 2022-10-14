@@ -384,9 +384,10 @@ This object is then JSON-encoded and used as the source string. The JSON-encoded
 Or, for the address example:
 ```
 "address": "{\"s\": \"al1N3Zom221\", \"v\": 
-  {\"locality\": \"Schulpforta\", \"street_address\": \"Schulstr. 12\"}}"
+  {\"locality\": \"Schulpforta\", 
+  \"street_address\": \"Schulstr. 12\"}}"
 ```
-(Line break and indentation of the second line for presentation only!)
+(Line break and indentation of the second and third line for presentation only!)
 
 A verifier can then easily check the hash over the source string before
 extracting the original JSON data. Variations in the encoding of the source
@@ -1567,7 +1568,8 @@ SVC sent alongside this SD-JWT as a JWT-VC is same as in Example 1.
     "vc": {
       "credentialSubject": {
         "email": "ET2A1JQLF85ZpBulh6UFstGrSfR4B3KM-bjQVllhxqY",
-        "phone_number": "SJnciB2DIRVA5cXBrdKoH6n45788mZyUn2rnv74uMVU",
+        "phone_number": "SJnciB2DIRVA5cXBrdKoH6n45788mZyUn2rnv74
+          uMVU",
         "address": "0FldqLfGnERPPVDC17od9xb4w3iRJTEQbW_Yk9AmnDw",
         "birthdate": "-L0kMgIbLXe3OEkKTUGwz_QKhjehDeofKGwoPrxLuo4"
       }
@@ -1612,7 +1614,8 @@ encoded as JSON and signed as a JWS compliant to [@VC_DATA].
   },
   "sd_release": {
     "email": "[\"eI8ZWm9QnKPpNPeNenHdhQ\", \"johndoe@example.com\"]",
-    "phone_number": "[\"Qg_O64zqAxe412a108iroA\", \"+1-202-555-0101\"]",
+    "phone_number": "[\"Qg_O64zqAxe412a108iroA\", 
+      \"+1-202-555-0101\"]",
     "address": "[\"AJx-095VPrpTtN4QMOqROA\", {\"street_address\": 
       \"123 Main St\", \"locality\": \"Anytown\", \"region\": 
       \"Anystate\", \"country\": \"US\"}]",
