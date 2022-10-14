@@ -349,12 +349,13 @@ The claim `digest_derivation_alg` indicates the digest derivation algorithm
 used by the Issuer to generate the digests over the salts and the
 claim values. 
 
-The digest derivation algorithm identifier MUST be a value from the "Hash Name String" column 
-in the IANA "Named Information Hash Algorithm" registry [IANA.Hash.Algorithms] or
-HMAC algorithms in "Algorithmn Name" column in the IANA "JSON Web Signature and Encryption Algorithms" registry [IANA.JWS.Algorithms]. 
+The digest derivation algorithm identifier MUST be one of the following:
+- a hash algorithm value from the "Hash Name String" column in the IANA "Named Information Hash Algorithm" registry [IANA.Hash.Algorithms]
+- an HMAC algorithm value from the "Algorithmn Name" column in the IANA "JSON Web Signature and Encryption Algorithms" registry [IANA.JWS.Algorithms]
+- a value defined in another specification and/or profile of this specification
 
 To promote interoperability, implementations MUST support the SHA-256 hash algorithm.
-Other specifications and/or profiles of this specification may register additional algorithm identifiers.
+
 
 See (#security_considerations) for requirements regarding entropy of the salt, minimum length of the salt, and choice of a digest derivation algorithm.
 
