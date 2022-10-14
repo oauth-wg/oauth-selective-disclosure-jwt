@@ -1,3 +1,5 @@
+# License
+
 Copyright (c) 2012-2022 IETF
 
 Permission is hereby granted, free of charge, to any person obtaining
@@ -18,3 +20,8 @@ NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE
 LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION
 OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
 WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+
+
+See the
+[guidelines for contributions](https://github.com/oauth-wg/oauth-selective-disclosure-jwt/blob/master/CONTRIBUTING.md).
+

@@ -8,7 +8,7 @@ keyword = ["security", "oauth2"]
 
 [seriesInfo]
 name = "Internet-Draft"
-value = "draft-ietf-oauth-selective-disclosure-jwt-00"
+value = "draft-ietf-oauth-selective-disclosure-jwt-latest"
 stream = "IETF"
 status = "standard"
 
@@ -29,14 +29,14 @@ fullname="Kristina Yasuda"
 organization="Microsoft"
     [author.address]
     email = "Kristina.Yasuda@microsoft.com"
-        
-    
+
+
 %%%
 
-.# Abstract 
+.# Abstract
 
 This document specifies conventions for creating JSON Web Token (JWT)
-documents that support selective disclosure of JWT claim values. 
+documents that support selective disclosure of JWT claim values.
 
 {mainmatter}
 
@@ -56,7 +56,7 @@ the original signed JWT instead of releasing all the claims to every verifier.
 During issuance, an SD-JWT is sent from the issuer to the holder alongside an
 SD-JWT Salt/Value Container (SVC), a JSON object that contains the mapping
 between raw claim values contained in the SD-JWT and the salts for each claim
-value. 
+value.
 
 This document also defines a format for SD-JWT Releases (SD-JWT-R), which convey
 a subset of the claim values of an SD-JWT to the verifier. For presentation, the
@@ -77,7 +77,7 @@ prevent verifiers from obtaining claims irrelevant for the transaction at hand.
 One example of such a multi-use JWT is a verifiable credential, a
 tamper-evident credential with a cryptographically verifiable authorship that
 contains claims about a subject. SD-JWTs defined in this document enable such
-selective disclosure of claims. 
+selective disclosure of claims.
 
 While JWTs for claims describing natural persons are a common use case, the
 mechanisms defined in this document can be used for many other use cases as
@@ -101,33 +101,33 @@ Section 2 of [@!RFC7515].
 
 # Terms and Definitions
 
-Selectively Disclosable JWT (SD-JWT) 
-:  A JWT [@!RFC7515] created by the issuer, which is signed as a JWS [@!RFC7515], 
+Selectively Disclosable JWT (SD-JWT)
+:  A JWT [@!RFC7515] created by the issuer, which is signed as a JWS [@!RFC7515],
    that supports selective disclosure as defined in this document.
 
-SD-JWT Salt/Value Container (SVC) 
-:  A JSON object created by the issuer that contains mapping between 
+SD-JWT Salt/Value Container (SVC)
+:  A JSON object created by the issuer that contains mapping between
    raw claim values contained in the SD-JWT and the salts for each claim value.
 
-SD-JWT Release (SD-JWT-R) 
-:  A JWT created by the holder that contains a subset of the claim values of an SD-JWT in a verifiable way. 
+SD-JWT Release (SD-JWT-R)
+:  A JWT created by the holder that contains a subset of the claim values of an SD-JWT in a verifiable way.
 
-Holder binding 
-:  Ability of the holder to prove legitimate possession of SD-JWT by proving 
+Holder binding
+:  Ability of the holder to prove legitimate possession of SD-JWT by proving
    control over the same private key during the issuance and presentation. SD-JWT signed by the issuer contains
    a public key or a reference to a public key that matches to the private key controlled by the holder.
 
 Claim name blinding
-:  Feature that enables to blind not only claim values, but also claim names of the claims 
+:  Feature that enables to blind not only claim values, but also claim names of the claims
 that are included in SD-JWT but are not disclosed to the verifier in the SD-JWT-Release.
 
-Issuer 
+Issuer
 :  An entity that creates SD-JWTs (2.1).
 
-Holder 
+Holder
 :  An entity that received SD-JWTs (2.1) from the issuer and has control over them.
 
-Verifier 
+Verifier
 :  An entity that requests, checks and extracts the claims from SD-JWT-R (2.2)
 
 Selective disclosure
@@ -198,7 +198,7 @@ The claim name (`CLAIM-NAME`) is an optional
 
 `SD-CLAIMS` can also be nested deeper to capture more complex objects, as will be shown later.
 
-`SD-JWT` is sent from the issuer to the holder, together with the mapping of the plain-text claim values, the salt values, and potentially some other information. 
+`SD-JWT` is sent from the issuer to the holder, together with the mapping of the plain-text claim values, the salt values, and potentially some other information.
 
 ## Creating an SD-JWT Release
 
@@ -225,7 +225,7 @@ verifier.
 
 ## Optional Holder Binding
 
-Some use-cases may require holder binding. 
+Some use-cases may require holder binding.
 
 If holder binding is desired, `SD-JWT` must contain information about key material controlled by the holder:
 
@@ -264,7 +264,7 @@ Note that blinded and unblinded claim names can be mixed in `SD-CLAIMS` and acco
 
 ## Verifying an SD-JWT Release
 
-A verifier checks that 
+A verifier checks that
 
  * for each claim in `SD-JWT-RELEASE`, the hash digest over the disclosed values
    matches the hash digest under the given claim name in `SD-JWT`,
@@ -291,7 +291,7 @@ required by the application using SD-JWTs.
 ### `sd_digests` Claim (Digests of Selectively Disclosable Claims)
 
 An SD-JWT MUST include hash digests of the salted claim values that are included by the issuer
-under the property `sd_digests`. 
+under the property `sd_digests`.
 
 The issuer MUST choose a cryptographically random salt value
 for each claim value. The salt value MUST then be encoded as a string. It is
@@ -334,7 +334,7 @@ names and hashed claim values without any deeper structure. The `sd_digests`
 object can also be a 'structured' object, where some claims and their respective
 hash digests are contained in places deeper in the structure. It is at the issuer's
 discretion whether to use a 'flat' or 'structured' `sd_digests` SD-JWT object,
-and how to structure it such that it is suitable for the use case. 
+and how to structure it such that it is suitable for the use case.
 
 Example 1 below is a non-normative example of an SD-JWT using a 'flat'
 `sd_digests` object and Example 2 in the appendix shows a non-normative example
@@ -362,10 +362,10 @@ See (#security_considerations) for requirements regarding entropy of the salt, m
 ### Holder Public Key Claim
 
 If the issuer wants to enable holder binding, it MAY include a public key
-associated with the holder, or a reference thereto. 
+associated with the holder, or a reference thereto.
 
 It is out of the scope of this document to describe how the holder key pair is
-established. For example, the holder MAY provide a key pair to the issuer, 
+established. For example, the holder MAY provide a key pair to the issuer,
 the issuer MAY create the key pair for the holder, or
 holder and issuer MAY use pre-established key material.
 
@@ -497,16 +497,16 @@ formed by serializing an object containing the salt, the claim value, and
 optionally the claim name. This ensures that issuer and verifier use the same
 input to their hash functions and avoids issues with canonicalization of JSON
 values that would lead to different hash digests. The SVC therefore maps claim
-names to JSON-encoded arrays. 
+names to JSON-encoded arrays.
 
 ## Sending SD-JWT and SVC during Issuance
 
 For transporting the SVC together with the SD-JWT from the issuer to the holder,
 the SVC is base64url-encoded and appended to the SD-JWT using a period character `.` as the
-separator. 
+separator.
 
 The SVC and SD-JWT are implicitly linked through the hash values of the claims
-in the SVC that is included in the SD-JWT. To ensure that the correct SVC and 
+in the SVC that is included in the SD-JWT. To ensure that the correct SVC and
 SD-JWT pairings are being used, the holder SHOULD verify the binding between
 SVC and SD-JWT as defined in the Verification Section of this document.
 
@@ -555,20 +555,20 @@ V9sSGdndl91ZlFcIiwgXCIxOTQwLTAxLTAxXCJdIn19
 
 ## Format of an SD-JWT Release
 
-SD-JWT-R contains claim values and the salts of the claims that the holder 
-has consented to release to the Verifier. This enables the Verifier to verify 
+SD-JWT-R contains claim values and the salts of the claims that the holder
+has consented to release to the Verifier. This enables the Verifier to verify
 the claims received from the holder by computing the hash digests of the claim
-values and the salts revealed in the SD-JWT-R using the hashing algorithm 
+values and the salts revealed in the SD-JWT-R using the hashing algorithm
 specified in SD-JWT and comparing them to the hash digests included in SD-JWT.
 
 For each claim, an array of the salt and the claim value is contained in the
-`sd_release` object. The structure of an `sd_release` object in the SD-JWT-R is the same as the structure of an `sd_release` object in SVC. 
+`sd_release` object. The structure of an `sd_release` object in the SD-JWT-R is the same as the structure of an `sd_release` object in SVC.
 
 The SD-JWT-R MAY contain further claims, for example, to ensure a binding
 to a concrete transaction (in the example the `nonce` and `aud` claims).
 
-When the holder sends the SD-JWT-R to the Verifier, the SD-JWT-R MUST be a JWS 
-represented as the JWS Compact Serialization as described in 
+When the holder sends the SD-JWT-R to the Verifier, the SD-JWT-R MUST be a JWS
+represented as the JWS Compact Serialization as described in
 Section 7.1 of [@!RFC7515].
 
 If holder binding is desired, the SD-JWT-R is signed by the holder. If no
@@ -593,9 +593,9 @@ The following is a non-normative example of the contents of an SD-JWT-R for Exam
 ```
 
 For each claim, a JSON literal that decodes to an object with the and the claim
-value (plus optionally the claim name) is contained in the `sd_release` object. 
+value (plus optionally the claim name) is contained in the `sd_release` object.
 
-Again, the SD-JWT-R follows the same structure as the `sd_digests` in the SD-JWT. 
+Again, the SD-JWT-R follows the same structure as the `sd_digests` in the SD-JWT.
 
 Below is a non-normative example of a representation of the SD-JWT-R JWS Compact
 Serialization:
@@ -689,7 +689,7 @@ trusting/using any of the contents of an SD-JWT:
  3. Separate the SD-JWT from the SD-JWT Release.
  4. Validate the SD-JWT:
     1. Ensure that a signing algorithm was used that was deemed secure for the application. Refer to [@RFC8725], Sections 3.1 and 3.2 for details.
-    2. Validate the signature over the SD-JWT. 
+    2. Validate the signature over the SD-JWT.
     3. Validate the issuer of the SD-JWT and that the signing key belongs to this issuer.
     4. Check that the SD-JWT is valid using `nbf`, `iat`, and `exp` claims, if provided in the SD-JWT.
     5. Check that the claim `sd_digests` is present in the SD-JWT.
@@ -724,12 +724,12 @@ If any step fails, the input is not valid and processing MUST be aborted.
 
 ## Mandatory hash computation of the revealed claim values by the Verifier
 
-ToDo: add text explaining mechanisms that should be adopted to ensure that 
+ToDo: add text explaining mechanisms that should be adopted to ensure that
   verifiers validate the claim values received in SD-JWT-R by calculating the
-  hashes of those values and comparing them with the hashes in the SD-JWT: 
-  - create a test suite that forces hash computation by the Verifiers, 
+  hashes of those values and comparing them with the hashes in the SD-JWT:
+  - create a test suite that forces hash computation by the Verifiers,
     and includes negative test cases in test vectors
-  - use only implementations/libraries that are compliant to the test suite 
+  - use only implementations/libraries that are compliant to the test suite
   - etc.
 
 ## Mandatory signing of the SD-JWT
@@ -741,7 +741,7 @@ attribute indicating a fake academic qualification).
 
 The verifier MUST always check the SD-JWT signature to ensure that the SD-JWT
 has not been tampered with since its issuance. If the signature on the SD-JWT
-cannot be verified, the SD-JWT MUST be rejected. 
+cannot be verified, the SD-JWT MUST be rejected.
 
 ## Entropy of the salt
 
@@ -764,7 +764,7 @@ resistant, i.e., it is infeasible to calculate the salt and claim value that res
 a particular digest, and it is infeasible to find a different salt and claim value pair that
 result in a matching digest, respectively.
 
-Furthermore the hash algorithms MD2, MD4, MD5, RIPEMD-160, and SHA-1 
+Furthermore the hash algorithms MD2, MD4, MD5, RIPEMD-160, and SHA-1
 revealed fundamental weaknesses and they MUST NOT be used.
 
 ## Holder Binding {#holder_binding_security}
@@ -792,7 +792,7 @@ By default, claim names are not blinded in an SD-JWT. In this case, even when
 the claim's value is not known to a verifier, the claim name can disclose some
 information to the verifier. For example, if the SD-JWT contains a claim named
 `super_secret_club_membership_no`, the verifier might assume that the end-user
-is a member of the Super Secret Club. 
+is a member of the Super Secret Club.
 
 Blinding claim names can help to avoid this potential privacy issue. In many
 cases, however, verifiers can already deduce this or similar information just
@@ -802,7 +802,7 @@ Blinding claim names might not provide additional privacy if this is the case.
 Furthermore, re-using the same value to blind a claim name may limit the privacy benefits.
 
 
-## Unlinkability 
+## Unlinkability
 
 Colluding issuer/verifier or verifier/verifier pairs could link issuance/presentation or two presentation sessions
 to the same user on the basis of unique values encoded in the SD-JWT
@@ -810,15 +810,15 @@ to the same user on the basis of unique values encoded in the SD-JWT
 this specification, can be used to prevent this type of linkability.
 
 # Acknowledgements {#Acknowledgements}
-      
-We would like to thank 
-Alen Horvat, 
-Brian Campbell, 
-Christian Paquin, 
+
+We would like to thank
+Alen Horvat,
+Brian Campbell,
+Christian Paquin,
 Fabian Hauck,
-Giuseppe De Marco, 
-Kushal Das, 
-Mike Jones, 
+Giuseppe De Marco,
+Kushal Das,
+Mike Jones,
 Nat Sakimura,
 Pieter Kasselman, and
 Torsten Lodderstedt
@@ -1171,7 +1171,7 @@ SD-JWT-Release is equivalent to a holder-signed W3C Verifiable Presentation (VP)
 
 SD-JWT-Release as a VP contains a `verifiableCredential` claim inside a `vp` claim that is a string array of an SD-JWT as a VC using JWT compact serialization.
 
-Below is a non-normative example of an SD-JWT represented as a verifiable credential 
+Below is a non-normative example of an SD-JWT represented as a verifiable credential
 encoded as JSON and signed as JWS compliant to [@VC_DATA].
 
 SVC sent alongside this SD-JWT as a JWT-VC is same as in Example 1.
@@ -1506,7 +1506,7 @@ The verifier would decode the SD-JWT-R and SD-JWT as follows:
 # Document History
 
    [[ To be removed from the final specification ]]
-  
+
    -01
 
    * clarified relationship between `sd_release` in the Release and SD-JWT
@@ -1530,7 +1530,7 @@ The verifier would decode the SD-JWT-R and SD-JWT as follows:
    * clarified that HMAC is supported
 
    -01
-   
+
    *  Editorial fixes
    *  Added `hash_alg` claim
    *  Renamed `_sd` to `sd_digests` and `sd_release`

@@ -77,7 +77,7 @@ parser.add_argument(
     required=False,
     type=pathlib.Path,
     help=(
-        "path/to/main.md - Do not output examples, but replace all the examples in the specs"
+        "path/to/draft-ietf-oauth-selective-disclosure-jwt.md - Do not output examples, but replace all the examples in the specs"
     ),
 )
 parser.add_argument(

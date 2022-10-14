@@ -47,7 +47,7 @@ def replace_all_in_file(
     ignore_missing_placeholders: bool = False,
 ):
     """
-    Replaces all the placeholders in the main.md file
+    Replaces all the placeholders in the draft-ietf-oauth-selective-disclosure-jwt.md file
     """
 
     file_contents = file.read_text()
