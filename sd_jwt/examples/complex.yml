@@ -28,8 +28,6 @@ user_claims:
           {
             "given_name": "Max",
             "family_name": "Meier",
-            "birthdate": "1956-01-28",
-            "place_of_birth": { "country": "DE", "locality": "Musterstadt" },
             "nationalities": ["DE"],
             "address":
               {
@@ -45,12 +43,24 @@ user_claims:
     "msisdn": "49123456789",
   }
 
+further_claims:
+  {
+    "verified_claims":
+      {
+        "claims":
+          {
+            "birthdate": "1956-01-28",
+            "place_of_birth": { "country": "DE", "locality": "Musterstadt" },
+          },
+      },
+  }
+
 claims_structure:
   {
     "verified_claims":
       {
         "verification": { "evidence": [{ "document": { "issuer": {} } }] },
-        "claims": { "place_of_birth": {} },
+        "claims": { "address": {} },
       },
   }
 
@@ -68,8 +78,6 @@ disclosed_claims:
           {
             "given_name": null,
             "family_name": null,
-            "birthdate": null,
-            "place_of_birth": { "country": null },
           },
       },
   }
