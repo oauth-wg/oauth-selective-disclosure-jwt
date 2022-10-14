@@ -62,7 +62,7 @@ This document also defines a format for SD-JWT Releases (SD-JWT-R), which convey
 a subset of the claim values of an SD-JWT to the verifier. For presentation, the
 holder creates an SD-JWT-R and sends it together with the SD-JWT to the
 verifier. To verify claim values received in SD-JWT-R, the verifier uses the
-salts values in the SD-JWT-R to compute the hash digests of the claim values and
+salts values in the SD-JWT-R to compute the digests of the claim values and
 compare them to the ones in the SD-JWT.
 
 One of the common use cases of a signed JWT is representing a user's identity
@@ -176,7 +176,7 @@ conceptual level, abstracting from the data formats described afterwards.
 
 ## Creating an SD-JWT
 
-An SD-JWT, at its core, is a digitally signed document containing hash digests over the claim values with random salts and other metadata. 
+An SD-JWT, at its core, is a digitally signed document containing digests over the claim values with random salts and other metadata. 
 It MUST be digitally signed using the issuer's private key.
 
 ```
@@ -184,7 +184,7 @@ SD-JWT-DOC = (METADATA, SD-CLAIMS)
 SD-JWT = SD-JWT-DOC | SIG(SD-JWT-DOC, ISSUER-PRIV-KEY)
 ```
 
-`SD-CLAIMS` is an object with claim names mapped to the digests over the claim values with random salts calculated using digest derivation function such as hash function, HMAC, or other:
+`SD-CLAIMS` is an object with claim names (`CLAIM-NAME`) mapped to the digests over the claim values (`CLAIM-VALUE`) with random salts (`SALT`). Digests are calculated using digest derivation function such as hash function, HMAC, or other (`DIGEST-DERIVATION()`):
 
 ```
 SD-CLAIMS = (
@@ -192,13 +192,33 @@ SD-CLAIMS = (
 )
 ```
 
-When HMAC is used, a secret cryptographic key is used as a salt value.
-
-The claim name (`CLAIM-NAME`) is an optional 
+When an HMAC or another type of digest derivation function is used for digest derivation, a secret cryptographic key or other cryptographic secret is used instead of a salt value. 
+However, the term "salt" is used throughout this document for brevity.
 
 `SD-CLAIMS` can also be nested deeper to capture more complex objects, as will be shown later.
 
 `SD-JWT` is sent from the issuer to the holder, together with the mapping of the plain-text claim values, the salt values, and potentially some other information.
+
+### Optional Claim Name Blinding
+
+If claim name blinding is used, `SD-CLAIMS` is created as follows:
+```
+SD-CLAIMS = (
+    CLAIM-NAME-PLACEHOLDER: DIGEST-DERIVATION(SALT | CLAIM-VALUE | CLAIM-NAME)
+)*
+```
+
+`CLAIM-NAME-PLACEHOLDER` is a placeholder used instead of the original claim
+name, chosen such that it does not leak information about the claim name (e.g.,
+randomly).
+
+The contents of `SD-RELEASES` are modified as follows:
+```
+SD-RELEASES = (
+    CLAIM-NAME-PLACEHOLDER: (DISCLOSED-SALT, DISCLOSED-VALUE, DISCLOSED-CLAIM-NAME)
+)
+```
+Note that blinded and unblinded claim names can be mixed in `SD-CLAIMS` and accordingly in `SD-RELEASES`.
 
 ## Creating an SD-JWT Release
 
@@ -241,33 +261,12 @@ With holder binding, the `SD-JWT-RELEASE` is signed by the holder using its priv
 SD-JWT-RELEASE = SD-JWT-RELEASE-DOC | SIG(SD-JWT-RELEASE-DOC, HOLDER-PRIV-KEY)
 ```
 
-## Optional Claim Name Blinding
-
-If claim name blinding is used, `SD-CLAIMS` is created as follows:
-```
-SD-CLAIMS = (
-    CLAIM-NAME-PLACEHOLDER: HASH(SALT | CLAIM-VALUE | CLAIM-NAME)
-)*
-```
-
-`CLAIM-NAME-PLACEHOLDER` is a placeholder used instead of the original claim
-name, chosen such that it does not leak information about the claim name (e.g.,
-randomly).
-
-The contents of `SD-RELEASES` are modified as follows:
-```
-SD-RELEASES = (
-    CLAIM-NAME-PLACEHOLDER: (DISCLOSED-SALT, DISCLOSED-VALUE, DISCLOSED-CLAIM-NAME)
-)
-```
-Note that blinded and unblinded claim names can be mixed in `SD-CLAIMS` and accordingly in `SD-RELEASES`.
-
 ## Verifying an SD-JWT Release
 
 A verifier checks that
 
- * for each claim in `SD-JWT-RELEASE`, the hash digest over the disclosed values
-   matches the hash digest under the given claim name in `SD-JWT`,
+ * for each claim in `SD-JWT-RELEASE`, the digest over the disclosed values
+   matches the digest under the given claim name in `SD-JWT`,
  * if holder binding is used, the `SD-JWT-RELEASE` was signed by the private key
  belonging to `HOLDER-PUBLIC-KEY`.
 
@@ -275,7 +274,7 @@ The detailed algorithm is described below.
 
 # Data Formats
 
-This section defines data formats for SD-JWTs (containing hash digests of the salted
+This section defines data formats for SD-JWTs (containing digests of the salted
 claim values), SD-JWT Salt/Value Containers (containing the mapping of the
 plain-text claim values and the salt values), and SD-JWT Releases (containing a
 subset of the same mapping).
@@ -283,21 +282,21 @@ subset of the same mapping).
 ## Format of an SD-JWT
 
 An SD-JWT is a JWT that MUST be signed using the issuer's private key. The
-payload of an SD-JWT MUST contain the `sd_digests` and `sd_hash_alg` claims
+payload of an SD-JWT MUST contain the `sd_digests` and `digest_derivation_alg` claims
 described in the following, and MAY contain a holder's public key or a reference
 thereto, as well as further claims such as `iss`, `iat`, etc. as defined or
 required by the application using SD-JWTs.
 
 ### `sd_digests` Claim (Digests of Selectively Disclosable Claims)
 
-An SD-JWT MUST include hash digests of the salted claim values that are included by the issuer
+An SD-JWT MUST include digests of the salted claim values that are included by the issuer
 under the property `sd_digests`.
 
 The issuer MUST choose a cryptographically random salt value
 for each claim value. The salt value MUST then be encoded as a string. It is
 RECOMMENDED to base64url-encode the salt value.
 
-The issuer MUST build the digests by hashing over a JSON literal according to
+The issuer MUST generate the digests over a JSON literal according to
 [@!RFC8259] that is formed by
 JSON-encoding an object with the following contents:
 
@@ -319,7 +318,7 @@ The following is an example for a JSON literal with claim name blinding:
 
 IMPORTANT: JSON encoding according to [@!RFC8259] allows for white space
 characters and other variations in the encoded representation. To ensure that
-issuer and verifier produce the same hash digest, the issuer therefore sends the
+issuer and verifier produce the same digest, the issuer therefore sends the
 JSON literal to the holder along with the SD-JWT, as described below.
 
 The `sd_digests` claim contains an object where claim names are mapped to the
@@ -330,9 +329,9 @@ replaced by a placeholder value that does not leak information about the claim's
 #### Flat and Structured `sd_digests` objects
 
 The `sd_digests` object can be a 'flat' object, directly containing all claim
-names and hashed claim values without any deeper structure. The `sd_digests`
+names and digests without any deeper structure. The `sd_digests`
 object can also be a 'structured' object, where some claims and their respective
-hash digests are contained in places deeper in the structure. It is at the issuer's
+digests are contained in places deeper in the structure. It is at the issuer's
 discretion whether to use a 'flat' or 'structured' `sd_digests` SD-JWT object,
 and how to structure it such that it is suitable for the use case.
 
@@ -346,18 +345,18 @@ reference).
 
 ### Digest Derivation Function Claim
 
-The claim `digest_derivation_alg` indicates the hash algorithm function 
-used by the Issuer to generate the hashes over the random values and the
+The claim `digest_derivation_alg` indicates the digest derivation algorithm
+used by the Issuer to generate the digests over the salts and the
 claim values. 
 
-The hash algorithm identifier MUST be a value from the "Hash Name String" column 
+The digest derivation algorithm identifier MUST be a value from the "Hash Name String" column 
 in the IANA "Named Information Hash Algorithm" registry [IANA.Hash.Algorithms] or
 HMAC algorithms in "Algorithmn Name" column in the IANA "JSON Web Signature and Encryption Algorithms" registry [IANA.JWS.Algorithms]. 
 
 To promote interoperability, implementations MUST support the SHA-256 hash algorithm.
 Other specifications and/or profiles of this specification may register additional algorithm identifiers.
 
-See (#security_considerations) for requirements regarding entropy of the salt, minimum length of the salt, and choice of a hash function.
+See (#security_considerations) for requirements regarding entropy of the salt, minimum length of the salt, and choice of a digest derivation algorithm.
 
 ### Holder Public Key Claim
 
@@ -411,7 +410,7 @@ be disclosed in full.
   },
   "iat": 1516239022,
   "exp": 1516247022,
-  "sd_hash_alg": "sha-256",
+  "digest_derivation_alg": "sha-256",
   "sd_digests": {
     "sub": "OMdwkk2HPuiInPypWUWMxot1Y2tStGsLuIcDMjKdXMU",
     "given_name": "AfKKH4a0IZki8MFDythFaFS_Xqzn-wRvAMfiy_VjYpE",
@@ -460,14 +459,14 @@ RRgRLgILYetPOZqpVxfsCtgzDN_OGoSUq3pdvLJ3bFAzrt8dHenOvlz_CvlMXx2A
 ## Format of a SD-JWT Salt/Value Container (SVC)
 
 Besides the SD-JWT itself, the holder needs to learn the raw claim values that
-are contained in the SD-JWT, along with the precise input to the hash
+are contained in the SD-JWT, along with the precise input to the digest
 calculation, and the salts. There MAY be other information the issuer needs to
 communicate to the holder, such as a private key if the issuer selected the
 holder key pair.
 
 A SD-JWT Salt/Value Container (SVC) is a JSON object containing at least the
 top-level property `sd_release`. Its structure mirrors the one of `sd_digests` in
-the SD-JWT, but the values are the inputs to the hash calculations the issuer
+the SD-JWT, but the values are the inputs to the digest calculations the issuer
 used, as strings.
 
 The SVC MAY contain further properties, for example, to transport the holder
@@ -492,11 +491,11 @@ The SVC for Example 1 is as follows:
 }
 ```
 
-Important: As described above, hash digests are calculated over the JSON literal
+Important: As described above, digests are calculated over the JSON literal
 formed by serializing an object containing the salt, the claim value, and
 optionally the claim name. This ensures that issuer and verifier use the same
-input to their hash functions and avoids issues with canonicalization of JSON
-values that would lead to different hash digests. The SVC therefore maps claim
+input to their digest derivation algorithms and avoids issues with canonicalization of JSON
+values that would lead to different digests. The SVC therefore maps claim
 names to JSON-encoded arrays.
 
 ## Sending SD-JWT and SVC during Issuance
@@ -505,7 +504,7 @@ For transporting the SVC together with the SD-JWT from the issuer to the holder,
 the SVC is base64url-encoded and appended to the SD-JWT using a period character `.` as the
 separator.
 
-The SVC and SD-JWT are implicitly linked through the hash values of the claims
+The SVC and SD-JWT are implicitly linked through the digest values of the claims
 in the SVC that is included in the SD-JWT. To ensure that the correct SVC and
 SD-JWT pairings are being used, the holder SHOULD verify the binding between
 SVC and SD-JWT as defined in the Verification Section of this document.
@@ -557,9 +556,9 @@ V9sSGdndl91ZlFcIiwgXCIxOTQwLTAxLTAxXCJdIn19
 
 SD-JWT-R contains claim values and the salts of the claims that the holder
 has consented to release to the Verifier. This enables the Verifier to verify
-the claims received from the holder by computing the hash digests of the claim
-values and the salts revealed in the SD-JWT-R using the hashing algorithm
-specified in SD-JWT and comparing them to the hash digests included in SD-JWT.
+the claims received from the holder by computing the digests of the claim
+values and the salts revealed in the SD-JWT-R using the digest derivation algorithm
+specified in SD-JWT and comparing them to the digests included in SD-JWT.
 
 For each claim, an array of the salt and the claim value is contained in the
 `sd_release` object. The structure of an `sd_release` object in the SD-JWT-R is the same as the structure of an `sd_release` object in SVC.
@@ -674,7 +673,7 @@ Q
 
 The holder SHOULD verify the binding between SD-JWT and SVC by performing the following steps:
  1. Check that all the claims in the SVC are present in the SD-JWT and that there are no claims in the SD-JWT that are not in the SVC
- 2. Check that the hashes of the claims in the SVC match those in the SD-JWT
+ 2. Check that the digests of the claims in the SVC match those in the SD-JWT
 
 ## Verification by the Verifier when Receiving SD-JWT and SD-JWT-R
 
@@ -693,8 +692,8 @@ trusting/using any of the contents of an SD-JWT:
     3. Validate the issuer of the SD-JWT and that the signing key belongs to this issuer.
     4. Check that the SD-JWT is valid using `nbf`, `iat`, and `exp` claims, if provided in the SD-JWT.
     5. Check that the claim `sd_digests` is present in the SD-JWT.
-    6. Check that the `sd_hash_alg` claim is present and its value is understand
-       and the hash algorithm is deemed secure.
+    6. Check that the `digest_derivation_alg` claim is present and its value is understand
+       and the digest derivation algorithm is deemed secure.
  5. Validate the SD-JWT Release:
     1. If holder binding is required, validate the signature over the SD-JWT using the same steps as for the SD-JWT plus the following steps:
        1. Determine that the public key for the private key that used to sign the SD-JWT-R is bound to the SD-JWT, i.e., the SD-JWT either contains a reference to the public key or contains the public key itself.
@@ -703,10 +702,10 @@ trusting/using any of the contents of an SD-JWT:
        1. Ensure that the claim is present as well in `sd_release` in the SD-JWT.
           If `sd_release` is structured, the claim MUST be present at the same
           place within the structure.
-       2. Compute the base64url-encoded hash digest of the JSON literal released
-          by the Holder using the `sd_hash_alg` in SD-JWT.
-       3. Compare the hash digests computed in the previous step with the one of
-          the same claim in the SD-JWT. Accept the claim only when the two hash
+       2. Compute the base64url-encoded digest of the JSON literal released
+          by the Holder using the `digest_derivation_alg` in SD-JWT.
+       3. Compare the digests computed in the previous step with the one of
+          the same claim in the SD-JWT. Accept the claim only when the two
           digests match.
        4. Ensure that the claim value in the SD-JWT-R is a JSON-encoded
           object containing at least the keys `s` and `v`, and optionally `n`.
@@ -722,12 +721,12 @@ If any step fails, the input is not valid and processing MUST be aborted.
 
 # Security Considerations {#security_considerations}
 
-## Mandatory hash computation of the revealed claim values by the Verifier
+## Mandatory digest computation of the revealed claim values by the Verifier
 
 ToDo: add text explaining mechanisms that should be adopted to ensure that
   verifiers validate the claim values received in SD-JWT-R by calculating the
-  hashes of those values and comparing them with the hashes in the SD-JWT:
-  - create a test suite that forces hash computation by the Verifiers,
+  digests of those values and comparing them with the digests in the SD-JWT:
+  - create a test suite that forces digest computation by the Verifiers,
     and includes negative test cases in test vectors
   - use only implementations/libraries that are compliant to the test suite
   - etc.
@@ -749,7 +748,7 @@ The security model relies on the fact that the salt is not learned or guessed by
 the attacker. It is vitally important to adhere to this principle. As such, the
 salt MUST be created in such a manner that it is cryptographically random,
 long enough and has high entropy that it is not practical for the attacker to
-guess. A new random value MUST be chosen for each claim.
+guess. A new salt MUST be chosen for each claim.
 
 ## Minimum length of the salt
 
@@ -757,9 +756,9 @@ The RECOMMENDED length of the randomly-generated portion of the salt is at least
 
 Note that minimum 128 bits would be necessary when SHA-256, HMAC-SHA256, or a function of similar strength is used, but a smaller salt size might achieve similar level of security if a stronger iterative derivation function is used.
 
-## Choice of a hash function
+## Choice of a digest derivation algorithm
 
-For the security of this scheme, the hash function is required to be preimage and collision
+For the security of this scheme, the digest derivation algorithm is required to be preimage and collision
 resistant, i.e., it is infeasible to calculate the salt and claim value that result in
 a particular digest, and it is infeasible to find a different salt and claim value pair that
 result in a matching digest, respectively.
@@ -776,7 +775,7 @@ Issuers that chose to blind claim names MUST ensure not to inadvertently leak
 information about the blinded claim names to verifiers. In particular, issuers
 MUST choose placeholder claim names accordingly. 
 
-It is RECOMMENDED to use cryptographically random values with at least 128 bits
+It is RECOMMENDED to use cryptographically salts with at least 128 bits
 of entropy as placeholder claim names.
 
 The order of elements in JSON-encoded objects is not relevant to applications,
@@ -884,7 +883,7 @@ TBD
 
 ## Example 2 - Structured SD-JWT
 This non-normative example is based on the same claim values as Example 1, but
-this time the issuer decided to create a structured object for the hashes. This
+this time the issuer decided to create a structured object for the digests. This
 allows for the release of individual members of the address claim separately.
 
 {#example-simple_structured-sd_jwt_payload}
@@ -900,7 +899,7 @@ allows for the release of individual members of the address claim separately.
   },
   "iat": 1516239022,
   "exp": 1516247022,
-  "sd_hash_alg": "sha-256",
+  "digest_derivation_alg": "sha-256",
   "sd_digests": {
     "sub": "OMdwkk2HPuiInPypWUWMxot1Y2tStGsLuIcDMjKdXMU",
     "given_name": "AfKKH4a0IZki8MFDythFaFS_Xqzn-wRvAMfiy_VjYpE",
@@ -1032,7 +1031,7 @@ The following shows the resulting SD-JWT payload:
   },
   "iat": 1516239022,
   "exp": 1516247022,
-  "sd_hash_alg": "sha-256",
+  "digest_derivation_alg": "sha-256",
   "sd_digests": {
     "verified_claims": {
       "verification": {
@@ -1304,7 +1303,7 @@ Hiding just this claim, the following SD-JWT payload would result:
   },
   "iat": 1516239022,
   "exp": 1516247022,
-  "hash_alg": "sha-256",
+  "digest_derivation_alg": "sha-256",
   "sd_digests": {
     "sub": "OMdwkk2HPuiInPypWUWMxot1Y2tStGsLuIcDMjKdXMU",
     "given_name": "AfKKH4a0IZki8MFDythFaFS_Xqzn-wRvAMfiy_VjYpE",
@@ -1422,7 +1421,7 @@ The resulting SD-JWT payload:
   },
   "iat": 1516239022,
   "exp": 1516247022,
-  "hash_alg": "sha-256",
+  "digest_derivation_alg": "sha-256",
   "sd_digests": {
     "eluV5Og3gSNII8EYnsxA_A": "bvPLqohL5ROmk2UsuNffH8C1wx9o-ipm-G4SkUwrpAE",
     "eI8ZWm9QnKPpNPeNenHdhQ": "pCtjs0hC2Klhsnpe7BIqnGAsXlyXXC-lAEgX6isoYVM",
@@ -1513,6 +1512,7 @@ The verifier would decode the SD-JWT-R and SD-JWT as follows:
    * updated examples
    * clarifications
    * fix `cnf` structure in examples
+   * sd_hash_alg renamed to digest_derivation_alg
 
    -00
 
@@ -1527,7 +1527,7 @@ The verifier would decode the SD-JWT-R and SD-JWT as follows:
    *  Stressed entropy requirements for salts
    *  Python reference implementation clean-up and refactoring
    *  hash_alg renamed to sd_hash_alg
-   * clarified that HMAC is supported
+   *  clarified that HMAC is supported
 
    -01
 
