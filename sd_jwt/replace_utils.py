@@ -7,14 +7,14 @@ from pathlib import Path
 logger = logging.getLogger("sd_jwt")
 
 EXAMPLE_INDENT = 2
-EXAMPLE_MAX_WIDTH = 70
+EXAMPLE_MAX_WIDTH = 69
 
 #######################################################################
 # Helper functions to replace the examples in the markdown file
 #######################################################################
 
 
-def textwrap_json(text, width=70):
+def textwrap_json(text, width):
     output = []
     for line in text.splitlines():
         if len(line) <= width:
