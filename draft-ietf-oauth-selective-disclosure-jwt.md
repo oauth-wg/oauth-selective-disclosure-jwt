@@ -309,9 +309,9 @@ JSON, however, does not prescribe a unique encoding for data, but allows for var
 
 ```
 ...
-"family_name": "M\u00f6bius", 
+"family_name": "M\u00f6bius",
 "address": {
-  "street_address": "Schulstr. 12", 
+  "street_address": "Schulstr. 12",
   "locality": "Schulpforta"
 }
 ...
@@ -358,7 +358,7 @@ for simple and reliable interoperability without the requirement for a
 canonicalization library. To encode the source string, JSON itself is used. This
 approach means that SD-JWTs can be implemented purely based on widely available
 JSON encoding and decoding libraries without the need for a custom data format
-for encoding data. 
+for encoding data.
 
 To produce a source string for hashing, the data is put into a JSON object
 together with the salt value, like so (non-normative example, see
@@ -370,7 +370,7 @@ together with the salt value, like so (non-normative example, see
 
 Or, for the address example above:
 ```
-{"s": "al1N3Zom221", "v": 
+{"s": "al1N3Zom221", "v":
   {"locality": "Schulpforta", "street_address": "Schulstr. 12"}}
 ```
 (Line break and indentation of the second line for presentation only!)
@@ -383,8 +383,8 @@ This object is then JSON-encoded and used as the source string. The JSON-encoded
 
 Or, for the address example:
 ```
-"address": "{\"s\": \"al1N3Zom221\", \"v\": 
-  {\"locality\": \"Schulpforta\", 
+"address": "{\"s\": \"al1N3Zom221\", \"v\":
+  {\"locality\": \"Schulpforta\",
   \"street_address\": \"Schulstr. 12\"}}"
 ```
 (Line break and indentation of the second and third line for presentation only!)
@@ -396,7 +396,7 @@ predefined byte string and not over a JSON object.
 
 Since the encoding is based on JSON, all value types that are allowed in JSON
 are also allowed in the `v` property in the source string. This includes
-numbers, strings, booleans, arrays, and objects. 
+numbers, strings, booleans, arrays, and objects.
 
 It is important to note that the SD-JWT-Release containing the source string is
 neither intended nor suitable for direct consumption by an application that
@@ -865,14 +865,14 @@ that an application-consumable format is generated from the data released in
 the SD-JWT-Release. The RECOMMENDED way is to merge the released claims and any
 plaintext claims in the SD-JWT recursively:
 
- * Objects from the released claims must be merged into existing objects from the SD-JWT. 
+ * Objects from the released claims must be merged into existing objects from the SD-JWT.
  * If a key is present in both objects:
    * If the value in the released claims is and object and the value in the
      SD-JWT claims is an object, the two objects MUST be merged recursively.
    * Else, the value in the released claims MUST be used.
 
 The keys `sd_digests` and `sd_hash_alg` SHOULD be removed prior to further
-processing. 
+processing.
 
 The processing is shown in Examples 2b and 3 in the Appendix.
 
@@ -1139,7 +1139,7 @@ disclosure only to some of the claims. In particular, the `country` component of
 the `address` is contained in the JWT as a regular claim, whereas the rest of
 the claims can be disclosed selectively. Note that the processing model
 described in (#processing_model) allows for merging the selectively disclosable
-claims with the regular claims. 
+claims with the regular claims.
 
 The JSON-payload of the SD-JWT that contains both selectively disclosable claims in the `sd_digests` object and not selectively disclosable claims in a top-level JWT claim would look as follows:
 
@@ -1212,7 +1212,7 @@ The holder can now, for example, release the rest of the components of the `addr
 
 The verifier, after verifying the SD-JWT and applying the SD-JWT-Release, would
 process the result according to (#processing_model) and pass the following data
-to the application: 
+to the application:
 
 
 {#example-simple_structured_merging-merged}
@@ -1614,10 +1614,10 @@ encoded as JSON and signed as a JWS compliant to [@VC_DATA].
   },
   "sd_release": {
     "email": "[\"eI8ZWm9QnKPpNPeNenHdhQ\", \"johndoe@example.com\"]",
-    "phone_number": "[\"Qg_O64zqAxe412a108iroA\", 
+    "phone_number": "[\"Qg_O64zqAxe412a108iroA\",
       \"+1-202-555-0101\"]",
-    "address": "[\"AJx-095VPrpTtN4QMOqROA\", {\"street_address\": 
-      \"123 Main St\", \"locality\": \"Anytown\", \"region\": 
+    "address": "[\"AJx-095VPrpTtN4QMOqROA\", {\"street_address\":
+      \"123 Main St\", \"locality\": \"Anytown\", \"region\":
       \"Anystate\", \"country\": \"US\"}]",
     "birthdate": "[\"Pc33JM2LchcU_lHggv_ufQ\", \"1940-01-01\"]"
   }
