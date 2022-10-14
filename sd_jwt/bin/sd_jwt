@@ -130,6 +130,7 @@ for property in ("user_claims", "claims_structure", "disclosed_claims"):
 
 sdjwt_at_issuer = SDJWT(
     example["user_claims"],
+    example.get('further_claims', {}),
     settings.ISSUER,
     ISSUER_KEY,
     HOLDER_KEY,
@@ -166,7 +167,14 @@ vc = sdjwt_at_verifier.verify(
     settings.VERIFIER,
     _args.nonce,
 )
-
+merged = sdjwt_at_verifier.verify(
+    ISSUER_PUBLIC_KEY,
+    settings.ISSUER,
+    HOLDER_KEY,
+    settings.VERIFIER,
+    _args.nonce,
+    return_merged=True,
+)
 
 ### Done - now output everything to CLI (unless --replace-examples-in was used)
 
@@ -196,6 +204,7 @@ _artifacts = {
         "Combined representation of SD-JWT and SD-JWT-R",
     ),
     "verified_contents": (vc, "Verified released contents of the SD-JWT"),
+    "merged": (merged, "Merged contents of the SD-JWT"),
 }
 
 
