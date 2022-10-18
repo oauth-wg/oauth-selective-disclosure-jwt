@@ -189,10 +189,10 @@ SD-JWT = SD-JWT-DOC | SIG(SD-JWT-DOC, ISSUER-PRIV-KEY)
 ```
 SD-CLAIMS = (
     CLAIM-NAME: DIGEST-DERIVATION(SALT, CLAIM-VALUE)
-)
+)*
 ```
 
-When an HMAC or another type of digest derivation function is used for digest derivation, a secret cryptographic key or other cryptographic secret is used instead of a salt value. 
+When an HMAC or another type of derivation function is used for digest calculation, a secret cryptographic key or other cryptographic secret is used instead of a salt value. 
 However, the term "salt" is used throughout this document for brevity.
 
 `SD-CLAIMS` can also be nested deeper to capture more complex objects, as will be shown later.
@@ -282,15 +282,14 @@ subset of the same mapping).
 ## Format of an SD-JWT
 
 An SD-JWT is a JWT that MUST be signed using the issuer's private key. The
-payload of an SD-JWT MUST contain the `sd_digests` and `digest_derivation_alg` claims
+payload of an SD-JWT MUST contain the `sd_digests` and `sd_digest_derivation_alg` claims
 described in the following, and MAY contain a holder's public key or a reference
 thereto, as well as further claims such as `iss`, `iat`, etc. as defined or
 required by the application using SD-JWTs.
 
 ### `sd_digests` Claim (Digests of Selectively Disclosable Claims)
 
-An SD-JWT MUST include digests of the salted claim values that are included by the issuer
-under the property `sd_digests`.
+The property `sd_digests` MUST be used by the issuer to include digests of the salted claim values for any claim that is intended to be selectively disclosable.
 
 The issuer MUST choose a cryptographically random salt value
 for each claim value. The salt value MUST then be encoded as a string. It is
