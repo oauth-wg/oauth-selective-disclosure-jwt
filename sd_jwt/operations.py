@@ -9,8 +9,13 @@ from typing import Dict, List, Optional, Tuple, Union
 from jwcrypto.jwk import JWK
 from jwcrypto.jws import JWS
 
+<<<<<<< HEAD
+from sd_jwt import DEFAULT_SIGNING_ALG, DIGEST_ALG_KEY, SD_CLAIMS_KEY, SD_DIGESTS_KEY
+from sd_jwt.utils import generate_salt, pad_urlsafe_b64
+=======
 from sd_jwt import DEFAULT_SIGNING_ALG, HASH_ALG_KEY, SD_CLAIMS_KEY, SD_DIGESTS_KEY
 from sd_jwt.utils import generate_salt, pad_urlsafe_b64, merge
+>>>>>>> e2307eea50efa4b0823763e99871794642636a1a
 from sd_jwt.walk import by_structure as walk_by_structure
 
 
@@ -94,7 +99,7 @@ class SDJWT:
             "cnf": {"jwk": self._holder_key.export_public(as_dict=True)},
             "iat": self._iat,
             "exp": self._exp,
-            HASH_ALG_KEY: self.HASH_ALG["name"],
+            DIGEST_ALG_KEY: self.HASH_ALG["name"],
             SD_DIGESTS_KEY: walk_by_structure(
                 self.salts_and_blinded_claim_names,
                 self._user_claims,
@@ -336,10 +341,10 @@ class SDJWT:
             raise ValueError("Invalid issuer")
 
         # TODO: Check exp/nbf/iat
-        if HASH_ALG_KEY not in sd_jwt_payload:
+        if DIGEST_ALG_KEY not in sd_jwt_payload:
             raise ValueError("Missing hash algorithm")
 
-        if sd_jwt_payload[HASH_ALG_KEY] != SDJWT.HASH_ALG["name"]:
+        if sd_jwt_payload[DIGEST_ALG_KEY] != SDJWT.HASH_ALG["name"]:
             raise ValueError("Invalid hash algorithm")
 
         if SD_DIGESTS_KEY not in sd_jwt_payload:
