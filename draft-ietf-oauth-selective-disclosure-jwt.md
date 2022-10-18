@@ -184,15 +184,15 @@ SD-JWT-DOC = (METADATA, SD-CLAIMS)
 SD-JWT = SD-JWT-DOC | SIG(SD-JWT-DOC, ISSUER-PRIV-KEY)
 ```
 
-`SD-CLAIMS` is an object with claim names (`CLAIM-NAME`) mapped to the digests over the claim values (`CLAIM-VALUE`) with random salts (`SALT`). Digests are calculated using digest derivation function such as hash function, HMAC, or other (`DIGEST-DERIVATION()`):
+`SD-CLAIMS` is an object with claim names (`CLAIM-NAME`) mapped to the digests over the claim values (`CLAIM-VALUE`) with random salts (`SALT`). Digests are calculated using a digest derivation function such as a hash function, HMAC, or other (`DIGEST-DERIVATION()`):
 
 ```
 SD-CLAIMS = (
     CLAIM-NAME: DIGEST-DERIVATION(SALT, CLAIM-VALUE)
-)
+)*
 ```
 
-When an HMAC or another type of digest derivation function is used for digest derivation, a secret cryptographic key or other cryptographic secret is used instead of a salt value. 
+When an HMAC or another type of derivation function is used for digest calculation, a secret cryptographic key or other cryptographic secret is used instead of a salt value. 
 However, the term "salt" is used throughout this document for brevity.
 
 `SD-CLAIMS` can also be nested deeper to capture more complex objects, as will be shown later.
@@ -417,8 +417,7 @@ required by the application using SD-JWTs.
 
 ### `sd_digests` Claim (Digests of Selectively Disclosable Claims) {#sd_digests_claim}
 
-An SD-JWT MUST include digests of the salted claim values that are included by the issuer
-under the property `sd_digests`.
+The property `sd_digests` MUST be used by the issuer to include digests of the salted claim values for any claim that is intended to be selectively disclosable.
 
 The issuer MUST choose a cryptographically random salt value
 for each claim value. The salt value MUST then be encoded as a string. It is
