@@ -282,7 +282,7 @@ subset of the same mapping).
 ## Format of an SD-JWT
 
 An SD-JWT is a JWT that MUST be signed using the issuer's private key. The
-payload of an SD-JWT MUST contain the `sd_digests` and `digest_derivation_alg` claims
+payload of an SD-JWT MUST contain the `sd_digests` and `sd_digest_derivation_alg` claims
 described in the following, and MAY contain a holder's public key or a reference
 thereto, as well as further claims such as `iss`, `iat`, etc. as defined or
 required by the application using SD-JWTs.
@@ -345,7 +345,7 @@ reference).
 
 ### Digest Derivation Function Claim
 
-The claim `digest_derivation_alg` indicates the digest derivation algorithm
+The claim `sd_digest_derivation_alg` indicates the digest derivation algorithm
 used by the Issuer to generate the digests over the salts and the
 claim values. 
 
@@ -411,7 +411,7 @@ be disclosed in full.
   },
   "iat": 1516239022,
   "exp": 1516247022,
-  "digest_derivation_alg": "sha-256",
+  "sd_digest_derivation_alg": "sha-256",
   "sd_digests": {
     "sub": "OMdwkk2HPuiInPypWUWMxot1Y2tStGsLuIcDMjKdXMU",
     "given_name": "AfKKH4a0IZki8MFDythFaFS_Xqzn-wRvAMfiy_VjYpE",
@@ -693,7 +693,7 @@ trusting/using any of the contents of an SD-JWT:
     3. Validate the issuer of the SD-JWT and that the signing key belongs to this issuer.
     4. Check that the SD-JWT is valid using `nbf`, `iat`, and `exp` claims, if provided in the SD-JWT.
     5. Check that the claim `sd_digests` is present in the SD-JWT.
-    6. Check that the `digest_derivation_alg` claim is present and its value is understand
+    6. Check that the `sd_digest_derivation_alg` claim is present and its value is understand
        and the digest derivation algorithm is deemed secure.
  5. Validate the SD-JWT Release:
     1. If holder binding is required, validate the signature over the SD-JWT using the same steps as for the SD-JWT plus the following steps:
@@ -704,7 +704,7 @@ trusting/using any of the contents of an SD-JWT:
           If `sd_release` is structured, the claim MUST be present at the same
           place within the structure.
        2. Compute the base64url-encoded digest of the JSON literal released
-          by the Holder using the `digest_derivation_alg` in SD-JWT.
+          by the Holder using the `sd_digest_derivation_alg` in SD-JWT.
        3. Compare the digests computed in the previous step with the one of
           the same claim in the SD-JWT. Accept the claim only when the two
           digests match.
@@ -900,7 +900,7 @@ allows for the release of individual members of the address claim separately.
   },
   "iat": 1516239022,
   "exp": 1516247022,
-  "digest_derivation_alg": "sha-256",
+  "sd_digest_derivation_alg": "sha-256",
   "sd_digests": {
     "sub": "OMdwkk2HPuiInPypWUWMxot1Y2tStGsLuIcDMjKdXMU",
     "given_name": "AfKKH4a0IZki8MFDythFaFS_Xqzn-wRvAMfiy_VjYpE",
@@ -1032,7 +1032,7 @@ The following shows the resulting SD-JWT payload:
   },
   "iat": 1516239022,
   "exp": 1516247022,
-  "digest_derivation_alg": "sha-256",
+  "sd_digest_derivation_alg": "sha-256",
   "sd_digests": {
     "verified_claims": {
       "verification": {
@@ -1304,7 +1304,7 @@ Hiding just this claim, the following SD-JWT payload would result:
   },
   "iat": 1516239022,
   "exp": 1516247022,
-  "digest_derivation_alg": "sha-256",
+  "sd_digest_derivation_alg": "sha-256",
   "sd_digests": {
     "sub": "OMdwkk2HPuiInPypWUWMxot1Y2tStGsLuIcDMjKdXMU",
     "given_name": "AfKKH4a0IZki8MFDythFaFS_Xqzn-wRvAMfiy_VjYpE",
@@ -1422,7 +1422,7 @@ The resulting SD-JWT payload:
   },
   "iat": 1516239022,
   "exp": 1516247022,
-  "digest_derivation_alg": "sha-256",
+  "sd_digest_derivation_alg": "sha-256",
   "sd_digests": {
     "eluV5Og3gSNII8EYnsxA_A": "bvPLqohL5ROmk2UsuNffH8C1wx9o-ipm-G4SkUwrpAE",
     "eI8ZWm9QnKPpNPeNenHdhQ": "pCtjs0hC2Klhsnpe7BIqnGAsXlyXXC-lAEgX6isoYVM",
@@ -1513,7 +1513,7 @@ The verifier would decode the SD-JWT-R and SD-JWT as follows:
    * updated examples
    * clarifications
    * fix `cnf` structure in examples
-   * sd_hash_alg renamed to digest_derivation_alg
+   * sd_hash_alg renamed to sd_digest_derivation_alg
 
    -00
 
