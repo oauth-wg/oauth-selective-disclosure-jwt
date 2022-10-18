@@ -77,4 +77,4 @@ Command line usage requires that you have the necessary software installed.  See
  * Kotlin: [SD-JWT-Kotlin](https://github.com/IDunion/SD-JWT-Kotlin)
  * Rust: [sd_jwt](https://github.com/kushaldas/sd_jwt)
  * TypeScript: [sd-jwt](https://github.com/christianpaquin/sd-jwt)
-
+ * TypeScript: [sd-jwt-ts](https://github.com/chike0905/sd-jwt-ts)
