@@ -105,6 +105,10 @@ Selectively Disclosable JWT (SD-JWT)
 :  A JWT [@!RFC7515] created by the issuer, which is signed as a JWS [@!RFC7515],
    that supports selective disclosure as defined in this document.
 
+Disclosure
+: A combination of the cleartext claim value, the cleartext claim name, a salt and
+   optionally blinded claim name value that is used to calculate a digest for a certain claim.
+
 Issuer-Issued Disclosures Object (II-Disclosures Object)
 :  A JSON object created by the issuer that contains mapping between 
    raw claim values contained in the SD-JWT and the salts for each claim value.
