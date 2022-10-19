@@ -110,13 +110,13 @@ Disclosure
    optionally blinded claim name value that is used to calculate a digest for a certain claim.
 
 Issuer-Issued Disclosures Object (II-Disclosures Object)
-:  A JSON object created by the issuer that contains mapping between 
+:  A JSON object created by the issuer that contains mapping between
    raw claim values contained in the SD-JWT and the salts for each claim value.
 
 Holder-Selected Disclosures JWT (HS-Disclosures JWT)
 :  A JWT created by the Holder that contains the Disclosures from an Issuer-Issued Disclosures Object that the Holder is disclosing to the Verifier. In addition to the Disclosures, it can contain other properties and may be signed by the Holder.
 
-claim values of an SD-JWT in a verifiable way. 
+claim values of an SD-JWT in a verifiable way.
 
 Holder binding
 :  Ability of the holder to prove legitimate possession of SD-JWT by proving
@@ -124,7 +124,7 @@ Holder binding
    a public key or a reference to a public key that matches to the private key controlled by the holder.
 
 Claim name blinding
-:  Feature that enables to blind not only claim values, but also claim names of the claims 
+:  Feature that enables to blind not only claim values, but also claim names of the claims
 that are included in SD-JWT but are not disclosed to the verifier in the HS-Disclosures JWT.
 
 Issuer
@@ -133,7 +133,7 @@ Issuer
 Holder
 :  An entity that received SD-JWTs from the issuer and has control over them.
 
-Verifier 
+Verifier
 :  An entity that requests, checks and extracts the claims from HS-Disclosures JWT.
 
 Selective disclosure
@@ -182,7 +182,7 @@ conceptual level, abstracting from the data formats described afterwards.
 
 ## Creating an SD-JWT
 
-An SD-JWT, at its core, is a digitally signed document containing digests over the claim values with random salts and other metadata. 
+An SD-JWT, at its core, is a digitally signed document containing digests over the claim values with random salts and other metadata.
 It MUST be digitally signed using the issuer's private key.
 
 ```
@@ -198,7 +198,7 @@ SD-CLAIMS = (
 )*
 ```
 
-When an HMAC or another type of derivation function is used for digest calculation, a secret cryptographic key or other cryptographic secret is used instead of a salt value. 
+When an HMAC or another type of derivation function is used for digest calculation, a secret cryptographic key or other cryptographic secret is used instead of a salt value.
 However, the term "salt" is used throughout this document for brevity.
 
 `SD-CLAIMS` can also be nested deeper to capture more complex objects, as will be shown later.
@@ -283,7 +283,7 @@ The detailed algorithm is described below.
 
 This section defines data formats for SD-JWT (containing digests of the salted
 claim values), Issuer-Issued Disclosures (containing the mapping of the
-plain-text claim values and the salt values), and HS-Disclosures 
+plain-text claim values and the salt values), and HS-Disclosures
 (containing a subset of the same mapping).
 
 ## The Challenge of Canonicalization
@@ -470,7 +470,7 @@ reference).
 
 The claim `sd_digest_derivation_alg` indicates the digest derivation algorithm
 used by the Issuer to generate the digests over the salts and the
-claim values. 
+claim values.
 
 The digest derivation algorithm identifier MUST be one of the following:
 - a hash algorithm value from the "Hash Name String" column in the IANA "Named Information Hash Algorithm" registry [IANA.Hash.Algorithms]
@@ -637,16 +637,16 @@ formed by serializing an object containing the salt, the claim value, and
 optionally the claim name. This ensures that issuer and verifier use the same
 input to their digest derivation algorithms and avoids issues with canonicalization of JSON
 values that would lead to different digests. The II-Disclosures Object therefore maps claim
-names to JSON-encoded arrays. 
+names to JSON-encoded arrays.
 
 ## Sending SD-JWT and Issuer-Issued Disclosures Object during Issuance
 
 For transporting the II-Disclosures Object together with the SD-JWT from the issuer to the holder,
 the II-Disclosures Object is base64url-encoded and appended to the SD-JWT using a period character `.` as the
-separator. 
+separator.
 
 The II-Disclosures Object and SD-JWT are implicitly linked through the digest values of the claims
-in the II-Disclosures Object that is included in the SD-JWT. To ensure that the correct II-Disclosures Object and 
+in the II-Disclosures Object that is included in the SD-JWT. To ensure that the correct II-Disclosures Object and
 SD-JWT pairings are being used, the holder SHOULD verify the binding between
 II-Disclosures Object and SD-JWT as defined in the Verification Section of this document.
 
@@ -698,20 +698,20 @@ CJ5MXNWVTV3ZGZKYWhWZGd3UGdTN1JRXCIsIFwidlwiOiBcIjE5NDAtMDEtMDFcIn0ifX
 
 ## Format of an Holder-Selected Disclosures JWT
 
-HS-Disclosures JWT contains claim values and the salts of the claims that the holder 
-has consented to disclose to the Verifier. This enables the Verifier to verify 
+HS-Disclosures JWT contains claim values and the salts of the claims that the holder
+has consented to disclose to the Verifier. This enables the Verifier to verify
 the claims received from the holder by computing the digests of the claim
-values and the salts revealed in the HS-Disclosures JWT using the digest derivation algorithm 
+values and the salts revealed in the HS-Disclosures JWT using the digest derivation algorithm
 specified in SD-JWT and comparing them to the digests included in SD-JWT.
 
 For each claim, an array of the salt and the claim value is contained in the
-`sd_hs_disclosures` object. The structure of an `sd_hs_disclosures` object in the HS-Disclosures JWT is the same as the structure of an `sd_ii_disclosures` object in II-Disclosures Object. 
+`sd_hs_disclosures` object. The structure of an `sd_hs_disclosures` object in the HS-Disclosures JWT is the same as the structure of an `sd_ii_disclosures` object in II-Disclosures Object.
 
 The HS-Disclosures JWT MAY contain further claims, for example, to ensure a binding
 to a concrete transaction (in the example the `nonce` and `aud` claims).
 
-When the holder sends the HS-Disclosures JWT to the Verifier, the HS-Disclosures JWT MUST be a JWS 
-represented as the JWS Compact Serialization as described in 
+When the holder sends the HS-Disclosures JWT to the Verifier, the HS-Disclosures JWT MUST be a JWS
+represented as the JWS Compact Serialization as described in
 Section 7.1 of [@!RFC7515].
 
 If holder binding is desired, the HS-Disclosures JWT is signed by the holder. If no
@@ -740,9 +740,9 @@ The following is a non-normative example of the contents of a HS-Disclosures JWT
 ```
 
 For each claim, a JSON literal that decodes to an object with the and the claim
-value (plus optionally the claim name) is contained in the `sd_hs_disclosures` object. 
+value (plus optionally the claim name) is contained in the `sd_hs_disclosures` object.
 
-Again, the HS-Disclosures JWT follows the same structure as the `sd_digests` in the SD-JWT. 
+Again, the HS-Disclosures JWT follows the same structure as the `sd_digests` in the SD-JWT.
 
 Below is a non-normative example of a representation of the HS-Disclosures JWT using JWS Compact
 Serialization:
@@ -821,7 +821,7 @@ The holder SHOULD verify the binding between SD-JWT and II-Disclosures Object by
  1. Check that all the claims in the II-Disclosures Object are present in the SD-JWT and that there are no claims in the SD-JWT that are not in the II-Disclosures Object
  2. Check that the digests of the claims in the II-Disclosures Object match those in the SD-JWT
 
-## Verification by the Verifier when Receiving SD-JWT and Holder-Selected Disclosures JWT 
+## Verification by the Verifier when Receiving SD-JWT and Holder-Selected Disclosures JWT
 
 Verifiers MUST follow [@RFC8725] for checking the SD-JWT and, if signed, the
 HS-Disclosures JWT.
@@ -887,10 +887,10 @@ The processing is shown in Examples 2b and 3 in the Appendix.
 
 ## Mandatory digest computation of the revealed claim values by the Verifier
 
-ToDo: add text explaining mechanisms that should be adopted to ensure that 
+ToDo: add text explaining mechanisms that should be adopted to ensure that
   verifiers validate the claim values received in HS-Disclosures JWT by calculating the
-  digests of those values and comparing them with the digests in the SD-JWT: 
-  - create a test suite that forces digest computation by the Verifiers, 
+  digests of those values and comparing them with the digests in the SD-JWT:
+  - create a test suite that forces digest computation by the Verifiers,
     and includes negative test cases in test vectors
   - use only implementations/libraries that are compliant to the test suite
   - etc.
@@ -937,7 +937,7 @@ TBD
 
 Issuers that chose to blind claim names MUST ensure not to inadvertently leak
 information about the blinded claim names to verifiers. In particular, issuers
-MUST choose placeholder claim names accordingly. 
+MUST choose placeholder claim names accordingly.
 
 It is RECOMMENDED to use cryptographically salts with at least 128 bits
 of entropy as placeholder claim names.
