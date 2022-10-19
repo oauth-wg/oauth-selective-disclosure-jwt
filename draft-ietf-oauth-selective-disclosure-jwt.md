@@ -598,7 +598,7 @@ communicate to the holder, such as a private key if the issuer selected the
 holder key pair.
 
 An Issuer-Issued Disclosures Object (II-Disclosures Object) is a JSON object containing at least the
-top-level property `sd_disclosure`. Its structure mirrors the one of `sd_digests` in
+top-level property `sd_ii_disclosures`. Its structure mirrors the one of `sd_digests` in
 the SD-JWT, but the values are the inputs to the digest calculations the issuer
 used, as strings.
 
@@ -612,7 +612,7 @@ The II-Disclosures Object for Example 1 is as follows:
 {#example-simple-svc_payload}
 ```json
 {
-  "sd_disclosure": {
+  "sd_ii_disclosures": {
     "sub": "{\"s\": \"2GLC42sKQveCfGfryNRN9w\", \"v\":
       \"6c5c0a49-b589-431d-bae7-219122a9ec2c\"}",
     "given_name": "{\"s\": \"6Ij7tM-a5iVPGboS5tmvVA\", \"v\":
@@ -705,7 +705,7 @@ values and the salts revealed in the HS-Disclosures JWT using the digest derivat
 specified in SD-JWT and comparing them to the digests included in SD-JWT.
 
 For each claim, an array of the salt and the claim value is contained in the
-`sd_disclosure` object. The structure of an `sd_disclosure` object in the HS-Disclosures JWT is the same as the structure of an `sd_disclosure` object in II-Disclosures Object. 
+`sd_hs_disclosures` object. The structure of an `sd_hs_disclosures` object in the HS-Disclosures JWT is the same as the structure of an `sd_ii_disclosures` object in II-Disclosures Object. 
 
 The HS-Disclosures JWT MAY contain further claims, for example, to ensure a binding
 to a concrete transaction (in the example the `nonce` and `aud` claims).
@@ -727,7 +727,7 @@ The following is a non-normative example of the contents of a HS-Disclosures JWT
 {
   "nonce": "XZOUco1u_gEPknxS78sWWg",
   "aud": "https://example.com/verifier",
-  "sd_disclosure": {
+  "sd_hs_disclosures": {
     "given_name": "{\"s\": \"6Ij7tM-a5iVPGboS5tmvVA\", \"v\":
       \"John\"}",
     "family_name": "{\"s\": \"Qg_O64zqAxe412a108iroA\", \"v\":
@@ -740,7 +740,7 @@ The following is a non-normative example of the contents of a HS-Disclosures JWT
 ```
 
 For each claim, a JSON literal that decodes to an object with the and the claim
-value (plus optionally the claim name) is contained in the `sd_disclosure` object. 
+value (plus optionally the claim name) is contained in the `sd_hs_disclosures` object. 
 
 Again, the HS-Disclosures JWT follows the same structure as the `sd_digests` in the SD-JWT. 
 
@@ -845,8 +845,8 @@ trusting/using any of the contents of an SD-JWT:
        1. Determine that the public key for the private key that used to sign the HS-Disclosures JWT is bound to the SD-JWT, i.e., the SD-JWT either contains a reference to the public key or contains the public key itself.
        2. Determine that the HS-Disclosures JWT is bound to the current transaction and was created for this verifier (replay protection). This is usually achieved by a `nonce` and `aud` field within the HS-Disclosures JWT.
     2. For each claim in the HS-Disclosures JWT:
-       1. Ensure that the claim is present as well in `sd_disclosure` in the SD-JWT.
-          If `sd_disclosure` is structured, the claim MUST be present at the same
+       1. Ensure that the claim is present as well in `sd_digests` in the SD-JWT.
+          If `sd_digests` is structured, the claim MUST be present at the same
           place within the structure.
        2. Compute the base64url-encoded digest of the JSON literal disclosed
           by the Holder using the `sd_digest_derivation_alg` in SD-JWT.
@@ -1092,7 +1092,7 @@ The II-Disclosures Object for this SD-JWT is as follows:
 {#example-simple_structured-svc_payload}
 ```json
 {
-  "sd_disclosure": {
+  "sd_ii_disclosures": {
     "sub": "{\"s\": \"2GLC42sKQveCfGfryNRN9w\", \"v\":
       \"6c5c0a49-b589-431d-bae7-219122a9ec2c\"}",
     "given_name": "{\"s\": \"6Ij7tM-a5iVPGboS5tmvVA\", \"v\":
@@ -1126,7 +1126,7 @@ the `address` property:
 {
   "nonce": "XZOUco1u_gEPknxS78sWWg",
   "aud": "https://example.com/verifier",
-  "sd_disclosure": {
+  "sd_hs_disclosures": {
     "given_name": "{\"s\": \"6Ij7tM-a5iVPGboS5tmvVA\", \"v\":
       \"John\"}",
     "family_name": "{\"s\": \"Qg_O64zqAxe412a108iroA\", \"v\":
@@ -1201,7 +1201,7 @@ The holder can now, for example, release the rest of the components of the `addr
 {
   "nonce": "XZOUco1u_gEPknxS78sWWg",
   "aud": "https://example.com/verifier",
-  "sd_disclosure": {
+  "sd_hs_disclosures": {
     "given_name": "{\"s\": \"6Ij7tM-a5iVPGboS5tmvVA\", \"v\":
       \"John\"}",
     "family_name": "{\"s\": \"Qg_O64zqAxe412a108iroA\", \"v\":
@@ -1452,7 +1452,7 @@ A HS-Disclosures JWT for some of the claims may look as follows:
 {
   "nonce": "XZOUco1u_gEPknxS78sWWg",
   "aud": "https://example.com/verifier",
-  "sd_disclosure": {
+  "sd_hs_disclosures": {
     "verified_claims": {
       "verification": {
         "trust_framework": "{\"s\": \"2GLC42sKQveCfGfryNRN9w\",
@@ -1622,7 +1622,7 @@ encoded as JSON and signed as a JWS compliant to [@VC_DATA].
     ],
     "verifiableCredential": ["eyJhb...npyXw"]
   },
-  "sd_disclosure": {
+  "sd_hs_disclosures": {
     "email": "[\"eI8ZWm9QnKPpNPeNenHdhQ\", \"johndoe@example.com\"]",
     "phone_number": "[\"Qg_O64zqAxe412a108iroA\",
       \"+1-202-555-0101\"]",
@@ -1708,7 +1708,7 @@ In the II-Disclosures Object, it can be seen that the blinded claim's original n
 {#example-simple_structured_some_blinded-svc_payload}
 ```json
 {
-  "sd_disclosure": {
+  "sd_ii_disclosures": {
     "sub": "{\"s\": \"2GLC42sKQveCfGfryNRN9w\", \"v\":
       \"6c5c0a49-b589-431d-bae7-219122a9ec2c\"}",
     "given_name": "{\"s\": \"6Ij7tM-a5iVPGboS5tmvVA\", \"v\":
@@ -1745,7 +1745,7 @@ The verifier would learn this information via the HS-Disclosures JWT:
 {
   "nonce": "XZOUco1u_gEPknxS78sWWg",
   "aud": "https://example.com/verifier",
-  "sd_disclosure": {
+  "sd_hs_disclosures": {
     "given_name": "{\"s\": \"6Ij7tM-a5iVPGboS5tmvVA\", \"v\":
       \"John\"}",
     "family_name": "{\"s\": \"Qg_O64zqAxe412a108iroA\", \"v\":
@@ -1857,7 +1857,7 @@ The II-Disclosures Object:
 {#example-simple_structured_all_blinded-svc_payload}
 ```json
 {
-  "sd_disclosure": {
+  "sd_ii_disclosures": {
     "eluV5Og3gSNII8EYnsxA_A": "{\"s\": \"2GLC42sKQveCfGfryNRN9w\",
       \"v\": \"6c5c0a49-b589-431d-bae7-219122a9ec2c\", \"n\":
       \"sub\"}",
@@ -1894,7 +1894,7 @@ Here, the holder decided only to disclose a subset of the claims to the verifier
 {
   "nonce": "XZOUco1u_gEPknxS78sWWg",
   "aud": "https://example.com/verifier",
-  "sd_disclosure": {
+  "sd_hs_disclosures": {
     "eI8ZWm9QnKPpNPeNenHdhQ": "{\"s\": \"6Ij7tM-a5iVPGboS5tmvVA\",
       \"v\": \"John\", \"n\": \"given_name\"}",
     "AJx-095VPrpTtN4QMOqROA": "{\"s\": \"Qg_O64zqAxe412a108iroA\",
@@ -1941,10 +1941,11 @@ The verifier would decode the HS-Disclosures JWT and SD-JWT as follows:
    * explain merging algorithm ("processing model")
    * generalized hash alg to digest derivation alg which also enables HMAC to calculate digests
    * `sd_digest_derivation_alg` renamed to `sd_digest_derivation_alg`
-   * `sd_release` renamed to `sd_disclosure`
    * Salt/Value Container (SVC) renamed to Issuer-Issued Disclosures (II-Disclosures)
    * SD-JWT-Release (SD-JWT-R) renamed to Holder-Selected Disclosures (HS-Disclosures)
-   * clarified relationship between `sd_disclosure` in the HS-Disclosures and SD-JWT
+   * `sd_disclosure` in II-Disclosures renamed to `sd_ii_disclosures`
+   * `sd_disclosure` in HS-Disclosures renamed to `sd_hs_disclosures`
+   * clarified relationship between `sd_hs_disclosure` and SD-JWT
    * updated examples
    * text clarifications
    * fix `cnf` structure in examples
