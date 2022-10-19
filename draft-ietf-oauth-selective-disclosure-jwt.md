@@ -86,11 +86,11 @@ cases as well.
 
 This document also describes an optional mechanism for holder binding,
 or the concept of binding an SD-JWT to key material controlled by the
-holder. 
+holder.
 
 This specification aims to be easy to imeplement and to leverage
 established and widely used data formats and cryptographic algorithms
-where possible.  
+where possible.
 
 ## Conventions and Terminology
 
@@ -667,7 +667,7 @@ separator. This means that the resulting string consists of four dot-separated p
 ```
 (Line breaks for presentation only.)
 
-This is called the Combined Format for Issuance. 
+This is called the Combined Format for Issuance.
 
 The II-Disclosures Object and SD-JWT are implicitly linked through the
 digest values of the claims in the II-Disclosures Object that is
@@ -816,7 +816,7 @@ The SD-JWT and the HS-Disclosures JWT can be combined into one document using pe
 ```
 (Line breaks for presentation only.)
 
-This is called the Combined Format for Presentation. 
+This is called the Combined Format for Presentation.
 
 For Example 1, the Combined Format for Presentation looks as follows:
 
@@ -983,7 +983,7 @@ Furthermore the hash algorithms MD2, MD4, MD5, RIPEMD-160, and SHA-1
 revealed fundamental weaknesses and they MUST NOT be used.
 
 ## Holder Binding {#holder_binding_security}
-Issuers that include a reference to the public key of the Holder in the SD-JWT enable the use of holder binding for the respective credential. Independent of that, Verifiers MUST make a decision on whether holder-binding is required for a particular use case or not. 
+Issuers that include a reference to the public key of the Holder in the SD-JWT enable the use of holder binding for the respective credential. Independent of that, Verifiers MUST make a decision on whether holder-binding is required for a particular use case or not.
 
 For example:
 
