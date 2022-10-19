@@ -13,12 +13,19 @@ user_claims:
         "region": "Anystate",
         "country": "US",
       },
+    "delivery_address":
+      {
+        "street_address": "123 Main St",
+        "locality": "Anytown",
+        "region": "Anystate",
+        "country": "US",
+      },
     "birthdate": "1940-01-01",
   }
 
-claims_structure: { "address": {} }
+claims_structure: { "address": {}, "delivery_address": {} }
 
-blinded_claim_names: 
+blinded_claim_names:
   - "sub"
   - "given_name"
   - "family_name"
