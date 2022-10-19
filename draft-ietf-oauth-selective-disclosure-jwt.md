@@ -114,7 +114,9 @@ Issuer-Issued Disclosures Object (II-Disclosures Object)
    raw claim values contained in the SD-JWT and the salts for each claim value.
 
 Holder-Selected Disclosures JWT (HS-Disclosures JWT)
-:  A JWT created by the holder that contains a subset of the claim values of an SD-JWT in a verifiable way. 
+:  A JWT created by the Holder that contains the Disclosures from an Issuer-Issued Disclosures Object that the Holder is disclosing to the Verifier. In addition to the Disclosures, it can contain other properties and may be signed by the Holder.
+
+claim values of an SD-JWT in a verifiable way. 
 
 Holder binding
 :  Ability of the holder to prove legitimate possession of SD-JWT by proving
@@ -126,13 +128,13 @@ Claim name blinding
 that are included in SD-JWT but are not disclosed to the verifier in the HS-Disclosures JWT.
 
 Issuer
-:  An entity that creates SD-JWTs (2.1).
+:  An entity that creates SD-JWTs.
 
 Holder
-:  An entity that received SD-JWTs (2.1) from the issuer and has control over them.
+:  An entity that received SD-JWTs from the issuer and has control over them.
 
 Verifier 
-:  An entity that requests, checks and extracts the claims from HS-Disclosures JWT (2.2)
+:  An entity that requests, checks and extracts the claims from HS-Disclosures JWT.
 
 Selective disclosure
 : Process of a Holder disclosing to a Verifier a subset of claims contained in a claim set issued by an Issuer.
