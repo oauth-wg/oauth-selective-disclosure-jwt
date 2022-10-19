@@ -9,13 +9,8 @@ from typing import Dict, List, Optional, Tuple, Union
 from jwcrypto.jwk import JWK
 from jwcrypto.jws import JWS
 
-<<<<<<< HEAD
-from sd_jwt import DEFAULT_SIGNING_ALG, DIGEST_ALG_KEY, SD_CLAIMS_KEY, SD_DIGESTS_KEY
-from sd_jwt.utils import generate_salt, pad_urlsafe_b64
-=======
-from sd_jwt import DEFAULT_SIGNING_ALG, HASH_ALG_KEY, SD_CLAIMS_KEY, SD_DIGESTS_KEY
+from sd_jwt import DEFAULT_SIGNING_ALG, DIGEST_ALG_KEY, SD_II_CLAIMS_KEY, SD_HS_CLAIMS_KEY, SD_DIGESTS_KEY
 from sd_jwt.utils import generate_salt, pad_urlsafe_b64, merge
->>>>>>> e2307eea50efa4b0823763e99871794642636a1a
 from sd_jwt.walk import by_structure as walk_by_structure
 
 
@@ -167,7 +162,7 @@ class SDJWT:
     def _create_svc(self):
         # Create the SVC
         self.svc_payload = {
-            SD_CLAIMS_KEY: walk_by_structure(
+            SD_II_CLAIMS_KEY: walk_by_structure(
                 self.salts_and_blinded_claim_names,
                 self._user_claims,
                 self._create_svc_entry,
@@ -215,7 +210,7 @@ class SDJWT:
         # Reconstruct hash raw values (salt+claim value) from serialized_svc
         self._input_hash_raw_values = loads(
             urlsafe_b64decode(pad_urlsafe_b64(self.serialized_svc))
-        )[SD_CLAIMS_KEY]
+        )[SD_II_CLAIMS_KEY]
 
         # TODO: Check that input_sd_jwt and input_svc match
 
@@ -247,7 +242,7 @@ class SDJWT:
         self.sd_jwt_release_payload = {
             "nonce": nonce,
             "aud": aud,
-            SD_CLAIMS_KEY: sd_jwt_r_struct,
+            SD_HS_CLAIMS_KEY: sd_jwt_r_struct,
         }
 
         # Sign the SD-JWT-Release using the holder's key
@@ -322,7 +317,7 @@ class SDJWT:
             return _wbs
         else:
             del sd_jwt_claims[SD_DIGESTS_KEY]
-            del sd_jwt_claims[HASH_ALG_KEY]
+            del sd_jwt_claims[DIGEST_ALG_KEY]
             return merge(_wbs, sd_jwt_claims)
 
     def _verify_sd_jwt(
@@ -394,10 +389,10 @@ class SDJWT:
             if sd_jwt_release_payload["nonce"] != expected_nonce:
                 raise ValueError("Invalid nonce")
 
-        if SD_CLAIMS_KEY not in sd_jwt_release_payload:
+        if SD_HS_CLAIMS_KEY not in sd_jwt_release_payload:
             raise ValueError("No selective disclosure claims in SD-JWT-Release")
 
-        return sd_jwt_release_payload[SD_CLAIMS_KEY]
+        return sd_jwt_release_payload[SD_HS_CLAIMS_KEY]
 
     def _check_claim(
         self, claim_name: str, released_value: str, sd_jwt_claim_value: str
