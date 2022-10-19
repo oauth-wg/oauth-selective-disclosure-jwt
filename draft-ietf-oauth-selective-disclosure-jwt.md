@@ -842,21 +842,21 @@ trusting/using any of the contents of an SD-JWT:
        and the digest derivation algorithm is deemed secure.
  5. Validate the HS-Disclosures JWT:
     1. If holder binding is required, validate the signature over the SD-JWT using the same steps as for the SD-JWT plus the following steps:
-       1. Determine that the public key for the private key that used to sign the HS-Disclosures JWT is bound to the SD-JWT, i.e., the SD-JWT either contains a reference to the public key or contains the public key itself.
-       2. Determine that the HS-Disclosures JWT is bound to the current transaction and was created for this verifier (replay protection). This is usually achieved by a `nonce` and `aud` field within the HS-Disclosures JWT.
+      1. Determine that the public key for the private key that used to sign the HS-Disclosures JWT is bound to the SD-JWT, i.e., the SD-JWT either contains a reference to the public key or contains the public key itself.
+      2. Determine that the HS-Disclosures JWT is bound to the current transaction and was created for this verifier (replay protection). This is usually achieved by a `nonce` and `aud` field within the HS-Disclosures JWT.
     2. For each claim in the HS-Disclosures JWT:
-       1. Ensure that the claim is present as well in `sd_digests` in the SD-JWT.
-          If `sd_digests` is structured, the claim MUST be present at the same
-          place within the structure.
-       2. Compute the base64url-encoded digest of the JSON literal disclosed
-          by the Holder using the `sd_digest_derivation_alg` in SD-JWT.
-       3. Compare the digests computed in the previous step with the one of
-          the same claim in the SD-JWT. Accept the claim only when the two
-          digests match.
-       4. Ensure that the claim value in the HS-Disclosures JWT is a JSON-encoded
-          object containing at least the keys `s` and `v`, and optionally `n`.
-       5. Store the value of the key `v` as the claim value. If `n` is contained
-          in the object, use the value of the key `n` as the claim name.
+      1. Ensure that the claim is present as well in `sd_digests` in the SD-JWT.
+         If `sd_digests` is structured, the claim MUST be present at the same
+         place within the structure.
+      2. Compute the base64url-encoded digest of the JSON literal disclosed
+         by the Holder using the `sd_digest_derivation_alg` in SD-JWT.
+      3. Compare the digests computed in the previous step with the one of
+         the same claim in the SD-JWT. Accept the claim only when the two
+         digests match.
+      4. Ensure that the claim value in the HS-Disclosures JWT is a JSON-encoded
+         object containing at least the keys `s` and `v`, and optionally `n`.
+      5. Store the value of the key `v` as the claim value. If `n` is contained
+         in the object, use the value of the key `n` as the claim name.
     3. Once all necessary claims have been verified, their values can be
        validated and used according to the requirements of the application. It
        MUST be ensured that all claims required for the application have been
