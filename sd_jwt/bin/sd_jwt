@@ -182,26 +182,26 @@ _artifacts = {
     "user_claims": (example["user_claims"], "User Claims"),
     "sd_jwt_payload": (sdjwt_at_issuer.sd_jwt_payload, "Payload of the SD-JWT"),
     "serialized_sd_jwt": (sdjwt_at_issuer.serialized_sd_jwt, "Serialized SD-JWT"),
-    "svc_payload": (
+    "iid_payload": (
         sdjwt_at_issuer.svc_payload,
-        "Payload of the Salt/Value Container (SVC)",
+        "Payload of the Issuer-Issued Disclosures Object (II-Disclosures Object)",
     ),
-    "serialized_svc": (sdjwt_at_issuer.serialized_svc, "Serialized SVC"),
-    "combined_sd_jwt_svc": (
+    "serialized_iid": (sdjwt_at_issuer.serialized_svc, "Serialized II-Disclosures Object"),
+    "combined_sd_jwt_iid": (
         sdjwt_at_issuer.combined_sd_jwt_svc,
-        "Combined SD-JWT and SVC representation",
+        "Combined SD-JWT and II-Disclosures Object representation",
     ),
-    "sd_jwt_release_payload": (
+    "hsd_jwt_payload": (
         sdjwt_at_holder.sd_jwt_release_payload,
-        "Payload of the SD-JWT-Release",
+        "Payload of the Holder-Selected Disclosures JWT (HS-Disclosures JWT)",
     ),
-    "serialized_sd_jwt_release": (
+    "serialized_hsd_jwt": (
         sdjwt_at_holder.serialized_sd_jwt_release,
-        "Serialized SD-JWT-Release",
+        "Serialized HS-Disclosures JWT",
     ),
-    "combined_sd_jwt_sd_jwt_release": (
+    "combined_sd_jwt_hsd_jwt": (
         sdjwt_at_holder.combined_presentation,
-        "Combined representation of SD-JWT and SD-JWT-R",
+        "Combined representation of SD-JWT and HS-Disclosures JWT",
     ),
     "verified_contents": (vc, "Verified released contents of the SD-JWT"),
     "merged": (merged, "Merged contents of the SD-JWT"),
