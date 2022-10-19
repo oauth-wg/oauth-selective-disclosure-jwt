@@ -983,14 +983,47 @@ Furthermore the hash algorithms MD2, MD4, MD5, RIPEMD-160, and SHA-1
 revealed fundamental weaknesses and they MUST NOT be used.
 
 ## Holder Binding {#holder_binding_security}
-Issuers that include a reference to the public key of the Holder in the SD-JWT enable the use of holder binding for the respective credential. Independent of that, Verifiers MUST make a decision on whether holder-binding is required for a particular use case or not.
+Verifiers MUST decide whether holder-binding is required for a
+particular use case or not before verifying a credential. This decision
+can be informed by business requirements, the use case, the type of
+binding between a holder and its credential that is required for a use
+case, the sensitivity of the use case, the expected properties of a
+credential, the type and contents of other credentials expected to be
+presented at the same time, etc.
 
-For example:
+This can be showcased on two use cases based on a mobile driver's license:
 
- * For the verification of a driver's license at a traffic stop, holder binding may be necessary to ensure that the person presenting the license is the actual holder of the license.
- * A rental car agency might not be interested in holder binding when the only goal of the verification is to ensure that there exists a government-issued driver's license for a driver of a rental car. The identification of the driver might be done by other means, e.g., a passport.
+**Use case A:** For the verification of the driver's license at a
+traffic stop, holder binding may be necessary to ensure that the person
+driving the car and presenting the license is the actual holder of the
+license. The verifier (e.g., the software used by the police officer)
+will ensure that the HS-Disclosures JWT is signed by the holder's private
+key.
 
-Verifiers MUST NOT take into account whether a HS-Disclosure JWT is signed or not when deciding whether holder binding is required or not, as an attacker can remove the signature from an HS-Disclosure JWT and present it to the verifier.
+**Use case B:** A rental car agency may want to ensure, for insurance
+purposes, that all drivers named on the rental contract own a
+government-issued driver's license. The signer of the rental contract
+can present the mobile driver's license of all named drivers. In this
+case, the rental car agency does not need to check holder binding as the
+goal is not to verify the identity of the person presenting the license,
+but to verify that a license exists and is valid.
+
+It is important that a verifier does not make its security policy
+decisions based on data that can be influenced by an attacker or that
+can be misinterpreted. For this reason, when deciding whether holder
+binding is required or not, Verifiers MUST NOT take into account
+
+ * whether an HS-Disclosure JWT is signed or not, as an attacker can
+   remove the signature from any HS-Disclosure JWT and present it to the
+   verifier, or
+ * whether a key reference is present in the SD-JWT or not, as the
+   issuer might have added the key to the SD-JWT in a format/claim that
+   is not recognized by the verifier.
+
+If a verifier has decided that holder binding is required for a
+particular use case and the HS-Disclosure is unsigned or no recognized
+key reference is present in the SD-JWT, the verifier will reject the
+presentation, as described in (#verifier-verification).
 
 ## Blinding Claim Names
 
