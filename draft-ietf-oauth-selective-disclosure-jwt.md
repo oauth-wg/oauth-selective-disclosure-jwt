@@ -275,7 +275,7 @@ The detailed algorithm is described below.
 
 # Data Formats
 
-This section defines data formats for SD-JWT (containing hash digests of the salted
+This section defines data formats for SD-JWT (containing digests of the salted
 claim values), Issuer-Issued Disclosures (containing the mapping of the
 plain-text claim values and the salt values), and Holder-Selected Disclosures 
 (containing a subset of the same mapping).
@@ -298,10 +298,9 @@ Usually, JSON-based formats transport claim values as simple properties of a JSO
 ...
 ```
 
-However, a problem arises when computation over the data need to be performed and verified, like signing or hashing. Common signature schemes require the same byte string as input to the
-signature verification as was used for creating the signature. In the salted
-hash approach outlined above, the same problem exists: For the issuer and the
-verifier to arrive at the same hash digest, the same byte string must be hashed.
+However, a problem arises when computation over the data need to be performed and verified, like signing or computing digests. Common signature schemes require the same byte string as input to the
+signature verification as was used for creating the signature. In the digest derivation approach outlined above, the same problem exists: for the issuer and the
+verifier to arrive at the same digest, the same byte string must be hashed.
 
 JSON, however, does not prescribe a unique encoding for data, but allows for variations in the encoded string. The data above, for example, can be encoded as
 
@@ -331,23 +330,23 @@ The variations in white space, ordering of object properties, and encoding of
 Unicode characters are all allowed by the JSON specification. Other variations,
 e.g., concerning floating-point numbers, are described in [@RFC8785]. Variations
 can be introduced whenever JSON data is serialized or deserialized and unless
-dealt with, will lead to different hashes and the inability to verify
+dealt with, will lead to different digests and the inability to verify
 signatures.
 
 There are generally two approaches to deal with this problem:
 
 1. Canonicalization: The data is transferred in JSON format, potentially
    introducing variations in its representation, but is transformed into a
-   canonical form before hashing. Both the issuer and the verifier
+   canonical form before computing a digest. Both the issuer and the verifier
    must use the same canonicalization algorithm to arrive at the same byte
-   string for hashing.
+   string for computing a digest.
 2. Source string encoding: Instead of transferring data in JSON format that may
-   introduce variations, the serialized data that is used as the hash input is
+   introduce variations, the serialized data that is used as the digest input is
    transferred from the issuer to the verifier. This means that the verifier can
-   easily check the hash over the byte string before deserializing the data.
+   easily check the digest over the byte string before deserializing the data.
 
 Mixed approaches are conceivable, i.e., transferring both the original JSON data
-plus a string suitable for hashing, but such approaches can easily lead to
+plus a string suitable for computing a digest, but such approaches can easily lead to
 undetected inconsistencies resulting in time-of-check-time-of-use type security
 vulnerabilities.
 
@@ -358,7 +357,7 @@ approach means that SD-JWTs can be implemented purely based on widely available
 JSON encoding and decoding libraries without the need for a custom data format
 for encoding data.
 
-To produce a source string for hashing, the data is put into a JSON object
+To produce a source string to compute a digest, the data is put into a JSON object
 together with the salt value, like so (non-normative example, see
 (#sd_digests_claim) for details):
 
@@ -373,7 +372,7 @@ Or, for the address example above:
 ```
 (Line break and indentation of the second line for presentation only!)
 
-This object is then JSON-encoded and used as the source string. The JSON-encoded value is transferred in the SD-JWT-Release instead of the original JSON data:
+This object is then JSON-encoded and used as the source string. The JSON-encoded value is transferred in the HS-Disclosures instead of the original JSON data:
 
 ```
 "family_name": "{\"s\": \"6qMQvRL5haj\", \"v\": \"M\\u00f6bius\"}"
@@ -387,19 +386,19 @@ Or, for the address example:
 ```
 (Line break and indentation of the second and third line for presentation only!)
 
-A verifier can then easily check the hash over the source string before
+A verifier can then easily check the digest over the source string before
 extracting the original JSON data. Variations in the encoding of the source
-string are implicitly tolerated by the verifier, as the hash is computed over a
+string are implicitly tolerated by the verifier, as the digest is computed over a
 predefined byte string and not over a JSON object.
 
 Since the encoding is based on JSON, all value types that are allowed in JSON
 are also allowed in the `v` property in the source string. This includes
 numbers, strings, booleans, arrays, and objects.
 
-It is important to note that the SD-JWT-Release containing the source string is
+It is important to note that the HS-Disclosures containing the source string is
 neither intended nor suitable for direct consumption by an application that
-needs to access the disclosed claim values. The SD-JWT-Release is only intended
-to be used by a verifier to check the hash over the source string and to extract
+needs to access the disclosed claim values. The SD-JWT-Release are only intended
+to be used by a verifier to check the digests over the source strings and to extract
 the original JSON data. The original JSON data is then used by the application.
 See (#processing_model) for details.
 
@@ -442,7 +441,7 @@ The following is an example for a JSON literal with claim name blinding:
 The `sd_digests` claim contains an object where claim names are mapped to the
 respective digests. If a claim name is to be blinded, the digests MUST contain
 the `n` key as described above and the claim name in `sd_digests` MUST be
-replaced by a placeholder value that does not leak information about the claim's original name. The same placeholder value is to be used in the SVC and SD-JWT-R described below.
+replaced by a placeholder value that does not leak information about the claim's original name. The same placeholder value is to be used in the II-Disclosures and HS-Disclosures described below.
 
 #### Flat and Structured `sd_digests` objects
 
@@ -594,7 +593,7 @@ holder key pair.
 
 An Issuer-Issued Disclosures Object is a JSON object containing at least the
 top-level property `sd_disclosure`. Its structure mirrors the one of `sd_digests` in
-the SD-JWT, but the values are the inputs to the hash calculations the issuer
+the SD-JWT, but the values are the inputs to the digest calculations the issuer
 used, as strings.
 
 The Issuer-Issued Disclosures Object MAY contain further properties, for example, to transport the holder
@@ -861,10 +860,10 @@ If any step fails, the input is not valid and processing MUST be aborted.
 
 ## Processing Model {#processing_model}
 
-Neither an SD-JWT nor an SD-JWT-R is suitable for direct use by an application.
+Neither an SD-JWT nor an HS-Disclosures JWT is suitable for direct use by an application.
 Besides the REQUIRED verification steps listed above, it is further RECOMMENDED
 that an application-consumable format is generated from the data released in
-the SD-JWT-Release. The RECOMMENDED way is to merge the released claims and any
+the HS-Disclosures. The RECOMMENDED way is to merge the released claims and any
 plaintext claims in the SD-JWT recursively:
 
  * Objects from the released claims must be merged into existing objects from the SD-JWT.
@@ -873,7 +872,7 @@ plaintext claims in the SD-JWT recursively:
      SD-JWT claims is an object, the two objects MUST be merged recursively.
    * Else, the value in the released claims MUST be used.
 
-The keys `sd_digests` and `sd_hash_alg` SHOULD be removed prior to further
+The keys `sd_digests` and `sd_digest_derivation_alg` SHOULD be removed prior to further
 processing.
 
 The processing is shown in Examples 2b and 3 in the Appendix.
@@ -1166,7 +1165,7 @@ The JSON-payload of the SD-JWT that contains both selectively disclosable claims
   },
   "iat": 1516239022,
   "exp": 1516247022,
-  "sd_hash_alg": "sha-256",
+  "sd_digest_derivation_alg": "sha-256",
   "sd_digests": {
     "sub": "OMdwkk2HPuiInPypWUWMxot1Y2tStGsLuIcDMjKdXMU",
     "given_name": "AfKKH4a0IZki8MFDythFaFS_Xqzn-wRvAMfiy_VjYpE",
@@ -1188,7 +1187,7 @@ The JSON-payload of the SD-JWT that contains both selectively disclosable claims
 }
 ```
 
-The holder can now, for example, release the rest of the components of the `address` claim in the SD-JWT-Release:
+The holder can now, for example, release the rest of the components of the `address` claim in the HS-Disclosures:
 
 
 {#example-simple_structured_merging-sd_jwt_release_payload}
@@ -1196,7 +1195,7 @@ The holder can now, for example, release the rest of the components of the `addr
 {
   "nonce": "XZOUco1u_gEPknxS78sWWg",
   "aud": "https://example.com/verifier",
-  "sd_release": {
+  "sd_disclosure": {
     "given_name": "{\"s\": \"6Ij7tM-a5iVPGboS5tmvVA\", \"v\":
       \"John\"}",
     "family_name": "{\"s\": \"Qg_O64zqAxe412a108iroA\", \"v\":
@@ -1215,7 +1214,7 @@ The holder can now, for example, release the rest of the components of the `addr
 }
 ```
 
-The verifier, after verifying the SD-JWT and applying the SD-JWT-Release, would
+The verifier, after verifying the SD-JWT and applying the HS-Disclosures, would
 process the result according to (#processing_model) and pass the following data
 to the application:
 
@@ -1447,7 +1446,7 @@ A Holder-Selected Disclosures JWT for some of the claims may look as follows:
 {
   "nonce": "XZOUco1u_gEPknxS78sWWg",
   "aud": "https://example.com/verifier",
-  "sd_release": {
+  "sd_disclosure": {
     "verified_claims": {
       "verification": {
         "trust_framework": "{\"s\": \"2GLC42sKQveCfGfryNRN9w\",
@@ -1472,7 +1471,7 @@ A Holder-Selected Disclosures JWT for some of the claims may look as follows:
 }
 ```
 
-After verifying the SD-JWT and SD-JWT-R, the verifier merges the selectively
+After verifying the SD-JWT and HS-Disclosures, the verifier merges the selectively
 disclosed claims into the other data contained in the JWT. The verifier will
 then pass the result on to the application for further processing:
 
@@ -1931,15 +1930,18 @@ The verifier would decode the Holder-Selected Disclosures JWT and SD-JWT as foll
 
    -01
 
-   * clarified relationship between `sd_release` in the Release and SD-JWT
-   * updated examples
-   * clarifications
-   * fix `cnf` structure in examples
-   * generalized hash alg to digest derivation alg which also enables HMAC to calculate digests 
-   * sd_hash_alg renamed to sd_digest_derivation_alg
    * introduce blinded claim names
    * explain why JSON-encoding of values is needed
    * explain merging algorithm ("processing model")
+   * generalized hash alg to digest derivation alg which also enables HMAC to calculate digests
+   * `sd_digest_derivation_alg` renamed to `sd_digest_derivation_alg`
+   * `sd_release` renamed to `sd_disclosure`
+   * Salt/Value Container (SVC) renamed to Issuer-Issued Disclosures (II-Disclosures)
+   * SD-JWT-Release (SD-JWT-R) renamed to Holder-Selected Disclosures (HS-Disclosures)
+   * clarified relationship between `sd_disclosure` in the HS-Disclosures and SD-JWT
+   * updated examples
+   * text clarifications
+   * fix `cnf` structure in examples
 
    -00
 
@@ -1953,8 +1955,7 @@ The verifier would decode the Holder-Selected Disclosures JWT and SD-JWT as foll
    *  Improved Security Considerations
    *  Stressed entropy requirements for salts
    *  Python reference implementation clean-up and refactoring
-   *  hash_alg renamed to sd_hash_alg
-   *  clarified that HMAC is supported
+   *  `hash_alg` renamed to `sd_hash_alg`
 
    -01
 
