@@ -14,13 +14,26 @@ def generate_salt():
         .strip("=")
     )
 
+
 # Deep merge two dicts, with the second dict taking precedence
 def merge(dict_a, dict_b):
     for key in dict_b:
-        if key in dict_a and isinstance(dict_a[key], dict) and isinstance(
-            dict_b[key], dict
+        if (
+            key in dict_a
+            and isinstance(dict_a[key], dict)
+            and isinstance(dict_b[key], dict)
         ):
             merge(dict_a[key], dict_b[key])
         else:
             dict_a[key] = dict_b[key]
     return dict_a
+
+
+# Python preserves the order of keys in dicts. This function sorts dicts by keys, recursively.
+def sort_dict(d):
+    if isinstance(d, dict):
+        return {k: sort_dict(v) for k, v in sorted(d.items())}
+    elif isinstance(d, list):
+        return [sort_dict(v) for v in d]
+    else:
+        return d

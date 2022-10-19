@@ -28,7 +28,7 @@ def print_decoded_repr(value: str, nlines=2):
     print("\n.\n".join(seq), end=_nlines)
 
 
-def get_jwk(jwk_kwargs: dict = {}, no_randomness: bool = False):
+def get_jwk(jwk_kwargs: dict = {}, no_randomness: bool = False, random_seed: int = 0):
     """
     jwk_kwargs = {
         iss_key:dict : {},
@@ -40,7 +40,7 @@ def get_jwk(jwk_kwargs: dict = {}, no_randomness: bool = False):
     returns static or random JWK
     """
     if no_randomness:
-        random.seed(0)
+        random.seed(random_seed)
         ISSUER_KEY = JWK.from_json(json.dumps(jwk_kwargs["iss_key"]))
         HOLDER_KEY = JWK.from_json(json.dumps(jwk_kwargs["holder_key"]))
         logger.warning("Using fixed randomness for demo purposes")

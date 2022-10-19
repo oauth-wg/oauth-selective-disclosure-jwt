@@ -10,7 +10,7 @@ from jwcrypto.jwk import JWK
 from jwcrypto.jws import JWS
 
 from sd_jwt import DEFAULT_SIGNING_ALG, DIGEST_ALG_KEY, SD_II_CLAIMS_KEY, SD_HS_CLAIMS_KEY, SD_DIGESTS_KEY
-from sd_jwt.utils import generate_salt, pad_urlsafe_b64, merge
+from sd_jwt.utils import generate_salt, pad_urlsafe_b64, merge, sort_dict
 from sd_jwt.walk import by_structure as walk_by_structure
 
 
@@ -101,6 +101,11 @@ class SDJWT:
                 self._create_sd_claim_entry,
             ),
         }
+
+        # If any of the claim names are blinded, sort the SD-JWT contents.
+        if self._blinded_claim_names:
+            self.sd_jwt_payload = sort_dict(self.sd_jwt_payload)
+
         self.sd_jwt_payload.update(self._further_claims)
 
     def _hash_raw(self, raw):
@@ -169,6 +174,11 @@ class SDJWT:
             ),
             # "cnf_private": issuer_key.export_private(as_dict=True),
         }
+
+        # If any of the claim names are blinded, sort the SVC contents.
+        if self._blinded_claim_names:
+            self.svc_payload = sort_dict(self.svc_payload)
+
         self.serialized_svc = (
             urlsafe_b64encode(dumps(self.svc_payload).encode())
             .decode("ascii")
