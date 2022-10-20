@@ -964,7 +964,8 @@ each claim, including for claims that carry the same name at different
 places in the structure of the SD-JWT. This can be seen in Example 6 in
 the Appendix, where multiple claims with same name appear below
 `address` and `delivery_address`, but each of them has a different
-blinded claim name.
+blinded claim name. For each credential issued, new random placeholder names
+MUST be chosen by the issuer.
 
 The order of elements in JSON-encoded objects is not relevant to applications,
 but the order may reveal information about the blinded claim name to the
