@@ -929,7 +929,7 @@ The RECOMMENDED minimum length of the randomly-generated portion of the salt is 
 Note that minimum 128 bits would be necessary when SHA-256, HMAC-SHA256, or a function of similar strength is used, but a smaller salt size might achieve similar level of security if a stronger iterative derivation function is used.
 
 The issuer MUST ensure that a new salt value is chosen for each claim,
-including for claims that carry the same name at different places in the
+including when the same claim name occurs at different places in the
 structure of the SD-JWT. This can be seen in Example 3 in the Appendix,
 where multiple claims with the name `type` appear, but each of them has
 a different salt.
