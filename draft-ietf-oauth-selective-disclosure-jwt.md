@@ -420,9 +420,9 @@ required by the application using SD-JWTs.
 
 The property `sd_digests` MUST be used by the issuer to include digests of the salted claim values for any claim that is intended to be selectively disclosable.
 
-The issuer MUST choose a cryptographically random salt value
-for each claim value. The salt value MUST then be encoded as a string. It is
-RECOMMENDED to base64url-encode the salt value.
+The issuer MUST choose a random salt value for each claim. It is
+RECOMMENDED to do so by base64url-encoding a cryptographically secure
+nonce. See (#salt-minlength) for further requirements.
 
 The issuer MUST generate the digests over a JSON literal according to
 [@!RFC8259] that is formed by
@@ -444,10 +444,18 @@ The following is an example for a JSON literal with claim name blinding:
 {"s": "6qMQvRL5haj", "v": "Peter", "n": "given_name"}
 ```
 
-The `sd_digests` claim contains an object where claim names are mapped to the
-respective digests. If a claim name is to be blinded, the digests MUST contain
-the `n` key as described above and the claim name in `sd_digests` MUST be
-replaced by a placeholder value that does not leak information about the claim's original name. The same placeholder value is to be used in the II-Disclosures and HS-Disclosures described below.
+The `sd_digests` claim contains an object where claim names are mapped
+to the respective digests. If a claim name is to be blinded, the digests
+MUST contain the `n` key as described above and the claim name in
+`sd_digests` MUST be replaced by a placeholder name that does not leak
+information about the claim's original name. The same placeholder name
+will be used in the II-Disclosures (`sd_ii_disclosures`) and
+HS-Disclosures (`sd_hs_disclosures`) described below.
+
+To this end, the issuer MUST choose a random placeholder name for each
+claim that is to be blinded. It is RECOMMENDED to do so by
+base64url-encoding a cryptographically secure nonce. See
+(#blinding-claim-names) for further requirements.
 
 #### Flat and Structured `sd_digests` objects
 
@@ -571,21 +579,21 @@ xNzlNaEtHNVFvV19tVHoxMFFUXzZINGM3UGpXRzFmamg4aHBXTm5iUF9wdjZkMXpTd1pm
 YzVmbDZ5VlJMMERWMFYzbEdIS2UyV3FmX2VOR2pCckJMVmtsRFRrOC1zdFhfTVdMY1ItR
 UdtWEFPdjBVQldpdFNfZFhKS0p1LXZYSnl3MTRuSFNHdXhUSUsyaHgxcHR0TWZ0OUNzdn
 FpbVhLZURUVTE0cVFMMWVFN2loY3ciLCAiZSI6ICJBUUFCIn19LCAiaWF0IjogMTUxNjI
-zOTAyMiwgImV4cCI6IDE1MTYyNDcwMjIsICJzZF9oYXNoX2FsZyI6ICJzaGEtMjU2Iiwg
-InNkX2RpZ2VzdHMiOiB7InN1YiI6ICJPTWR3a2sySFB1aUluUHlwV1VXTXhvdDFZMnRTd
-EdzTHVJY0RNaktkWE1VIiwgImdpdmVuX25hbWUiOiAiQWZLS0g0YTBJWmtpOE1GRHl0aE
-ZhRlNfWHF6bi13UnZBTWZpeV9WallwRSIsICJmYW1pbHlfbmFtZSI6ICJlVW1YbXJ5MzJ
-KaUtfNzZ4TWFzYWdrQVFRc21TVmRXNTdBamsxOHJpU0YwIiwgImVtYWlsIjogIi1SY3I0
-ZkR5andsTV9pdGNNeG9RWkNFMVFBRXd5TEpjaWJFcEgxMTRLaUUiLCAicGhvbmVfbnVtY
-mVyIjogIkp2Mm53MEMxd1A1QVN1dFlOQXhyV0VuYURSSXBpRjBlVFVBa1VPcDhGNlkiLC
-AiYWRkcmVzcyI6ICJacmpLcy1SbUVBVmVBWVN6U3c2R1BGck1wY2djdENmYUo2dDlxUWh
-iZko0IiwgImJpcnRoZGF0ZSI6ICJxWFBSUlBkcE5hZWJQOGp0YkVwTy1za0Y0bjd2N0FT
-VGg4b0xnMG1rQWRRIn19.QgoJn9wkjFvM9bAr0hTDHLspuqdA21WzfBRVHkASa2ck4PFD
-3TC9MiZSi3AiRytRbYT4ZzvkH3BSbm6vy68y62gj0A6OYvZ1Z60Wxho14bxZQveJZgw3u
-_lMvYj6GKiUtskypFEHU-Kd-LoDVqEpf6lPQHdpsac__yQ_JL24oCEBlVQRXB-T-6ZNZf
-ID6JafSkNNCYQbI8nXbzIEp1LBFm0fE8eUd4G4yPYOj1SeuR6Gy92T0vAoL5QtpIAHo49
-oAmiSIj6DQNl2cNYs74jhrBIcNZyt4l8H1lV20wS5OS3T0vXaYD13fgm0p4iWD9cVg3HK
-ShUVulEyrSbq94jIKg
+zOTAyMiwgImV4cCI6IDE1MTYyNDcwMjIsICJzZF9kaWdlc3RfZGVyaXZhdGlvbl9hbGci
+OiAic2hhLTI1NiIsICJzZF9kaWdlc3RzIjogeyJzdWIiOiAiT01kd2trMkhQdWlJblB5c
+FdVV014b3QxWTJ0U3RHc0x1SWNETWpLZFhNVSIsICJnaXZlbl9uYW1lIjogIkFmS0tING
+EwSVpraThNRkR5dGhGYUZTX1hxem4td1J2QU1maXlfVmpZcEUiLCAiZmFtaWx5X25hbWU
+iOiAiZVVtWG1yeTMySmlLXzc2eE1hc2Fna0FRUXNtU1ZkVzU3QWprMThyaVNGMCIsICJl
+bWFpbCI6ICItUmNyNGZEeWp3bE1faXRjTXhvUVpDRTFRQUV3eUxKY2liRXBIMTE0S2lFI
+iwgInBob25lX251bWJlciI6ICJKdjJudzBDMXdQNUFTdXRZTkF4cldFbmFEUklwaUYwZV
+RVQWtVT3A4RjZZIiwgImFkZHJlc3MiOiAiWnJqS3MtUm1FQVZlQVlTelN3NkdQRnJNcGN
+nY3RDZmFKNnQ5cVFoYmZKNCIsICJiaXJ0aGRhdGUiOiAicVhQUlJQZHBOYWViUDhqdGJF
+cE8tc2tGNG43djdBU1RoOG9MZzBta0FkUSJ9fQ.cAMV58Un7veKm2tlSgUHsobwYbM7Y9
+fzHrTSEXEj7Coq-tUwpb9t1JG6IirrCI_ogsIHa_0yLhxFWiaWZfcAmHh9_luJvryhjag
+ZdD0z5SAb-2yq4HJQaBsLXliVcFEFt1I8UCJrnpETwQzPohhyB4Gjkupz1pfxtSAxsIEZ
+G8fk5N1yC9rUvWHanzyrQMOmTxiNQHuSvMqyOlaC5Cszlkj58SQhNx88SmB7xAmCgdZsd
+L8MipmOq_U5wmrIna8vzIyJpPuP0FQnARmtRC7CEjs4RKH4UF2Du2pyyXGSfQ2drWMp9j
+HcljwQrmgZ0sNpFnvH8tA_W02ykNO_uoi2BA
 ```
 
 
@@ -914,11 +922,17 @@ salt MUST be created in such a manner that it is cryptographically random,
 long enough and has high entropy that it is not practical for the attacker to
 guess. A new salt MUST be chosen for each claim.
 
-## Minimum length of the salt
+## Minimum length of the salt {#salt-minlength}
 
-The RECOMMENDED length of the randomly-generated portion of the salt is at least 128 bits.
+The RECOMMENDED minimum length of the randomly-generated portion of the salt is 128 bits.
 
 Note that minimum 128 bits would be necessary when SHA-256, HMAC-SHA256, or a function of similar strength is used, but a smaller salt size might achieve similar level of security if a stronger iterative derivation function is used.
+
+The issuer MUST ensure that a new salt value is chosen for each claim,
+including when the same claim name occurs at different places in the
+structure of the SD-JWT. This can be seen in Example 3 in the Appendix,
+where multiple claims with the name `type` appear, but each of them has
+a different salt.
 
 ## Choice of a digest derivation algorithm
 
@@ -933,14 +947,25 @@ revealed fundamental weaknesses and they MUST NOT be used.
 ## Holder Binding {#holder_binding_security}
 TBD
 
-## Blinding Claim Names
+## Blinding Claim Names {#blinding-claim-names}
 
-Issuers that chose to blind claim names MUST ensure not to inadvertently leak
-information about the blinded claim names to verifiers. In particular, issuers
-MUST choose placeholder claim names accordingly.
-
-It is RECOMMENDED to use cryptographically salts with at least 128 bits
+It is RECOMMENDED to use cryptographically random numbers with at least 128 bits
 of entropy as placeholder claim names.
+
+With the approach chosen in this specification, claim names of objects
+that are not themselves selectively disclosable are not blinded.  This
+can be seen in Example 6 in the Appendix, where even in the blinded
+SD-JWT, `address` and `delivery_address` are visible. This limitation
+needs to be taken into account by issuers when creating the structure of
+the SD-JWT.
+
+The issuer MUST ensure that a new random placeholder name is chosen for
+each claim, including when the same claim name occurs at different
+places in the structure of the SD-JWT. This can be seen in Example 6 in
+the Appendix, where multiple claims with same name appear below
+`address` and `delivery_address`, but each of them has a different
+blinded claim name. For each credential issued, new random placeholder names
+MUST be chosen by the issuer.
 
 The order of elements in JSON-encoded objects is not relevant to applications,
 but the order may reveal information about the blinded claim name to the
@@ -1045,10 +1070,12 @@ TBD
 
 # Additional Examples
 
+All of the following examples are non-normative.
+
 ## Example 2a - Structured SD-JWT
 This non-normative example is based on the same claim values as Example 1, but
-this time the issuer decided to create a structured object for the digests. This
-allows for the disclosure of individual members of the address claim separately.
+here the issuer decided to create a structured object for the digests. This
+allows for the disclosure of individual members of the `address` claim separately.
 
 {#example-simple_structured-sd_jwt_payload}
 ```json
@@ -1118,8 +1145,8 @@ The II-Disclosures Object for this SD-JWT is as follows:
 }
 ```
 
-a HS-Disclosures JWT for the SD-JWT above that discloses only `region` and `country` of
-the `address` property:
+An HS-Disclosures JWT for the SD-JWT above that discloses only `region`
+and `country` of the `address` property could look as follows:
 
 {#example-simple_structured-sd_jwt_release_payload}
 ```json
@@ -1151,7 +1178,9 @@ the claims can be disclosed selectively. Note that the processing model
 described in (#processing_model) allows for merging the selectively disclosable
 claims with the regular claims.
 
-The JSON-payload of the SD-JWT that contains both selectively disclosable claims in the `sd_digests` object and not selectively disclosable claims in a top-level JWT claim would look as follows:
+The JSON-payload of the SD-JWT that contains both selectively
+disclosable claims in the `sd_digests` object and not-selectively
+disclosable claims in a top-level JWT claim would look as follows:
 
 {#example-simple_structured_merging-sd_jwt_payload}
 ```json
@@ -1182,10 +1211,9 @@ The JSON-payload of the SD-JWT that contains both selectively disclosable claims
       "street_address":
         "n25N6kth9N0CwjZXHeth1gfovg8_I8fGyzeY0qeLp0k",
       "locality": "gJVL_TKoT_SbA4_sv0klLTkg-YEGzVUkC-6egxegsz0",
-      "region": "zXbstGPuPq2cPJfyD_-HlmqVyFMf03xH-FbeotXxdbo",
-      "country": "pN-5CZ5hbumsPvLKUADm4Ott6gu0E4xj09s4Z51yb8U"
+      "region": "zXbstGPuPq2cPJfyD_-HlmqVyFMf03xH-FbeotXxdbo"
     },
-    "birthdate": "UxsvgkUgPnawP6wY4hmxJ_jqiNNKni62zrX7hQOUsys"
+    "birthdate": "LE_vN7VR3ejbTWb7r_pnvpsNMrvu9i3punsSu0tBEKs"
   },
   "address": {
     "country": "US"
@@ -1258,9 +1286,8 @@ to the application:
 
 ## Example 3 - Complex Structured SD-JWT
 
-In this example, a complex object such as those used for OIDC4IDA (todo reference) is used.
-
-In this example, the Issuer is using a following object as a set of selectively disclosable claims to issue to the Holder:
+In this example, a complex object such as those defined in OIDC4IDA
+[@OIDC.IDA] is used. Here, the Issuer is using the following user data:
 
 {#example-complex-user_claims}
 ```json
@@ -1406,46 +1433,46 @@ xNzlNaEtHNVFvV19tVHoxMFFUXzZINGM3UGpXRzFmamg4aHBXTm5iUF9wdjZkMXpTd1pm
 YzVmbDZ5VlJMMERWMFYzbEdIS2UyV3FmX2VOR2pCckJMVmtsRFRrOC1zdFhfTVdMY1ItR
 UdtWEFPdjBVQldpdFNfZFhKS0p1LXZYSnl3MTRuSFNHdXhUSUsyaHgxcHR0TWZ0OUNzdn
 FpbVhLZURUVTE0cVFMMWVFN2loY3ciLCAiZSI6ICJBUUFCIn19LCAiaWF0IjogMTUxNjI
-zOTAyMiwgImV4cCI6IDE1MTYyNDcwMjIsICJzZF9oYXNoX2FsZyI6ICJzaGEtMjU2Iiwg
-InNkX2RpZ2VzdHMiOiB7InZlcmlmaWVkX2NsYWltcyI6IHsidmVyaWZpY2F0aW9uIjoge
-yJ0cnVzdF9mcmFtZXdvcmsiOiAiVDdpdnhzZnV5LW5BdUVDZWgwdXRQRVg4Y1NsYzdRZm
-xKREUwUnF0V0RNVSIsICJ0aW1lIjogIl9lY0NRb1hTUjh0OWVzdXI2Nlp3V3dDNnU0eEx
-1VkVMam13RmdwUlpxY1EiLCAidmVyaWZpY2F0aW9uX3Byb2Nlc3MiOiAiQm9sd0tLdlU4
-Tjd1VWhqTjJhR0gyVDU0d2pYcGtjT3o1c0M5UGtJUDRzNCIsICJldmlkZW5jZSI6IFt7I
-nR5cGUiOiAiN2pCbFVaa1puMUdmajlteWJxbEpHelRiMno4S2NOTkhVMElWNEI4TXhPTS
-IsICJtZXRob2QiOiAiQlJRZ2NUMDlnZEJxTy1NTFRrYThkNmRsQ3NoWkNVTnBGZ3Nab2V
-0NUktbyIsICJ0aW1lIjogIi1QVkxOU21ia0NITHA4UzdpMDc3WW5IWlYweUU4Z3lLV0xw
-V1YybzhGSkUiLCAiZG9jdW1lbnQiOiB7InR5cGUiOiAidnpESEQtNmhRcVo1bFN3XzdhY
-0sxbEVyeFNoM0U2ZE8wemxVWU0yaER2dyIsICJpc3N1ZXIiOiB7Im5hbWUiOiAidXM5VD
-l1ZlZkU215dFNtanJ0ZE5fVFVJMGFpM19KTk0zcS0wcXgwQ1hrNCIsICJjb3VudHJ5Ijo
-gInVJdEt0UFJaUUJCOXY1VEhIT2RpMDJBTGpEME1IMFU2ampIRExlOTFOblkifSwgIm51
-bWJlciI6ICJRTk5Yd28zc2lPV2RxTml2S0JuRnNENFg4Z1p4VklndTN0djZkZnBaaFVjI
-iwgImRhdGVfb2ZfaXNzdWFuY2UiOiAiQVlXUXBobk9sRkZOOW9TVnZ0QnJfaVlDS1lsdW
-NUaTNsc01yWGViZWJnYyIsICJkYXRlX29mX2V4cGlyeSI6ICJKSWstQVBZSFczcXk2MHJ
-2R3lGc3dEQ1RNZkFiQlhaeXlyWkVuOE5zQmhVIn19XX0sICJjbGFpbXMiOiB7ImdpdmVu
-X25hbWUiOiAiaFp0VDZGWkJ6eEFlQnlEVWtGSlRlcVRDcFRkMmNRS3g2TURQa0d2VkNSR
-SIsICJmYW1pbHlfbmFtZSI6ICI1eUxZR1Z4UFNmWHluaGNvcGJJY3JGZTBfc01HeHZfLT
-ZUSFpBdTRlV25VIiwgIm5hdGlvbmFsaXRpZXMiOiAiQnhDdG5lSGwtUlFvTDI0dFM4QWF
-5d2Z5SHBuWlNxOXRVc05EeXJZRkxZWSIsICJhZGRyZXNzIjogeyJsb2NhbGl0eSI6ICJh
-aDZRSThjZWR1SEtQN3VpSGJ3WjJhMkxZa3hqaWJIYW9XRzNNNngxaXA0IiwgInBvc3Rhb
-F9jb2RlIjogIkF1Y2k1WTBqcnBfM2FoZ19JV19aLW1xQmFFOUJyckl0UjZvN2VraEVHQm
-8iLCAiY291bnRyeSI6ICJSQUtUSmdfbTF0Y295R0kxTzJxZ1FtNEtEMmQyYWJYaFU0SVM
-3YzZSVmpVIiwgInN0cmVldF9hZGRyZXNzIjogImlLa2sxbkpIVEJLVGtFdDJUTk1rWmY2
-OVdZa2lEWWFRTDZaekRabUdPMU0ifX19LCAiYmlydGhfbWlkZGxlX25hbWUiOiAiS3BSa
-kdDbTN1eWt2Q0dGSURyVko3aVRNUWhXYWtCbUNJdEhiQWE2dm5aRSIsICJzYWx1dGF0aW
-9uIjogIklvWTVlMDNlNjVDVXJuYU1jUkRtUENtMFJXUEVGRTRtVmtvQ3NLODZhZ0EiLCA
-ibXNpc2RuIjogIlh1cEppY2s0UDhieGF6MjBreF9WT3diR1UxY2dzbGhBVUc2SUUtdERq
-bXMifSwgInZlcmlmaWVkX2NsYWltcyI6IHsiY2xhaW1zIjogeyJiaXJ0aGRhdGUiOiAiM
-Tk1Ni0wMS0yOCIsICJwbGFjZV9vZl9iaXJ0aCI6IHsiY291bnRyeSI6ICJERSIsICJsb2
-NhbGl0eSI6ICJNdXN0ZXJzdGFkdCJ9fX19.h3d682fP_x2tqYiUR4y2ftsWE8DHOyg0VF
-Y4q9jUAH7yCk7KExyDUBaiyLrFhgFmJHWzkFoggcSTLsvOAM1QB7kgOilwNW8KKtZpSQV
-2Db7WEmXi-Q2QblSNGVNXAcZMobLnl6j4QJJaW-5xLbH-6S1Fe2Vw2hn3rQ2VLzPTUZjz
-CWk3OdLWTI5MlaYr9GleK9ZDErlrCXtfsXRY6M-Smvb8ZvIDs95vGxsJW-6SbasuonTun
-zZGdt2WqXFRtXuaCb-Vw9wPXuytHmH_1vuyROhH8ITzqYbTZ-4H6eS5BLjx8HXWQDk3r-
-M_g9htP9G3ezhDi3uzLQ2dSAbNqOWiXQ
+zOTAyMiwgImV4cCI6IDE1MTYyNDcwMjIsICJzZF9kaWdlc3RfZGVyaXZhdGlvbl9hbGci
+OiAic2hhLTI1NiIsICJzZF9kaWdlc3RzIjogeyJ2ZXJpZmllZF9jbGFpbXMiOiB7InZlc
+mlmaWNhdGlvbiI6IHsidHJ1c3RfZnJhbWV3b3JrIjogIlQ3aXZ4c2Z1eS1uQXVFQ2VoMH
+V0UEVYOGNTbGM3UWZsSkRFMFJxdFdETVUiLCAidGltZSI6ICJfZWNDUW9YU1I4dDllc3V
+yNjZad1d3QzZ1NHhMdVZFTGptd0ZncFJacWNRIiwgInZlcmlmaWNhdGlvbl9wcm9jZXNz
+IjogIkJvbHdLS3ZVOE43dVVoak4yYUdIMlQ1NHdqWHBrY096NXNDOVBrSVA0czQiLCAiZ
+XZpZGVuY2UiOiBbeyJ0eXBlIjogIjdqQmxVWmtabjFHZmo5bXlicWxKR3pUYjJ6OEtjTk
+5IVTBJVjRCOE14T00iLCAibWV0aG9kIjogIkJSUWdjVDA5Z2RCcU8tTUxUa2E4ZDZkbEN
+zaFpDVU5wRmdzWm9ldDVJLW8iLCAidGltZSI6ICItUFZMTlNtYmtDSExwOFM3aTA3N1lu
+SFpWMHlFOGd5S1dMcFdWMm84RkpFIiwgImRvY3VtZW50IjogeyJ0eXBlIjogInZ6REhEL
+TZoUXFaNWxTd183YWNLMWxFcnhTaDNFNmRPMHpsVVlNMmhEdnciLCAiaXNzdWVyIjogey
+JuYW1lIjogInVzOVQ5dWZWZFNteXRTbWpydGROX1RVSTBhaTNfSk5NM3EtMHF4MENYazQ
+iLCAiY291bnRyeSI6ICJ1SXRLdFBSWlFCQjl2NVRISE9kaTAyQUxqRDBNSDBVNmpqSERM
+ZTkxTm5ZIn0sICJudW1iZXIiOiAiUU5OWHdvM3NpT1dkcU5pdktCbkZzRDRYOGdaeFZJZ
+3UzdHY2ZGZwWmhVYyIsICJkYXRlX29mX2lzc3VhbmNlIjogIkFZV1FwaG5PbEZGTjlvU1
+Z2dEJyX2lZQ0tZbHVjVGkzbHNNclhlYmViZ2MiLCAiZGF0ZV9vZl9leHBpcnkiOiAiSkl
+rLUFQWUhXM3F5NjBydkd5RnN3RENUTWZBYkJYWnl5clpFbjhOc0JoVSJ9fV19LCAiY2xh
+aW1zIjogeyJnaXZlbl9uYW1lIjogImhadFQ2RlpCenhBZUJ5RFVrRkpUZXFUQ3BUZDJjU
+Ut4Nk1EUGtHdlZDUkUiLCAiZmFtaWx5X25hbWUiOiAiNXlMWUdWeFBTZlh5bmhjb3BiSW
+NyRmUwX3NNR3h2Xy02VEhaQXU0ZVduVSIsICJuYXRpb25hbGl0aWVzIjogIkJ4Q3RuZUh
+sLVJRb0wyNHRTOEFheXdmeUhwblpTcTl0VXNORHlyWUZMWVkiLCAiYWRkcmVzcyI6IHsi
+bG9jYWxpdHkiOiAiYWg2UUk4Y2VkdUhLUDd1aUhid1oyYTJMWWt4amliSGFvV0czTTZ4M
+WlwNCIsICJwb3N0YWxfY29kZSI6ICJBdWNpNVkwanJwXzNhaGdfSVdfWi1tcUJhRTlCcn
+JJdFI2bzdla2hFR0JvIiwgImNvdW50cnkiOiAiUkFLVEpnX20xdGNveUdJMU8ycWdRbTR
+LRDJkMmFiWGhVNElTN2M2UlZqVSIsICJzdHJlZXRfYWRkcmVzcyI6ICJpS2trMW5KSFRC
+S1RrRXQyVE5Na1pmNjlXWWtpRFlhUUw2WnpEWm1HTzFNIn19fSwgImJpcnRoX21pZGRsZ
+V9uYW1lIjogIktwUmpHQ20zdXlrdkNHRklEclZKN2lUTVFoV2FrQm1DSXRIYkFhNnZuWk
+UiLCAic2FsdXRhdGlvbiI6ICJJb1k1ZTAzZTY1Q1VybmFNY1JEbVBDbTBSV1BFRkU0bVZ
+rb0NzSzg2YWdBIiwgIm1zaXNkbiI6ICJYdXBKaWNrNFA4YnhhejIwa3hfVk93YkdVMWNn
+c2xoQVVHNklFLXREam1zIn0sICJ2ZXJpZmllZF9jbGFpbXMiOiB7ImNsYWltcyI6IHsiY
+mlydGhkYXRlIjogIjE5NTYtMDEtMjgiLCAicGxhY2Vfb2ZfYmlydGgiOiB7ImNvdW50cn
+kiOiAiREUiLCAibG9jYWxpdHkiOiAiTXVzdGVyc3RhZHQifX19fQ.jB5q1Ogo1so3jKPi
+1xeYgBtqrH7VLChOilTp9kw500Vp0sEZzMeLu4Qd7ZDYf6_DqzDuTusHUAlY8pfS56vXX
+EZfv9vbWBucdiBp2FUr7izo5TSRpndBc9OH8CKvML6OouZYrDwrCmMcdJcPlf5Zvzr82l
+c4q_Rzz-ER49UiAU0RP0BOMutMvM58lHVBzj_NbnXUFMaLZcYGp9Gp7KVnygojkFgJxrC
+JMZh_uwDaCUuu81jBnsDeewtN7yhA-IEWZJO6BqLVmVkk1knYzf1lXEwrEzsgeRF2F8_q
+ZEpnwkYKcDIxj43Hev1a05e-vZYBqSU44GyjYEmUMo8kN-_eEw
 ```
 
-A HS-Disclosures JWT for some of the claims may look as follows:
+An HS-Disclosures JWT for some of the claims may look as follows:
 
 {#example-complex-sd_jwt_release_payload}
 ```json
@@ -1633,9 +1660,11 @@ encoded as JSON and signed as a JWS compliant to [@VC_DATA].
   }
 }
 ```
-# Blinding Claim Names
+## Blinding Claim Names
 
-## Example 5: Some Blinded Claims
+The following examples show the use of blinded claim names.
+
+### Example 5: Some Blinded Claims
 
 The following shows the user information used in this example, included a claim named `secret_club_membership_no`:
 
@@ -1659,7 +1688,7 @@ The following shows the user information used in this example, included a claim 
 }
 ```
 
-Hiding just this claim, the following SD-JWT payload would result:
+Hiding just the claim `secret_club_membership_no`, the following SD-JWT payload would result:
 
 {#example-simple_structured_some_blinded-sd_jwt_payload}
 ```json
@@ -1779,9 +1808,12 @@ The verifier would decode the data as follows:
   "secret_club_membership_no": "23"
 }
 ```
-## Example 6: All Claim Names Blinded
+### Example 6: All Claim Names Blinded
 
-In this example, all claim names are blinded. The following user data is used:
+In this example, all claim names are blinded. The user data includes a
+non-standard `delivery_address` claim to show that even though the same
+claim name appears at different places within the structure, different
+salts and blinded claim names are used for them:
 
 {#example-simple_structured_all_blinded-user_claims}
 ```json
@@ -1793,6 +1825,12 @@ In this example, all claim names are blinded. The following user data is used:
   "phone_number": "+1-202-555-0101",
   "secret_club_membership_no": "23",
   "address": {
+    "street_address": "123 Main St",
+    "locality": "Anytown",
+    "region": "Anystate",
+    "country": "US"
+  },
+  "delivery_address": {
     "street_address": "123 Main St",
     "locality": "Anytown",
     "region": "Anystate",
@@ -1847,8 +1885,18 @@ The resulting SD-JWT payload:
       "DsmtKNgpV4dAHpjrcaosAw":
         "-0XEQHSNzMu244QaOpLmPD3JkdZN8SrqbEQ4VDufu9A"
     },
-    "j7ADdb0UVb0Li0ciPcP0ew":
-      "X_v1hrkQIH_0LBM8TncMMTBzYN9UJc8FmJRda7yfY8g"
+    "delivery_address": {
+      "j7ADdb0UVb0Li0ciPcP0ew":
+        "mZNJT4TGOf8CxvON6boNM4q5JmOToJyg93yfnP7-fpc",
+      "atSmFACYMbJVKD05o3JgtQ":
+        "XToTx7QsB7rtaO0OO60hJ9ZolyzcmuXrr8wwBGJKQR8",
+      "chBCsyhyh-J86I-awQDiCQ":
+        "XZiMd58TainQwxm2CUWtH0nhnNs1CYgvEzCKsRGuQE4",
+      "ovoV1rkh_ANm861qUAA2Aw":
+        "2O1cfKdHLv75PYQySKbezwOtSbYthspwz_WIbRNjhFk"
+    },
+    "R7D6Lhl52uxloBQFRulzzA":
+      "vMUNkAiWMOKbyS_yDXOy2pU2vXWgd-FfVKq-wVztVc0"
   }
 }
 ```
@@ -1946,6 +1994,7 @@ The verifier would decode the HS-Disclosures JWT and SD-JWT as follows:
    * `sd_disclosure` in II-Disclosures renamed to `sd_ii_disclosures`
    * `sd_disclosure` in HS-Disclosures renamed to `sd_hs_disclosures`
    * clarified relationship between `sd_hs_disclosure` and SD-JWT
+   * clarified security requirements for blinded claim names
    * updated examples
    * text clarifications
    * fix `cnf` structure in examples

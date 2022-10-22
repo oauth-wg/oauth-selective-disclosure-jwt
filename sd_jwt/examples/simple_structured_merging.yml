@@ -10,7 +10,6 @@ user_claims:
         "street_address": "123 Main St",
         "locality": "Anytown",
         "region": "Anystate",
-        "country": "US",
       },
     "birthdate": "1940-01-01",
   }
