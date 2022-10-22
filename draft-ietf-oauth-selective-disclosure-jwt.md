@@ -960,7 +960,7 @@ needs to be taken into account by issuers when creating the structure of
 the SD-JWT.
 
 The issuer MUST ensure that a new random placeholder name is chosen for
-each claim, including for claims that carry the same name at different
+each claim, including when the same claim name occurs at different
 places in the structure of the SD-JWT. This can be seen in Example 6 in
 the Appendix, where multiple claims with same name appear below
 `address` and `delivery_address`, but each of them has a different
