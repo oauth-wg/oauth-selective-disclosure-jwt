@@ -606,20 +606,20 @@ YzVmbDZ5VlJMMERWMFYzbEdIS2UyV3FmX2VOR2pCckJMVmtsRFRrOC1zdFhfTVdMY1ItR
 UdtWEFPdjBVQldpdFNfZFhKS0p1LXZYSnl3MTRuSFNHdXhUSUsyaHgxcHR0TWZ0OUNzdn
 FpbVhLZURUVTE0cVFMMWVFN2loY3ciLCAiZSI6ICJBUUFCIn19LCAiaWF0IjogMTUxNjI
 zOTAyMiwgImV4cCI6IDE1MTYyNDcwMjIsICJzZF9kaWdlc3RfZGVyaXZhdGlvbl9hbGci
-OiAic2hhLTI1NiIsICJzZF9kaWdlc3RzIjogeyJzdWIiOiAiT01kd2trMkhQdWlJblB5c
-FdVV014b3QxWTJ0U3RHc0x1SWNETWpLZFhNVSIsICJnaXZlbl9uYW1lIjogIkFmS0tING
-EwSVpraThNRkR5dGhGYUZTX1hxem4td1J2QU1maXlfVmpZcEUiLCAiZmFtaWx5X25hbWU
-iOiAiZVVtWG1yeTMySmlLXzc2eE1hc2Fna0FRUXNtU1ZkVzU3QWprMThyaVNGMCIsICJl
-bWFpbCI6ICItUmNyNGZEeWp3bE1faXRjTXhvUVpDRTFRQUV3eUxKY2liRXBIMTE0S2lFI
-iwgInBob25lX251bWJlciI6ICJKdjJudzBDMXdQNUFTdXRZTkF4cldFbmFEUklwaUYwZV
-RVQWtVT3A4RjZZIiwgImFkZHJlc3MiOiAiWnJqS3MtUm1FQVZlQVlTelN3NkdQRnJNcGN
-nY3RDZmFKNnQ5cVFoYmZKNCIsICJiaXJ0aGRhdGUiOiAicVhQUlJQZHBOYWViUDhqdGJF
-cE8tc2tGNG43djdBU1RoOG9MZzBta0FkUSJ9fQ.cAMV58Un7veKm2tlSgUHsobwYbM7Y9
-fzHrTSEXEj7Coq-tUwpb9t1JG6IirrCI_ogsIHa_0yLhxFWiaWZfcAmHh9_luJvryhjag
-ZdD0z5SAb-2yq4HJQaBsLXliVcFEFt1I8UCJrnpETwQzPohhyB4Gjkupz1pfxtSAxsIEZ
-G8fk5N1yC9rUvWHanzyrQMOmTxiNQHuSvMqyOlaC5Cszlkj58SQhNx88SmB7xAmCgdZsd
-L8MipmOq_U5wmrIna8vzIyJpPuP0FQnARmtRC7CEjs4RKH4UF2Du2pyyXGSfQ2drWMp9j
-HcljwQrmgZ0sNpFnvH8tA_W02ykNO_uoi2BA
+OiAic2hhLTI1NiIsICJzZF9kaWdlc3RzIjogeyJzdWIiOiAiMkVEWFhaMUpjRTZhVGNNN
+zBmWm9wRm5lWUFTOS1oWTNsYWxhb0x1V0QxcyIsICJnaXZlbl9uYW1lIjogInBDNTZMV3
+BUZ2VjMThMbDFrcHMza29YYXBudzZTT2lJMGQxYmEzNHQtbVkiLCAiZmFtaWx5X25hbWU
+iOiAiRXlTUWMzMTZMbjNaR0pYd2lvRUxXU3l5bG1fNk9YVjZyY0w2THlQYjdvSSIsICJl
+bWFpbCI6ICJxSHY2Z0dhcTRvRm1JWHlLaDlabEZqUTVyT0NsUy1kWEhpUE1aeWwyRmFVI
+iwgInBob25lX251bWJlciI6ICJqaHJfUHNhdVQ0eHNZWlNfT3hCVzh5XzFNTFVMT292S3
+NlUnZGOUNFMFRNIiwgImFkZHJlc3MiOiAiZVFYZ21vd3FrVF9PUmtlZG9xZVcwd0JVeTR
+2emtXRzFWaHZPamgzdGxfbyIsICJiaXJ0aGRhdGUiOiAicWdEeEZ1TnBmODNNa0tlNEdD
+YWlMdUxfWFpkek80cFlEN2xRS2J2NHpvcyJ9fQ.0w8PQ_tg2K6Q82XhXn3-Nmi7uGeXkO
+FFMSfp_8iMKRRlfg-HXXdoZWv8UECv1B2PIJITjH2RAz_egYj-dLkPopnJ-0vIDKjKhvM
+CIIo0FEnTV3qQct-8s6NifR2exU1TuyF66Z9Jekk1V3M4BnKxCc6-mEf7_d1K-EfQ34dI
+-6XJFh05s1_sE7ePFvLRGtj4tHHQlwWGm7wQJqPRYtA_F0N10jIlyFbw4B6T59TpI8ZjH
+gucCxF9p1IUb-RYb6P1dYF4sVdQT258jAJVCAPz62JoRn-cPPwV-QbpAKD7npkk7pTxkY
+g0T9_iyvMcq_RdXGqqANkJn8qxEffwp_OsgA
 ```
 
 
@@ -1789,11 +1789,10 @@ II-Disclosures Object sent alongside this SD-JWT as a JWT-VC is same as in Examp
   "sd_digests": {
     "vc": {
       "credentialSubject": {
-        "email": "ET2A1JQLF85ZpBulh6UFstGrSfR4B3KM-bjQVllhxqY",
-        "phone_number": "SJnciB2DIRVA5cXBrdKoH6n45788mZyUn2rnv74
-          uMVU",
-        "address": "0FldqLfGnERPPVDC17od9xb4w3iRJTEQbW_Yk9AmnDw",
-        "birthdate": "-L0kMgIbLXe3OEkKTUGwz_QKhjehDeofKGwoPrxLuo4"
+        "email": "-Rcr4fDyjwlM_itcMxoQZCE1QAEwyLJcibEpH114KiE",
+        "phone_number": "Jv2nw0C1wP5ASutYNAxrWEnaDRIpiF0eTUAkUOp8F6Y",
+        "address": "ZrjKs-RmEAVeAYSzSw6GPFrMpcgctCfaJ6t9qQhbfJ4",
+        "birthdate": "qXPRRPdpNaebP8jtbEpO-skF4n7v7ASTh8oLg0mkAdQ"
       }
     }
   }
@@ -1835,13 +1834,20 @@ encoded as JSON and signed as a JWS compliant to [@VC_DATA].
     "verifiableCredential": ["eyJhb...npyXw"]
   },
   "sd_hs_disclosures": {
-    "email": "[\"eI8ZWm9QnKPpNPeNenHdhQ\", \"johndoe@example.com\"]",
-    "phone_number": "[\"Qg_O64zqAxe412a108iroA\",
-      \"+1-202-555-0101\"]",
-    "address": "[\"AJx-095VPrpTtN4QMOqROA\", {\"street_address\":
-      \"123 Main St\", \"locality\": \"Anytown\", \"region\":
-      \"Anystate\", \"country\": \"US\"}]",
-    "birthdate": "[\"Pc33JM2LchcU_lHggv_ufQ\", \"1940-01-01\"]"
+    "vc": {
+      "credentialSubject": {
+        "email": "{\"s\": \"Pc33JM2LchcU_lHggv_ufQ\", \"v\":
+        \"johndoe@example.com\"}",
+        "phone_number": "{\"s\": \"lklxF5jMYlGTPUovMNIvCA\", \"v\":
+        \"+1-202-555-0101\"}",
+        "address": "{\"s\": \"5bPs1IquZNa0hkaFzzzZNw\", \"v\":
+        {\"street_address\": \"123 Main St\", \"locality\":
+        \"Anytown\", \"region\": \"Anystate\", \"country\": \"US\"}}",
+        "birthdate": "{\"s\": \"y1sVU5wdfJahVdgwPgS7RQ\", \"v\":
+        \"1940-01-01\"}"
+      }
+    }
+
   }
 }
 ```
@@ -2070,18 +2076,8 @@ The resulting SD-JWT payload:
       "oVemP2NxvQ6lnWpdKSrRig":
         "cugLX_QPBOc4WBBshNt8v3Guo105CZdxfw6zxbpfwhI"
     },
-    "delivery_address": {
-      "j7ADdb0UVb0Li0ciPcP0ew":
-        "mZNJT4TGOf8CxvON6boNM4q5JmOToJyg93yfnP7-fpc",
-      "atSmFACYMbJVKD05o3JgtQ":
-        "XToTx7QsB7rtaO0OO60hJ9ZolyzcmuXrr8wwBGJKQR8",
-      "chBCsyhyh-J86I-awQDiCQ":
-        "XZiMd58TainQwxm2CUWtH0nhnNs1CYgvEzCKsRGuQE4",
-      "ovoV1rkh_ANm861qUAA2Aw":
-        "2O1cfKdHLv75PYQySKbezwOtSbYthspwz_WIbRNjhFk"
-    },
-    "R7D6Lhl52uxloBQFRulzzA":
-      "vMUNkAiWMOKbyS_yDXOy2pU2vXWgd-FfVKq-wVztVc0"
+    "j7ADdb0UVb0Li0ciPcP0ew":
+      "X_v1hrkQIH_0LBM8TncMMTBzYN9UJc8FmJRda7yfY8g"
   }
 }
 ```
