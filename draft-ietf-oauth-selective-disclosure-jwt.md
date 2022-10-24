@@ -733,7 +733,7 @@ CJ5MXNWVTV3ZGZKYWhWZGd3UGdTN1JRXCIsIFwidlwiOiBcIjE5NDAtMDEtMDFcIn0ifX
 
 (Line breaks for presentation only.)
 
-## Format of an Holder-Selected Disclosures JWT
+## Format of a Holder-Selected Disclosures JWT
 
 The HS-Disclosures JWT contains the Disclosures of the claims the Holder
 has consented to disclose to the Verifier. This enables the Verifier to
