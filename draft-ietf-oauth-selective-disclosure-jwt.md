@@ -95,6 +95,20 @@ This specification aims to be easy to implement and to leverage
 established and widely used data formats and cryptographic algorithms
 wherever possible.
 
+## Feature Summary
+
+ * This specification defines 
+   - a format enabling selective disclosure for JWTs,
+   - formats for associated data that enables disclosing claims, and
+   - formats for the combined transport of SD-JWTs and the associated data.
+ * The specification supports selectively disclosable claims in flat data structures as well as more complex, nested data structures.
+  * This specification enables combining selectively disclosable claims with
+   clear-text claims that are always disclosed.
+  * Optionally, this specification allows to also hide ("blind") the claim names, not only the claim values.
+  * When claim names are blinded, this specification enables combining claims with 
+     blinded and unblinded names in the same SD-JWT.
+
+
 ## Conventions and Terminology
 
 The key words "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL
@@ -2151,6 +2165,7 @@ The Verifier would decode the HS-Disclosures JWT and SD-JWT as follows:
    * updated examples
    * text clarifications
    * fix `cnf` structure in examples
+   * added feature summary
 
    -00
 
