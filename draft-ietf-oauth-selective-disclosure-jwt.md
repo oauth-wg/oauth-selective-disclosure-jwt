@@ -1703,7 +1703,7 @@ Hiding just this claim, the SD-JWT payload shown in the following would result. 
 }
 ```
 
-In the II-Disclosures Object, it can be seen that the blinded claim's original name is `secret_club_membership_no`. Note again that the claims are sorted alphabetically as described in (#blinding-claim-names).
+In the II-Disclosures Object, it can be seen that the blinded claim's original name is `secret_club_membership_no`. Note that the claims are sorted alphabetically as described in (#blinding-claim-names).
 
 
 {#example-simple_structured_some_blinded-iid_payload}
