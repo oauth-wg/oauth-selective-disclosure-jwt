@@ -1734,22 +1734,24 @@ then pass the result on to the application for further processing:
 }
 ```
 
-## Example 4 - W3C Verifiable Credentials Data Model
+## Example 4 - W3C Verifiable Credentials Data Model (work in progress)
 
 This example illustrates how the artifacts defined in this specification can be
 represented using W3C Verifiable Credentials Data Model as defined in
 [@VC_DATA].
 
-SD-JWT is equivalent to an Issuer-signed W3C Verifiable Credential (VC). II-Disclosures Object is sent alongside a VC.
+SD-JWT is equivalent to an Issuer-signed W3C Verifiable Credential (W3C VC). II-Disclosures Object is sent alongside a VC.
 
-HS-Disclosures JWT is equivalent to a Holder-signed W3C Verifiable Presentation (VP).
+HS-Disclosures JWT is equivalent to a Holder-signed W3C Verifiable Presentation (W3C VP).
 
-HS-Disclosures JWT as a VP contains a `verifiableCredential` claim inside a `vp` claim that is a string array of an SD-JWT as a VC using JWT compact serialization.
+Holder Binding is applied and HS-Disclosures JWT is signed using a raw public key passed in a `cnf` Claim in a W3C VC (SD-JWT).
+
+HS-Disclosures JWT as a W3C VP contains a `verifiableCredential` claim inside a `vp` claim that is a string array of an SD-JWT as a W3C VC using JWT compact serialization.
 
 Below is a non-normative example of an SD-JWT represented as a verifiable credential
 encoded as JSON and signed as JWS compliant to [@VC_DATA].
 
-II-Disclosures Object sent alongside this SD-JWT as a JWT-VC is same as in Example 1.
+II-Disclosures Object is the same as in Example 1.
 
 ```json
 {
@@ -1774,8 +1776,7 @@ II-Disclosures Object sent alongside this SD-JWT as a JWT-VC is same as in Examp
   },
   "vc": {
     "@context": [
-      "https://www.w3.org/2018/credentials/v1",
-      "https://www.w3.org/2018/credentials/examples/v1"
+      "https://www.w3.org/2018/credentials/v1"
     ],
     "type": [
       "VerifiableCredential",
