@@ -2011,6 +2011,7 @@ The verifier would decode the HS-Disclosures JWT and SD-JWT as follows:
    * updated examples
    * text clarifications
    * fix `cnf` structure in examples
+   * added feature summary
 
    -00
 
