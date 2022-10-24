@@ -1296,7 +1296,11 @@ TBD
 
 All of the following examples are non-normative.
 
-## Example 2a - Structured SD-JWT
+## Structured SD-JWT
+
+The following examples show the variations of a structured SD-JWT.
+
+### Example 2a - Simple Structured SD-JWT
 This non-normative example is based on the same claim values as Example 1, but
 here the Issuer decided to create a structured object for the digests. This
 allows for the disclosure of individual members of the `address` claim separately.
@@ -1395,7 +1399,7 @@ and `country` of the `address` property could look as follows:
 }
 ```
 
-## Example 2b - Mixing SD and Non-SD Claims
+### Example 2b - Mixing SD and Non-SD Claims in a Structured SD-JWT
 
 In this example, a variant of Example 2a, the Issuer decided to apply selective
 disclosure only to some of the claims. In particular, the `country` component of
@@ -1510,7 +1514,7 @@ to the application:
 ```
 
 
-## Example 3 - Complex Structured SD-JWT
+### Example 3 - Complex Structured SD-JWT
 
 In this example, a complex object such as those defined in OIDC4IDA
 [@OIDC.IDA] is used. Here, the Issuer is using the following user data:
@@ -1896,6 +1900,7 @@ encoded as JSON and signed as a JWS compliant to [@VC_DATA].
   }
 }
 ```
+
 ## Blinding Claim Names
 
 The following examples show the use of blinded claim names.
