@@ -87,6 +87,19 @@ This document also describes holder binding, or the concept of binding SD-JWT to
 key material controlled by the subject of SD-JWT. Holder binding is optional to
 implement.
 
+## Feature Summary
+
+ * This specification defines a format enabling selective disclosure for
+   JWTs, called SD-JWT, plus formats for associated data for disclosing
+   claims, as well as formats for the combined transport of SD-JWTs and
+   the associated data.
+ * The format allows combining selectively disclosable claims and
+   clear-text claims that are always disclosed.
+ * The format supports flat data structures as well as more complex,
+   nested data structures.
+ * Optionally, claim names can be hidden (or "blinded").
+ * Claims with
+   blinded and unblinded names can be combined in the same SD-JWT.
 
 ## Conventions and Terminology
 
