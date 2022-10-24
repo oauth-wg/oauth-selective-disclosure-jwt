@@ -2232,11 +2232,15 @@ The Verifier would decode the HS-Disclosures JWT and SD-JWT as follows:
 
    [[ To be removed from the final specification ]]
 
+   -02
+   
+   * reformatted
+
    -01
 
-   * introduce blinded claim names
-   * explain why JSON-encoding of values is needed
-   * explain merging algorithm ("processing model")
+   * introduced blinded claim names
+   * explained why JSON-encoding of values is needed
+   * explained merging algorithm ("processing model")
    * generalized hash alg to digest derivation alg which also enables HMAC to calculate digests
    * `sd_digest_derivation_alg` renamed to `sd_digest_derivation_alg`
    * Salt/Value Container (SVC) renamed to Issuer-Issued Disclosures (II-Disclosures)
@@ -2249,7 +2253,7 @@ The Verifier would decode the HS-Disclosures JWT and SD-JWT as follows:
    * improved description of Holder Binding security considerations - especially around the usage of "alg=none".
    * updated examples
    * text clarifications
-   * fix `cnf` structure in examples
+   * fixed `cnf` structure in examples
    * added feature summary
 
    -00
