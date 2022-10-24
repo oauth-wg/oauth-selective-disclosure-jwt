@@ -2147,7 +2147,7 @@ The Verifier would decode the HS-Disclosures JWT and SD-JWT as follows:
    * clarified relationship between `sd_hs_disclosure` and SD-JWT
    * clarified combined formats for issuance and presentation
    * clarified security requirements for blinded claim names
-   * improved description of Holder Binding security considerations
+   * improved description of Holder Binding security considerations - especially around the usage of "alg=none".
    * updated examples
    * text clarifications
    * fix `cnf` structure in examples
