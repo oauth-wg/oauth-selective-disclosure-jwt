@@ -1187,7 +1187,8 @@ Giuseppe De Marco,
 Kushal Das,
 Mike Jones,
 Nat Sakimura,
-Pieter Kasselman, and
+Pieter Kasselman, 
+Shawn Butterfield, and
 Torsten Lodderstedt
 for their contributions (some of which substantial) to this draft and to the initial set of implementations.
 
