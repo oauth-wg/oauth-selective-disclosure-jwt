@@ -53,7 +53,7 @@ can also read all of the claims.
 One of the common use cases of a signed JWT is representing a user's identity
 created by an issuer. As long as the signed JWT is one-time use, it typically
 only contains those claims the user has consented to disclose to a specific
-verifier. However, when a signed JWT is intended to be multi-use, it needs to
+Verifier. However, when a signed JWT is intended to be multi-use, it needs to
 contain the superset of all claims the user (the "holder" of the signed JWT) might want to disclose to verifiers
 at some point. The ability to selectively disclose a subset of these claims
 depending on the verifier becomes crucial to ensure minimum disclosure and
