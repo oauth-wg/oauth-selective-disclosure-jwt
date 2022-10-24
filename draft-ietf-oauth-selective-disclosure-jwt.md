@@ -497,12 +497,13 @@ digests are contained in places deeper in the structure. It is at the Issuer's
 discretion whether to use a 'flat' or 'structured' `sd_digests` SD-JWT object,
 and how to structure it such that it is suitable for the use case.
 
-Example 1 below is a non-normative example of an SD-JWT using a 'flat'
-`sd_digests` object and Example 2a in the appendix shows a non-normative example
+Example 1 in (#example-1) is a non-normative example of an SD-JWT using a 'flat'
+`sd_digests` object and Example 2a in (#example-simple-structured-sd-jwt) shows a non-normative example
 of an SD-JWT using a 'structured' `sd_digests` object. The difference between
 the examples is how the `address` claim is disclosed.
 
-Appendix 2 shows a more complex example using claims from OpenID Connect for Identity Assurance [@OIDC.IDA].
+(#example-complex-structured-sd-jwt) shows a more complex example using claims
+from OpenID Connect for Identity Assurance [@OIDC.IDA].
 
 ### Digest Derivation Function Claim
 
@@ -533,9 +534,9 @@ Holder and Issuer MAY use pre-established key material.
 
 Note: Examples in this document use `cnf` Claim defined in [@RFC7800] to include raw public key by value in SD-JWT.
 
-## Example 1: SD-JWT
+## Example 1: SD-JWT {#example-1}
 
-This example and Example 2a in the appendix use the following object as the set
+This example and Example 2a in (#example-simple-structured-sd-jwt) use the following object as the set
 of claims that the Issuer is issuing:
 
 {#example-simple-user_claims}
@@ -557,7 +558,7 @@ of claims that the Issuer is issuing:
 ```
 
 The following non-normative example shows the payload of an SD-JWT. The Issuer
-is using a flat structure, i.e., all of the claims the `address` claim can only
+is using a flat structure, i.e., all of the claims in the `address` claim can only
 be disclosed in full.
 
 {#example-simple-sd_jwt_payload}
@@ -806,7 +807,7 @@ The following is a non-normative example of the contents of a HS-Disclosures JWT
 }
 ```
 
-For each claim, a JSON literal that decodes to an object with the and the claim
+For each disclosed claim, a JSON literal that decodes to an object with the digest and the claim
 value (plus optionally the claim name) is contained in the `sd_hs_disclosures` object.
 
 Again, the HS-Disclosures JWT follows the same structure as the `sd_digests` in the SD-JWT.
@@ -935,7 +936,7 @@ trusting/using any of the contents of an SD-JWT:
     5. Check that the claim `sd_digests` is present in the SD-JWT.
     6. Check that the `sd_digest_derivation_alg` claim is present and its value is understood and the digest derivation algorithm is deemed secure.
  5. Validate the HS-Disclosures JWT:
-    1. If Holder Binding is required, validate the signature over the SD-JWT using the same steps as for the SD-JWT plus the following steps:
+    1. If Holder Binding is required, validate the signature over the HS-Disclosures JWT using the same steps as for the SD-JWT plus the following steps:
       1. Determine that the public key for the private key that used to sign the HS-Disclosures JWT is bound to the SD-JWT, i.e., the SD-JWT either contains a reference to the public key or contains the public key itself.
       2. Determine that the HS-Disclosures JWT is bound to the current transaction and was created for this Verifier (replay protection). This is usually achieved by a `nonce` and `aud` field within the HS-Disclosures JWT.
     2. For each claim in `sd_hs_disclosures` in the HS-Disclosures JWT:
@@ -1300,7 +1301,7 @@ All of the following examples are non-normative.
 
 The following examples show the variations of a structured SD-JWT.
 
-### Example 2a - Simple Structured SD-JWT
+### Example 2a - Simple Structured SD-JWT {#example-simple-structured-sd-jwt}
 This non-normative example is based on the same claim values as Example 1, but
 here the Issuer decided to create a structured object for the digests. This
 allows for the disclosure of individual members of the `address` claim separately.
@@ -1399,7 +1400,7 @@ and `country` of the `address` property could look as follows:
 }
 ```
 
-### Example 2b - Mixing SD and Non-SD Claims in a Structured SD-JWT
+### Example 2b - Mixing SD and Non-SD Claims in a Structured SD-JWT {#example-mixed-structured-sd-jwt}
 
 In this example, a variant of Example 2a, the Issuer decided to apply selective
 disclosure only to some of the claims. In particular, the `country` component of
@@ -1514,7 +1515,7 @@ to the application:
 ```
 
 
-### Example 3 - Complex Structured SD-JWT
+### Example 3 - Complex Structured SD-JWT {#example-complex-structured-sd-jwt}
 
 In this example, a complex object such as those defined in OIDC4IDA
 [@OIDC.IDA] is used. Here, the Issuer is using the following user data:
