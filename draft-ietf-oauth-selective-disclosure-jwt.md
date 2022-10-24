@@ -89,7 +89,8 @@ cases as well.
 
 This document also describes an optional mechanism for Holder Binding,
 or the concept of binding an SD-JWT to key material controlled by the
-Holder.
+Holder. Strenght of the Holder Binding is conditional upon the trusts
+in protection of the private key of the key matetial an SD-JWT is bound to.
 
 This specification aims to be easy to implement and to leverage
 established and widely used data formats and cryptographic algorithms
