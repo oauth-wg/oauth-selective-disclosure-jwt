@@ -77,7 +77,7 @@ Disclosures (II-Disclosures) object.
 The Holder decides which claims to disclose to a Verifier. This
 specification defines a format for conveying the selected subset of the
 II-Disclosures to the Verifier. This subset is called the
-Holder-Selected Disclosures and is transported in a JWT, the
+Holder-Selected Disclosures (HS-Disclosures) and is transported in a JWT, the
 HS-Disclosures JWT, for presentation alongside the SD-JWT. The Verifier
 can verify that all disclosed claim values were part of the original,
 Issuer-signed SD-JWT. The Verifier will not, however, learn any claim
