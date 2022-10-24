@@ -91,9 +91,9 @@ This document also describes an optional mechanism for Holder Binding,
 or the concept of binding an SD-JWT to key material controlled by the
 Holder.
 
-This specification aims to be easy to imeplement and to leverage
+This specification aims to be easy to implement and to leverage
 established and widely used data formats and cryptographic algorithms
-where possible.
+wherever possible.
 
 ## Conventions and Terminology
 
@@ -1014,22 +1014,23 @@ revealed fundamental weaknesses and they MUST NOT be used.
 ## Holder Binding {#holder_binding_security}
 Verifiers MUST decide whether Holder Binding is required for a
 particular use case or not before verifying a credential. This decision
-can be informed by business requirements, the use case, the type of
+can be informed by various factors including, but not limited to the following:
+business requirements, the use case, the type of
 binding between a Holder and its credential that is required for a use
 case, the sensitivity of the use case, the expected properties of a
 credential, the type and contents of other credentials expected to be
 presented at the same time, etc.
 
-This can be showcased on two use cases based on a mobile driver's license:
+This can be showcased based on two scenarios for a mobile driver's license use case for SD-JWT:
 
-**Use case A:** For the verification of the driver's license at a
-traffic stop, Holder Binding may be necessary to ensure that the person
+**Scenario A:** For the verification of the driver's license when
+stopped by a police officer for exceeding a speed limit, Holder Binding may be necessary to ensure that the person
 driving the car and presenting the license is the actual Holder of the
 license. The Verifier (e.g., the software used by the police officer)
 will ensure that the HS-Disclosures JWT is signed by the Holder's private
 key.
 
-**Use case B:** A rental car agency may want to ensure, for insurance
+**Scenario B:** A rental car agency may want to ensure, for insurance
 purposes, that all drivers named on the rental contract own a
 government-issued driver's license. The signer of the rental contract
 can present the mobile driver's license of all named drivers. In this
@@ -2145,7 +2146,6 @@ The Verifier would decode the HS-Disclosures JWT and SD-JWT as follows:
    * `sd_disclosure` in HS-Disclosures renamed to `sd_hs_disclosures`
    * clarified relationship between `sd_hs_disclosure` and SD-JWT
    * clarified combined formats for issuance and presentation
-   * improved description of holder binding security considerations
    * clarified security requirements for blinded claim names
    * improved description of Holder Binding security considerations
    * updated examples
