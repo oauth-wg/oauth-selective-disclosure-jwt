@@ -810,7 +810,12 @@ H-ZtWw
 
 ## Combined Format for Presentation
 
-The SD-JWT and the HS-Disclosures JWT can be combined into one document using period character `.` as a separator. This means that the resulting string consists of six dot-separated parts as follows, where the last part may be empty:
+The SD-JWT and the HS-Disclosures JWT can be combined into one document
+using period character `.` as a separator. This means that the resulting string consists of
+six dot-separated parts as described below.
+
+ The last part (HSD Signature) may be empty when Holder Binding is not used and 
+ HS-Disclosures JWT is not signed.
 
 ```
 <SD-JWT Header>
