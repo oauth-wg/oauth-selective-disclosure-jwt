@@ -89,17 +89,18 @@ implement.
 
 ## Feature Summary
 
- * This specification defines a format enabling selective disclosure for
-   JWTs, called SD-JWT, plus formats for associated data for disclosing
-   claims, as well as formats for the combined transport of SD-JWTs and
-   the associated data.
- * The format allows combining selectively disclosable claims and
+ * This specification defines 
+   - a format enabling selective disclosure for JWTs
+   - formats for associated data that enables disclosing claims
+   - formats for the combined transport of SD-JWTs and the associated data
+ * The specification supports selectively disclosable claims to be expressed 
+    using flat data structures as well as more complex, nested data structures.
+  * This specification enables combining selectively disclosable claims with
    clear-text claims that are always disclosed.
- * The format supports flat data structures as well as more complex,
-   nested data structures.
- * Optionally, claim names can be hidden (or "blinded").
- * Claims with
-   blinded and unblinded names can be combined in the same SD-JWT.
+  * Optionally, this specification allows to also hide ("blind") the claim names, not only the claim values.
+  * When claim names are blinded, this specification enables combining claims with 
+     blinded and unblinded names in the same SD-JWT.
+
 
 ## Conventions and Terminology
 
