@@ -990,7 +990,7 @@ distinguish what claim name has been hidden just by observing the order
 of blinded and unblinded claim names. It is therefore RECOMMENDED, if at
 least one claim name is blinded, to either 
 
- * randomize the order of all claims,
+ * randomize the order of all claims (blinded/unblinded, selectively disclosed/not-selectively disclosed),
  * or sort the claims by the property name (i.e., the placeholder claim
    name for blinded claim names and the plaintext claim name for
    unblinded claim names). The precise order does not matter. For
