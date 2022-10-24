@@ -758,7 +758,13 @@ Section 7.1 of [@!RFC7515].
 
 If Holder Binding is desired, the HS-Disclosures JWT is signed by the Holder. If no
 Holder Binding is to be used, the `none` algorithm is used, i.e., the document
-is not signed. As described in (#verifier-verification), a verified MUST NOT accept an HS-Disclosures JWT with `alg=none` or without a signature unless Holder Binding is not required. See also (#holder_binding_security).
+is not signed. 
+
+Whether to check the signature of the HS-Disclosures JWT is up to the Verifier's policy,
+based on the set of trust requirements such as trust frameworks it belongs to. 
+As described in (#verifier-verification), the Verifier MUST NOT accept HS-Disclosures 
+JWTs using "none" algorithm, when the Verifier's policy requires a signed 
+HS-Disclosures JWT. See also (#holder_binding_security).
 
 ## Example: Holder-Selected Disclosures JWT for Example 1
 
