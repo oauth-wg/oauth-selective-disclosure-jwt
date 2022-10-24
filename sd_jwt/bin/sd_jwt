@@ -109,7 +109,21 @@ jwk_kwargs = {
     "key_size": settings.DEFAULT_KEY_SIZE,
     "kty": settings.DEFAULT_KTY,
 }
-_JWKS = get_jwk(jwk_kwargs, _args.no_randomness)
+
+# If "no randomness" is requested, we hash the file name of the example
+# file to use it as the random seed. This ensures that the same example
+# file always generates the same output, but the output between
+# different example files is different.
+if _args.no_randomness:
+    import hashlib
+
+    hash_object = hashlib.sha256(_args.example.read_bytes())
+    # Extract the hash as integer
+    seed = int(hash_object.hexdigest(), 16)
+else:
+    seed = None
+
+_JWKS = get_jwk(jwk_kwargs, _args.no_randomness, seed)
 ISSUER_KEY = _JWKS["ISSUER_KEY"]
 HOLDER_KEY = _JWKS["HOLDER_KEY"]
 ISSUER_PUBLIC_KEY = _JWKS["ISSUER_PUBLIC_KEY"]
