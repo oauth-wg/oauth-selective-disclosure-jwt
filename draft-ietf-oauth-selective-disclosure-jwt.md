@@ -97,7 +97,7 @@ wherever possible.
 
 ## Feature Summary
 
- * This specification defines 
+ * This specification defines
    - a format enabling selective disclosure for JWTs,
    - formats for associated data that enables disclosing claims, and
    - formats for the combined transport of SD-JWTs and the associated data.
@@ -105,7 +105,7 @@ wherever possible.
   * This specification enables combining selectively disclosable claims with
    clear-text claims that are always disclosed.
   * Optionally, this specification allows to also hide ("blind") the claim names, not only the claim values.
-  * When claim names are blinded, this specification enables combining claims with 
+  * When claim names are blinded, this specification enables combining claims with
      blinded and unblinded names in the same SD-JWT.
 
 
@@ -262,7 +262,8 @@ Note: How the public key is included in SD-JWT is out of scope of this document.
 With Holder Binding, the `HOLDER-SELECTED-DISCLOSURES-JWT` is signed by the Holder using its private key. It therefore looks as follows:
 
 ```
-HOLDER-SELECTED-DISCLOSURES = HOLDER-SELECTED-DISCLOSURES-DOC | SIG(HOLDER-SELECTED-DISCLOSURES-DOC, HOLDER-PRIV-KEY)
+HOLDER-SELECTED-DISCLOSURES = HOLDER-SELECTED-DISCLOSURES-DOC |
+    SIG(HOLDER-SELECTED-DISCLOSURES-DOC, HOLDER-PRIV-KEY)
 ```
 
 ### Optional Claim Name Blinding
@@ -270,7 +271,8 @@ HOLDER-SELECTED-DISCLOSURES = HOLDER-SELECTED-DISCLOSURES-DOC | SIG(HOLDER-SELEC
 If Claim Name Blinding is used, `SD-CLAIMS` is created as follows:
 ```
 SD-CLAIMS = (
-    CLAIM-NAME-PLACEHOLDER: DIGEST-DERIVATION(SALT, CLAIM-VALUE, CLAIM-NAME)
+    CLAIM-NAME-PLACEHOLDER: DIGEST-DERIVATION(SALT,
+        CLAIM-VALUE, CLAIM-NAME)
 )*
 ```
 
@@ -281,7 +283,8 @@ randomly).
 The contents of `SD-DISCLOSURES` are modified as follows:
 ```
 SD-DISCLOSURES = (
-    CLAIM-NAME-PLACEHOLDER: (DISCLOSED-SALT, DISCLOSED-VALUE, DISCLOSED-CLAIM-NAME)
+    CLAIM-NAME-PLACEHOLDER: (DISCLOSED-SALT,
+        DISCLOSED-VALUE, DISCLOSED-CLAIM-NAME)
 )
 ```
 Note that blinded and unblinded claim names can be mixed in `SD-CLAIMS` and accordingly in `SD-DISCLOSURES`.
@@ -562,12 +565,12 @@ be disclosed in full.
   "cnf": {
     "jwk": {
       "kty": "RSA",
-      "n": "pm4bOHBg-oYhAyPWzR56AWX3rUIXp11_ICDkGgS6W3ZWLts-hzwI3x656
-        59kg4hVo9dbGoCJE3ZGF_eaetE30UhBUEgpGwrDrQiJ9zqprmcFfr3qvvkGjt
-        th8Zgl1eM2bJcOwE7PCBHWTKWYs152R7g6Jg2OVph-a8rq-q79MhKG5QoW_mT
-        z10QT_6H4c7PjWG1fjh8hpWNnbP_pv6d1zSwZfc5fl6yVRL0DV0V3lGHKe2Wq
-        f_eNGjBrBLVklDTk8-stX_MWLcR-EGmXAOv0UBWitS_dXJKJu-vXJyw14nHSG
-        uxTIK2hx1pttMft9CsvqimXKeDTU14qQL1eE7ihcw",
+      "n": "pm4bOHBg-oYhAyPWzR56AWX3rUIXp11_ICDkGgS6W3ZWLts-hzwI3x65
+        659kg4hVo9dbGoCJE3ZGF_eaetE30UhBUEgpGwrDrQiJ9zqprmcFfr3qvvkG
+        jtth8Zgl1eM2bJcOwE7PCBHWTKWYs152R7g6Jg2OVph-a8rq-q79MhKG5QoW
+        _mTz10QT_6H4c7PjWG1fjh8hpWNnbP_pv6d1zSwZfc5fl6yVRL0DV0V3lGHK
+        e2Wqf_eNGjBrBLVklDTk8-stX_MWLcR-EGmXAOv0UBWitS_dXJKJu-vXJyw1
+        4nHSGuxTIK2hx1pttMft9CsvqimXKeDTU14qQL1eE7ihcw",
       "e": "AQAB"
     }
   },
@@ -595,31 +598,31 @@ The SD-JWT is then signed by the Issuer to create a JWT like the following:
 
 {#example-simple-serialized_sd_jwt}
 ```
-eyJhbGciOiAiUlMyNTYiLCAia2lkIjogImNBRUlVcUowY21MekQxa3pHemhlaUJhZzBZU
-kF6VmRsZnhOMjgwTmdIYUEifQ.eyJpc3MiOiAiaHR0cHM6Ly9leGFtcGxlLmNvbS9pc3N
-1ZXIiLCAiY25mIjogeyJqd2siOiB7Imt0eSI6ICJSU0EiLCAibiI6ICJwbTRiT0hCZy1v
-WWhBeVBXelI1NkFXWDNyVUlYcDExX0lDRGtHZ1M2VzNaV0x0cy1oendJM3g2NTY1OWtnN
-GhWbzlkYkdvQ0pFM1pHRl9lYWV0RTMwVWhCVUVncEd3ckRyUWlKOXpxcHJtY0ZmcjNxdn
-ZrR2p0dGg4WmdsMWVNMmJKY093RTdQQ0JIV1RLV1lzMTUyUjdnNkpnMk9WcGgtYThycS1
-xNzlNaEtHNVFvV19tVHoxMFFUXzZINGM3UGpXRzFmamg4aHBXTm5iUF9wdjZkMXpTd1pm
-YzVmbDZ5VlJMMERWMFYzbEdIS2UyV3FmX2VOR2pCckJMVmtsRFRrOC1zdFhfTVdMY1ItR
-UdtWEFPdjBVQldpdFNfZFhKS0p1LXZYSnl3MTRuSFNHdXhUSUsyaHgxcHR0TWZ0OUNzdn
-FpbVhLZURUVTE0cVFMMWVFN2loY3ciLCAiZSI6ICJBUUFCIn19LCAiaWF0IjogMTUxNjI
-zOTAyMiwgImV4cCI6IDE1MTYyNDcwMjIsICJzZF9kaWdlc3RfZGVyaXZhdGlvbl9hbGci
-OiAic2hhLTI1NiIsICJzZF9kaWdlc3RzIjogeyJzdWIiOiAiMkVEWFhaMUpjRTZhVGNNN
-zBmWm9wRm5lWUFTOS1oWTNsYWxhb0x1V0QxcyIsICJnaXZlbl9uYW1lIjogInBDNTZMV3
-BUZ2VjMThMbDFrcHMza29YYXBudzZTT2lJMGQxYmEzNHQtbVkiLCAiZmFtaWx5X25hbWU
-iOiAiRXlTUWMzMTZMbjNaR0pYd2lvRUxXU3l5bG1fNk9YVjZyY0w2THlQYjdvSSIsICJl
-bWFpbCI6ICJxSHY2Z0dhcTRvRm1JWHlLaDlabEZqUTVyT0NsUy1kWEhpUE1aeWwyRmFVI
-iwgInBob25lX251bWJlciI6ICJqaHJfUHNhdVQ0eHNZWlNfT3hCVzh5XzFNTFVMT292S3
-NlUnZGOUNFMFRNIiwgImFkZHJlc3MiOiAiZVFYZ21vd3FrVF9PUmtlZG9xZVcwd0JVeTR
-2emtXRzFWaHZPamgzdGxfbyIsICJiaXJ0aGRhdGUiOiAicWdEeEZ1TnBmODNNa0tlNEdD
-YWlMdUxfWFpkek80cFlEN2xRS2J2NHpvcyJ9fQ.0w8PQ_tg2K6Q82XhXn3-Nmi7uGeXkO
-FFMSfp_8iMKRRlfg-HXXdoZWv8UECv1B2PIJITjH2RAz_egYj-dLkPopnJ-0vIDKjKhvM
-CIIo0FEnTV3qQct-8s6NifR2exU1TuyF66Z9Jekk1V3M4BnKxCc6-mEf7_d1K-EfQ34dI
--6XJFh05s1_sE7ePFvLRGtj4tHHQlwWGm7wQJqPRYtA_F0N10jIlyFbw4B6T59TpI8ZjH
-gucCxF9p1IUb-RYb6P1dYF4sVdQT258jAJVCAPz62JoRn-cPPwV-QbpAKD7npkk7pTxkY
-g0T9_iyvMcq_RdXGqqANkJn8qxEffwp_OsgA
+eyJhbGciOiAiUlMyNTYiLCAia2lkIjogImNBRUlVcUowY21MekQxa3pHemhlaUJhZzBZ
+UkF6VmRsZnhOMjgwTmdIYUEifQ.eyJpc3MiOiAiaHR0cHM6Ly9leGFtcGxlLmNvbS9pc
+3N1ZXIiLCAiY25mIjogeyJqd2siOiB7Imt0eSI6ICJSU0EiLCAibiI6ICJwbTRiT0hCZ
+y1vWWhBeVBXelI1NkFXWDNyVUlYcDExX0lDRGtHZ1M2VzNaV0x0cy1oendJM3g2NTY1O
+WtnNGhWbzlkYkdvQ0pFM1pHRl9lYWV0RTMwVWhCVUVncEd3ckRyUWlKOXpxcHJtY0Zmc
+jNxdnZrR2p0dGg4WmdsMWVNMmJKY093RTdQQ0JIV1RLV1lzMTUyUjdnNkpnMk9WcGgtY
+ThycS1xNzlNaEtHNVFvV19tVHoxMFFUXzZINGM3UGpXRzFmamg4aHBXTm5iUF9wdjZkM
+XpTd1pmYzVmbDZ5VlJMMERWMFYzbEdIS2UyV3FmX2VOR2pCckJMVmtsRFRrOC1zdFhfT
+VdMY1ItRUdtWEFPdjBVQldpdFNfZFhKS0p1LXZYSnl3MTRuSFNHdXhUSUsyaHgxcHR0T
+WZ0OUNzdnFpbVhLZURUVTE0cVFMMWVFN2loY3ciLCAiZSI6ICJBUUFCIn19LCAiaWF0I
+jogMTUxNjIzOTAyMiwgImV4cCI6IDE1MTYyNDcwMjIsICJzZF9kaWdlc3RfZGVyaXZhd
+Glvbl9hbGciOiAic2hhLTI1NiIsICJzZF9kaWdlc3RzIjogeyJzdWIiOiAiMkVEWFhaM
+UpjRTZhVGNNNzBmWm9wRm5lWUFTOS1oWTNsYWxhb0x1V0QxcyIsICJnaXZlbl9uYW1lI
+jogInBDNTZMV3BUZ2VjMThMbDFrcHMza29YYXBudzZTT2lJMGQxYmEzNHQtbVkiLCAiZ
+mFtaWx5X25hbWUiOiAiRXlTUWMzMTZMbjNaR0pYd2lvRUxXU3l5bG1fNk9YVjZyY0w2T
+HlQYjdvSSIsICJlbWFpbCI6ICJxSHY2Z0dhcTRvRm1JWHlLaDlabEZqUTVyT0NsUy1kW
+EhpUE1aeWwyRmFVIiwgInBob25lX251bWJlciI6ICJqaHJfUHNhdVQ0eHNZWlNfT3hCV
+zh5XzFNTFVMT292S3NlUnZGOUNFMFRNIiwgImFkZHJlc3MiOiAiZVFYZ21vd3FrVF9PU
+mtlZG9xZVcwd0JVeTR2emtXRzFWaHZPamgzdGxfbyIsICJiaXJ0aGRhdGUiOiAicWdEe
+EZ1TnBmODNNa0tlNEdDYWlMdUxfWFpkek80cFlEN2xRS2J2NHpvcyJ9fQ.0w8PQ_tg2K
+6Q82XhXn3-Nmi7uGeXkOFFMSfp_8iMKRRlfg-HXXdoZWv8UECv1B2PIJITjH2RAz_egY
+j-dLkPopnJ-0vIDKjKhvMCIIo0FEnTV3qQct-8s6NifR2exU1TuyF66Z9Jekk1V3M4Bn
+KxCc6-mEf7_d1K-EfQ34dI-6XJFh05s1_sE7ePFvLRGtj4tHHQlwWGm7wQJqPRYtA_F0
+N10jIlyFbw4B6T59TpI8ZjHgucCxF9p1IUb-RYb6P1dYF4sVdQT258jAJVCAPz62JoRn
+-cPPwV-QbpAKD7npkk7pTxkYg0T9_iyvMcq_RdXGqqANkJn8qxEffwp_OsgA
 ```
 
 
@@ -772,12 +775,12 @@ Section 7.1 of [@!RFC7515].
 
 If Holder Binding is desired, the HS-Disclosures JWT is signed by the Holder. If no
 Holder Binding is to be used, the `none` algorithm is used, i.e., the document
-is not signed. 
+is not signed.
 
 Whether to check the signature of the HS-Disclosures JWT is up to the Verifier's policy,
-based on the set of trust requirements such as trust frameworks it belongs to. 
-As described in (#verifier-verification), the Verifier MUST NOT accept HS-Disclosures 
-JWTs using "none" algorithm, when the Verifier's policy requires a signed 
+based on the set of trust requirements such as trust frameworks it belongs to.
+As described in (#verifier-verification), the Verifier MUST NOT accept HS-Disclosures
+JWTs using "none" algorithm, when the Verifier's policy requires a signed
 HS-Disclosures JWT. See also (#holder_binding_security).
 
 ## Example: Holder-Selected Disclosures JWT for Example 1
@@ -834,7 +837,7 @@ The SD-JWT and the HS-Disclosures JWT can be combined into one document
 using period character `.` as a separator. This means that the resulting string consists of
 six dot-separated parts as described below.
 
- The last part (HSD Signature) may be empty when Holder Binding is not used and 
+ The last part (HSD Signature) may be empty when Holder Binding is not used and
  HS-Disclosures JWT is not signed.
 
 ```
@@ -916,7 +919,7 @@ Verifiers MUST go through (at least) the following steps before
 trusting/using any of the contents of an SD-JWT:
 
  1. Determine if Holder Binding is to be checked according to the Verifier's policy
-    for the use case at hand. This decision MUST NOT be based on whether 
+    for the use case at hand. This decision MUST NOT be based on whether
     the HS-Disclosures
     JWT is signed or not. Refer to (#holder_binding_security) for
     details.
@@ -1072,7 +1075,7 @@ presentation, as described in (#verifier-verification).
 ## Blinding Claim Names {#blinding-claim-names}
 
 Issuers that chose to blind claim names MUST ensure not to inadvertently leak
-information about the blinded claim names to Verifiers. 
+information about the blinded claim names to Verifiers.
 
 It is RECOMMENDED to use cryptographically random numbers with at least 128 bits
 of entropy as placeholder claim names.
@@ -1124,14 +1127,14 @@ programming language):
 A verifier, even if it does not learn any blinded claim names, can
 distinguish what claim name has been hidden just by observing the order
 of blinded and unblinded claim names. It is therefore RECOMMENDED, if at
-least one claim name is blinded, to either 
+least one claim name is blinded, to either
 
  * randomize the order of all claims (blinded/unblinded, selectively disclosed/not-selectively disclosed),
  * or sort the claims by the property name (i.e., the placeholder claim
    name for blinded claim names and the plaintext claim name for
    unblinded claim names). The precise order does not matter. For
    example, ordering by unicode code points or by lexicographic order is
-   sufficient to hide the original order of claims. 
+   sufficient to hide the original order of claims.
 
 This applies to Issuers (SD-JWT and II-Disclosures document) and
 Holders (HS-Disclosures JWT).
@@ -1187,7 +1190,7 @@ Giuseppe De Marco,
 Kushal Das,
 Mike Jones,
 Nat Sakimura,
-Pieter Kasselman, 
+Pieter Kasselman,
 Shawn Butterfield, and
 Torsten Lodderstedt
 for their contributions (some of which substantial) to this draft and to the initial set of implementations.
@@ -1303,12 +1306,12 @@ allows for the disclosure of individual members of the `address` claim separatel
   "cnf": {
     "jwk": {
       "kty": "RSA",
-      "n": "pm4bOHBg-oYhAyPWzR56AWX3rUIXp11_ICDkGgS6W3ZWLts-hzwI3x656
-        59kg4hVo9dbGoCJE3ZGF_eaetE30UhBUEgpGwrDrQiJ9zqprmcFfr3qvvkGjt
-        th8Zgl1eM2bJcOwE7PCBHWTKWYs152R7g6Jg2OVph-a8rq-q79MhKG5QoW_mT
-        z10QT_6H4c7PjWG1fjh8hpWNnbP_pv6d1zSwZfc5fl6yVRL0DV0V3lGHKe2Wq
-        f_eNGjBrBLVklDTk8-stX_MWLcR-EGmXAOv0UBWitS_dXJKJu-vXJyw14nHSG
-        uxTIK2hx1pttMft9CsvqimXKeDTU14qQL1eE7ihcw",
+      "n": "pm4bOHBg-oYhAyPWzR56AWX3rUIXp11_ICDkGgS6W3ZWLts-hzwI3x65
+        659kg4hVo9dbGoCJE3ZGF_eaetE30UhBUEgpGwrDrQiJ9zqprmcFfr3qvvkG
+        jtth8Zgl1eM2bJcOwE7PCBHWTKWYs152R7g6Jg2OVph-a8rq-q79MhKG5QoW
+        _mTz10QT_6H4c7PjWG1fjh8hpWNnbP_pv6d1zSwZfc5fl6yVRL0DV0V3lGHK
+        e2Wqf_eNGjBrBLVklDTk8-stX_MWLcR-EGmXAOv0UBWitS_dXJKJu-vXJyw1
+        4nHSGuxTIK2hx1pttMft9CsvqimXKeDTU14qQL1eE7ihcw",
       "e": "AQAB"
     }
   },
@@ -1356,7 +1359,8 @@ The II-Disclosures Object for this SD-JWT is as follows:
         \"Anytown\"}",
       "region": "{\"s\": \"YTPF0rUHYtvldv1Df63WXQ\", \"v\":
         \"Anystate\"}",
-      "country": "{\"s\": \"mVZ4hCTnVdpu_GN-Rb9wNw\", \"v\": \"US\"}"
+      "country": "{\"s\": \"mVZ4hCTnVdpu_GN-Rb9wNw\", \"v\":
+        \"US\"}"
     },
     "birthdate": "{\"s\": \"T6-5A3xYsyy2MnwnUWbW3w\", \"v\":
       \"1940-01-01\"}"
@@ -1382,7 +1386,8 @@ and `country` of the `address` property could look as follows:
     "address": {
       "region": "{\"s\": \"YTPF0rUHYtvldv1Df63WXQ\", \"v\":
         \"Anystate\"}",
-      "country": "{\"s\": \"mVZ4hCTnVdpu_GN-Rb9wNw\", \"v\": \"US\"}"
+      "country": "{\"s\": \"mVZ4hCTnVdpu_GN-Rb9wNw\", \"v\":
+        \"US\"}"
     }
   }
 }
@@ -1408,12 +1413,12 @@ disclosable claims in a top-level JWT claim would look as follows:
   "cnf": {
     "jwk": {
       "kty": "RSA",
-      "n": "pm4bOHBg-oYhAyPWzR56AWX3rUIXp11_ICDkGgS6W3ZWLts-hzwI3x656
-        59kg4hVo9dbGoCJE3ZGF_eaetE30UhBUEgpGwrDrQiJ9zqprmcFfr3qvvkGjt
-        th8Zgl1eM2bJcOwE7PCBHWTKWYs152R7g6Jg2OVph-a8rq-q79MhKG5QoW_mT
-        z10QT_6H4c7PjWG1fjh8hpWNnbP_pv6d1zSwZfc5fl6yVRL0DV0V3lGHKe2Wq
-        f_eNGjBrBLVklDTk8-stX_MWLcR-EGmXAOv0UBWitS_dXJKJu-vXJyw14nHSG
-        uxTIK2hx1pttMft9CsvqimXKeDTU14qQL1eE7ihcw",
+      "n": "pm4bOHBg-oYhAyPWzR56AWX3rUIXp11_ICDkGgS6W3ZWLts-hzwI3x65
+        659kg4hVo9dbGoCJE3ZGF_eaetE30UhBUEgpGwrDrQiJ9zqprmcFfr3qvvkG
+        jtth8Zgl1eM2bJcOwE7PCBHWTKWYs152R7g6Jg2OVph-a8rq-q79MhKG5QoW
+        _mTz10QT_6H4c7PjWG1fjh8hpWNnbP_pv6d1zSwZfc5fl6yVRL0DV0V3lGHK
+        e2Wqf_eNGjBrBLVklDTk8-stX_MWLcR-EGmXAOv0UBWitS_dXJKJu-vXJyw1
+        4nHSGuxTIK2hx1pttMft9CsvqimXKeDTU14qQL1eE7ihcw",
       "e": "AQAB"
     }
   },
@@ -1488,12 +1493,12 @@ to the application:
   "cnf": {
     "jwk": {
       "kty": "RSA",
-      "n": "pm4bOHBg-oYhAyPWzR56AWX3rUIXp11_ICDkGgS6W3ZWLts-hzwI3x656
-        59kg4hVo9dbGoCJE3ZGF_eaetE30UhBUEgpGwrDrQiJ9zqprmcFfr3qvvkGjt
-        th8Zgl1eM2bJcOwE7PCBHWTKWYs152R7g6Jg2OVph-a8rq-q79MhKG5QoW_mT
-        z10QT_6H4c7PjWG1fjh8hpWNnbP_pv6d1zSwZfc5fl6yVRL0DV0V3lGHKe2Wq
-        f_eNGjBrBLVklDTk8-stX_MWLcR-EGmXAOv0UBWitS_dXJKJu-vXJyw14nHSG
-        uxTIK2hx1pttMft9CsvqimXKeDTU14qQL1eE7ihcw",
+      "n": "pm4bOHBg-oYhAyPWzR56AWX3rUIXp11_ICDkGgS6W3ZWLts-hzwI3x65
+        659kg4hVo9dbGoCJE3ZGF_eaetE30UhBUEgpGwrDrQiJ9zqprmcFfr3qvvkG
+        jtth8Zgl1eM2bJcOwE7PCBHWTKWYs152R7g6Jg2OVph-a8rq-q79MhKG5QoW
+        _mTz10QT_6H4c7PjWG1fjh8hpWNnbP_pv6d1zSwZfc5fl6yVRL0DV0V3lGHK
+        e2Wqf_eNGjBrBLVklDTk8-stX_MWLcR-EGmXAOv0UBWitS_dXJKJu-vXJyw1
+        4nHSGuxTIK2hx1pttMft9CsvqimXKeDTU14qQL1eE7ihcw",
       "e": "AQAB"
     }
   },
@@ -1563,12 +1568,12 @@ The Issuer in this example further adds the two claims `birthdate` and `place_of
   "cnf": {
     "jwk": {
       "kty": "RSA",
-      "n": "pm4bOHBg-oYhAyPWzR56AWX3rUIXp11_ICDkGgS6W3ZWLts-hzwI3x656
-        59kg4hVo9dbGoCJE3ZGF_eaetE30UhBUEgpGwrDrQiJ9zqprmcFfr3qvvkGjt
-        th8Zgl1eM2bJcOwE7PCBHWTKWYs152R7g6Jg2OVph-a8rq-q79MhKG5QoW_mT
-        z10QT_6H4c7PjWG1fjh8hpWNnbP_pv6d1zSwZfc5fl6yVRL0DV0V3lGHKe2Wq
-        f_eNGjBrBLVklDTk8-stX_MWLcR-EGmXAOv0UBWitS_dXJKJu-vXJyw14nHSG
-        uxTIK2hx1pttMft9CsvqimXKeDTU14qQL1eE7ihcw",
+      "n": "pm4bOHBg-oYhAyPWzR56AWX3rUIXp11_ICDkGgS6W3ZWLts-hzwI3x65
+        659kg4hVo9dbGoCJE3ZGF_eaetE30UhBUEgpGwrDrQiJ9zqprmcFfr3qvvkG
+        jtth8Zgl1eM2bJcOwE7PCBHWTKWYs152R7g6Jg2OVph-a8rq-q79MhKG5QoW
+        _mTz10QT_6H4c7PjWG1fjh8hpWNnbP_pv6d1zSwZfc5fl6yVRL0DV0V3lGHK
+        e2Wqf_eNGjBrBLVklDTk8-stX_MWLcR-EGmXAOv0UBWitS_dXJKJu-vXJyw1
+        4nHSGuxTIK2hx1pttMft9CsvqimXKeDTU14qQL1eE7ihcw",
       "e": "AQAB"
     }
   },
@@ -1608,7 +1613,8 @@ The Issuer in this example further adds the two claims `birthdate` and `place_of
       },
       "claims": {
         "given_name": "sx4wGd6-ONAsiq7dN16GHeg4RAyOshRBdoXWE_E751w",
-        "family_name": "Ldbea0SibAQDiZJlBigptwWXZ9QA8a0dKK7jipSn2K8",
+        "family_name":
+          "Ldbea0SibAQDiZJlBigptwWXZ9QA8a0dKK7jipSn2K8",
         "nationalities":
           "tr8SXHdYS0rzAio_IhFp2lzlta4kDzKCM7hUxItCU2U",
         "address": {
@@ -1642,53 +1648,54 @@ The SD-JWT is then signed by the Issuer to create a document like the following:
 
 {#example-complex-serialized_sd_jwt}
 ```
-eyJhbGciOiAiUlMyNTYiLCAia2lkIjogImNBRUlVcUowY21MekQxa3pHemhlaUJhZzBZU
-kF6VmRsZnhOMjgwTmdIYUEifQ.eyJpc3MiOiAiaHR0cHM6Ly9leGFtcGxlLmNvbS9pc3N
-1ZXIiLCAiY25mIjogeyJqd2siOiB7Imt0eSI6ICJSU0EiLCAibiI6ICJwbTRiT0hCZy1v
-WWhBeVBXelI1NkFXWDNyVUlYcDExX0lDRGtHZ1M2VzNaV0x0cy1oendJM3g2NTY1OWtnN
-GhWbzlkYkdvQ0pFM1pHRl9lYWV0RTMwVWhCVUVncEd3ckRyUWlKOXpxcHJtY0ZmcjNxdn
-ZrR2p0dGg4WmdsMWVNMmJKY093RTdQQ0JIV1RLV1lzMTUyUjdnNkpnMk9WcGgtYThycS1
-xNzlNaEtHNVFvV19tVHoxMFFUXzZINGM3UGpXRzFmamg4aHBXTm5iUF9wdjZkMXpTd1pm
-YzVmbDZ5VlJMMERWMFYzbEdIS2UyV3FmX2VOR2pCckJMVmtsRFRrOC1zdFhfTVdMY1ItR
-UdtWEFPdjBVQldpdFNfZFhKS0p1LXZYSnl3MTRuSFNHdXhUSUsyaHgxcHR0TWZ0OUNzdn
-FpbVhLZURUVTE0cVFMMWVFN2loY3ciLCAiZSI6ICJBUUFCIn19LCAiaWF0IjogMTUxNjI
-zOTAyMiwgImV4cCI6IDE1MTYyNDcwMjIsICJzZF9kaWdlc3RfZGVyaXZhdGlvbl9hbGci
-OiAic2hhLTI1NiIsICJzZF9kaWdlc3RzIjogeyJ2ZXJpZmllZF9jbGFpbXMiOiB7InZlc
-mlmaWNhdGlvbiI6IHsidHJ1c3RfZnJhbWV3b3JrIjogImZrSVctNGlVWmdUZUllRGdfWl
-82b0ZIVS13eVd3YXpTcHVhaVFiYzVRS3ciLCAidGltZSI6ICJWUkYtR19MZlR6U2FZa0x
-lbFZ6cnk4MmwxelF4R3drMVJmR2NuVVVXdWtjIiwgInZlcmlmaWNhdGlvbl9wcm9jZXNz
-IjogIjlPcERtbDRlUkJNNlVzZmszTUYyaTdrQmwxeEdHa3pQcTVOY3MxbXZiUG8iLCAiZ
-XZpZGVuY2UiOiBbeyJ0eXBlIjogIkh1Y2FuSGhRd2ItVEpOZ19yVnBhb25OU0R0elByQ0
-VlYmIzTGZYVHVMU00iLCAibWV0aG9kIjogImFVN0lPN29vVDh2QXJNa3FwT2ZrSUFsS3c
-4Qk5jZlJ5dzNOWHMzWlMxMjgiLCAidGltZSI6ICJMSGNIOThiVjMtWk5VYTAwSE5ucU9m
-OFc1SWRpalkxYUVucFZ6RE5WQndBIiwgImRvY3VtZW50IjogeyJ0eXBlIjogIjNJVElsZ
-mtiVUkwTnZldmlFSkJ3LV9WRWFHaVB0Q0RjWHk5dUQ5b3JXRkEiLCAiaXNzdWVyIjogey
-JuYW1lIjogIkFZN3dXNjNWYmNkN1JuS0RiMzlzU1hwTGd5aVZOeFdnb1JuVjZ4WkQ1Qzg
-iLCAiY291bnRyeSI6ICJLZDNhVW1tNlhIanBXcDZPWWlKZUVaVXJENUo3bklSVTNTbFRj
-LUU1M2dzIn0sICJudW1iZXIiOiAiOGdLcGtzbDY2Zk45RjJaeHMxUFJQZ0Q4a0hpOGRHQ
-zJKenBxdHJQWmF2cyIsICJkYXRlX29mX2lzc3VhbmNlIjogIkdmSUVoT0dXd2U4SjdseD
-ZIU0FQcEMtUXZ4MGlod1drRUUwX0xaLXJfREkiLCAiZGF0ZV9vZl9leHBpcnkiOiAiX2Z
-kbGpLUmRwNXdwdEdpN0R3S05aRXNTWDZBbm5pVnFtREUwYVN6bkg3NCJ9fV19LCAiY2xh
-aW1zIjogeyJnaXZlbl9uYW1lIjogInN4NHdHZDYtT05Bc2lxN2ROMTZHSGVnNFJBeU9za
-FJCZG9YV0VfRTc1MXciLCAiZmFtaWx5X25hbWUiOiAiTGRiZWEwU2liQVFEaVpKbEJpZ3
-B0d1dYWjlRQThhMGRLSzdqaXBTbjJLOCIsICJuYXRpb25hbGl0aWVzIjogInRyOFNYSGR
-ZUzByekFpb19JaEZwMmx6bHRhNGtEektDTTdoVXhJdENVMlUiLCAiYWRkcmVzcyI6IHsi
-bG9jYWxpdHkiOiAiVkZnS0hQWG5OclpIZW9Cd2N1NjFiNVZDb0ZWWDByUWp0SDVhT2lpT
-HowRSIsICJwb3N0YWxfY29kZSI6ICJHOFhIaThzQ1BjNDVXQVRlcnk2UlN2bkVjZHlwbn
-JqeXBqQmw0TEJkNVlFIiwgImNvdW50cnkiOiAiWXlHNE5oeWZqaXRwbzYteU1EUlRBUlN
-WQW5aTnZrWXFSWTNYZXBvUV9qOCIsICJzdHJlZXRfYWRkcmVzcyI6ICJOd0FLZkF0alFj
-Tl9YYlYza3VIdDNnYlVNdlE4M24wMkMxRWV4STlSbzJBIn19fSwgImJpcnRoX21pZGRsZ
-V9uYW1lIjogIk01R2hrdk5jR2pHT05SZXkycFJPUnVMMnlDZll6NWpvMFhxRjZLMHRVV2
-siLCAic2FsdXRhdGlvbiI6ICI4bTAtc0JOQThJODhfTERjMDVDN2dFMzFwVG1fQ1hRZmV
-3aXdsTDFTbjFZIiwgIm1zaXNkbiI6ICJkTFFWTURJa0VIbm1QVnZ1SE5ZaXY3V3dBcUdF
-N21ieUpNaDVFZmJqTTFRIn0sICJ2ZXJpZmllZF9jbGFpbXMiOiB7ImNsYWltcyI6IHsiY
-mlydGhkYXRlIjogIjE5NTYtMDEtMjgiLCAicGxhY2Vfb2ZfYmlydGgiOiB7ImNvdW50cn
-kiOiAiREUiLCAibG9jYWxpdHkiOiAiTXVzdGVyc3RhZHQifX19fQ.57pncJcJ6cQt2fSA
-RbQLlj6e6nYMpWqHNvI2Ep45WmNGuTtI3htmodK8svpgbrT-RaLL25WF7J3CqP1ElzpZS
-gVFs2VXCxGXgnTG6dQIvk2qPPfP-45hrZiMWyiwRFBr7Di68J01N90yFGbsMH5hh8kGGq
-FnCpTSQwvk--6aG_03l0nGmLDjOFyauCF_Tl-SlOHzNGYoP3MOOX9jU25T8z2e3EmLVLT
-a5KEmNis0GbpfSHUthbtZCCTaq-bSYaPDUHi22ZNqeoW1Y4v8nSaNIyrV9IxfPJNb37kY
-N6NLn5zwI33sxE_nCd8wOxvuI0rtFtmpS_-DNgwPTnLphzUNKA
+eyJhbGciOiAiUlMyNTYiLCAia2lkIjogImNBRUlVcUowY21MekQxa3pHemhlaUJhZzBZ
+UkF6VmRsZnhOMjgwTmdIYUEifQ.eyJpc3MiOiAiaHR0cHM6Ly9leGFtcGxlLmNvbS9pc
+3N1ZXIiLCAiY25mIjogeyJqd2siOiB7Imt0eSI6ICJSU0EiLCAibiI6ICJwbTRiT0hCZ
+y1vWWhBeVBXelI1NkFXWDNyVUlYcDExX0lDRGtHZ1M2VzNaV0x0cy1oendJM3g2NTY1O
+WtnNGhWbzlkYkdvQ0pFM1pHRl9lYWV0RTMwVWhCVUVncEd3ckRyUWlKOXpxcHJtY0Zmc
+jNxdnZrR2p0dGg4WmdsMWVNMmJKY093RTdQQ0JIV1RLV1lzMTUyUjdnNkpnMk9WcGgtY
+ThycS1xNzlNaEtHNVFvV19tVHoxMFFUXzZINGM3UGpXRzFmamg4aHBXTm5iUF9wdjZkM
+XpTd1pmYzVmbDZ5VlJMMERWMFYzbEdIS2UyV3FmX2VOR2pCckJMVmtsRFRrOC1zdFhfT
+VdMY1ItRUdtWEFPdjBVQldpdFNfZFhKS0p1LXZYSnl3MTRuSFNHdXhUSUsyaHgxcHR0T
+WZ0OUNzdnFpbVhLZURUVTE0cVFMMWVFN2loY3ciLCAiZSI6ICJBUUFCIn19LCAiaWF0I
+jogMTUxNjIzOTAyMiwgImV4cCI6IDE1MTYyNDcwMjIsICJzZF9kaWdlc3RfZGVyaXZhd
+Glvbl9hbGciOiAic2hhLTI1NiIsICJzZF9kaWdlc3RzIjogeyJ2ZXJpZmllZF9jbGFpb
+XMiOiB7InZlcmlmaWNhdGlvbiI6IHsidHJ1c3RfZnJhbWV3b3JrIjogImZrSVctNGlVW
+mdUZUllRGdfWl82b0ZIVS13eVd3YXpTcHVhaVFiYzVRS3ciLCAidGltZSI6ICJWUkYtR
+19MZlR6U2FZa0xlbFZ6cnk4MmwxelF4R3drMVJmR2NuVVVXdWtjIiwgInZlcmlmaWNhd
+Glvbl9wcm9jZXNzIjogIjlPcERtbDRlUkJNNlVzZmszTUYyaTdrQmwxeEdHa3pQcTVOY
+3MxbXZiUG8iLCAiZXZpZGVuY2UiOiBbeyJ0eXBlIjogIkh1Y2FuSGhRd2ItVEpOZ19yV
+nBhb25OU0R0elByQ0VlYmIzTGZYVHVMU00iLCAibWV0aG9kIjogImFVN0lPN29vVDh2Q
+XJNa3FwT2ZrSUFsS3c4Qk5jZlJ5dzNOWHMzWlMxMjgiLCAidGltZSI6ICJMSGNIOThiV
+jMtWk5VYTAwSE5ucU9mOFc1SWRpalkxYUVucFZ6RE5WQndBIiwgImRvY3VtZW50Ijoge
+yJ0eXBlIjogIjNJVElsZmtiVUkwTnZldmlFSkJ3LV9WRWFHaVB0Q0RjWHk5dUQ5b3JXR
+kEiLCAiaXNzdWVyIjogeyJuYW1lIjogIkFZN3dXNjNWYmNkN1JuS0RiMzlzU1hwTGd5a
+VZOeFdnb1JuVjZ4WkQ1QzgiLCAiY291bnRyeSI6ICJLZDNhVW1tNlhIanBXcDZPWWlKZ
+UVaVXJENUo3bklSVTNTbFRjLUU1M2dzIn0sICJudW1iZXIiOiAiOGdLcGtzbDY2Zk45R
+jJaeHMxUFJQZ0Q4a0hpOGRHQzJKenBxdHJQWmF2cyIsICJkYXRlX29mX2lzc3VhbmNlI
+jogIkdmSUVoT0dXd2U4SjdseDZIU0FQcEMtUXZ4MGlod1drRUUwX0xaLXJfREkiLCAiZ
+GF0ZV9vZl9leHBpcnkiOiAiX2ZkbGpLUmRwNXdwdEdpN0R3S05aRXNTWDZBbm5pVnFtR
+EUwYVN6bkg3NCJ9fV19LCAiY2xhaW1zIjogeyJnaXZlbl9uYW1lIjogInN4NHdHZDYtT
+05Bc2lxN2ROMTZHSGVnNFJBeU9zaFJCZG9YV0VfRTc1MXciLCAiZmFtaWx5X25hbWUiO
+iAiTGRiZWEwU2liQVFEaVpKbEJpZ3B0d1dYWjlRQThhMGRLSzdqaXBTbjJLOCIsICJuY
+XRpb25hbGl0aWVzIjogInRyOFNYSGRZUzByekFpb19JaEZwMmx6bHRhNGtEektDTTdoV
+XhJdENVMlUiLCAiYWRkcmVzcyI6IHsibG9jYWxpdHkiOiAiVkZnS0hQWG5OclpIZW9Cd
+2N1NjFiNVZDb0ZWWDByUWp0SDVhT2lpTHowRSIsICJwb3N0YWxfY29kZSI6ICJHOFhIa
+ThzQ1BjNDVXQVRlcnk2UlN2bkVjZHlwbnJqeXBqQmw0TEJkNVlFIiwgImNvdW50cnkiO
+iAiWXlHNE5oeWZqaXRwbzYteU1EUlRBUlNWQW5aTnZrWXFSWTNYZXBvUV9qOCIsICJzd
+HJlZXRfYWRkcmVzcyI6ICJOd0FLZkF0alFjTl9YYlYza3VIdDNnYlVNdlE4M24wMkMxR
+WV4STlSbzJBIn19fSwgImJpcnRoX21pZGRsZV9uYW1lIjogIk01R2hrdk5jR2pHT05SZ
+XkycFJPUnVMMnlDZll6NWpvMFhxRjZLMHRVV2siLCAic2FsdXRhdGlvbiI6ICI4bTAtc
+0JOQThJODhfTERjMDVDN2dFMzFwVG1fQ1hRZmV3aXdsTDFTbjFZIiwgIm1zaXNkbiI6I
+CJkTFFWTURJa0VIbm1QVnZ1SE5ZaXY3V3dBcUdFN21ieUpNaDVFZmJqTTFRIn0sICJ2Z
+XJpZmllZF9jbGFpbXMiOiB7ImNsYWltcyI6IHsiYmlydGhkYXRlIjogIjE5NTYtMDEtM
+jgiLCAicGxhY2Vfb2ZfYmlydGgiOiB7ImNvdW50cnkiOiAiREUiLCAibG9jYWxpdHkiO
+iAiTXVzdGVyc3RhZHQifX19fQ.57pncJcJ6cQt2fSARbQLlj6e6nYMpWqHNvI2Ep45Wm
+NGuTtI3htmodK8svpgbrT-RaLL25WF7J3CqP1ElzpZSgVFs2VXCxGXgnTG6dQIvk2qPP
+fP-45hrZiMWyiwRFBr7Di68J01N90yFGbsMH5hh8kGGqFnCpTSQwvk--6aG_03l0nGmL
+DjOFyauCF_Tl-SlOHzNGYoP3MOOX9jU25T8z2e3EmLVLTa5KEmNis0GbpfSHUthbtZCC
+Taq-bSYaPDUHi22ZNqeoW1Y4v8nSaNIyrV9IxfPJNb37kYN6NLn5zwI33sxE_nCd8wOx
+vuI0rtFtmpS_-DNgwPTnLphzUNKA
 ```
 
 An HS-Disclosures JWT for some of the claims may look as follows:
@@ -1754,12 +1761,12 @@ then pass the result on to the application for further processing:
   "cnf": {
     "jwk": {
       "kty": "RSA",
-      "n": "pm4bOHBg-oYhAyPWzR56AWX3rUIXp11_ICDkGgS6W3ZWLts-hzwI3x656
-        59kg4hVo9dbGoCJE3ZGF_eaetE30UhBUEgpGwrDrQiJ9zqprmcFfr3qvvkGjt
-        th8Zgl1eM2bJcOwE7PCBHWTKWYs152R7g6Jg2OVph-a8rq-q79MhKG5QoW_mT
-        z10QT_6H4c7PjWG1fjh8hpWNnbP_pv6d1zSwZfc5fl6yVRL0DV0V3lGHKe2Wq
-        f_eNGjBrBLVklDTk8-stX_MWLcR-EGmXAOv0UBWitS_dXJKJu-vXJyw14nHSG
-        uxTIK2hx1pttMft9CsvqimXKeDTU14qQL1eE7ihcw",
+      "n": "pm4bOHBg-oYhAyPWzR56AWX3rUIXp11_ICDkGgS6W3ZWLts-hzwI3x65
+        659kg4hVo9dbGoCJE3ZGF_eaetE30UhBUEgpGwrDrQiJ9zqprmcFfr3qvvkG
+        jtth8Zgl1eM2bJcOwE7PCBHWTKWYs152R7g6Jg2OVph-a8rq-q79MhKG5QoW
+        _mTz10QT_6H4c7PjWG1fjh8hpWNnbP_pv6d1zSwZfc5fl6yVRL0DV0V3lGHK
+        e2Wqf_eNGjBrBLVklDTk8-stX_MWLcR-EGmXAOv0UBWitS_dXJKJu-vXJyw1
+        4nHSGuxTIK2hx1pttMft9CsvqimXKeDTU14qQL1eE7ihcw",
       "e": "AQAB"
     }
   },
@@ -1872,14 +1879,15 @@ encoded as JSON and signed as a JWS compliant to [@VC_DATA].
     "vc": {
       "credentialSubject": {
         "email": "{\"s\": \"Pc33JM2LchcU_lHggv_ufQ\", \"v\":
-        \"johndoe@example.com\"}",
+          \"johndoe@example.com\"}",
         "phone_number": "{\"s\": \"lklxF5jMYlGTPUovMNIvCA\", \"v\":
-        \"+1-202-555-0101\"}",
+          \"+1-202-555-0101\"}",
         "address": "{\"s\": \"5bPs1IquZNa0hkaFzzzZNw\", \"v\":
-        {\"street_address\": \"123 Main St\", \"locality\":
-        \"Anytown\", \"region\": \"Anystate\", \"country\": \"US\"}}",
+          {\"street_address\": \"123 Main St\", \"locality\":
+          \"Anytown\", \"region\": \"Anystate\", \"country\":
+          \"US\"}}",
         "birthdate": "{\"s\": \"y1sVU5wdfJahVdgwPgS7RQ\", \"v\":
-        \"1940-01-01\"}"
+          \"1940-01-01\"}"
       }
     }
 
@@ -1925,12 +1933,12 @@ numbers) as described in (#blinding-claim-names).
     "jwk": {
       "e": "AQAB",
       "kty": "RSA",
-      "n": "pm4bOHBg-oYhAyPWzR56AWX3rUIXp11_ICDkGgS6W3ZWLts-hzwI3x656
-        59kg4hVo9dbGoCJE3ZGF_eaetE30UhBUEgpGwrDrQiJ9zqprmcFfr3qvvkGjt
-        th8Zgl1eM2bJcOwE7PCBHWTKWYs152R7g6Jg2OVph-a8rq-q79MhKG5QoW_mT
-        z10QT_6H4c7PjWG1fjh8hpWNnbP_pv6d1zSwZfc5fl6yVRL0DV0V3lGHKe2Wq
-        f_eNGjBrBLVklDTk8-stX_MWLcR-EGmXAOv0UBWitS_dXJKJu-vXJyw14nHSG
-        uxTIK2hx1pttMft9CsvqimXKeDTU14qQL1eE7ihcw"
+      "n": "pm4bOHBg-oYhAyPWzR56AWX3rUIXp11_ICDkGgS6W3ZWLts-hzwI3x65
+        659kg4hVo9dbGoCJE3ZGF_eaetE30UhBUEgpGwrDrQiJ9zqprmcFfr3qvvkG
+        jtth8Zgl1eM2bJcOwE7PCBHWTKWYs152R7g6Jg2OVph-a8rq-q79MhKG5QoW
+        _mTz10QT_6H4c7PjWG1fjh8hpWNnbP_pv6d1zSwZfc5fl6yVRL0DV0V3lGHK
+        e2Wqf_eNGjBrBLVklDTk8-stX_MWLcR-EGmXAOv0UBWitS_dXJKJu-vXJyw1
+        4nHSGuxTIK2hx1pttMft9CsvqimXKeDTU14qQL1eE7ihcw"
     }
   },
   "exp": 1516247022,
@@ -1944,7 +1952,8 @@ numbers) as described in (#blinding-claim-names).
       "country": "Bktf3gG1tXbn0XObrZT53RUr_lxMLZGEguLYwCvsaIg",
       "locality": "NeWRh4B9JLRfEODwno3UOXg9Pg3gtZEo45cK9pr4eZk",
       "region": "qpgFbdX1Az4Hm_E63K3J94oMzazHLCqqFb0Damo2eFE",
-      "street_address": "6Ex8b2gEeACuMal74_OBH_ROVNM7wvzjSck08EC9eSs"
+      "street_address":
+        "6Ex8b2gEeACuMal74_OBH_ROVNM7wvzjSck08EC9eSs"
     },
     "birthdate": "1IjWWzdrXEs7iXUbsahdx_-8CIJsz2bcHHH_ccwgTBg",
     "email": "gszmttjNfSw7_uL31KyJRvWgL1gHM6O3LFAzqxluWDQ",
@@ -2012,7 +2021,8 @@ The Verifier would learn this information via the HS-Disclosures JWT:
     "address": {
       "region": "{\"s\": \"qwybxKQUee9A0mMhzGC-Pg\", \"v\":
         \"Anystate\"}",
-      "country": "{\"s\": \"l-6DlGlNloOsAUlBhMOt_Q\", \"v\": \"US\"}"
+      "country": "{\"s\": \"l-6DlGlNloOsAUlBhMOt_Q\", \"v\":
+        \"US\"}"
     },
     "HS4QoeE9ty-I8BZTEupSzw": "{\"s\": \"iq6rolXF0SyWSsdCeaETNg\",
       \"v\": \"23\", \"n\": \"secret_club_membership_no\"}"
@@ -2078,12 +2088,12 @@ The resulting SD-JWT payload:
     "jwk": {
       "e": "AQAB",
       "kty": "RSA",
-      "n": "pm4bOHBg-oYhAyPWzR56AWX3rUIXp11_ICDkGgS6W3ZWLts-hzwI3x656
-        59kg4hVo9dbGoCJE3ZGF_eaetE30UhBUEgpGwrDrQiJ9zqprmcFfr3qvvkGjt
-        th8Zgl1eM2bJcOwE7PCBHWTKWYs152R7g6Jg2OVph-a8rq-q79MhKG5QoW_mT
-        z10QT_6H4c7PjWG1fjh8hpWNnbP_pv6d1zSwZfc5fl6yVRL0DV0V3lGHKe2Wq
-        f_eNGjBrBLVklDTk8-stX_MWLcR-EGmXAOv0UBWitS_dXJKJu-vXJyw14nHSG
-        uxTIK2hx1pttMft9CsvqimXKeDTU14qQL1eE7ihcw"
+      "n": "pm4bOHBg-oYhAyPWzR56AWX3rUIXp11_ICDkGgS6W3ZWLts-hzwI3x65
+        659kg4hVo9dbGoCJE3ZGF_eaetE30UhBUEgpGwrDrQiJ9zqprmcFfr3qvvkG
+        jtth8Zgl1eM2bJcOwE7PCBHWTKWYs152R7g6Jg2OVph-a8rq-q79MhKG5QoW
+        _mTz10QT_6H4c7PjWG1fjh8hpWNnbP_pv6d1zSwZfc5fl6yVRL0DV0V3lGHK
+        e2Wqf_eNGjBrBLVklDTk8-stX_MWLcR-EGmXAOv0UBWitS_dXJKJu-vXJyw1
+        4nHSGuxTIK2hx1pttMft9CsvqimXKeDTU14qQL1eE7ihcw"
     }
   },
   "exp": 1516247022,

@@ -7,7 +7,7 @@ from pathlib import Path
 logger = logging.getLogger("sd_jwt")
 
 EXAMPLE_INDENT = 2
-EXAMPLE_MAX_WIDTH = 69
+EXAMPLE_MAX_WIDTH = 68
 
 #######################################################################
 # Helper functions to replace the examples in the markdown file
