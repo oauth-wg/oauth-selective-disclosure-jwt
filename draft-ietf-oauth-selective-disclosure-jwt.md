@@ -124,40 +124,40 @@ Section 2 of [@!RFC7515].
 
 # Terms and Definitions
 
-Selective disclosure
-: Process of a Holder disclosing to a Verifier a subset of claims contained in a claim set issued by an Issuer.
+Selective disclosure:
+  Process of a Holder disclosing to a Verifier a subset of claims contained in a claim set issued by an Issuer.
 
-Selectively Disclosable JWT (SD-JWT)
-:  An Issuer-created signed JWT (JWS, [@!RFC7515])
-   that supports selective disclosure as defined in this document and can contain both regular claims and digests of selectively-disclosable claims.
+Selectively Disclosable JWT (SD-JWT):
+  An Issuer-created signed JWT (JWS, [@!RFC7515])
+  that supports selective disclosure as defined in this document and can contain both regular claims and digests of selectively-disclosable claims.
 
-Disclosure
-: A combination of a cleartext claim value, a cleartext claim name, a salt, and
-   optionally a blinded claim name value that is used to calculate a digest for a certain claim.
+Disclosure:
+  A combination of a cleartext claim value, a cleartext claim name, a salt, and
+  optionally a blinded claim name value that is used to calculate a digest for a certain claim.
 
-Issuer-Issued Disclosures Object (II-Disclosures Object)
-:  A JSON object created by the Issuer that contains Disclosures for all selectively-disclosable claims in an SD-JWT.
+Issuer-Issued Disclosures Object (II-Disclosures Object):
+  A JSON object created by the Issuer that contains Disclosures for all selectively-disclosable claims in an SD-JWT.
 
-Holder-Selected Disclosures JWT (HS-Disclosures JWT)
-:  A JWT created by the Holder that contains the Disclosures from an Issuer-Issued Disclosures Object that the Holder is disclosing to the Verifier. In addition to the Disclosures, it can contain other properties and may be signed by the Holder.
+Holder-Selected Disclosures JWT (HS-Disclosures JWT):
+  A JWT created by the Holder that contains the Disclosures from an Issuer-Issued Disclosures Object that the Holder is disclosing to the Verifier. In addition to the Disclosures, it can contain other properties and may be signed by the Holder.
 
-Holder Binding
-:  Ability of the Holder to prove legitimate possession of an SD-JWT by proving
-   control over the same private key during the issuance and presentation. An SD-JWT with Holder Binding contains
-   a public key or a reference to a public key that matches to the private key controlled by the Holder.
+Holder Binding:
+  Ability of the Holder to prove legitimate possession of an SD-JWT by proving
+  control over the same private key during the issuance and presentation. An SD-JWT with Holder Binding contains
+  a public key or a reference to a public key that matches to the private key controlled by the Holder.
 
-Claim Name Blinding
-:  Feature that enables to blind not only claim values, but also claim names of the claims
-that are included in SD-JWT but are not disclosed to the Verifier in the HS-Disclosures JWT.
+Claim Name Blinding:
+  Feature that enables to blind not only claim values, but also claim names of the claims
+  that are included in SD-JWT but are not disclosed to the Verifier in the HS-Disclosures JWT.
 
-Issuer
-:  An entity that creates SD-JWTs.
+Issuer:
+  An entity that creates SD-JWTs.
 
-Holder
-:  An entity that received SD-JWTs from the Issuer and has control over them.
+Holder:
+  An entity that received SD-JWTs from the Issuer and has control over them.
 
-Verifier
-:  An entity that requests, checks and extracts the claims from HS-Disclosures JWT.
+Verifier:
+  An entity that requests, checks and extracts the claims from HS-Disclosures JWT.
 
 Note: discuss if we want to include Client, Authorization Server for the purpose of
 ensuring continuity and separating the entity from the actor.
