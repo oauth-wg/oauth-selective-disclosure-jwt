@@ -890,8 +890,9 @@ HS-Disclosures JWT.
 Verifiers MUST go through (at least) the following steps before
 trusting/using any of the contents of an SD-JWT:
 
- 1. Determine if Holder Binding is to be checked for the use case at
-    hand. The decision MUST NOT be based on whether the HS-Disclosures
+ 1. Determine if Holder Binding is to be checked according to the Verifier's policy
+    for the use case at hand. This decision MUST NOT be based on whether 
+    the HS-Disclosures
     JWT is signed or not. Refer to (#holder_binding_security) for
     details.
  2. Check that the presentation consists of six period-separated (`.`) elements; if Holder Binding is not required, the last element can be empty.
