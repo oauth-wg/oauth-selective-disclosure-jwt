@@ -1712,7 +1712,9 @@ The following shows the user information used in this example, included a claim 
 }
 ```
 
-Hiding just this claim, the SD-JWT payload shown in the following would result. Note that the claims are sorted alphabetically as described in (#blinding-claim-names).
+Hiding just this claim, the SD-JWT payload shown in the following would
+result. Note that the claims are sorted (by the unicode code point
+numbers) as described in (#blinding-claim-names).
 
 {#example-simple_structured_some_blinded-sd_jwt_payload}
 ```json
