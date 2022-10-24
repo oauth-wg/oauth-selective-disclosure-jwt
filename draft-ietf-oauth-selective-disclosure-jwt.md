@@ -936,18 +936,69 @@ TBD
 ## Blinding Claim Names {#blinding-claim-names}
 
 Issuers that chose to blind claim names MUST ensure not to inadvertently leak
-information about the blinded claim names to verifiers. In particular, issuers
-MUST choose placeholder claim names accordingly.
+information about the blinded claim names to verifiers. 
 
 It is RECOMMENDED to use cryptographically salts with at least 128 bits
 of entropy as placeholder claim names.
 
-The order of elements in JSON-encoded objects is not relevant to
-applications, but the order may reveal information about the blinded
-claim name to the verifier. It is therefore RECOMMENDED to ensure that
-the claims in the SD-JWT, II-Disclosures object, and HS-Disclosures JWT
-is shuffled or otherwise hidden, e.g., by alphabetically sorting using
-the blinded claim names.
+The order of elements in JSON-encoded objects is generally not relevant
+to applications, but it may reveal information about a blinded claim
+name to the verifier. For example, assume the following two clear-text
+claim sets created by the same Issuer:
+
+(A)
+```
+{
+  "given_name": "Doe",
+  "secret_club_membership_no": 42
+}
+```
+
+(B)
+```
+{
+  "is_secret_agent": true,
+  "given_name": "Doe"
+}
+```
+
+When naively blinding the claim names, the order of the elements might
+be preserved in the SD-JWT (depending on implementation details of the
+programming language):
+
+
+(A)
+```
+{
+  "given_name": "Doe",
+  "3DOgmo7w7MDZNh1Zjvmwpg":
+    "OXZKGG7Ltar4vz_L7sAtWIkVXVf5r9xONFKZdyoNlco"
+}
+```
+
+(B)
+```
+{
+  "CwiB46IUgi4NydIfgGTRwg":
+    "4miZg7O_JaidVJyjGiPpc4FXAMN16e1SBZfOMlYg3hQ",
+  "given_name": "Doe"
+}
+```
+
+A verifier, even if it does not learn any blinded claim names, can
+distinguish what claim name has been hidden just by observing the order
+of blinded and unblinded claim names. It is therefore RECOMMENDED, if at
+least one claim name is blinded, to either 
+
+ * randomize the order of all claims,
+ * or sort the claims by the property name (i.e., the placeholder claim
+   name for blinded claim names and the plaintext claim name for
+   unblinded claim names). The precise order does not matter. For
+   example, ordering by unicode code points or by lexicographic order is
+   sufficient to hide the original order of claims. 
+
+This applies to Issuers (SD-JWT and II-Disclosures document) and
+Holders (HS-Disclosures JWT).
 
 # Privacy Considerations {#privacy_considerations}
 
