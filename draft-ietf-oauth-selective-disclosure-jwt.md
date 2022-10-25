@@ -1186,14 +1186,17 @@ To prevent these types of linkability, various methods, including but not limite
 
 We would like to thank
 Alen Horvat,
+Arjan Geluk,
 Brian Campbell,
 Christian Paquin,
+David Bakker,
 Fabian Hauck,
 Giuseppe De Marco,
 Kushal Das,
 Mike Jones,
 Nat Sakimura,
 Pieter Kasselman,
+Ryosuke Abe,
 Shawn Butterfield, and
 Torsten Lodderstedt
 for their contributions (some of which substantial) to this draft and to the initial set of implementations.
