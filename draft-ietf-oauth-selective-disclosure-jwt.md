@@ -1174,10 +1174,13 @@ Furthermore, re-using the same value to blind a claim name may limit the privacy
 
 ## Unlinkability
 
-Colluding Issuer/Verifier or Verifier/Verifier pairs could link issuance/presentation or two presentation sessions
-to the same user on the basis of unique values encoded in the SD-JWT
-(Issuer signature, salts, digests, etc.). More advanced cryptographic schemes, outside the scope of
-this specification, can be used to prevent this type of linkability.
+Colluding Issuer/Verifier or Verifier/Verifier pairs could link issuance/presentation 
+or two presentation sessions to the same user on the basis of unique values encoded in the SD-JWT
+(Issuer signature, salts, digests, etc.). 
+
+To prevent these types of linkability, various methods, including but not limited to the following ones can be used:
+- Use advanced cryptographic schemes, outside the scope of this specification.
+- Issue a barch of SD-JWTs to the Holder to enable the Holder to use a unique SD-JWT per Verifier. This only helps with Verifier/Verifier unlinkability.
 
 # Acknowledgements {#Acknowledgements}
 
