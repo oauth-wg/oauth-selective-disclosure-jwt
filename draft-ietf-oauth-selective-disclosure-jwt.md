@@ -1179,8 +1179,9 @@ or two presentation sessions to the same user on the basis of unique values enco
 (Issuer signature, salts, digests, etc.). 
 
 To prevent these types of linkability, various methods, including but not limited to the following ones can be used:
+
 - Use advanced cryptographic schemes, outside the scope of this specification.
-- Issue a barch of SD-JWTs to the Holder to enable the Holder to use a unique SD-JWT per Verifier. This only helps with Verifier/Verifier unlinkability.
+- Issue a batch of SD-JWTs to the Holder to enable the Holder to use a unique SD-JWT per Verifier. This only helps with Verifier/Verifier unlinkability.
 
 # Acknowledgements {#Acknowledgements}
 
