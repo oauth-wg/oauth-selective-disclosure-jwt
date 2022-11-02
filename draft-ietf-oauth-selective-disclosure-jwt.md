@@ -2243,7 +2243,7 @@ The Verifier would decode the HS-Disclosures JWT and SD-JWT as follows:
    * explain why JSON-encoding of values is needed
    * explain merging algorithm ("processing model")
    * generalized hash alg to digest derivation alg which also enables HMAC to calculate digests
-   * `sd_digest_derivation_alg` renamed to `sd_digest_derivation_alg`
+   * `sd_digests` renamed to `sd_digest_derivation_alg`
    * Salt/Value Container (SVC) renamed to Issuer-Issued Disclosures (II-Disclosures)
    * SD-JWT-Release (SD-JWT-R) renamed to Holder-Selected Disclosures (HS-Disclosures)
    * `sd_disclosure` in II-Disclosures renamed to `sd_ii_disclosures`
