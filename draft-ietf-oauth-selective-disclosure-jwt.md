@@ -1178,23 +1178,30 @@ Furthermore, re-using the same value to blind a claim name may limit the privacy
 
 ## Unlinkability
 
-Colluding Issuer/Verifier or Verifier/Verifier pairs could link issuance/presentation or two presentation sessions
-to the same user on the basis of unique values encoded in the SD-JWT
-(Issuer signature, salts, digests, etc.). More advanced cryptographic schemes, outside the scope of
-this specification, can be used to prevent this type of linkability.
+Colluding Issuer/Verifier or Verifier/Verifier pairs could link issuance/presentation 
+or two presentation sessions to the same user on the basis of unique values encoded in the SD-JWT
+(Issuer signature, salts, digests, etc.). 
+
+To prevent these types of linkability, various methods, including but not limited to the following ones can be used:
+
+- Use advanced cryptographic schemes, outside the scope of this specification.
+- Issue a batch of SD-JWTs to the Holder to enable the Holder to use a unique SD-JWT per Verifier. This only helps with Verifier/Verifier unlinkability.
 
 # Acknowledgements {#Acknowledgements}
 
 We would like to thank
 Alen Horvat,
+Arjan Geluk,
 Brian Campbell,
 Christian Paquin,
+David Bakker,
 Fabian Hauck,
 Giuseppe De Marco,
 Kushal Das,
 Mike Jones,
 Nat Sakimura,
 Pieter Kasselman,
+Ryosuke Abe,
 Shawn Butterfield, and
 Torsten Lodderstedt
 for their contributions (some of which substantial) to this draft and to the initial set of implementations.
@@ -2249,7 +2256,7 @@ The Verifier would decode the HS-Disclosures JWT and SD-JWT as follows:
    * explained why JSON-encoding of values is needed
    * explained merging algorithm ("processing model")
    * generalized hash alg to digest derivation alg which also enables HMAC to calculate digests
-   * `sd_digest_derivation_alg` renamed to `sd_digest_derivation_alg`
+   * `sd_hash_alg` renamed to `sd_digest_derivation_alg`
    * Salt/Value Container (SVC) renamed to Issuer-Issued Disclosures (II-Disclosures)
    * SD-JWT-Release (SD-JWT-R) renamed to Holder-Selected Disclosures (HS-Disclosures)
    * `sd_disclosure` in II-Disclosures renamed to `sd_ii_disclosures`
