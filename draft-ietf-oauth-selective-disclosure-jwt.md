@@ -89,8 +89,8 @@ cases as well.
 
 This document also describes an optional mechanism for Holder Binding,
 or the concept of binding an SD-JWT to key material controlled by the
-Holder. Strenght of the Holder Binding is conditional upon the trusts
-in protection of the private key of the key matetial an SD-JWT is bound to.
+Holder. The strength of the Holder Binding is conditional upon the trust
+in the protection of the private key of the key pair an SD-JWT is bound to.
 
 This specification aims to be easy to implement and to leverage
 established and widely used data formats and cryptographic algorithms
@@ -1307,7 +1307,7 @@ All of the following examples are non-normative.
 
 ## Structured SD-JWT
 
-The following examples show the variations of a structured SD-JWT.
+The following examples show variations of a structured SD-JWT.
 
 ### Example 2a - Simple Structured SD-JWT {#example-simple-structured-sd-jwt}
 This non-normative example is based on the same claim values as Example 1, but
