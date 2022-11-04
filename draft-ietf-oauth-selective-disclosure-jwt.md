@@ -102,7 +102,7 @@ wherever possible.
   - a format enabling selective disclosure for JWTs,
   - formats for associated data that enables disclosing claims, and
   - formats for the combined transport of SD-JWTs and the associated data.
-* The specification supports selectively disclosable claims in flat data structures 
+* The specification supports selectively disclosable claims in flat data structures
   as well as more complex, nested data structures.
 * This specification enables combining selectively disclosable claims with
   clear-text claims that are always disclosed.
@@ -1178,9 +1178,9 @@ Furthermore, re-using the same value to blind a claim name may limit the privacy
 
 ## Unlinkability
 
-Colluding Issuer/Verifier or Verifier/Verifier pairs could link issuance/presentation 
+Colluding Issuer/Verifier or Verifier/Verifier pairs could link issuance/presentation
 or two presentation sessions to the same user on the basis of unique values encoded in the SD-JWT
-(Issuer signature, salts, digests, etc.). 
+(Issuer signature, salts, digests, etc.).
 
 To prevent these types of linkability, various methods, including but not limited to the following ones can be used:
 
@@ -2247,7 +2247,7 @@ The Verifier would decode the HS-Disclosures JWT and SD-JWT as follows:
    [[ To be removed from the final specification ]]
 
    -02
-   
+
    * reformatted
 
    -01
