@@ -916,49 +916,84 @@ The Holder SHOULD verify the binding between SD-JWT and II-Disclosures Object by
 
 ## Verification by the Verifier when Receiving SD-JWT and Holder-Selected Disclosures JWT {#verifier-verification}
 
-Verifiers MUST follow [@RFC8725] for checking the SD-JWT and, if signed, the
+follow [@RFC8725] for checking the SD-JWT and, if signed, the
 HS-Disclosures JWT.
 
 Verifiers MUST go through (at least) the following steps before
-trusting/using any of the contents of an SD-JWT:
+trusting/using any of the contents of an SD-JWT.
 
- 1. Determine if Holder Binding is to be checked according to the Verifier's policy
+If any of the following steps fail, the input is not valid and
+processing MUST be aborted.
+
+### Step 1: Validate Combined Format for Presentation
+
+1. Determine if Holder Binding is to be checked according to the Verifier's policy
     for the use case at hand. This decision MUST NOT be based on whether
     the HS-Disclosures
     JWT is signed or not. Refer to (#holder_binding_security) for
     details.
- 2. Check that the presentation consists of six period-separated (`.`) elements; if Holder Binding is not required, the last element can be empty.
- 3. Separate the SD-JWT from the HS-Disclosures JWT.
- 4. Validate the SD-JWT:
-    1. Ensure that a signing algorithm was used that was deemed secure for the application. Refer to [@RFC8725], Sections 3.1 and 3.2 for details. `none` MUST NOT be accepted.
-    2. Validate the signature over the SD-JWT.
-    3. Validate the Issuer of the SD-JWT and that the signing key belongs to this Issuer.
-    4. Check that the SD-JWT is valid using `nbf`, `iat`, and `exp` claims, if provided in the SD-JWT.
-    5. Check that the claim `sd_digests` is present in the SD-JWT.
-    6. Check that the `sd_digest_derivation_alg` claim is present and its value is understood and the digest derivation algorithm is deemed secure.
- 5. Validate the HS-Disclosures JWT:
-    1. If Holder Binding is required, validate the signature over the HS-Disclosures JWT using the same steps as for the SD-JWT plus the following steps:
-      1. Determine that the public key for the private key that used to sign the HS-Disclosures JWT is bound to the SD-JWT, i.e., the SD-JWT either contains a reference to the public key or contains the public key itself.
-      2. Determine that the HS-Disclosures JWT is bound to the current transaction and was created for this Verifier (replay protection). This is usually achieved by a `nonce` and `aud` field within the HS-Disclosures JWT.
-    2. For each claim in `sd_hs_disclosures` in the HS-Disclosures JWT:
-      3. Ensure that the claim is present as well in `sd_digests` in the SD-JWT.
-         If `sd_digests` is structured, the claim MUST be present at the same
-         place within the structure.
-      4. Compute the base64url-encoded digest of the JSON literal disclosed
-         by the Holder using the `sd_digest_derivation_alg` in SD-JWT.
-      5. Compare the digests computed in the previous step with the one of
-         the same claim in the SD-JWT. Accept the claim only when the two
-         digests match.
-      6. Ensure that the claim value in the HS-Disclosures JWT is a JSON-encoded
-         object containing at least the keys `s` and `v`, and optionally `n`.
-      7. Store the value of the key `v` as the claim value. If `n` is contained
-         in the object, use the value of the key `n` as the claim name.
-    3. Once all necessary claims have been verified, their values can be
+2. Check that the combined format for presentation consists of six period-separated (`.`) elements;
+    if Holder Binding is not required, the last element can be empty.
+3. Separate the SD-JWT from the HS-Disclosures JWT.
+
+### Step 2: Validate the SD-JWT
+
+1. Ensure that a signing algorithm used was deemed secure for the application. Refer to [@RFC8725], Sections 3.1 and 3.2 for details. `none` MUST NOT be accepted.
+2. Validate the signature over the SD-JWT.
+3. Validate the Issuer of the SD-JWT and that the signing key belongs to this Issuer.
+4. Check that the SD-JWT is valid using `nbf`, `iat`, and `exp` claims, if provided in the SD-JWT.
+5. Check that the claim `sd_digests` is present in the SD-JWT.
+6. Check that the `sd_digest_derivation_alg` claim is present and its value is understood and the digest derivation algorithm is deemed secure.
+
+### Step 3: Validate the HS-Disclosures JWT:
+
+When there is no Holder Binding check:
+
+1. Check that the HS-Disclosures JWT is valid using `nbf`, `iat`, and `exp` claims, if provided in the HS-Disclosures JWT.
+2. Determine that the HS-Disclosures JWT is bound to the current transaction and was created for this Verifier (replay protection). This is usually achieved by a `nonce` and `aud` field within the HS-Disclosures JWT.
+3. For each claim in `sd_hs_disclosures` in the HS-Disclosures JWT:
+  1. Ensure that the claim is present as well in `sd_digests` in the SD-JWT.
+     If `sd_digests` is structured, the claim MUST be present at the same
+     place within the structure.
+  2. Compute the base64url-encoded digest of the JSON literal disclosed
+     by the Holder using the `sd_digest_derivation_alg` in SD-JWT.
+  3. Compare the digests computed in the previous step with the one of
+     the same claim in the SD-JWT. Accept the claim only when the two
+     digests match.
+  4. Ensure that the claim value in the HS-Disclosures JWT is a JSON-encoded
+     object containing at least the keys `s` and `v`, and optionally `n`.
+  5. Store the value of the key `v` as the claim value. If `n` is contained
+     in the object, use the value of the key `n` as the claim name.
+4. Once all necessary claims have been verified, their values can be
        validated and used according to the requirements of the application. It
        MUST be ensured that all claims required for the application have been
        disclosed.
 
-If any step fails, the input is not valid and processing MUST be aborted.
+When there is Holder Binding check:
+
+1. Ensure that a signing algorithm used was deemed secure for the application. Refer to [@RFC8725], Sections 3.1 and 3.2 for details. `none` MUST NOT be accepted.
+2. Validate the signature over the HS-Disclosures JWT.
+3. Validate the Issuer of the HS-Disclosures JWT and that the signing key belongs to this Issuer.
+4. Check that the HS-Disclosures JWT is valid using `nbf`, `iat`, and `exp` claims, if provided in the HS-Disclosures JWT.
+5. Determine that the public key for the private key that used to sign the HS-Disclosures JWT is bound to the SD-JWT, i.e., the SD-JWT either contains a reference to the public key or contains the public key itself.
+6. Determine that the HS-Disclosures JWT is bound to the current transaction and was created for this Verifier (replay protection). This is usually achieved by a `nonce` and `aud` field within the HS-Disclosures JWT.
+7. For each claim in `sd_hs_disclosures` in the HS-Disclosures JWT:
+  1. Ensure that the claim is present as well in `sd_digests` in the SD-JWT.
+     If `sd_digests` is structured, the claim MUST be present at the same
+     place within the structure.
+  2. Compute the base64url-encoded digest of the JSON literal disclosed
+     by the Holder using the `sd_digest_derivation_alg` in SD-JWT.
+  3. Compare the digests computed in the previous step with the one of
+     the same claim in the SD-JWT. Accept the claim only when the two
+     digests match.
+  4. Ensure that the claim value in the HS-Disclosures JWT is a JSON-encoded
+     object containing at least the keys `s` and `v`, and optionally `n`.
+  5. Store the value of the key `v` as the claim value. If `n` is contained
+     in the object, use the value of the key `n` as the claim name.
+8. Once all necessary claims have been verified, their values can be
+       validated and used according to the requirements of the application. It
+       MUST be ensured that all claims required for the application have been
+       disclosed.
 
 ## Processing Model {#processing_model}
 
