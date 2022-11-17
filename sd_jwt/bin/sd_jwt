@@ -2,17 +2,20 @@
 import argparse
 import json
 import logging
-import sys
 import pathlib
+import random
+import sys
 
 import yaml
-
 from sd_jwt import __version__
-from sd_jwt.demo_utils import print_decoded_repr, get_jwk, print_repr
-from sd_jwt.utils import generate_salt
-from sd_jwt.operations import SDJWT
+from sd_jwt.demo_utils import get_jwk, print_decoded_repr, print_repr
+from sd_jwt.operations import SDJWTCommon, SDJWTHolder, SDJWTIssuer, SDJWTVerifier
 
 logger = logging.getLogger("sd_jwt")
+
+# Generate a 16-bit random number
+def generate_nonce():
+    return bytes(random.getrandbits(8) for _ in range(16)).hex()
 
 
 parser = argparse.ArgumentParser(
@@ -50,8 +53,8 @@ parser.add_argument(
     "--nonce",
     required=False,
     type=str,
-    default=generate_salt(),
-    help=("given example of a salt: 'XZOUco1u_gEPknxS78sWWg'"),
+    default=generate_nonce(),
+    help=("given example of a nonce: 'XZOUco1u_gEPknxS78sWWg'"),
 )
 parser.add_argument(
     "--iat", required=False, type=int, help=("issued at, UTC Timestamp")
@@ -141,54 +144,43 @@ for property in ("user_claims", "claims_structure", "disclosed_claims"):
         sys.exit(f"Example file must define '{property}'.")
 
 ### Produce SD-JWT and SVC for selected example
-
-sdjwt_at_issuer = SDJWT(
+SDJWTCommon.unsafe_randomness = _args.no_randomness
+sdjwt_at_issuer = SDJWTIssuer(
     example["user_claims"],
-    example.get('further_claims', {}),
     settings.ISSUER,
     ISSUER_KEY,
     HOLDER_KEY,
     example["claims_structure"],
-    example.get("blinded_claim_names", []),
     iat=_args.iat,
     exp=_args.exp,
 )
+
+print(f"SD-JWT at issuer: {sdjwt_at_issuer.combined_sd_jwt_iid}")
 
 ### Produce SD-JWT-R for selected example
 
 # Note: The only input from the issuer is the combined SD-JWT and SVC!
 
-sdjwt_at_holder = SDJWT.from_combined_sd_jwt_svc(sdjwt_at_issuer.combined_sd_jwt_svc)
-
-sdjwt_at_holder.create_sd_jwt_release(
+sdjwt_at_holder = SDJWTHolder(sdjwt_at_issuer.combined_sd_jwt_iid)
+sdjwt_at_holder.create_presentation(
+    example["disclosed_claims"],
     _args.nonce,
     settings.VERIFIER,
-    example["disclosed_claims"],
     HOLDER_KEY,
 )
 
 ### Verify the SD-JWT using the SD-JWT-R
 
 # Note: The only input from the holder is the combined presentation!
-
-sdjwt_at_verifier = SDJWT.from_combined_presentation(
-    sdjwt_at_holder.combined_presentation
-)
-vc = sdjwt_at_verifier.verify(
+print(sdjwt_at_holder.combined_presentation)
+sdjwt_at_verifier = SDJWTVerifier(
+    sdjwt_at_holder.combined_presentation,
     ISSUER_PUBLIC_KEY,
     settings.ISSUER,
-    HOLDER_KEY,
     settings.VERIFIER,
     _args.nonce,
 )
-merged = sdjwt_at_verifier.verify(
-    ISSUER_PUBLIC_KEY,
-    settings.ISSUER,
-    HOLDER_KEY,
-    settings.VERIFIER,
-    _args.nonce,
-    return_merged=True,
-)
+verified = sdjwt_at_verifier.get_verified_payload()
 
 ### Done - now output everything to CLI (unless --replace-examples-in was used)
 
@@ -197,28 +189,22 @@ _artifacts = {
     "sd_jwt_payload": (sdjwt_at_issuer.sd_jwt_payload, "Payload of the SD-JWT"),
     "serialized_sd_jwt": (sdjwt_at_issuer.serialized_sd_jwt, "Serialized SD-JWT"),
     "iid_payload": (
-        sdjwt_at_issuer.svc_payload,
-        "Payload of the Issuer-Issued Disclosures Object (II-Disclosures Object)",
+        "\n".join(sdjwt_at_issuer._debug_ii_disclosures_contents),
+        "Payloads of the II-Disclosures",
     ),
-    "serialized_iid": (sdjwt_at_issuer.serialized_svc, "Serialized II-Disclosures Object"),
     "combined_sd_jwt_iid": (
-        sdjwt_at_issuer.combined_sd_jwt_svc,
+        sdjwt_at_issuer.combined_sd_jwt_iid,
         "Combined SD-JWT and II-Disclosures Object representation",
     ),
-    "hsd_jwt_payload": (
-        sdjwt_at_holder.sd_jwt_release_payload,
-        "Payload of the Holder-Selected Disclosures JWT (HS-Disclosures JWT)",
-    ),
     "serialized_hsd_jwt": (
-        sdjwt_at_holder.serialized_sd_jwt_release,
-        "Serialized HS-Disclosures JWT",
+        sdjwt_at_holder.serialized_holder_binding_jwt,
+        "Serialized Holder Binding JWT",
     ),
     "combined_sd_jwt_hsd_jwt": (
         sdjwt_at_holder.combined_presentation,
-        "Combined representation of SD-JWT and HS-Disclosures JWT",
+        "Combined representation of SD-JWT and HS-Disclosures",
     ),
-    "verified_contents": (vc, "Verified released contents of the SD-JWT"),
-    "merged": (merged, "Merged contents of the SD-JWT"),
+    "verified_contents": (verified, "Verified released contents of the SD-JWT"),
 }
 
 

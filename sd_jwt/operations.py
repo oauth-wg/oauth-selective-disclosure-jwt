@@ -1,151 +1,176 @@
 import datetime
-
+import random
+import secrets
 from base64 import urlsafe_b64decode, urlsafe_b64encode
 from hashlib import sha256
 from json import dumps, loads
-from secrets import compare_digest
 from typing import Dict, List, Optional, Tuple, Union
 
 from jwcrypto.jwk import JWK
 from jwcrypto.jws import JWS
 
-from sd_jwt import DEFAULT_SIGNING_ALG, DIGEST_ALG_KEY, SD_II_CLAIMS_KEY, SD_HS_CLAIMS_KEY, SD_DIGESTS_KEY
-from sd_jwt.utils import generate_salt, pad_urlsafe_b64, merge, sort_dict
-from sd_jwt.walk import by_structure as walk_by_structure
+from sd_jwt import DEFAULT_SIGNING_ALG, DIGEST_ALG_KEY, SD_DIGESTS_KEY
 
 
-class SDJWT:
+class SDJWTCommon:
     SD_JWT_HEADER = None  # "sd+jwt"
     # WiP: https://github.com/oauthstuff/draft-selective-disclosure-jwt/issues/60
     SD_JWT_R_HEADER = None  # "sd+jwt-r"
-    DEFAULT_EXP_MINS = 15
     # TODO: adopt a dynamic module/package loader, defs could be as string -> "fn": "hashlib.sha256"
     HASH_ALG = {"name": "sha-256", "fn": sha256}
 
-    HIDDEN_CLAIM_NAME_PREFIX = ""
+    COMBINED_FORMAT_SEPARATOR = "~"
 
-    SD_KEY_SALT = "s"
-    SD_KEY_VALUE = "v"
-    SD_KEY_CLAIM_NAME = "n"
+    unsafe_randomness = False
 
-    # Issuer produces:
-    salts_and_blinded_claim_names: Dict
+    def _b64hash(self, raw):
+        # Calculate the SHA 256 hash and output it base64 encoded
+        return self._base64url_encode(self.HASH_ALG["fn"](raw).digest())
+
+    def _combine(self, *parts):
+        return self.COMBINED_FORMAT_SEPARATOR.join(parts)
+
+    def _split(self, combined):
+        return combined.split(self.COMBINED_FORMAT_SEPARATOR)
+
+    def _base64url_encode(self, data: bytes) -> str:
+        return urlsafe_b64encode(data).decode("ascii").strip("=")
+
+    def _base64url_decode(self, b64data: str) -> bytes:
+        padded = f"{b64data}{'=' * divmod(len(b64data),4)[1]}"
+        return urlsafe_b64decode(padded)
+
+    def _generate_salt(self):
+        if self.unsafe_randomness:
+            # This is not cryptographically secure, but it is deterministic
+            # and allows for repeatable output for the generation of the examples.
+            print("WARNING: Using unsafe randomness - output is not suitable for production use!")
+            return self._base64url_encode(
+                bytes(random.getrandbits(8) for _ in range(16))
+            )
+        else:
+            return self._base64url_encode(secrets.token_bytes(16))
+
+    def _create_hash_mappings(self, disclosurses_list: List):
+        # Mapping from hash of disclosure to the decoded disclosure
+        self._hash_to_decoded_disclosure = {}
+
+        # Mapping from hash of disclosure to the raw disclosure
+        self._hash_to_disclosure = {}
+
+        for disclosure in disclosurses_list:
+            print(f"disclosure: {disclosure}")
+            print(f"disclosure decoded: {self._base64url_decode(disclosure)}")
+            decoded_disclosure = loads(
+                self._base64url_decode(disclosure).decode("utf-8")
+            )
+            hash = self._b64hash(disclosure.encode("ascii"))
+            self._hash_to_decoded_disclosure[hash] = decoded_disclosure
+            self._hash_to_disclosure[hash] = disclosure
+
+
+class SDJWTIssuer(SDJWTCommon):
+    DEFAULT_EXP_MINS = 15
+
     sd_jwt_payload: Dict
     sd_jwt: JWS
     serialized_sd_jwt: str
-    svc_payload: Dict
-    serialized_svc: str
-    combined_sd_jwt_svc: str
 
-    # Holder produces:
-    sd_jwt_release_payload: Dict
-    sd_jwt_release: JWS
-    serialized_sd_jwt_release: str
-    combined_presentation: str
+    ii_disclosures = []
+    combined_sd_jwt_iid: str
+
+    _debug_ii_disclosures_contents = []
 
     def __init__(
         self,
         user_claims: Dict,
-        further_claims: Dict,
         issuer: str,
         issuer_key,
         holder_key,
         claims_structure: Optional[Dict] = None,
-        blinded_claim_names: Optional[List] = None,
         iat: Optional[int] = None,
         exp: Optional[int] = None,
         sign_alg=None,
     ):
         self._user_claims = user_claims
-        self._further_claims = further_claims
         self._issuer = issuer
         self._issuer_key = issuer_key
         self._holder_key = holder_key
         self._claims_structure = claims_structure or {}
-        self._blinded_claim_names = blinded_claim_names or []
         self._iat = iat or int(datetime.datetime.utcnow().timestamp())
         self._exp = exp or self._iat + (self.DEFAULT_EXP_MINS * 60)
         self._sign_alg = sign_alg or DEFAULT_SIGNING_ALG
 
-        self._create_salts_and_blinded_claim_names()
         self._assemble_sd_jwt_payload()
         self._create_signed_jwt()
-        self._create_svc()
         self._create_combined()
-
-    def _create_salts_and_blinded_claim_names(self):
-        """
-        This function generates a structure that follows the claims structure, but for
-        each entry contains a tuple: the salt value plus a random string that can become
-        the blinded claim name.
-        """
-
-        # something like: {'sub': ('zyZQuxk2AUv5_Z_RAMxh9Q', 'EpCuoArhQK6MjmO6D-Bi6w'), 'given_name': ('EpCuoArhQK6MjmO6D-Bi6w', 'ArhQK6MjmO6D-Bi6wud62k'). ...
-        self.salts_and_blinded_claim_names = walk_by_structure(
-            self._claims_structure,
-            self._user_claims,
-            lambda key, __, ___=None: (key, (generate_salt(), generate_salt())),
-        )
 
     def _assemble_sd_jwt_payload(self):
         # Create the JWS payload
-        self.sd_jwt_payload = {
-            "iss": self._issuer,
-            "cnf": {"jwk": self._holder_key.export_public(as_dict=True)},
-            "iat": self._iat,
-            "exp": self._exp,
-            DIGEST_ALG_KEY: self.HASH_ALG["name"],
-            SD_DIGESTS_KEY: walk_by_structure(
-                self.salts_and_blinded_claim_names,
-                self._user_claims,
-                self._create_sd_claim_entry,
-            ),
-        }
-
-        # If any of the claim names are blinded, sort the SD-JWT contents.
-        if self._blinded_claim_names:
-            self.sd_jwt_payload = sort_dict(self.sd_jwt_payload)
-
-        self.sd_jwt_payload.update(self._further_claims)
-
-    def _hash_raw(self, raw):
-        # Calculate the SHA 256 hash and output it base64 encoded
-        return (
-            urlsafe_b64encode(self.HASH_ALG["fn"](raw).digest())
-            .decode("ascii")
-            .strip("=")
+        self.sd_jwt_payload = self._create_sd_claims(
+            self._user_claims, self._claims_structure
+        )
+        self.sd_jwt_payload.update(
+            {
+                "iss": self._issuer,
+                "cnf": {"jwk": self._holder_key.export_public(as_dict=True)},
+                "iat": self._iat,
+                "exp": self._exp,
+                DIGEST_ALG_KEY: self.HASH_ALG["name"],
+            }
         )
 
-    def _hash_claim(
-        self, key, value, salt_and_blinded_claim_name, return_raw=False
-    ) -> Tuple[str, str]:
-        salt, blinded_claim_name = salt_and_blinded_claim_name
-        if key in self._blinded_claim_names:
-            raw = dumps(
-                {
-                    self.SD_KEY_SALT: salt,
-                    self.SD_KEY_VALUE: value,
-                    self.SD_KEY_CLAIM_NAME: key,
-                }
-            )
-            output_key = self.HIDDEN_CLAIM_NAME_PREFIX + blinded_claim_name
+    def _hash_claim(self, key, value) -> Tuple[str, str]:
+        json = dumps([self._generate_salt(), key, value]).encode("utf-8")
+        self._debug_ii_disclosures_contents.append(json.decode('utf-8'))
+
+        raw_b64 = self._base64url_encode(json)
+        hash = self._b64hash(raw_b64.encode("ascii"))
+
+        return (hash, raw_b64)
+
+    def _create_sd_claim_entry(self, key, value: any) -> str:
+        hash, raw_b64 = self._hash_claim(key, value)
+        self.ii_disclosures.append(raw_b64)
+        return hash
+
+    def _create_sd_claims(self, user_claims, non_sd_claims):
+        # If the user claims are a list, apply this function
+        # to each item in the list. The first element in non_sd_claims
+        # (which is assumed to be a list as well) is used as the
+        # structure for each item in the list.
+        if type(user_claims) is list:
+            return [
+                self._create_sd_claims(claim, non_sd_claims[0]) for claim in user_claims
+            ]
+
+        # If the user claims are a dictionary, apply this function
+        # to each key/value pair in the dictionary. The structure
+        # for each key/value pair is found in the non_sd_claims
+        # dictionary. If the key is not found in the non_sd_claims
+        # dictionary, then the value is assumed to be a claims that
+        # should be selectively disclosable.
+        elif type(user_claims) is dict:
+            sd_claims = {}
+            for key, value in user_claims.items():
+                if key in non_sd_claims:
+                    sd_claims[key] = self._create_sd_claims(
+                        value, non_sd_claims.get(key, {})
+                    )
+                else:
+                    # Assemble all hash digests in the disclosures list.
+                    # This list is sorted by the hash digest.
+                    sd_claims[SD_DIGESTS_KEY] = sorted(
+                        sd_claims.get(SD_DIGESTS_KEY, [])
+                        + [
+                            self._create_sd_claim_entry(key, value)
+                        ]  # self._hash_claim(key, value)[0]
+                    )
+            return sd_claims
+
+        # For other types, assume that the value can be disclosed.
         else:
-            raw = dumps({self.SD_KEY_SALT: salt, self.SD_KEY_VALUE: value})
-            output_key = key
-
-        if return_raw:
-            return (output_key, raw)
-        # Calculate the SHA 256 hash and output it base64 encoded
-        return (output_key, self._hash_raw(raw.encode()))
-
-    def _create_sd_claim_entry(
-        self, key, value: str, salt_and_blinded_claim_name: str
-    ) -> Tuple[str, str]:
-        """
-        returns the hashed and salted value string
-        key arg is not used here, it's just for compliance to other calls
-        """
-        return self._hash_claim(key, value, salt_and_blinded_claim_name)
+            return user_claims
 
     def _create_signed_jwt(self):
         """
@@ -164,259 +189,234 @@ class SDJWT:
         )
         self.serialized_sd_jwt = self.sd_jwt.serialize(compact=True)
 
-    def _create_svc(self):
-        # Create the SVC
-        self.svc_payload = {
-            SD_II_CLAIMS_KEY: walk_by_structure(
-                self.salts_and_blinded_claim_names,
-                self._user_claims,
-                self._create_svc_entry,
-            ),
-            # "cnf_private": issuer_key.export_private(as_dict=True),
-        }
-
-        # If any of the claim names are blinded, sort the SVC contents.
-        if self._blinded_claim_names:
-            self.svc_payload = sort_dict(self.svc_payload)
-
-        self.serialized_svc = (
-            urlsafe_b64encode(dumps(self.svc_payload).encode())
-            .decode("ascii")
-            .strip("=")
-        )
-
-    def _create_svc_entry(
-        self, key, value: str, salt_and_blinded_claim_name: str
-    ) -> Tuple[str, str]:
-        """
-        returns a string representation of a list
-        [hashed and salted value string, value string]
-        key arg is not used here, it's just for compliances to other calls
-        """
-        return self._hash_claim(
-            key, value, salt_and_blinded_claim_name, return_raw=True
-        )
-
     def _create_combined(self):
-        self.combined_sd_jwt_svc = self.serialized_sd_jwt + "." + self.serialized_svc
+        self.combined_sd_jwt_iid = self._combine(
+            self.serialized_sd_jwt, *self.ii_disclosures
+        )
 
-    #### Holder Operations ####
 
-    @classmethod
-    def from_combined_sd_jwt_svc(cls, combined):
-        sdjwt = cls.__new__(cls)
-        sdjwt._parse_combined_sd_jwt_svc(combined)
-        return sdjwt
+class SDJWTHolder(SDJWTCommon):
+    hs_disclosures: List
+    holder_binding_jwt_payload: Dict
+    holder_binding_jwt: JWS
+    serialized_holder_binding_jwt: str = ""
+    combined_presentation: str
 
-    def _parse_combined_sd_jwt_svc(self, combined):
+    _ii_disclosures: List
+    _hash_to_decoded_disclosure: Dict
+    _hash_to_disclosure: Dict
 
-        parts = combined.split(".")
-        if len(parts) != 4:
-            raise ValueError("Invalid number of parts in the combined presentation")
+    def __init__(self, combined_sd_jwt_iid: str):
+        self._parse_combined_sd_jwt_iid(combined_sd_jwt_iid)
+        self._create_hash_mappings(self._ii_disclosures)
+        self._extract_payload_unverified()
 
-        self.serialized_sd_jwt = ".".join(parts[:3])
-        self.serialized_svc = parts[3]
+    def _parse_combined_sd_jwt_iid(self, combined):
+        self.serialized_sd_jwt, *self._ii_disclosures = self._split(combined)
 
-        # Reconstruct hash raw values (salt+claim value) from serialized_svc
-        self._input_hash_raw_values = loads(
-            urlsafe_b64decode(pad_urlsafe_b64(self.serialized_svc))
-        )[SD_II_CLAIMS_KEY]
+    def _extract_payload_unverified(self):
+        # TODO: This holder does not verify the SD-JWT yet - this
+        # is not strictly needed, but it would be nice to have.
 
-        # TODO: Check that input_sd_jwt and input_svc match
+        # Extract only the body from SD-JWT without verifying the signature
+        _, jwt_body, _ = self.serialized_sd_jwt.split(".")
+        self.sd_jwt_payload = loads(self._base64url_decode(jwt_body))
 
-    def create_sd_jwt_release(
-        self, nonce, aud, disclosed_claims, holder_key, sign_alg: Optional[str] = None
+    def create_presentation(
+        self, claims_to_disclose, nonce=None, aud=None, holder_key=None, sign_alg=None
+    ):
+        # Select the disclosures
+        self.hs_disclosures = []
+        self._select_disclosures(self.sd_jwt_payload, claims_to_disclose)
+
+        # Optional: Create a holder binding JWT
+        if nonce and aud and holder_key:
+            self._create_holder_binding_jwt(nonce, aud, holder_key, sign_alg)
+
+        # Create the combined presentation
+        # Note: If the holder binding JWT is not created, then the
+        # last element is empty, matching the spec.
+        self.combined_presentation = self._combine(
+            self.serialized_sd_jwt,
+            *self.hs_disclosures,
+            self.serialized_holder_binding_jwt,
+        )
+
+    def _select_disclosures(self, sd_jwt_claims, claims_to_disclose):
+        # Recursively process the claims in sd_jwt_claims. In each
+        # object found therein, look at the SD_DIGESTS_KEY. If it
+        # contains hash digests for claims that should be disclosed,
+        # then add the corresponding disclosures to the claims_to_disclose.
+
+        if type(sd_jwt_claims) is list:
+            return [
+                self._select_disclosures(claim, claims_to_disclose[0])
+                for claim in sd_jwt_claims
+            ]
+
+        elif type(sd_jwt_claims) is dict:
+            for key, value in sd_jwt_claims.items():
+                if key == SD_DIGESTS_KEY:
+                    for digest in value:
+                        if digest not in self._hash_to_decoded_disclosure:
+                            # fake digest
+                            continue
+                        decoded = self._hash_to_decoded_disclosure[digest]
+                        _, key, _ = decoded
+                        if key in claims_to_disclose:
+                            self.hs_disclosures.append(self._hash_to_disclosure[digest])
+                else:
+                    self._select_disclosures(value, claims_to_disclose.get(key, {}))
+
+        else:
+            pass
+
+    def _create_holder_binding_jwt(
+        self, nonce, aud, holder_key, sign_alg: Optional[str] = None
     ):
         _alg = sign_alg or DEFAULT_SIGNING_ALG
 
-        def find_claim_by_blinded_name(structure, key):
-            if key in structure:
-                return key
-            for key_in_structure, value_in_structure in structure.items():
-                if not key_in_structure.startswith(self.HIDDEN_CLAIM_NAME_PREFIX):
-                    continue
-                if not isinstance(value_in_structure, str):
-                    continue
-                parsed = loads(value_in_structure)
-                if parsed.get(self.SD_KEY_CLAIM_NAME, None) == key:
-                    return key_in_structure
-            raise KeyError()
-
-        sd_jwt_r_struct = walk_by_structure(
-            self._input_hash_raw_values,
-            disclosed_claims,
-            lambda key, __, raw="???": (key, raw),
-            find_claim_by_blinded_name,
-        )
-
-        self.sd_jwt_release_payload = {
+        self.holder_binding_jwt_payload = {
             "nonce": nonce,
             "aud": aud,
-            SD_HS_CLAIMS_KEY: sd_jwt_r_struct,
         }
 
         # Sign the SD-JWT-Release using the holder's key
-        self.sd_jwt_release = JWS(payload=dumps(self.sd_jwt_release_payload))
+        self.holder_binding_jwt = JWS(payload=dumps(self.holder_binding_jwt_payload))
 
         _data = {"alg": _alg, "kid": holder_key.thumbprint()}
         if self.SD_JWT_R_HEADER:
             _data["typ"] = self.SD_JWT_R_HEADER
 
-        self.sd_jwt_release.add_signature(
+        self.holder_binding_jwt.add_signature(
             holder_key,
             alg=_alg,
             protected=dumps(_data),
         )
-        self.serialized_sd_jwt_release = self.sd_jwt_release.serialize(compact=True)
-
-        self.combined_presentation = (
-            self.serialized_sd_jwt + "." + self.serialized_sd_jwt_release
+        self.serialized_holder_binding_jwt = self.holder_binding_jwt.serialize(
+            compact=True
         )
 
-    #### Verifier Operations ####
 
-    @classmethod
-    def from_combined_presentation(cls, combined_presentation):
-        sdjwt = cls.__new__(cls)
-        sdjwt._parse_combined_presentation(combined_presentation)
-        return sdjwt
+class SDJWTVerifier(SDJWTCommon):
+    _hs_disclosures: List
+    _hash_to_decoded_disclosure: Dict
+    _hash_to_disclosure: Dict
 
-    def _parse_combined_presentation(self, combined_presentation):
-        parts = combined_presentation.split(".")
-        if len(parts) != 6:
-            raise ValueError("Invalid number of parts in the combined presentation")
-
-        # Extract the parts
-        self._unverified_input_sd_jwt = ".".join(parts[:3])
-        self._unverified_input_sd_jwt_release = ".".join(parts[3:])
-
-    def verify(
+    def __init__(
         self,
+        combined_presentation: str,
         issuer_public_key: dict,
         expected_issuer: str,
-        holder_public_key: Union[dict, None] = None,
         expected_aud: Union[str, None] = None,
         expected_nonce: Union[str, None] = None,
-        return_merged=False,
     ):
+        self._parse_combined_presentation(combined_presentation)
+        self._create_hash_mappings(self._hs_disclosures)
+        self._verify_sd_jwt(issuer_public_key, expected_issuer)
 
-        if holder_public_key and (not expected_aud or not expected_nonce):
-            raise ValueError(
-                "When holder binding is to be checked, aud and nonce need to be provided."
+        # expected aud and nonce either need to be both set or both None
+        if expected_aud or expected_nonce:
+            if not (expected_aud and expected_nonce):
+                raise ValueError(
+                    "Either both expected_aud and expected_nonce must be set or both must be None"
+                )
+
+            # Verify the SD-JWT-Release
+            self._verify_holder_binding_jwt(
+                expected_aud,
+                expected_nonce,
             )
 
-        sd_jwt_claims, holder_public_key_payload = self._verify_sd_jwt(
-            self._unverified_input_sd_jwt, issuer_public_key, expected_issuer
-        )
+    def get_verified_payload(self):
+        return self._extract_sd_claims()
 
-        sd_jwt_sd_claims = sd_jwt_claims[SD_DIGESTS_KEY]
-
-        # Verify the SD-JWT-Release
-        sd_jwt_release_claims = self._verify_sd_jwt_release(
-            self._unverified_input_sd_jwt_release,
-            holder_public_key,
-            expected_aud,
-            expected_nonce,
-            holder_public_key_payload,
-        )
-
-        _wbs = walk_by_structure(
-            sd_jwt_sd_claims, sd_jwt_release_claims, self._check_claim
-        )
-        if not return_merged:
-            return _wbs
-        else:
-            del sd_jwt_claims[SD_DIGESTS_KEY]
-            del sd_jwt_claims[DIGEST_ALG_KEY]
-            return merge(_wbs, sd_jwt_claims)
+    def _parse_combined_presentation(self, combined):
+        (
+            self._unverified_input_sd_jwt,
+            *self._hs_disclosures,
+            self._unverified_input_holder_binding_jwt,
+        ) = self._split(combined)
 
     def _verify_sd_jwt(
         self,
-        sd_jwt: str,
         issuer_public_key: dict,
         expected_issuer: str,
         sign_alg: str = None,
     ):
         parsed_input_sd_jwt = JWS()
-        parsed_input_sd_jwt.deserialize(sd_jwt)
+        parsed_input_sd_jwt.deserialize(self._unverified_input_sd_jwt)
         parsed_input_sd_jwt.verify(issuer_public_key, alg=sign_alg)
 
-        sd_jwt_payload = loads(parsed_input_sd_jwt.payload)
-        if sd_jwt_payload["iss"] != expected_issuer:
+        self._sd_jwt_payload = loads(parsed_input_sd_jwt.payload)
+        if self._sd_jwt_payload["iss"] != expected_issuer:
             raise ValueError("Invalid issuer")
 
         # TODO: Check exp/nbf/iat
-        if DIGEST_ALG_KEY not in sd_jwt_payload:
-            raise ValueError("Missing hash algorithm")
 
-        if sd_jwt_payload[DIGEST_ALG_KEY] != SDJWT.HASH_ALG["name"]:
-            raise ValueError("Invalid hash algorithm")
+        self._holder_public_key_payload = self._sd_jwt_payload.get("cnf", None)
 
-        if SD_DIGESTS_KEY not in sd_jwt_payload:
-            raise ValueError("No selective disclosure claims in SD-JWT")
-
-        holder_public_key_payload = None
-        if "cnf" in sd_jwt_payload:
-            holder_public_key_payload = sd_jwt_payload["cnf"]
-
-        return sd_jwt_payload, holder_public_key_payload
-
-    def _verify_sd_jwt_release(
+    def _verify_holder_binding_jwt(
         self,
-        sd_jwt_release: Union[dict, str],  # the release could be signed by the holder
-        holder_public_key: Union[dict, None] = None,
         expected_aud: Union[str, None] = None,
         expected_nonce: Union[str, None] = None,
-        holder_public_key_payload: Union[dict, None] = None,
         sign_alg: Union[str, None] = None,
     ):
         _alg = sign_alg or DEFAULT_SIGNING_ALG
-        parsed_input_sd_jwt_release = JWS()
-        parsed_input_sd_jwt_release.deserialize(sd_jwt_release)
+        parsed_input_holder_binding_jwt = JWS()
+        parsed_input_holder_binding_jwt.deserialize(
+            self._unverified_input_holder_binding_jwt
+        )
 
-        if holder_public_key and holder_public_key_payload:
-            holder_public_key_payload_jwk = holder_public_key_payload.get('jwk', None)
-            if not holder_public_key_payload_jwk:
-                raise ValueError(
-                    "The holder_public_key_payload is malformed. "
-                    "It doesn't contain the claim jwk: "
-                    f"{holder_public_key_payload}"
-                )
-            
-            pubkey = JWK.from_json(dumps(holder_public_key_payload_jwk))
-            # TODO: adopt an OrderedDict here
-            # Because of weird bug of failed != between two public keys
-            if not holder_public_key == pubkey:
-                raise ValueError("cnf is not matching with HOLDER Public Key.")
-        if holder_public_key:
-            parsed_input_sd_jwt_release.verify(holder_public_key, alg=_alg)
+        if not self._holder_public_key_payload:
+            raise ValueError("No holder public key in SD-JWT")
 
-        sd_jwt_release_payload = loads(parsed_input_sd_jwt_release.payload)
-
-        if holder_public_key:
-            if sd_jwt_release_payload["aud"] != expected_aud:
-                raise ValueError("Invalid audience")
-            if sd_jwt_release_payload["nonce"] != expected_nonce:
-                raise ValueError("Invalid nonce")
-
-        if SD_HS_CLAIMS_KEY not in sd_jwt_release_payload:
-            raise ValueError("No selective disclosure claims in SD-JWT-Release")
-
-        return sd_jwt_release_payload[SD_HS_CLAIMS_KEY]
-
-    def _check_claim(
-        self, claim_name: str, released_value: str, sd_jwt_claim_value: str
-    ):
-        # the hash of the release claim value must match the claim value in the sd_jwt
-        hashed_release_value = self._hash_raw(released_value.encode("utf-8"))
-        if not compare_digest(hashed_release_value, sd_jwt_claim_value):
+        holder_public_key_payload_jwk = self._holder_public_key_payload.get("jwk", None)
+        if not holder_public_key_payload_jwk:
             raise ValueError(
-                "Claim release value does not match the claim value in the SD-JWT"
+                "The holder_public_key_payload is malformed. "
+                "It doesn't contain the claim jwk: "
+                f"{self._holder_public_key_payload}"
             )
 
-        decoded = loads(released_value)
-        if not isinstance(decoded, dict):
-            raise ValueError("Claim release value is not a dictionary")
+        pubkey = JWK.from_json(dumps(holder_public_key_payload_jwk))
 
-        output_claim_name = decoded.get(self.SD_KEY_CLAIM_NAME, claim_name)
-        return (output_claim_name, decoded[self.SD_KEY_VALUE])
+        parsed_input_holder_binding_jwt.verify(pubkey, alg=_alg)
+
+        holder_binding_jwt_payload = loads(parsed_input_holder_binding_jwt.payload)
+
+        if holder_binding_jwt_payload["aud"] != expected_aud:
+            raise ValueError("Invalid audience")
+        if holder_binding_jwt_payload["nonce"] != expected_nonce:
+            raise ValueError("Invalid nonce")
+
+    def _extract_sd_claims(self):
+        if DIGEST_ALG_KEY not in self._sd_jwt_payload:
+            raise ValueError("Missing hash algorithm")
+
+        if self._sd_jwt_payload[DIGEST_ALG_KEY] != self.HASH_ALG["name"]:
+            # TODO: Support other hash algorithms
+            raise ValueError("Invalid hash algorithm")
+
+        return self._unpack_disclosed_claims(self._sd_jwt_payload)
+
+    def _unpack_disclosed_claims(self, sd_jwt_claims):
+        if type(sd_jwt_claims) is list:
+            return [self._unpack_disclosed_claims(c) for c in sd_jwt_claims]
+
+        elif type(sd_jwt_claims) is dict:
+            output = {
+                k: self._unpack_disclosed_claims(v)
+                for k, v in sd_jwt_claims.items()
+                if k != SD_DIGESTS_KEY
+            }
+
+            for digest in sd_jwt_claims.get(SD_DIGESTS_KEY, []):
+                if digest in self._hash_to_decoded_disclosure:
+                    _, key, value = self._hash_to_decoded_disclosure[digest]
+                    output[key] = value
+
+            return output
+
+        else:
+            return sd_jwt_claims

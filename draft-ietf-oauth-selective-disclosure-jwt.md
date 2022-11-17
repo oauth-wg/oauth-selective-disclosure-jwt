@@ -106,10 +106,7 @@ wherever possible.
   as well as more complex, nested data structures.
 * This specification enables combining selectively disclosable claims with
   clear-text claims that are always disclosed.
-* Optionally, this specification allows to also hide ("blind") the claim names,
-  not only the claim values.
-* When claim names are blinded, this specification enables combining claims with
-  blinded and unblinded names in the same SD-JWT.
+* For selectively disclosable claims, claim names are blinded by default.
 
 
 ## Conventions and Terminology
@@ -146,10 +143,6 @@ Holder Binding:
 :  Ability of the Holder to prove legitimate possession of an SD-JWT by proving
   control over the same private key during the issuance and presentation. An SD-JWT with Holder Binding contains
   a public key or a reference to a public key that matches to the private key controlled by the Holder.
-
-Claim Name Blinding:
-:  Feature that enables to blind not only claim values, but also claim names of the claims
-  that are included in SD-JWT but are not disclosed to the Verifier in the HS-Disclosures JWT.
 
 Issuer:
 :  An entity that creates SD-JWTs.

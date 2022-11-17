@@ -29,12 +29,14 @@ user_claims:
             "given_name": "Max",
             "family_name": "Meier",
             "nationalities": ["DE"],
+            "birthdate": "1956-01-28",
+            "place_of_birth": { "country": "IS", "locality": "Þykkvabæjarklaustur" },
             "address":
               {
                 "locality": "Maxstadt",
                 "postal_code": "12344",
                 "country": "DE",
-                "street_address": "An der Weide 22",
+                "street_address": "Weidenstraße 22",
               },
           },
       },
@@ -43,24 +45,12 @@ user_claims:
     "msisdn": "49123456789",
   }
 
-further_claims:
-  {
-    "verified_claims":
-      {
-        "claims":
-          {
-            "birthdate": "1956-01-28",
-            "place_of_birth": { "country": "DE", "locality": "Musterstadt" },
-          },
-      },
-  }
-
 claims_structure:
   {
     "verified_claims":
       {
         "verification": { "evidence": [{ "document": { "issuer": {} } }] },
-        "claims": { "address": {} },
+        "claims": { "address": {}, "birthdate": true, "place_of_birth": {"country": true, "locality": true} },
       },
   }
 
@@ -74,10 +64,6 @@ disclosed_claims:
             "time": null,
             "evidence": [{ "type": null }],
           },
-        "claims":
-          {
-            "given_name": null,
-            "family_name": null,
-          },
+        "claims": { "given_name": null, "family_name": null },
       },
   }
