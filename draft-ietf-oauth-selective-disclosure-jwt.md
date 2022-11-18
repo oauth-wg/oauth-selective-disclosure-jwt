@@ -446,37 +446,19 @@ In any case, the `_sd` claim MUST be included in the SD-JWT at the same level as
 
 Taking the OpenID Connect `address` claim as an example, the Issuer may want to produce an SD-JWT with the following End-User data:
 
-<<{{examples/address_only_flat/user_claims.json}}
+<{{examples/address_only_flat/user_claims.json}}
 
 The Issuer can decide to treat the `address` claim as a block that can either be disclosed completely or not at all:
 
-<<{{examples/address_only_flat/sd_jwt_payload.json}}
+<{{examples/address_only_flat/sd_jwt_payload.json}}
 
 The Issuer may instead decide to make the `address` claim contents selectively disclosable individually:
 
-<<{{examples/address_only_structured/sd_jwt_payload.json}}
+<{{examples/address_only_structured/sd_jwt_payload.json}}
 
 The Issuer may also make one claim in address non-selectively disclosable and hide only the other claims:
 
-<<{{examples/address_only_structured_one_open/sd_jwt_payload.json}}
-
-
-#### Flat and Structured `sd_digests` objects
-
-The `sd_digests` object can be a 'flat' object, directly containing all claim
-names and digests without any deeper structure. The `sd_digests`
-object can also be a 'structured' object, where some claims and their respective
-digests are contained in places deeper in the structure. It is at the Issuer's
-discretion whether to use a 'flat' or 'structured' `sd_digests` SD-JWT object,
-and how to structure it such that it is suitable for the use case.
-
-Example 1 in (#example-1) is a non-normative example of an SD-JWT using a 'flat'
-`sd_digests` object and Example 2a in (#example-simple-structured-sd-jwt) shows a non-normative example
-of an SD-JWT using a 'structured' `sd_digests` object. The difference between
-the examples is how the `address` claim is disclosed.
-
-(#example-complex-structured-sd-jwt) shows a more complex example using claims
-from OpenID Connect for Identity Assurance [@OIDC.IDA].
+<{{examples/address_only_structured_one_open/sd_jwt_payload.json}}
 
 ### Digest Derivation Function Claim
 
