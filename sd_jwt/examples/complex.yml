@@ -27,10 +27,11 @@ user_claims:
         "claims":
           {
             "given_name": "Max",
-            "family_name": "Meier",
+            "family_name": "Müller",
             "nationalities": ["DE"],
             "birthdate": "1956-01-28",
-            "place_of_birth": { "country": "IS", "locality": "Þykkvabæjarklaustur" },
+            "place_of_birth":
+              { "country": "IS", "locality": "Þykkvabæjarklaustur" },
             "address":
               {
                 "locality": "Maxstadt",
@@ -45,16 +46,20 @@ user_claims:
     "msisdn": "49123456789",
   }
 
-claims_structure:
+non_sd_claims:
   {
     "verified_claims":
       {
         "verification": { "evidence": [{ "document": { "issuer": {} } }] },
-        "claims": { "address": {}, "birthdate": true, "place_of_birth": {"country": true, "locality": true} },
+        "claims":
+          {
+            "birthdate": true,
+            "place_of_birth": { "country": true, "locality": true },
+          },
       },
   }
 
-disclosed_claims:
+holder_disclosed_claims:
   {
     "verified_claims":
       {
@@ -64,6 +69,6 @@ disclosed_claims:
             "time": null,
             "evidence": [{ "type": null }],
           },
-        "claims": { "given_name": null, "family_name": null },
+        "claims": { "given_name": null, "family_name": null, "address": null },
       },
   }

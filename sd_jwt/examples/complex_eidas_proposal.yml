@@ -40,7 +40,7 @@ user_claims:
     "birth_middle_name": "Lello", # other optional claim not covered by eu.europa.ec.eudiw.pid.1
   }
 
-claims_structure:
+non_sd_claims:
   {
     "verified_claims":
       {
@@ -57,7 +57,7 @@ claims_structure:
       },
   }
 
-disclosed_claims:
+holder_disclosed_claims:
   {
     "verified_claims":
       {

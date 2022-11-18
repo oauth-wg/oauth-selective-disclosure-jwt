@@ -15,6 +15,7 @@ user_claims:
     "birthdate": "1940-01-01",
   }
 
-claims_structure: { }
+non_sd_claims: {}
 
-disclosed_claims: { "given_name": null, "family_name": null, "address": null }
+holder_disclosed_claims:
+  { "given_name": null, "family_name": null, "address": null }

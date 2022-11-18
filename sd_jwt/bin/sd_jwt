@@ -139,7 +139,7 @@ example_identifer = _args.example.stem
 with open(_args.example, "r") as f:
     example = yaml.load(f, Loader=yaml.FullLoader)
 
-for property in ("user_claims", "claims_structure", "disclosed_claims"):
+for property in ("user_claims", "non_sd_claims", "holder_disclosed_claims"):
     if property not in example:
         sys.exit(f"Example file must define '{property}'.")
 
@@ -150,12 +150,11 @@ sdjwt_at_issuer = SDJWTIssuer(
     settings.ISSUER,
     ISSUER_KEY,
     HOLDER_KEY,
-    example["claims_structure"],
+    example["non_sd_claims"],
     iat=_args.iat,
     exp=_args.exp,
+    add_decoy_claims=example.get("add_decoy_claims", False),
 )
-
-print(f"SD-JWT at issuer: {sdjwt_at_issuer.combined_sd_jwt_iid}")
 
 ### Produce SD-JWT-R for selected example
 
@@ -163,7 +162,7 @@ print(f"SD-JWT at issuer: {sdjwt_at_issuer.combined_sd_jwt_iid}")
 
 sdjwt_at_holder = SDJWTHolder(sdjwt_at_issuer.combined_sd_jwt_iid)
 sdjwt_at_holder.create_presentation(
-    example["disclosed_claims"],
+    example["holder_disclosed_claims"],
     _args.nonce,
     settings.VERIFIER,
     HOLDER_KEY,

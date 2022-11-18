@@ -6,14 +6,8 @@ user_claims:
     "email": "johndoe@example.com",
     "phone_number": "+1-202-555-0101",
     "secret_club_membership_no": "23",
+    "other_secret_club_membership_no": "42",
     "address":
-      {
-        "street_address": "123 Main St",
-        "locality": "Anytown",
-        "region": "Anystate",
-        "country": "US",
-      },
-    "delivery_address":
       {
         "street_address": "123 Main St",
         "locality": "Anytown",
@@ -23,26 +17,15 @@ user_claims:
     "birthdate": "1940-01-01",
   }
 
-claims_structure: { "address": {}, "delivery_address": {} }
+non_sd_claims: { "address": {} }
 
-blinded_claim_names:
-  - "sub"
-  - "given_name"
-  - "family_name"
-  - "email"
-  - "phone_number"
-  - "secret_club_membership_no"
-  - "address"
-  - "street_address"
-  - "locality"
-  - "region"
-  - "country"
-  - "birthdate"
-
-disclosed_claims:
+holder_disclosed_claims:
   {
     "given_name": null,
     "family_name": null,
     "birthdate": null,
     "address": { "region": null, "country": null },
+    "secret_club_membership_no": null,
   }
+
+add_decoy_claims: true

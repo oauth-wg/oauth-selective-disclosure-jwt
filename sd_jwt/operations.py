@@ -44,7 +44,9 @@ class SDJWTCommon:
         if self.unsafe_randomness:
             # This is not cryptographically secure, but it is deterministic
             # and allows for repeatable output for the generation of the examples.
-            print("WARNING: Using unsafe randomness - output is not suitable for production use!")
+            print(
+                "WARNING: Using unsafe randomness - output is not suitable for production use!"
+            )
             return self._base64url_encode(
                 bytes(random.getrandbits(8) for _ in range(16))
             )
@@ -59,8 +61,6 @@ class SDJWTCommon:
         self._hash_to_disclosure = {}
 
         for disclosure in disclosurses_list:
-            print(f"disclosure: {disclosure}")
-            print(f"disclosure decoded: {self._base64url_decode(disclosure)}")
             decoded_disclosure = loads(
                 self._base64url_decode(disclosure).decode("utf-8")
             )
@@ -71,6 +71,8 @@ class SDJWTCommon:
 
 class SDJWTIssuer(SDJWTCommon):
     DEFAULT_EXP_MINS = 15
+    DECOY_MIN_ELEMENTS = 2
+    DECOY_MAX_ELEMENTS = 5
 
     sd_jwt_payload: Dict
     sd_jwt: JWS
@@ -91,6 +93,7 @@ class SDJWTIssuer(SDJWTCommon):
         iat: Optional[int] = None,
         exp: Optional[int] = None,
         sign_alg=None,
+        add_decoy_claims: bool = False,
     ):
         self._user_claims = user_claims
         self._issuer = issuer
@@ -100,6 +103,7 @@ class SDJWTIssuer(SDJWTCommon):
         self._iat = iat or int(datetime.datetime.utcnow().timestamp())
         self._exp = exp or self._iat + (self.DEFAULT_EXP_MINS * 60)
         self._sign_alg = sign_alg or DEFAULT_SIGNING_ALG
+        self._add_decoy_claims = add_decoy_claims
 
         self._assemble_sd_jwt_payload()
         self._create_signed_jwt()
@@ -122,7 +126,7 @@ class SDJWTIssuer(SDJWTCommon):
 
     def _hash_claim(self, key, value) -> Tuple[str, str]:
         json = dumps([self._generate_salt(), key, value]).encode("utf-8")
-        self._debug_ii_disclosures_contents.append(json.decode('utf-8'))
+        self._debug_ii_disclosures_contents.append(json.decode("utf-8"))
 
         raw_b64 = self._base64url_encode(json)
         hash = self._b64hash(raw_b64.encode("ascii"))
@@ -133,6 +137,9 @@ class SDJWTIssuer(SDJWTCommon):
         hash, raw_b64 = self._hash_claim(key, value)
         self.ii_disclosures.append(raw_b64)
         return hash
+
+    def _create_decoy_claim_entry(self) -> str:
+        return self._b64hash(random.randbytes(16))
 
     def _create_sd_claims(self, user_claims, non_sd_claims):
         # If the user claims are a list, apply this function
@@ -151,7 +158,7 @@ class SDJWTIssuer(SDJWTCommon):
         # dictionary, then the value is assumed to be a claims that
         # should be selectively disclosable.
         elif type(user_claims) is dict:
-            sd_claims = {}
+            sd_claims = {SD_DIGESTS_KEY: []}
             for key, value in user_claims.items():
                 if key in non_sd_claims:
                     sd_claims[key] = self._create_sd_claims(
@@ -159,13 +166,24 @@ class SDJWTIssuer(SDJWTCommon):
                     )
                 else:
                     # Assemble all hash digests in the disclosures list.
-                    # This list is sorted by the hash digest.
-                    sd_claims[SD_DIGESTS_KEY] = sorted(
-                        sd_claims.get(SD_DIGESTS_KEY, [])
-                        + [
-                            self._create_sd_claim_entry(key, value)
-                        ]  # self._hash_claim(key, value)[0]
+                    sd_claims[SD_DIGESTS_KEY].append(
+                        self._create_sd_claim_entry(key, value)
                     )
+
+            # Add decoy claims if requested
+            if self._add_decoy_claims:
+                for _ in range(
+                    random.randint(self.DECOY_MIN_ELEMENTS, self.DECOY_MAX_ELEMENTS)
+                ):
+                    sd_claims[SD_DIGESTS_KEY].append(self._create_decoy_claim_entry())
+
+            # Delete the SD_DIGESTS_KEY if it is empty
+            if len(sd_claims[SD_DIGESTS_KEY]) == 0:
+                del sd_claims[SD_DIGESTS_KEY]
+            else:
+                # Sort the hash digests otherwise
+                sd_claims[SD_DIGESTS_KEY].sort()
+
             return sd_claims
 
         # For other types, assume that the value can be disclosed.
