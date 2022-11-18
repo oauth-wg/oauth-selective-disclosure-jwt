@@ -403,7 +403,7 @@ The Issuer MUST create a Disclosure object for each selectively disclosable clai
    2. The claim name, or key, as it would be used in a regular JWT. This MUST be a string.
    3. The claim's value, as it would be used in a regular JWT. The value MAY be of any type that is allowed in JSON, including numbers, strings, booleans, arrays, and objects.
  * JSON-encode the array such that an UTF-8 string is produced.
- * base64url-encode the byte representation of the UTF-8 string, producing a US-ASCII [@RFC20] string. This string is the Disclosure.
+ * base64url-encode the byte representation of the UTF-8 string, producing a US-ASCII [@RFC0020] string. This string is the Disclosure.
 
 The following example illustrates the steps described above.
 
