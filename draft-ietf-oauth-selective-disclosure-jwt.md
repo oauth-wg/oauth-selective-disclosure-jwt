@@ -72,7 +72,7 @@ against undetected modification. When issuing the SD-JWT to the Holder,
 the Issuer also sends the cleartext counterparts of all hidden claims, the so-called
 Issuer-Issued Disclosures, separate from the SD-JWT itself.
 
-The Holder decides which claims to disclose to a Verifier. The Holder sends the SD-JWT and the 
+The Holder decides which claims to disclose to a Verifier. The Holder sends the SD-JWT and the
 so-called Holder-Selected Disclosures (HS-Disclosures) to the Verifier. The Verifier
 has to verify that all disclosed claim values were part of the original,
 Issuer-signed SD-JWT. The Verifier will not, however, learn any claim
@@ -223,7 +223,7 @@ II-DISCLOSURES = (
 ```
 
 The SD-JWT and the II-Disclosures are sent to the Holder by the Issuer:
-  
+
 ```
 COMBINED-ISSUANCE = (SD-JWT, II-DISCLOSURES)
 ```
@@ -254,8 +254,8 @@ SD-JWT-DOC = (METADATA, HOLDER-PUBLIC-KEY, SD-CLAIMS, NON-SD-CLAIMS)
 
 Note: How the public key is included in SD-JWT is out of scope of this document. It can be passed by value or by reference.
 
-The Holder can then create a signed document `HOLDER-BINDING-JWT` using its private key. This document contains some 
-data provided by the Verifier (out of scope of this document) to ensure the freshness of the signature, for example, a nonce and an indicator of the 
+The Holder can then create a signed document `HOLDER-BINDING-JWT` using its private key. This document contains some
+data provided by the Verifier (out of scope of this document) to ensure the freshness of the signature, for example, a nonce and an indicator of the
 intended audience for the document.
 
 ```
@@ -278,7 +278,7 @@ On a high level, the Verifier
 
  * receives the `COMBINED-PRESENTATION` from the Holder and verifies the signature of the SD-JWT using the Issuer's public key,
  * verifies the Holder Binding JWT, if Holder Binding is required, using the public key included in the SD-JWT,
- * calculates the digests over the Holder-Selected Disclosures and verifies that each digest is contained in the SD-JWT. 
+ * calculates the digests over the Holder-Selected Disclosures and verifies that each digest is contained in the SD-JWT.
 
 The detailed algorithm is described in (#verifier-verification).
 
@@ -375,7 +375,7 @@ extracting the original JSON data. Variations in the encoding of the source
 string are implicitly tolerated by the Verifier, as the digest is computed over a
 predefined byte string and not over a JSON object.
 
-It is important to note that the HS-Disclosures are neither intended nor 
+It is important to note that the HS-Disclosures are neither intended nor
 suitable for direct consumption by
 an application that needs to access the disclosed claim values. The
 HS-Disclosures are only intended to be used by a Verifier to check
@@ -419,7 +419,7 @@ WyI2cU1RdlJMNWhhaiIsICJmYW1pbHlfbmFtZSIsICJNw7ZiaXVzIl0
 ```
 
 Note that the JSON encoding of the object is not canonicalized, so variations in white space, encoding
-of Unicode characters, and ordering of object properties are allowed. For example, the following strings 
+of Unicode characters, and ordering of object properties are allowed. For example, the following strings
 are all valid and encode the same claim value:
 
  * A different way to encode the umlaut: `WyI2cU1RdlJMNWhhaiIsICJmYW1pbHlfbmFtZSIsICJNXHUwMGY2Yml1cyJd`
@@ -432,9 +432,9 @@ An SD-JWT is a JWT that MUST be signed using the Issuer's private key.
 
 An SD-JWT MAY contain both selectively disclosable claims and non-selectively disclosable claims, i.e., claims that are always contained in the SD-JWT in plaintext and are always visible to a Verifier.
 
-Claims controlling the validity of the SD-JWT, such as `iss`, `exp`, or `nbf` are usually included in plaintext. End-User claims MAY be included as plaintext as well, e.g., if hiding the particular claims from the Verifier does not make sense in the intended use case. Ultimately, an Issuer decides which claims are selectively disclosable and which are not. 
+Claims controlling the validity of the SD-JWT, such as `iss`, `exp`, or `nbf` are usually included in plaintext. End-User claims MAY be included as plaintext as well, e.g., if hiding the particular claims from the Verifier does not make sense in the intended use case. Ultimately, an Issuer decides which claims are selectively disclosable and which are not.
 
-Plaintext claims are included in the SD-JWT just as in any other JWT. 
+Plaintext claims are included in the SD-JWT just as in any other JWT.
 
 Selectively disclosable claims are omitted from the SD-JWT. Instead, the hash digests of the respective Disclosures are contained as an array in a new claim, `_sd`. The `_sd` claim MUST be an array of strings, each string being a base64url-encoded hash digest of a Disclosure. The Issuer MUST hide the original order of the claims in the array. To this end, it is RECOMMENDED to either sort the array (e.g., alphanumerically, but the precise method does not matter) or to shuffle the array randomly. The array MAY be empty, although it is RECOMMENDED to omit the claim in this case to save space.
 
