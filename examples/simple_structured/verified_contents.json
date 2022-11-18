@@ -1,0 +1,14 @@
+{
+  "address": {
+    "region": "\u6e2f\u533a",
+    "country": "JP"
+  },
+  "iss": "https://example.com/issuer",
+  "iat": 1516239022,
+  "exp": 1516247022,
+  "sd_digest_derivation_alg": "sha-256",
+  "given_name": "\u592a\u90ce",
+  "email": "\"unusual email address\"@\u65e5\u672c.com",
+  "birthdate": "1940-01-01",
+  "family_name": "\u5c71\u7530"
+}

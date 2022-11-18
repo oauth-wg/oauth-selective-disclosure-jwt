@@ -1,0 +1,14 @@
+{
+  "address": {
+    "region": "Anystate",
+    "country": "US"
+  },
+  "iss": "https://example.com/issuer",
+  "iat": 1516239022,
+  "exp": 1516247022,
+  "sd_digest_derivation_alg": "sha-256",
+  "family_name": "Doe",
+  "given_name": "John",
+  "birthdate": "1940-01-01",
+  "secret_club_membership_no": "23"
+}

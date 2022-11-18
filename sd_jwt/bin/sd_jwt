@@ -158,7 +158,7 @@ sdjwt_at_issuer = SDJWTIssuer(
     example["user_claims"],
     settings.ISSUER,
     ISSUER_KEY,
-    HOLDER_KEY,
+    HOLDER_KEY if example.get("holder_binding", False) else None,
     example["non_sd_claims"],
     iat=_args.iat,
     exp=_args.exp,
@@ -172,9 +172,9 @@ sdjwt_at_issuer = SDJWTIssuer(
 sdjwt_at_holder = SDJWTHolder(sdjwt_at_issuer.combined_sd_jwt_iid)
 sdjwt_at_holder.create_presentation(
     example["holder_disclosed_claims"],
-    _args.nonce,
-    settings.VERIFIER,
-    HOLDER_KEY,
+    _args.nonce if example.get("holder_binding", False) else None,
+    settings.VERIFIER if example.get("holder_binding", False) else None,
+    HOLDER_KEY if example.get("holder_binding", False) else None,
 )
 
 ### Verify the SD-JWT using the SD-JWT-R
@@ -184,8 +184,8 @@ sdjwt_at_verifier = SDJWTVerifier(
     sdjwt_at_holder.combined_presentation,
     ISSUER_PUBLIC_KEY,
     settings.ISSUER,
-    settings.VERIFIER,
-    _args.nonce,
+    settings.VERIFIER if example.get("holder_binding", False) else None,
+    _args.nonce if example.get("holder_binding", False) else None,
 )
 verified = sdjwt_at_verifier.get_verified_payload()
 
@@ -242,7 +242,12 @@ elif _args.output_dir:
         if not output_dir.exists():
             output_dir.mkdir(parents=True)
 
-        with open(output_dir / f"{key}.txt", "w") as f:
+        if isinstance(value[0], dict):
+            ext = "json"
+        else:
+            ext = "txt"
+
+        with open(output_dir / f"{key}.{ext}", "w") as f:
             f.write(format_example(value[0]))
 
 else:

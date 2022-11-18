@@ -88,7 +88,7 @@ class SDJWTIssuer(SDJWTCommon):
         user_claims: Dict,
         issuer: str,
         issuer_key,
-        holder_key,
+        holder_key=None,
         claims_structure: Optional[Dict] = None,
         iat: Optional[int] = None,
         exp: Optional[int] = None,
@@ -117,12 +117,15 @@ class SDJWTIssuer(SDJWTCommon):
         self.sd_jwt_payload.update(
             {
                 "iss": self._issuer,
-                "cnf": {"jwk": self._holder_key.export_public(as_dict=True)},
                 "iat": self._iat,
                 "exp": self._exp,
                 DIGEST_ALG_KEY: self.HASH_ALG["name"],
             }
         )
+        if self._holder_key:
+            self.sd_jwt_payload["cnf"] = {
+                "jwk": self._holder_key.export_public(as_dict=True)
+            }
 
     def _hash_claim(self, key, value) -> Tuple[str, str]:
         json = dumps([self._generate_salt(), key, value]).encode("utf-8")
@@ -151,9 +154,7 @@ class SDJWTIssuer(SDJWTCommon):
                 reference = {}
             else:
                 reference = non_sd_claims[0]
-            return [
-                self._create_sd_claims(claim, reference) for claim in user_claims
-            ]
+            return [self._create_sd_claims(claim, reference) for claim in user_claims]
 
         # If the user claims are a dictionary, apply this function
         # to each key/value pair in the dictionary. The structure
@@ -276,8 +277,7 @@ class SDJWTHolder(SDJWTCommon):
             else:
                 reference = claims_to_disclose[0]
             return [
-                self._select_disclosures(claim, reference)
-                for claim in sd_jwt_claims
+                self._select_disclosures(claim, reference) for claim in sd_jwt_claims
             ]
 
         elif type(sd_jwt_claims) is dict:

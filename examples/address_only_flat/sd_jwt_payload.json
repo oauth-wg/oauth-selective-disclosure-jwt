@@ -1,0 +1,10 @@
+{
+  "_sd": [
+    "k8f8eq6sIxqKjmbO-OylY4jalkvW4DZg5cyV8N_TXqA",
+    "ri7L7wKKi0AJAIr8SpiIcFu2tXmQJNnRjCHuzQvUUQg"
+  ],
+  "iss": "https://example.com/issuer",
+  "iat": 1516239022,
+  "exp": 1516247022,
+  "sd_digest_derivation_alg": "sha-256"
+}

@@ -1,0 +1,17 @@
+{
+  "_sd": [
+    "2lwEEfEpYi-_B_ZBCwjLVNIoeGBPSVl95SnrUxCMRQ8"
+  ],
+  "address": {
+    "_sd": [
+      "-hhHkLTKhCitAz2I7EHh6oMQNn6QsEG30i-HU1aXCs4",
+      "7yuMSE4fQM9CR2atuQv42S4-FjFX2uXMU8IOc1LOeFU",
+      "_EZp0gVJKsTd5iEgsWezy2RFihn7s6WN-9YtNZBsfqw",
+      "sIA6f43LlrQo_28d3E5EEBF9-anFic7y1_mfT7xLsZQ"
+    ]
+  },
+  "iss": "https://example.com/issuer",
+  "iat": 1516239022,
+  "exp": 1516247022,
+  "sd_digest_derivation_alg": "sha-256"
+}

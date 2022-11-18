@@ -13,4 +13,4 @@ do
     echo "Processing $file"
     sd_jwt $file $SDJWT_ARGS 
 done
-git add $OUTPUT_DIR/*/*.txt
+git add $OUTPUT_DIR/*/*.{json,txt}
