@@ -1,0 +1,21 @@
+["6yCDGTRnPsPz0KtqIXwr8Q", "trust_framework", "de_aml"]
+["6NZEaoERefw2va9wUfCJRA", "time", "2012-04-23T18:25Z"]
+["SYXZKoujrXuvOgxcnuYKRw", "verification_process",
+"f24c6f-6d3f-4ec5-973e-b0d8506f3bc7"] ["r4MSvVDcXP0YEJclwPINdg",
+"type", "document"] ["Ubb80fQbwN9ltKLXsDonGg", "method", "pipp"]
+["ZEmoY74fSoQwq8YV2LF2kw", "time", "2012-04-22T11:30Z"]
+["mjpcDi0xqYm1xhRrCyBxfg", "type", "idcard"]
+["DcB39tpppjlhcTW--HJaRw", "name", "Stadt Augsburg"]
+["Fme4UWfx6AWH55-A8rWD_w", "country", "DE"]
+["3gsIEK45c8nFZOOXmbD-TA", "number", "53554554"]
+["k6VFKB7WoqyfWOS4EVjSww", "date_of_issuance", "2010-03-23"]
+["jLKFfQXBNEttEG4uPezryg", "date_of_expiry", "2020-03-22"]
+["vZcyd4CL8Ex1APiRoKUTPw", "given_name", "Max"]
+["hwIENIC1l-BTnfs_2vPWfA", "family_name", "M\u00fcller"]
+["GDXL-0_YioaLMSYtG7BvLg", "nationalities", ["DE"]]
+["UR6lH-cmKHzxyTiak4fEUQ", "address", {"locality": "Maxstadt",
+"postal_code": "12344", "country": "DE", "street_address":
+"Weidenstra\u00dfe 22"}] ["n5_ASyikaR4pY34kToXNPQ",
+"birth_middle_name", "Timotheus"] ["EHhvwWgXh6UFJqTfF5QhOw",
+"salutation", "Dr."] ["S31vF7VdsiP8QMptomOemA", "msisdn",
+"49123456789"]

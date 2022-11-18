@@ -1,0 +1,34 @@
+{
+  "_sd": [
+    "9NEmRF3rhaSHqT05xEsEQ2d7V4HSNHahzdXyPPQ-Tvk",
+    "QP1mnvUz-ZblKK2hiD6X7sDYaI8YTX79IWAZqM1LX64",
+    "QVNU9Xooq5vLnYtQ9uqYUgXcX6f4matA9rmjZ834b6E",
+    "_fWXPu-XKuF-TuGoKSoGdTeT_vqxWtkftXuDRaKZJL8",
+    "bXgwqQiv8htzdOpdc-InIsosQHp0irfOklEXTANmnb4",
+    "geqKIxiKSSJyPshE7AQF36kqp8Plu8DHO8HvZNshLww"
+  ],
+  "address": {
+    "_sd": [
+      "6bDJBECANbRfJ0lu8ErtZkTwqSNMeiXcJt74_YtLpmQ",
+      "AviuWE4YRymLVuoNZkqad1iaYMGdzzjdstAjDKpb6lk",
+      "aQhnCIssfb5upnNBd_uKcWNjYYyo7vhAmc_tV5XIGPU",
+      "lokpwW_yH1SAqX0gmpoPDQ7IzagsrbdhjK7-mYVJi_A"
+    ]
+  },
+  "iss": "https://example.com/issuer",
+  "cnf": {
+    "jwk": {
+      "kty": "RSA",
+      "n": "pm4bOHBg-oYhAyPWzR56AWX3rUIXp11_ICDkGgS6W3ZWLts-hzwI3x65
+        659kg4hVo9dbGoCJE3ZGF_eaetE30UhBUEgpGwrDrQiJ9zqprmcFfr3qvvkG
+        jtth8Zgl1eM2bJcOwE7PCBHWTKWYs152R7g6Jg2OVph-a8rq-q79MhKG5QoW
+        _mTz10QT_6H4c7PjWG1fjh8hpWNnbP_pv6d1zSwZfc5fl6yVRL0DV0V3lGHK
+        e2Wqf_eNGjBrBLVklDTk8-stX_MWLcR-EGmXAOv0UBWitS_dXJKJu-vXJyw1
+        4nHSGuxTIK2hx1pttMft9CsvqimXKeDTU14qQL1eE7ihcw",
+      "e": "AQAB"
+    }
+  },
+  "iat": 1516239022,
+  "exp": 1516247022,
+  "sd_digest_derivation_alg": "sha-256"
+}

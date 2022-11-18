@@ -1,0 +1,68 @@
+{
+  "_sd": [
+    "0fGhQf6nEvYH9sTcCtkxCfAVKp9qAYDVmFsxADWJsio",
+    "H0ZuxXsa39gwxHQ0cK_HQAIKjW4t11YwM0Gy_1gUluU",
+    "gXzq9tVKaddfQvt94riVze6GlZiW35ItiMngC5p_hXE"
+  ],
+  "verified_claims": {
+    "verification": {
+      "_sd": [
+        "4nQI4-y9wtJvyCs2WttyLmITY02K5WBMKKT1qKeEhHE",
+        "Zvx3GXqsjB1cR5rmxrlv3xQuTykWDZ7lKlmaxtBVYo0",
+        "cCzobgUal0u_Dn0PengU8YcZfv_R3xh0MW1K01Okg1o"
+      ],
+      "evidence": [
+        {
+          "_sd": [
+            "18o6apk_mELe_RaWjI1Om877h9_Jky5dpgzuBBNl-dQ",
+            "Ed7fTsdbgv2EZ5uGsuUAk5YBaMtCfvTFkmZZszVRJpk",
+            "rvJdOi2J6gFeNIvCdgIprrjmi1rKTD_Ru96di5FS7i4"
+          ],
+          "document": {
+            "_sd": [
+              "BiKOIkmtJfr7IpWsn8_X4hc6FygqaeQPujoVuXAHnWQ",
+              "F1vtjNyR7vaY8bO6CHdFr9tAje0ltSLe7bIFYlpNW7s",
+              "HXyhyliGWAP8uvBf3JhdGSh9Pbg3KNu969581e8MZPo",
+              "sVzUIXAzzMw0EfIwZyL23xwee3874u3a7iXcWyZhwp4"
+            ],
+            "issuer": {
+              "_sd": [
+                "C1saJVc21n1Y1O2s4ya0UYJabTAoGyg__Q39OfyjqSM",
+                "Li9BJSo7AFcKVTlrLz6ip6t82nqIt2qrXc3wp6rColM"
+              ]
+            }
+          }
+        }
+      ]
+    },
+    "claims": {
+      "_sd": [
+        "1qb26tNg6OZuZyVDYwK4--mQxXbZqwcQbhUxGHrXeLM",
+        "AHX0EgNpd_wak07lK8HX2izDNntsUZojuzyEWd2GJdk",
+        "FwzTz0THaEOzexgEzLRXu-zsTPND7by3aBF57AwKCZI",
+        "xKbTMlOSjFjkJw8kAMZAyhEfqbaq2b-klaPK8srpgvs"
+      ],
+      "birthdate": "1956-01-28",
+      "place_of_birth": {
+        "country": "IS",
+        "locality": "\u00deykkvab\u00e6jarklaustur"
+      }
+    }
+  },
+  "iss": "https://example.com/issuer",
+  "cnf": {
+    "jwk": {
+      "kty": "RSA",
+      "n": "pm4bOHBg-oYhAyPWzR56AWX3rUIXp11_ICDkGgS6W3ZWLts-hzwI3x65
+        659kg4hVo9dbGoCJE3ZGF_eaetE30UhBUEgpGwrDrQiJ9zqprmcFfr3qvvkG
+        jtth8Zgl1eM2bJcOwE7PCBHWTKWYs152R7g6Jg2OVph-a8rq-q79MhKG5QoW
+        _mTz10QT_6H4c7PjWG1fjh8hpWNnbP_pv6d1zSwZfc5fl6yVRL0DV0V3lGHK
+        e2Wqf_eNGjBrBLVklDTk8-stX_MWLcR-EGmXAOv0UBWitS_dXJKJu-vXJyw1
+        4nHSGuxTIK2hx1pttMft9CsvqimXKeDTU14qQL1eE7ihcw",
+      "e": "AQAB"
+    }
+  },
+  "iat": 1516239022,
+  "exp": 1516247022,
+  "sd_digest_derivation_alg": "sha-256"
+}

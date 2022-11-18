@@ -1,0 +1,11 @@
+["z4K1wudi42WfE6WPgflk2g", "assurance_level", "high"]
+["CqJGSsXuZUh6uNkyehxSCQ", "type", "electronic_record"]
+["R9_RAVaMf6CLvRm4gp39-g", "type", "eu.europa.ec.eudiw.pid.1"]
+["bEOq8j569eYzlS7-xHWFBg", "source", {"organization_name": "Comune
+di Firenze", "organization_id": "c_d612", "country_code": "IT",
+"country": "Italy"}] ["ZhoNuEm709dkO0TUoey4WA", "personal_number",
+"9642-8fe652c8c040"] ["tyUXA6PPhyE0XIQz1KXaJw", "date_of_birth",
+"1922-03-13"] ["upRgInERoNYJ4wdQs8oNeA", "gender", "M"]
+["5pjF2JLNgx9lIbR_BoIZ3w", "place_of_birth", {"country": "IT",
+"locality": "Firenze"}] ["aohVTGX-pkx-o1msffdwkQ",
+"birth_middle_name", "Lello"]

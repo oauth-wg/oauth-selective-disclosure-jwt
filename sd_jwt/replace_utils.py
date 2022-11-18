@@ -70,6 +70,21 @@ def replace_code_in_markdown_source(file_contents, placeholder_id, new_code):
     return new_string
 
 
+def format_example(data):
+    if isinstance(data, dict):
+        return textwrap_json(
+            json.dumps(data, indent=EXAMPLE_INDENT),
+            width=EXAMPLE_MAX_WIDTH,
+        )
+
+    else:
+        return fill(
+            data,
+            width=EXAMPLE_MAX_WIDTH,
+            break_on_hyphens=False,
+        )
+
+
 def replace_all_in_file(
     file: Path,
     replacements: dict,
@@ -86,18 +101,7 @@ def replace_all_in_file(
     file.with_suffix(".bak").write_text(file_contents)
 
     for key, (data, _) in replacements.items():
-        if isinstance(data, dict):
-            new_code = textwrap_json(
-                json.dumps(data, indent=EXAMPLE_INDENT),
-                width=EXAMPLE_MAX_WIDTH,
-            )
-
-        else:
-            new_code = fill(
-                data,
-                width=EXAMPLE_MAX_WIDTH,
-                break_on_hyphens=False,
-            )
+        new_code = format_example(data)
 
         placeholder_id = prefix + key
 

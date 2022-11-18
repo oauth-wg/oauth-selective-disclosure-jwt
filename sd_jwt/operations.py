@@ -147,8 +147,12 @@ class SDJWTIssuer(SDJWTCommon):
         # (which is assumed to be a list as well) is used as the
         # structure for each item in the list.
         if type(user_claims) is list:
+            if type(non_sd_claims) is not list or len(non_sd_claims) < 1:
+                reference = {}
+            else:
+                reference = non_sd_claims[0]
             return [
-                self._create_sd_claims(claim, non_sd_claims[0]) for claim in user_claims
+                self._create_sd_claims(claim, reference) for claim in user_claims
             ]
 
         # If the user claims are a dictionary, apply this function
@@ -267,8 +271,12 @@ class SDJWTHolder(SDJWTCommon):
         # then add the corresponding disclosures to the claims_to_disclose.
 
         if type(sd_jwt_claims) is list:
+            if type(claims_to_disclose) is not list or len(claims_to_disclose) < 1:
+                reference = {}
+            else:
+                reference = claims_to_disclose[0]
             return [
-                self._select_disclosures(claim, claims_to_disclose[0])
+                self._select_disclosures(claim, reference)
                 for claim in sd_jwt_claims
             ]
 

@@ -1,0 +1,42 @@
+{
+  "_sd": [
+    "05aLRlDgF63ZcpkFEu0D3eMDfiA7nBU6Me3X08Thnc4",
+    "4oXf9WUldZn8kSjrajZGReflaaJ5KcmZptuIgZBN6Cc",
+    "8ksb9q1-0zwGuof5ohl-gfioRE9V_lXrmzcmLIJyXTE",
+    "AQHHxTAXNcctXciLglp5YdUAv5L1CK-IBxWE15KJmBY",
+    "A_iBPCQ4szwuIBywLH5TOpkMmelCOu7mkAzIwjX-DnE",
+    "PBZeggXotURSLpE2aurrUj54AXMWfL3MRUBhbXd5gnY",
+    "PTmVMwb40pxKMCVykdU_zm6S5yphwGm5FRa1m3KOd-o",
+    "TDC-Jsdq-VyKA0Z25Ubx6tL7dk1OwAbGXIN2K_ItYvw",
+    "ZRq0Mx8bsF7QFEj7d-AkkyegxbSsFg_kU2tlsEskkLc",
+    "_quPDs_FDezZNLZ1WILfqthsRGJmrEEzRgrWgwpRWmI",
+    "ag8or__yKLbwAj4kHDKaRt47xiX49jvEHMKh8LvMycw",
+    "l97gH6Plr8xi0GGRPJBFtnhOfc5MdEfcq-PaUT2eYJE"
+  ],
+  "address": {
+    "_sd": [
+      "3zkPqkRYlhsjGCRf70YwcnT2Uuo00cd7nsjXOpr-UTg",
+      "CIdL4buJbO9IQ4zdy13Q35Ov41JEVy9NFQ6lAwIBcGE",
+      "I29Sl8nSMVVf-jUzvjRJFbKIdZkks7lmyIZ9ZDw-v3I",
+      "J3Zg5NDlVOadcFAn8fi1F4am-hxH4T8NdN1lcghW95w",
+      "RsWikMC_5eWT2pysz3J0QeKZV-309ypMhRhmk2wY8OY",
+      "UOKDqn5wTYHbo9F3p30Cfj6hFBpeWd9gsJh8JvtndOg"
+    ]
+  },
+  "iss": "https://example.com/issuer",
+  "cnf": {
+    "jwk": {
+      "kty": "RSA",
+      "n": "pm4bOHBg-oYhAyPWzR56AWX3rUIXp11_ICDkGgS6W3ZWLts-hzwI3x65
+        659kg4hVo9dbGoCJE3ZGF_eaetE30UhBUEgpGwrDrQiJ9zqprmcFfr3qvvkG
+        jtth8Zgl1eM2bJcOwE7PCBHWTKWYs152R7g6Jg2OVph-a8rq-q79MhKG5QoW
+        _mTz10QT_6H4c7PjWG1fjh8hpWNnbP_pv6d1zSwZfc5fl6yVRL0DV0V3lGHK
+        e2Wqf_eNGjBrBLVklDTk8-stX_MWLcR-EGmXAOv0UBWitS_dXJKJu-vXJyw1
+        4nHSGuxTIK2hx1pttMft9CsvqimXKeDTU14qQL1eE7ihcw",
+      "e": "AQAB"
+    }
+  },
+  "iat": 1516239022,
+  "exp": 1516247022,
+  "sd_digest_derivation_alg": "sha-256"
+}

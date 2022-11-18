@@ -48,14 +48,14 @@ non_sd_claims:
     "verified_claims":
       {
         "verification": { 
-            "trust_framework": "", 
+            "trust_framework": null, 
             "evidence": [{ "document": { "issuer": {} } }] 
         },
         "claims": { 
-            "person_unique_identifier": "",
-            "given_name": "", 
-            "family_name": "", 
-            "nationalities": "" 
+            "person_unique_identifier": null,
+            "given_name": null, 
+            "family_name": null, 
+            "nationalities": null 
         },
       },
   }

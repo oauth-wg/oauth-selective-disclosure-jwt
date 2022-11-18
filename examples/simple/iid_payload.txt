@@ -1,0 +1,8 @@
+["9Wa6FQS_aYIBnNa8OVza6w", "sub",
+"6c5c0a49-b589-431d-bae7-219122a9ec2c"] ["sm_cDBOVuz7F_D3UtakpyQ",
+"given_name", "John"] ["uFK3rhHz2236WXxJs8VwQw", "family_name",
+"Doe"] ["BCysc7sKyIcAc2A2p3sgPg", "email", "johndoe@example.com"]
+["UkXVjmkPN2kLoCB2T4uU8A", "phone_number", "+1-202-555-0101"]
+["nbAMseDdtIiTII205MQV6w", "address", {"street_address": "123 Main
+St", "locality": "Anytown", "region": "Anystate", "country": "US"}]
+["3go396-P1b5ureTz7pgL9w", "birthdate", "1940-01-01"]

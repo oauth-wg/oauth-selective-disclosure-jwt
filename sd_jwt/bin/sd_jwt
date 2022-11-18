@@ -83,6 +83,15 @@ parser.add_argument(
         "path/to/draft-ietf-oauth-selective-disclosure-jwt.md - Do not output examples, but replace all the examples in the specs"
     ),
 )
+# new option to put examples into a directory
+parser.add_argument(
+    "--output-dir",
+    required=False,
+    type=pathlib.Path,
+    help=(
+        "path/to/directory - Write all the examples into separate files in this directory"
+    ),
+)
 parser.add_argument(
     "-v",
     "--version",
@@ -171,7 +180,6 @@ sdjwt_at_holder.create_presentation(
 ### Verify the SD-JWT using the SD-JWT-R
 
 # Note: The only input from the holder is the combined presentation!
-print(sdjwt_at_holder.combined_presentation)
 sdjwt_at_verifier = SDJWTVerifier(
     sdjwt_at_holder.combined_presentation,
     ISSUER_PUBLIC_KEY,
@@ -207,8 +215,37 @@ _artifacts = {
 }
 
 
-if not _args.replace_examples_in:
+if _args.replace_examples_in:
+    from sd_jwt.replace_utils import replace_all_in_file
 
+    logger.info(
+        f"Replacing the placeholders in the '{_args.replace_examples_in}' file."
+    )
+
+    replace_all_in_file(
+        _args.replace_examples_in,
+        _artifacts,
+        f"example-{example_identifer}-",
+        ignore_missing_placeholders=True,
+    )
+
+elif _args.output_dir:
+    from sd_jwt.replace_utils import format_example
+
+    logger.info(
+        f"Writing all the examples into separate files in '{_args.output_dir}'."
+    )
+
+    for key, value in _artifacts.items():
+        output_dir = _args.output_dir / example_identifer
+
+        if not output_dir.exists():
+            output_dir.mkdir(parents=True)
+
+        with open(output_dir / f"{key}.txt", "w") as f:
+            f.write(format_example(value[0]))
+
+else:
     for key, (data, description) in _artifacts.items():
         print(f"{description} ({key}):")
         if isinstance(data, dict):
@@ -222,17 +259,3 @@ if not _args.replace_examples_in:
             print_decoded_repr(data)
 
     sys.exit(0)
-
-
-### Otherwise, update examples in the spec
-
-from sd_jwt.replace_utils import replace_all_in_file
-
-logger.info(f"Replacing the placeholders in the '{_args.replace_examples_in}' file.")
-
-replace_all_in_file(
-    _args.replace_examples_in,
-    _artifacts,
-    f"example-{example_identifer}-",
-    ignore_missing_placeholders=True,
-)

@@ -1,0 +1,47 @@
+{
+  "verified_claims": {
+    "verification": {
+      "trust_framework": "de_aml",
+      "time": "2012-04-23T18:25Z",
+      "verification_process": "f24c6f-6d3f-4ec5-973e-b0d8506f3bc7",
+      "evidence": [
+        {
+          "type": "document",
+          "method": "pipp",
+          "time": "2012-04-22T11:30Z",
+          "document": {
+            "type": "idcard",
+            "issuer": {
+              "name": "Stadt Augsburg",
+              "country": "DE"
+            },
+            "number": "53554554",
+            "date_of_issuance": "2010-03-23",
+            "date_of_expiry": "2020-03-22"
+          }
+        }
+      ]
+    },
+    "claims": {
+      "given_name": "Max",
+      "family_name": "M\u00fcller",
+      "nationalities": [
+        "DE"
+      ],
+      "birthdate": "1956-01-28",
+      "place_of_birth": {
+        "country": "IS",
+        "locality": "\u00deykkvab\u00e6jarklaustur"
+      },
+      "address": {
+        "locality": "Maxstadt",
+        "postal_code": "12344",
+        "country": "DE",
+        "street_address": "Weidenstra\u00dfe 22"
+      }
+    }
+  },
+  "birth_middle_name": "Timotheus",
+  "salutation": "Dr.",
+  "msisdn": "49123456789"
+}
