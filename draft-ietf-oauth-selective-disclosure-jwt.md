@@ -72,7 +72,7 @@ against undetected modification. When issuing the SD-JWT to the Holder,
 the Issuer also sends the cleartext counterparts of all hidden claims, the so-called
 Disclosures, separate from the SD-JWT itself.
 
-The Holder decides which claims to disclose to a Verifier and forwards the respective 
+The Holder decides which claims to disclose to a Verifier and forwards the respective
 Disclosures together with the SD-JWT to the Verifier. The Verifier
 has to verify that all disclosed claim values were part of the original,
 Issuer-signed SD-JWT. The Verifier will not, however, learn any claim
@@ -418,22 +418,22 @@ are all valid and encode the same claim value:
 
 #### Hashing Disclosures
 
-For embedding the Disclosures in the SD-JWT, the Disclosures are hashed using the digest algorithm specified in the `sd_digest_derivation_alg` claim described below. The resulting hash is then included in the SD-JWT instead of the original claim value, as described next. 
+For embedding the Disclosures in the SD-JWT, the Disclosures are hashed using the digest algorithm specified in the `sd_digest_derivation_alg` claim described below. The resulting hash is then included in the SD-JWT instead of the original claim value, as described next.
 
 The hash digest MUST be taken over the US-ASCII bytes of the base64url-encoded Disclosure. This follows the convention in JWS [@RFC7515] and JWE [@RFC7516]. The bytes of the hash digest MUST then be base64url-encoded.
 
 Note:
 
  * The input to the hash function is the base64url-encoded Disclosure, not the bytes encoded by the base64url string.
- * The bytes of the output of the hash function are base64url-encoded, not the bytes making up the (often used) hex representation of the bytes of the hash digest. 
+ * The bytes of the output of the hash function are base64url-encoded, not the bytes making up the (often used) hex representation of the bytes of the hash digest.
 
 For example, the
-SHA-256 hash digest of the Disclosure `WyI2cU1RdlJMNWhhaiIsICJmYW1pbHlfbmFtZSIsICJNw7ZiaXVzIl0` would be 
+SHA-256 hash digest of the Disclosure `WyI2cU1RdlJMNWhhaiIsICJmYW1pbHlfbmFtZSIsICJNw7ZiaXVzIl0` would be
 `uutlBuYeMDyjLLTpf6Jxi7yNkEF35jdyWMn9U7b_RYY`.
 
 #### Decoy Digests
 
-An Issuer MAY add additional hash digests to the SD-JWT that are not associated with any claim.  The purpose of such "decoy" digests is to make it more difficult for an attacker to see the original number of claims contained in the SD-JWT. It is RECOMMENDED to create the decoy digests by hashing over a cryptographically secure random number. The bytes of the hash digest MUST then be base64url-encoded as above. The same digest function as for the Disclosures MUST be used. 
+An Issuer MAY add additional hash digests to the SD-JWT that are not associated with any claim.  The purpose of such "decoy" digests is to make it more difficult for an attacker to see the original number of claims contained in the SD-JWT. It is RECOMMENDED to create the decoy digests by hashing over a cryptographically secure random number. The bytes of the hash digest MUST then be base64url-encoded as above. The same digest function as for the Disclosures MUST be used.
 
 For decoy digests, no Disclosure is sent to the Holder, i.e., the Holder will see hash digests that do not correspond to any Disclosure. See (#decoy_digests_privacy) for additional privacy considerations.
 
@@ -449,12 +449,12 @@ Claims controlling the validity of the SD-JWT, such as `iss`, `exp`, or `nbf` ar
 
 Plaintext claims are included in the SD-JWT just as they would be in any other JWT.
 
-Selectively disclosable claims are omitted from the SD-JWT. Instead, the hash digests of the respective Disclosures and potentially decoy digests are contained as an array in a new claim, `_sd`. 
+Selectively disclosable claims are omitted from the SD-JWT. Instead, the hash digests of the respective Disclosures and potentially decoy digests are contained as an array in a new claim, `_sd`.
 
-The `_sd` claim MUST be an array of strings, each string being a hash digests of a Disclosure or a decoy digest as described above. 
+The `_sd` claim MUST be an array of strings, each string being a hash digests of a Disclosure or a decoy digest as described above.
 The array MAY be empty, although it is RECOMMENDED to omit the claim in this case to save space.
 
-The Issuer MUST hide the original order of the claims in the array. To ensure this, it is RECOMMENDED to shuffle the array, e.g., by sorting it alphanumerically or randomly. The precise method does not matter as long as it does not depend on the original order of elements. 
+The Issuer MUST hide the original order of the claims in the array. To ensure this, it is RECOMMENDED to shuffle the array, e.g., by sorting it alphanumerically or randomly. The precise method does not matter as long as it does not depend on the original order of elements.
 
 
 #### Nested Data in SD-JWTs
@@ -558,7 +558,7 @@ The Issuer creates the following Disclosures:
 Besides the SD-JWT itself, the Holder needs to learn the raw claim values that
 are contained in the SD-JWT, along with the precise input to the digest
 calculation and the salts. To this end, the Issuer sends the Disclosure objects
-that were also used for the hash calculation, as described in (#creating_disclosures), 
+that were also used for the hash calculation, as described in (#creating_disclosures),
 to the Holder.
 
 The data format for sending the SD-JWT and the Disclosures to the Holder is
@@ -591,13 +591,13 @@ as follows (line break added for readability):
 ```
 This is called the Combined Format for Presentation.
 
-The Holder MAY send any subset of the Disclosures to the Verifier, i.e., 
-none, multiple, or all Disclosures. 
+The Holder MAY send any subset of the Disclosures to the Verifier, i.e.,
+none, multiple, or all Disclosures.
 
 The Holder MAY add an optional JWT to prove Holder Binding to the Verifier.
 The precise contents of the JWT are out of scope of this specification.
 Usually, a `nonce` and `aud` claim are included to show that the proof is
-intended for the Verifier and to prevent replay attacks. How the `nonce` or 
+intended for the Verifier and to prevent replay attacks. How the `nonce` or
 other claims are obtained by the Holder is out of scope of this specification.
 
 Whether to require Holder Binding is up to the Verifier's policy,
@@ -882,7 +882,7 @@ MUST be chosen by the Issuer.
 
 The use of decoy digests is RECOMMENDED when the number of claims (or the existence of particular claims) can be a side-channel disclosing information about otherwise undisclosed claims. In particular, if a claim in an SD-JWT is present only if a certain condition is met (e.g., a membership number is only contained if the End-User is a member of a group), the Issuer SHOULD add decoy digests when the condition is not met.
 
-Decoy digests increase the size of the SD-JWT. The number of decoy digests (or whether to use them at all) is a trade-off between the size of the SD-JWT and the privacy of the End-User's data. 
+Decoy digests increase the size of the SD-JWT. The number of decoy digests (or whether to use them at all) is a trade-off between the size of the SD-JWT and the privacy of the End-User's data.
 
 
 ## Claim Names
