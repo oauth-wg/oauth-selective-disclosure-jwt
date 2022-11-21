@@ -1,4 +1,4 @@
-**Disclosure for 'sub':**
+__Disclosure for `sub`:__
 
 ```
 WyJOMzJUYXZ2bnByVjB4UTVYQl9PaElRIiwgInN1YiIsICI2YzVjMGE0OS1iNTg5LTQz
@@ -14,7 +14,7 @@ Contents:
 
 SHA-256 Hash: `QP1mnvUz-ZblKK2hiD6X7sDYaI8YTX79IWAZqM1LX64`
 
-**Disclosure for 'given_name':**
+__Disclosure for `given_name`:__
 
 ```
 WyJyU3pjLVBFVEVhaDFqX1dKU2ItT1NRIiwgImdpdmVuX25hbWUiLCAiXHU1OTJhXHU5
@@ -29,7 +29,7 @@ Contents:
 
 SHA-256 Hash: `QVNU9Xooq5vLnYtQ9uqYUgXcX6f4matA9rmjZ834b6E`
 
-**Disclosure for 'family_name':**
+__Disclosure for `family_name`:__
 
 ```
 WyJrdGRLMThLb3VJTFNMNUxQQWNoQ2tRIiwgImZhbWlseV9uYW1lIiwgIlx1NWM3MVx1
@@ -44,7 +44,7 @@ Contents:
 
 SHA-256 Hash: `geqKIxiKSSJyPshE7AQF36kqp8Plu8DHO8HvZNshLww`
 
-**Disclosure for 'email':**
+__Disclosure for `email`:__
 
 ```
 WyJvMFZZMXdGaXE5TUNuOGlobkdfQ3dRIiwgImVtYWlsIiwgIlwidW51c3VhbCBlbWFp
@@ -60,7 +60,7 @@ address\"@\u65e5\u672c.com"]
 
 SHA-256 Hash: `_fWXPu-XKuF-TuGoKSoGdTeT_vqxWtkftXuDRaKZJL8`
 
-**Disclosure for 'phone_number':**
+__Disclosure for `phone_number`:__
 
 ```
 WyIwaldnSk0xUk5YNWJWZlFyclRyc0hnIiwgInBob25lX251bWJlciIsICIxMjM0NTYi
@@ -75,7 +75,7 @@ Contents:
 
 SHA-256 Hash: `9NEmRF3rhaSHqT05xEsEQ2d7V4HSNHahzdXyPPQ-Tvk`
 
-**Disclosure for 'street_address':**
+__Disclosure for `street_address`:__
 
 ```
 WyJCWEk3Q0FqVEUzSHBMclVDS2FlYlV3IiwgInN0cmVldF9hZGRyZXNzIiwgIlx1Njc3
@@ -92,7 +92,7 @@ Contents:
 
 SHA-256 Hash: `AviuWE4YRymLVuoNZkqad1iaYMGdzzjdstAjDKpb6lk`
 
-**Disclosure for 'locality':**
+__Disclosure for `locality`:__
 
 ```
 WyJwWjlPMHdTZ1dXVjZvT2hUbGhuT3NnIiwgImxvY2FsaXR5IiwgIlx1Njc3MVx1NGVh
@@ -107,7 +107,7 @@ Contents:
 
 SHA-256 Hash: `aQhnCIssfb5upnNBd_uKcWNjYYyo7vhAmc_tV5XIGPU`
 
-**Disclosure for 'region':**
+__Disclosure for `region`:__
 
 ```
 WyJHZ0M2NmZ3eWU0Nlc2M21HbDY2Y05nIiwgInJlZ2lvbiIsICJcdTZlMmZcdTUzM2Ei
@@ -122,7 +122,7 @@ Contents:
 
 SHA-256 Hash: `6bDJBECANbRfJ0lu8ErtZkTwqSNMeiXcJt74_YtLpmQ`
 
-**Disclosure for 'country':**
+__Disclosure for `country`:__
 
 ```
 WyIwa1JnRExxQnY4UjEwNUs4bmU5LTZBIiwgImNvdW50cnkiLCAiSlAiXQ
@@ -136,7 +136,7 @@ Contents:
 
 SHA-256 Hash: `lokpwW_yH1SAqX0gmpoPDQ7IzagsrbdhjK7-mYVJi_A`
 
-**Disclosure for 'birthdate':**
+__Disclosure for `birthdate`:__
 
 ```
 WyJiMC11SFlDTjFOaHFST1pIZ0tId1hnIiwgImJpcnRoZGF0ZSIsICIxOTQwLTAxLTAx

@@ -1,4 +1,4 @@
-**Disclosure for 'trust_framework':**
+__Disclosure for `trust_framework`:__
 
 ```
 WyI2eUNER1RSblBzUHowS3RxSVh3cjhRIiwgInRydXN0X2ZyYW1ld29yayIsICJkZV9h
@@ -13,7 +13,7 @@ Contents:
 
 SHA-256 Hash: `Zvx3GXqsjB1cR5rmxrlv3xQuTykWDZ7lKlmaxtBVYo0`
 
-**Disclosure for 'time':**
+__Disclosure for `time`:__
 
 ```
 WyI2TlpFYW9FUmVmdzJ2YTl3VWZDSlJBIiwgInRpbWUiLCAiMjAxMi0wNC0yM1QxODoy
@@ -28,7 +28,7 @@ Contents:
 
 SHA-256 Hash: `cCzobgUal0u_Dn0PengU8YcZfv_R3xh0MW1K01Okg1o`
 
-**Disclosure for 'verification_process':**
+__Disclosure for `verification_process`:__
 
 ```
 WyJTWVhaS291anJYdXZPZ3hjbnVZS1J3IiwgInZlcmlmaWNhdGlvbl9wcm9jZXNzIiwg
@@ -44,7 +44,7 @@ Contents:
 
 SHA-256 Hash: `4nQI4-y9wtJvyCs2WttyLmITY02K5WBMKKT1qKeEhHE`
 
-**Disclosure for 'type':**
+__Disclosure for `type`:__
 
 ```
 WyJyNE1TdlZEY1hQMFlFSmNsd1BJTmRnIiwgInR5cGUiLCAiZG9jdW1lbnQiXQ
@@ -58,7 +58,7 @@ Contents:
 
 SHA-256 Hash: `rvJdOi2J6gFeNIvCdgIprrjmi1rKTD_Ru96di5FS7i4`
 
-**Disclosure for 'method':**
+__Disclosure for `method`:__
 
 ```
 WyJVYmI4MGZRYndOOWx0S0xYc0RvbkdnIiwgIm1ldGhvZCIsICJwaXBwIl0
@@ -72,7 +72,7 @@ Contents:
 
 SHA-256 Hash: `18o6apk_mELe_RaWjI1Om877h9_Jky5dpgzuBBNl-dQ`
 
-**Disclosure for 'time':**
+__Disclosure for `time`:__
 
 ```
 WyJaRW1vWTc0ZlNvUXdxOFlWMkxGMmt3IiwgInRpbWUiLCAiMjAxMi0wNC0yMlQxMToz
@@ -87,7 +87,7 @@ Contents:
 
 SHA-256 Hash: `Ed7fTsdbgv2EZ5uGsuUAk5YBaMtCfvTFkmZZszVRJpk`
 
-**Disclosure for 'type':**
+__Disclosure for `type`:__
 
 ```
 WyJtanBjRGkweHFZbTF4aFJyQ3lCeGZnIiwgInR5cGUiLCAiaWRjYXJkIl0
@@ -101,7 +101,7 @@ Contents:
 
 SHA-256 Hash: `F1vtjNyR7vaY8bO6CHdFr9tAje0ltSLe7bIFYlpNW7s`
 
-**Disclosure for 'name':**
+__Disclosure for `name`:__
 
 ```
 WyJEY0IzOXRwcHBqbGhjVFctLUhKYVJ3IiwgIm5hbWUiLCAiU3RhZHQgQXVnc2J1cmci
@@ -116,7 +116,7 @@ Contents:
 
 SHA-256 Hash: `Li9BJSo7AFcKVTlrLz6ip6t82nqIt2qrXc3wp6rColM`
 
-**Disclosure for 'country':**
+__Disclosure for `country`:__
 
 ```
 WyJGbWU0VVdmeDZBV0g1NS1BOHJXRF93IiwgImNvdW50cnkiLCAiREUiXQ
@@ -130,7 +130,7 @@ Contents:
 
 SHA-256 Hash: `C1saJVc21n1Y1O2s4ya0UYJabTAoGyg__Q39OfyjqSM`
 
-**Disclosure for 'number':**
+__Disclosure for `number`:__
 
 ```
 WyIzZ3NJRUs0NWM4bkZaT09YbWJELVRBIiwgIm51bWJlciIsICI1MzU1NDU1NCJd
@@ -144,7 +144,7 @@ Contents:
 
 SHA-256 Hash: `BiKOIkmtJfr7IpWsn8_X4hc6FygqaeQPujoVuXAHnWQ`
 
-**Disclosure for 'date_of_issuance':**
+__Disclosure for `date_of_issuance`:__
 
 ```
 WyJrNlZGS0I3V29xeWZXT1M0RVZqU3d3IiwgImRhdGVfb2ZfaXNzdWFuY2UiLCAiMjAx
@@ -159,7 +159,7 @@ Contents:
 
 SHA-256 Hash: `HXyhyliGWAP8uvBf3JhdGSh9Pbg3KNu969581e8MZPo`
 
-**Disclosure for 'date_of_expiry':**
+__Disclosure for `date_of_expiry`:__
 
 ```
 WyJqTEtGZlFYQk5FdHRFRzR1UGV6cnlnIiwgImRhdGVfb2ZfZXhwaXJ5IiwgIjIwMjAt
@@ -174,7 +174,7 @@ Contents:
 
 SHA-256 Hash: `sVzUIXAzzMw0EfIwZyL23xwee3874u3a7iXcWyZhwp4`
 
-**Disclosure for 'given_name':**
+__Disclosure for `given_name`:__
 
 ```
 WyJ2WmN5ZDRDTDhFeDFBUGlSb0tVVFB3IiwgImdpdmVuX25hbWUiLCAiTWF4Il0
@@ -188,7 +188,7 @@ Contents:
 
 SHA-256 Hash: `xKbTMlOSjFjkJw8kAMZAyhEfqbaq2b-klaPK8srpgvs`
 
-**Disclosure for 'family_name':**
+__Disclosure for `family_name`:__
 
 ```
 WyJod0lFTklDMWwtQlRuZnNfMnZQV2ZBIiwgImZhbWlseV9uYW1lIiwgIk1cdTAwZmNs
@@ -203,7 +203,7 @@ Contents:
 
 SHA-256 Hash: `1qb26tNg6OZuZyVDYwK4--mQxXbZqwcQbhUxGHrXeLM`
 
-**Disclosure for 'nationalities':**
+__Disclosure for `nationalities`:__
 
 ```
 WyJHRFhMLTBfWWlvYUxNU1l0RzdCdkxnIiwgIm5hdGlvbmFsaXRpZXMiLCBbIkRFIl1d
@@ -217,7 +217,7 @@ Contents:
 
 SHA-256 Hash: `FwzTz0THaEOzexgEzLRXu-zsTPND7by3aBF57AwKCZI`
 
-**Disclosure for 'address':**
+__Disclosure for `address`:__
 
 ```
 WyJVUjZsSC1jbUtIenh5VGlhazRmRVVRIiwgImFkZHJlc3MiLCB7ImxvY2FsaXR5Ijog
@@ -235,7 +235,7 @@ Contents:
 
 SHA-256 Hash: `AHX0EgNpd_wak07lK8HX2izDNntsUZojuzyEWd2GJdk`
 
-**Disclosure for 'birth_middle_name':**
+__Disclosure for `birth_middle_name`:__
 
 ```
 WyJuNV9BU3lpa2FSNHBZMzRrVG9YTlBRIiwgImJpcnRoX21pZGRsZV9uYW1lIiwgIlRp
@@ -250,7 +250,7 @@ Contents:
 
 SHA-256 Hash: `gXzq9tVKaddfQvt94riVze6GlZiW35ItiMngC5p_hXE`
 
-**Disclosure for 'salutation':**
+__Disclosure for `salutation`:__
 
 ```
 WyJFSGh2d1dnWGg2VUZKcVRmRjVRaE93IiwgInNhbHV0YXRpb24iLCAiRHIuIl0
@@ -264,7 +264,7 @@ Contents:
 
 SHA-256 Hash: `H0ZuxXsa39gwxHQ0cK_HQAIKjW4t11YwM0Gy_1gUluU`
 
-**Disclosure for 'msisdn':**
+__Disclosure for `msisdn`:__
 
 ```
 WyJTMzF2RjdWZHNpUDhRTXB0b21PZW1BIiwgIm1zaXNkbiIsICI0OTEyMzQ1Njc4OSJd

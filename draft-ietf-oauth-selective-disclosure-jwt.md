@@ -577,6 +577,8 @@ This is called the Combined Format for Issuance.
 The Disclosures and SD-JWT are implicitly linked through the
 digest values of the Disclosures included in the SD-JWT.
 
+### Example
+
 For Example 1, the Combined Format for Issuance looks as follows:
 
 <{{examples/simple/combined_issuance.txt}}
@@ -599,11 +601,24 @@ This is called the Combined Format for Presentation.
 The Holder MAY send any subset of the Disclosures to the Verifier, i.e.,
 none, multiple, or all Disclosures.
 
+A Holder MUST NOT send a Disclosure that was not included in the SD-JWT or send
+a Disclosure more than once.
+
+### Enabling Holder Binding
+
 The Holder MAY add an optional JWT to prove Holder Binding to the Verifier.
 The precise contents of the JWT are out of scope of this specification.
 Usually, a `nonce` and `aud` claim are included to show that the proof is
 intended for the Verifier and to prevent replay attacks. How the `nonce` or
 other claims are obtained by the Holder is out of scope of this specification.
+
+Example Holder Binding JWT payload:
+
+<{{examples/simple/hb_jwt_payload.json}}
+
+Which is then signed by the Holder to create a JWT like the following:
+
+<{{examples/simple/hb_jwt_serialized.txt}}
 
 Whether to require Holder Binding is up to the Verifier's policy,
 based on the set of trust requirements such as trust frameworks it belongs to.
@@ -614,8 +629,10 @@ for Presentation is itself embedded in a signed JWT.
 If no Holder Binding JWT is included, the Combined Format for Presentation ends with
 the `~` character after the last Disclosure.
 
+### Example
+
 The following is a non-normative example of the contents of a Presentation for Example 1, disclosing
-the claims `given_name`, `family_name`, and `address`, as it would be sent from the Holder to the Verifier. There is also a Holder Binding JWT included.
+the claims `given_name`, `family_name`, and `address`, as it would be sent from the Holder to the Verifier. The Holder Binding JWT as shown before is included as the last element.
 
 <{{examples/simple/combined_presentation.txt}}
 
@@ -669,7 +686,7 @@ To this end, Verifiers MUST follow the following steps (or equivalent):
        3. If there is a key `_sd` that does not refer to an array, the Verifier MUST reject the Presentation.
        4. Otherwise, insert, at the level of the `_sd` claim, the claim described by the Disclosure with the claim name and claim value provided in the Disclosure.
           1. If the Disclosure is not a JSON-encoded array of three elements, the Verifier MUST reject the Presentation.
-          2. If the claim name already exists, the Verifier MUST reject the Presentation.
+          2. If the claim name already exists, the Verifier MUST reject the Presentation. Note that this also means that if a Holder sends the same Disclosure multiple times, the Verifier MUST reject the Presentation.
           3. If the claim value is an object and contains an `_sd` key, the Verifier MUST reject the Presentation.
     3. Remove all `_sd` claims from the SD-JWT payload.
     4. Remove the claim `sd_digest_derivation_alg` from the SD-JWT payload.
@@ -1051,6 +1068,7 @@ Disclosures:
    * Holder Binding is now separate from delivering the Disclosures and implemented, if required, with a separate JWT.
    * Examples are now pulled in from the examples directory, not inlined.
    * Updated and automated the W3C VC example.
+   * Added examples with multibyte characters to show that the specification and demo code work well with UTF-8.
 
    -02
 

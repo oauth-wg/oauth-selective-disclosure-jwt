@@ -1,4 +1,4 @@
-**Disclosure for 'assurance_level':**
+__Disclosure for `assurance_level`:__
 
 ```
 WyJ6NEsxd3VkaTQyV2ZFNldQZ2ZsazJnIiwgImFzc3VyYW5jZV9sZXZlbCIsICJoaWdo
@@ -13,7 +13,7 @@ Contents:
 
 SHA-256 Hash: `2YRmUkluJhbeEzMQ0p4QJCZZHt38O9Yp5xQxj-s-of4`
 
-**Disclosure for 'type':**
+__Disclosure for `type`:__
 
 ```
 WyJDcUpHU3NYdVpVaDZ1Tmt5ZWh4U0NRIiwgInR5cGUiLCAiZWxlY3Ryb25pY19yZWNv
@@ -28,7 +28,7 @@ Contents:
 
 SHA-256 Hash: `OSlizAB2reacAQs2WN6N91y8JroSUjGLefjboVc622A`
 
-**Disclosure for 'type':**
+__Disclosure for `type`:__
 
 ```
 WyJSOV9SQVZhTWY2Q0x2Um00Z3AzOS1nIiwgInR5cGUiLCAiZXUuZXVyb3BhLmVjLmV1
@@ -43,7 +43,7 @@ Contents:
 
 SHA-256 Hash: `iJhephauvMFgH11qS3AT0G4aEIw8NvgoPOs5oL16y8o`
 
-**Disclosure for 'source':**
+__Disclosure for `source`:__
 
 ```
 WyJiRU9xOGo1NjllWXpsUzcteEhXRkJnIiwgInNvdXJjZSIsIHsib3JnYW5pemF0aW9u
@@ -61,7 +61,7 @@ di Firenze", "organization_id": "c_d612", "country_code": "IT",
 
 SHA-256 Hash: `_qb1Qw94yeS4uzMHeMHjZH2nH_brDyM7eV5Ueky3xVY`
 
-**Disclosure for 'personal_number':**
+__Disclosure for `personal_number`:__
 
 ```
 WyJaaG9OdUVtNzA5ZGtPMFRVb2V5NFdBIiwgInBlcnNvbmFsX251bWJlciIsICI5NjQy
@@ -76,7 +76,7 @@ Contents:
 
 SHA-256 Hash: `BS3s_ENu82Z-WT9jdx1ZY9wz5QMnUr1OdS6lr4SOwbw`
 
-**Disclosure for 'date_of_birth':**
+__Disclosure for `date_of_birth`:__
 
 ```
 WyJ0eVVYQTZQUGh5RTBYSVF6MUtYYUp3IiwgImRhdGVfb2ZfYmlydGgiLCAiMTkyMi0w
@@ -91,7 +91,7 @@ Contents:
 
 SHA-256 Hash: `cWgplOSX84pLObFPtRo-Q08Eg2_sm4pNEmP_Dc5FZlw`
 
-**Disclosure for 'gender':**
+__Disclosure for `gender`:__
 
 ```
 WyJ1cFJnSW5FUm9OWUo0d2RRczhvTmVBIiwgImdlbmRlciIsICJNIl0
@@ -105,7 +105,7 @@ Contents:
 
 SHA-256 Hash: `bSAXcTJCWsR-rX1EIU8XCxKAi0d4EMVjSuNwzRmpsK0`
 
-**Disclosure for 'place_of_birth':**
+__Disclosure for `place_of_birth`:__
 
 ```
 WyI1cGpGMkpMTmd4OWxJYlJfQm9JWjN3IiwgInBsYWNlX29mX2JpcnRoIiwgeyJjb3Vu
@@ -121,7 +121,7 @@ Contents:
 
 SHA-256 Hash: `d23C2t5j0QVLdDvbP7_2KdVYB-KrLbq14ZG5mqTG1io`
 
-**Disclosure for 'birth_middle_name':**
+__Disclosure for `birth_middle_name`:__
 
 ```
 WyJhb2hWVEdYLXBreC1vMW1zZmZkd2tRIiwgImJpcnRoX21pZGRsZV9uYW1lIiwgIkxl

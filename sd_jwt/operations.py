@@ -4,6 +4,7 @@ import secrets
 from base64 import urlsafe_b64decode, urlsafe_b64encode
 from hashlib import sha256
 from json import dumps, loads
+from time import time
 from typing import Dict, List, Optional, Tuple, Union
 
 from jwcrypto.jwk import JWK
@@ -305,6 +306,7 @@ class SDJWTHolder(SDJWTCommon):
         self.holder_binding_jwt_payload = {
             "nonce": nonce,
             "aud": aud,
+            "iat": int(time()),
         }
 
         # Sign the SD-JWT-Release using the holder's key

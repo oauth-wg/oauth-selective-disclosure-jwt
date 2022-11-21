@@ -1,4 +1,4 @@
-**Disclosure for 'given_name':**
+__Disclosure for `given_name`:__
 
 ```
 WyI5S05NMUxWcU1PVXR6Rk9iSFV4Q2J3IiwgImdpdmVuX25hbWUiLCAiSm9obiJd
@@ -12,7 +12,7 @@ Contents:
 
 SHA-256 Hash: `jIjo9ElQ4Ng2mMzs0SoWq2molpyU80OE_LENjk2Ha_8`
 
-**Disclosure for 'family_name':**
+__Disclosure for `family_name`:__
 
 ```
 WyJJeC1jVTQzcXpBUFhvU2xZclF3RnRnIiwgImZhbWlseV9uYW1lIiwgIkRvZSJd
@@ -26,7 +26,7 @@ Contents:
 
 SHA-256 Hash: `w9rrWnA1RQ5dUOBaJDKGfAgtiW12obi1joeF_oLTaZ0`
 
-**Disclosure for 'email':**
+__Disclosure for `email`:__
 
 ```
 WyJrbnFPOXJYYldqc2llOEtTMkJJSkFRIiwgImVtYWlsIiwgImpvaG5kb2VAZXhhbXBs
@@ -41,7 +41,7 @@ Contents:
 
 SHA-256 Hash: `NVTo4oQvI0kuqdMYeb6M_sp_ByUY7d4zcLfHB483aVY`
 
-**Disclosure for 'phone_number':**
+__Disclosure for `phone_number`:__
 
 ```
 WyJSbVdDWEhxaE41TDg2SllqOUdYN0h3IiwgInBob25lX251bWJlciIsICIrMS0yMDIt
@@ -56,7 +56,7 @@ Contents:
 
 SHA-256 Hash: `zOJJSAmcB0OqPmFkOZebY70hHI3GpJC1x4beJRtIPbM`
 
-**Disclosure for 'street_address':**
+__Disclosure for `street_address`:__
 
 ```
 WyJjTE84ZnZpNlVHYUstbF91QmFJYTVRIiwgInN0cmVldF9hZGRyZXNzIiwgIjEyMyBN
@@ -71,7 +71,7 @@ Contents:
 
 SHA-256 Hash: `Hl_wpSSSagpXtSk_rGoE-xkYGVnIHBO-ZzhUWchy8bo`
 
-**Disclosure for 'locality':**
+__Disclosure for `locality`:__
 
 ```
 WyJOSzBZQU1MWUwtLXRVdi1EdGNoaU1RIiwgImxvY2FsaXR5IiwgIkFueXRvd24iXQ
@@ -85,7 +85,7 @@ Contents:
 
 SHA-256 Hash: `4zIfrBGk3TStRDz_wlxi4VgYDza81mBs_zeJ84czsS4`
 
-**Disclosure for 'region':**
+__Disclosure for `region`:__
 
 ```
 WyI3c3FoSU1aMlkzOHM4aWxaY012c2RRIiwgInJlZ2lvbiIsICJBbnlzdGF0ZSJd
@@ -99,7 +99,7 @@ Contents:
 
 SHA-256 Hash: `ySoQUT3JlKF5NdTPMWzmlDamB4TY2EMmGCgrzzJzih0`
 
-**Disclosure for 'country':**
+__Disclosure for `country`:__
 
 ```
 WyJISXlPZXkzNXEzX0ZTbDRVV0g2Mm5BIiwgImNvdW50cnkiLCAiVVMiXQ
@@ -113,7 +113,7 @@ Contents:
 
 SHA-256 Hash: `0mcZNz0nIGNYBI4WgKJFx9mjaaB10E59Bc_pefmm544`
 
-**Disclosure for 'birthdate':**
+__Disclosure for `birthdate`:__
 
 ```
 WyJpUU5VWU9tblo1N1Z5VHBRaGZnV2lnIiwgImJpcnRoZGF0ZSIsICIxOTQwLTAxLTAx
@@ -128,7 +128,7 @@ Contents:
 
 SHA-256 Hash: `Um7LRM6Ol51wJZLobMeREW6HsMyO3DCCHnWtaikD-40`
 
-**Disclosure for 'is_over_18':**
+__Disclosure for `is_over_18`:__
 
 ```
 WyJ0cmNEb1BJUDVzeW5wWFhZU0dFc0FRIiwgImlzX292ZXJfMTgiLCB0cnVlXQ
@@ -142,7 +142,7 @@ Contents:
 
 SHA-256 Hash: `8wawaYT3XNlnl0zUdP8Xri1252yHK6pjgr8JInBzMQg`
 
-**Disclosure for 'is_over_21':**
+__Disclosure for `is_over_21`:__
 
 ```
 WyJRMnhzRWpnUnBhSE5rdUdEM2tUNUpnIiwgImlzX292ZXJfMjEiLCB0cnVlXQ
@@ -156,7 +156,7 @@ Contents:
 
 SHA-256 Hash: `UQ6IHUAtHqW8Xcik7GqVikWtoviseS4BKjvCmmon6xA`
 
-**Disclosure for 'is_over_65':**
+__Disclosure for `is_over_65`:__
 
 ```
 WyI0RDd2N1JWTTh2THUwN0tRVUJqOF9RIiwgImlzX292ZXJfNjUiLCB0cnVlXQ
