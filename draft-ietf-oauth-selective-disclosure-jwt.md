@@ -972,8 +972,8 @@ and `country` of the `address` property could look as follows:
 
 ## Example 2b: Adding Decoys {#example-simple_structured_with_decoys}
 
-This example is based on the same set of user data as Example 1 and Example 2a, but 
-here, the Issuer decided to add decoy digests to the SD-JWT. 
+This example is based on the same set of user data as Example 1 and Example 2a, but
+here, the Issuer decided to add decoy digests to the SD-JWT.
 
 The SD-JWT payload is as follows:
 
@@ -985,7 +985,7 @@ Since the Disclosures or Presentation are not affected by the decoy digests (oth
 ## Example 3 - Complex Structured SD-JWT {#example-complex-structured-sd-jwt}
 
 In this example, an SD-JWT with a complex object is demonstrated. Here, the data
-structures defined in OIDC4IDA [@OIDC.IDA] are used. 
+structures defined in OIDC4IDA [@OIDC.IDA] are used.
 
 The Issuer is using the following user data:
 
