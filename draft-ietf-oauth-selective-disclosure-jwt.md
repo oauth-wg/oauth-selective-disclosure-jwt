@@ -1040,6 +1040,12 @@ Holder Binding is applied and the Holder Binding JWT is signed using a raw publi
 Below is a non-normative example of an SD-JWT represented as a verifiable credential
 encoded as JSON and signed as JWS compliant to [@VC_DATA].
 
+The following data will be used in this example:
+
+<{{examples/w3c-vc/user_claims.json}}
+
+The encoded SD-JWT looks as follows:
+
 Header:
 ```json
 {
@@ -1054,6 +1060,8 @@ Body:
 Disclosures:
 
 {{examples/w3c-vc/disclosures.md}}
+
+
 
 
 # Document History
