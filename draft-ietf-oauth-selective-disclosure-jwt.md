@@ -1076,6 +1076,7 @@ Disclosures:
    * In the SD-JWT, hash digests are collected under a `_sd` claim per level.
    * Terms "II-Disclosures" and "HS-Disclosures" are replaces with "Disclosures".
    * Holder Binding is now separate from delivering the Disclosures and implemented, if required, with a separate JWT.
+   * Examples updated and modified to properly explain the specifics of the new SD-JWT format.
    * Examples are now pulled in from the examples directory, not inlined.
    * Updated and automated the W3C VC example.
    * Added examples with multibyte characters to show that the specification and demo code work well with UTF-8.
