@@ -1,16 +1,15 @@
 {
   "sub": "6c5c0a49-b589-431d-bae7-219122a9ec2c",
-  "given_name": "John",
-  "family_name": "Doe",
-  "email": "johndoe@example.com",
-  "phone_number": "+1-202-555-0101",
-  "secret_club_membership_no": "23",
-  "other_secret_club_membership_no": "42",
+  "given_name": "\u592a\u90ce",
+  "family_name": "\u5c71\u7530",
+  "email": "\"unusual email address\"@\u65e5\u672c.com",
+  "phone_number": "123456",
   "address": {
-    "street_address": "123 Main St",
-    "locality": "Anytown",
-    "region": "Anystate",
-    "country": "US"
+    "street_address": "\u6771\u4eac\u90fd\u6e2f\u533a\u829d\u516c\u5
+      712\uff14\u4e01\u76ee\uff12\u2212\uff18",
+    "locality": "\u6771\u4eac\u90fd",
+    "region": "\u6e2f\u533a",
+    "country": "JP"
   },
   "birthdate": "1940-01-01"
 }

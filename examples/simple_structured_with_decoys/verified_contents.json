@@ -1,14 +1,14 @@
 {
   "address": {
-    "region": "Anystate",
-    "country": "US"
+    "country": "JP",
+    "region": "\u6e2f\u533a"
   },
   "iss": "https://example.com/issuer",
   "iat": 1516239022,
   "exp": 1516247022,
   "sd_digest_derivation_alg": "sha-256",
-  "family_name": "Doe",
-  "given_name": "John",
-  "birthdate": "1940-01-01",
-  "secret_club_membership_no": "23"
+  "given_name": "\u592a\u90ce",
+  "email": "\"unusual email address\"@\u65e5\u672c.com",
+  "family_name": "\u5c71\u7530",
+  "birthdate": "1940-01-01"
 }

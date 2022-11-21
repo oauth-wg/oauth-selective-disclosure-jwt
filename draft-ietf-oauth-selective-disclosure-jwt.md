@@ -539,7 +539,7 @@ Note: Examples in this document use `cnf` Claim defined in [@RFC7800] to include
 
 ## Example 1: SD-JWT {#example-1}
 
-This example, Example 2a in (#example-simple_structured) and Example 2b in (#example-simple_structured_with_decoys) use the following object as the set of claims that the Issuer is issuing:
+This example uses the following object as the set of claims that the Issuer is issuing:
 
 <{{examples/simple/user_claims.json}}
 
@@ -614,11 +614,8 @@ for Presentation is itself embedded in a signed JWT.
 If no Holder Binding JWT is included, the Combined Format for Presentation ends with
 the `~` character after the last Disclosure.
 
-
-## Example: Combined Format for Presentation for Example 1
-
 The following is a non-normative example of the contents of a Presentation for Example 1, disclosing
-the claims `given_name`, `family_name`, and `address`, as it would be sent from the Holder to the Verifier:
+the claims `given_name`, `family_name`, and `address`, as it would be sent from the Holder to the Verifier. There is also a Holder Binding JWT included.
 
 <{{examples/simple/combined_presentation.txt}}
 
@@ -955,9 +952,11 @@ All of the following examples are non-normative.
 
 ## Example 2a: Handling Structured Claims {#example-simple_structured}
 
-This example is based on the same claim values as Example 1, but
-here the Issuer decided to create a structured object for the digests. This
-allows for the disclosure of individual members of the `address` claim separately.
+This example uses the following object as the set of claims that the Issuer is issuing:
+
+<{{examples/simple_structured/user_claims.json}}
+
+Note that in contrast to Example 1, here the Issuer decided to create a structured object for the `address` claim, allowing for separate disclosure of the individual members of the claim.
 
 <{{examples/simple_structured/sd_jwt_payload.json}}
 
@@ -966,13 +965,13 @@ The Disclosures for this SD-JWT are as follows:
 {{examples/simple_structured/disclosures.md}}
 
 A Presentation for the SD-JWT that discloses only `region`
-and `country` of the `address` property could look as follows:
+and `country` of the `address` property and without a Holder Binding JWT could look as follows:
 
 <{{examples/simple_structured/combined_presentation.txt}}
 
 ## Example 2b: Adding Decoys {#example-simple_structured_with_decoys}
 
-This example is based on the same set of user data as Example 1 and Example 2a, but
+This example is based on the same set of user data as  Example 2a, but
 here, the Issuer decided to add decoy digests to the SD-JWT.
 
 The SD-JWT payload is as follows:

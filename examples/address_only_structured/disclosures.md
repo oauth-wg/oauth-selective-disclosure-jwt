@@ -1,58 +1,58 @@
 **Disclosure for 'street_address':**
 
 ```
-WyJTY3MwWEtrLUVpYmg3bGV3T0pXTmVBIiwgInN0cmVldF9hZGRyZXNzIiwgIlNjaHVs
+WyI0d3dqUzlyMm4tblBxdzNpTHR0TkFBIiwgInN0cmVldF9hZGRyZXNzIiwgIlNjaHVs
 c3RyLiAxMiJd
 ```
 
 Contents:
 
 ```
-["Scs0XKk-Eibh7lewOJWNeA", "street_address", "Schulstr. 12"]
+["4wwjS9r2n-nPqw3iLttNAA", "street_address", "Schulstr. 12"]
 ```
 
-SHA-256 Hash: `i8GJhq3bHnL0RImnEePpgAiKMFWjVhhdXy0u5ksfXIU`
+SHA-256 Hash: `pEtkKwoFK_JHN7yNby0Lc_Jc10BAxCm5yXJjDbVehvU`
 
 **Disclosure for 'locality':**
 
 ```
-WyJaY1lTYk5jV3BIODdIZ1p1X2J3azB3IiwgImxvY2FsaXR5IiwgIlNjaHVscGZvcnRh
+WyJXcEtIQmVTa3A5U2MyNVV4a1F1RmNRIiwgImxvY2FsaXR5IiwgIlNjaHVscGZvcnRh
 Il0
 ```
 
 Contents:
 
 ```
-["ZcYSbNcWpH87HgZu_bwk0w", "locality", "Schulpforta"]
+["WpKHBeSkp9Sc25UxkQuFcQ", "locality", "Schulpforta"]
 ```
 
-SHA-256 Hash: `5GcOWoYSuDtJ6mmwOVBpohx7km5Jn6fqV3EuKjbnx1E`
+SHA-256 Hash: `nTzPZ3Q68z1Ko_9ao9LK0mSYXY5gY6UG6KEkQ_BdqU0`
 
 **Disclosure for 'region':**
 
 ```
-WyJidGNydXFNbHJwSzY4MVBGQVZMNnRRIiwgInJlZ2lvbiIsICJTYWNoc2VuLUFuaGFs
-dGUiXQ
+WyIzSl9xWGctdUwxYzdtN1FoT0hUNTJnIiwgInJlZ2lvbiIsICJTYWNoc2VuLUFuaGFs
+dCJd
 ```
 
 Contents:
 
 ```
-["btcruqMlrpK681PFAVL6tQ", "region", "Sachsen-Anhalte"]
+["3J_qXg-uL1c7m7QhOHT52g", "region", "Sachsen-Anhalt"]
 ```
 
-SHA-256 Hash: `YVeajj6L3bQvb_uSgWsqi5A9JbWtwszFWbtzlBEMZ1s`
+SHA-256 Hash: `9-VdSnvRTZNDo-4Bxcp3X-V9VtLOCRUkR6oLWZQl81I`
 
 **Disclosure for 'country':**
 
 ```
-WyJBUHdBS0NpVWktNlJSSXk5aWNCazBBIiwgImNvdW50cnkiLCAiREUiXQ
+WyIwN2U3bWY2YWpTUDJjZkQ3NmJCZE93IiwgImNvdW50cnkiLCAiREUiXQ
 ```
 
 Contents:
 
 ```
-["APwAKCiUi-6RRIy9icBk0A", "country", "DE"]
+["07e7mf6ajSP2cfD76bBdOw", "country", "DE"]
 ```
 
-SHA-256 Hash: `Y9YwGhQiiy6woOi5erWQdHfHT9ZC-WqBWcMaxmiabyo`
+SHA-256 Hash: `7pHe1uQ5uSClgAxXdG0E6dKnBgXcxEO1zvoQO9E5Lr4`
