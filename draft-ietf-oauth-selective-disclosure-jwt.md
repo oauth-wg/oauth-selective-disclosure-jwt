@@ -727,7 +727,7 @@ Disclosures, such an implementation could not determine the correct place in a
 nested object where a claim needs to be inserted. Therefore, the naive implementation
 would not only be insecure, but also incorrect.
 
-The steps described in (#issuer_verification) ensure that the Verifier
+The steps described in (#verifier_verification) ensure that the Verifier
 checks the Disclosures correctly.
 
 ## Entropy of the salt {#salt-entropy}
@@ -992,7 +992,7 @@ The Holder can now, for example, release the rest of the components of the `addr
 
 <{{examples/mixed-structured/combined_presentation.json}}
 
-The Verifier, after applying the steps described in (#verifier-verification),
+The Verifier, after applying the steps described in (#verifier_verification),
 would pass the following data to the application:
 
 <{{examples/mixed-structured/verified_contents.json}}
