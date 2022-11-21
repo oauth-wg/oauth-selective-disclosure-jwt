@@ -7,6 +7,7 @@ logger = logging.getLogger("sd_jwt")
 
 EXAMPLE_INDENT = 2
 EXAMPLE_MAX_WIDTH = 68
+EXAMPLE_ENSURE_ASCII = False
 
 #######################################################################
 # Helper functions to format examples
@@ -14,7 +15,7 @@ EXAMPLE_MAX_WIDTH = 68
 
 
 def textwrap_json(data, width=EXAMPLE_MAX_WIDTH):
-    text = json.dumps(data, indent=EXAMPLE_INDENT)
+    text = json.dumps(data, indent=EXAMPLE_INDENT, ensure_ascii=EXAMPLE_ENSURE_ASCII)
     output = []
     for line in text.splitlines():
         if len(line) <= width:

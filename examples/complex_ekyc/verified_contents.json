@@ -16,14 +16,14 @@
       "birthdate": "1956-01-28",
       "place_of_birth": {
         "country": "IS",
-        "locality": "\u00deykkvab\u00e6jarklaustur"
+        "locality": "Þykkvabæjarklaustur"
       },
-      "family_name": "M\u00fcller",
+      "family_name": "Müller",
       "address": {
         "locality": "Maxstadt",
         "postal_code": "12344",
         "country": "DE",
-        "street_address": "Weidenstra\u00dfe 22"
+        "street_address": "Weidenstraße 22"
       },
       "given_name": "Max"
     }
