@@ -274,7 +274,7 @@ On a high level, the Verifier
  * verifies the Holder Binding JWT, if Holder Binding is required, using the public key included in the SD-JWT,
  * calculates the digests over the Holder-Selected Disclosures and verifies that each digest is contained in the SD-JWT.
 
-The detailed algorithm is described in (#verifier-verification).
+The detailed algorithm is described in (#verifier_verification).
 
 # Data Formats
 
@@ -375,7 +375,7 @@ an application that needs to access the disclosed claim values. The
 Disclosures are only intended to be used by a Verifier to check
 the digests over the source strings and to extract the original JSON
 data. The original JSON data is then used by the application. See
-(#processing_model) for details.
+(#verifier_verification) for details.
 
 ## Format of an SD-JWT
 
@@ -393,7 +393,7 @@ For each claim that is to be selectively disclosed, the Issuer creates a Disclos
 The Issuer MUST create a Disclosure object for each selectively disclosable claim as follows:
 
  * Create an array of three elements in this order:
-   1. A salt value. See (#salt-entropy) and (#salt-minlength) for security considerations. The salt value MUST be unique for each claim that is to be selectively disclosed. It is RECOMMENDED to base64url-encode the salt value, producing a string. Any other type that is allowed in JSON MAY be used, e.g., a number.
+   1. A salt value. See (#salt-entropy) and (#salt_minlength) for security considerations. The salt value MUST be unique for each claim that is to be selectively disclosed. It is RECOMMENDED to base64url-encode the salt value, producing a string. Any other type that is allowed in JSON MAY be used, e.g., a number.
    2. The claim name, or key, as it would be used in a regular JWT. This MUST be a string.
    3. The claim's value, as it would be used in a regular JWT. The value MAY be of any type that is allowed in JSON, including numbers, strings, booleans, arrays, and objects.
  * JSON-encode the array such that an UTF-8 string is produced.
@@ -416,7 +416,7 @@ are all valid and encode the same claim value:
  * No white space: `WyI2cU1RdlJMNWhhaiIsImZhbWlseV9uYW1lIiwiTcO2Yml1cyJd`
  * Newline characters between elements: `WwoiNnFNUXZSTDVoYWoiLAoiZmFtaWx5X25hbWUiLAoiTcO2Yml1cyIKXQ`
 
-#### Hashing Disclosures
+#### Hashing Disclosures {#hashing_disclosures}
 
 For embedding the Disclosures in the SD-JWT, the Disclosures are hashed using the digest algorithm specified in the `sd_digest_derivation_alg` claim described below. The resulting hash is then included in the SD-JWT instead of the original claim value, as described next.
 
@@ -431,7 +431,7 @@ For example, the
 SHA-256 hash digest of the Disclosure `WyI2cU1RdlJMNWhhaiIsICJmYW1pbHlfbmFtZSIsICJNw7ZiaXVzIl0` would be
 `uutlBuYeMDyjLLTpf6Jxi7yNkEF35jdyWMn9U7b_RYY`.
 
-#### Decoy Digests
+#### Decoy Digests {#decoy_digests}
 
 An Issuer MAY add additional hash digests to the SD-JWT that are not associated with any claim.  The purpose of such "decoy" digests is to make it more difficult for an attacker to see the original number of claims contained in the SD-JWT. It is RECOMMENDED to create the decoy digests by hashing over a cryptographically secure random number. The bytes of the hash digest MUST then be base64url-encoded as above. The same digest function as for the Disclosures MUST be used.
 
@@ -439,7 +439,7 @@ For decoy digests, no Disclosure is sent to the Holder, i.e., the Holder will se
 
 To ensure readability and replicability, the examples in this specification do not contain decoy digests unless explicitly stated.
 
-#### Creating an SD-JWT
+#### Creating an SD-JWT {#creating_sd_jwt}
 
 An SD-JWT is a JWT that MUST be signed using the Issuer's private key.
 
@@ -456,8 +456,14 @@ The array MAY be empty, although it is RECOMMENDED to omit the claim in this cas
 
 The Issuer MUST hide the original order of the claims in the array. To ensure this, it is RECOMMENDED to shuffle the array, e.g., by sorting it alphanumerically or randomly. The precise method does not matter as long as it does not depend on the original order of elements.
 
+Issuers MUST NOT issue SD-JWTs where
 
-#### Nested Data in SD-JWTs
+ * the key `_sd` is used for any other purpose than to contain the array of hash digests, or
+ * the key `_sd` is itself used inside a claim value (when the claim value is an object), or
+ * the same Disclosure appears more than once (in the same array or in different arrays).
+
+
+#### Nested Data in SD-JWTs {#nested_data}
 
 Just like any JWT, an SD-JWT MAY contain objects that themselves contain other data. For any object in an SD-JWT, the Issuer MAY decide to either make the entire object selectively disclosable or to make its properties selectively disclosable individually. In the latter case, the Issuer MAY even choose to make some some of the object's properties selectively disclosable and others not.
 
@@ -502,7 +508,7 @@ In this case, the Issuer would issue the following Disclosures:
 
 {{examples/address_only_structured_one_open/disclosures.md}}
 
-### Digest Derivation Function Claim
+### Digest Derivation Function Claim {#digest_derivation_function_claim}
 
 The claim `sd_digest_derivation_alg` indicates the digest derivation algorithm
 used by the Issuer to generate the digests over the salts and the
@@ -519,7 +525,7 @@ To promote interoperability, implementations MUST support the SHA-256 hash algor
 
 See (#security_considerations) for requirements regarding entropy of the salt, minimum length of the salt, and choice of a digest derivation algorithm.
 
-### Holder Public Key Claim
+### Holder Public Key Claim {#holder_public_key_claim}
 
 If the Issuer wants to enable Holder Binding, it MAY include a public key
 associated with the Holder, or a reference thereto.
@@ -613,13 +619,13 @@ the `~` character after the last Disclosure.
 ## Example: Combined Format for Presentation for Example 1
 
 The following is a non-normative example of the contents of a Presentation for Example 1, disclosing
-the claims `given_name`, `family_name`, and `address`:
+the claims `given_name`, `family_name`, and `address`, as it would be sent from the Holder to the Verifier:
 
 <{{examples/simple/combined_presentation.txt}}
 
 # Verification and Processing
 
-## Verification by the Holder  {#holder-verification}
+## Processing by the Holder  {#holder_verification}
 
 The Holder MUST perform the following (or equivalent) steps when receiving
 a Combined Format for Issuance:
@@ -627,75 +633,63 @@ a Combined Format for Issuance:
  1. Separate the SD-JWT and the Disclosures in the Combined Format for Issuance.
  2. Hash all of the Disclosures separately.
  3. Find the places in the SD-JWT where the digests of the Disclosures are
-    included.
- 4. Decide which Disclosures to release to the Verifier, obtaining proper End-User consent if necessary.
- 5. If Holder Binding is required, create a Holder Binding JWT.
- 6. Create the Combined Format for Presentation, including the selected Disclosures and, if applicable, the Holder Binding JWT.
+    included. If any of the digests cannot be found in the SD-JWT, the
+    Holder MUST reject the SD-JWT.
 
-## Verification by the Verifier when Receiving SD-JWT and Holder-Selected Disclosures JWT {#verifier-verification}
+For presentation to a Verifier, the Holder MUST perform the following (or equivalent) steps:
 
-Verifiers MUST follow [@RFC8725] for checking the SD-JWT and, if signed, the
-Disclosures JWT.
+ 1. Decide which Disclosures to release to the Verifier, obtaining proper End-User consent if necessary.
+ 2. If Holder Binding is required, create a Holder Binding JWT.
+ 3. Create the Combined Format for Presentation, including the selected Disclosures and, if applicable, the Holder Binding JWT.
+ 4. Send the Presentation to the Verifier.
 
-Verifiers MUST go through (at least) the following steps before
-trusting/using any of the contents of an SD-JWT:
+## Verification by the Verifier  {#verifier_verification}
+
+Upon receiving a Presentation, Verifiers MUST ensure that
+
+ * the SD-JWT is valid, i.e., it is signed by the Issuer and the signature is valid,
+ * all Disclosures are correct, i.e., their digests are referenced in the SD-JWT, and
+ * if Holder Binding is required, the Holder Binding JWT is signed by the Holder and valid.
+
+To this end, Verifiers MUST follow the following steps (or equivalent):
 
  1. Determine if Holder Binding is to be checked according to the Verifier's policy
     for the use case at hand. This decision MUST NOT be based on whether
-    the HS-Disclosures
-    JWT is signed or not. Refer to (#holder_binding_security) for
+    a Holder Binding JWT is provided by the Holder or not. Refer to (#holder_binding_security) for
     details.
- 2. Check that the presentation consists of six period-separated (`.`) elements; if Holder Binding is not required, the last element can be empty.
- 3. Separate the SD-JWT from the HS-Disclosures JWT.
- 4. Validate the SD-JWT:
-    1. Ensure that a signing algorithm was used that was deemed secure for the application. Refer to [@RFC8725], Sections 3.1 and 3.2 for details. `none` MUST NOT be accepted.
+ 2. Separate the Presentation into the SD-JWT, the Disclosures (if any), and the Holder Binding JWT (if provided).
+ 3. Validate the SD-JWT:
+    1. Ensure that a signing algorithm was used that was deemed secure for the application. Refer to [@RFC8725], Sections 3.1 and 3.2 for details. The `none` algorithm MUST NOT be accepted.
     2. Validate the signature over the SD-JWT.
     3. Validate the Issuer of the SD-JWT and that the signing key belongs to this Issuer.
     4. Check that the SD-JWT is valid using `nbf`, `iat`, and `exp` claims, if provided in the SD-JWT.
-    5. Check that the claim `sd_digests` is present in the SD-JWT.
-    6. Check that the `sd_digest_derivation_alg` claim is present and its value is understood and the digest derivation algorithm is deemed secure.
- 5. Validate the HS-Disclosures JWT:
-    1. If Holder Binding is required, validate the signature over the HS-Disclosures JWT using the same steps as for the SD-JWT plus the following steps:
-      1. Determine that the public key for the private key that used to sign the HS-Disclosures JWT is bound to the SD-JWT, i.e., the SD-JWT either contains a reference to the public key or contains the public key itself.
-      2. Determine that the HS-Disclosures JWT is bound to the current transaction and was created for this Verifier (replay protection). This is usually achieved by a `nonce` and `aud` field within the HS-Disclosures JWT.
-    2. For each claim in `sd_hs_disclosures` in the HS-Disclosures JWT:
-      3. Ensure that the claim is present as well in `sd_digests` in the SD-JWT.
-         If `sd_digests` is structured, the claim MUST be present at the same
-         place within the structure.
-      4. Compute the base64url-encoded digest of the JSON literal disclosed
-         by the Holder using the `sd_digest_derivation_alg` in SD-JWT.
-      5. Compare the digests computed in the previous step with the one of
-         the same claim in the SD-JWT. Accept the claim only when the two
-         digests match.
-      6. Ensure that the claim value in the HS-Disclosures JWT is a JSON-encoded
-         object containing at least the keys `s` and `v`, and optionally `n`.
-      7. Store the value of the key `v` as the claim value. If `n` is contained
-         in the object, use the value of the key `n` as the claim name.
-    3. Once all necessary claims have been verified, their values can be
-       validated and used according to the requirements of the application. It
-       MUST be ensured that all claims required for the application have been
-       disclosed.
+    5. Check that the `sd_digest_derivation_alg` claim is present and its value is understood and the digest derivation algorithm is deemed secure.
+ 4. Create a copy of the SD-JWT payload for further processing, if required.
+ 5. Process the Disclosures. For each Disclosure provided:
+    1. Calculate the hash digest over the base64url string as described in (#hashing_disclosures).
+    2. Find any `_sd` keys in the SD-JWT payload where the digest of the Disclosure is included in the array.
+       1. If the digest cannot be found in the SD-JWT payload, the Verifier MUST reject the Presentation.
+       2. If there is more than one place where the digest is included, the Verifier MUST reject the Presentation.
+       3. If there is a key `_sd` that does not refer to an array, the Verifier MUST reject the Presentation.
+       4. Otherwise, insert, at the level of the `_sd` claim, the claim described by the Disclosure with the claim name and claim value provided in the Disclosure.
+          1. If the Disclosure is not a JSON-encoded array of three elements, the Verifier MUST reject the Presentation.
+          2. If the claim name already exists, the Verifier MUST reject the Presentation.
+          3. If the claim value is an object and contains an `_sd` key, the Verifier MUST reject the Presentation.
+    3. Remove all `_sd` claims from the SD-JWT payload.
+    4. Remove the claim `sd_digest_derivation_alg` from the SD-JWT payload.
+ 6. If Holder Binding is required:
+    1. If Holder Binding is provided by means not defined in this specification, verify the Holder Binding according to the method used.
+    2. Otherwise, verify the Holder Binding JWT as follows:
+       1. If not Holder Binding JWT is provided, the Verifier MUST reject the Presentation.
+       2. Determine the public key for the Holder from the Holder Binding JWT.
+       3. Ensure that a signing algorithm was used that was deemed secure for the application. Refer to [@RFC8725], Sections 3.1 and 3.2 for details. The `none` algorithm MUST NOT be accepted.
+       4. Validate the signature over the Holder Binding JWT.
+       5. Check that the Holder Binding JWT is valid using `nbf`, `iat`, and `exp` claims, if provided in the Holder Binding JWT.
+       6. Determine that the Holder Binding JWT is bound to the current transaction and was created for this Verifier (replay protection). This is usually achieved by a `nonce` and `aud` field within the Holder Binding JWT.
 
-If any step fails, the input is not valid and processing MUST be aborted.
+If any step fails, the Presentation is not valid and processing MUST be aborted.
 
-## Processing Model {#processing_model}
-
-Neither an SD-JWT nor an HS-Disclosures JWT is suitable for direct use by an application.
-Besides the REQUIRED verification steps listed above, it is further RECOMMENDED
-that an application-consumable format is generated from the data released in
-the HS-Disclosures. The RECOMMENDED way is to merge the released claims and any
-plaintext claims in the SD-JWT recursively:
-
- * Objects from the released claims must be merged into existing objects from the SD-JWT.
- * If a key is present in both objects:
-   * If the value in the released claims is an object and the value in the
-     SD-JWT claims is an object, the two objects MUST be merged recursively.
-   * Else, the value in the released claims MUST be used.
-
-The keys `sd_digests` and `sd_digest_derivation_alg` SHOULD be removed prior to further
-processing.
-
-The processing is shown in Examples 2b and 3 in the Appendix.
+Otherwise, the processed SD-JWT payload can be passed to the application to be used for the intended purpose.
 
 # Security Considerations {#security_considerations}
 
@@ -720,6 +714,22 @@ The Verifier MUST always check the SD-JWT signature to ensure that the SD-JWT
 has not been tampered with since its issuance. If the signature on the SD-JWT
 cannot be verified, the SD-JWT MUST be rejected.
 
+## Manipulation of Disclosures
+
+Holders can manipulate the Disclosures by changing the values of the claims
+before sending them to the Issuer. The Issuer MUST check the Disclosures to
+ensure that the values of the claims are correct, i.e., the hash digests of the Disclosures are actually present in the signed SD-JWT.
+
+A naive Issuer that extracts
+all claim values from the Disclosures (without checking the hashes) and inserts them into the SD-JWT payload
+is vulnerable to this attack. However, without comparing the digests of the
+Disclosures, such an implementation could not determine the correct place in a
+nested object where a claim needs to be inserted. Therefore, the naive implementation
+would not only be insecure, but also incorrect.
+
+The steps described in (#issuer_verification) ensure that the Verifier
+checks the Disclosures correctly.
+
 ## Entropy of the salt {#salt-entropy}
 
 The security model relies on the fact that the salt is not learned or guessed by
@@ -728,7 +738,7 @@ salt MUST be created in such a manner that it is cryptographically random,
 long enough and has high entropy that it is not practical for the attacker to
 guess. A new salt MUST be chosen for each claim.
 
-## Minimum length of the salt {#salt-minlength}
+## Minimum length of the salt {#salt_minlength}
 
 The RECOMMENDED minimum length of the randomly-generated portion of the salt is 128 bits.
 
@@ -766,7 +776,7 @@ This can be showcased based on two scenarios for a mobile driver's license use c
 stopped by a police officer for exceeding a speed limit, Holder Binding may be necessary to ensure that the person
 driving the car and presenting the license is the actual Holder of the
 license. The Verifier (e.g., the software used by the police officer)
-will ensure that the HS-Disclosures JWT is signed by the Holder's private
+will ensure that a Holder Binding JWT is present and signed with the Holder's private
 key.
 
 **Scenario B:** A rental car agency may want to ensure, for insurance
@@ -782,99 +792,28 @@ decisions based on data that can be influenced by an attacker or that
 can be misinterpreted. For this reason, when deciding whether Holder
 binding is required or not, Verifiers MUST NOT take into account
 
- * whether an HS-Disclosure JWT is signed or not, as an attacker can
-   remove the signature from any HS-Disclosure JWT and present it to the
+ * whether an Holder Binding JWT is present or not, as an attacker can
+   remove the Holder Binding JWT from any Presentation and present it to the
    Verifier, or
  * whether a key reference is present in the SD-JWT or not, as the
    Issuer might have added the key to the SD-JWT in a format/claim that
    is not recognized by the Verifier.
 
 If a Verifier has decided that Holder Binding is required for a
-particular use case and the HS-Disclosure is unsigned or no recognized
+particular use case and the Holder Binding is not present, does not fulfill the requirements
+(e.g., on the signing algorithm), or no recognized
 key reference is present in the SD-JWT, the Verifier will reject the
-presentation, as described in (#verifier-verification).
+presentation, as described in (#verifier_verification).
 
 ## Blinding Claim Names {#blinding-claim-names}
 
-Issuers that chose to blind claim names MUST ensure not to inadvertently leak
-information about the blinded claim names to Verifiers.
-
-It is RECOMMENDED to use cryptographically random numbers with at least 128 bits
-of entropy as placeholder claim names.
-
-The order of elements in JSON-encoded objects is generally not relevant
-to applications, but it may reveal information about a blinded claim
-name to the verifier. For example, assume the following two clear-text
-claim sets created by the same Issuer:
-
-(A)
-```
-{
-  "given_name": "Doe",
-  "secret_club_membership_no": 42
-}
-```
-
-(B)
-```
-{
-  "is_secret_agent": true,
-  "given_name": "Doe"
-}
-```
-
-When naively blinding the claim names, the order of the elements might
-be preserved in the SD-JWT (depending on implementation details of the
-programming language):
-
-
-(A)
-```
-{
-  "given_name": "Doe",
-  "3DOgmo7w7MDZNh1Zjvmwpg":
-    "OXZKGG7Ltar4vz_L7sAtWIkVXVf5r9xONFKZdyoNlco"
-}
-```
-
-(B)
-```
-{
-  "CwiB46IUgi4NydIfgGTRwg":
-    "4miZg7O_JaidVJyjGiPpc4FXAMN16e1SBZfOMlYg3hQ",
-  "given_name": "Doe"
-}
-```
-
-A verifier, even if it does not learn any blinded claim names, can
-distinguish what claim name has been hidden just by observing the order
-of blinded and unblinded claim names. It is therefore RECOMMENDED, if at
-least one claim name is blinded, to either
-
- * randomize the order of all claims (blinded/unblinded, selectively disclosed/not-selectively disclosed),
- * or sort the claims by the property name (i.e., the placeholder claim
-   name for blinded claim names and the plaintext claim name for
-   unblinded claim names). The precise order does not matter. For
-   example, ordering by unicode code points or by lexicographic order is
-   sufficient to hide the original order of claims.
-
-This applies to Issuers (SD-JWT and Disclosures document) and
-Holders (HS-Disclosures JWT).
-
-With the approach chosen in this specification, claim names of objects
-that are not themselves selectively disclosable are not blinded.  This
-can be seen in Example 6 in the Appendix, where even in the blinded
-SD-JWT, `address` and `delivery_address` are visible. This limitation
+SD-JWT ensures that names of claims that are selectively disclosable are
+blinded. This prevents an attacker from learning the names of the
+disclosable claims. However, the names of the claims that are not
+disclosable are not blinded. This includes the keys of objects that themselves
+are not blinded, but contain disclosable claims. This limitation
 needs to be taken into account by Issuers when creating the structure of
 the SD-JWT.
-
-The Issuer MUST ensure that a new random placeholder name is chosen for
-each claim, including when the same claim name occurs at different
-places in the structure of the SD-JWT. This can be seen in Example 6 in
-the Appendix, where multiple claims with same name appear below
-`address` and `delivery_address`, but each of them has a different
-blinded claim name. For each credential issued, new random placeholder names
-MUST be chosen by the Issuer.
 
 # Privacy Considerations {#privacy_considerations}
 
@@ -883,23 +822,6 @@ MUST be chosen by the Issuer.
 The use of decoy digests is RECOMMENDED when the number of claims (or the existence of particular claims) can be a side-channel disclosing information about otherwise undisclosed claims. In particular, if a claim in an SD-JWT is present only if a certain condition is met (e.g., a membership number is only contained if the End-User is a member of a group), the Issuer SHOULD add decoy digests when the condition is not met.
 
 Decoy digests increase the size of the SD-JWT. The number of decoy digests (or whether to use them at all) is a trade-off between the size of the SD-JWT and the privacy of the End-User's data.
-
-
-## Claim Names
-
-By default, claim names are not blinded in an SD-JWT. In this case, even when
-the claim's value is not known to a Verifier, the claim name can disclose some
-information to the Verifier. For example, if the SD-JWT contains a claim named
-`super_secret_club_membership_no`, the Verifier might assume that the end-user
-is a member of the Super Secret Club.
-
-Blinding claim names can help to avoid this potential privacy issue. In many
-cases, however, Verifiers can already deduce this or similar information just
-from the identification of the Issuer and the schema used for the SD-JWT.
-Blinding claim names might not provide additional privacy if this is the case.
-
-Furthermore, re-using the same value to blind a claim name may limit the privacy benefits.
-
 
 ## Unlinkability
 
@@ -920,11 +842,13 @@ Arjan Geluk,
 Brian Campbell,
 Christian Paquin,
 David Bakker,
+David Waite,
 Fabian Hauck,
 Giuseppe De Marco,
 Kushal Das,
 Mike Jones,
 Nat Sakimura,
+Orie Steele,
 Pieter Kasselman,
 Ryosuke Abe,
 Shawn Butterfield, and
@@ -1039,213 +963,39 @@ This non-normative example is based on the same claim values as Example 1, but
 here the Issuer decided to create a structured object for the digests. This
 allows for the disclosure of individual members of the `address` claim separately.
 
-{#example-simple_structured-sd_jwt_payload}
-```json
-{
-  "iss": "https://example.com/issuer",
-  "cnf": {
-    "jwk": {
-      "kty": "RSA",
-      "n": "pm4bOHBg-oYhAyPWzR56AWX3rUIXp11_ICDkGgS6W3ZWLts-hzwI3x65
-        659kg4hVo9dbGoCJE3ZGF_eaetE30UhBUEgpGwrDrQiJ9zqprmcFfr3qvvkG
-        jtth8Zgl1eM2bJcOwE7PCBHWTKWYs152R7g6Jg2OVph-a8rq-q79MhKG5QoW
-        _mTz10QT_6H4c7PjWG1fjh8hpWNnbP_pv6d1zSwZfc5fl6yVRL0DV0V3lGHK
-        e2Wqf_eNGjBrBLVklDTk8-stX_MWLcR-EGmXAOv0UBWitS_dXJKJu-vXJyw1
-        4nHSGuxTIK2hx1pttMft9CsvqimXKeDTU14qQL1eE7ihcw",
-      "e": "AQAB"
-    }
-  },
-  "iat": 1516239022,
-  "exp": 1516247022,
-  "sd_digest_derivation_alg": "sha-256",
-  "sd_digests": {
-    "sub": "p7GDm8_lnxCJUsQojBatCJQgPCZOVBGxU-eX_lUIcC4",
-    "given_name": "BrmUer7nGIRyk3sbHHcZk43M9Oy_BQar0VE3NMOGk9w",
-    "family_name": "8voOnlh20GGzTInd6T9-Vcu2l6Q4_Kc-keedo7_3VY8",
-    "email": "b9DpmK8_xwhR4PX_MiIsQc1TyB_1NN40lI5Kj8SSNl4",
-    "phone_number": "0LFRbHdtG1eze9ET1rDEtSIrPI0poCM3J0EYBt2iwVg",
-    "address": {
-      "street_address":
-        "qYDFWJxdl_OQDdn_lxX1-E9r5H2juwqonoWM8A76X_w",
-      "locality": "3mLauig0JJyjJbdMvf3jLJGSBAIt0tdvq7F_VL1gqXw",
-      "region": "qRa_XKvVxCzUK8buAsxg9ylzyQlfvUgSwqATQV74z6c",
-      "country": "DjbYtjTT3PAQHtVkcpvrnRboYVUfXMro6Y4oEGdHW_0"
-    },
-    "birthdate": "rXv8RpBXYOy9WtYf2Bg-KIdO0a3KnYGCAhL53iCsLJA"
-  }
-}
-```
+<{{examples/simple-structured/sd_jwt_payload.json}}
 
-The Disclosures Object for this SD-JWT is as follows:
+The Disclosures for this SD-JWT are as follows:
 
-{#example-simple_structured-iid_payload}
-```json
-{
-  "sd_ii_disclosures": {
-    "sub": "{\"s\": \"2iFrkb5skOft_gSL6BhdBg\", \"v\":
-      \"6c5c0a49-b589-431d-bae7-219122a9ec2c\"}",
-    "given_name": "{\"s\": \"AbA1MKJ1Oyqtff2JoFKNXA\", \"v\":
-      \"John\"}",
-    "family_name": "{\"s\": \"vGk9hg40yrI1qazJn8qaKw\", \"v\":
-      \"Doe\"}",
-    "email": "{\"s\": \"6Ilb1QXTN4Qdv-1qGcQdbw\", \"v\":
-      \"johndoe@example.com\"}",
-    "phone_number": "{\"s\": \"-F5a6ZAOKHwUsYPDS383pQ\", \"v\":
-      \"+1-202-555-0101\"}",
-    "address": {
-      "street_address": "{\"s\": \"t6GqrdbiTFbJYh4D38aLjA\", \"v\":
-        \"123 Main St\"}",
-      "locality": "{\"s\": \"B0G5ap7hsAPIYOJ21rUjgg\", \"v\":
-        \"Anytown\"}",
-      "region": "{\"s\": \"YTPF0rUHYtvldv1Df63WXQ\", \"v\":
-        \"Anystate\"}",
-      "country": "{\"s\": \"mVZ4hCTnVdpu_GN-Rb9wNw\", \"v\":
-        \"US\"}"
-    },
-    "birthdate": "{\"s\": \"T6-5A3xYsyy2MnwnUWbW3w\", \"v\":
-      \"1940-01-01\"}"
-  }
-}
-```
+{{examples/simple-structured/disclosures.json}}
 
-An HS-Disclosures JWT for the SD-JWT above that discloses only `region`
+A Presentation for the SD-JWT that discloses only `region`
 and `country` of the `address` property could look as follows:
 
-{#example-simple_structured-hsd_jwt_payload}
-```json
-{
-  "nonce": "XZOUco1u_gEPknxS78sWWg",
-  "aud": "https://example.com/verifier",
-  "sd_hs_disclosures": {
-    "given_name": "{\"s\": \"AbA1MKJ1Oyqtff2JoFKNXA\", \"v\":
-      \"John\"}",
-    "family_name": "{\"s\": \"vGk9hg40yrI1qazJn8qaKw\", \"v\":
-      \"Doe\"}",
-    "birthdate": "{\"s\": \"T6-5A3xYsyy2MnwnUWbW3w\", \"v\":
-      \"1940-01-01\"}",
-    "address": {
-      "region": "{\"s\": \"YTPF0rUHYtvldv1Df63WXQ\", \"v\":
-        \"Anystate\"}",
-      "country": "{\"s\": \"mVZ4hCTnVdpu_GN-Rb9wNw\", \"v\":
-        \"US\"}"
-    }
-  }
-}
-```
+<{{examples/simple-structured/combined_presentation.json}}
+
 
 ### Example 2b - Mixing SD and Non-SD Claims in a Structured SD-JWT {#example-mixed-structured-sd-jwt}
 
 In this example, a variant of Example 2a, the Issuer decided to apply selective
 disclosure only to some of the claims. In particular, the `country` component of
 the `address` is contained in the JWT as a regular claim, whereas the rest of
-the claims can be disclosed selectively. Note that the processing model
-described in (#processing_model) allows for merging the selectively disclosable
-claims with the regular claims.
+the claims can be disclosed selectively.
 
-The JSON-payload of the SD-JWT that contains both selectively
-disclosable claims in the `sd_digests` object and not-selectively
-disclosable claims in a top-level JWT claim would look as follows:
+<{{examples/mixed-structured/sd_jwt_payload.json}}
 
-{#example-simple_structured_merging-sd_jwt_payload}
-```json
-{
-  "iss": "https://example.com/issuer",
-  "cnf": {
-    "jwk": {
-      "kty": "RSA",
-      "n": "pm4bOHBg-oYhAyPWzR56AWX3rUIXp11_ICDkGgS6W3ZWLts-hzwI3x65
-        659kg4hVo9dbGoCJE3ZGF_eaetE30UhBUEgpGwrDrQiJ9zqprmcFfr3qvvkG
-        jtth8Zgl1eM2bJcOwE7PCBHWTKWYs152R7g6Jg2OVph-a8rq-q79MhKG5QoW
-        _mTz10QT_6H4c7PjWG1fjh8hpWNnbP_pv6d1zSwZfc5fl6yVRL0DV0V3lGHK
-        e2Wqf_eNGjBrBLVklDTk8-stX_MWLcR-EGmXAOv0UBWitS_dXJKJu-vXJyw1
-        4nHSGuxTIK2hx1pttMft9CsvqimXKeDTU14qQL1eE7ihcw",
-      "e": "AQAB"
-    }
-  },
-  "iat": 1516239022,
-  "exp": 1516247022,
-  "sd_digest_derivation_alg": "sha-256",
-  "sd_digests": {
-    "sub": "m6f849XozrOu1dDvaoGfzp_FwJ0Jpcm8LBt8BeZdxkc",
-    "given_name": "CEBrXkrUZcZ3njZE46q_CEdSASdcEP0qoGrjNcPJx8g",
-    "family_name": "j5ZcRWCSTbdtevKIp8L1XMunNHXZHOEDLtkJ3By4rms",
-    "email": "AXm5JzGxUAfQaqTAz5hZGrhL7ZEM_J3ljKRK4wSpRvU",
-    "phone_number": "Vkehj3w1-X9Ssz96tWl8lvap8EaIy9pi9q4qWzWAWNo",
-    "address": {
-      "street_address":
-        "MVldFr-b-NKmQSLyHbnnq9ciMFGcb4GuhLtKLtmmnwk",
-      "locality": "aAusTIjJS8e9QwaGs53OaHqngMZ142uDScfW41hqFm0",
-      "region": "o6d8Kv-xOL3fidw5t0QF1StAlw5YLSN3Rco1aHsiWn8"
-    },
-    "birthdate": "_l2Sr5D08premyjfkmrnxMV6aFnEH8qMXme0BFGFGqk"
-  },
-  "address": {
-    "country": "US"
-  }
-}
-```
+With the following Disclosures:
 
-The Holder can now, for example, release the rest of the components of the `address` claim in the HS-Disclosures:
+{{examples/mixed-structured/disclosures.json}}
 
+The Holder can now, for example, release the rest of the components of the `address` claim:
 
-{#example-simple_structured_merging-hsd_jwt_payload}
-```json
-{
-  "nonce": "XZOUco1u_gEPknxS78sWWg",
-  "aud": "https://example.com/verifier",
-  "sd_hs_disclosures": {
-    "given_name": "{\"s\": \"juf0vRMI_5aHaGZQfl5o5A\", \"v\":
-      \"John\"}",
-    "family_name": "{\"s\": \"mJXFsX6E6IvqR6vMd_un5A\", \"v\":
-      \"Doe\"}",
-    "birthdate": "{\"s\": \"vnc31gtRYVh_zW8RrqSbaw\", \"v\":
-      \"1940-01-01\"}",
-    "address": {
-      "region": "{\"s\": \"4mt7paa9SIEuEgWIm-10kg\", \"v\":
-        \"Anystate\"}",
-      "street_address": "{\"s\": \"4r1Y7ivPIQzkp8rKF_BUTQ\", \"v\":
-        \"123 Main St\"}",
-      "locality": "{\"s\": \"v5I5nfxYin0IB2mWP1oj6Q\", \"v\":
-        \"Anytown\"}"
-    }
-  }
-}
-```
+<{{examples/mixed-structured/combined_presentation.json}}
 
-The Verifier, after verifying the SD-JWT and applying the HS-Disclosures, would
-process the result according to (#processing_model) and pass the following data
-to the application:
+The Verifier, after applying the steps described in (#verifier-verification),
+would pass the following data to the application:
 
-
-{#example-simple_structured_merging-merged}
-```json
-{
-  "given_name": "John",
-  "family_name": "Doe",
-  "birthdate": "1940-01-01",
-  "address": {
-    "region": "Anystate",
-    "street_address": "123 Main St",
-    "locality": "Anytown",
-    "country": "US"
-  },
-  "iss": "https://example.com/issuer",
-  "cnf": {
-    "jwk": {
-      "kty": "RSA",
-      "n": "pm4bOHBg-oYhAyPWzR56AWX3rUIXp11_ICDkGgS6W3ZWLts-hzwI3x65
-        659kg4hVo9dbGoCJE3ZGF_eaetE30UhBUEgpGwrDrQiJ9zqprmcFfr3qvvkG
-        jtth8Zgl1eM2bJcOwE7PCBHWTKWYs152R7g6Jg2OVph-a8rq-q79MhKG5QoW
-        _mTz10QT_6H4c7PjWG1fjh8hpWNnbP_pv6d1zSwZfc5fl6yVRL0DV0V3lGHK
-        e2Wqf_eNGjBrBLVklDTk8-stX_MWLcR-EGmXAOv0UBWitS_dXJKJu-vXJyw1
-        4nHSGuxTIK2hx1pttMft9CsvqimXKeDTU14qQL1eE7ihcw",
-      "e": "AQAB"
-    }
-  },
-  "iat": 1516239022,
-  "exp": 1516247022
-}
-```
+<{{examples/mixed-structured/verified_contents.json}}
 
 
 ### Example 3 - Complex Structured SD-JWT {#example-complex-structured-sd-jwt}
@@ -1253,267 +1003,25 @@ to the application:
 In this example, a complex object such as those defined in OIDC4IDA
 [@OIDC.IDA] is used. Here, the Issuer is using the following user data:
 
-{#example-complex-user_claims}
-```json
-{
-  "verified_claims": {
-    "verification": {
-      "trust_framework": "de_aml",
-      "time": "2012-04-23T18:25Z",
-      "verification_process": "f24c6f-6d3f-4ec5-973e-b0d8506f3bc7",
-      "evidence": [
-        {
-          "type": "document",
-          "method": "pipp",
-          "time": "2012-04-22T11:30Z",
-          "document": {
-            "type": "idcard",
-            "issuer": {
-              "name": "Stadt Augsburg",
-              "country": "DE"
-            },
-            "number": "53554554",
-            "date_of_issuance": "2010-03-23",
-            "date_of_expiry": "2020-03-22"
-          }
-        }
-      ]
-    },
-    "claims": {
-      "given_name": "Max",
-      "family_name": "Meier",
-      "nationalities": [
-        "DE"
-      ],
-      "address": {
-        "locality": "Maxstadt",
-        "postal_code": "12344",
-        "country": "DE",
-        "street_address": "An der Weide 22"
-      }
-    }
-  },
-  "birth_middle_name": "Timotheus",
-  "salutation": "Dr.",
-  "msisdn": "49123456789"
-}
-```
+<{{examples/complex/user_claims.json}}
 
-The Issuer in this example further adds the two claims `birthdate` and `place_of_birth` to the `claims` element in plain text. The following shows the resulting SD-JWT payload:
+The Issuer in this example sends the two claims `birthdate` and `place_of_birth` in the `claims` element in plain text. The following shows the resulting SD-JWT payload:
 
-{#example-complex-sd_jwt_payload}
-```json
-{
-  "iss": "https://example.com/issuer",
-  "cnf": {
-    "jwk": {
-      "kty": "RSA",
-      "n": "pm4bOHBg-oYhAyPWzR56AWX3rUIXp11_ICDkGgS6W3ZWLts-hzwI3x65
-        659kg4hVo9dbGoCJE3ZGF_eaetE30UhBUEgpGwrDrQiJ9zqprmcFfr3qvvkG
-        jtth8Zgl1eM2bJcOwE7PCBHWTKWYs152R7g6Jg2OVph-a8rq-q79MhKG5QoW
-        _mTz10QT_6H4c7PjWG1fjh8hpWNnbP_pv6d1zSwZfc5fl6yVRL0DV0V3lGHK
-        e2Wqf_eNGjBrBLVklDTk8-stX_MWLcR-EGmXAOv0UBWitS_dXJKJu-vXJyw1
-        4nHSGuxTIK2hx1pttMft9CsvqimXKeDTU14qQL1eE7ihcw",
-      "e": "AQAB"
-    }
-  },
-  "iat": 1516239022,
-  "exp": 1516247022,
-  "sd_digest_derivation_alg": "sha-256",
-  "sd_digests": {
-    "verified_claims": {
-      "verification": {
-        "trust_framework":
-          "fkIW-4iUZgTeIeDg_Z_6oFHU-wyWwazSpuaiQbc5QKw",
-        "time": "VRF-G_LfTzSaYkLelVzry82l1zQxGwk1RfGcnUUWukc",
-        "verification_process":
-          "9OpDml4eRBM6Usfk3MF2i7kBl1xGGkzPq5Ncs1mvbPo",
-        "evidence": [
-          {
-            "type": "HucanHhQwb-TJNg_rVpaonNSDtzPrCEebb3LfXTuLSM",
-            "method": "aU7IO7ooT8vArMkqpOfkIAlKw8BNcfRyw3NXs3ZS128",
-            "time": "LHcH98bV3-ZNUa00HNnqOf8W5IdijY1aEnpVzDNVBwA",
-            "document": {
-              "type": "3ITIlfkbUI0NveviEJBw-_VEaGiPtCDcXy9uD9orWFA",
-              "issuer": {
-                "name":
-                  "AY7wW63Vbcd7RnKDb39sSXpLgyiVNxWgoRnV6xZD5C8",
-                "country":
-                  "Kd3aUmm6XHjpWp6OYiJeEZUrD5J7nIRU3SlTc-E53gs"
-              },
-              "number":
-                "8gKpksl66fN9F2Zxs1PRPgD8kHi8dGC2JzpqtrPZavs",
-              "date_of_issuance":
-                "GfIEhOGWwe8J7lx6HSAPpC-Qvx0ihwWkEE0_LZ-r_DI",
-              "date_of_expiry":
-                "_fdljKRdp5wptGi7DwKNZEsSX6AnniVqmDE0aSznH74"
-            }
-          }
-        ]
-      },
-      "claims": {
-        "given_name": "sx4wGd6-ONAsiq7dN16GHeg4RAyOshRBdoXWE_E751w",
-        "family_name":
-          "Ldbea0SibAQDiZJlBigptwWXZ9QA8a0dKK7jipSn2K8",
-        "nationalities":
-          "tr8SXHdYS0rzAio_IhFp2lzlta4kDzKCM7hUxItCU2U",
-        "address": {
-          "locality": "VFgKHPXnNrZHeoBwcu61b5VCoFVX0rQjtH5aOiiLz0E",
-          "postal_code":
-            "G8XHi8sCPc45WATery6RSvnEcdypnrjypjBl4LBd5YE",
-          "country": "YyG4Nhyfjitpo6-yMDRTARSVAnZNvkYqRY3XepoQ_j8",
-          "street_address":
-            "NwAKfAtjQcN_XbV3kuHt3gbUMvQ83n02C1EexI9Ro2A"
-        }
-      }
-    },
-    "birth_middle_name":
-      "M5GhkvNcGjGONRey2pRORuL2yCfYz5jo0XqF6K0tUWk",
-    "salutation": "8m0-sBNA8I88_LDc05C7gE31pTm_CXQfewiwlL1Sn1Y",
-    "msisdn": "dLQVMDIkEHnmPVvuHNYiv7WwAqGE7mbyJMh5EfbjM1Q"
-  },
-  "verified_claims": {
-    "claims": {
-      "birthdate": "1956-01-28",
-      "place_of_birth": {
-        "country": "DE",
-        "locality": "Musterstadt"
-      }
-    }
-  }
-}
-```
+<{{examples/complex/sd_jwt_payload.json}}
 
-The SD-JWT is then signed by the Issuer to create a document like the following:
+With the following Disclosures:
 
-{#example-complex-serialized_sd_jwt}
-```
-eyJhbGciOiAiUlMyNTYiLCAia2lkIjogImNBRUlVcUowY21MekQxa3pHemhlaUJhZzBZ
-UkF6VmRsZnhOMjgwTmdIYUEifQ.eyJpc3MiOiAiaHR0cHM6Ly9leGFtcGxlLmNvbS9pc
-3N1ZXIiLCAiY25mIjogeyJqd2siOiB7Imt0eSI6ICJSU0EiLCAibiI6ICJwbTRiT0hCZ
-y1vWWhBeVBXelI1NkFXWDNyVUlYcDExX0lDRGtHZ1M2VzNaV0x0cy1oendJM3g2NTY1O
-WtnNGhWbzlkYkdvQ0pFM1pHRl9lYWV0RTMwVWhCVUVncEd3ckRyUWlKOXpxcHJtY0Zmc
-jNxdnZrR2p0dGg4WmdsMWVNMmJKY093RTdQQ0JIV1RLV1lzMTUyUjdnNkpnMk9WcGgtY
-ThycS1xNzlNaEtHNVFvV19tVHoxMFFUXzZINGM3UGpXRzFmamg4aHBXTm5iUF9wdjZkM
-XpTd1pmYzVmbDZ5VlJMMERWMFYzbEdIS2UyV3FmX2VOR2pCckJMVmtsRFRrOC1zdFhfT
-VdMY1ItRUdtWEFPdjBVQldpdFNfZFhKS0p1LXZYSnl3MTRuSFNHdXhUSUsyaHgxcHR0T
-WZ0OUNzdnFpbVhLZURUVTE0cVFMMWVFN2loY3ciLCAiZSI6ICJBUUFCIn19LCAiaWF0I
-jogMTUxNjIzOTAyMiwgImV4cCI6IDE1MTYyNDcwMjIsICJzZF9kaWdlc3RfZGVyaXZhd
-Glvbl9hbGciOiAic2hhLTI1NiIsICJzZF9kaWdlc3RzIjogeyJ2ZXJpZmllZF9jbGFpb
-XMiOiB7InZlcmlmaWNhdGlvbiI6IHsidHJ1c3RfZnJhbWV3b3JrIjogImZrSVctNGlVW
-mdUZUllRGdfWl82b0ZIVS13eVd3YXpTcHVhaVFiYzVRS3ciLCAidGltZSI6ICJWUkYtR
-19MZlR6U2FZa0xlbFZ6cnk4MmwxelF4R3drMVJmR2NuVVVXdWtjIiwgInZlcmlmaWNhd
-Glvbl9wcm9jZXNzIjogIjlPcERtbDRlUkJNNlVzZmszTUYyaTdrQmwxeEdHa3pQcTVOY
-3MxbXZiUG8iLCAiZXZpZGVuY2UiOiBbeyJ0eXBlIjogIkh1Y2FuSGhRd2ItVEpOZ19yV
-nBhb25OU0R0elByQ0VlYmIzTGZYVHVMU00iLCAibWV0aG9kIjogImFVN0lPN29vVDh2Q
-XJNa3FwT2ZrSUFsS3c4Qk5jZlJ5dzNOWHMzWlMxMjgiLCAidGltZSI6ICJMSGNIOThiV
-jMtWk5VYTAwSE5ucU9mOFc1SWRpalkxYUVucFZ6RE5WQndBIiwgImRvY3VtZW50Ijoge
-yJ0eXBlIjogIjNJVElsZmtiVUkwTnZldmlFSkJ3LV9WRWFHaVB0Q0RjWHk5dUQ5b3JXR
-kEiLCAiaXNzdWVyIjogeyJuYW1lIjogIkFZN3dXNjNWYmNkN1JuS0RiMzlzU1hwTGd5a
-VZOeFdnb1JuVjZ4WkQ1QzgiLCAiY291bnRyeSI6ICJLZDNhVW1tNlhIanBXcDZPWWlKZ
-UVaVXJENUo3bklSVTNTbFRjLUU1M2dzIn0sICJudW1iZXIiOiAiOGdLcGtzbDY2Zk45R
-jJaeHMxUFJQZ0Q4a0hpOGRHQzJKenBxdHJQWmF2cyIsICJkYXRlX29mX2lzc3VhbmNlI
-jogIkdmSUVoT0dXd2U4SjdseDZIU0FQcEMtUXZ4MGlod1drRUUwX0xaLXJfREkiLCAiZ
-GF0ZV9vZl9leHBpcnkiOiAiX2ZkbGpLUmRwNXdwdEdpN0R3S05aRXNTWDZBbm5pVnFtR
-EUwYVN6bkg3NCJ9fV19LCAiY2xhaW1zIjogeyJnaXZlbl9uYW1lIjogInN4NHdHZDYtT
-05Bc2lxN2ROMTZHSGVnNFJBeU9zaFJCZG9YV0VfRTc1MXciLCAiZmFtaWx5X25hbWUiO
-iAiTGRiZWEwU2liQVFEaVpKbEJpZ3B0d1dYWjlRQThhMGRLSzdqaXBTbjJLOCIsICJuY
-XRpb25hbGl0aWVzIjogInRyOFNYSGRZUzByekFpb19JaEZwMmx6bHRhNGtEektDTTdoV
-XhJdENVMlUiLCAiYWRkcmVzcyI6IHsibG9jYWxpdHkiOiAiVkZnS0hQWG5OclpIZW9Cd
-2N1NjFiNVZDb0ZWWDByUWp0SDVhT2lpTHowRSIsICJwb3N0YWxfY29kZSI6ICJHOFhIa
-ThzQ1BjNDVXQVRlcnk2UlN2bkVjZHlwbnJqeXBqQmw0TEJkNVlFIiwgImNvdW50cnkiO
-iAiWXlHNE5oeWZqaXRwbzYteU1EUlRBUlNWQW5aTnZrWXFSWTNYZXBvUV9qOCIsICJzd
-HJlZXRfYWRkcmVzcyI6ICJOd0FLZkF0alFjTl9YYlYza3VIdDNnYlVNdlE4M24wMkMxR
-WV4STlSbzJBIn19fSwgImJpcnRoX21pZGRsZV9uYW1lIjogIk01R2hrdk5jR2pHT05SZ
-XkycFJPUnVMMnlDZll6NWpvMFhxRjZLMHRVV2siLCAic2FsdXRhdGlvbiI6ICI4bTAtc
-0JOQThJODhfTERjMDVDN2dFMzFwVG1fQ1hRZmV3aXdsTDFTbjFZIiwgIm1zaXNkbiI6I
-CJkTFFWTURJa0VIbm1QVnZ1SE5ZaXY3V3dBcUdFN21ieUpNaDVFZmJqTTFRIn0sICJ2Z
-XJpZmllZF9jbGFpbXMiOiB7ImNsYWltcyI6IHsiYmlydGhkYXRlIjogIjE5NTYtMDEtM
-jgiLCAicGxhY2Vfb2ZfYmlydGgiOiB7ImNvdW50cnkiOiAiREUiLCAibG9jYWxpdHkiO
-iAiTXVzdGVyc3RhZHQifX19fQ.57pncJcJ6cQt2fSARbQLlj6e6nYMpWqHNvI2Ep45Wm
-NGuTtI3htmodK8svpgbrT-RaLL25WF7J3CqP1ElzpZSgVFs2VXCxGXgnTG6dQIvk2qPP
-fP-45hrZiMWyiwRFBr7Di68J01N90yFGbsMH5hh8kGGqFnCpTSQwvk--6aG_03l0nGmL
-DjOFyauCF_Tl-SlOHzNGYoP3MOOX9jU25T8z2e3EmLVLTa5KEmNis0GbpfSHUthbtZCC
-Taq-bSYaPDUHi22ZNqeoW1Y4v8nSaNIyrV9IxfPJNb37kYN6NLn5zwI33sxE_nCd8wOx
-vuI0rtFtmpS_-DNgwPTnLphzUNKA
-```
+{{examples/complex/disclosures.json}}
 
-An HS-Disclosures JWT for some of the claims may look as follows:
+The Verifier would receive the Issuer-signed SD-JWT together with a selection
+of the Disclosures. The Presentation in this example would look as follows:
 
-{#example-complex-hsd_jwt_payload}
-```json
-{
-  "nonce": "XZOUco1u_gEPknxS78sWWg",
-  "aud": "https://example.com/verifier",
-  "sd_hs_disclosures": {
-    "verified_claims": {
-      "verification": {
-        "trust_framework": "{\"s\": \"SJKr-Pydh8RqHomXCOiVwQ\",
-          \"v\": \"de_aml\"}",
-        "time": "{\"s\": \"CrxH2Ez8uu2t7tEPQqwZig\", \"v\":
-          \"2012-04-23T18:25Z\"}",
-        "evidence": [
-          {
-            "type": "{\"s\": \"sPCCbZtOdjnQjfOiPBxOYA\", \"v\":
-              \"document\"}"
-          }
-        ]
-      },
-      "claims": {
-        "given_name": "{\"s\": \"kqwnbB6oHhaBD3F3t-KUGw\", \"v\":
-          \"Max\"}",
-        "family_name": "{\"s\": \"_6Do5glcgEQDMVJoPArGSA\", \"v\":
-          \"Meier\"}"
-      }
-    }
-  }
-}
-```
+<{{examples/complex/combined_presentation.json}}
 
-After verifying the SD-JWT and HS-Disclosures, the Verifier merges the selectively
-disclosed claims into the other data contained in the JWT. The Verifier will
-then pass the result on to the application for further processing:
+After the verification of the data, the Verifier will
+pass the following result on to the application for further processing:
 
-{#example-complex-merged}
-```json
-{
-  "verified_claims": {
-    "verification": {
-      "trust_framework": "de_aml",
-      "time": "2012-04-23T18:25Z",
-      "evidence": [
-        {
-          "type": "document"
-        }
-      ]
-    },
-    "claims": {
-      "given_name": "Max",
-      "family_name": "Meier",
-      "birthdate": "1956-01-28",
-      "place_of_birth": {
-        "country": "DE",
-        "locality": "Musterstadt"
-      }
-    }
-  },
-  "iss": "https://example.com/issuer",
-  "cnf": {
-    "jwk": {
-      "kty": "RSA",
-      "n": "pm4bOHBg-oYhAyPWzR56AWX3rUIXp11_ICDkGgS6W3ZWLts-hzwI3x65
-        659kg4hVo9dbGoCJE3ZGF_eaetE30UhBUEgpGwrDrQiJ9zqprmcFfr3qvvkG
-        jtth8Zgl1eM2bJcOwE7PCBHWTKWYs152R7g6Jg2OVph-a8rq-q79MhKG5QoW
-        _mTz10QT_6H4c7PjWG1fjh8hpWNnbP_pv6d1zSwZfc5fl6yVRL0DV0V3lGHK
-        e2Wqf_eNGjBrBLVklDTk8-stX_MWLcR-EGmXAOv0UBWitS_dXJKJu-vXJyw1
-        4nHSGuxTIK2hx1pttMft9CsvqimXKeDTU14qQL1eE7ihcw",
-      "e": "AQAB"
-    }
-  },
-  "iat": 1516239022,
-  "exp": 1516247022
-}
-```
+<{{examples/complex/verified_contents.json}}
 
 ## Example 4 - W3C Verifiable Credentials Data Model (work in progress)
 
@@ -1521,450 +1029,27 @@ This example illustrates how the artifacts defined in this specification can be
 represented using W3C Verifiable Credentials Data Model as defined in
 [@VC_DATA].
 
-SD-JWT is equivalent to an Issuer-signed W3C Verifiable Credential (W3C VC). Disclosures Object is sent alongside a VC.
+SD-JWT is equivalent to an Issuer-signed W3C Verifiable Credential (W3C VC). Disclosures are sent alongside a VC.
 
-HS-Disclosures JWT is equivalent to a Holder-signed W3C Verifiable Presentation (W3C VP).
+A Presentation with a Holder Binding JWT is equivalent to a Holder-signed W3C Verifiable Presentation (W3C VP).
 
-Holder Binding is applied and HS-Disclosures JWT is signed using a raw public key passed in a `cnf` Claim in a W3C VC (SD-JWT).
-
-HS-Disclosures JWT as a W3C VP contains a `verifiableCredential` claim inside a `vp` claim that is a string array of an SD-JWT as a W3C VC using JWT compact serialization.
+Holder Binding is applied and the Holder Binding JWT is signed using a raw public key passed in a `cnf` Claim in a W3C VC (SD-JWT).
 
 Below is a non-normative example of an SD-JWT represented as a verifiable credential
 encoded as JSON and signed as JWS compliant to [@VC_DATA].
 
-Disclosures Object is the same as in Example 1.
-
+Header:
 ```json
 {
-  "sub": "urn:ietf:params:oauth:jwk-thumbprint:sha-256:NzbLsXh8uDCc
-    d-6MNwXF4W_7noWXFZAfHkxZsRGC9Xs",
-  "jti": "http://example.edu/credentials/3732",
-  "iss": "https://example.com/keys/foo.jwk",
-  "nbf": 1541493724,
-  "iat": 1541493724,
-  "exp": 1573029723,
-  "cnf": {
-    "jwk": {
-      "kty":"RSA",
-      "n": "0vx7agoebGcQSuuPiLJXZptN9nndrQmbXEps2aiAFbWhM78LhWx
-     4cbbfAAtVT86zwu1RK7aPFFxuhDR1L6tSoc_BJECPebWKRXjBZCiFV4n3oknjhMs
-     tn64tZ_2W-5JsGY4Hc5n9yBXArwl93lqt7_RN5w6Cf0h4QyQ5v-65YGjQR0_FDW2
-     QvzqY368QQMicAtaSqzs8KJZgnYb9c7d0zgdAZHzu6qMQvRL5hajrn1n91CbOpbI
-     SD08qNLyrdkt-bFTWhAI4vMQFh6WeZu0fM4lFd2NcRwr3XPksINHaQ-G_xBniIqb
-     w0Ls1jF44-csFCur-kEgU8awapJzKnqDKgw",
-      "e":"AQAB"
-    }
-  },
-  "vc": {
-    "@context": [
-      "https://www.w3.org/2018/credentials/v1"
-    ],
-    "type": [
-      "VerifiableCredential",
-      "UniversityDegreeCredential"
-    ],
-    "credentialSubject": {
-      "first_name": "Jane",
-      "last_name": "Doe"
-    }
-  },
-  "sd_digests": {
-    "vc": {
-      "credentialSubject": {
-        "email": "-Rcr4fDyjwlM_itcMxoQZCE1QAEwyLJcibEpH114KiE",
-        "phone_number": "Jv2nw0C1wP5ASutYNAxrWEnaDRIpiF0eTUAkUOp8F6Y",
-        "address": "ZrjKs-RmEAVeAYSzSw6GPFrMpcgctCfaJ6t9qQhbfJ4",
-        "birthdate": "qXPRRPdpNaebP8jtbEpO-skF4n7v7ASTh8oLg0mkAdQ"
-      }
-    }
-  }
+  "typ": "sd-jwt-vc"
 }
 ```
 
-Below is a non-normative example of a HS-Disclosures JWT represented as a verifiable presentation
-encoded as JSON and signed as a JWS compliant to [@VC_DATA].
+Body:
+<{{examples/w3c-vc/sd_jwt_payload.json}}
 
-```json
-{
-  "alg": "RS256",
-  "typ": "JWT",
-  "jwk": {
-      "kty":"RSA",
-      "n": "0vx7agoebGcQSuuPiLJXZptN9nndrQmbXEps2aiAFbWhM78LhWx
-     4cbbfAAtVT86zwu1RK7aPFFxuhDR1L6tSoc_BJECPebWKRXjBZCiFV4n3oknjhMs
-     tn64tZ_2W-5JsGY4Hc5n9yBXArwl93lqt7_RN5w6Cf0h4QyQ5v-65YGjQR0_FDW2
-     QvzqY368QQMicAtaSqzs8KJZgnYb9c7d0zgdAZHzu6qMQvRL5hajrn1n91CbOpbI
-     SD08qNLyrdkt-bFTWhAI4vMQFh6WeZu0fM4lFd2NcRwr3XPksINHaQ-G_xBniIqb
-     w0Ls1jF44-csFCur-kEgU8awapJzKnqDKgw",
-      "e":"AQAB"
-    }
-}.{
-  "iss": "urn:ietf:params:oauth:jwk-thumbprint:sha-256:NzbLsXh8uDCc
-    d-6MNwXF4W_7noWXFZAfHkxZsRGC9Xs",
-  "aud": "s6BhdRkqt3",
-  "nbf": 1560415047,
-  "iat": 1560415047,
-  "exp": 1573029723,
-  "nonce": "660!6345FSer",
-  "vp": {
-    "@context": [
-      "https://www.w3.org/2018/credentials/v1"
-    ],
-    "type": [
-      "VerifiablePresentation"
-    ],
-    "verifiableCredential": ["eyJhb...npyXw"]
-  },
-  "sd_hs_disclosures": {
-    "vc": {
-      "credentialSubject": {
-        "email": "{\"s\": \"Pc33JM2LchcU_lHggv_ufQ\", \"v\":
-          \"johndoe@example.com\"}",
-        "phone_number": "{\"s\": \"lklxF5jMYlGTPUovMNIvCA\", \"v\":
-          \"+1-202-555-0101\"}",
-        "address": "{\"s\": \"5bPs1IquZNa0hkaFzzzZNw\", \"v\":
-          {\"street_address\": \"123 Main St\", \"locality\":
-          \"Anytown\", \"region\": \"Anystate\", \"country\":
-          \"US\"}}",
-        "birthdate": "{\"s\": \"y1sVU5wdfJahVdgwPgS7RQ\", \"v\":
-          \"1940-01-01\"}"
-      }
-    }
-
-  }
-}
-```
-
-## Blinding Claim Names
-
-The following examples show the use of blinded claim names.
-
-### Example 5: Some Blinded Claims
-
-The following shows the user information used in this example, included a claim named `secret_club_membership_no`:
-
-{#example-simple_structured_some_blinded-user_claims}
-```json
-{
-  "sub": "6c5c0a49-b589-431d-bae7-219122a9ec2c",
-  "given_name": "John",
-  "family_name": "Doe",
-  "email": "johndoe@example.com",
-  "phone_number": "+1-202-555-0101",
-  "secret_club_membership_no": "23",
-  "other_secret_club_membership_no": "42",
-  "address": {
-    "street_address": "123 Main St",
-    "locality": "Anytown",
-    "region": "Anystate",
-    "country": "US"
-  },
-  "birthdate": "1940-01-01"
-}
-```
-
-Hiding just the claim `secret_club_membership_no`, the SD-JWT payload shown in the following would
-result. Note that the claims are sorted (here by unicode code point
-numbers) as described in (#blinding-claim-names).
-
-{#example-simple_structured_some_blinded-sd_jwt_payload}
-```json
-{
-  "cnf": {
-    "jwk": {
-      "e": "AQAB",
-      "kty": "RSA",
-      "n": "pm4bOHBg-oYhAyPWzR56AWX3rUIXp11_ICDkGgS6W3ZWLts-hzwI3x65
-        659kg4hVo9dbGoCJE3ZGF_eaetE30UhBUEgpGwrDrQiJ9zqprmcFfr3qvvkG
-        jtth8Zgl1eM2bJcOwE7PCBHWTKWYs152R7g6Jg2OVph-a8rq-q79MhKG5QoW
-        _mTz10QT_6H4c7PjWG1fjh8hpWNnbP_pv6d1zSwZfc5fl6yVRL0DV0V3lGHK
-        e2Wqf_eNGjBrBLVklDTk8-stX_MWLcR-EGmXAOv0UBWitS_dXJKJu-vXJyw1
-        4nHSGuxTIK2hx1pttMft9CsvqimXKeDTU14qQL1eE7ihcw"
-    }
-  },
-  "exp": 1516247022,
-  "iat": 1516239022,
-  "iss": "https://example.com/issuer",
-  "sd_digest_derivation_alg": "sha-256",
-  "sd_digests": {
-    "HS4QoeE9ty-I8BZTEupSzw":
-      "emp2qhunGPulOGvtgor5dFwNSasDewLqNdqXCkYl4Nw",
-    "address": {
-      "country": "Bktf3gG1tXbn0XObrZT53RUr_lxMLZGEguLYwCvsaIg",
-      "locality": "NeWRh4B9JLRfEODwno3UOXg9Pg3gtZEo45cK9pr4eZk",
-      "region": "qpgFbdX1Az4Hm_E63K3J94oMzazHLCqqFb0Damo2eFE",
-      "street_address":
-        "6Ex8b2gEeACuMal74_OBH_ROVNM7wvzjSck08EC9eSs"
-    },
-    "birthdate": "1IjWWzdrXEs7iXUbsahdx_-8CIJsz2bcHHH_ccwgTBg",
-    "email": "gszmttjNfSw7_uL31KyJRvWgL1gHM6O3LFAzqxluWDQ",
-    "family_name": "Xbz5qK4Fqg-bS_CdwQYd_7qiNS9W810mRn42-FTHMPo",
-    "given_name": "asBCBSyK-B45q79qxGMe6j4MijK4lZsHHCD8O_jsDdc",
-    "other_secret_club_membership_no":
-      "3RP5qguZWamNuvdrFS-sqqYq_MaCIzx6Zn_bOZyE9BY",
-    "phone_number": "lB98F2RApo-ifhA3lwJGdqV-PAURkstN-oHmCv4LmxA",
-    "sub": "sJ88WF6Q05a2eyPnLJHXzZ8bbiQXWlXl44Nss7Ywk0E"
-  }
-}
-```
-
-In the Disclosures Object, it can be seen that the blinded claim's original name is `secret_club_membership_no`. Note that the claims are sorted alphabetically as described in (#blinding-claim-names).
-
-
-{#example-simple_structured_some_blinded-iid_payload}
-```json
-{
-  "sd_ii_disclosures": {
-    "HS4QoeE9ty-I8BZTEupSzw": "{\"s\": \"iq6rolXF0SyWSsdCeaETNg\",
-      \"v\": \"23\", \"n\": \"secret_club_membership_no\"}",
-    "address": {
-      "country": "{\"s\": \"l-6DlGlNloOsAUlBhMOt_Q\", \"v\":
-        \"US\"}",
-      "locality": "{\"s\": \"c6kc69Gmh04VVNPRlhOV_g\", \"v\":
-        \"Anytown\"}",
-      "region": "{\"s\": \"qwybxKQUee9A0mMhzGC-Pg\", \"v\":
-        \"Anystate\"}",
-      "street_address": "{\"s\": \"qNsw9K05ZngcEqXLEGalHA\", \"v\":
-        \"123 Main St\"}"
-    },
-    "birthdate": "{\"s\": \"OErzfd2Gy6jw1atlcCpr6A\", \"v\":
-      \"1940-01-01\"}",
-    "email": "{\"s\": \"woZIMokulfwyF_do1czRaA\", \"v\":
-      \"johndoe@example.com\"}",
-    "family_name": "{\"s\": \"ZXPEdf3K8mtRBKDAMjEcBQ\", \"v\":
-      \"Doe\"}",
-    "given_name": "{\"s\": \"btsLJCwSb0B7gtVLPMjjqA\", \"v\":
-      \"John\"}",
-    "other_secret_club_membership_no": "{\"s\":
-      \"Fj8RxKoVno-9SOVOEUoMpw\", \"v\": \"42\"}",
-    "phone_number": "{\"s\": \"YJSPlYo_aenthOCkapFRTg\", \"v\":
-      \"+1-202-555-0101\"}",
-    "sub": "{\"s\": \"Rj94TRxr3nvOw2WKtujLSA\", \"v\":
-      \"6c5c0a49-b589-431d-bae7-219122a9ec2c\"}"
-  }
-}
-```
-
-The Verifier would learn this information via the HS-Disclosures JWT:
-
-{#example-simple_structured_some_blinded-hsd_jwt_payload}
-```json
-{
-  "nonce": "XZOUco1u_gEPknxS78sWWg",
-  "aud": "https://example.com/verifier",
-  "sd_hs_disclosures": {
-    "given_name": "{\"s\": \"btsLJCwSb0B7gtVLPMjjqA\", \"v\":
-      \"John\"}",
-    "family_name": "{\"s\": \"ZXPEdf3K8mtRBKDAMjEcBQ\", \"v\":
-      \"Doe\"}",
-    "birthdate": "{\"s\": \"OErzfd2Gy6jw1atlcCpr6A\", \"v\":
-      \"1940-01-01\"}",
-    "address": {
-      "region": "{\"s\": \"qwybxKQUee9A0mMhzGC-Pg\", \"v\":
-        \"Anystate\"}",
-      "country": "{\"s\": \"l-6DlGlNloOsAUlBhMOt_Q\", \"v\":
-        \"US\"}"
-    },
-    "HS4QoeE9ty-I8BZTEupSzw": "{\"s\": \"iq6rolXF0SyWSsdCeaETNg\",
-      \"v\": \"23\", \"n\": \"secret_club_membership_no\"}"
-  }
-}
-```
-
-The Verifier would decode the data as follows:
-
-
-{#example-simple_structured_some_blinded-verified_contents}
-```json
-{
-  "given_name": "John",
-  "family_name": "Doe",
-  "birthdate": "1940-01-01",
-  "address": {
-    "region": "Anystate",
-    "country": "US"
-  },
-  "secret_club_membership_no": "23"
-}
-```
-### Example 6: All Claim Names Blinded
-
-In this example, all claim names are blinded. The user data includes a
-non-standard `delivery_address` claim to show that even though the same
-claim name appears at different places within the structure, different
-salts and blinded claim names are used for them:
-
-{#example-simple_structured_all_blinded-user_claims}
-```json
-{
-  "sub": "6c5c0a49-b589-431d-bae7-219122a9ec2c",
-  "given_name": "John",
-  "family_name": "Doe",
-  "email": "johndoe@example.com",
-  "phone_number": "+1-202-555-0101",
-  "secret_club_membership_no": "23",
-  "address": {
-    "street_address": "123 Main St",
-    "locality": "Anytown",
-    "region": "Anystate",
-    "country": "US"
-  },
-  "delivery_address": {
-    "street_address": "123 Main St",
-    "locality": "Anytown",
-    "region": "Anystate",
-    "country": "US"
-  },
-  "birthdate": "1940-01-01"
-}
-```
-
-
-The resulting SD-JWT payload:
-
-{#example-simple_structured_all_blinded-sd_jwt_payload}
-```json
-{
-  "cnf": {
-    "jwk": {
-      "e": "AQAB",
-      "kty": "RSA",
-      "n": "pm4bOHBg-oYhAyPWzR56AWX3rUIXp11_ICDkGgS6W3ZWLts-hzwI3x65
-        659kg4hVo9dbGoCJE3ZGF_eaetE30UhBUEgpGwrDrQiJ9zqprmcFfr3qvvkG
-        jtth8Zgl1eM2bJcOwE7PCBHWTKWYs152R7g6Jg2OVph-a8rq-q79MhKG5QoW
-        _mTz10QT_6H4c7PjWG1fjh8hpWNnbP_pv6d1zSwZfc5fl6yVRL0DV0V3lGHK
-        e2Wqf_eNGjBrBLVklDTk8-stX_MWLcR-EGmXAOv0UBWitS_dXJKJu-vXJyw1
-        4nHSGuxTIK2hx1pttMft9CsvqimXKeDTU14qQL1eE7ihcw"
-    }
-  },
-  "exp": 1516247022,
-  "iat": 1516239022,
-  "iss": "https://example.com/issuer",
-  "sd_digest_derivation_alg": "sha-256",
-  "sd_digests": {
-    "2lrQaXAeV85isgBjuHAOfw":
-      "2kT2ohIPzxb8Mt2aa8YJ7Rj_SmTUrSIfzCz8zVXix5E",
-    "HTQvLIU4zz7NkMr5p4KDWw":
-      "4Hyw9wnR-uEvbJPSyQdrZMz6JY99mLqR_9m_lntD4_s",
-    "HmNQxl6SFAx_Su6uDR94lg":
-      "tmuay_zrl23ZdDX1hIyI48a4huCiTf70chBEvAl2Qf0",
-    "_ZzazarE9UrZHTv3BnHJ1w":
-      "uW7QffEkT_Hw4q_LrsIDV5vcQGh7ubQdKSOJc5qXRiQ",
-    "address": {
-      "MXDpEmt5sRxRxlDw8YAdfA":
-        "9Lu5UyimpvSrpJU9R80aEpzemufK8eRH5QEKo5xLJj0",
-      "SdQneYafbrvTMuPyyQhj2A":
-        "f54HJqBhU7gC1MHPaMYzzlr9vg96qE3eo4kP2zXoKTc",
-      "abIR4EGTTgQKNXnmxoY5qA":
-        "QDUyK4ACX0mVPfCm7uVQFwbBPNo6_xI6-3fHZaHEQW0",
-      "zno2BBCk2a7pk49dcZYnqw":
-        "Ho4wYzUNdQow3TBdPmH5Fbq-4Me_fx8pECok3NJMfFM"
-    },
-    "aqdLloEIUy4FVDdmmSo48w":
-      "C5XJjFnU9CX-k_xIo7qxX_CsLKcR5GDqJJ3MBy_o1Zg",
-    "cIsqMhsylJDPtEpoqVGLvQ":
-      "wWR4GNiwmcPPbTfuIwphr3j4Vs95TCjUzytdiPC7434",
-    "delivery_address": {
-      "Q7vBvGQFVCw8keOQLY1SVg":
-        "sPeIeivTQeApuZ2piXouWMEm1xA_liTae8BsEOQ7z9M",
-      "bMMGdJM0qO_zqVo75zun1w":
-        "xTM2Ojec5bxvHY6sOt5c47LeMErCR7TSc1tJ51v28tQ",
-      "bxNsq8p-Jobl47JNkhNOMA":
-        "AF3X_wkKrY4KHiajZ5vhv7CzUp-ATXe-Jtl5x7QUAcg",
-      "kR7kfLZF-3YiQ5VRgsY3yA":
-        "crbT6qlk8nmEkwqO_GsFUUQHNq7DxoU0ziMh22Cxe7M"
-    },
-    "vEA0i5_1JvuDfS7hH7TWZw":
-      "d9Wa_qCEbikmrXt_1refkreitUPIbZWNn5miQGZWPKg"
-  }
-}
-```
-
-The Disclosures Object:
-{#example-simple_structured_all_blinded-iid_payload}
-```json
-{
-  "sd_ii_disclosures": {
-    "2lrQaXAeV85isgBjuHAOfw": "{\"s\": \"PdxYWdt_MFsC6qce2uiVLQ\",
-      \"v\": \"+1-202-555-0101\", \"n\": \"phone_number\"}",
-    "HTQvLIU4zz7NkMr5p4KDWw": "{\"s\": \"353CLP3ZZFmxJQ6aZ_HDYg\",
-      \"v\": \"John\", \"n\": \"given_name\"}",
-    "HmNQxl6SFAx_Su6uDR94lg": "{\"s\": \"Qb5pmhvwzr4aRd7g7QVckA\",
-      \"v\": \"23\", \"n\": \"secret_club_membership_no\"}",
-    "_ZzazarE9UrZHTv3BnHJ1w": "{\"s\": \"yL66N684FNAao5hWfBqc6A\",
-      \"v\": \"1940-01-01\", \"n\": \"birthdate\"}",
-    "address": {
-      "MXDpEmt5sRxRxlDw8YAdfA": "{\"s\": \"3VzdS1O4wRgglXFk_ENJ2g\",
-        \"v\": \"Anytown\", \"n\": \"locality\"}",
-      "SdQneYafbrvTMuPyyQhj2A": "{\"s\": \"VQz3c8LhaQCy7hqEsusPPA\",
-        \"v\": \"US\", \"n\": \"country\"}",
-      "abIR4EGTTgQKNXnmxoY5qA": "{\"s\": \"BhX1rStOsN3_vk_Kx4IgOg\",
-        \"v\": \"Anystate\", \"n\": \"region\"}",
-      "zno2BBCk2a7pk49dcZYnqw": "{\"s\": \"u2jvKsy0g-inkL3RAcpssw\",
-        \"v\": \"123 Main St\", \"n\": \"street_address\"}"
-    },
-    "aqdLloEIUy4FVDdmmSo48w": "{\"s\": \"Y3d_N7vZNfNp7KWDmCpJlA\",
-      \"v\": \"Doe\", \"n\": \"family_name\"}",
-    "cIsqMhsylJDPtEpoqVGLvQ": "{\"s\": \"bbdW6Rtr4YEaDvydH4Yerw\",
-      \"v\": \"johndoe@example.com\", \"n\": \"email\"}",
-    "delivery_address": {
-      "Q7vBvGQFVCw8keOQLY1SVg": "{\"s\": \"nBOOpTNOcCScA_MHr9P9SQ\",
-        \"v\": \"Anystate\", \"n\": \"region\"}",
-      "bMMGdJM0qO_zqVo75zun1w": "{\"s\": \"urI5m4JPtDbe9rRQbXgtEg\",
-        \"v\": \"US\", \"n\": \"country\"}",
-      "bxNsq8p-Jobl47JNkhNOMA": "{\"s\": \"LojbKO3mpEE6WTgSL5EzMg\",
-        \"v\": \"123 Main St\", \"n\": \"street_address\"}",
-      "kR7kfLZF-3YiQ5VRgsY3yA": "{\"s\": \"e925I1ajysz2xx9kzyzveg\",
-        \"v\": \"Anytown\", \"n\": \"locality\"}"
-    },
-    "vEA0i5_1JvuDfS7hH7TWZw": "{\"s\": \"i_rQHJJUvGFdOgVVM8H8Ww\",
-      \"v\": \"6c5c0a49-b589-431d-bae7-219122a9ec2c\", \"n\":
-      \"sub\"}"
-  }
-}
-```
-
-Here, the Holder decided only to disclose a subset of the claims to the Verifier:
-
-{#example-simple_structured_all_blinded-hsd_jwt_payload}
-```json
-{
-  "nonce": "XZOUco1u_gEPknxS78sWWg",
-  "aud": "https://example.com/verifier",
-  "sd_hs_disclosures": {
-    "HTQvLIU4zz7NkMr5p4KDWw": "{\"s\": \"353CLP3ZZFmxJQ6aZ_HDYg\",
-      \"v\": \"John\", \"n\": \"given_name\"}",
-    "aqdLloEIUy4FVDdmmSo48w": "{\"s\": \"Y3d_N7vZNfNp7KWDmCpJlA\",
-      \"v\": \"Doe\", \"n\": \"family_name\"}",
-    "_ZzazarE9UrZHTv3BnHJ1w": "{\"s\": \"yL66N684FNAao5hWfBqc6A\",
-      \"v\": \"1940-01-01\", \"n\": \"birthdate\"}",
-    "address": {
-      "abIR4EGTTgQKNXnmxoY5qA": "{\"s\": \"BhX1rStOsN3_vk_Kx4IgOg\",
-        \"v\": \"Anystate\", \"n\": \"region\"}",
-      "SdQneYafbrvTMuPyyQhj2A": "{\"s\": \"VQz3c8LhaQCy7hqEsusPPA\",
-        \"v\": \"US\", \"n\": \"country\"}"
-    }
-  }
-}
-```
-
-The Verifier would decode the HS-Disclosures JWT and SD-JWT as follows:
-
-
-{#example-simple_structured_all_blinded-verified_contents}
-```json
-{
-  "given_name": "John",
-  "family_name": "Doe",
-  "birthdate": "1940-01-01",
-  "address": {
-    "region": "Anystate",
-    "country": "US"
-  }
-}
-```
-
-
+Disclosures:
+{{examples/w3c-vc/disclosures.json}}
 
 
 # Document History
