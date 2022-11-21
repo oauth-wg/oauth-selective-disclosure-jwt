@@ -539,13 +539,12 @@ Note: Examples in this document use `cnf` Claim defined in [@RFC7800] to include
 
 ## Example 1: SD-JWT {#example-1}
 
-This example and Example 2a in (#example-simple-structured-sd-jwt) use the following object as the set
-of claims that the Issuer is issuing:
+This example, Example 2a in (#example-simple_structured) and Example 2b in (#example-simple_structured_with_decoys) use the following object as the set of claims that the Issuer is issuing:
 
 <{{examples/simple/user_claims.json}}
 
 The following non-normative example shows the payload of an SD-JWT. The Issuer
-is using a flat structure, i.e., all of the claims in the `address` claim can only
+is using a flat structure in this case, i.e., all of the claims in the `address` claim can only
 be disclosed in full.
 
 <{{examples/simple/sd_jwt_payload.json}}
@@ -954,74 +953,61 @@ TBD
 
 All of the following examples are non-normative.
 
-## Structured SD-JWT
+## Example 2a: Handling Structured Claims {#example-simple_structured}
 
-The following examples show variations of a structured SD-JWT.
-
-### Example 2a - Simple Structured SD-JWT {#example-simple-structured-sd-jwt}
-This non-normative example is based on the same claim values as Example 1, but
+This example is based on the same claim values as Example 1, but
 here the Issuer decided to create a structured object for the digests. This
 allows for the disclosure of individual members of the `address` claim separately.
 
-<{{examples/simple-structured/sd_jwt_payload.json}}
+<{{examples/simple_structured/sd_jwt_payload.json}}
 
 The Disclosures for this SD-JWT are as follows:
 
-{{examples/simple-structured/disclosures.json}}
+{{examples/simple_structured/disclosures.md}}
 
 A Presentation for the SD-JWT that discloses only `region`
 and `country` of the `address` property could look as follows:
 
-<{{examples/simple-structured/combined_presentation.json}}
+<{{examples/simple_structured/combined_presentation.txt}}
+
+## Example 2b: Adding Decoys {#example-simple_structured_with_decoys}
+
+This example is based on the same set of user data as Example 1 and Example 2a, but 
+here, the Issuer decided to add decoy digests to the SD-JWT. 
+
+The SD-JWT payload is as follows:
+
+<{{examples/simple_structured_with_decoys/sd_jwt_payload.json}}
+
+Since the Disclosures or Presentation are not affected by the decoy digests (other than a slightly larger SD-JWT), they are omitted here.
 
 
-### Example 2b - Mixing SD and Non-SD Claims in a Structured SD-JWT {#example-mixed-structured-sd-jwt}
+## Example 3 - Complex Structured SD-JWT {#example-complex-structured-sd-jwt}
 
-In this example, a variant of Example 2a, the Issuer decided to apply selective
-disclosure only to some of the claims. In particular, the `country` component of
-the `address` is contained in the JWT as a regular claim, whereas the rest of
-the claims can be disclosed selectively.
+In this example, an SD-JWT with a complex object is demonstrated. Here, the data
+structures defined in OIDC4IDA [@OIDC.IDA] are used. 
 
-<{{examples/mixed-structured/sd_jwt_payload.json}}
+The Issuer is using the following user data:
 
-With the following Disclosures:
-
-{{examples/mixed-structured/disclosures.json}}
-
-The Holder can now, for example, release the rest of the components of the `address` claim:
-
-<{{examples/mixed-structured/combined_presentation.json}}
-
-The Verifier, after applying the steps described in (#verifier_verification),
-would pass the following data to the application:
-
-<{{examples/mixed-structured/verified_contents.json}}
-
-
-### Example 3 - Complex Structured SD-JWT {#example-complex-structured-sd-jwt}
-
-In this example, a complex object such as those defined in OIDC4IDA
-[@OIDC.IDA] is used. Here, the Issuer is using the following user data:
-
-<{{examples/complex/user_claims.json}}
+<{{examples/complex-ekyc/user_claims.json}}
 
 The Issuer in this example sends the two claims `birthdate` and `place_of_birth` in the `claims` element in plain text. The following shows the resulting SD-JWT payload:
 
-<{{examples/complex/sd_jwt_payload.json}}
+<{{examples/complex-ekyc/sd_jwt_payload.json}}
 
 With the following Disclosures:
 
-{{examples/complex/disclosures.json}}
+{{examples/complex-ekyc/disclosures.md}}
 
 The Verifier would receive the Issuer-signed SD-JWT together with a selection
 of the Disclosures. The Presentation in this example would look as follows:
 
-<{{examples/complex/combined_presentation.json}}
+<{{examples/complex-ekyc/combined_presentation.txt}}
 
 After the verification of the data, the Verifier will
 pass the following result on to the application for further processing:
 
-<{{examples/complex/verified_contents.json}}
+<{{examples/complex-ekyc/verified_contents.json}}
 
 ## Example 4 - W3C Verifiable Credentials Data Model (work in progress)
 
@@ -1046,10 +1032,12 @@ Header:
 ```
 
 Body:
+
 <{{examples/w3c-vc/sd_jwt_payload.json}}
 
 Disclosures:
-{{examples/w3c-vc/disclosures.json}}
+
+{{examples/w3c-vc/disclosures.md}}
 
 
 # Document History
@@ -1063,6 +1051,7 @@ Disclosures:
    * Terms "II-Disclosures" and "HS-Disclosures" are replaces with "Disclosures".
    * Holder Binding is now separate from delivering the Disclosures and implemented, if required, with a separate JWT.
    * Examples are now pulled in from the examples directory, not inlined.
+   * Updated and automated the W3C VC example.
 
    -02
 
