@@ -10,6 +10,7 @@ import yaml
 from sd_jwt import __version__
 from sd_jwt.demo_utils import get_jwk, print_decoded_repr, print_repr
 from sd_jwt.operations import SDJWTCommon, SDJWTHolder, SDJWTIssuer, SDJWTVerifier
+from sd_jwt.replace_utils import textwrap_json, textwrap_text
 
 logger = logging.getLogger("sd_jwt")
 
@@ -74,14 +75,6 @@ parser.add_argument(
     type=int,
     default=4,
     help=("json output indentation level"),
-)
-parser.add_argument(
-    "--replace-examples-in",
-    required=False,
-    type=pathlib.Path,
-    help=(
-        "path/to/draft-ietf-oauth-selective-disclosure-jwt.md - Do not output examples, but replace all the examples in the specs"
-    ),
 )
 # new option to put examples into a directory
 parser.add_argument(
@@ -191,72 +184,79 @@ verified = sdjwt_at_verifier.get_verified_payload()
 
 ### Done - now output everything to CLI (unless --replace-examples-in was used)
 
+iid_payload = ""
+for hash in sdjwt_at_holder._hash_to_decoded_disclosure:
+    salt, claim_name, claim_value = sdjwt_at_holder._hash_to_decoded_disclosure[hash]
+    b64 = sdjwt_at_holder._hash_to_disclosure[hash]
+    encoded_json = sdjwt_at_holder._base64url_decode(b64).decode("utf-8")
+
+    iid_payload += f"**Disclosure for '{claim_name}':**\n"
+    iid_payload += f"\n```\n{textwrap_text(b64)}\n```\n\n"
+    iid_payload += f"Contents:\n"
+    iid_payload += f"\n```\n{textwrap_text(encoded_json)}\n```\n\n"
+    iid_payload += f"SHA-256 Hash: `{hash}`\n\n" 
+
+iid_payload = iid_payload.strip()
+
 _artifacts = {
-    "user_claims": (example["user_claims"], "User Claims"),
-    "sd_jwt_payload": (sdjwt_at_issuer.sd_jwt_payload, "Payload of the SD-JWT"),
-    "serialized_sd_jwt": (sdjwt_at_issuer.serialized_sd_jwt, "Serialized SD-JWT"),
-    "iid_payload": (
-        "\n".join(sdjwt_at_issuer._debug_ii_disclosures_contents),
+    "user_claims": (example["user_claims"], "User Claims", "json"),
+    "sd_jwt_payload": (sdjwt_at_issuer.sd_jwt_payload, "Payload of the SD-JWT", "json"),
+    "sd_jwt_serialized": (sdjwt_at_issuer.serialized_sd_jwt, "Serialized SD-JWT", "txt"),
+    "disclosures": (
+        iid_payload,
         "Payloads of the II-Disclosures",
+        "md"
     ),
-    "combined_sd_jwt_iid": (
+    "combined_issuance": (
         sdjwt_at_issuer.combined_sd_jwt_iid,
-        "Combined SD-JWT and II-Disclosures Object representation",
+        "Combined SD-JWT and Disclosures",
+        "txt"
     ),
-    "serialized_hsd_jwt": (
+    "hb_jwt_serialized": (
         sdjwt_at_holder.serialized_holder_binding_jwt,
         "Serialized Holder Binding JWT",
+        "txt"
     ),
-    "combined_sd_jwt_hsd_jwt": (
+    "combined_presentation": (
         sdjwt_at_holder.combined_presentation,
         "Combined representation of SD-JWT and HS-Disclosures",
+        "txt"
     ),
-    "verified_contents": (verified, "Verified released contents of the SD-JWT"),
+    "verified_contents": (verified, "Verified released contents of the SD-JWT", "json"),
 }
 
-
-if _args.replace_examples_in:
-    from sd_jwt.replace_utils import replace_all_in_file
-
-    logger.info(
-        f"Replacing the placeholders in the '{_args.replace_examples_in}' file."
-    )
-
-    replace_all_in_file(
-        _args.replace_examples_in,
-        _artifacts,
-        f"example-{example_identifer}-",
-        ignore_missing_placeholders=True,
-    )
-
-elif _args.output_dir:
-    from sd_jwt.replace_utils import format_example
-
+if _args.output_dir:
     logger.info(
         f"Writing all the examples into separate files in '{_args.output_dir}'."
     )
 
-    for key, value in _artifacts.items():
-        output_dir = _args.output_dir / example_identifer
+    output_dir = _args.output_dir / example_identifer
 
-        if not output_dir.exists():
-            output_dir.mkdir(parents=True)
+    if not output_dir.exists():
+        output_dir.mkdir(parents=True)
 
-        if isinstance(value[0], dict):
-            ext = "json"
+    for key, (data, _, ftype) in _artifacts.items():
+        if ftype == "json":
+            out = textwrap_json(data)
+        elif ftype == "txt":
+            out = textwrap_text(data)
         else:
-            ext = "txt"
+            out = data
 
-        with open(output_dir / f"{key}.{ext}", "w") as f:
-            f.write(format_example(value[0]))
+        with open(output_dir / f"{key}.{ftype}", "w") as f:
+            f.write(out)
 
 else:
-    for key, (data, description) in _artifacts.items():
+    for key, (data, description, ftype) in _artifacts.items():
         print(f"{description} ({key}):")
-        if isinstance(data, dict):
-            print_repr(json.dumps(data, indent=_args.indent))
+        if ftype == "json":
+            out = textwrap_json(data)
+        elif ftype == "txt":
+            out = textwrap_text(data)
         else:
-            print_repr(data)
+            out = data
+
+        print(out)
 
         # Small hack to display some values in decoded form
         if key.startswith("serialized_"):

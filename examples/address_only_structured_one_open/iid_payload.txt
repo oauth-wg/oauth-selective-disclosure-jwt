@@ -1,5 +1,0 @@
-["6X_sEsuQEM4LjCdwTfnA6w", "sub",
-"6c5c0a49-b589-431d-bae7-219122a9ec2c"] ["ej1p9notxpjfx-q6VVaiqA",
-"street_address", "Schulstr. 12"] ["9o8nDXMA2aSjxripERx3UQ",
-"locality", "Schulpforta"] ["SmJbGDUPNZd4kbqMhULN6A", "region",
-"Sachsen-Anhalte"]

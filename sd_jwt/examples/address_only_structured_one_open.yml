@@ -10,7 +10,7 @@ user_claims:
       },
   }
 
-non_sd_claims: { "address": { "country": true } }
+non_sd_claims: { "address": { "country": true }, "sub": true }
 
 holder_disclosed_claims:
   {}

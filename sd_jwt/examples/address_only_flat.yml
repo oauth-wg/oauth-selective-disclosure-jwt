@@ -10,7 +10,7 @@ user_claims:
       },
   }
 
-non_sd_claims: {}
+non_sd_claims: {"sub": true}
 
 holder_disclosed_claims:
   {}
