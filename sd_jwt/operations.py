@@ -143,7 +143,7 @@ class SDJWTIssuer(SDJWTCommon):
         return hash
 
     def _create_decoy_claim_entry(self) -> str:
-        return self._b64hash(random.randbytes(16))
+        return self._b64hash(self._generate_salt().encode('ascii'))
 
     def _create_sd_claims(self, user_claims, non_sd_claims):
         # If the user claims are a list, apply this function

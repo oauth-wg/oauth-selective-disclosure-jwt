@@ -139,14 +139,14 @@ SHA-256 Hash: `bTvbv9_F4EGMTwOZ9BKguES9p2WCGC2xXyZ1tiPWuNI`
 __Disclosure for `birthdate`:__
 
 ```
-WyJac0tIWkNqTGIwYVBpMFFjSHFvZnlBIiwgImJpcnRoZGF0ZSIsICIxOTQwLTAxLTAx
+WyJmdXVhOVBVVTJIRDI1aHRuOEF4bTlBIiwgImJpcnRoZGF0ZSIsICIxOTQwLTAxLTAx
 Il0
 ```
 
 Contents:
 
 ```
-["ZsKHZCjLb0aPi0QcHqofyA", "birthdate", "1940-01-01"]
+["fuua9PUU2HD25htn8Axm9A", "birthdate", "1940-01-01"]
 ```
 
-SHA-256 Hash: `pnL_1_uTFP1zJsfp7hC_KtxwJyhewS0a-sTYk1yZpLo`
+SHA-256 Hash: `0--cgzkgM91JyfIA_iZW_bk0NTNjk--MkMuaA_tuIxY`
