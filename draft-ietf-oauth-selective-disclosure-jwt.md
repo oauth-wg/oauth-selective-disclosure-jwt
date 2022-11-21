@@ -1049,7 +1049,9 @@ The encoded SD-JWT looks as follows:
 Header:
 ```json
 {
-  "typ": "sd-jwt-vc"
+  "typ": "sd-jwt-vc",
+  "alg": "RS256",
+  "kid": "cAEIUqJ0cmLzD1kzGzheiBag0YRAzVdlfxN280NgHaA"
 }
 ```
 
