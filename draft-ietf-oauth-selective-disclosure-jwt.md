@@ -371,7 +371,7 @@ predefined byte string and not over a JSON object.
 
 It is important to note that the Disclosures are neither intended nor
 suitable for direct consumption by
-an application that needs to access the disclosed claim values. The
+an application that needs to access the disclosed claim values after the verification by the Verifier. The
 Disclosures are only intended to be used by a Verifier to check
 the digests over the source strings and to extract the original JSON
 data. The original JSON data is then used by the application. See
@@ -387,7 +387,7 @@ required by the application using SD-JWTs.
 
 ### Selectively Disclosable Claims
 
-For each claim that is to be selectively disclosed, the Issuer creates a Disclosure object, hashes it, and includes the hash instead of the original claim in the SD-JWT, as described next. The Disclosures are then sent to the Holder.
+For each claim that is to be selectively disclosed, the Issuer creates a Disclosure, hashes it, and includes the hash instead of the original claim in the SD-JWT, as described next. The Disclosures are then sent to the Holder.
 
 #### Creating Disclosures {#creating_disclosures}
 The Issuer MUST create a Disclosure for each selectively disclosable claim as follows:
@@ -398,6 +398,8 @@ The Issuer MUST create a Disclosure for each selectively disclosable claim as fo
    3. The claim's value, as it would be used in a regular JWT body. The value MAY be of any type that is allowed in JSON, including numbers, strings, booleans, arrays, and objects.
  * JSON-encode the array such that an UTF-8 string is produced.
  * base64url-encode the byte representation of the UTF-8 string, producing a US-ASCII [@RFC0020] string. This string is the Disclosure.
+
+The order is decided based on the readability considerations: salts would have a constant length within the SD-JWT, claim names would be around the same length all the time, and claim values would vary in size, potentially being large objects.
 
 The following example illustrates the steps described above.
 
@@ -412,7 +414,7 @@ Note that the JSON encoding of the object is not canonicalized, so variations in
 of Unicode characters, and ordering of object properties are allowed. For example, the following strings
 are all valid and encode the same claim value:
 
- * A different way to encode the umlaut: `WyI2cU1RdlJMNWhhaiIsICJmYW1pbHlfbmFtZSIsICJNXHUwMGY2Yml1cyJd`
+ * A different way to encode the umlaut (two dots `¨` placed over the letter): `WyI2cU1RdlJMNWhhaiIsICJmYW1pbHlfbmFtZSIsICJNXHUwMGY2Yml1cyJd`
  * No white space: `WyI2cU1RdlJMNWhhaiIsImZhbWlseV9uYW1lIiwiTcO2Yml1cyJd`
  * Newline characters between elements: `WwoiNnFNUXZSTDVoYWoiLAoiZmFtaWx5X25hbWUiLAoiTcO2Yml1cyIKXQ`
 
@@ -452,20 +454,20 @@ Claims that are not selectively disclosable are included in the SD-JWT in plaint
 Selectively disclosable claims are omitted from the SD-JWT. Instead, the hash digests of the respective Disclosures and potentially decoy digests are contained as an array in a new JWT claim, `_sd`.
 
 The `_sd` claim MUST be an array of strings, each string being a hash digests of a Disclosure or a decoy digest as described above.
-The array MAY be empty, although it is RECOMMENDED to omit the claim in this case to save space.
+The array MAY be empty in case the Issuer decided not to selectively disclose any of the claims at that level. However, it is RECOMMENDED to omit `_sd` claim in this case to save space.
 
 The Issuer MUST hide the original order of the claims in the array. To ensure this, it is RECOMMENDED to shuffle the array of hashes, e.g., by sorting it alphanumerically or randomly. The precise method does not matter as long as it does not depend on the original order of elements.
 
 Issuers MUST NOT issue SD-JWTs where
 
- * the key `_sd` is used for any other purpose than to contain the array of hash digests, or
- * the key `_sd` is itself used inside a claim value (when the claim value is an object), or
- * the same Disclosure appears more than once (in the same array or in different arrays).
+ * the key `_sd` is already used for the purpose other than to contain the array of hash digests, or
+ * plaintext claim value is an object that contains the `_sd` claim array, or
+ * the same Disclosure value appears more than once (in the same array or in different arrays).
 
 
 #### Nested Data in SD-JWTs {#nested_data}
 
-Just like any JWT, an SD-JWT MAY contain objects that themselves contain other data. For any object in an SD-JWT, the Issuer MAY decide to either make the entire object selectively disclosable or to make its properties selectively disclosable individually. In the latter case, the Issuer MAY even choose to make some some of the object's properties selectively disclosable and others not.
+Just like any JWT, an SD-JWT MAY contain key value pairs where the value is an object. For any object in an SD-JWT, the Issuer MAY decide to either make the entire object selectively disclosable or to make its properties selectively disclosable individually. In the latter case, the Issuer MAY even choose to make some some of the object's properties selectively disclosable and others not.
 
 In any case, the `_sd` claim MUST be included in the SD-JWT at the same level as the original claim and therefore MAY appear multiple times in an SD-JWT.
 
@@ -650,6 +652,8 @@ a Combined Format for Issuance:
     Holder MUST reject the SD-JWT.
  4. Decode Disclosures and obtain plaintext of the claim values.
 
+It is up to the Holder how to maintain the mapping between the Disclosures and the plaintext claim values to be able to display them to the End-User when needed.
+
 For presentation to a Verifier, the Holder MUST perform the following (or equivalent) steps:
 
  1. Decide which Disclosures to release to the Verifier, obtaining proper End-User consent if necessary.
@@ -676,19 +680,19 @@ To this end, Verifiers MUST follow the following steps (or equivalent):
     1. Ensure that a signing algorithm was used that was deemed secure for the application. Refer to [@RFC8725], Sections 3.1 and 3.2 for details. The `none` algorithm MUST NOT be accepted.
     2. Validate the signature over the SD-JWT.
     3. Validate the Issuer of the SD-JWT and that the signing key belongs to this Issuer.
-    4. Check that the SD-JWT is valid using `nbf`, `iat`, and `exp` claims, if provided in the SD-JWT.
+    4. Check that the SD-JWT is valid using `nbf`, `iat`, and `exp` claims, if provided in the SD-JWT, and not selectively disclosed.
     5. Check that the `sd_digest_derivation_alg` claim is present and its value is understood and the digest derivation algorithm is deemed secure.
- 4. Create a copy of the SD-JWT payload for further processing, if required.
+ 4. Create a copy of the SD-JWT payload, if required for further processing.
  5. Process the Disclosures. For each Disclosure provided:
     1. Calculate the hash digest over the base64url string as described in (#hashing_disclosures).
-    2. Find any `_sd` keys in the SD-JWT payload where the digest of the Disclosure is included in the array.
+    2. Find `_sd` key in the SD-JWT payload that contains a hash calculated in the previous step. Note that there might be more than one `_sd` arrays in on SD-JWT.
        1. If the digest cannot be found in the SD-JWT payload, the Verifier MUST reject the Presentation.
        2. If there is more than one place where the digest is included, the Verifier MUST reject the Presentation.
        3. If there is a key `_sd` that does not refer to an array, the Verifier MUST reject the Presentation.
        4. Otherwise, insert, at the level of the `_sd` claim, the claim described by the Disclosure with the claim name and claim value provided in the Disclosure.
           1. If the Disclosure is not a JSON-encoded array of three elements, the Verifier MUST reject the Presentation.
-          2. If the claim name already exists, the Verifier MUST reject the Presentation. Note that this also means that if a Holder sends the same Disclosure multiple times, the Verifier MUST reject the Presentation.
-          3. If the claim value is an object and contains an `_sd` key, the Verifier MUST reject the Presentation.
+          2. If the claim name already exists at the same level, the Verifier MUST reject the Presentation. Note that this also means that if a Holder sends the same Disclosure multiple times, the Verifier MUST reject the Presentation.
+          3. If the claim value is an object and contains an `_sd` key with an array, the Verifier MUST reject the Presentation.
     3. Remove all `_sd` claims from the SD-JWT payload.
     4. Remove the claim `sd_digest_derivation_alg` from the SD-JWT payload.
  6. If Holder Binding is required:
