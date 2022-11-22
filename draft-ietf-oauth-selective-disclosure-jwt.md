@@ -127,7 +127,7 @@ Selectively Disclosable JWT (SD-JWT):
 Disclosure:
 :  A combination of a salt, a cleartext claim name, and a cleartext claim value that is used to calculate a digest for a certain claim.
 
-Holder Binding:
+Cryptographic Holder Binding:
 :  Ability of the Holder to prove legitimate possession of an SD-JWT by proving
   control over the same private key during the issuance and presentation. An SD-JWT with Holder Binding contains
   a public key or a reference to a public key that matches to the private key controlled by the Holder.
@@ -219,7 +219,7 @@ DISCLOSURES = (
 The SD-JWT and the Disclosures are sent to the Holder by the Issuer:
 
 ```
-COMBINED-ISSUANCE = (SD-JWT, DISCLOSURES)
+COMBINED-ISSUANCE = SD-JWT | DISCLOSURES
 ```
 
 ## Creating Holder-Selected Disclosures
@@ -240,7 +240,7 @@ COMBINED-PRESENTATION = SD-JWT | HOLDER-SELECTED-DISCLOSURES
 
 Some use-cases may require Holder Binding.
 
-If Holder Binding is desired, `SD-JWT` must contain information about key material controlled by the Holder:
+Cryptographic Holder Binding is an optional feature, but when it is desired, `SD-JWT` must contain information about key material controlled by the Holder:
 
 ```
 SD-JWT-DOC = (METADATA, HOLDER-PUBLIC-KEY, SD-CLAIMS, NON-SD-CLAIMS)
@@ -268,11 +268,11 @@ Note that there may be other ways to send the Holder Binding JWT to the Verifier
 
 ## Verifying Holder-Selected Disclosures
 
-On a high level, the Verifier
+At a high level, the Verifier
 
  * receives the `COMBINED-PRESENTATION` from the Holder and verifies the signature of the SD-JWT using the Issuer's public key,
- * verifies the Holder Binding JWT, if Holder Binding is required, using the public key included in the SD-JWT,
- * calculates the digests over the Holder-Selected Disclosures and verifies that each digest is contained in the SD-JWT.
+ * verifies the Holder Binding JWT, if Holder Binding is required by the Verifier's policy, using the public key included in the SD-JWT,
+ * calculates the hash digests over the Holder-Selected Disclosures and verifies that each digest is contained in the SD-JWT.
 
 The detailed algorithm is described in (#verifier_verification).
 
@@ -360,7 +360,7 @@ it allows for simple and reliable interoperability without the
 requirement for a canonicalization library. To harden the source string,
 any serialization format that supports the necessary data types could
 be used in theory, like protobuf, msgpack, or pickle. In this
-specification, JSON is used and the JSON document is encoded using base64url-encoding
+specification, JSON is used and plain text values of each Disclosure is encoded using base64url-encoding
 for transport. This approach means that SD-JWTs can be implemented purely based
 on widely available JWT, JSON, and Base64 encoding and decoding libraries.
 
@@ -390,12 +390,12 @@ required by the application using SD-JWTs.
 For each claim that is to be selectively disclosed, the Issuer creates a Disclosure object, hashes it, and includes the hash instead of the original claim in the SD-JWT, as described next. The Disclosures are then sent to the Holder.
 
 #### Creating Disclosures {#creating_disclosures}
-The Issuer MUST create a Disclosure object for each selectively disclosable claim as follows:
+The Issuer MUST create a Disclosure for each selectively disclosable claim as follows:
 
  * Create an array of three elements in this order:
    1. A salt value. See (#salt-entropy) and (#salt_minlength) for security considerations. The salt value MUST be unique for each claim that is to be selectively disclosed. It is RECOMMENDED to base64url-encode the salt value, producing a string. Any other type that is allowed in JSON MAY be used, e.g., a number.
-   2. The claim name, or key, as it would be used in a regular JWT. This MUST be a string.
-   3. The claim's value, as it would be used in a regular JWT. The value MAY be of any type that is allowed in JSON, including numbers, strings, booleans, arrays, and objects.
+   2. The claim name, or key, as it would be used in a regular JWT body. This MUST be a string.
+   3. The claim's value, as it would be used in a regular JWT body. The value MAY be of any type that is allowed in JSON, including numbers, strings, booleans, arrays, and objects.
  * JSON-encode the array such that an UTF-8 string is produced.
  * base64url-encode the byte representation of the UTF-8 string, producing a US-ASCII [@RFC0020] string. This string is the Disclosure.
 
@@ -422,7 +422,7 @@ For embedding the Disclosures in the SD-JWT, the Disclosures are hashed using th
 
 The hash digest MUST be taken over the US-ASCII bytes of the base64url-encoded Disclosure. This follows the convention in JWS [@RFC7515] and JWE [@RFC7516]. The bytes of the hash digest MUST then be base64url-encoded.
 
-Note:
+It is important to note that:
 
  * The input to the hash function is the base64url-encoded Disclosure, not the bytes encoded by the base64url string.
  * The bytes of the output of the hash function are base64url-encoded, not the bytes making up the (often used) hex representation of the bytes of the hash digest.
@@ -445,16 +445,16 @@ An SD-JWT is a JWT that MUST be signed using the Issuer's private key.
 
 An SD-JWT MAY contain both selectively disclosable claims and non-selectively disclosable claims, i.e., claims that are always contained in the SD-JWT in plaintext and are always visible to a Verifier.
 
-Claims controlling the validity of the SD-JWT, such as `iss`, `exp`, or `nbf` are usually included in plaintext. End-User claims MAY be included as plaintext as well, e.g., if hiding the particular claims from the Verifier does not make sense in the intended use case. Ultimately, an Issuer decides which claims are selectively disclosable and which are not.
+It is the Issuer who decides which claims are selectively disclosable and which are not. However, claims controlling the validity of the SD-JWT, such as `iss`, `exp`, or `nbf` are usually included in plaintext. End-User claims MAY be included as plaintext as well, e.g., if hiding the particular claims from the Verifier does not make sense in the intended use case.
 
-Plaintext claims are included in the SD-JWT just as they would be in any other JWT.
+Claims that are not selectively disclosable are included in the SD-JWT in plaintext just as they would be in any other JWT.
 
-Selectively disclosable claims are omitted from the SD-JWT. Instead, the hash digests of the respective Disclosures and potentially decoy digests are contained as an array in a new claim, `_sd`.
+Selectively disclosable claims are omitted from the SD-JWT. Instead, the hash digests of the respective Disclosures and potentially decoy digests are contained as an array in a new JWT claim, `_sd`.
 
 The `_sd` claim MUST be an array of strings, each string being a hash digests of a Disclosure or a decoy digest as described above.
 The array MAY be empty, although it is RECOMMENDED to omit the claim in this case to save space.
 
-The Issuer MUST hide the original order of the claims in the array. To ensure this, it is RECOMMENDED to shuffle the array, e.g., by sorting it alphanumerically or randomly. The precise method does not matter as long as it does not depend on the original order of elements.
+The Issuer MUST hide the original order of the claims in the array. To ensure this, it is RECOMMENDED to shuffle the array of hashes, e.g., by sorting it alphanumerically or randomly. The precise method does not matter as long as it does not depend on the original order of elements.
 
 Issuers MUST NOT issue SD-JWTs where
 
@@ -648,6 +648,7 @@ a Combined Format for Issuance:
  3. Find the places in the SD-JWT where the digests of the Disclosures are
     included. If any of the digests cannot be found in the SD-JWT, the
     Holder MUST reject the SD-JWT.
+ 4. Decode Disclosures and obtain plaintext of the claim values.
 
 For presentation to a Verifier, the Holder MUST perform the following (or equivalent) steps:
 
@@ -693,8 +694,8 @@ To this end, Verifiers MUST follow the following steps (or equivalent):
  6. If Holder Binding is required:
     1. If Holder Binding is provided by means not defined in this specification, verify the Holder Binding according to the method used.
     2. Otherwise, verify the Holder Binding JWT as follows:
-       1. If not Holder Binding JWT is provided, the Verifier MUST reject the Presentation.
-       2. Determine the public key for the Holder from the Holder Binding JWT.
+       1. If Holder Binding JWT is not provided, the Verifier MUST reject the Presentation.
+       2. Determine the public key for the Holder from the SD-JWT.
        3. Ensure that a signing algorithm was used that was deemed secure for the application. Refer to [@RFC8725], Sections 3.1 and 3.2 for details. The `none` algorithm MUST NOT be accepted.
        4. Validate the signature over the Holder Binding JWT.
        5. Check that the Holder Binding JWT is valid using `nbf`, `iat`, and `exp` claims, if provided in the Holder Binding JWT.
@@ -735,7 +736,7 @@ ensure that the values of the claims are correct, i.e., the hash digests of the 
 
 A naive Issuer that extracts
 all claim values from the Disclosures (without checking the hashes) and inserts them into the SD-JWT payload
-is vulnerable to this attack. However, without comparing the digests of the
+is vulnerable to this attack. However, in a structured SD-JWT, without comparing the digests of the
 Disclosures, such an implementation could not determine the correct place in a
 nested object where a claim needs to be inserted. Therefore, the naive implementation
 would not only be insecure, but also incorrect.
@@ -821,7 +822,7 @@ presentation, as described in (#verifier_verification).
 ## Blinding Claim Names {#blinding-claim-names}
 
 SD-JWT ensures that names of claims that are selectively disclosable are
-blinded. This prevents an attacker from learning the names of the
+always blinded. This prevents an attacker from learning the names of the
 disclosable claims. However, the names of the claims that are not
 disclosable are not blinded. This includes the keys of objects that themselves
 are not blinded, but contain disclosable claims. This limitation
