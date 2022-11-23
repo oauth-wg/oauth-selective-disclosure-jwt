@@ -461,7 +461,7 @@ The Issuer MUST hide the original order of the claims in the array. To ensure th
 Issuers MUST NOT issue SD-JWTs where
 
  * the key `_sd` is already used for the purpose other than to contain the array of hash digests, or
- * plaintext claim value is an object that contains the `_sd` claim array, or
+ * the claim value contained in a Disclosure is an object that contains an `_sd` key, or
  * the same Disclosure value appears more than once (in the same array or in different arrays).
 
 
@@ -1079,7 +1079,7 @@ Disclosures:
 
    * Disclosures are now delivered not as a JWT but as separate base64url-encoded JSON objects.
    * In the SD-JWT, hash digests are collected under a `_sd` claim per level.
-   * Terms "II-Disclosures" and "HS-Disclosures" are replaces with "Disclosures".
+   * Terms "II-Disclosures" and "HS-Disclosures" are replaced with "Disclosures".
    * Holder Binding is now separate from delivering the Disclosures and implemented, if required, with a separate JWT.
    * Examples updated and modified to properly explain the specifics of the new SD-JWT format.
    * Examples are now pulled in from the examples directory, not inlined.
