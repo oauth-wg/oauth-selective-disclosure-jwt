@@ -4,7 +4,7 @@ user_claims:
     "given_name": "太郎",
     "family_name": "山田",
     "email": "\"unusual email address\"@nihon.com",
-    "phone_number": "123456",
+    "phone_number": "08012345678",
     "address":
       {
         "street_address": "東京都港区芝公園４丁目２−８",
