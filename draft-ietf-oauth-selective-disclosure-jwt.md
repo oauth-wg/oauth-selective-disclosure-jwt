@@ -30,6 +30,14 @@ organization="Microsoft"
     [author.address]
     email = "Kristina.Yasuda@microsoft.com"
 
+[[author]]
+initials="B."
+surname="Campbell"
+fullname="Brian Campbell"
+organization="Ping Identity"
+    [author.address]
+    email = "bcampbell@pingidentity.com"
+
 
 %%%
 
