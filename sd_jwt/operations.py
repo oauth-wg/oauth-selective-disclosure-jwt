@@ -13,6 +13,13 @@ from jwcrypto.jws import JWS
 from sd_jwt import DEFAULT_SIGNING_ALG, DIGEST_ALG_KEY, SD_DIGESTS_KEY
 
 
+class SDJWTHasSDClaimException(Exception):
+    """Exception raised when input data contains the special _sd claim reserved for SD-JWT internal data."""
+
+    def __init__(self, error_location: any):
+        super().__init__(f"Input data contains the special claim '{SD_DIGESTS_KEY}' reserved for SD-JWT internal data. Location: {error_location!r}")
+
+
 class SDJWTCommon:
     SD_JWT_HEADER = None  # "sd+jwt"
     # WiP: https://github.com/oauthstuff/draft-selective-disclosure-jwt/issues/60
@@ -66,8 +73,28 @@ class SDJWTCommon:
                 self._base64url_decode(disclosure).decode("utf-8")
             )
             hash = self._b64hash(disclosure.encode("ascii"))
+            if hash in self._hash_to_decoded_disclosure:
+                raise ValueError(
+                    f"Duplicate disclosure hash {hash} for disclosure {decoded_disclosure}"
+                )
+            
             self._hash_to_decoded_disclosure[hash] = decoded_disclosure
             self._hash_to_disclosure[hash] = disclosure
+
+    def _check_for_sd_claim(self, the_object):
+        # Recursively check for the presence of the _sd claim, also
+        # works for arrays and nested objects.
+        if isinstance(the_object, dict):
+            for key, value in the_object.items():
+                if key == SD_DIGESTS_KEY:
+                    raise SDJWTHasSDClaimException(the_object)
+                else:
+                    self._check_for_sd_claim(value)
+        elif isinstance(the_object, list):
+            for item in the_object:
+                self._check_for_sd_claim(item)
+        else:
+            return
 
 
 class SDJWTIssuer(SDJWTCommon):
@@ -106,6 +133,7 @@ class SDJWTIssuer(SDJWTCommon):
         self._sign_alg = sign_alg or DEFAULT_SIGNING_ALG
         self._add_decoy_claims = add_decoy_claims
 
+        self._check_for_sd_claim(self._user_claims)
         self._assemble_sd_jwt_payload()
         self._create_signed_jwt()
         self._create_combined()
@@ -143,7 +171,7 @@ class SDJWTIssuer(SDJWTCommon):
         return hash
 
     def _create_decoy_claim_entry(self) -> str:
-        return self._b64hash(self._generate_salt().encode('ascii'))
+        return self._b64hash(self._generate_salt().encode("ascii"))
 
     def _create_sd_claims(self, user_claims, non_sd_claims):
         # If the user claims are a list, apply this function
@@ -425,10 +453,12 @@ class SDJWTVerifier(SDJWTCommon):
         if self._sd_jwt_payload[DIGEST_ALG_KEY] != self.HASH_ALG["name"]:
             # TODO: Support other hash algorithms
             raise ValueError("Invalid hash algorithm")
-
+        
+        self._duplicate_hash_check = []
         return self._unpack_disclosed_claims(self._sd_jwt_payload)
 
     def _unpack_disclosed_claims(self, sd_jwt_claims):
+        # In a list, unpack each element individually
         if type(sd_jwt_claims) is list:
             return [self._unpack_disclosed_claims(c) for c in sd_jwt_claims]
 
@@ -440,8 +470,14 @@ class SDJWTVerifier(SDJWTCommon):
             }
 
             for digest in sd_jwt_claims.get(SD_DIGESTS_KEY, []):
+                if digest in self._duplicate_hash_check:
+                    raise ValueError(f"Duplicate hash found in SD-JWT: {digest}")
+                self._duplicate_hash_check.append(digest)
+                
                 if digest in self._hash_to_decoded_disclosure:
                     _, key, value = self._hash_to_decoded_disclosure[digest]
+                    if key in output:
+                        raise ValueError(f"Duplicate key found when unpacking disclosed claim: '{key}' in {output}. This is not allowed.")
                     output[key] = value
 
             return output

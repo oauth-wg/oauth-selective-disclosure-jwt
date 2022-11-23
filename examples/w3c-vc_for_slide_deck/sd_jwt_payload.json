@@ -1,0 +1,32 @@
+{
+  "iss": "https://example.com/issuer",
+  "cnf": {
+    "jwk": {
+      "kty": "RSA",
+      "n": "0vx7agoebGcQSu....-csFCur-kEgU8awapJzKnqDKgw",
+      "e": "AQAB"
+    }
+  },
+  "type": "IdentityCredential",
+  "credentialSubject": {
+    "_sd": [
+      "EW1o0egqa5mGcbytT5S-kAubcEjYEUwRkXlu2vC5l20",
+      "FEx-ITHt41I8_cn0SS-hvoLneX_RGlJo_8o2xRNhfdk",
+      "QxJV-2V1H8mcltR6vVC4m3reU5aNH9wdJz2UdmRoI1E",
+      "atUn1TYwRAl4GQ7PeEtXaMw2f4uITiJrX485wM8v67E",
+      "fTMw3vkkELwL1XNuYK8H7zBKCHu_uif60SlG1pyXIUQ",
+      "igg7H5fn2eBEMIEkE5Ckbm23QuwDJlTYoKRip08dYIc",
+      "tpUtl70hpU_xnrvZi0GhGoRR1jmt1zYgvv5IY0Ax7Kc"
+    ],
+    "address": {
+      "_sd": [
+        "gqB5kmAwyry88aHjaAeO-USX6JOMaojukKsheo38O0c",
+        "vOnlYtcjr872fP3Wa75Ozl7c-6_MOVdIUNtwLKKxZw0",
+        "w8InvxsPXdKoowuVpyBMgl1b9_R2b6Xpa3OYOIjgQro"
+      ]
+    }
+  },
+  "iat": 1516239022,
+  "exp": 1516247022,
+  "sd_digest_derivation_alg": "sha-256"
+}

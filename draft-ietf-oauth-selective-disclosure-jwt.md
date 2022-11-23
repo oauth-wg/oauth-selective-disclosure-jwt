@@ -461,7 +461,7 @@ The Issuer MUST hide the original order of the claims in the array. To ensure th
 Issuers MUST NOT issue SD-JWTs where
 
  * the key `_sd` is already used for the purpose other than to contain the array of hash digests, or
- * the claim value contained in a Disclosure is an object that contains an `_sd` key, or
+ * the claim value contained in a Disclosure contains (at the top level or nested deeper) an object with an `_sd` key, or
  * the same Disclosure value appears more than once (in the same array or in different arrays).
 
 
@@ -685,14 +685,14 @@ To this end, Verifiers MUST follow the following steps (or equivalent):
  4. Create a copy of the SD-JWT payload, if required for further processing.
  5. Process the Disclosures. For each Disclosure provided:
     1. Calculate the hash digest over the base64url string as described in (#hashing_disclosures).
-    2. Find `_sd` key in the SD-JWT payload that contains a hash calculated in the previous step. Note that there might be more than one `_sd` arrays in on SD-JWT.
+    2. Find all `_sd` keys in the SD-JWT payload that contain a hash digest calculated in the previous step. Note that there might be more than one `_sd` arrays in on SD-JWT.
        1. If the digest cannot be found in the SD-JWT payload, the Verifier MUST reject the Presentation.
        2. If there is more than one place where the digest is included, the Verifier MUST reject the Presentation.
        3. If there is a key `_sd` that does not refer to an array, the Verifier MUST reject the Presentation.
        4. Otherwise, insert, at the level of the `_sd` claim, the claim described by the Disclosure with the claim name and claim value provided in the Disclosure.
           1. If the Disclosure is not a JSON-encoded array of three elements, the Verifier MUST reject the Presentation.
           2. If the claim name already exists at the same level, the Verifier MUST reject the Presentation. Note that this also means that if a Holder sends the same Disclosure multiple times, the Verifier MUST reject the Presentation.
-          3. If the claim value is an object and contains an `_sd` key with an array, the Verifier MUST reject the Presentation.
+          3. If the claim value contains an object with an `_sd` key (at the top level or nested deeper), the Verifier MUST reject the Presentation.
     3. Remove all `_sd` claims from the SD-JWT payload.
     4. Remove the claim `sd_digest_derivation_alg` from the SD-JWT payload.
  6. If Holder Binding is required:
