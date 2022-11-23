@@ -1,0 +1,27 @@
+{
+  "_sd": [
+    "NYCoSRKEYwXdpe5yduJXCxxhynEU8z-b4TyNiap77UY",
+    "SY8n2BbkX9lrY3exHlSwPRFXoD09GF8a9CPO-G8j208",
+    "TPsGNPYA46wmBxfv2znOJhfdoN5Y1GkezbpaGZCT1ac",
+    "ZkSJxxeGluIdYBb7CqkZbJVm0w2V5UrReNTzAQCYBjw",
+    "l9qIJ9JTQwLG7OLEICTFBVxmArw8Pjy65dD6mtQVG5c",
+    "o1SAsJ33YMioO9pX5VeAM1lxuHF6hZW2kGdkKKBnVlo",
+    "qqvcqnczAMgYx7EykI6wwtspyvyvK790ge7MBbQ-Nus"
+  ],
+  "iss": "https://example.com/issuer",
+  "iat": 1516239022,
+  "exp": 1516247022,
+  "sd_digest_derivation_alg": "sha-256",
+  "cnf": {
+    "jwk": {
+      "kty": "RSA",
+      "n": "pm4bOHBg-oYhAyPWzR56AWX3rUIXp11_ICDkGgS6W3ZWLts-hzwI3x65
+        659kg4hVo9dbGoCJE3ZGF_eaetE30UhBUEgpGwrDrQiJ9zqprmcFfr3qvvkG
+        jtth8Zgl1eM2bJcOwE7PCBHWTKWYs152R7g6Jg2OVph-a8rq-q79MhKG5QoW
+        _mTz10QT_6H4c7PjWG1fjh8hpWNnbP_pv6d1zSwZfc5fl6yVRL0DV0V3lGHK
+        e2Wqf_eNGjBrBLVklDTk8-stX_MWLcR-EGmXAOv0UBWitS_dXJKJu-vXJyw1
+        4nHSGuxTIK2hx1pttMft9CsvqimXKeDTU14qQL1eE7ihcw",
+      "e": "AQAB"
+    }
+  }
+}

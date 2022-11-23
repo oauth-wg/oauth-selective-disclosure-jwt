@@ -1,0 +1,41 @@
+{
+  "iss": "https://example.com/issuer",
+  "jti": "http://example.com/credentials/3732",
+  "nbf": 1541493724,
+  "iat": 1516239022,
+  "cnf": {
+    "jwk": {
+      "kty": "RSA",
+      "n": "0vx7agoebGcQSuuPiLJXZptN9nndrQmbXEps2aiAFbWhM78LhWx4cbbf
+        AAtVT86zwu1RK7aPFFxuhDR1L6tSoc_BJECPebWKRXjBZCiFV4n3oknjhMst
+        n64tZ_2W-5JsGY4Hc5n9yBXArwl93lqt7_RN5w6Cf0h4QyQ5v-65YGjQR0_F
+        DW2QvzqY368QQMicAtaSqzs8KJZgnYb9c7d0zgdAZHzu6qMQvRL5hajrn1n9
+        1CbOpbISD08qNLyrdkt-bFTWhAI4vMQFh6WeZu0fM4lFd2NcRwr3XPksINHa
+        Q-G_xBniIqbw0Ls1jF44-csFCur-kEgU8awapJzKnqDKgw",
+      "e": "AQAB"
+    }
+  },
+  "type": "IdentityCredential",
+  "credentialSubject": {
+    "_sd": [
+      "8Bcr2ZGImJ9FlsBNmGiLgj7XmHm-g8QOuYVSXOWoM58",
+      "8wawaYT3XNlnl0zUdP8Xri1252yHK6pjgr8JInBzMQg",
+      "NVTo4oQvI0kuqdMYeb6M_sp_ByUY7d4zcLfHB483aVY",
+      "UQ6IHUAtHqW8Xcik7GqVikWtoviseS4BKjvCmmon6xA",
+      "Um7LRM6Ol51wJZLobMeREW6HsMyO3DCCHnWtaikD-40",
+      "jIjo9ElQ4Ng2mMzs0SoWq2molpyU80OE_LENjk2Ha_8",
+      "w9rrWnA1RQ5dUOBaJDKGfAgtiW12obi1joeF_oLTaZ0",
+      "zOJJSAmcB0OqPmFkOZebY70hHI3GpJC1x4beJRtIPbM"
+    ],
+    "address": {
+      "_sd": [
+        "0mcZNz0nIGNYBI4WgKJFx9mjaaB10E59Bc_pefmm544",
+        "4zIfrBGk3TStRDz_wlxi4VgYDza81mBs_zeJ84czsS4",
+        "Hl_wpSSSagpXtSk_rGoE-xkYGVnIHBO-ZzhUWchy8bo",
+        "ySoQUT3JlKF5NdTPMWzmlDamB4TY2EMmGCgrzzJzih0"
+      ]
+    }
+  },
+  "exp": 1516247022,
+  "sd_digest_derivation_alg": "sha-256"
+}

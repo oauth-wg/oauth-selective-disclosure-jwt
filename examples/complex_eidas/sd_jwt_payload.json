@@ -1,0 +1,53 @@
+{
+  "_sd": [
+    "UxYjx8bYA86RGAHOjRjntztJ16doIL9tAFREFeQCKz0"
+  ],
+  "verified_claims": {
+    "verification": {
+      "_sd": [
+        "OKbpoO_RGyeF1FP_X4RI67ytOW5OO5pj8iAEHPPmGzQ"
+      ],
+      "trust_framework": "eidas",
+      "evidence": [
+        {
+          "_sd": [
+            "DwtOtYlPczP3j0CAGmwK_sG1PS15BePEWennozJtnc4",
+            "N5X-cmduA_hEiG-2-TFHWlYFPmuPAhgMSDAd5-_0ANw"
+          ],
+          "document": {
+            "_sd": [
+              "30jdaA9OfGpa3Tj5XJbtWiVrl4i66my26mOnbIuwY0w",
+              "Fsu1XL9NW1tHVpytr44jFbXwdhX1avNlRArOzRRj6FQ",
+              "PPzuOzIrbneVJ49-K3zgqOPDJvFgbipGcU1Psg2BqPY",
+              "wnXuBaY3ZVHy7qb8zhyVqGjs5ZywuwfDxJ3pIc1vHQo"
+            ],
+            "issuer": {
+              "_sd": [
+                "S-K8XHQ5-TipWeWHZNcKLe4gyqoTW8QPl6XXdmnBPiI",
+                "VBsVXxKHbC7-6dVZcdFg9kU7yCNsPWob4bDcVbZB4-w"
+              ]
+            }
+          }
+        }
+      ]
+    },
+    "claims": {
+      "_sd": [
+        "9C3BrCMDx2zsqn9IhN7siBJXSyZvvJoDYzGsyHhhnZU",
+        "QVtNjGpLtd7NpJgfjBTMhKwwef4EE2VuEE-jBKQJueA",
+        "zXwogmNL4aJrhL7OikfJCpDYpPNSA1SyFciDIcWP14k"
+      ],
+      "person_unique_identifier":
+        "TINIT-fc0d9684-1bf0-4220-9642-8fe652c8c040",
+      "given_name": "Raffaello",
+      "family_name": "Mascetti",
+      "nationalities": [
+        "IT"
+      ]
+    }
+  },
+  "iss": "https://example.com/issuer",
+  "iat": 1516239022,
+  "exp": 1516247022,
+  "sd_digest_derivation_alg": "sha-256"
+}

@@ -1,6 +1,6 @@
 user_claims:
   {
-    "sub": "6c5c0a49-b589-431d-bae7-219122a9ec2c",
+    "sub": "john_doe_42",
     "given_name": "John",
     "family_name": "Doe",
     "email": "johndoe@example.com",
@@ -15,6 +15,9 @@ user_claims:
     "birthdate": "1940-01-01",
   }
 
-claims_structure: { }
+non_sd_claims: {}
 
-disclosed_claims: { "given_name": null, "family_name": null, "address": null }
+holder_disclosed_claims:
+  { "given_name": null, "family_name": null, "address": null }
+
+holder_binding: True

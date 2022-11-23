@@ -1,0 +1,17 @@
+{
+  "iss": "https://example.com/issuer",
+  "cnf": {
+    "jwk": {
+      "kty": "RSA",
+      "n": "0vx7agoebGcQSu....-csFCur-kEgU8awapJzKnqDKgw",
+      "e": "AQAB"
+    }
+  },
+  "type": "IdentityCredential",
+  "credentialSubject": {
+    "address": {}
+  },
+  "iat": 1516239022,
+  "exp": 1516247022,
+  "sd_digest_derivation_alg": "sha-256"
+}

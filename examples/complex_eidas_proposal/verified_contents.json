@@ -1,0 +1,33 @@
+{
+  "verified_claims": {
+    "verification": {
+      "trust_framework": "eidas",
+      "evidence": [
+        {
+          "record": {
+            "type": "eu.europa.ec.eudiw.pid.1"
+          }
+        }
+      ],
+      "assurance_level": "high"
+    },
+    "claims": {
+      "person_unique_identifier":
+        "TINIT-fc0d9684-1bf0-4220-9642-8fe652c8c040",
+      "given_name": "Raffaello",
+      "family_name": "Mascetti",
+      "nationalities": [
+        "IT"
+      ],
+      "gender": "M",
+      "place_of_birth": {
+        "country": "IT",
+        "locality": "Firenze"
+      }
+    }
+  },
+  "iss": "https://example.com/issuer",
+  "iat": 1516239022,
+  "exp": 1516247022,
+  "sd_digest_derivation_alg": "sha-256"
+}

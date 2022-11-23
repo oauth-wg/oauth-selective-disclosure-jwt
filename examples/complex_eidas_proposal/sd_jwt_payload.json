@@ -1,0 +1,45 @@
+{
+  "_sd": [
+    "jhmbpTEsQNvnzgsR2D_TVRlVAmSMzYObIdy19Uvd62A"
+  ],
+  "verified_claims": {
+    "verification": {
+      "_sd": [
+        "2YRmUkluJhbeEzMQ0p4QJCZZHt38O9Yp5xQxj-s-of4"
+      ],
+      "trust_framework": "eidas",
+      "evidence": [
+        {
+          "_sd": [
+            "OSlizAB2reacAQs2WN6N91y8JroSUjGLefjboVc622A"
+          ],
+          "record": {
+            "_sd": [
+              "BS3s_ENu82Z-WT9jdx1ZY9wz5QMnUr1OdS6lr4SOwbw",
+              "_qb1Qw94yeS4uzMHeMHjZH2nH_brDyM7eV5Ueky3xVY",
+              "iJhephauvMFgH11qS3AT0G4aEIw8NvgoPOs5oL16y8o"
+            ]
+          }
+        }
+      ]
+    },
+    "claims": {
+      "_sd": [
+        "bSAXcTJCWsR-rX1EIU8XCxKAi0d4EMVjSuNwzRmpsK0",
+        "cWgplOSX84pLObFPtRo-Q08Eg2_sm4pNEmP_Dc5FZlw",
+        "d23C2t5j0QVLdDvbP7_2KdVYB-KrLbq14ZG5mqTG1io"
+      ],
+      "person_unique_identifier":
+        "TINIT-fc0d9684-1bf0-4220-9642-8fe652c8c040",
+      "given_name": "Raffaello",
+      "family_name": "Mascetti",
+      "nationalities": [
+        "IT"
+      ]
+    }
+  },
+  "iss": "https://example.com/issuer",
+  "iat": 1516239022,
+  "exp": 1516247022,
+  "sd_digest_derivation_alg": "sha-256"
+}

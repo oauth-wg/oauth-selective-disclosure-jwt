@@ -1,0 +1,35 @@
+{
+  "verified_claims": {
+    "verification": {
+      "evidence": [
+        {
+          "document": {
+            "issuer": {}
+          },
+          "type": "document"
+        }
+      ],
+      "trust_framework": "de_aml",
+      "time": "2012-04-23T18:25Z"
+    },
+    "claims": {
+      "birthdate": "1956-01-28",
+      "place_of_birth": {
+        "country": "IS",
+        "locality": "Þykkvabæjarklaustur"
+      },
+      "family_name": "Müller",
+      "address": {
+        "locality": "Maxstadt",
+        "postal_code": "12344",
+        "country": "DE",
+        "street_address": "Weidenstraße 22"
+      },
+      "given_name": "Max"
+    }
+  },
+  "iss": "https://example.com/issuer",
+  "iat": 1516239022,
+  "exp": 1516247022,
+  "sd_digest_derivation_alg": "sha-256"
+}

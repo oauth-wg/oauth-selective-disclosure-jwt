@@ -4,7 +4,6 @@ import logging
 import random
 
 from jwcrypto.jwk import JWK
-from sd_jwt.utils import pad_urlsafe_b64
 from typing import Union
 
 logger = logging.getLogger(__name__)
@@ -20,7 +19,8 @@ def print_decoded_repr(value: str, nlines=2):
     seq = []
     for i in value.split("."):
         try:
-            seq.append(f"{base64.urlsafe_b64decode(pad_urlsafe_b64(i)).decode()}")
+            padded = f"{i}{'=' * divmod(len(i),4)[1]}"
+            seq.append(f"{base64.urlsafe_b64decode(padded).decode()}")
         except Exception as e:
             logging.debug(f"{e} - for value: {i}")
             seq.append(i)

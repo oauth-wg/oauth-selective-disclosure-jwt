@@ -2,7 +2,6 @@
 *.pdf
 *.redxml
 *.swp
-*.txt
 *.upload
 *~
 .tags

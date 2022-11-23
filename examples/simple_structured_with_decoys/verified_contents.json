@@ -1,0 +1,14 @@
+{
+  "address": {
+    "country": "JP",
+    "region": "港区"
+  },
+  "iss": "https://example.com/issuer",
+  "iat": 1516239022,
+  "exp": 1516247022,
+  "sd_digest_derivation_alg": "sha-256",
+  "birthdate": "1940-01-01",
+  "given_name": "太郎",
+  "email": "\"unusual email address\"@日本.com",
+  "family_name": "山田"
+}

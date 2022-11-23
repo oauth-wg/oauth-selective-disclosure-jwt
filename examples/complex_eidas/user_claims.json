@@ -1,0 +1,40 @@
+{
+  "verified_claims": {
+    "verification": {
+      "trust_framework": "eidas",
+      "assurance_level": "high",
+      "evidence": [
+        {
+          "type": "document",
+          "time": "2022-04-22T11:30Z",
+          "document": {
+            "type": "idcard",
+            "issuer": {
+              "name": "c_d612",
+              "country": "IT"
+            },
+            "number": "154554",
+            "date_of_issuance": "2021-03-23",
+            "date_of_expiry": "2031-03-22"
+          }
+        }
+      ]
+    },
+    "claims": {
+      "person_unique_identifier":
+        "TINIT-fc0d9684-1bf0-4220-9642-8fe652c8c040",
+      "given_name": "Raffaello",
+      "family_name": "Mascetti",
+      "date_of_birth": "1922-03-13",
+      "gender": "M",
+      "place_of_birth": {
+        "country": "IT",
+        "locality": "Firenze"
+      },
+      "nationalities": [
+        "IT"
+      ]
+    }
+  },
+  "birth_middle_name": "Lello"
+}
