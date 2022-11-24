@@ -201,16 +201,13 @@ SD-JWT-DOC = (METADATA, SD-CLAIMS, NON-SD-CLAIMS)
 SD-JWT = SD-JWT-DOC | SIG(SD-JWT-DOC, ISSUER-PRIV-KEY)
 ```
 
-`SD-CLAIMS` is an object with claim names (`CLAIM-NAME`) mapped to the digests over the claim values (`CLAIM-VALUE`) with random salts (`SALT`). Digests are calculated using a digest derivation function such as a hash function, HMAC, or other (`DIGEST-DERIVATION()`):
+`SD-CLAIMS` is an object with claim names (`CLAIM-NAME`) mapped to the digests over the claim values (`CLAIM-VALUE`) with random salts (`SALT`). Digests are calculated using a hash function:
 
 ```
 SD-CLAIMS = (
-    DIGEST-DERIVATION(SALT, CLAIM-NAME, CLAIM-VALUE)
+    HASH(SALT, CLAIM-NAME, CLAIM-VALUE)
 )*
 ```
-
-When an HMAC or another type of derivation function is used for digest calculation, a secret cryptographic key or other cryptographic secret is used instead of a salt value.
-However, the term "salt" is used throughout this document for brevity.
 
 `SD-CLAIMS` can also be nested deeper to capture more complex objects, as will be shown later.
 
@@ -280,7 +277,7 @@ At a high level, the Verifier
 
  * receives the `COMBINED-PRESENTATION` from the Holder and verifies the signature of the SD-JWT using the Issuer's public key,
  * verifies the Holder Binding JWT, if Holder Binding is required by the Verifier's policy, using the public key included in the SD-JWT,
- * calculates the hash digests over the Holder-Selected Disclosures and verifies that each digest is contained in the SD-JWT.
+ * calculates the digest s over the Holder-Selected Disclosures and verifies that each digest is contained in the SD-JWT.
 
 The detailed algorithm is described in (#verifier_verification).
 
@@ -308,7 +305,7 @@ Usually, JSON-based formats transport claim values as simple properties of a JSO
 ```
 
 However, a problem arises when computation over the data need to be performed and verified, like signing or computing digests. Common signature schemes require the same byte string as input to the
-signature verification as was used for creating the signature. In the digest derivation approach outlined above, the same problem exists: for the Issuer and the
+signature verification as was used for creating the signature. In the digest approach outlined above, the same problem exists: for the Issuer and the
 Verifier to arrive at the same digest, the same byte string must be hashed.
 
 JSON [@!RFC7159], however, does not prescribe a unique encoding for data, but allows for variations in the encoded string. The data above, for example, can be encoded as
@@ -352,10 +349,10 @@ There are generally two approaches to deal with this problem:
    string for computing a digest.
 2. Source string hardening: Instead of transferring data in a format that
    may introduce variations, a representation of the data is serialized.
-   This representation is then used as the digest input at the Verifier,
+   This representation is then used as the hashing input at the Verifier,
    but also transferred to the Verifier and used for the same digest
-   calculcation there. This means that the Verifier can easily check the
-   digest over the byte string before finally deserializing and
+   calculcation there. This means that the Verifier can easily caompute and check the
+   digest of the byte string before finally deserializing and
    accessing the data.
 
 Mixed approaches are conceivable, i.e., transferring both the original JSON data
@@ -388,7 +385,7 @@ data. The original JSON data is then used by the application. See
 ## Format of an SD-JWT
 
 An SD-JWT is a JWT that MUST be signed using the Issuer's private key. The
-payload of an SD-JWT MUST contain the `sd_digest_derivation_alg` claim
+payload of an SD-JWT MUST contain the `sd_hash_alg` claim
 described in the following, MAY contain one or more selectively disclosable claims, and MAY contain a Holder's public key or a reference
 thereto, as well as further claims such as `iss`, `iat`, etc. as defined or
 required by the application using SD-JWTs.
@@ -428,24 +425,24 @@ are all valid and encode the same claim value:
 
 #### Hashing Disclosures {#hashing_disclosures}
 
-For embedding the Disclosures in the SD-JWT, the Disclosures are hashed using the digest algorithm specified in the `sd_digest_derivation_alg` claim described below. The resulting hash is then included in the SD-JWT instead of the original claim value, as described next.
+For embedding the Disclosures in the SD-JWT, the Disclosures are hashed using the hash algorithm specified in the `sd_hash_alg` claim described below. The resulting digest is then included in the SD-JWT instead of the original claim value, as described next.
 
-The hash digest MUST be taken over the US-ASCII bytes of the base64url-encoded Disclosure. This follows the convention in JWS [@RFC7515] and JWE [@RFC7516]. The bytes of the hash digest MUST then be base64url-encoded.
+The digest MUST be taken over the US-ASCII bytes of the base64url-encoded Disclosure. This follows the convention in JWS [@RFC7515] and JWE [@RFC7516]. The bytes of the digest MUST then be base64url-encoded.
 
 It is important to note that:
 
  * The input to the hash function is the base64url-encoded Disclosure, not the bytes encoded by the base64url string.
- * The bytes of the output of the hash function are base64url-encoded, not the bytes making up the (often used) hex representation of the bytes of the hash digest.
+ * The bytes of the output of the hash function are base64url-encoded, not the bytes making up the (often used) hex representation of the bytes of the digest .
 
 For example, the
-SHA-256 hash digest of the Disclosure `WyI2cU1RdlJMNWhhaiIsICJmYW1pbHlfbmFtZSIsICJNw7ZiaXVzIl0` would be
+SHA-256 digest of the Disclosure `WyI2cU1RdlJMNWhhaiIsICJmYW1pbHlfbmFtZSIsICJNw7ZiaXVzIl0` would be
 `uutlBuYeMDyjLLTpf6Jxi7yNkEF35jdyWMn9U7b_RYY`.
 
 #### Decoy Digests {#decoy_digests}
 
-An Issuer MAY add additional hash digests to the SD-JWT that are not associated with any claim.  The purpose of such "decoy" digests is to make it more difficult for an attacker to see the original number of claims contained in the SD-JWT. It is RECOMMENDED to create the decoy digests by hashing over a cryptographically secure random number. The bytes of the hash digest MUST then be base64url-encoded as above. The same digest function as for the Disclosures MUST be used.
+An Issuer MAY add additional digest s to the SD-JWT that are not associated with any claim.  The purpose of such "decoy" digests is to make it more difficult for an attacker to see the original number of claims contained in the SD-JWT. It is RECOMMENDED to create the decoy digests by hashing over a cryptographically secure random number. The bytes of the digest MUST then be base64url-encoded as above. The same digest function as for the Disclosures MUST be used.
 
-For decoy digests, no Disclosure is sent to the Holder, i.e., the Holder will see hash digests that do not correspond to any Disclosure. See (#decoy_digests_privacy) for additional privacy considerations.
+For decoy digests, no Disclosure is sent to the Holder, i.e., the Holder will see digest s that do not correspond to any Disclosure. See (#decoy_digests_privacy) for additional privacy considerations.
 
 To ensure readability and replicability, the examples in this specification do not contain decoy digests unless explicitly stated.
 
@@ -459,16 +456,16 @@ It is the Issuer who decides which claims are selectively disclosable and which 
 
 Claims that are not selectively disclosable are included in the SD-JWT in plaintext just as they would be in any other JWT.
 
-Selectively disclosable claims are omitted from the SD-JWT. Instead, the hash digests of the respective Disclosures and potentially decoy digests are contained as an array in a new JWT claim, `_sd`.
+Selectively disclosable claims are omitted from the SD-JWT. Instead, the digest s of the respective Disclosures and potentially decoy digests are contained as an array in a new JWT claim, `_sd`.
 
-The `_sd` claim MUST be an array of strings, each string being a hash digests of a Disclosure or a decoy digest as described above.
+The `_sd` claim MUST be an array of strings, each string being a digest  of a Disclosure or a decoy digest as described above.
 The array MAY be empty in case the Issuer decided not to selectively disclose any of the claims at that level. However, it is RECOMMENDED to omit `_sd` claim in this case to save space.
 
 The Issuer MUST hide the original order of the claims in the array. To ensure this, it is RECOMMENDED to shuffle the array of hashes, e.g., by sorting it alphanumerically or randomly. The precise method does not matter as long as it does not depend on the original order of elements.
 
 Issuers MUST NOT issue SD-JWTs where
 
- * the key `_sd` is already used for the purpose other than to contain the array of hash digests, or
+ * the key `_sd` is already used for the purpose other than to contain the array of digest s, or
  * the claim value contained in a Disclosure contains (at the top level or nested deeper) an object with an `_sd` key, or
  * the same Disclosure value appears more than once (in the same array or in different arrays).
 
@@ -518,22 +515,20 @@ In this case, the Issuer would issue the following Disclosures:
 
 {{examples/address_only_structured_one_open/disclosures.md}}
 
-### Digest Derivation Function Claim {#digest_derivation_function_claim}
+### Hash Function Claim {#digest_derivation_function_claim}
 
-The claim `sd_digest_derivation_alg` indicates the digest derivation algorithm
+The claim `sd_hash_alg` indicates the hash algorithm
 used by the Issuer to generate the digests over the salts and the
 claim values.
 
-The digest derivation algorithm identifier MUST be one of the following:
+The hash algorithm identifier MUST be one of the following:
 
 - a hash algorithm value from the "Hash Name String" column in the IANA "Named Information Hash Algorithm" registry [@IANA.Hash.Algorithms]
-- an HMAC algorithm value from the "Algorithmn Name" column in the IANA "JSON Web Signature and Encryption Algorithms" registry [@IANA.JWS.Algorithms]
 - a value defined in another specification and/or profile of this specification
 
 To promote interoperability, implementations MUST support the SHA-256 hash algorithm.
 
-
-See (#security_considerations) for requirements regarding entropy of the salt, minimum length of the salt, and choice of a digest derivation algorithm.
+See (#security_considerations) for requirements regarding entropy of the salt, minimum length of the salt, and choice of a hash algorithm.
 
 ### Holder Public Key Claim {#holder_public_key_claim}
 
@@ -689,11 +684,11 @@ To this end, Verifiers MUST follow the following steps (or equivalent):
     2. Validate the signature over the SD-JWT.
     3. Validate the Issuer of the SD-JWT and that the signing key belongs to this Issuer.
     4. Check that the SD-JWT is valid using `nbf`, `iat`, and `exp` claims, if provided in the SD-JWT, and not selectively disclosed.
-    5. Check that the `sd_digest_derivation_alg` claim is present and its value is understood and the digest derivation algorithm is deemed secure.
+    5. Check that the `sd_hash_alg` claim is present and its value is understood and the hash algorithm is deemed secure.
  4. Create a copy of the SD-JWT payload, if required for further processing.
  5. Process the Disclosures. For each Disclosure provided:
-    1. Calculate the hash digest over the base64url string as described in (#hashing_disclosures).
-    2. Find all `_sd` keys in the SD-JWT payload that contain a hash digest calculated in the previous step. Note that there might be more than one `_sd` arrays in on SD-JWT.
+    1. Calculate the digest  over the base64url string as described in (#hashing_disclosures).
+    2. Find all `_sd` keys in the SD-JWT payload that contain a digest  calculated in the previous step. Note that there might be more than one `_sd` arrays in on SD-JWT.
        1. If the digest cannot be found in the SD-JWT payload, the Verifier MUST reject the Presentation.
        2. If there is more than one place where the digest is included, the Verifier MUST reject the Presentation.
        3. If there is a key `_sd` that does not refer to an array, the Verifier MUST reject the Presentation.
@@ -702,7 +697,7 @@ To this end, Verifiers MUST follow the following steps (or equivalent):
           2. If the claim name already exists at the same level, the Verifier MUST reject the Presentation. Note that this also means that if a Holder sends the same Disclosure multiple times, the Verifier MUST reject the Presentation.
           3. If the claim value contains an object with an `_sd` key (at the top level or nested deeper), the Verifier MUST reject the Presentation.
     3. Remove all `_sd` claims from the SD-JWT payload.
-    4. Remove the claim `sd_digest_derivation_alg` from the SD-JWT payload.
+    4. Remove the claim `sd_hash_alg` from the SD-JWT payload.
  6. If Holder Binding is required:
     1. If Holder Binding is provided by means not defined in this specification, verify the Holder Binding according to the method used.
     2. Otherwise, verify the Holder Binding JWT as follows:
@@ -744,7 +739,7 @@ cannot be verified, the SD-JWT MUST be rejected.
 
 Holders can manipulate the Disclosures by changing the values of the claims
 before sending them to the Issuer. The Issuer MUST check the Disclosures to
-ensure that the values of the claims are correct, i.e., the hash digests of the Disclosures are actually present in the signed SD-JWT.
+ensure that the values of the claims are correct, i.e., the digest s of the Disclosures are actually present in the signed SD-JWT.
 
 A naive Issuer that extracts
 all claim values from the Disclosures (without checking the hashes) and inserts them into the SD-JWT payload
@@ -768,7 +763,7 @@ guess. A new salt MUST be chosen for each claim.
 
 The RECOMMENDED minimum length of the randomly-generated portion of the salt is 128 bits.
 
-Note that minimum 128 bits would be necessary when SHA-256, HMAC-SHA256, or a function of similar strength is used, but a smaller salt size might achieve similar level of security if a stronger iterative derivation function is used.
+Note that minimum 128 bits would be necessary when SHA-256, or a function of similar strength is used.
 
 The Issuer MUST ensure that a new salt value is chosen for each claim,
 including when the same claim name occurs at different places in the
@@ -776,15 +771,17 @@ structure of the SD-JWT. This can be seen in Example 3 in the Appendix,
 where multiple claims with the name `type` appear, but each of them has
 a different salt.
 
-## Choice of a digest derivation algorithm
+## Choice of a Hash Algorithm
 
-For the security of this scheme, the digest derivation algorithm is required to be preimage and collision
+For the security of this scheme, the hash algorithm is required to be preimage and collision
 resistant, i.e., it is infeasible to calculate the salt and claim value that result in
 a particular digest, and it is infeasible to find a different salt and claim value pair that
 result in a matching digest, respectively.
 
 Furthermore the hash algorithms MD2, MD4, MD5, RIPEMD-160, and SHA-1
 revealed fundamental weaknesses and they MUST NOT be used.
+
+Note that implementations willing to use functions other than hash functions, for example to achieve a smaller salt size with similar level of security by using a stronger iterative derivation function, are RECOMMENDED to define a profile of this specification, i.e., when an HMAC or another type of hash function is used for digest calculation, it needs to be defiend how a secret cryptographic key or other cryptographic secret is can be used instead of a salt value.
 
 ## Holder Binding {#holder_binding_security}
 Verifiers MUST decide whether Holder Binding is required for a
@@ -1086,14 +1083,14 @@ Disclosures:
    -03
 
    * Disclosures are now delivered not as a JWT but as separate base64url-encoded JSON objects.
-   * In the SD-JWT, hash digests are collected under a `_sd` claim per level.
+   * In the SD-JWT, digest s are collected under a `_sd` claim per level.
    * Terms "II-Disclosures" and "HS-Disclosures" are replaced with "Disclosures".
    * Holder Binding is now separate from delivering the Disclosures and implemented, if required, with a separate JWT.
    * Examples updated and modified to properly explain the specifics of the new SD-JWT format.
    * Examples are now pulled in from the examples directory, not inlined.
    * Updated and automated the W3C VC example.
    * Added examples with multibyte characters to show that the specification and demo code work well with UTF-8.
-
+   * reverted back to hash alg from digest derivation alg (renamed to `sd_hash_alg`)
    -02
 
    * reformatted
