@@ -44,7 +44,7 @@ organization="Ping Identity"
 .# Abstract
 
 This document specifies conventions for creating JSON Web Token (JWT)
-documents that support selective disclosure of JWT claim values.
+documents that support selective disclosure of JWT claims.
 
 {mainmatter}
 
