@@ -865,7 +865,6 @@ To prevent these types of linkability, various methods, including but not limite
 We would like to thank
 Alen Horvat,
 Arjan Geluk,
-Brian Campbell,
 Christian Paquin,
 David Bakker,
 David Waite,
