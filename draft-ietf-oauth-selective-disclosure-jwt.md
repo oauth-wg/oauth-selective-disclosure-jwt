@@ -414,7 +414,7 @@ The array is created as follows:
 ["6qMQvRL5haj", "family_name", "Möbius"]
 ```
 
-The resulting Disclosure would be `WyI2cU1RdlJMNWhhaiIsICJmYW1pbHlfbmFtZSIsICJNw7ZiaXVzIl0`.
+The resulting Disclosure would be: `WyI2cU1RdlJMNWhhaiIsICJmYW1pbHlfbmFtZSIsICJNw7ZiaXVzIl0`
 
 Note that the JSON encoding of the object is not canonicalized, so variations in white space, encoding
 of Unicode characters, and ordering of object properties are allowed. For example, the following strings
