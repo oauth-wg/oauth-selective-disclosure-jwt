@@ -133,7 +133,7 @@ Selectively Disclosable JWT (SD-JWT):
   that supports selective disclosure as defined in this document and can contain both regular claims and digests of selectively-disclosable claims.
 
 Disclosure:
-:  A combination of a salt, a cleartext claim name, and a cleartext claim value that is used to calculate a digest for a certain claim.
+:  A combination of a salt, a cleartext claim name, and a cleartext claim value, all of which are used to calculate a digest for the respective claim.
 
 Cryptographic Holder Binding:
 :  Ability of the Holder to prove legitimate possession of an SD-JWT by proving
@@ -201,7 +201,7 @@ SD-JWT-DOC = (METADATA, SD-CLAIMS, NON-SD-CLAIMS)
 SD-JWT = SD-JWT-DOC | SIG(SD-JWT-DOC, ISSUER-PRIV-KEY)
 ```
 
-`SD-CLAIMS` is an object with claim names (`CLAIM-NAME`) mapped to the digests over the claim values (`CLAIM-VALUE`) with random salts (`SALT`). Digests are calculated using a digest derivation function such as a hash function, HMAC, or other (`DIGEST-DERIVATION()`):
+`SD-CLAIMS` is an array of digest values that and ensure the integrity of and map to the respective Disclosures.  Digest values are calculated over the Disclosures, each of which contains the claim name (`CLAIM-NAME`) and value (`CLAIM-VALUE`) with a random salt (`SALT`). Digests are calculated using a digest derivation function such as a hash function, HMAC, or other (`DIGEST-DERIVATION()`):
 
 ```
 SD-CLAIMS = (
@@ -213,8 +213,6 @@ When an HMAC or another type of derivation function is used for digest calculati
 However, the term "salt" is used throughout this document for brevity.
 
 `SD-CLAIMS` can also be nested deeper to capture more complex objects, as will be shown later.
-
-`SD-JWT` is sent from the Issuer to the Holder, together with the mapping of the plain-text claim values, the salt values, and potentially some other information.
 
 The Issuer further creates a set of Disclosures for all claims in the SD-JWT. The Disclosures are sent to the Holder together with the SD-JWT:
 
