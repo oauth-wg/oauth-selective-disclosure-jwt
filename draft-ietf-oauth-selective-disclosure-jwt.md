@@ -459,12 +459,12 @@ Claims that are not selectively disclosable are included in the SD-JWT in plaint
 
 Selectively disclosable claims are omitted from the SD-JWT. Instead, the hash digests of the respective Disclosures and potentially decoy digests are contained as an array in a new JWT claim, `_sd`.
 
-The `_sd` claim MUST be an array of strings, each string being a hash digests of a Disclosure or a decoy digest as described above.
+The `_sd` claim MUST be an array of strings, each string being a hash digest of a Disclosure or a decoy digest as described above.
 The array MAY be empty in case the Issuer decided not to selectively disclose any of the claims at that level. However, it is RECOMMENDED to omit `_sd` claim in this case to save space.
 
 The Issuer MUST hide the original order of the claims in the array. To ensure this, it is RECOMMENDED to shuffle the array of hashes, e.g., by sorting it alphanumerically or randomly. The precise method does not matter as long as it does not depend on the original order of elements.
 
-Issuers MUST NOT issue SD-JWTs where
+Issuers MUST NOT issue SD-JWTs where:
 
  * the key `_sd` is already used for the purpose other than to contain the array of hash digests, or
  * the claim value contained in a Disclosure contains (at the top level or nested deeper) an object with an `_sd` key, or
@@ -473,7 +473,7 @@ Issuers MUST NOT issue SD-JWTs where
 
 #### Nested Data in SD-JWTs {#nested_data}
 
-Just like any JWT, an SD-JWT MAY contain key value pairs where the value is an object. For any object in an SD-JWT, the Issuer MAY decide to either make the entire object selectively disclosable or to make its properties selectively disclosable individually. In the latter case, the Issuer MAY even choose to make some some of the object's properties selectively disclosable and others not.
+Just like any JWT, an SD-JWT MAY contain key value pairs where the value is an object. For any object in an SD-JWT, the Issuer MAY decide to either make the entire object selectively disclosable or to make its properties selectively disclosable individually. In the latter case, the Issuer MAY even choose to make some of the object's properties selectively disclosable and others not.
 
 In any case, the `_sd` claim MUST be included in the SD-JWT at the same level as the original claim and therefore MAY appear multiple times in an SD-JWT.
 
