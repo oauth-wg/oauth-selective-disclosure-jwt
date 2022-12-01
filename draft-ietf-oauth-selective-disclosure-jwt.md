@@ -366,7 +366,7 @@ it allows for simple and reliable interoperability without the
 requirement for a canonicalization library. To harden the source string,
 any serialization format that supports the necessary data types could
 be used in theory, like protobuf, msgpack, or pickle. In this
-specification, JSON is used and plain text values of each Disclosure is encoded using base64url-encoding
+specification, JSON is used and plain text values of each Disclosure are encoded using base64url-encoding
 for transport. This approach means that SD-JWTs can be implemented purely based
 on widely available JWT, JSON, and Base64 encoding and decoding libraries.
 
