@@ -385,7 +385,7 @@ data. The original JSON data is then used by the application. See
 ## Format of an SD-JWT
 
 An SD-JWT is a JWT that MUST be signed using the Issuer's private key. The
-payload of an SD-JWT MUST contain the `sd_hash_alg` claim
+payload of an SD-JWT MUST contain the `_sd_hash_alg` claim
 described in the following, MAY contain one or more selectively disclosable claims, and MAY contain a Holder's public key or a reference
 thereto, as well as further claims such as `iss`, `iat`, etc. as defined or
 required by the application using SD-JWTs.
@@ -425,7 +425,7 @@ are all valid and encode the same claim value:
 
 #### Hashing Disclosures {#hashing_disclosures}
 
-For embedding the Disclosures in the SD-JWT, the Disclosures are hashed using the hash algorithm specified in the `sd_hash_alg` claim described below. The resulting digest is then included in the SD-JWT instead of the original claim value, as described next.
+For embedding the Disclosures in the SD-JWT, the Disclosures are hashed using the hash algorithm specified in the `_sd_hash_alg` claim described below. The resulting digest is then included in the SD-JWT instead of the original claim value, as described next.
 
 The digest MUST be taken over the US-ASCII bytes of the base64url-encoded Disclosure. This follows the convention in JWS [@RFC7515] and JWE [@RFC7516]. The bytes of the digest MUST then be base64url-encoded.
 
@@ -517,7 +517,7 @@ In this case, the Issuer would issue the following Disclosures:
 
 ### Hash Function Claim {#digest_derivation_function_claim}
 
-The claim `sd_hash_alg` indicates the hash algorithm
+The claim `_sd_hash_alg` indicates the hash algorithm
 used by the Issuer to generate the digests over the salts and the
 claim values.
 
@@ -684,7 +684,7 @@ To this end, Verifiers MUST follow the following steps (or equivalent):
     2. Validate the signature over the SD-JWT.
     3. Validate the Issuer of the SD-JWT and that the signing key belongs to this Issuer.
     4. Check that the SD-JWT is valid using `nbf`, `iat`, and `exp` claims, if provided in the SD-JWT, and not selectively disclosed.
-    5. Check that the `sd_hash_alg` claim is present and its value is understood and the hash algorithm is deemed secure.
+    5. Check that the `_sd_hash_alg` claim is present and its value is understood and the hash algorithm is deemed secure.
  4. Create a copy of the SD-JWT payload, if required for further processing.
  5. Process the Disclosures. For each Disclosure provided:
     1. Calculate the digest  over the base64url string as described in (#hashing_disclosures).
@@ -697,7 +697,7 @@ To this end, Verifiers MUST follow the following steps (or equivalent):
           2. If the claim name already exists at the same level, the Verifier MUST reject the Presentation. Note that this also means that if a Holder sends the same Disclosure multiple times, the Verifier MUST reject the Presentation.
           3. If the claim value contains an object with an `_sd` key (at the top level or nested deeper), the Verifier MUST reject the Presentation.
     3. Remove all `_sd` claims from the SD-JWT payload.
-    4. Remove the claim `sd_hash_alg` from the SD-JWT payload.
+    4. Remove the claim `_sd_hash_alg` from the SD-JWT payload.
  6. If Holder Binding is required:
     1. If Holder Binding is provided by means not defined in this specification, verify the Holder Binding according to the method used.
     2. Otherwise, verify the Holder Binding JWT as follows:
@@ -1091,7 +1091,7 @@ Disclosures:
    * Examples are now pulled in from the examples directory, not inlined.
    * Updated and automated the W3C VC example.
    * Added examples with multibyte characters to show that the specification and demo code work well with UTF-8.
-   * reverted back to hash alg from digest derivation alg (renamed to `sd_hash_alg`)
+   * reverted back to hash alg from digest derivation alg (renamed to `_sd_hash_alg`)
    -02
 
    * reformatted
@@ -1102,7 +1102,7 @@ Disclosures:
    * explained why JSON-encoding of values is needed
    * explained merging algorithm ("processing model")
    * generalized hash alg to digest derivation alg which also enables HMAC to calculate digests
-   * `sd_hash_alg` renamed to `sd_digest_derivation_alg`
+   * `_sd_hash_alg` renamed to `sd_digest_derivation_alg`
    * Salt/Value Container (SVC) renamed to Issuer-Issued Disclosures (II-Disclosures)
    * SD-JWT-Release (SD-JWT-R) renamed to Holder-Selected Disclosures (HS-Disclosures)
    * `sd_disclosure` in II-Disclosures renamed to `sd_ii_disclosures`
@@ -1128,7 +1128,7 @@ Disclosures:
    *  Improved Security Considerations
    *  Stressed entropy requirements for salts
    *  Python reference implementation clean-up and refactoring
-   *  `hash_alg` renamed to `sd_hash_alg`
+   *  `hash_alg` renamed to `_sd_hash_alg`
 
    -01
 
