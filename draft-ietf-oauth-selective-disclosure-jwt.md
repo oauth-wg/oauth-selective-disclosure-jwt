@@ -876,6 +876,7 @@ Pieter Kasselman,
 Ryosuke Abe,
 Shawn Butterfield, and
 Torsten Lodderstedt
+Vittorio Bertocci
 for their contributions (some of which substantial) to this draft and to the initial set of implementations.
 
 The work on this draft was started at OAuth Security Workshop 2022 in Trondheim, Norway.
