@@ -521,10 +521,7 @@ The claim `_sd_hash_alg` indicates the hash algorithm
 used by the Issuer to generate the digests over the salts and the
 claim values.
 
-The hash algorithm identifier MUST be one of the following:
-
-- a hash algorithm value from the "Hash Name String" column in the IANA "Named Information Hash Algorithm" registry [@IANA.Hash.Algorithms]
-- a value defined in another specification and/or profile of this specification
+The hash algorithm identifier MUST be a hash algorithm value from the "Hash Name String" column in the IANA "Named Information Hash Algorithm" registry [@IANA.Hash.Algorithms].
 
 To promote interoperability, implementations MUST support the SHA-256 hash algorithm.
 
@@ -780,8 +777,6 @@ result in a matching digest, respectively.
 
 Furthermore the hash algorithms MD2, MD4, MD5, RIPEMD-160, and SHA-1
 revealed fundamental weaknesses and they MUST NOT be used.
-
-Note that implementations willing to use functions other than hash functions, for example to achieve a smaller salt size with similar level of security by using a stronger iterative derivation function, are RECOMMENDED to define a profile of this specification, i.e., when an HMAC or another type of hash function is used for digest calculation, it needs to be defiend how a secret cryptographic key or other cryptographic secret is can be used instead of a salt value.
 
 ## Holder Binding {#holder_binding_security}
 Verifiers MUST decide whether Holder Binding is required for a
