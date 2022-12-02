@@ -756,7 +756,7 @@ checks the Disclosures correctly.
 
 ## Entropy of the salt {#salt-entropy}
 
-The security model that conceals the cleartext claims relies on the fact that the salt can not be learned or guessed by
+The security model that conceals the cleartext claims relies on the fact that the salt cannot be learned or guessed by
 the attacker. It is vitally important to adhere to this principle. As such, the
 salt MUST be created in such a manner that it is cryptographically random,
 long enough and has high entropy that it is not practical for the attacker to
