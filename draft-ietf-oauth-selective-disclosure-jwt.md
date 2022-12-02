@@ -277,7 +277,7 @@ At a high level, the Verifier
 
  * receives the `COMBINED-PRESENTATION` from the Holder and verifies the signature of the SD-JWT using the Issuer's public key,
  * verifies the Holder Binding JWT, if Holder Binding is required by the Verifier's policy, using the public key included in the SD-JWT,
- * calculates the digest s over the Holder-Selected Disclosures and verifies that each digest is contained in the SD-JWT.
+ * calculates the digests over the Holder-Selected Disclosures and verifies that each digest is contained in the SD-JWT.
 
 The detailed algorithm is described in (#verifier_verification).
 
@@ -440,9 +440,9 @@ SHA-256 digest of the Disclosure `WyI2cU1RdlJMNWhhaiIsICJmYW1pbHlfbmFtZSIsICJNw7
 
 #### Decoy Digests {#decoy_digests}
 
-An Issuer MAY add additional digest s to the SD-JWT that are not associated with any claim.  The purpose of such "decoy" digests is to make it more difficult for an attacker to see the original number of claims contained in the SD-JWT. It is RECOMMENDED to create the decoy digests by hashing over a cryptographically secure random number. The bytes of the digest MUST then be base64url-encoded as above. The same digest function as for the Disclosures MUST be used.
+An Issuer MAY add additional digests to the SD-JWT that are not associated with any claim.  The purpose of such "decoy" digests is to make it more difficult for an attacker to see the original number of claims contained in the SD-JWT. It is RECOMMENDED to create the decoy digests by hashing over a cryptographically secure random number. The bytes of the digest MUST then be base64url-encoded as above. The same digest function as for the Disclosures MUST be used.
 
-For decoy digests, no Disclosure is sent to the Holder, i.e., the Holder will see digest s that do not correspond to any Disclosure. See (#decoy_digests_privacy) for additional privacy considerations.
+For decoy digests, no Disclosure is sent to the Holder, i.e., the Holder will see digests that do not correspond to any Disclosure. See (#decoy_digests_privacy) for additional privacy considerations.
 
 To ensure readability and replicability, the examples in this specification do not contain decoy digests unless explicitly stated.
 
@@ -456,7 +456,7 @@ It is the Issuer who decides which claims are selectively disclosable and which 
 
 Claims that are not selectively disclosable are included in the SD-JWT in plaintext just as they would be in any other JWT.
 
-Selectively disclosable claims are omitted from the SD-JWT. Instead, the digest s of the respective Disclosures and potentially decoy digests are contained as an array in a new JWT claim, `_sd`.
+Selectively disclosable claims are omitted from the SD-JWT. Instead, the digests of the respective Disclosures and potentially decoy digests are contained as an array in a new JWT claim, `_sd`.
 
 The `_sd` claim MUST be an array of strings, each string being a digest  of a Disclosure or a decoy digest as described above.
 The array MAY be empty in case the Issuer decided not to selectively disclose any of the claims at that level. However, it is RECOMMENDED to omit `_sd` claim in this case to save space.
@@ -465,7 +465,7 @@ The Issuer MUST hide the original order of the claims in the array. To ensure th
 
 Issuers MUST NOT issue SD-JWTs where
 
- * the key `_sd` is already used for the purpose other than to contain the array of digest s, or
+ * the key `_sd` is already used for the purpose other than to contain the array of digests, or
  * the claim value contained in a Disclosure contains (at the top level or nested deeper) an object with an `_sd` key, or
  * the same Disclosure value appears more than once (in the same array or in different arrays).
 
@@ -739,7 +739,7 @@ cannot be verified, the SD-JWT MUST be rejected.
 
 Holders can manipulate the Disclosures by changing the values of the claims
 before sending them to the Issuer. The Issuer MUST check the Disclosures to
-ensure that the values of the claims are correct, i.e., the digest s of the Disclosures are actually present in the signed SD-JWT.
+ensure that the values of the claims are correct, i.e., the digests of the Disclosures are actually present in the signed SD-JWT.
 
 A naive Issuer that extracts
 all claim values from the Disclosures (without checking the hashes) and inserts them into the SD-JWT payload
@@ -1084,7 +1084,7 @@ Disclosures:
    -03
 
    * Disclosures are now delivered not as a JWT but as separate base64url-encoded JSON objects.
-   * In the SD-JWT, digest s are collected under a `_sd` claim per level.
+   * In the SD-JWT, digests are collected under a `_sd` claim per level.
    * Terms "II-Disclosures" and "HS-Disclosures" are replaced with "Disclosures".
    * Holder Binding is now separate from delivering the Disclosures and implemented, if required, with a separate JWT.
    * Examples updated and modified to properly explain the specifics of the new SD-JWT format.
