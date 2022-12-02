@@ -744,7 +744,7 @@ Holders can manipulate the Disclosures by changing the values of the claims
 before sending them to the Issuer. The Issuer MUST check the Disclosures to
 ensure that the values of the claims are correct, i.e., the hash digests of the Disclosures are actually present in the signed SD-JWT.
 
-A naive Issuer that extracts
+A naive Verifier that extracts
 all claim values from the Disclosures (without checking the hashes) and inserts them into the SD-JWT payload
 is vulnerable to this attack. However, in a structured SD-JWT, without comparing the digests of the
 Disclosures, such an implementation could not determine the correct place in a
