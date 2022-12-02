@@ -351,7 +351,7 @@ There are generally two approaches to deal with this problem:
    may introduce variations, a representation of the data is serialized.
    This representation is then used as the hashing input at the Verifier,
    but also transferred to the Verifier and used for the same digest
-   calculcation there. This means that the Verifier can easily caompute and check the
+   calculcation there. This means that the Verifier can easily compute and check the
    digest of the byte string before finally deserializing and
    accessing the data.
 
@@ -432,7 +432,7 @@ The digest MUST be taken over the US-ASCII bytes of the base64url-encoded Disclo
 It is important to note that:
 
  * The input to the hash function is the base64url-encoded Disclosure, not the bytes encoded by the base64url string.
- * The bytes of the output of the hash function are base64url-encoded, not the bytes making up the (often used) hex representation of the bytes of the digest .
+ * The bytes of the output of the hash function are base64url-encoded, not the bytes making up the (often used) hex representation of the bytes of the digest.
 
 For example, the
 SHA-256 digest of the Disclosure `WyI2cU1RdlJMNWhhaiIsICJmYW1pbHlfbmFtZSIsICJNw7ZiaXVzIl0` would be
@@ -687,8 +687,8 @@ To this end, Verifiers MUST follow the following steps (or equivalent):
     5. Check that the `_sd_hash_alg` claim is present and its value is understood and the hash algorithm is deemed secure.
  4. Create a copy of the SD-JWT payload, if required for further processing.
  5. Process the Disclosures. For each Disclosure provided:
-    1. Calculate the digest  over the base64url string as described in (#hashing_disclosures).
-    2. Find all `_sd` keys in the SD-JWT payload that contain a digest  calculated in the previous step. Note that there might be more than one `_sd` arrays in on SD-JWT.
+    1. Calculate the digest over the base64url string as described in (#hashing_disclosures).
+    2. Find all `_sd` keys in the SD-JWT payload that contain a digest calculated in the previous step. Note that there might be more than one `_sd` arrays in on SD-JWT.
        1. If the digest cannot be found in the SD-JWT payload, the Verifier MUST reject the Presentation.
        2. If there is more than one place where the digest is included, the Verifier MUST reject the Presentation.
        3. If there is a key `_sd` that does not refer to an array, the Verifier MUST reject the Presentation.
@@ -763,7 +763,6 @@ guess. A new salt MUST be chosen for each claim.
 
 The RECOMMENDED minimum length of the randomly-generated portion of the salt is 128 bits.
 
-Note that minimum 128 bits would be necessary when SHA-256, or a function of similar strength is used.
 
 The Issuer MUST ensure that a new salt value is chosen for each claim,
 including when the same claim name occurs at different places in the
