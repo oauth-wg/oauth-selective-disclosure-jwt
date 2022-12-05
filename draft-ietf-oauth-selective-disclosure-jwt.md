@@ -44,7 +44,7 @@ organization="Ping Identity"
 .# Abstract
 
 This document specifies conventions for creating JSON Web Token (JWT)
-documents that support selective disclosure of JWT claim values.
+documents that support selective disclosure of JWT claims.
 
 {mainmatter}
 
@@ -133,7 +133,7 @@ Selectively Disclosable JWT (SD-JWT):
   that supports selective disclosure as defined in this document and can contain both regular claims and digests of selectively-disclosable claims.
 
 Disclosure:
-:  A combination of a salt, a cleartext claim name, and a cleartext claim value that is used to calculate a digest for a certain claim.
+:  A combination of a salt, a cleartext claim name, and a cleartext claim value, all of which are used to calculate a digest for the respective claim.
 
 Cryptographic Holder Binding:
 :  Ability of the Holder to prove legitimate possession of an SD-JWT by proving
@@ -201,7 +201,7 @@ SD-JWT-DOC = (METADATA, SD-CLAIMS, NON-SD-CLAIMS)
 SD-JWT = SD-JWT-DOC | SIG(SD-JWT-DOC, ISSUER-PRIV-KEY)
 ```
 
-`SD-CLAIMS` is an object with claim names (`CLAIM-NAME`) mapped to the digests over the claim values (`CLAIM-VALUE`) with random salts (`SALT`). Digests are calculated using a digest derivation function such as a hash function, HMAC, or other (`DIGEST-DERIVATION()`):
+`SD-CLAIMS` is an array of digest values that ensure the integrity of and map to the respective Disclosures.  Digest values are calculated over the Disclosures, each of which contains the claim name (`CLAIM-NAME`), the claim value (`CLAIM-VALUE`), and a random salt (`SALT`). Digests are calculated using a digest derivation function such as a hash function, HMAC, or other (`DIGEST-DERIVATION()`):
 
 ```
 SD-CLAIMS = (
@@ -213,8 +213,6 @@ When an HMAC or another type of derivation function is used for digest calculati
 However, the term "salt" is used throughout this document for brevity.
 
 `SD-CLAIMS` can also be nested deeper to capture more complex objects, as will be shown later.
-
-`SD-JWT` is sent from the Issuer to the Holder, together with the mapping of the plain-text claim values, the salt values, and potentially some other information.
 
 The Issuer further creates a set of Disclosures for all claims in the SD-JWT. The Disclosures are sent to the Holder together with the SD-JWT:
 
@@ -368,7 +366,7 @@ it allows for simple and reliable interoperability without the
 requirement for a canonicalization library. To harden the source string,
 any serialization format that supports the necessary data types could
 be used in theory, like protobuf, msgpack, or pickle. In this
-specification, JSON is used and plain text values of each Disclosure is encoded using base64url-encoding
+specification, JSON is used and plain text values of each Disclosure are encoded using base64url-encoding
 for transport. This approach means that SD-JWTs can be implemented purely based
 on widely available JWT, JSON, and Base64 encoding and decoding libraries.
 
@@ -416,7 +414,7 @@ The array is created as follows:
 ["6qMQvRL5haj", "family_name", "Möbius"]
 ```
 
-The resulting Disclosure would be `WyI2cU1RdlJMNWhhaiIsICJmYW1pbHlfbmFtZSIsICJNw7ZiaXVzIl0`.
+The resulting Disclosure would be: `WyI2cU1RdlJMNWhhaiIsICJmYW1pbHlfbmFtZSIsICJNw7ZiaXVzIl0`
 
 Note that the JSON encoding of the object is not canonicalized, so variations in white space, encoding
 of Unicode characters, and ordering of object properties are allowed. For example, the following strings
@@ -461,7 +459,7 @@ Claims that are not selectively disclosable are included in the SD-JWT in plaint
 
 Selectively disclosable claims are omitted from the SD-JWT. Instead, the hash digests of the respective Disclosures and potentially decoy digests are contained as an array in a new JWT claim, `_sd`.
 
-The `_sd` claim MUST be an array of strings, each string being a hash digests of a Disclosure or a decoy digest as described above.
+The `_sd` claim MUST be an array of strings, each string being a hash digest of a Disclosure or a decoy digest as described above.
 The array MAY be empty in case the Issuer decided not to selectively disclose any of the claims at that level. However, it is RECOMMENDED to omit `_sd` claim in this case to save space.
 
 The Issuer MUST hide the original order of the claims in the array. To ensure this, it is RECOMMENDED to shuffle the array of hashes, e.g., by sorting it alphanumerically or randomly. The precise method does not matter as long as it does not depend on the original order of elements.
@@ -475,7 +473,7 @@ Issuers MUST NOT issue SD-JWTs where
 
 #### Nested Data in SD-JWTs {#nested_data}
 
-Just like any JWT, an SD-JWT MAY contain key value pairs where the value is an object. For any object in an SD-JWT, the Issuer MAY decide to either make the entire object selectively disclosable or to make its properties selectively disclosable individually. In the latter case, the Issuer MAY even choose to make some some of the object's properties selectively disclosable and others not.
+Just like any JWT, an SD-JWT MAY contain key value pairs where the value is an object. For any object in an SD-JWT, the Issuer MAY decide to either make the entire object selectively disclosable or to make its properties selectively disclosable individually. In the latter case, the Issuer MAY even choose to make some of the object's properties selectively disclosable and others not.
 
 In any case, the `_sd` claim MUST be included in the SD-JWT at the same level as the original claim and therefore MAY appear multiple times in an SD-JWT.
 
@@ -746,7 +744,7 @@ Holders can manipulate the Disclosures by changing the values of the claims
 before sending them to the Issuer. The Issuer MUST check the Disclosures to
 ensure that the values of the claims are correct, i.e., the hash digests of the Disclosures are actually present in the signed SD-JWT.
 
-A naive Issuer that extracts
+A naive Verifier that extracts
 all claim values from the Disclosures (without checking the hashes) and inserts them into the SD-JWT payload
 is vulnerable to this attack. However, in a structured SD-JWT, without comparing the digests of the
 Disclosures, such an implementation could not determine the correct place in a
@@ -758,7 +756,7 @@ checks the Disclosures correctly.
 
 ## Entropy of the salt {#salt-entropy}
 
-The security model relies on the fact that the salt is not learned or guessed by
+The security model that conceals the plaintext claims relies on the fact that the salt cannot be learned or guessed by
 the attacker. It is vitally important to adhere to this principle. As such, the
 salt MUST be created in such a manner that it is cryptographically random,
 long enough and has high entropy that it is not practical for the attacker to
@@ -865,7 +863,6 @@ To prevent these types of linkability, various methods, including but not limite
 We would like to thank
 Alen Horvat,
 Arjan Geluk,
-Brian Campbell,
 Christian Paquin,
 David Bakker,
 David Waite,
