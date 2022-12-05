@@ -201,7 +201,7 @@ SD-JWT-DOC = (METADATA, SD-CLAIMS, NON-SD-CLAIMS)
 SD-JWT = SD-JWT-DOC | SIG(SD-JWT-DOC, ISSUER-PRIV-KEY)
 ```
 
-`SD-CLAIMS` is an array of digest values that and ensure the integrity of and map to the respective Disclosures.  Digest values are calculated over the Disclosures, each of which contains the claim name (`CLAIM-NAME`) and value (`CLAIM-VALUE`) with a random salt (`SALT`). Digests are calculated using a digest derivation function such as a hash function, HMAC, or other (`DIGEST-DERIVATION()`):
+`SD-CLAIMS` is an array of digest values that ensure the integrity of and map to the respective Disclosures.  Digest values are calculated over the Disclosures, each of which contains the claim name (`CLAIM-NAME`), the claim value (`CLAIM-VALUE`), and a random salt (`SALT`). Digests are calculated using a digest derivation function such as a hash function, HMAC, or other (`DIGEST-DERIVATION()`):
 
 ```
 SD-CLAIMS = (
