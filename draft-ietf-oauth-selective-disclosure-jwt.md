@@ -464,7 +464,7 @@ The array MAY be empty in case the Issuer decided not to selectively disclose an
 
 The Issuer MUST hide the original order of the claims in the array. To ensure this, it is RECOMMENDED to shuffle the array of hashes, e.g., by sorting it alphanumerically or randomly. The precise method does not matter as long as it does not depend on the original order of elements.
 
-Issuers MUST NOT issue SD-JWTs where:
+Issuers MUST NOT issue SD-JWTs where
 
  * the key `_sd` is already used for the purpose other than to contain the array of hash digests, or
  * the claim value contained in a Disclosure contains (at the top level or nested deeper) an object with an `_sd` key, or
