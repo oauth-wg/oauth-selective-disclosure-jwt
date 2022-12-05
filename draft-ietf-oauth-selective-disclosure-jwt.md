@@ -1086,7 +1086,7 @@ Disclosures:
    * Updated and automated the W3C VC example.
    * Added examples with multibyte characters to show that the specification and demo code work well with UTF-8.
    * reverted back to hash alg from digest derivation alg (renamed to `_sd_alg`)
-   
+
    -02
 
    * reformatted
