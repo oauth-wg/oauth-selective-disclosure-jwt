@@ -13,5 +13,5 @@
   },
   "iat": 1516239022,
   "exp": 1516247022,
-  "sd_digest_derivation_alg": "sha-256"
+  "_sd_alg": "sha-256"
 }
