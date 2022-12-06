@@ -1008,25 +1008,25 @@ structures defined in OIDC4IDA [@OIDC.IDA] are used.
 
 The Issuer is using the following user data:
 
-<{{examples/complex-ekyc/user_claims.json}}
+<{{examples/complex_ekyc/user_claims.json}}
 
 The Issuer in this example sends the two claims `birthdate` and `place_of_birth` in the `claims` element in plain text. The following shows the resulting SD-JWT payload:
 
-<{{examples/complex-ekyc/sd_jwt_payload.json}}
+<{{examples/complex_ekyc/sd_jwt_payload.json}}
 
 With the following Disclosures:
 
-{{examples/complex-ekyc/disclosures.md}}
+{{examples/complex_ekyc/disclosures.md}}
 
 The Verifier would receive the Issuer-signed SD-JWT together with a selection
 of the Disclosures. The Presentation in this example would look as follows:
 
-<{{examples/complex-ekyc/combined_presentation.txt}}
+<{{examples/complex_ekyc/combined_presentation.txt}}
 
 After the verification of the data, the Verifier will
 pass the following result on to the application for further processing:
 
-<{{examples/complex-ekyc/verified_contents.json}}
+<{{examples/complex_ekyc/verified_contents.json}}
 
 ## Example 4 - W3C Verifiable Credentials Data Model (work in progress)
 
