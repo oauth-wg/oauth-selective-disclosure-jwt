@@ -11,8 +11,7 @@ rm -r $OUTPUT_DIR/*
 for file in sd_jwt/examples/*.yml
 do
     echo "Processing $file"
-    sd_jwt $file $SDJWT_ARGS 
+    sd_jwt $file $SDJWT_ARGS
 done
 echo "Remember to add updated examples to git repository:"
 echo "git add $OUTPUT_DIR"
-

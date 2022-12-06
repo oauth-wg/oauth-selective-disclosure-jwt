@@ -19,7 +19,6 @@ setup(
     name=_pkg_name,
     version=VERSION,
     description="Selective Disclosure for JWTs (SD-JWT)",
-    long_description=readme(),
     long_description_content_type='text/markdown',
     classifiers=['Development Status :: 1 - Planning Copy',
                  'License :: OSI Approved :: MIT License',
