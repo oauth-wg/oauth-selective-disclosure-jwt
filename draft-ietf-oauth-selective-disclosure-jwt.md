@@ -514,7 +514,7 @@ In this case, the Issuer would issue the following Disclosures:
 
 {{examples/address_only_structured_one_open/disclosures.md}}
 
-### Hash Function Claim {#digest_derivation_function_claim}
+### Hash Function Claim {#hash_function_claim}
 
 The claim `_sd_alg` indicates the hash algorithm
 used by the Issuer to generate the digests over the salts and the
