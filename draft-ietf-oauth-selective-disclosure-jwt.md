@@ -881,9 +881,10 @@ This specification therefore considers the confidentiality of the data to be
 provided by the transport protocol and does not specify any encryption
 mechanism.
 
-Implementers MUST ensure that the transport protocol provides confidentiality
-if the privacy of End-User data or correlation attacks are a concern. Implementers MAY define a
-JWT envelope format (as described in (#enveloping)) to encrypt the SD-JWT
+Implementers MUST ensure that the transport protocol provides confidentiality,
+if the privacy of End-User data or correlation attacks are a concern. Implementers MAY define an
+envelope format (such as described in (#enveloping) or nesting the SD-JWT Combined Format as
+the plaintext payload of a JWE) to encrypt the SD-JWT
 and associated Disclosures when transmitted over an insecure channel.
 
 ## Decoy Digests {#decoy_digests_privacy}
