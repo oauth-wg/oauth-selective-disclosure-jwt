@@ -632,7 +632,7 @@ Whether to require Holder Binding is up to the Verifier's policy,
 based on the set of trust requirements such as trust frameworks it belongs to.
 
 Other ways of proving Holder Binding MAY be used when supported by the Verifier,
-e.g., when the Combined Format for Presentation is itself embedded in a 
+e.g., when the Combined Format for Presentation is itself embedded in a
 signed JWT. See (#enveloping) for details.
 
 If no Holder Binding JWT is included, the Combined Format for Presentation ends with
