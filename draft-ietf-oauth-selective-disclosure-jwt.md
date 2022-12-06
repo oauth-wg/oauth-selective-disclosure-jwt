@@ -871,7 +871,7 @@ the SD-JWT.
 
 If the SD-JWT and associated Disclosures are transmitted over an insecure
 channel during issuance or presentation, an adversary may be able to
-intercept and read the End-User's personal data or correllate the information with previous uses of the same SD-JWT.
+intercept and read the End-User's personal data or correlate the information with previous uses of the same SD-JWT.
 
 Usually, transport protocols for issuance and presentation of credentials
 are designed to protect the confidentiality of the transmitted data, for
@@ -882,7 +882,7 @@ provided by the transport protocol and does not specify any encryption
 mechanism.
 
 Implementers MUST ensure that the transport protocol provides confidentiality
-if the privacy of End-User data or correllation attacks are a concern. Implementers MAY define a
+if the privacy of End-User data or correlation attacks are a concern. Implementers MAY define a
 JWT envelope format (as described in (#enveloping)) to encrypt the SD-JWT
 and associated Disclosures when transmitted over an insecure channel.
 
