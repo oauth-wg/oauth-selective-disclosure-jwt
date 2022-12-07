@@ -605,7 +605,7 @@ none, multiple, or all Disclosures.
 A Holder MUST NOT send a Disclosure that was not included in the SD-JWT or send
 a Disclosure more than once.
 
-### Enabling Holder Binding
+### Enabling Holder Binding {#enabling_holder_binding}
 
 The Holder MAY add an optional JWT to prove Holder Binding to the Verifier.
 The precise contents of the JWT are out of scope of this specification.
@@ -624,8 +624,9 @@ Which is then signed by the Holder to create a JWT like the following:
 Whether to require Holder Binding is up to the Verifier's policy,
 based on the set of trust requirements such as trust frameworks it belongs to.
 
-Other ways of proving Holder Binding are possible, e.g., when the Combined Format
-for Presentation is itself embedded in a signed JWT.
+Other ways of proving Holder Binding MAY be used when supported by the Verifier,
+e.g., when the Combined Format for Presentation is itself embedded in a
+signed JWT. See (#enveloping) for details.
 
 If no Holder Binding JWT is included, the Combined Format for Presentation ends with
 the `~` character after the last Disclosure.
@@ -707,6 +708,31 @@ To this end, Verifiers MUST follow the following steps (or equivalent):
 If any step fails, the Presentation is not valid and processing MUST be aborted.
 
 Otherwise, the processed SD-JWT payload can be passed to the application to be used for the intended purpose.
+
+# Enveloping the Combined Format for Issuance and Presentation {#enveloping}
+
+In some applications or transport protocols, it is desirable to put an SD-JWT and associated Disclosures into a JWT container. For example, an implementation may envelope all credentials and presentations, independent of their format, in a JWT to enable application-layer encryption during transport.
+
+For such use cases, the SD-JWT and the respective Disclosures SHOULD be transported as a single string using the Combined Formats for Issuance and Presentation, respectively. Holder Binding MAY be achieved by signing the envelope JWT instead of adding a separate Holder Binding JWT as described in (#enabling_holder_binding).
+
+The claim `_sd_jwt` SHOULD be used when transporting a Combined Format unless the application or protocol defines a different claim name.
+
+The following non-normative example shows a Combined Format for Presentation enveloped in a JWT payload:
+
+```
+{
+  "iss": "https://holder.example.com",
+  "sub": "did:example:123",
+  "aud": "https://verifier.example.com",
+  "exp": 1590000000,
+  "iat": 1580000000,
+  "nbf": 1580000000,
+  "jti": "urn:uuid:12345678-1234-1234-1234-123456789012",
+  "_sd_jwt": "eyJhbGci...emhlaUJhZzBZ~eyJhb...dYALCGg~"
+}
+```
+
+Here, `eyJhbGci...emhlaUJhZzBZ` represents the SD-JWT and `eyJhb...dYALCGg` represents a Disclosure. The Combined Format for Presentation does not contain a Holder Binding JWT as the outer container can be signed instead.
 
 # Security Considerations {#security_considerations}
 
@@ -832,6 +858,26 @@ needs to be taken into account by Issuers when creating the structure of
 the SD-JWT.
 
 # Privacy Considerations {#privacy_considerations}
+
+## Confidentiality during Transport
+
+If the SD-JWT and associated Disclosures are transmitted over an insecure
+channel during issuance or presentation, an adversary may be able to
+intercept and read the End-User's personal data or correlate the information with previous uses of the same SD-JWT.
+
+Usually, transport protocols for issuance and presentation of credentials
+are designed to protect the confidentiality of the transmitted data, for
+example, by requiring the use of TLS.
+
+This specification therefore considers the confidentiality of the data to be
+provided by the transport protocol and does not specify any encryption
+mechanism.
+
+Implementers MUST ensure that the transport protocol provides confidentiality,
+if the privacy of End-User data or correlation attacks are a concern. Implementers MAY define an
+envelope format (such as described in (#enveloping) or nesting the SD-JWT Combined Format as
+the plaintext payload of a JWE) to encrypt the SD-JWT
+and associated Disclosures when transmitted over an insecure channel.
 
 ## Decoy Digests {#decoy_digests_privacy}
 
