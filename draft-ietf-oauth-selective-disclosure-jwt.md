@@ -408,18 +408,18 @@ The following example illustrates the steps described above.
 
 The array is created as follows:
 ```json
-["6qMQvRL5haj", "family_name", "Möbius"]
+["_26bc4LT-ac6q2KI6cBW5es", "family_name", "Möbius"]
 ```
 
-The resulting Disclosure would be: `WyI2cU1RdlJMNWhhaiIsICJmYW1pbHlfbmFtZSIsICJNw7ZiaXVzIl0`
+The resulting Disclosure would be: `WyJfMjZiYzRMVC1hYzZxMktJNmNCVzVlcyIsICJmYW1pbHlfbmFtZSIsICJNw7ZiaXVzIl0`
 
 Note that the JSON encoding of the object is not canonicalized, so variations in white space, encoding
 of Unicode characters, and ordering of object properties are allowed. For example, the following strings
 are all valid and encode the same claim value:
 
- * A different way to encode the umlaut (two dots `¨` placed over the letter): `WyI2cU1RdlJMNWhhaiIsICJmYW1pbHlfbmFtZSIsICJNXHUwMGY2Yml1cyJd`
- * No white space: `WyI2cU1RdlJMNWhhaiIsImZhbWlseV9uYW1lIiwiTcO2Yml1cyJd`
- * Newline characters between elements: `WwoiNnFNUXZSTDVoYWoiLAoiZmFtaWx5X25hbWUiLAoiTcO2Yml1cyIKXQ`
+ * A different way to encode the umlaut (two dots `¨` placed over the letter): `WyJfMjZiYzRMVC1hYzZxMktJNmNCVzVlcyIsICJmYW1pbHlfbmFtZSIsICJNXHUwMGY2Yml1cyJd`
+ * No white space: `WyJfMjZiYzRMVC1hYzZxMktJNmNCVzVlcyIsImZhbWlseV9uYW1lIiwiTcO2Yml1cyJd`
+ * Newline characters between elements: `WwoiXzI2YmM0TFQtYWM2cTJLSTZjQlc1ZXMiLAoiZmFtaWx5X25hbWUiLAoiTcO2Yml1cyIKXQ`
 
 #### Hashing Disclosures {#hashing_disclosures}
 
