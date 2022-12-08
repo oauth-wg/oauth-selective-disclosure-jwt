@@ -5,14 +5,13 @@
   "_sd_alg": "sha-256",
   "cnf": {
     "jwk": {
-      "kty": "RSA",
-      "n": "pm4bOHBg-oYhAyPWzR56AWX3rUIXp11_ICDkGgS6W3ZWLts-hzwI3x65
-        659kg4hVo9dbGoCJE3ZGF_eaetE30UhBUEgpGwrDrQiJ9zqprmcFfr3qvvkG
-        jtth8Zgl1eM2bJcOwE7PCBHWTKWYs152R7g6Jg2OVph-a8rq-q79MhKG5QoW
-        _mTz10QT_6H4c7PjWG1fjh8hpWNnbP_pv6d1zSwZfc5fl6yVRL0DV0V3lGHK
-        e2Wqf_eNGjBrBLVklDTk8-stX_MWLcR-EGmXAOv0UBWitS_dXJKJu-vXJyw1
-        4nHSGuxTIK2hx1pttMft9CsvqimXKeDTU14qQL1eE7ihcw",
-      "e": "AQAB"
+      "kty": "EC",
+      "use": "sig",
+      "alg": "ES256",
+      "kid": "2",
+      "crv": "P-256",
+      "x": "TCAER19Zvu3OHF4j4W4vfSVoHIP1ILilDls7vCeGemc",
+      "y": "ZxjiWWbZMQGHVWKVQ4hbSIirsVfuecCE6t4jT9F2HZQ"
     }
   },
   "address": {
