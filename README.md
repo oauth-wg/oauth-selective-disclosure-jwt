@@ -1,4 +1,4 @@
-# Selective Disclosure for JWTs (SD-JWT)
+# SD-JWT: Selective Disclosure for JWTs
 
 This is the working area for the IETF [OAUTH Working Group](https://datatracker.ietf.org/wg/oauth/documents/) Internet-Draft, "Selective Disclosure for JWTs (SD-JWT)".
 
