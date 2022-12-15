@@ -17,7 +17,9 @@ class SDJWTHasSDClaimException(Exception):
     """Exception raised when input data contains the special _sd claim reserved for SD-JWT internal data."""
 
     def __init__(self, error_location: any):
-        super().__init__(f"Input data contains the special claim '{SD_DIGESTS_KEY}' reserved for SD-JWT internal data. Location: {error_location!r}")
+        super().__init__(
+            f"Input data contains the special claim '{SD_DIGESTS_KEY}' reserved for SD-JWT internal data. Location: {error_location!r}"
+        )
 
 
 class SDJWTCommon:
@@ -77,7 +79,7 @@ class SDJWTCommon:
                 raise ValueError(
                     f"Duplicate disclosure hash {hash} for disclosure {decoded_disclosure}"
                 )
-            
+
             self._hash_to_decoded_disclosure[hash] = decoded_disclosure
             self._hash_to_disclosure[hash] = disclosure
 
@@ -231,7 +233,7 @@ class SDJWTIssuer(SDJWTCommon):
 
         # Sign the SD-JWT using the issuer's key
         self.sd_jwt = JWS(payload=dumps(self.sd_jwt_payload))
-        _headers = {"alg": self._sign_alg, "kid": self._issuer_key.thumbprint()}
+        _headers = {"alg": self._sign_alg}
         if self.SD_JWT_HEADER:
             _headers["typ"] = self.SD_JWT_HEADER
         self.sd_jwt.add_signature(
@@ -340,7 +342,7 @@ class SDJWTHolder(SDJWTCommon):
         # Sign the SD-JWT-Release using the holder's key
         self.holder_binding_jwt = JWS(payload=dumps(self.holder_binding_jwt_payload))
 
-        _data = {"alg": _alg, "kid": holder_key.thumbprint()}
+        _data = {"alg": _alg}
         if self.SD_JWT_R_HEADER:
             _data["typ"] = self.SD_JWT_R_HEADER
 
@@ -453,7 +455,7 @@ class SDJWTVerifier(SDJWTCommon):
         if self._sd_jwt_payload[DIGEST_ALG_KEY] != self.HASH_ALG["name"]:
             # TODO: Support other hash algorithms
             raise ValueError("Invalid hash algorithm")
-        
+
         self._duplicate_hash_check = []
         return self._unpack_disclosed_claims(self._sd_jwt_payload)
 
@@ -473,11 +475,13 @@ class SDJWTVerifier(SDJWTCommon):
                 if digest in self._duplicate_hash_check:
                     raise ValueError(f"Duplicate hash found in SD-JWT: {digest}")
                 self._duplicate_hash_check.append(digest)
-                
+
                 if digest in self._hash_to_decoded_disclosure:
                     _, key, value = self._hash_to_decoded_disclosure[digest]
                     if key in output:
-                        raise ValueError(f"Duplicate key found when unpacking disclosed claim: '{key}' in {output}. This is not allowed.")
+                        raise ValueError(
+                            f"Duplicate key found when unpacking disclosed claim: '{key}' in {output}. This is not allowed."
+                        )
                     output[key] = value
 
             return output
