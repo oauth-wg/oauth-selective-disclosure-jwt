@@ -906,14 +906,15 @@ David Bakker,
 David Waite,
 Fabian Hauck,
 Giuseppe De Marco,
+Justin Richer,
 Kushal Das,
 Mike Jones,
 Nat Sakimura,
 Orie Steele,
 Pieter Kasselman,
 Ryosuke Abe,
-Shawn Butterfield, and
-Torsten Lodderstedt
+Shawn Butterfield,
+Torsten Lodderstedt, and
 Vittorio Bertocci
 for their contributions (some of which substantial) to this draft and to the initial set of implementations.
 
