@@ -20,3 +20,6 @@ draft-ietf-oauth-selective-disclosure-jwt.xml
 package-lock.json
 report.xml
 !requirements.txt
+sd_jwt.egg-info/
+sd_jwt/__pycache__/
+.gitignore

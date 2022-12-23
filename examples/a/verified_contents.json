@@ -1,0 +1,51 @@
+{
+  "iss": "https://example.com/issuer",
+  "iat": 1516239022,
+  "type": "Europass",
+  "holder": {
+    "binding": [
+      {
+        "type": "ClaimsBindinding2022",
+        "famileName": "Mustermann",
+        "givenName": "Erika",
+        "dateOfBirth": "1973-01-01"
+      }
+    ]
+  },
+  "credentialSubject": {
+    "entitledTo": [
+      {
+        "id": "urn:epass:entitlement:1",
+        "title": "Postgraduate doctoral study",
+        "definition": "Competences the student acquires after the
+          completion of Graduate university study are sufficient
+          conditions for attending the programme of Postgraduate
+          doctoral study at the Faculty of Civil Engineering,
+          Architecture and Geodesy in Split, as well as for
+          attending the same or similar programmes and Postgraduate
+          specialist studies at other faculties of Civil Engineering
+          in Croatia. The acquired learning outcomes enable the
+          student to attend other postgraduate study programmes in
+          the field of technical sciences. ",
+        "issuedDate": "2019-09-20",
+        "specifiedBy": {
+          "id": "urn:epass:entitlementspec:1",
+          "title": "Postgraduate doctoral study",
+          "entitlementType":
+            "http://data.europa.eu/snb/entitlement/64aad92881",
+          "status": "http://data.europa.eu/snb/entitlement-status/5b
+            8d6b34fb",
+          "limitOrganisation": [
+            "did:ebsi:zsSgDXeYPhZ3AuKhTFneDf1"
+          ],
+          "limitJurisdiction": [
+            "http://publications.europa.eu/resource/authority/countr
+              y/HRV"
+          ]
+        }
+      }
+    ]
+  },
+  "exp": 1516247022,
+  "_sd_alg": "sha-256"
+}

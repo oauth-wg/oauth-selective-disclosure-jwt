@@ -1,0 +1,9 @@
+{
+  "iss": "https://example.com/issuer",
+  "iat": 1516239022,
+  "type": "Europass",
+  "holder": {},
+  "credentialSubject": {},
+  "exp": 1516247022,
+  "_sd_alg": "sha-256"
+}

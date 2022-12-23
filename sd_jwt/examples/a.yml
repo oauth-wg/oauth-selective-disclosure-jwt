@@ -1,0 +1,92 @@
+user_claims:
+    {
+        "iss": "did:ebsi:zsSgDXeYPhZ3AuKhTFneDf1",
+        "iat": 1541493724,
+        "jti": "urn:credential:5a4d5412-27e3-4540-a5e5-f1aa4d55b20c",
+        "type": "Europass",
+        "holder":
+            {
+                "binding":
+                    [
+                        {
+                            "type": "ClaimsBindinding2022",
+                            "famileName": "Mustermann",
+                            "givenName": "Erika",
+                            "dateOfBirth": "1973-01-01",
+                        },
+                    ],
+            },
+        "credentialSubject":
+            {
+                "achieved":
+                    [
+                        {
+                            "id": "urn:epass:learningAchievement:1",
+                            "title": "Master of Science in Civil Engineering",
+                            "wasDerivedFrom":
+                                [
+                                    {
+                                        "id": "urn:epass:assessment:1",
+                                        "title": "Overall Diploma Assessment",
+                                        "grade": "excellent (5)",
+                                        "assessedBy":
+                                            [
+                                                "did:ebsi:zsSgDXeYPhZ3AuKhTFneDf1",
+                                            ],
+                                        "specifiedBy":
+                                            {
+                                                "id": "urn:epass:asssessmentspec:1",
+                                                "title": "Overall Diploma Assessment",
+                                                "gradingScheme":
+                                                    {
+                                                        "id": "urn:epass:scoringschemespec:1",
+                                                        "title": "General grading scheme in Croatia",
+                                                        "definition": "The Croatian national grading scheme consists of five grades with numerical equivalents: izvrstan \u2013 5 (outstanding); vrlo dobar \u2013 4 (very good); dobar \u2013 3 (good); dovoljan \u2013 2 (sufficient); nedovoljan \u2013 1 (insufficient - fail). The minimum passing grade is dovoljan \u2013 2.",
+                                                    },
+                                            },
+                                    },
+                                ],
+                        },
+                    ],
+                "entitledTo":
+                    [
+                        {
+                            "id": "urn:epass:entitlement:1",
+                            "title": "Postgraduate doctoral study",
+                            "definition": "Competences the student acquires after the completion of Graduate university study are sufficient conditions for attending the programme of Postgraduate doctoral study at the Faculty of Civil Engineering, Architecture and Geodesy in Split, as well as for attending the same or similar programmes and Postgraduate specialist studies at other faculties of Civil Engineering in Croatia. The acquired learning outcomes enable the student to attend other postgraduate study programmes in the field of technical sciences. ",
+                            "issuedDate": "2019-09-20",
+                            "specifiedBy":
+                                {
+                                    "id": "urn:epass:entitlementspec:1",
+                                    "title": "Postgraduate doctoral study",
+                                    "entitlementType": "http://data.europa.eu/snb/entitlement/64aad92881",
+                                    "status": "http://data.europa.eu/snb/entitlement-status/5b8d6b34fb",
+                                    "limitOrganisation":
+                                        ["did:ebsi:zsSgDXeYPhZ3AuKhTFneDf1"],
+                                    "limitJurisdiction":
+                                        [
+                                            "http://publications.europa.eu/resource/authority/country/HRV",
+                                        ],
+                                },
+                        },
+                    ],
+            },
+    }
+
+non_sd_claims:
+    {
+        "iss": true,
+        "iat": true,
+        "cnf": { "jwk": { "kty": true, "n": true, "e": true } },
+        "type": true,
+        "holder": {},
+        "credentialSubject": {},
+    }
+
+holder_disclosed_claims:
+    {
+        "holder": { "binding": true },
+        "credentialSubject": { "entitledTo": true },
+    }
+
+holder_binding: false

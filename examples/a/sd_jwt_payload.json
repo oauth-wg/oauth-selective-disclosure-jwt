@@ -1,0 +1,21 @@
+{
+  "_sd": [
+    "MgwrNhUbZzmbEk_fvLJxVcObrgSjcdXO8pvwCnfE9Sg"
+  ],
+  "iss": "https://example.com/issuer",
+  "iat": 1516239022,
+  "type": "Europass",
+  "holder": {
+    "_sd": [
+      "iDpCqlGoMz0B_JOZozi-_G2XY9XelI1voUrNdj50HZY"
+    ]
+  },
+  "credentialSubject": {
+    "_sd": [
+      "LWZnCLjMw_ZEYBgHYUVA1XNVChNfZFLrIRxzaZjyMPI",
+      "rZjZ1CGOzAyS_QZj6wKvpas7ERF3eLNyu9zfum7tUX8"
+    ]
+  },
+  "exp": 1516247022,
+  "_sd_alg": "sha-256"
+}

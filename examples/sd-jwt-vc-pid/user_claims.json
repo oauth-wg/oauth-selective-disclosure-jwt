@@ -1,0 +1,24 @@
+{
+  "iss": "https://pid_issuer.memberstate.eu",
+  "iat": 1541493724,
+  "type": "PersonIdentificationData",
+  "credentialSubject": {
+    "given_name": "Erika",
+    "family_name": "Mustermann",
+    "nationalities": [
+      "DE"
+    ],
+    "birth_family_name": "Schmidt",
+    "birthdate": "1973-01-01",
+    "place_of_birth": "Regensburg",
+    "address": {
+      "postal_code": "12345",
+      "locality": "Irgendwo",
+      "street_address": "Sonnenstrasse 23",
+      "country_code": "DE"
+    },
+    "is_over_18": true,
+    "is_over_21": true,
+    "is_over_65": false
+  }
+}
