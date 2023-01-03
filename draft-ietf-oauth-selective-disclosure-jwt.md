@@ -806,7 +806,7 @@ revealed fundamental weaknesses and they MUST NOT be used.
 Holder binding aims to ensure that the presenter of a credential is
 actually the legitimate Holder of the credential. There are, in general,
 two approaches to Holder Binding: Claims-based Holder Binding and
-Crpytographic Holder Binding. 
+Crpytographic Holder Binding.
 
 Claims-based Holder Binding means that the Issuer includes claims in the
 SD-JWT that a Verifier can correlate with the Holder, potentially with
@@ -821,7 +821,7 @@ binding a credential to a Holder.
 Cryptographic Holder Binding means that the Issuer includes some
 cryptographic data, usually a public key, belonging to the Holder. The
 Holder can then sign over some data defined by the Verifier to prove
-that the Holder is in possession of the private key. 
+that the Holder is in possession of the private key.
 
 Without Holder Binding, a Verifier only gets the proof that the
 credential was issued by a particular Issuer, but the credential itself
@@ -848,7 +848,7 @@ stopped by a police officer for exceeding a speed limit, Holder Binding may be n
 driving the car and presenting the license is the actual Holder of the
 license. The Verifier (e.g., the software used by the police officer)
 will ensure that a Holder Binding JWT is present and signed with the Holder's private
-key. Claims-based Holder Binding may be used as well, e.g., by including a 
+key. Claims-based Holder Binding may be used as well, e.g., by including a
 picture of the user.
 
 **Scenario B:** A rental car agency may want to ensure, for insurance
@@ -895,7 +895,7 @@ Issuers publish their keys in a way that allows for efficient and secure
 key rotation and revocation, for example, by publishing keys at a
 predefined location using the JSON Web Key Set (JWKS) format [@RFC7517].
 Verifiers MUST ensure that they are not using expired or revoked keys
-for signature verification. 
+for signature verification.
 
 # Privacy Considerations {#privacy_considerations}
 
@@ -931,7 +931,7 @@ as soon as possible.
 
 Verifiers SHOULD NOT store SD-JWTs after verification. It may be
 sufficient to store the result of the verification and any End-User data
-that is needed for the application. 
+that is needed for the application.
 
 If secure key rotation and revocation is ensured according to
 (#issuer_signature_key_distribution), Issuers may MAY opt to publish
