@@ -894,8 +894,9 @@ Issuers are distributed to Verifiers. However, it is RECOMMENDED that
 Issuers publish their keys in a way that allows for efficient and secure
 key rotation and revocation, for example, by publishing keys at a
 predefined location using the JSON Web Key Set (JWKS) format [@RFC7517].
-Verifiers MUST ensure that they are not using expired or revoked keys
-for signature verification.
+Verifiers need to ensure that they are not using expired or revoked keys
+for signature verification as reasonable and appropriate for the given
+key distribution method.
 
 # Privacy Considerations {#privacy_considerations}
 
@@ -903,18 +904,19 @@ for signature verification.
 
 Wherever End-User data is stored, it represents a potentially
 interesting target for an attacker. This target can be of particularly
-high value when the data is signed by a trusted authority. For example,
-in OpenID Connect, signed ID Tokens can be stored by Relying Parties. In
-the case of SD-JWT, Holders have to store signed SD-JWTs and associated
-Disclosures, and Issuers and Verifiers may decide to do so as well.
+high value when the data is signed by a trusted authority like an
+official national identity service. For example, in OpenID Connect,
+signed ID Tokens can be stored by Relying Parties. In the case of
+SD-JWT, Holders have to store signed SD-JWTs and associated Disclosures,
+and Issuers and Verifiers may decide to do so as well.
 
 As usual, a leak of such data risks revealing private data of End-Users
 to third parties. As discussed in (#holder_binding_security), leaked
 SD-JWTs may also allow attackers to impersonate Holders unless Holder
 Binding is enforced and the attacker does not have access to the
-Holder's cryptographic keys. For this reason, and because the
-authenticity of the authority-signed data is easy to verify, the data
-may have a high monetary value on black markets.
+Holder's cryptographic keys. For these reasons, and in particular
+because the authenticity of the authority-signed data is easy to verify,
+the data may have a high monetary value on black markets.
 
 Due to these risks, systems implementing SD-JWT SHOULD be designed to
 minimize the amount of data that is stored. All involved parties SHOULD
@@ -933,8 +935,8 @@ Verifiers SHOULD NOT store SD-JWTs after verification. It may be
 sufficient to store the result of the verification and any End-User data
 that is needed for the application.
 
-If secure key rotation and revocation is ensured according to
-(#issuer_signature_key_distribution), Issuers may MAY opt to publish
+If reliable and secure key rotation and revocation is ensured according
+to (#issuer_signature_key_distribution), Issuers may MAY opt to publish
 expired or revoked private signing keys (after a grace period that
 ensures that the keys are not cached any longer at any Verifier). This
 reduces the value of any leaked credentials as the signatures on them
