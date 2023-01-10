@@ -76,8 +76,8 @@ contains claims about a subject.
 SD-JWTs defined in this document enable such selective disclosure of claims for JWTs.
 
 Similar to the JWT specification on which it builds, this document is a product of the
-OAuth working group. However, while both JWT and SD-JWT have potential OAuth
-applications, their utility and application is certainly not constrained to OAuth.
+Web Authorization Protocol (oauth) working group. However, while both JWT and SD-JWT
+have potential OAuth 2.0 applications, their utility and application is certainly not constrained to OAuth 2.0.
 JWT was developed as a general-purpose token format and has seen widespread usage in a
 variety of applications. SD-JWT is a selective disclosure mechanism for JWT and is
 similarly intended to be general-purpose specification.
