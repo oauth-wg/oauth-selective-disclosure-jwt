@@ -54,9 +54,9 @@ The JSON-based representation of claims in a signed JSON Web Token (JWT) [@!RFC7
 secured against modification using JSON Web Signature (JWS) [@!RFC7515] digital
 signatures. A consumer of a signed JWT that has checked the
 signature can safely assume that the contents of the token have not been
-modified.  However, anyone receiving an unencrypted JWT can read all of the
+modified.  However, anyone receiving an unencrypted JWT can read all the
 claims and likewise, anyone with the decryption key receiving an encrypted JWT
-can also read all of the claims.
+can also read all the claims.
 
 One of the common use cases of a signed JWT is representing a user's
 identity. As long as the signed JWT is one-time
@@ -69,11 +69,18 @@ signed JWT might want to disclose to Verifiers at some point. The
 ability to selectively disclose a subset of these claims depending on
 the Verifier becomes crucial to ensure minimum disclosure and prevent
 Verifiers from obtaining claims irrelevant for the transaction at hand.
-
 One example of such a multi-use JWT is a verifiable credential, a
 tamper-evident credential with a cryptographically verifiable authorship that
-contains claims about a subject. SD-JWTs defined in this document enable such
-selective disclosure of claims.
+contains claims about a subject.
+
+SD-JWTs defined in this document enable such selective disclosure of claims for JWTs.
+
+Similar to the JWT specification on which it builds, this document is a product of the
+OAuth working group. However, while both JWT and SD-JWT have potential OAuth
+applications, their utility and application is certainly not constrained to OAuth.
+JWT was developed as a general-purpose token format and has seen widespread usage in a
+variety of applications. SD-JWT is a selective disclosure mechanism for JWT and is
+similarly intended to be general-purpose specification.
 
 In an SD-JWT, claims can be hidden, but cryptographically protected
 against undetected modification. When issuing the SD-JWT to the Holder,
