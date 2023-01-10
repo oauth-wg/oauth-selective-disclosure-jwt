@@ -815,8 +815,7 @@ in a vaccination certificate, the Issuer can include a claim that
 contains the Holder's name and birthdate, and a Verifier can correlate
 this data with the Holder's passport that has to be presented together
 with the vaccination certificate - either as a digital credential or a
-physical document. Biometric data may also be used for the purpose of
-binding a credential to a Holder.
+physical document.
 
 Cryptographic Holder Binding means that the Issuer includes some
 cryptographic data, usually a public key, belonging to the Holder. The
@@ -849,7 +848,7 @@ driving the car and presenting the license is the actual Holder of the
 license. The Verifier (e.g., the software used by the police officer)
 will ensure that a Holder Binding JWT is present and signed with the Holder's private
 key. Claims-based Holder Binding may be used as well, e.g., by including a
-picture of the user.
+first name, last name and a date of birth that matches that of an insurance policy paper.
 
 **Scenario B:** A rental car agency may want to ensure, for insurance
 purposes, that all drivers named on the rental contract own a
