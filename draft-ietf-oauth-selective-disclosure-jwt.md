@@ -873,7 +873,7 @@ binding is required or not, Verifiers MUST NOT take into account
 If a Verifier has decided that Holder Binding is required for a
 particular use case and the Holder Binding is not present, does not fulfill the requirements
 (e.g., on the signing algorithm), or no recognized
-holder binding data is present in the SD-JWT, the Verifier will reject the
+Holder Binding data is present in the SD-JWT, the Verifier will reject the
 presentation, as described in (#verifier_verification).
 
 ## Blinding Claim Names {#blinding-claim-names}
@@ -1214,6 +1214,7 @@ Disclosures:
    * Updated and automated the W3C VC example.
    * Added examples with multibyte characters to show that the specification and demo code work well with UTF-8.
    * reverted back to hash alg from digest derivation alg (renamed to `_sd_alg`)
+   * Discussion on holder binding and privacy of stored credentials
 
    -02
 
