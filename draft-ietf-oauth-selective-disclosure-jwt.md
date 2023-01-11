@@ -73,7 +73,7 @@ One example of such a multi-use JWT is a verifiable credential, a
 tamper-evident credential with a cryptographically verifiable authorship that
 contains claims about a subject.
 
-SD-JWTs defined in this document enable such selective disclosure of claims for JWTs.
+SD-JWTs defined in this document enable such selective disclosure of JWT claims.
 
 Similar to the JWT specification on which it builds, this document is a product of the
 Web Authorization Protocol (oauth) working group. However, while both JWT and SD-JWT
