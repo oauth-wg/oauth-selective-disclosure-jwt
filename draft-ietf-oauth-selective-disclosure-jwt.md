@@ -894,28 +894,29 @@ Issuers publish their keys in a way that allows for efficient and secure
 key rotation and revocation, for example, by publishing keys at a
 predefined location using the JSON Web Key Set (JWKS) format [@RFC7517].
 Verifiers need to ensure that they are not using expired or revoked keys
-for signature verification as reasonable and appropriate for the given
-key distribution method.
+for signature verification using reasonable and appropriate means for the given
+key-distribution method.
 
 # Privacy Considerations {#privacy_considerations}
 
 ## Storage of Signed User Data
 
-Wherever End-User data is stored, it represents a potentially
-interesting target for an attacker. This target can be of particularly
+Wherever End-User data is stored, it represents a potential
+target for an attacker. This target can be of particularly
 high value when the data is signed by a trusted authority like an
 official national identity service. For example, in OpenID Connect,
 signed ID Tokens can be stored by Relying Parties. In the case of
 SD-JWT, Holders have to store signed SD-JWTs and associated Disclosures,
 and Issuers and Verifiers may decide to do so as well.
 
-As usual, a leak of such data risks revealing private data of End-Users
-to third parties. As discussed in (#holder_binding_security), leaked
+Not surprisingly, a leak of such data risks revealing private data of End-Users
+to third parties. Signed End-User data, the authenticity of which
+can be easily verified by third parties, further exacerbates the risk.
+As discussed in (#holder_binding_security), leaked
 SD-JWTs may also allow attackers to impersonate Holders unless Holder
 Binding is enforced and the attacker does not have access to the
-Holder's cryptographic keys. For these reasons, and in particular
-because the authenticity of the authority-signed data is easy to verify,
-the data may have a high monetary value on black markets.
+Holder's cryptographic keys. Altogether, leaked SD-JWT credentials may have
+a high monetary value on black markets.
 
 Due to these risks, systems implementing SD-JWT SHOULD be designed to
 minimize the amount of data that is stored. All involved parties SHOULD
