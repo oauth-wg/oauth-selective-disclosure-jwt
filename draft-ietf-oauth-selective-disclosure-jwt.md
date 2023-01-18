@@ -1213,6 +1213,13 @@ Disclosures:
 
    -03
 
+   * Discussion on holder binding and privacy of stored credentials
+   * Add some context about SD-JWT being general-purpose despite being a product of the OAuth WG
+   * Use ES256 instead of RS256 in examples
+   * Fix the Document History (which had a premature list for -03)
+
+   -02
+
    * Disclosures are now delivered not as a JWT but as separate base64url-encoded JSON objects.
    * In the SD-JWT, digests are collected under a `_sd` claim per level.
    * Terms "II-Disclosures" and "HS-Disclosures" are replaced with "Disclosures".
@@ -1222,10 +1229,6 @@ Disclosures:
    * Updated and automated the W3C VC example.
    * Added examples with multibyte characters to show that the specification and demo code work well with UTF-8.
    * reverted back to hash alg from digest derivation alg (renamed to `_sd_alg`)
-   * Discussion on holder binding and privacy of stored credentials
-
-   -02
-
    * reformatted
 
    -01
