@@ -810,6 +810,34 @@ Furthermore the hash algorithms MD2, MD4, MD5, RIPEMD-160, and SHA-1
 revealed fundamental weaknesses and they MUST NOT be used.
 
 ## Holder Binding {#holder_binding_security}
+Holder binding aims to ensure that the presenter of a credential is
+actually the legitimate Holder of the credential. There are, in general,
+two approaches to Holder Binding: Claims-based Holder Binding and
+Crpytographic Holder Binding.
+
+Claims-based Holder Binding means that the Issuer includes claims in the
+SD-JWT that a Verifier can correlate with the Holder, potentially with
+the help of other credentials presented at the same time. For example,
+in a vaccination certificate, the Issuer can include a claim that
+contains the Holder's name and birthdate, and a Verifier can correlate
+this data with the Holder's passport that has to be presented together
+with the vaccination certificate - either as a digital credential or a
+physical document.
+
+Cryptographic Holder Binding means that the Issuer includes some
+cryptographic data, usually a public key, belonging to the Holder. The
+Holder can then sign over some data defined by the Verifier to prove
+that the Holder is in possession of the private key.
+
+Without Holder Binding, a Verifier only gets the proof that the
+credential was issued by a particular Issuer, but the credential itself
+can be replayed by anyone who gets access to it. This means that, for
+example, after a credential was leaked to an attacker, the attacker can
+present the credential to any verifier that does not require Holder
+Binding. But also a malicious Verifier to which the Holder presented the
+credential can present the credential to another Verifier if that other
+Verifier does not require Holder Binding.
+
 Verifiers MUST decide whether Holder Binding is required for a
 particular use case or not before verifying a credential. This decision
 can be informed by various factors including, but not limited to the following:
@@ -826,7 +854,8 @@ stopped by a police officer for exceeding a speed limit, Holder Binding may be n
 driving the car and presenting the license is the actual Holder of the
 license. The Verifier (e.g., the software used by the police officer)
 will ensure that a Holder Binding JWT is present and signed with the Holder's private
-key.
+key. Claims-based Holder Binding may be used as well, e.g., by including a
+first name, last name and a date of birth that matches that of an insurance policy paper.
 
 **Scenario B:** A rental car agency may want to ensure, for insurance
 purposes, that all drivers named on the rental contract own a
@@ -844,14 +873,14 @@ binding is required or not, Verifiers MUST NOT take into account
  * whether an Holder Binding JWT is present or not, as an attacker can
    remove the Holder Binding JWT from any Presentation and present it to the
    Verifier, or
- * whether a key reference is present in the SD-JWT or not, as the
+ * whether Holder Binding data is present in the SD-JWT or not, as the
    Issuer might have added the key to the SD-JWT in a format/claim that
    is not recognized by the Verifier.
 
 If a Verifier has decided that Holder Binding is required for a
 particular use case and the Holder Binding is not present, does not fulfill the requirements
 (e.g., on the signing algorithm), or no recognized
-key reference is present in the SD-JWT, the Verifier will reject the
+Holder Binding data is present in the SD-JWT, the Verifier will reject the
 presentation, as described in (#verifier_verification).
 
 ## Blinding Claim Names {#blinding-claim-names}
@@ -864,7 +893,62 @@ are not blinded, but contain disclosable claims. This limitation
 needs to be taken into account by Issuers when creating the structure of
 the SD-JWT.
 
+## Issuer Signature Key Distribution and Rotation {#issuer_signature_key_distribution}
+
+This specification does not define how signature verification keys of
+Issuers are distributed to Verifiers. However, it is RECOMMENDED that
+Issuers publish their keys in a way that allows for efficient and secure
+key rotation and revocation, for example, by publishing keys at a
+predefined location using the JSON Web Key Set (JWKS) format [@RFC7517].
+Verifiers need to ensure that they are not using expired or revoked keys
+for signature verification using reasonable and appropriate means for the given
+key-distribution method.
+
 # Privacy Considerations {#privacy_considerations}
+
+## Storage of Signed User Data
+
+Wherever End-User data is stored, it represents a potential
+target for an attacker. This target can be of particularly
+high value when the data is signed by a trusted authority like an
+official national identity service. For example, in OpenID Connect,
+signed ID Tokens can be stored by Relying Parties. In the case of
+SD-JWT, Holders have to store signed SD-JWTs and associated Disclosures,
+and Issuers and Verifiers may decide to do so as well.
+
+Not surprisingly, a leak of such data risks revealing private data of End-Users
+to third parties. Signed End-User data, the authenticity of which
+can be easily verified by third parties, further exacerbates the risk.
+As discussed in (#holder_binding_security), leaked
+SD-JWTs may also allow attackers to impersonate Holders unless Holder
+Binding is enforced and the attacker does not have access to the
+Holder's cryptographic keys. Altogether, leaked SD-JWT credentials may have
+a high monetary value on black markets.
+
+Due to these risks, systems implementing SD-JWT SHOULD be designed to
+minimize the amount of data that is stored. All involved parties SHOULD
+store SD-JWTs only for as long as needed, including in log files.
+
+Issuers SHOULD NOT store SD-JWTs after issuance.
+
+Holders SHOULD store SD-JWTs and associated Disclosures only in
+encrypted form, and, wherever possible, use hardware-backed encryption
+in particular for the private Holder Binding key. Decentralized storage
+of data, e.g., on End-User devices, SHOULD be preferred for End-User
+credentials over centralized storage. Expired SD-JWTs SHOULD be deleted
+as soon as possible.
+
+Verifiers SHOULD NOT store SD-JWTs after verification. It may be
+sufficient to store the result of the verification and any End-User data
+that is needed for the application.
+
+If reliable and secure key rotation and revocation is ensured according
+to (#issuer_signature_key_distribution), Issuers may MAY opt to publish
+expired or revoked private signing keys (after a grace period that
+ensures that the keys are not cached any longer at any Verifier). This
+reduces the value of any leaked credentials as the signatures on them
+can no longer be trusted to originate from the Issuer.
+
 
 ## Confidentiality during Transport
 
@@ -1138,6 +1222,7 @@ Disclosures:
    * Updated and automated the W3C VC example.
    * Added examples with multibyte characters to show that the specification and demo code work well with UTF-8.
    * reverted back to hash alg from digest derivation alg (renamed to `_sd_alg`)
+   * Discussion on holder binding and privacy of stored credentials
 
    -02
 
