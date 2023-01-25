@@ -3,20 +3,17 @@ user_claims:
     "iss": "https://pid_issuer.memberstate.eu",
     "iat": 1541493724,
     "type": "PersonIdentificationData",
-            "holder":
+    "holder":
+      {
+        "binding":
+          [
             {
-                "binding":
-                    [
-                        {
-                            "type": "CryptographicBinding2022",
-                            "did": "did:example:1386147674571545"
-                        },
-                                                {
-                            "type": "BiometricBinding2022",
-                            "template": "..."
-                        },
-                    ],
+              "type": "CryptographicBinding2022",
+              "did": "did:example:1386147674571545"
             },
+            { "type": "BiometricBinding2022", "template": "..." },
+          ],
+      },
     "credentialSubject":
       {
         "given_name": "Erika",
@@ -30,12 +27,12 @@ user_claims:
             "postal_code": "12345",
             "locality": "Irgendwo",
             "street_address": "Sonnenstrasse 23",
-            "country_code": "DE"
+            "country_code": "DE",
           },
         "is_over_18": true,
         "is_over_21": true,
-        "is_over_65": false
-      }
+        "is_over_65": false,
+      },
   }
 
 non_sd_claims:
