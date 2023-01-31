@@ -782,11 +782,13 @@ checks the Disclosures correctly.
 
 ## Entropy of the salt {#salt-entropy}
 
-The security model that conceals the plaintext claims relies on the fact that the salt cannot be learned or guessed by
-the attacker. It is vitally important to adhere to this principle. As such, the
-salt MUST be created in such a manner that it is cryptographically random,
-long enough and has high entropy that it is not practical for the attacker to
-guess. A new salt MUST be chosen for each claim.
+The security model that conceals the plaintext claims relies on the fact
+that salts not revealed to an attacker cannot be learned or guessed by
+the attacker, even if other salts have been revealed. It is vitally
+important to adhere to this principle. As such, each salt MUST be created
+in such a manner that it is cryptographically random, long enough, and
+has high entropy that it is not practical for the attacker to guess. A
+new salt MUST be chosen for each claim independently from other salts.
 
 ## Minimum length of the salt {#salt_minlength}
 
