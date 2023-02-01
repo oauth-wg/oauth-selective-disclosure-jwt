@@ -313,7 +313,7 @@ However, a problem arises when computation over the data need to be performed an
 signature verification as was used for creating the signature. In the digest approach outlined above, the same problem exists: for the Issuer and the
 Verifier to arrive at the same digest, the same byte string must be hashed.
 
-JSON [@!RFC7159], however, does not prescribe a unique encoding for data, but allows for variations in the encoded string. The data above, for example, can be encoded as
+JSON [@!RFC8259], however, does not prescribe a unique encoding for data, but allows for variations in the encoded string. The data above, for example, can be encoded as
 
 ```
 ...
