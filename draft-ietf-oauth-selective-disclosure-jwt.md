@@ -607,8 +607,9 @@ as follows (line break added for readability):
 This is called the Combined Format for Presentation.
 
 The Holder MAY send any subset of the Disclosures to the Verifier, i.e.,
-none, multiple, or all Disclosures. The Holder MUST NOT send Disclosures
-or salt values for data that should not be revealed to the Verifier.
+none, multiple, or all Disclosures. For data that the Holder does not want to reveal
+to the Verifier, the Holder MUST NOT send Disclosures or reveal the salt values in any
+other way.
 
 A Holder MUST NOT send a Disclosure that was not included in the SD-JWT or send
 a Disclosure more than once.
