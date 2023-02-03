@@ -403,7 +403,7 @@ For each claim that is to be selectively disclosed, the Issuer creates a Disclos
 The Issuer MUST create a Disclosure for each selectively disclosable claim as follows:
 
  * Create an array of three elements in this order:
-   1. A salt value. See (#salt-entropy) and (#salt_minlength) for security considerations. The salt value MUST be unique for each claim that is to be selectively disclosed. It is RECOMMENDED to base64url-encode the salt value, producing a string. Any other type that is allowed in JSON MAY be used, e.g., a number.
+   1. A salt value. See (#salt-entropy) and (#salt_minlength) for security considerations. The salt value MUST be unique for each claim that is to be selectively disclosed. It is RECOMMENDED to base64url-encode the salt value, producing a string. Any other type that is allowed in JSON MAY be used, e.g., a number. The Issuer MUST NOT disclose the salt value to any party other than the Holder.
    2. The claim name, or key, as it would be used in a regular JWT body. This MUST be a string.
    3. The claim's value, as it would be used in a regular JWT body. The value MAY be of any type that is allowed in JSON, including numbers, strings, booleans, arrays, and objects.
  * JSON-encode the array such that an UTF-8 string is produced.
@@ -607,7 +607,9 @@ as follows (line break added for readability):
 This is called the Combined Format for Presentation.
 
 The Holder MAY send any subset of the Disclosures to the Verifier, i.e.,
-none, multiple, or all Disclosures.
+none, multiple, or all Disclosures. For data that the Holder does not want to reveal
+to the Verifier, the Holder MUST NOT send Disclosures or reveal the salt values in any
+other way.
 
 A Holder MUST NOT send a Disclosure that was not included in the SD-JWT or send
 a Disclosure more than once.
@@ -782,11 +784,13 @@ checks the Disclosures correctly.
 
 ## Entropy of the salt {#salt-entropy}
 
-The security model that conceals the plaintext claims relies on the fact that the salt cannot be learned or guessed by
-the attacker. It is vitally important to adhere to this principle. As such, the
-salt MUST be created in such a manner that it is cryptographically random,
-long enough and has high entropy that it is not practical for the attacker to
-guess. A new salt MUST be chosen for each claim.
+The security model that conceals the plaintext claims relies on the fact
+that salts not revealed to an attacker cannot be learned or guessed by
+the attacker, even if other salts have been revealed. It is vitally
+important to adhere to this principle. As such, each salt MUST be created
+in such a manner that it is cryptographically random, long enough, and
+has high entropy that it is not practical for the attacker to guess. A
+new salt MUST be chosen for each claim independently from other salts.
 
 ## Minimum length of the salt {#salt_minlength}
 
@@ -997,6 +1001,7 @@ David Bakker,
 David Waite,
 Fabian Hauck,
 Giuseppe De Marco,
+John Mattsson,
 Justin Richer,
 Kushal Das,
 Mike Jones,
