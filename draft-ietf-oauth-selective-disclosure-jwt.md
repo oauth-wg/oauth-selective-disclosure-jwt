@@ -50,7 +50,7 @@ documents that support selective disclosure of JWT claims.
 
 # Introduction {#Introduction}
 
-The JSON-based representation of claims in a signed JSON Web Token (JWT) [@!RFC7519] is
+The JSON-based [@!RFC8259] representation of claims in a signed JSON Web Token (JWT) [@!RFC7519] is
 secured against modification using JSON Web Signature (JWS) [@!RFC7515] digital
 signatures. A consumer of a signed JWT that has checked the
 signature can safely assume that the contents of the token have not been
@@ -290,103 +290,6 @@ The detailed algorithm is described in (#verifier_verification).
 
 This section defines data formats for SD-JWTs, Disclosures, Holder Binding JWTs and formats for combining these elements for transport.
 
-## The Challenge of Canonicalization {#canonicalization}
-
-When receiving an SD-JWT with associated Disclosures, a Verifier must
-be able to re-compute digests of the disclosed claim values and, given
-the same input values, obtain the same digest values as signed by the
-Issuer.
-
-Usually, JSON-based formats transport claim values as simple properties of a JSON object such as this:
-
-```
-...
-  "family_name": "Möbius",
-  "address": {
-    "street_address": "Schulstr. 12",
-    "locality": "Schulpforta"
-  }
-...
-```
-
-However, a problem arises when computation over the data need to be performed and verified, like signing or computing digests. Common signature schemes require the same byte string as input to the
-signature verification as was used for creating the signature. In the digest approach outlined above, the same problem exists: for the Issuer and the
-Verifier to arrive at the same digest, the same byte string must be hashed.
-
-JSON [@!RFC8259], however, does not prescribe a unique encoding for data, but allows for variations in the encoded string. The data above, for example, can be encoded as
-
-```
-...
-"family_name": "M\u00f6bius",
-"address": {
-  "street_address": "Schulstr. 12",
-  "locality": "Schulpforta"
-}
-...
-```
-
-or as
-
-```
-...
-"family_name": "Möbius",
-"address": {"locality":"Schulpforta", "street_address":"Schulstr. 12"}
-...
-```
-
-The two representations `"M\u00f6bius"` and `"Möbius"` are very different on the byte-level, but yield
-equivalent objects. Same for the representations of `address`, varying in white space and order of elements in the object.
-
-The variations in white space, ordering of object properties, and
-encoding of Unicode characters are all allowed by the JSON
-specification, including further variations, e.g., concerning
-floating-point numbers, as described in [@RFC8785]. Variations can be
-introduced whenever JSON data is serialized or deserialized and unless
-dealt with, will lead to different digests and the inability to verify
-signatures.
-
-There are generally two approaches to deal with this problem:
-
-1. Canonicalization: The data is transferred in JSON format, potentially
-   introducing variations in its representation, but is transformed into a
-   canonical form before computing a digest. Both the Issuer and the Verifier
-   must use the same canonicalization algorithm to arrive at the same byte
-   string for computing a digest.
-2. Source string hardening: Instead of transferring data in a format that
-   may introduce variations, a representation of the data is serialized.
-   This representation is then used as the hashing input at the Verifier,
-   but also transferred to the Verifier and used for the same digest
-   calculcation there. This means that the Verifier can easily compute and check the
-   digest of the byte string before finally deserializing and
-   accessing the data.
-
-Mixed approaches are conceivable, i.e., transferring both the original JSON data
-plus a string suitable for computing a digest, but such approaches can easily lead to
-undetected inconsistencies resulting in time-of-check-time-of-use type security
-vulnerabilities.
-
-In this specification, the source string hardening approach is used, as
-it allows for simple and reliable interoperability without the
-requirement for a canonicalization library. To harden the source string,
-any serialization format that supports the necessary data types could
-be used in theory, like protobuf, msgpack, or pickle. In this
-specification, JSON is used and plain text values of each Disclosure are encoded using base64url-encoding
-for transport. This approach means that SD-JWTs can be implemented purely based
-on widely available JWT, JSON, and Base64 encoding and decoding libraries.
-
-A Verifier can then easily check the digest over the source string before
-extracting the original JSON data. Variations in the encoding of the source
-string are implicitly tolerated by the Verifier, as the digest is computed over a
-predefined byte string and not over a JSON object.
-
-It is important to note that the Disclosures are neither intended nor
-suitable for direct consumption by
-an application that needs to access the disclosed claim values after the verification by the Verifier. The
-Disclosures are only intended to be used by a Verifier to check
-the digests over the source strings and to extract the original JSON
-data. The original JSON data is then used by the application. See
-(#verifier_verification) for details.
-
 ## Format of an SD-JWT
 
 An SD-JWT is a JWT that MUST be signed using the Issuer's private key. The
@@ -395,7 +298,7 @@ described in the following, MAY contain one or more selectively disclosable clai
 thereto, as well as further claims such as `iss`, `iat`, etc. as defined or
 required by the application using SD-JWTs.
 
-### Selectively Disclosable Claims
+### Selectively Disclosable Claims {#disclosable_claims}
 
 For each claim that is to be selectively disclosed, the Issuer creates a Disclosure, hashes it, and includes the hash instead of the original claim in the SD-JWT, as described next. The Disclosures are then sent to the Holder.
 
@@ -1209,7 +1112,109 @@ Disclosures:
 
 {{examples/w3c-vc/disclosures.md}}
 
+# Disclosure Format Considerations
 
+As described in (#disclosable_claims), the Disclosure structure is JSON containing salt and the
+cleartext content of a claim, which is base64url encoded. The encoded value is the input used to calculate
+a digest for the respective claim. The inclusion of digest value in the signed JWT ensures the integrity of
+the claim value. Using encoded content as the input to the integrity mechanism is conceptually similar to the
+approach in JWS and particularly useful when the content, like JSON, can have differences but be semantically
+equivalent. Some further discussion of the considerations around this design decision follows.
+
+When receiving an SD-JWT with associated Disclosures, a Verifier must
+be able to re-compute digests of the disclosed claim values and, given
+the same input values, obtain the same digest values as signed by the
+Issuer.
+
+Usually, JSON-based formats transport claim values as simple properties of a JSON object such as this:
+
+```
+...
+  "family_name": "Möbius",
+  "address": {
+    "street_address": "Schulstr. 12",
+    "locality": "Schulpforta"
+  }
+...
+```
+
+However, a problem arises when computation over the data need to be performed and verified, like signing or computing digests. Common signature schemes require the same byte string as input to the
+signature verification as was used for creating the signature. In the digest approach outlined above, the same problem exists: for the Issuer and the
+Verifier to arrive at the same digest, the same byte string must be hashed.
+
+JSON, however, does not prescribe a unique encoding for data, but allows for variations in the encoded string. The data above, for example, can be encoded as
+
+```
+...
+"family_name": "M\u00f6bius",
+"address": {
+  "street_address": "Schulstr. 12",
+  "locality": "Schulpforta"
+}
+...
+```
+
+or as
+
+```
+...
+"family_name": "Möbius",
+"address": {"locality":"Schulpforta", "street_address":"Schulstr. 12"}
+...
+```
+
+The two representations `"M\u00f6bius"` and `"Möbius"` are very different on the byte-level, but yield
+equivalent objects. Same for the representations of `address`, varying in white space and order of elements in the object.
+
+The variations in white space, ordering of object properties, and
+encoding of Unicode characters are all allowed by the JSON
+specification, including further variations, e.g., concerning
+floating-point numbers, as described in [@RFC8785]. Variations can be
+introduced whenever JSON data is serialized or deserialized and unless
+dealt with, will lead to different digests and the inability to verify
+signatures.
+
+There are generally two approaches to deal with this problem:
+
+1. Canonicalization: The data is transferred in JSON format, potentially
+   introducing variations in its representation, but is transformed into a
+   canonical form before computing a digest. Both the Issuer and the Verifier
+   must use the same canonicalization algorithm to arrive at the same byte
+   string for computing a digest.
+2. Source string hardening: Instead of transferring data in a format that
+   may introduce variations, a representation of the data is serialized.
+   This representation is then used as the hashing input at the Verifier,
+   but also transferred to the Verifier and used for the same digest
+   calculation there. This means that the Verifier can easily compute and check the
+   digest of the byte string before finally deserializing and
+   accessing the data.
+
+Mixed approaches are conceivable, i.e., transferring both the original JSON data
+plus a string suitable for computing a digest, but such approaches can easily lead to
+undetected inconsistencies resulting in time-of-check-time-of-use type security
+vulnerabilities.
+
+In this specification, the source string hardening approach is used, as
+it allows for simple and reliable interoperability without the
+requirement for a canonicalization library. To harden the source string,
+any serialization format that supports the necessary data types could
+be used in theory, like protobuf, msgpack, or pickle. In this
+specification, JSON is used and plain text values of each Disclosure are encoded using base64url-encoding
+for transport. This approach means that SD-JWTs can be implemented purely based
+on widely available JWT, JSON, and Base64 encoding and decoding libraries.
+
+A Verifier can then easily check the digest over the source string before
+extracting the original JSON data. Variations in the encoding of the source
+string are implicitly tolerated by the Verifier, as the digest is computed over a
+predefined byte string and not over a JSON object.
+
+It is important to note that the Disclosures are neither intended nor
+suitable for direct consumption by
+an application that needs to access the disclosed claim values after the verification by the Verifier. The
+Disclosures are only intended to be used by a Verifier to check
+the digests over the source strings and to extract the original JSON
+data. The original JSON data is then used by the application. See
+(#verifier_verification) for details.
 
 
 # Document History
