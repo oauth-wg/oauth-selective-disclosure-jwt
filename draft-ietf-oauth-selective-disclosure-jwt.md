@@ -905,6 +905,7 @@ David Waite,
 Fabian Hauck,
 Giuseppe De Marco,
 John Mattsson,
+Matthew Miller,
 Justin Richer,
 Kushal Das,
 Mike Jones,
@@ -1226,6 +1227,7 @@ data. The original JSON data is then used by the application. See
    * Discussion on holder binding and privacy of stored credentials
    * Add some context about SD-JWT being general-purpose despite being a product of the OAuth WG
    * Use ES256 instead of RS256 in examples
+   * Rename and move the c14n challenges section to an appendix
    * Fix the Document History (which had a premature list for -03)
 
    -02
