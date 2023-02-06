@@ -527,7 +527,8 @@ The claim `_sd_alg` indicates the hash algorithm
 used by the Issuer to generate the digests over the salts and the
 claim values.
 
-The hash algorithm identifier MUST be a hash algorithm value from the "Hash Name String" column in the IANA "Named Information Hash Algorithm" registry [@IANA.Hash.Algorithms].
+The hash algorithm identifier MUST be a hash algorithm value from the "Hash Name String" column in the IANA "Named Information Hash Algorithm" registry [@IANA.Hash.Algorithms]
+or a value defined in another specification and/or profile of this specification.
 
 To promote interoperability, implementations MUST support the SHA-256 hash algorithm.
 
