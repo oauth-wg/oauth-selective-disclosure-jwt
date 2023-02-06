@@ -454,6 +454,8 @@ To ensure readability and replicability, the examples in this specification do n
 #### Creating an SD-JWT {#creating_sd_jwt}
 
 An SD-JWT is a JWT that MUST be signed using the Issuer's private key.
+It MUST use a JWS asymmetric digital signature algorithm and
+MUST NOT use `none` or an identifier for a symmetric algorithm (MAC).
 
 An SD-JWT MAY contain both selectively disclosable claims and non-selectively disclosable claims, i.e., claims that are always contained in the SD-JWT in plaintext and are always visible to a Verifier.
 
@@ -1220,6 +1222,7 @@ Disclosures:
 
    * Discussion on holder binding and privacy of stored credentials
    * Add some context about SD-JWT being general-purpose despite being a product of the OAuth WG
+   * More explicitly say that SD-JWTs have to be signed asymmetrically (no MAC and no `none`)
    * Use ES256 instead of RS256 in examples
    * Fix the Document History (which had a premature list for -03)
 
