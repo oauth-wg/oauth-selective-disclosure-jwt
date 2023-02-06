@@ -805,7 +805,7 @@ a different salt.
 
 ## Choice of a Hash Algorithm
 
-For the security of this scheme, the hash algorithm is required to be preimage resistant and second-preimage 
+For the security of this scheme, the hash algorithm is required to be preimage resistant and second-preimage
 resistant, i.e., it is infeasible to calculate the salt and claim value that result in
 a particular digest, and, for any salt and claim value pair, it is infeasible to find a different salt and claim value pair that
 result in the same digest, respectively.
