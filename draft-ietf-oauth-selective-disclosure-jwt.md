@@ -808,10 +808,10 @@ a different salt.
 For the security of this scheme, the hash algorithm is required to be first and second preimage
 resistant, i.e., it is infeasible to calculate the salt and claim value that result in
 a particular digest, and it is infeasible to find a different salt and claim value pair that
-result in a matching digest, respectively. 
+result in a matching digest, respectively.
 
-Hash algorithms that do not meet the aforementioned requirements MUST NOT be used. 
-Inclusion in the "Named Information Hash Algorithm" registry [@IANA.Hash.Algorithms] 
+Hash algorithms that do not meet the aforementioned requirements MUST NOT be used.
+Inclusion in the "Named Information Hash Algorithm" registry [@IANA.Hash.Algorithms]
 alone does not indicate a hash algorithm's suitability for use in SD-JWT (it contains several
 heavily truncated digests, such as `sha-256-32` and `sha-256-64`, which are unfit for security
 applications).
