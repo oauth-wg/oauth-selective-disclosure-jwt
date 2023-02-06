@@ -807,8 +807,8 @@ a different salt.
 
 For the security of this scheme, the hash algorithm is required to be first and second preimage
 resistant, i.e., it is infeasible to calculate the salt and claim value that result in
-a particular digest, and it is infeasible to find a different salt and claim value pair that
-result in a matching digest, respectively.
+a particular digest, and, for any salt and claim value pair, it is infeasible to find a different salt and claim value pair that
+result in the same digest, respectively.
 
 Hash algorithms that do not meet the aforementioned requirements MUST NOT be used.
 Inclusion in the "Named Information Hash Algorithm" registry [@IANA.Hash.Algorithms]
