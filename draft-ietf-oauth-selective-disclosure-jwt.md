@@ -357,6 +357,8 @@ To ensure readability and replicability, the examples in this specification do n
 #### Creating an SD-JWT {#creating_sd_jwt}
 
 An SD-JWT is a JWT that MUST be signed using the Issuer's private key.
+It MUST use a JWS asymmetric digital signature algorithm and
+MUST NOT use `none` or an identifier for a symmetric algorithm (MAC).
 
 An SD-JWT MAY contain both selectively disclosable claims and non-selectively disclosable claims, i.e., claims that are always contained in the SD-JWT in plaintext and are always visible to a Verifier.
 
@@ -430,7 +432,8 @@ The claim `_sd_alg` indicates the hash algorithm
 used by the Issuer to generate the digests over the salts and the
 claim values.
 
-The hash algorithm identifier MUST be a hash algorithm value from the "Hash Name String" column in the IANA "Named Information Hash Algorithm" registry [@IANA.Hash.Algorithms].
+The hash algorithm identifier MUST be a hash algorithm value from the "Hash Name String" column in the IANA "Named Information Hash Algorithm" registry [@IANA.Hash.Algorithms]
+or a value defined in another specification and/or profile of this specification.
 
 To promote interoperability, implementations MUST support the SHA-256 hash algorithm.
 
@@ -708,12 +711,18 @@ a different salt.
 
 ## Choice of a Hash Algorithm
 
-For the security of this scheme, the hash algorithm is required to be preimage and collision
+For the security of this scheme, the hash algorithm is required to be preimage resistant and second-preimage
 resistant, i.e., it is infeasible to calculate the salt and claim value that result in
-a particular digest, and it is infeasible to find a different salt and claim value pair that
-result in a matching digest, respectively.
+a particular digest, and, for any salt and claim value pair, it is infeasible to find a different salt and claim value pair that
+result in the same digest, respectively.
 
-Furthermore the hash algorithms MD2, MD4, MD5, RIPEMD-160, and SHA-1
+Hash algorithms that do not meet the aforementioned requirements MUST NOT be used.
+Inclusion in the "Named Information Hash Algorithm" registry [@IANA.Hash.Algorithms]
+alone does not indicate a hash algorithm's suitability for use in SD-JWT (it contains several
+heavily truncated digests, such as `sha-256-32` and `sha-256-64`, which are unfit for security
+applications).
+
+Furthermore, the hash algorithms MD2, MD4, MD5, RIPEMD-160, and SHA-1
 revealed fundamental weaknesses and they MUST NOT be used.
 
 ## Holder Binding {#holder_binding_security}
@@ -1226,8 +1235,10 @@ data. The original JSON data is then used by the application. See
 
    * Discussion on holder binding and privacy of stored credentials
    * Add some context about SD-JWT being general-purpose despite being a product of the OAuth WG
+   * More explicitly say that SD-JWTs have to be signed asymmetrically (no MAC and no `none`)
    * Use ES256 instead of RS256 in examples
    * Rename and move the c14n challenges section to an appendix
+   * A bit more in security considerations for Choice of a Hash Algorithm (1st & 2nd preimage resistant and not majorly truncated)
    * Fix the Document History (which had a premature list for -03)
 
    -02
