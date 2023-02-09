@@ -1105,18 +1105,7 @@ The following data will be used in this example:
 
 <{{examples/w3c-vc/user_claims.json}}
 
-The encoded SD-JWT looks as follows:
-
-Header:
-```json
-{
-  "typ": "sd-jwt-vc",
-  "alg": "RS256",
-  "kid": "cAEIUqJ0cmLzD1kzGzheiBag0YRAzVdlfxN280NgHaA"
-}
-```
-
-Body:
+The payload of a corresponding SD-JWT looks as follows:
 
 <{{examples/w3c-vc/sd_jwt_payload.json}}
 
