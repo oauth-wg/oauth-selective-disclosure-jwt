@@ -2,6 +2,16 @@
   "iss": "https://pid_issuer.memberstate.eu",
   "iat": 1541493724,
   "type": "PersonIdentificationData",
+  "binding": [
+    {
+      "type": "CryptographicBinding2022",
+      "did": "did:example:1386147674571545"
+    },
+    {
+      "type": "BiometricBinding2022",
+      "template": "..."
+    }
+  ],
   "credentialSubject": {
     "given_name": "Erika",
     "family_name": "Mustermann",

@@ -1,0 +1,75 @@
+{
+  "_sd": [
+    "OGNF8wlb5_pIeEShGi10U_MKYf9sWNE5iuq66RueIZQ"
+  ],
+  "iss": "https://example.com/issuer",
+  "iat": 1516239022,
+  "type": "Europass",
+  "holder": {
+    "binding": [
+      {
+        "_sd": [
+          "9lip6bEdO8nitn5X_3iS3jI5b96wvYDZF8CRE4uYNVA",
+          "OyMKjiEglS-p_j3Xx45JDxjf0SPEomaaFZasPddnxVE",
+          "aSIpk-PwBngeA6AEtOip7rzgYT6_IbJUSJc7XPXQ37Y",
+          "rzDGSa_bBjUh5h2iM1MjjgRFn47DnpjOpY6a-BLxL_U"
+        ]
+      }
+    ]
+  },
+  "credentialSubject": {
+    "achieved": [
+      {
+        "_sd": [
+          "0w4aSs32CMO47MG7bS6LCrtuOPjP7Svfuq7UrgPbpFc",
+          "_QUWwRCuKV-jwlYtKu6EQhUWtKC3IuspoIy8f_-j1zA"
+        ],
+        "wasDerivedFrom": [
+          {
+            "_sd": [
+              "mEM27zNHAtg3rVKD9uuIT6InWnR9gjndp2RiTtbyWmY",
+              "nBPJKCODvNcpAGjGGE8hUpXY3Q7Cpt9OSTO7Ms-L8pY",
+              "pPL--R0hBQ039XfarshdpU7-qDucK2uPk-njSCL4FGQ",
+              "vWOS20L0DQp0Be2njDiNDghClclj-hw2VM1mUO1Hr3s"
+            ],
+            "specifiedBy": {
+              "_sd": [
+                "DR2I3UuHc3SWqMTpXS-Q0FFsg2HnT8OApH7NJbA1Qtc",
+                "POhTaODBIJyUCI_IIskg0FgfoYSRE1S-pyOzm3Xq5R4"
+              ],
+              "gradingScheme": {
+                "_sd": [
+                  "PnnpICAdiTYuRyoHE0wxDpxCOHfrpLPK4YyHEAsxK1c",
+                  "fQl_iB7YkXZnu42cp9dhW9ppRqLxrbNVwjjOdnBj5A0",
+                  "kR1AHqMN8nt0x0eU-4qfYmsSvKX95fXdcsUP2R8lRoo"
+                ]
+              }
+            }
+          }
+        ]
+      }
+    ],
+    "entitledTo": [
+      {
+        "_sd": [
+          "4RB7JUrUhkgcWsM6FN-5oOMuR56oGfvAfWCUj4STVnw",
+          "JK4HBSDPVuUHensEtgrKJiJJJPIzb4QXXkz8ylG9W8E",
+          "bjXFKiTG3iOTzx2VEV-MiaE0QlkqsQx80WEz3FXEBWY",
+          "xOKswgEC0pp9oFlAEPBvJ9aoD2eDcwbVfDv2URmQY0U"
+        ],
+        "specifiedBy": {
+          "_sd": [
+            "12vKO47MX9I_fYhKbAMPdMVHVz8OBsCwCyH4J8SFoBA",
+            "1e6juiZzHjj1QiGpaP2rJCSXk6nK1vXVIdq2U2W_-Fg",
+            "Qk1-tBMv8T8-Et0-17ZVlUeRlESFNHw3GU2bKzaAmE4",
+            "e6sweekiZMvWvHMEohz2RjnWSwbv_ZNP9qlaFTKkz88",
+            "kHnsIeZfqCrj6VgoFcr3Qo0UzoTlFwmB80xY3-C1Y3A",
+            "svj2pqOnH3H6AF3pcC5CZlMB2m-Wl02g_nKbFYrzyRE"
+          ]
+        }
+      }
+    ]
+  },
+  "exp": 1516247022,
+  "_sd_alg": "sha-256"
+}

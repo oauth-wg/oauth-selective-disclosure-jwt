@@ -4,12 +4,11 @@
   "type": "PersonIdentificationData",
   "credentialSubject": {
     "address": {},
+    "birthdate": "1973-01-01",
     "given_name": "Erika",
-    "family_name": "Mustermann",
-    "birthdate": "1973-01-01"
+    "family_name": "Mustermann"
   },
   "exp": 1516247022,
-  "_sd_alg": "sha-256",
   "cnf": {
     "jwk": {
       "kty": "EC",

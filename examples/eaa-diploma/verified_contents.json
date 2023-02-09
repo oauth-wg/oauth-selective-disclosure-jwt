@@ -1,0 +1,41 @@
+{
+  "iss": "https://example.com/issuer",
+  "iat": 1516239022,
+  "type": "Europass",
+  "holder": {
+    "binding": [
+      {
+        "dateOfBirth": "1973-01-01",
+        "famileName": "Mustermann",
+        "givenName": "Erika",
+        "type": "ClaimsBinding2022"
+      }
+    ]
+  },
+  "credentialSubject": {
+    "achieved": [
+      {
+        "wasDerivedFrom": [
+          {
+            "specifiedBy": {
+              "gradingScheme": {
+                "title": "General grading scheme in Croatia"
+              }
+            },
+            "assessedBy": [
+              "did:ebsi:zsSgDXeYPhZ3AuKhTFneDf1"
+            ]
+          }
+        ],
+        "title": "Master of Science in Civil Engineering"
+      }
+    ],
+    "entitledTo": [
+      {
+        "specifiedBy": {},
+        "title": "Postgraduate doctoral study"
+      }
+    ]
+  },
+  "exp": 1516247022
+}

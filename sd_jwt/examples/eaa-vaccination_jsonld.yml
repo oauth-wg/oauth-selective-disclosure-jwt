@@ -1,0 +1,57 @@
+user_claims:
+  {
+    "@context":
+      [
+        "https://www.w3.org/2018/credentials/v1",
+        "https://w3id.org/vaccination/v1",
+      ],
+    "type": ["VerifiableCredential", "VaccinationCertificate"],
+    "issuer": "https://example.com/jdoe",
+    "issuanceDate": "2023-02-09T11:01:59Z",
+    "expirationDate": "2028-02-08T11:01:59Z",
+    "name": "COVID-19 Vaccination Certificate",
+    "description": "COVID-19 Vaccination Certificate",
+    "credentialSubject":
+      {
+        "vaccine":
+          {
+            "type": "Vaccine",
+            "atcCode": "J07BX03",
+            "medicinalProductName": "COVID-19 Vaccine Moderna",
+            "marketingAuthorizationHolder": "Moderna Biotech",
+          },
+        "nextVaccinationDate": "2021-08-16T13:40:12Z",
+        "countryOfVaccination": "GE",
+        "dateOfVaccination": "2021-06-23T13:40:12Z",
+        "order": "3/3",
+        "recipient":
+          {
+            "type": "VaccineRecipient",
+            "gender": "Female",
+            "birthDate": "1961-08-17",
+            "givenName": "Marion",
+            "familyName": "Mustermann",
+          },
+        "type": "VaccinationEvent",
+        "administeringCentre": "Praxis Sommergarten",
+        "batchNumber": "1626382736",
+        "healthProfessional": "883110000015376",
+      },
+  }
+
+non_sd_claims:
+  {
+    "@context": true,
+    "type": true,
+    "issuanceDate": true,
+    "expirationDate": true,
+    "issuer": true,
+    "name": true,
+    "description": true,
+    "credentialSubject": { "recipient": {}, "vaccine": {} },
+  }
+
+holder_disclosed_claims:
+  { "credentialSubject": { "type":true, "dateOfVaccination": true,"order": true,"vaccine": { "type": true, "atcCode": true, "medicinalProductName": true} } }
+
+holder_binding: true
