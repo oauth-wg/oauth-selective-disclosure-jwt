@@ -488,3 +488,4 @@ class SDJWTVerifier(SDJWTCommon):
 
         else:
             return sd_jwt_claims
+
