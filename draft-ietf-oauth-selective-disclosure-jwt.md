@@ -331,6 +331,8 @@ are all valid and encode the same claim value:
  * No white space: `WyJfMjZiYzRMVC1hYzZxMktJNmNCVzVlcyIsImZhbWlseV9uYW1lIiwiTcO2Yml1cyJd`
  * Newline characters between elements: `WwoiXzI2YmM0TFQtYWM2cTJLSTZjQlc1ZXMiLAoiZmFtaWx5X25hbWUiLAoiTcO2Yml1cyIKXQ`
 
+See (#disclosure_format_considerations) for some further considerations on the Disclosure format approach.
+
 #### Hashing Disclosures {#hashing_disclosures}
 
 For embedding the Disclosures in the SD-JWT, the Disclosures are hashed using the hash algorithm specified in the `_sd_alg` claim described below. The resulting digest is then included in the SD-JWT instead of the original claim value, as described next.
@@ -1113,7 +1115,7 @@ Disclosures:
 
 {{examples/w3c-vc/disclosures.md}}
 
-# Disclosure Format Considerations
+# Disclosure Format Considerations {#disclosure_format_considerations}
 
 As described in (#disclosable_claims), the Disclosure structure is JSON containing salt and the
 cleartext content of a claim, which is base64url encoded. The encoded value is the input used to calculate
