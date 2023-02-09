@@ -9,6 +9,7 @@
     "family_name": "Mustermann"
   },
   "exp": 1516247022,
+  "_sd_alg": "sha-256",
   "cnf": {
     "jwk": {
       "kty": "EC",
