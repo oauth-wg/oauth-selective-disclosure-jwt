@@ -1,0 +1,64 @@
+{
+  "_sd": [
+    "ibCpxiL1Dj1IxDf4N6rmrRZnABziOGoRFOaQEbyp1-8",
+    "w0XCqc7QBA1YVswoohv4Jw9FP0aP1wx0tY6jxyBfj6w"
+  ],
+  "iss": "https://example.com/issuer",
+  "iat": 1516239022,
+  "type": "Europass",
+  "credentialSubject": {
+    "achieved": [
+      {
+        "_sd": [
+          "JoYt9p-8f88VqtLAMDp3uZoyP18WHkqHpPndcF3m6h0",
+          "iMBFP8piEdJ8S0px3iwIY0RLdYXDSQ5hCfjCBmj_OM8"
+        ],
+        "wasDerivedFrom": [
+          {
+            "_sd": [
+              "4hIZ2_e3Vv6A4TXP_WFlBG34C0iQI9VzzcPaImvPWl8",
+              "MHOvkp8xUfYcSL7jqVbV2MXp7YPjgrdMUTPXr6T2bL4",
+              "U6UBG0_eh9AXMerEs-H-dOx0CTuDqG-m_p3Pjwps0hs",
+              "ivl57Toq3roUhX-FBLDkk-CLg-sh7W-_wVbGGhDnE6g"
+            ],
+            "specifiedBy": {
+              "_sd": [
+                "8sis9Ry7WGHw5Q930kZAgS_8z5lLVKxiXl2iQm1vHGQ",
+                "KUH1p4GYQMbLWMCjm5o1hU29ePDd4fq8gVGdklJwi5Q"
+              ],
+              "gradingScheme": {
+                "_sd": [
+                  "NtdpgUVSeUNrP5xs-QnHsbOT3m9ib3MkkZaTNGR73No",
+                  "a4O_WNbLXVVTJxjUOZJGyxHgDHlO-ESBlaCCkIDxQHc",
+                  "qDIfp4x5IFrqVYF4tKGEbSWdSH33BUhJkS2n9BROwNo"
+                ]
+              }
+            }
+          }
+        ]
+      }
+    ],
+    "entitledTo": [
+      {
+        "_sd": [
+          "TW7jd9aBSUeZCLJkxO5M7k09dsOyuKVg0mpDOEjxtOg",
+          "ZWie8arAO9i-wyc9pfM-aTHJ8sa_DG9QiKv5mDFS-wQ",
+          "eLaYSj7c-d5kFW_ksC5CK7rc5SyhElclroRoLSFXaRU",
+          "xZacXzkscfD558FTAG1jfMKsm-7C6mqGNFY4qnSPbkU"
+        ],
+        "specifiedBy": {
+          "_sd": [
+            "DfECoxy2BKvT-Fz9ceBovHXoZb30qGP_JcHeKzCA3KA",
+            "MUksykhpnmAH0JlaASI4sUNONodgWrJGAkJp1os1JmE",
+            "SL786rToFMcIifOBX1sLb3K-s3PG2QdYSpJp1eZlfqY",
+            "XSg5NL2bj38mlwgDXWpI4dKTqZwHHIj5x6bOXsDHQRQ",
+            "d62rIH5usw1KUWcMeCSvKwRHrpkDuCwrP2Lzz2bQLAs",
+            "xO8QioE0oqEu9NOygUBuckuh77QLHXPysT24fP5IiMg"
+          ]
+        }
+      }
+    ]
+  },
+  "exp": 1516247022,
+  "_sd_alg": "sha-256"
+}
