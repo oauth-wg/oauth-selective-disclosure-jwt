@@ -1,0 +1,56 @@
+{
+  "@context": [
+    "https://www.w3.org/2018/credentials/v1",
+    "https://w3id.org/vaccination/v1"
+  ],
+  "type": [
+    "VerifiableCredential",
+    "VaccinationCertificate"
+  ],
+  "issuer": "https://example.com/jdoe",
+  "issuanceDate": "2023-02-09T11:01:59Z",
+  "expirationDate": "2028-02-08T11:01:59Z",
+  "name": "COVID-19 Vaccination Certificate",
+  "description": "COVID-19 Vaccination Certificate",
+  "credentialSubject": {
+    "_sd": [
+      "8-N936mMUuXx-Kbf6byQTDOwQoFcoapEvVPbYWiRV5M",
+      "GyDDvOMyEtqsI3vdjbaVSXJZp_WjX_JQIMVqehpr1cU",
+      "MGWjDeD0DvcvG2quwT0zT3wz72HisTJoOtimMc65Qtg",
+      "S7xgnTLcgRqHRipEu0xiEQceAaYh_mfjowFsNZORh4w",
+      "aO2ZezAuMOhmhVv0pQ-U_ZUB4py2hOHa-x7xmGywt8E",
+      "qkaVSrXEw2sbbqS5YdtU1HMNAEjMofTH_6DCxDr91LQ",
+      "ypFwyXOiHzulGDvpY46Jr1nDRexz35FYfBqJWe7xKqc"
+    ],
+    "vaccine": {
+      "_sd": [
+        "C10ypGMJiTgrgKICDu0TIJ5HSEEhRrsy-XgjPGSsxEk",
+        "HduAC5dITq5LsmcYJChAHrSanA0106-JQdkfqVI-Drs",
+        "HlXX723D-EgjoNr4nQVUbEpAg1Gaxwl74350UXfBBM0"
+      ],
+      "type": "Vaccine"
+    },
+    "recipient": {
+      "_sd": [
+        "-KMt3FVtI_7DuaDpFZGIfE751AwqnXKpLVCQaIpl6P4",
+        "8FbBeqe_wV1ES-RU28y8DDkfQv9dlGziVdd9R3jq-fQ",
+        "Cu8JNGQ2WRs6KHKngBKEaU9r6SMfnwoVVYGTPWwvxJc",
+        "YJI42JtoLHmwv2oi45QW6wmINZXTpYBxhD4eWlmEpiw"
+      ],
+      "type": "VaccineRecipient"
+    },
+    "type": "VaccinationEvent"
+  },
+  "iss": "https://example.com/issuer",
+  "iat": 1516239022,
+  "exp": 1516247022,
+  "_sd_alg": "sha-256",
+  "cnf": {
+    "jwk": {
+      "kty": "EC",
+      "crv": "P-256",
+      "x": "TCAER19Zvu3OHF4j4W4vfSVoHIP1ILilDls7vCeGemc",
+      "y": "ZxjiWWbZMQGHVWKVQ4hbSIirsVfuecCE6t4jT9F2HZQ"
+    }
+  }
+}
