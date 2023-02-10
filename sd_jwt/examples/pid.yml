@@ -1,0 +1,63 @@
+user_claims:
+  {
+    "iss": "https://pid_issuer.memberstate.eu",
+    "iat": 1541493724,
+    "type": "PersonIdentificationData",
+    "binding":
+      [
+        {
+          "type": "CryptographicBinding2022",
+          "cnf":
+            {
+              "jwk":
+                {
+                  "kty": "RSA",
+                  "n": "0vx7agoebGcQSuuPiLJXZptN9nndrQmbXEps2aiAFbWhM78LhWx4cbbf
+                    AAtVT86zwu1RK7aPFFxuhDR1L6tSoc_BJECPebWKRXjBZCiFV4n3oknjhMst
+                    n64tZ_2W-5JsGY4Hc5n9yBXArwl93lqt7_RN5w6Cf0h4QyQ5v-65YGjQR0_F
+                    DW2QvzqY368QQMicAtaSqzs8KJZgnYb9c7d0zgdAZHzu6qMQvRL5hajrn1n9
+                    1CbOpbISD08qNLyrdkt-bFTWhAI4vMQFh6WeZu0fM4lFd2NcRwr3XPksINHa
+                    Q-G_xBniIqbw0Ls1jF44-csFCur-kEgU8awapJzKnqDKgw",
+                  "e": "AQAB",
+                },
+            },
+        },
+        { "type": "BiometricBinding2022", "template": "..." },
+      ],
+    "credentialSubject":
+      {
+        "given_name": "Erika",
+        "family_name": "Mustermann",
+        "nationalities": ["DE"],
+        "birth_family_name": "Schmidt",
+        "birthdate": "1973-01-01",
+        "place_of_birth": "Regensburg",
+        "address":
+          {
+            "postal_code": "12345",
+            "locality": "Irgendwo",
+            "street_address": "Sonnenstrasse 23",
+            "country_code": "DE",
+          },
+        "is_over_18": true,
+        "is_over_21": true,
+        "is_over_65": false,
+      },
+  }
+
+non_sd_claims:
+  {
+    "iss": true,
+    "iat": true,
+    "type": true,
+    "credentialSubject": { "address": {} },
+  }
+
+holder_disclosed_claims:
+  {
+    "binding":[{"type":true}],
+    "credentialSubject":
+      { "given_name": true, "family_name": true, "birthdate": true },
+  }
+
+holder_binding: false

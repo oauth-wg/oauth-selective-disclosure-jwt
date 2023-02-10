@@ -1,0 +1,31 @@
+{
+  "_sd": [
+    "Q4lzGYk-K7LsgoRnZ_RBq3ztcJqR-cDd3a8Z7_xi7YE"
+  ],
+  "iss": "https://example.com/issuer",
+  "iat": 1516239022,
+  "type": "PersonIdentificationData",
+  "credentialSubject": {
+    "_sd": [
+      "18U8KSRBsHiRi-Lsm7uMnyh-UpntUUsqu5pDJWM5cII",
+      "4xSWOfWMIb1_sk9ISt7tGK2hj0KYcf5v2BcjFPDoVMA",
+      "CFBzMbzV4Ub9cPc2e35LIGzzbbzmOYi9liBxRY0GpE4",
+      "DoQ6qQsS9qGGIImogrI_zMcvlYbWmw6o9CHBxUtgpQU",
+      "Lb7d-8FprtGNnZLOGbVCZGOsXdNayp1rVegj83_oFf8",
+      "YTeCtVywmBqoxh-xynDFIJtq77TuhKlKsm9ok2YbC1o",
+      "aGOyZ7mC3XmZXR9w-30VLizgz-vwyyZlkuMpRqvMIx4",
+      "cMgR5Kc_WSkxkWBN6vulv-PBA3Jd2sJh54UKJmXCqs4",
+      "f-rht-usD5F4mkwdriZW4Zu1l4wX9AOLrW4J8wpllEw"
+    ],
+    "address": {
+      "_sd": [
+        "5evAfvcviIwacDTpGNGZbLbxQHvYN9eh08b0i_vxEo0",
+        "O4ZvmWqMI9UqRGZ-lRpS5Qb7-eT7O11I8Vx86jsn-nA",
+        "n_10L3d78RLKmApaL1OTaLskrygoHlzNdTaBYuJig3M",
+        "wrp5pBnFRPfphe6a-43gHFHk0UFYH9cCKsruEchHieg"
+      ]
+    }
+  },
+  "exp": 1516247022,
+  "_sd_alg": "sha-256"
+}
