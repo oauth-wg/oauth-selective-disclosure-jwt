@@ -1,7 +1,11 @@
 {
   "address": {
-    "country": "JP",
-    "region": "港区"
+    "_sd": [
+      "5O-wKdMUr_dlbEF5eLhuQOxiXUt3LG9RjwEmIm6CS3w",
+      "7CdlgmJjQLeZapI6S7hYCtflHv4cBHlXZOZ7IhUkXEI",
+      "DScvrrYx-7iLsl-5ckgbVOB99HUulAyM3vO_nqRu5PA",
+      "jIWk0Kt7KRBddocm-PKE3gqVaIDLe9TnwqtHHDGTxI0"
+    ]
   },
   "iss": "https://example.com/issuer",
   "iat": 1516239022,

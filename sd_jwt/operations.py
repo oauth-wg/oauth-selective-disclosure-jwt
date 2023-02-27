@@ -198,14 +198,15 @@ class SDJWTIssuer(SDJWTCommon):
         elif type(user_claims) is dict:
             sd_claims = {SD_DIGESTS_KEY: []}
             for key, value in user_claims.items():
+                subtree_from_here = self._create_sd_claims(
+                    value, non_sd_claims.get(key, {})
+                )
                 if key in non_sd_claims:
-                    sd_claims[key] = self._create_sd_claims(
-                        value, non_sd_claims.get(key, {})
-                    )
+                    sd_claims[key] = subtree_from_here
                 else:
                     # Assemble all hash digests in the disclosures list.
                     sd_claims[SD_DIGESTS_KEY].append(
-                        self._create_sd_claim_entry(key, value)
+                        self._create_sd_claim_entry(key, subtree_from_here)
                     )
 
             # Add decoy claims if requested
@@ -321,9 +322,21 @@ class SDJWTHolder(SDJWTCommon):
                             # fake digest
                             continue
                         decoded = self._hash_to_decoded_disclosure[digest]
-                        _, key, _ = decoded
-                        if key in claims_to_disclose:
-                            self.hs_disclosures.append(self._hash_to_disclosure[digest])
+                        _, key, value = decoded
+
+                        try:
+                            if key in claims_to_disclose:
+                                self.hs_disclosures.append(
+                                    self._hash_to_disclosure[digest]
+                                )
+                        except TypeError:
+                            # claims_to_disclose is not a dict
+                            raise TypeError(
+                                f"claims_to_disclose does not contain a dict where a dict was expected (found {claims_to_disclose} instead)\n"
+                                f"Check claims_to_disclose for key: {key}, value: {value}"
+                            ) from None
+
+                        self._select_disclosures(value, claims_to_disclose.get(key, {}))
                 else:
                     self._select_disclosures(value, claims_to_disclose.get(key, {}))
 
@@ -467,11 +480,11 @@ class SDJWTVerifier(SDJWTCommon):
             return [self._unpack_disclosed_claims(c) for c in sd_jwt_claims]
 
         elif type(sd_jwt_claims) is dict:
-            output = {
-                k: self._unpack_disclosed_claims(v)
-                for k, v in sd_jwt_claims.items()
-                if k != SD_DIGESTS_KEY
-            }
+            # First, try to figure out if there are any claims to be
+            # disclosed in this dict. If so, replace them by their
+            # disclosed values.
+
+            pre_output = {k: v for k, v in sd_jwt_claims.items() if k != SD_DIGESTS_KEY}
 
             for digest in sd_jwt_claims.get(SD_DIGESTS_KEY, []):
                 if digest in self._duplicate_hash_check:
@@ -480,14 +493,16 @@ class SDJWTVerifier(SDJWTCommon):
 
                 if digest in self._hash_to_decoded_disclosure:
                     _, key, value = self._hash_to_decoded_disclosure[digest]
-                    if key in output:
+                    if key in pre_output:
                         raise ValueError(
-                            f"Duplicate key found when unpacking disclosed claim: '{key}' in {output}. This is not allowed."
+                            f"Duplicate key found when unpacking disclosed claim: '{key}' in {pre_output}. This is not allowed."
                         )
-                    output[key] = value
+                    unpacked_value = self._unpack_disclosed_claims(value)
+                    pre_output[key] = unpacked_value
 
-            return output
+            # Now, go through the dict and unpack any nested dicts.
+
+            return pre_output
 
         else:
             return sd_jwt_claims
-

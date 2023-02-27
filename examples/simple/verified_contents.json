@@ -11,12 +11,7 @@
       "y": "ZxjiWWbZMQGHVWKVQ4hbSIirsVfuecCE6t4jT9F2HZQ"
     }
   },
-  "address": {
-    "street_address": "123 Main St",
-    "locality": "Anytown",
-    "region": "Anystate",
-    "country": "US"
-  },
+  "given_name": "John",
   "family_name": "Doe",
-  "given_name": "John"
+  "address": {}
 }

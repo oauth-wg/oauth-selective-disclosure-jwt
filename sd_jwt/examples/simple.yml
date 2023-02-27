@@ -18,6 +18,6 @@ user_claims:
 non_sd_claims: {}
 
 holder_disclosed_claims:
-  { "given_name": null, "family_name": null, "address": null }
+  { "given_name": null, "family_name": null, "address": {} }
 
 holder_binding: True

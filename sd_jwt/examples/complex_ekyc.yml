@@ -69,6 +69,6 @@ holder_disclosed_claims:
             "time": null,
             "evidence": [{ "type": null }],
           },
-        "claims": { "given_name": null, "family_name": null, "address": null },
+        "claims": { "given_name": null, "family_name": null, "address": {} },
       },
   }

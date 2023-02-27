@@ -157,33 +157,63 @@ Contents:
 
 SHA-256 Hash: `9C3BrCMDx2zsqn9IhN7siBJXSyZvvJoDYzGsyHhhnZU`
 
-__Disclosure for `place_of_birth`:__
+__Disclosure for `country`:__
 
 ```
-WyI1cF9vamx3S3gwUjZSNjFkS0xOOENRIiwgInBsYWNlX29mX2JpcnRoIiwgeyJjb3Vu
-dHJ5IjogIklUIiwgImxvY2FsaXR5IjogIkZpcmVuemUifV0
+WyI1cF9vamx3S3gwUjZSNjFkS0xOOENRIiwgImNvdW50cnkiLCAiSVQiXQ
 ```
 
 Contents:
 
 ```
-["5p_ojlwKx0R6R61dKLN8CQ", "place_of_birth", {"country": "IT",
-"locality": "Firenze"}]
+["5p_ojlwKx0R6R61dKLN8CQ", "country", "IT"]
 ```
 
-SHA-256 Hash: `QVtNjGpLtd7NpJgfjBTMhKwwef4EE2VuEE-jBKQJueA`
+SHA-256 Hash: `3Ahsua1VEeZz231deCZ-m-ofeNAPcb5Jlu26kZb6DR0`
+
+__Disclosure for `locality`:__
+
+```
+WyJlSHhBZWQ5THNybG5ncGhKRE5aSXZnIiwgImxvY2FsaXR5IiwgIkZpcmVuemUiXQ
+```
+
+Contents:
+
+```
+["eHxAed9LsrlngphJDNZIvg", "locality", "Firenze"]
+```
+
+SHA-256 Hash: `YcIsCpTmfVnU48jzsQEqn2VxY-by5SUGs9LkmvpFe3Q`
+
+__Disclosure for `place_of_birth`:__
+
+```
+WyJ6dDc4MEtGakxaMjVIbmgzaE1ZNGh3IiwgInBsYWNlX29mX2JpcnRoIiwgeyJfc2Qi
+OiBbIjNBaHN1YTFWRWVaejIzMWRlQ1otbS1vZmVOQVBjYjVKbHUyNmtaYjZEUjAiLCAi
+WWNJc0NwVG1mVm5VNDhqenNRRXFuMlZ4WS1ieTVTVUdzOUxrbXZwRmUzUSJdfV0
+```
+
+Contents:
+
+```
+["zt780KFjLZ25Hnh3hMY4hw", "place_of_birth", {"_sd":
+["3Ahsua1VEeZz231deCZ-m-ofeNAPcb5Jlu26kZb6DR0",
+"YcIsCpTmfVnU48jzsQEqn2VxY-by5SUGs9LkmvpFe3Q"]}]
+```
+
+SHA-256 Hash: `CFHPUzNVFvlshaoNuPW5pEtgA6sFMzCL0lPmGnZK3a4`
 
 __Disclosure for `birth_middle_name`:__
 
 ```
-WyJlSHhBZWQ5THNybG5ncGhKRE5aSXZnIiwgImJpcnRoX21pZGRsZV9uYW1lIiwgIkxl
+WyJ1TE44RUNVbTkwMmRZMEs2OE1tS0ZRIiwgImJpcnRoX21pZGRsZV9uYW1lIiwgIkxl
 bGxvIl0
 ```
 
 Contents:
 
 ```
-["eHxAed9LsrlngphJDNZIvg", "birth_middle_name", "Lello"]
+["uLN8ECUm902dY0K68MmKFQ", "birth_middle_name", "Lello"]
 ```
 
-SHA-256 Hash: `UxYjx8bYA86RGAHOjRjntztJ16doIL9tAFREFeQCKz0`
+SHA-256 Hash: `x09pDWOjHKfuWXWacZJSjzNOAEr1JSm_wurAfmI0Zfk`

@@ -17,7 +17,24 @@
   },
   "type": "IdentityCredential",
   "credentialSubject": {
-    "address": {}
+    "_sd": [
+      "8Bcr2ZGImJ9FlsBNmGiLgj7XmHm-g8QOuYVSXOWoM58",
+      "8wawaYT3XNlnl0zUdP8Xri1252yHK6pjgr8JInBzMQg",
+      "NVTo4oQvI0kuqdMYeb6M_sp_ByUY7d4zcLfHB483aVY",
+      "UQ6IHUAtHqW8Xcik7GqVikWtoviseS4BKjvCmmon6xA",
+      "Um7LRM6Ol51wJZLobMeREW6HsMyO3DCCHnWtaikD-40",
+      "jIjo9ElQ4Ng2mMzs0SoWq2molpyU80OE_LENjk2Ha_8",
+      "w9rrWnA1RQ5dUOBaJDKGfAgtiW12obi1joeF_oLTaZ0",
+      "zOJJSAmcB0OqPmFkOZebY70hHI3GpJC1x4beJRtIPbM"
+    ],
+    "address": {
+      "_sd": [
+        "0mcZNz0nIGNYBI4WgKJFx9mjaaB10E59Bc_pefmm544",
+        "4zIfrBGk3TStRDz_wlxi4VgYDza81mBs_zeJ84czsS4",
+        "Hl_wpSSSagpXtSk_rGoE-xkYGVnIHBO-ZzhUWchy8bo",
+        "ySoQUT3JlKF5NdTPMWzmlDamB4TY2EMmGCgrzzJzih0"
+      ]
+    }
   },
   "exp": 1516247022,
   "_sd_alg": "sha-256"

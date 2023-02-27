@@ -1,31 +1,47 @@
 {
   "verified_claims": {
     "verification": {
+      "_sd": [
+        "GgFGEUqd-2Cn8AKT0gfVXwmyYkETDNviRMjo_AKCtsA",
+        "GjnKmyAI6TrUx4YG6N-X9yJZ0uA2Kqewp1ekvJ9G0KY",
+        "q2T35VQTOvpqMADrW3jBXRemD599F2ZCBemJvrUfBSQ"
+      ],
       "evidence": [
         {
+          "_sd": [
+            "QLQFvwtNvTaZPRmb3vMHTWIA9ZaOBm8mUfgqhuY8AY8",
+            "hBdJXyUTaOmovgp8TrX2WYrt3WQ-z0Vqwm0YAP6xxNQ",
+            "o3buY7u2_bjkvzrmfTPPU2R1BL9GNb4KB5pd16pkeug"
+          ],
           "document": {
-            "issuer": {}
-          },
-          "type": "document"
+            "_sd": [
+              "N11Sego4dmGs9nzQRkvROveCN6X0T6Ckv1pBNDCYCoI",
+              "OG7zQ_j3LG5BtnU5NTvESbQwpRpcqcMJBbb78a7XPQ4",
+              "WfvYy1hdvHfWwiNtBZgE2-q0dJoYcZkzipfCMZAlJUg",
+              "xpGtgN0HUNONQulagdZOT6SgWPm_C2fgkQAmip7zD_I"
+            ],
+            "issuer": {
+              "_sd": [
+                "Srv3vEm6xJDexblWDjqtED6xRQTzetKzjTOd0IknNGg",
+                "wNSnaiZ_nb06siPIYoCZDAj3jFSHozSlUcOGFbY_HsA"
+              ]
+            }
+          }
         }
-      ],
-      "trust_framework": "de_aml",
-      "time": "2012-04-23T18:25Z"
+      ]
     },
     "claims": {
+      "_sd": [
+        "ML0NnCXe7KkX6kOm4WlE5bg8TYnZTYzn8zipMAvfPNw",
+        "c_9CKsgpZWikDSc5EmnafFdKGcwro889cTaEEzIhAkI",
+        "knODuXwf2HfAm1i8Fg83yA-vMFGP0nDsu4CBcIoH82U",
+        "m6uZJdeojYsoQG2QW5Qhn8UPVrI4m-QWDLJjwIHBaxM"
+      ],
       "birthdate": "1956-01-28",
       "place_of_birth": {
         "country": "IS",
         "locality": "Þykkvabæjarklaustur"
-      },
-      "family_name": "Müller",
-      "address": {
-        "locality": "Maxstadt",
-        "postal_code": "12344",
-        "country": "DE",
-        "street_address": "Weidenstraße 22"
-      },
-      "given_name": "Max"
+      }
     }
   },
   "iss": "https://example.com/issuer",

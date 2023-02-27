@@ -1,279 +1,340 @@
 __Disclosure for `trust_framework`:__
 
 ```
-WyI2eUNER1RSblBzUHowS3RxSVh3cjhRIiwgInRydXN0X2ZyYW1ld29yayIsICJkZV9h
+WyJPUGRuVklOclJFbVFHS05pMTlyTDdBIiwgInRydXN0X2ZyYW1ld29yayIsICJkZV9h
 bWwiXQ
 ```
 
 Contents:
 
 ```
-["6yCDGTRnPsPz0KtqIXwr8Q", "trust_framework", "de_aml"]
+["OPdnVINrREmQGKNi19rL7A", "trust_framework", "de_aml"]
 ```
 
-SHA-256 Hash: `Zvx3GXqsjB1cR5rmxrlv3xQuTykWDZ7lKlmaxtBVYo0`
+SHA-256 Hash: `GjnKmyAI6TrUx4YG6N-X9yJZ0uA2Kqewp1ekvJ9G0KY`
 
 __Disclosure for `time`:__
 
 ```
-WyI2TlpFYW9FUmVmdzJ2YTl3VWZDSlJBIiwgInRpbWUiLCAiMjAxMi0wNC0yM1QxODoy
+WyJtMWNleUMxZW5RUGZDbXRlWDlTbkVRIiwgInRpbWUiLCAiMjAxMi0wNC0yM1QxODoy
 NVoiXQ
 ```
 
 Contents:
 
 ```
-["6NZEaoERefw2va9wUfCJRA", "time", "2012-04-23T18:25Z"]
+["m1ceyC1enQPfCmteX9SnEQ", "time", "2012-04-23T18:25Z"]
 ```
 
-SHA-256 Hash: `cCzobgUal0u_Dn0PengU8YcZfv_R3xh0MW1K01Okg1o`
+SHA-256 Hash: `GgFGEUqd-2Cn8AKT0gfVXwmyYkETDNviRMjo_AKCtsA`
 
 __Disclosure for `verification_process`:__
 
 ```
-WyJTWVhaS291anJYdXZPZ3hjbnVZS1J3IiwgInZlcmlmaWNhdGlvbl9wcm9jZXNzIiwg
+WyJETnFQak1URFV6ZXFWMDd6RTRydk1nIiwgInZlcmlmaWNhdGlvbl9wcm9jZXNzIiwg
 ImYyNGM2Zi02ZDNmLTRlYzUtOTczZS1iMGQ4NTA2ZjNiYzciXQ
 ```
 
 Contents:
 
 ```
-["SYXZKoujrXuvOgxcnuYKRw", "verification_process",
+["DNqPjMTDUzeqV07zE4rvMg", "verification_process",
 "f24c6f-6d3f-4ec5-973e-b0d8506f3bc7"]
 ```
 
-SHA-256 Hash: `4nQI4-y9wtJvyCs2WttyLmITY02K5WBMKKT1qKeEhHE`
+SHA-256 Hash: `q2T35VQTOvpqMADrW3jBXRemD599F2ZCBemJvrUfBSQ`
 
 __Disclosure for `type`:__
 
 ```
-WyJyNE1TdlZEY1hQMFlFSmNsd1BJTmRnIiwgInR5cGUiLCAiZG9jdW1lbnQiXQ
+WyJpNFpIM05aUDMwODFuNFlzdzl1Z0Z3IiwgInR5cGUiLCAiZG9jdW1lbnQiXQ
 ```
 
 Contents:
 
 ```
-["r4MSvVDcXP0YEJclwPINdg", "type", "document"]
+["i4ZH3NZP3081n4Ysw9ugFw", "type", "document"]
 ```
 
-SHA-256 Hash: `rvJdOi2J6gFeNIvCdgIprrjmi1rKTD_Ru96di5FS7i4`
+SHA-256 Hash: `hBdJXyUTaOmovgp8TrX2WYrt3WQ-z0Vqwm0YAP6xxNQ`
 
 __Disclosure for `method`:__
 
 ```
-WyJVYmI4MGZRYndOOWx0S0xYc0RvbkdnIiwgIm1ldGhvZCIsICJwaXBwIl0
+WyJXVVBsOGtXNmxtU1I0c2ktbC1LNllnIiwgIm1ldGhvZCIsICJwaXBwIl0
 ```
 
 Contents:
 
 ```
-["Ubb80fQbwN9ltKLXsDonGg", "method", "pipp"]
+["WUPl8kW6lmSR4si-l-K6Yg", "method", "pipp"]
 ```
 
-SHA-256 Hash: `18o6apk_mELe_RaWjI1Om877h9_Jky5dpgzuBBNl-dQ`
+SHA-256 Hash: `o3buY7u2_bjkvzrmfTPPU2R1BL9GNb4KB5pd16pkeug`
 
 __Disclosure for `time`:__
 
 ```
-WyJaRW1vWTc0ZlNvUXdxOFlWMkxGMmt3IiwgInRpbWUiLCAiMjAxMi0wNC0yMlQxMToz
+WyJpZVdGMDFLQVA3V2YyY2NieDNiTVFRIiwgInRpbWUiLCAiMjAxMi0wNC0yMlQxMToz
 MFoiXQ
 ```
 
 Contents:
 
 ```
-["ZEmoY74fSoQwq8YV2LF2kw", "time", "2012-04-22T11:30Z"]
+["ieWF01KAP7Wf2ccbx3bMQQ", "time", "2012-04-22T11:30Z"]
 ```
 
-SHA-256 Hash: `Ed7fTsdbgv2EZ5uGsuUAk5YBaMtCfvTFkmZZszVRJpk`
+SHA-256 Hash: `QLQFvwtNvTaZPRmb3vMHTWIA9ZaOBm8mUfgqhuY8AY8`
 
 __Disclosure for `type`:__
 
 ```
-WyJtanBjRGkweHFZbTF4aFJyQ3lCeGZnIiwgInR5cGUiLCAiaWRjYXJkIl0
+WyJiX3hqaldWNkp4N3FUUjJzc2pzV0hnIiwgInR5cGUiLCAiaWRjYXJkIl0
 ```
 
 Contents:
 
 ```
-["mjpcDi0xqYm1xhRrCyBxfg", "type", "idcard"]
+["b_xjjWV6Jx7qTR2ssjsWHg", "type", "idcard"]
 ```
 
-SHA-256 Hash: `F1vtjNyR7vaY8bO6CHdFr9tAje0ltSLe7bIFYlpNW7s`
+SHA-256 Hash: `N11Sego4dmGs9nzQRkvROveCN6X0T6Ckv1pBNDCYCoI`
 
 __Disclosure for `name`:__
 
 ```
-WyJEY0IzOXRwcHBqbGhjVFctLUhKYVJ3IiwgIm5hbWUiLCAiU3RhZHQgQXVnc2J1cmci
+WyJQQ1Y1aF9pX3h1S3V4YTBNX3lKQTJBIiwgIm5hbWUiLCAiU3RhZHQgQXVnc2J1cmci
 XQ
 ```
 
 Contents:
 
 ```
-["DcB39tpppjlhcTW--HJaRw", "name", "Stadt Augsburg"]
+["PCV5h_i_xuKuxa0M_yJA2A", "name", "Stadt Augsburg"]
 ```
 
-SHA-256 Hash: `Li9BJSo7AFcKVTlrLz6ip6t82nqIt2qrXc3wp6rColM`
+SHA-256 Hash: `wNSnaiZ_nb06siPIYoCZDAj3jFSHozSlUcOGFbY_HsA`
 
 __Disclosure for `country`:__
 
 ```
-WyJGbWU0VVdmeDZBV0g1NS1BOHJXRF93IiwgImNvdW50cnkiLCAiREUiXQ
+WyJfc1VoNVpfdzA2Q09jUkNqWlNnS0J3IiwgImNvdW50cnkiLCAiREUiXQ
 ```
 
 Contents:
 
 ```
-["Fme4UWfx6AWH55-A8rWD_w", "country", "DE"]
+["_sUh5Z_w06COcRCjZSgKBw", "country", "DE"]
 ```
 
-SHA-256 Hash: `C1saJVc21n1Y1O2s4ya0UYJabTAoGyg__Q39OfyjqSM`
+SHA-256 Hash: `Srv3vEm6xJDexblWDjqtED6xRQTzetKzjTOd0IknNGg`
 
 __Disclosure for `number`:__
 
 ```
-WyIzZ3NJRUs0NWM4bkZaT09YbWJELVRBIiwgIm51bWJlciIsICI1MzU1NDU1NCJd
+WyJlT2JiZ3NCYkxtS3dCMUlnVXk5aGpnIiwgIm51bWJlciIsICI1MzU1NDU1NCJd
 ```
 
 Contents:
 
 ```
-["3gsIEK45c8nFZOOXmbD-TA", "number", "53554554"]
+["eObbgsBbLmKwB1IgUy9hjg", "number", "53554554"]
 ```
 
-SHA-256 Hash: `BiKOIkmtJfr7IpWsn8_X4hc6FygqaeQPujoVuXAHnWQ`
+SHA-256 Hash: `xpGtgN0HUNONQulagdZOT6SgWPm_C2fgkQAmip7zD_I`
 
 __Disclosure for `date_of_issuance`:__
 
 ```
-WyJrNlZGS0I3V29xeWZXT1M0RVZqU3d3IiwgImRhdGVfb2ZfaXNzdWFuY2UiLCAiMjAx
+WyJ2ejI4SmVwLWJabU41X2dMVktJWm13IiwgImRhdGVfb2ZfaXNzdWFuY2UiLCAiMjAx
 MC0wMy0yMyJd
 ```
 
 Contents:
 
 ```
-["k6VFKB7WoqyfWOS4EVjSww", "date_of_issuance", "2010-03-23"]
+["vz28Jep-bZmN5_gLVKIZmw", "date_of_issuance", "2010-03-23"]
 ```
 
-SHA-256 Hash: `HXyhyliGWAP8uvBf3JhdGSh9Pbg3KNu969581e8MZPo`
+SHA-256 Hash: `OG7zQ_j3LG5BtnU5NTvESbQwpRpcqcMJBbb78a7XPQ4`
 
 __Disclosure for `date_of_expiry`:__
 
 ```
-WyJqTEtGZlFYQk5FdHRFRzR1UGV6cnlnIiwgImRhdGVfb2ZfZXhwaXJ5IiwgIjIwMjAt
+WyJ2OThpbGkxWHBYNGZlOXhXbnFUQy1nIiwgImRhdGVfb2ZfZXhwaXJ5IiwgIjIwMjAt
 MDMtMjIiXQ
 ```
 
 Contents:
 
 ```
-["jLKFfQXBNEttEG4uPezryg", "date_of_expiry", "2020-03-22"]
+["v98ili1XpX4fe9xWnqTC-g", "date_of_expiry", "2020-03-22"]
 ```
 
-SHA-256 Hash: `sVzUIXAzzMw0EfIwZyL23xwee3874u3a7iXcWyZhwp4`
+SHA-256 Hash: `WfvYy1hdvHfWwiNtBZgE2-q0dJoYcZkzipfCMZAlJUg`
 
 __Disclosure for `given_name`:__
 
 ```
-WyJ2WmN5ZDRDTDhFeDFBUGlSb0tVVFB3IiwgImdpdmVuX25hbWUiLCAiTWF4Il0
+WyJyaW5DMTlZNWNENTMtZGlsVXRUZkdnIiwgImdpdmVuX25hbWUiLCAiTWF4Il0
 ```
 
 Contents:
 
 ```
-["vZcyd4CL8Ex1APiRoKUTPw", "given_name", "Max"]
+["rinC19Y5cD53-dilUtTfGg", "given_name", "Max"]
 ```
 
-SHA-256 Hash: `xKbTMlOSjFjkJw8kAMZAyhEfqbaq2b-klaPK8srpgvs`
+SHA-256 Hash: `c_9CKsgpZWikDSc5EmnafFdKGcwro889cTaEEzIhAkI`
 
 __Disclosure for `family_name`:__
 
 ```
-WyJod0lFTklDMWwtQlRuZnNfMnZQV2ZBIiwgImZhbWlseV9uYW1lIiwgIk1cdTAwZmNs
+WyJjMkl3MTd1b0ZpUWhheHprYnBGYlhnIiwgImZhbWlseV9uYW1lIiwgIk1cdTAwZmNs
 bGVyIl0
 ```
 
 Contents:
 
 ```
-["hwIENIC1l-BTnfs_2vPWfA", "family_name", "M\u00fcller"]
+["c2Iw17uoFiQhaxzkbpFbXg", "family_name", "M\u00fcller"]
 ```
 
-SHA-256 Hash: `1qb26tNg6OZuZyVDYwK4--mQxXbZqwcQbhUxGHrXeLM`
+SHA-256 Hash: `knODuXwf2HfAm1i8Fg83yA-vMFGP0nDsu4CBcIoH82U`
 
 __Disclosure for `nationalities`:__
 
 ```
-WyJHRFhMLTBfWWlvYUxNU1l0RzdCdkxnIiwgIm5hdGlvbmFsaXRpZXMiLCBbIkRFIl1d
+WyJwQWQ1cW9YRDZsS0N1a280UlNnNVVBIiwgIm5hdGlvbmFsaXRpZXMiLCBbIkRFIl1d
 ```
 
 Contents:
 
 ```
-["GDXL-0_YioaLMSYtG7BvLg", "nationalities", ["DE"]]
+["pAd5qoXD6lKCuko4RSg5UA", "nationalities", ["DE"]]
 ```
 
-SHA-256 Hash: `FwzTz0THaEOzexgEzLRXu-zsTPND7by3aBF57AwKCZI`
+SHA-256 Hash: `m6uZJdeojYsoQG2QW5Qhn8UPVrI4m-QWDLJjwIHBaxM`
+
+__Disclosure for `locality`:__
+
+```
+WyJPbExqQTd5eXdYUGNOZDJ2aTMyMGJ3IiwgImxvY2FsaXR5IiwgIk1heHN0YWR0Il0
+```
+
+Contents:
+
+```
+["OlLjA7yywXPcNd2vi320bw", "locality", "Maxstadt"]
+```
+
+SHA-256 Hash: `c2tpwSL5yHkhfs2vee_d4rheC_J3DnqT60SRLsRBhBs`
+
+__Disclosure for `postal_code`:__
+
+```
+WyJFeWxqVUt6NzRWcW5KaWlGb01NcmJnIiwgInBvc3RhbF9jb2RlIiwgIjEyMzQ0Il0
+```
+
+Contents:
+
+```
+["EyljUKz74VqnJiiFoMMrbg", "postal_code", "12344"]
+```
+
+SHA-256 Hash: `O6Zacf1Yjm-0FcXShgvyfpEo_Z-xhX0CspvIPRCrfE4`
+
+__Disclosure for `country`:__
+
+```
+WyJwOWtnSk9IRnVRdFBjcVNXelpWZzNnIiwgImNvdW50cnkiLCAiREUiXQ
+```
+
+Contents:
+
+```
+["p9kgJOHFuQtPcqSWzZVg3g", "country", "DE"]
+```
+
+SHA-256 Hash: `Ix0FmaLKIkFkcXpPgOmQGSS9cX2R3cqRAAjFcuUHW5s`
+
+__Disclosure for `street_address`:__
+
+```
+WyJZZFd2cFBYMWZEdWlWODNoOUhzVFBnIiwgInN0cmVldF9hZGRyZXNzIiwgIldlaWRl
+bnN0cmFcdTAwZGZlIDIyIl0
+```
+
+Contents:
+
+```
+["YdWvpPX1fDuiV83h9HsTPg", "street_address", "Weidenstra\u00dfe 22"]
+```
+
+SHA-256 Hash: `JIG95iECQOKVyzIi4DkB6kGUL8NM9Bcn8DTLMedCW7w`
 
 __Disclosure for `address`:__
 
 ```
-WyJVUjZsSC1jbUtIenh5VGlhazRmRVVRIiwgImFkZHJlc3MiLCB7ImxvY2FsaXR5Ijog
-Ik1heHN0YWR0IiwgInBvc3RhbF9jb2RlIjogIjEyMzQ0IiwgImNvdW50cnkiOiAiREUi
-LCAic3RyZWV0X2FkZHJlc3MiOiAiV2VpZGVuc3RyYVx1MDBkZmUgMjIifV0
+WyJiT1BHMXdSa3F3RUFhT25QZnIwVFRnIiwgImFkZHJlc3MiLCB7Il9zZCI6IFsiSXgw
+Rm1hTEtJa0ZrY1hwUGdPbVFHU1M5Y1gyUjNjcVJBQWpGY3VVSFc1cyIsICJKSUc5NWlF
+Q1FPS1Z5eklpNERrQjZrR1VMOE5NOUJjbjhEVExNZWRDVzd3IiwgIk82WmFjZjFZam0t
+MEZjWFNoZ3Z5ZnBFb19aLXhoWDBDc3B2SVBSQ3JmRTQiLCAiYzJ0cHdTTDV5SGtoZnMy
+dmVlX2Q0cmhlQ19KM0RucVQ2MFNSTHNSQmhCcyJdfV0
 ```
 
 Contents:
 
 ```
-["UR6lH-cmKHzxyTiak4fEUQ", "address", {"locality": "Maxstadt",
-"postal_code": "12344", "country": "DE", "street_address":
-"Weidenstra\u00dfe 22"}]
+["bOPG1wRkqwEAaOnPfr0TTg", "address", {"_sd":
+["Ix0FmaLKIkFkcXpPgOmQGSS9cX2R3cqRAAjFcuUHW5s",
+"JIG95iECQOKVyzIi4DkB6kGUL8NM9Bcn8DTLMedCW7w",
+"O6Zacf1Yjm-0FcXShgvyfpEo_Z-xhX0CspvIPRCrfE4",
+"c2tpwSL5yHkhfs2vee_d4rheC_J3DnqT60SRLsRBhBs"]}]
 ```
 
-SHA-256 Hash: `AHX0EgNpd_wak07lK8HX2izDNntsUZojuzyEWd2GJdk`
+SHA-256 Hash: `ML0NnCXe7KkX6kOm4WlE5bg8TYnZTYzn8zipMAvfPNw`
 
 __Disclosure for `birth_middle_name`:__
 
 ```
-WyJuNV9BU3lpa2FSNHBZMzRrVG9YTlBRIiwgImJpcnRoX21pZGRsZV9uYW1lIiwgIlRp
+WyJ0QjBXblpCdW5Jb3VGSGMtS0dPVVB3IiwgImJpcnRoX21pZGRsZV9uYW1lIiwgIlRp
 bW90aGV1cyJd
 ```
 
 Contents:
 
 ```
-["n5_ASyikaR4pY34kToXNPQ", "birth_middle_name", "Timotheus"]
+["tB0WnZBunIouFHc-KGOUPw", "birth_middle_name", "Timotheus"]
 ```
 
-SHA-256 Hash: `gXzq9tVKaddfQvt94riVze6GlZiW35ItiMngC5p_hXE`
+SHA-256 Hash: `I6rcUamEE5OAzAovet-1su0Mgb4uaEKJ5RDgYPYi_DM`
 
 __Disclosure for `salutation`:__
 
 ```
-WyJFSGh2d1dnWGg2VUZKcVRmRjVRaE93IiwgInNhbHV0YXRpb24iLCAiRHIuIl0
+WyJLSGpLTzRFWm1FRkJDZUJ2LXNjYmFnIiwgInNhbHV0YXRpb24iLCAiRHIuIl0
 ```
 
 Contents:
 
 ```
-["EHhvwWgXh6UFJqTfF5QhOw", "salutation", "Dr."]
+["KHjKO4EZmEFBCeBv-scbag", "salutation", "Dr."]
 ```
 
-SHA-256 Hash: `H0ZuxXsa39gwxHQ0cK_HQAIKjW4t11YwM0Gy_1gUluU`
+SHA-256 Hash: `rjURv64Uhsrgpe-U9P1T_q7TK4bjP3G8F_Z3CykmLdc`
 
 __Disclosure for `msisdn`:__
 
 ```
-WyJTMzF2RjdWZHNpUDhRTXB0b21PZW1BIiwgIm1zaXNkbiIsICI0OTEyMzQ1Njc4OSJd
+WyJiOXdlelRBSk5FR21PemdNMDI1Zld3IiwgIm1zaXNkbiIsICI0OTEyMzQ1Njc4OSJd
 ```
 
 Contents:
 
 ```
-["S31vF7VdsiP8QMptomOemA", "msisdn", "49123456789"]
+["b9wezTAJNEGmOzgM025fWw", "msisdn", "49123456789"]
 ```
 
-SHA-256 Hash: `0fGhQf6nEvYH9sTcCtkxCfAVKp9qAYDVmFsxADWJsio`
+SHA-256 Hash: `3Ya8bg_ml8KnSgyVgua8l1HPYkdN7ssS_6vGbRnkTNw`
