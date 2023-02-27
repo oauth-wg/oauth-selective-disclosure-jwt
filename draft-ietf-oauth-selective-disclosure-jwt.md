@@ -197,14 +197,14 @@ Figure: SD-JWT Issuance and Presentation Flow
 This section describes SD-JWTs and Disclosures at a
 conceptual level, abstracting from the data formats described in (#data_formats).
 
-## Creating an SD-JWT
+## SD-JWT and Disclosures
 
 An SD-JWT, at its core, is a digitally signed document containing digests of the selectively discloseable claims (per claim: a random salt, the claim name and the claim value) with the clear-text claims as Disclosures outside the document.
 An SD-JWT may also contain clear-text claims that are always disclosed to the Verifier.
 
 Each digest value ensures the integrity of, and maps to, the respective Disclosure.  Digest values are calculated using a hash function over the Disclosures, each of which contains the claim name, the claim value, and a random salt. The Disclosures are sent to the Holder together with the SD-JWT in the Combined Format for Issuance.
 
-## Creating Holder-Selected Disclosures
+## Disclosing to a Verifier
 
 To disclose to a Verifier a subset of the SD-JWT claim values, a Holder selects a subset of the Disclosures and sends them to the Verifier along with the SD-JWT in the Combined Format for Presentation.
 
@@ -222,7 +222,7 @@ The Holder Binding JWT is included in the Combined Format for Presentation and s
 
 Note that there may be other ways to send the Holder Binding JWT to the Verifier or to prove Holder Binding. In these cases, inclusion of the Holder Binding JWT in the Combined Format for Presentation is not required.
 
-## Verifying Holder-Selected Disclosures
+## Verification
 
 At a high level, the Verifier
 
