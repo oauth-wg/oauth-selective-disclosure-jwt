@@ -210,7 +210,7 @@ To disclose to a Verifier a subset of the SD-JWT claim values, a Holder selects 
 
 ## Optional Holder Binding
 
-Cryptographic Holder Binding is an optional feature, but when required by thee use-case, the SD-JWT must contain information about key material controlled by the Holder.
+Cryptographic Holder Binding is an optional feature, but when required by the use-case, the SD-JWT must contain information about key material controlled by the Holder.
 
 Note: How the public key is included in SD-JWT is out of scope of this document. It can be passed by value or by reference.
 
