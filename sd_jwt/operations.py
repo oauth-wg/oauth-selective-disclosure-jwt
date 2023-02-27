@@ -449,12 +449,10 @@ class SDJWTVerifier(SDJWTCommon):
             raise ValueError("Invalid nonce")
 
     def _extract_sd_claims(self):
-        if DIGEST_ALG_KEY not in self._sd_jwt_payload:
-            raise ValueError("Missing hash algorithm")
-
-        if self._sd_jwt_payload[DIGEST_ALG_KEY] != self.HASH_ALG["name"]:
-            # TODO: Support other hash algorithms
-            raise ValueError("Invalid hash algorithm")
+        if DIGEST_ALG_KEY in self._sd_jwt_payload:
+            if self._sd_jwt_payload[DIGEST_ALG_KEY] != self.HASH_ALG["name"]:
+                # TODO: Support other hash algorithms
+                raise ValueError("Invalid hash algorithm")
 
         self._duplicate_hash_check = []
         return self._unpack_disclosed_claims(self._sd_jwt_payload)
