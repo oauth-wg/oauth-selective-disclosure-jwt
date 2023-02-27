@@ -176,6 +176,8 @@ class SDJWTIssuer(SDJWTCommon):
         return self._b64hash(self._generate_salt().encode("ascii"))
 
     def _create_sd_claims(self, user_claims, non_sd_claims):
+        # This function can be called recursively.
+        #
         # If the user claims are a list, apply this function
         # to each item in the list. The first element in non_sd_claims
         # (which is assumed to be a list as well) is used as the
