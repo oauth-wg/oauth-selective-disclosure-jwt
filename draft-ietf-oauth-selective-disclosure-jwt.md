@@ -1230,6 +1230,7 @@ data. The original JSON data is then used by the application. See
    * Use ES256 instead of RS256 in examples
    * Rename and move the c14n challenges section to an appendix
    * A bit more in security considerations for Choice of a Hash Algorithm (1st & 2nd preimage resistant and not majorly truncated)
+   * Change salt to always be a string (rather than any JSON type)
    * Fix the Document History (which had a premature list for -03)
 
    -02
