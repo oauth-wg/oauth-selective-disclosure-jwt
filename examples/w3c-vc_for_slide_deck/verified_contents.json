@@ -1,5 +1,7 @@
 {
-  "iss": "https://example.com/issuer",
+  "iss": "https://example.com",
+  "iat": 1516239022,
+  "exp": 1516247022,
   "cnf": {
     "jwk": {
       "kty": "RSA",
@@ -11,7 +13,5 @@
   "credentialSubject": {
     "address": {}
   },
-  "iat": 1516239022,
-  "exp": 1516247022,
   "_sd_alg": "sha-256"
 }

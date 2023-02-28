@@ -1,4 +1,7 @@
 {
+  "iss": "https://example.com/issuer",
+  "iat": 1516239022,
+  "exp": 1516247022,
   "verified_claims": {
     "verification": {
       "trust_framework": "eidas",
@@ -18,15 +21,12 @@
       "nationalities": [
         "IT"
       ],
-      "gender": "M",
       "place_of_birth": {
         "country": "IT",
         "locality": "Firenze"
-      }
+      },
+      "gender": "M"
     }
   },
-  "iss": "https://example.com/issuer",
-  "iat": 1516239022,
-  "exp": 1516247022,
   "_sd_alg": "sha-256"
 }

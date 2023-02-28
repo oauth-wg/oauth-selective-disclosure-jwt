@@ -1,8 +1,9 @@
 {
-  "iss": "https://example.com/issuer",
+  "iss": "https://example.com",
+  "iat": 1541493724,
+  "exp": 1516247022,
   "jti": "http://example.com/credentials/3732",
   "nbf": 1541493724,
-  "iat": 1516239022,
   "cnf": {
     "jwk": {
       "kty": "RSA",
@@ -18,24 +19,23 @@
   "type": "IdentityCredential",
   "credentialSubject": {
     "_sd": [
-      "8Bcr2ZGImJ9FlsBNmGiLgj7XmHm-g8QOuYVSXOWoM58",
-      "8wawaYT3XNlnl0zUdP8Xri1252yHK6pjgr8JInBzMQg",
-      "NVTo4oQvI0kuqdMYeb6M_sp_ByUY7d4zcLfHB483aVY",
-      "UQ6IHUAtHqW8Xcik7GqVikWtoviseS4BKjvCmmon6xA",
-      "Um7LRM6Ol51wJZLobMeREW6HsMyO3DCCHnWtaikD-40",
-      "jIjo9ElQ4Ng2mMzs0SoWq2molpyU80OE_LENjk2Ha_8",
-      "w9rrWnA1RQ5dUOBaJDKGfAgtiW12obi1joeF_oLTaZ0",
-      "zOJJSAmcB0OqPmFkOZebY70hHI3GpJC1x4beJRtIPbM"
+      "-2bCFKMXjZVt7hhagNpsAxT6FQ1-qaYAeOQnZEL0Vpc",
+      "Bg5pWbsHBJNewXHqASf9ZADmxgqt_xdz3erhFhD3sXY",
+      "PtQyOatCEozBnYUA26FPMsFC-W3-FDYJBhn8lqqxuOg",
+      "UVcOJc4J7Jcnm_Em8F0r1NagucfbQMBLw7e10G-1Q6U",
+      "Xl1ciCZZ2N3wkh8pZhuRH79ewVG-h7BEw2pZHn9OZgo",
+      "bHt6WLSoJUJ9A-X6X9N_C6l2IuoC0lI-iCQtM5sQhnM",
+      "ll6gr32KNBA1FBUv1oY3JShG_sDPnMVHQBVGg1etYk0",
+      "u88KbAlZOxd_3f3GxGWhRbFzq4KoTImpjbvOUMrEljs"
     ],
     "address": {
       "_sd": [
-        "0mcZNz0nIGNYBI4WgKJFx9mjaaB10E59Bc_pefmm544",
-        "4zIfrBGk3TStRDz_wlxi4VgYDza81mBs_zeJ84czsS4",
-        "Hl_wpSSSagpXtSk_rGoE-xkYGVnIHBO-ZzhUWchy8bo",
-        "ySoQUT3JlKF5NdTPMWzmlDamB4TY2EMmGCgrzzJzih0"
+        "3TKZ1mxdN3BLiCjL_4RegOW6UohdI91g64RgncbDk4g",
+        "CM61OJrDHasrARVcRIBd70WX-wXxr9UGH30iYPFQmDU",
+        "FjMHYY_7s62j2WMf20OF-P1DpYYeKgv6wVuIoMcWDLs",
+        "HaJ4T1EG-Fc_521DmQ8t9Gg4T8gZ-Rpf5mSeL2fERPg"
       ]
     }
   },
-  "exp": 1516247022,
   "_sd_alg": "sha-256"
 }

@@ -11,12 +11,12 @@
       "y": "ZxjiWWbZMQGHVWKVQ4hbSIirsVfuecCE6t4jT9F2HZQ"
     }
   },
+  "family_name": "Doe",
+  "given_name": "John",
   "address": {
     "street_address": "123 Main St",
     "locality": "Anytown",
     "region": "Anystate",
     "country": "US"
-  },
-  "family_name": "Doe",
-  "given_name": "John"
+  }
 }

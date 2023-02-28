@@ -1,11 +1,10 @@
-import datetime
 import random
 import secrets
 from base64 import urlsafe_b64decode, urlsafe_b64encode
 from hashlib import sha256
 from json import dumps, loads
 from time import time
-from typing import Dict, List, Optional, Tuple, Union
+from typing import Dict, List, Optional, Tuple, Union, Callable
 
 from jwcrypto.jwk import JWK
 from jwcrypto.jws import JWS
@@ -100,7 +99,6 @@ class SDJWTCommon:
 
 
 class SDJWTIssuer(SDJWTCommon):
-    DEFAULT_EXP_MINS = 15
     DECOY_MIN_ELEMENTS = 2
     DECOY_MAX_ELEMENTS = 5
 
@@ -116,22 +114,16 @@ class SDJWTIssuer(SDJWTCommon):
     def __init__(
         self,
         user_claims: Dict,
-        issuer: str,
         issuer_key,
         holder_key=None,
         claims_structure: Optional[Dict] = None,
-        iat: Optional[int] = None,
-        exp: Optional[int] = None,
         sign_alg=None,
         add_decoy_claims: bool = False,
     ):
         self._user_claims = user_claims
-        self._issuer = issuer
         self._issuer_key = issuer_key
         self._holder_key = holder_key
         self._claims_structure = claims_structure or {}
-        self._iat = iat or int(datetime.datetime.utcnow().timestamp())
-        self._exp = exp or self._iat + (self.DEFAULT_EXP_MINS * 60)
         self._sign_alg = sign_alg or DEFAULT_SIGNING_ALG
         self._add_decoy_claims = add_decoy_claims
 
@@ -145,11 +137,9 @@ class SDJWTIssuer(SDJWTCommon):
         self.sd_jwt_payload = self._create_sd_claims(
             self._user_claims, self._claims_structure
         )
+
         self.sd_jwt_payload.update(
             {
-                "iss": self._issuer,
-                "iat": self._iat,
-                "exp": self._exp,
                 DIGEST_ALG_KEY: self.HASH_ALG["name"],
             }
         )
@@ -364,14 +354,13 @@ class SDJWTVerifier(SDJWTCommon):
     def __init__(
         self,
         combined_presentation: str,
-        issuer_public_key: dict,
-        expected_issuer: str,
+        cb_get_issuer_key: Callable[[str], str],
         expected_aud: Union[str, None] = None,
         expected_nonce: Union[str, None] = None,
     ):
         self._parse_combined_presentation(combined_presentation)
         self._create_hash_mappings(self._hs_disclosures)
-        self._verify_sd_jwt(issuer_public_key, expected_issuer)
+        self._verify_sd_jwt(cb_get_issuer_key)
 
         # expected aud and nonce either need to be both set or both None
         if expected_aud or expected_nonce:
@@ -396,20 +385,23 @@ class SDJWTVerifier(SDJWTCommon):
             self._unverified_input_holder_binding_jwt,
         ) = self._split(combined)
 
+    def _extract_issuer_unverified_from_sd_jwt(self):
+        # Extracts only the issuer from the raw SD-JWT without verifying the signature
+        _, jwt_body, _ = self._unverified_input_sd_jwt.split(".")
+        return loads(self._base64url_decode(jwt_body))["iss"]
+
     def _verify_sd_jwt(
         self,
-        issuer_public_key: dict,
-        expected_issuer: str,
+        cb_get_issuer_key,
         sign_alg: str = None,
     ):
         parsed_input_sd_jwt = JWS()
         parsed_input_sd_jwt.deserialize(self._unverified_input_sd_jwt)
+        unverified_payload_issuer = self._extract_issuer_unverified_from_sd_jwt()
+        issuer_public_key = cb_get_issuer_key(unverified_payload_issuer)
         parsed_input_sd_jwt.verify(issuer_public_key, alg=sign_alg)
 
-        self._sd_jwt_payload = loads(parsed_input_sd_jwt.payload)
-        if self._sd_jwt_payload["iss"] != expected_issuer:
-            raise ValueError("Invalid issuer")
-
+        self._sd_jwt_payload = loads(parsed_input_sd_jwt.payload.decode("utf-8"))
         # TODO: Check exp/nbf/iat
 
         self._holder_public_key_payload = self._sd_jwt_payload.get("cnf", None)
@@ -486,4 +478,3 @@ class SDJWTVerifier(SDJWTCommon):
 
         else:
             return sd_jwt_claims
-
