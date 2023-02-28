@@ -206,7 +206,7 @@ Each digest value ensures the integrity of, and maps to, the respective Disclosu
 
 ## Disclosing to a Verifier
 
-To disclose to a Verifier a subset of the SD-JWT claim values, a Holder selects a subset of the Disclosures and sends them to the Verifier along with the SD-JWT in the Combined Format for Presentation.
+To disclose to a Verifier a subset of the SD-JWT claim values, a Holder sends only the Disclosures of those selectively released claims to the Verifier along with the SD-JWT in the Combined Format for Presentation.
 
 ## Optional Holder Binding
 
