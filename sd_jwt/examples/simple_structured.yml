@@ -3,7 +3,7 @@ user_claims:
     "sub": "6c5c0a49-b589-431d-bae7-219122a9ec2c",
     "given_name": "太郎",
     "family_name": "山田",
-    "email": "\"unusual email address\"@nihon.com",
+    "email": "\"unusual email address\"@example.jp",
     "phone_number": "+81-80-1234-5678",
     "address":
       {

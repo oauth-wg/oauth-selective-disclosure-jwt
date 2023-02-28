@@ -1,14 +1,14 @@
 {
   "address": {
-    "region": "港区",
-    "country": "JP"
+    "country": "JP",
+    "region": "港区"
   },
   "iss": "https://example.com/issuer",
   "iat": 1516239022,
   "exp": 1516247022,
   "_sd_alg": "sha-256",
-  "family_name": "山田",
   "given_name": "太郎",
-  "birthdate": "1940-01-01",
-  "email": "\"unusual email address\"@nihon.com"
+  "family_name": "山田",
+  "email": "\"unusual email address\"@example.jp",
+  "birthdate": "1940-01-01"
 }

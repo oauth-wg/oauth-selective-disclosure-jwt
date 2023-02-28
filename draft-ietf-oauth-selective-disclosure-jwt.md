@@ -252,7 +252,7 @@ For each claim that is to be selectively disclosed, the Issuer creates a Disclos
 The Issuer MUST create a Disclosure for each selectively disclosable claim as follows:
 
  * Create an array of three elements in this order:
-   1. A salt value. See (#salt-entropy) and (#salt_minlength) for security considerations. The salt value MUST be unique for each claim that is to be selectively disclosed. It is RECOMMENDED to base64url-encode the salt value, producing a string. Any other type that is allowed in JSON MAY be used, e.g., a number. The Issuer MUST NOT disclose the salt value to any party other than the Holder.
+   1. A salt value MUST be a string. See (#salt-entropy) and (#salt_minlength) for security considerations. It is RECOMMENDED to base64url-encode minimum 128 bits of cryptographically secure pseudorandom data, producing a string. The salt value MUST be unique for each claim that is to be selectively disclosed. The Issuer MUST NOT disclose the salt value to any party other than the Holder.
    2. The claim name, or key, as it would be used in a regular JWT body. This MUST be a string.
    3. The claim's value, as it would be used in a regular JWT body. The value MAY be of any type that is allowed in JSON, including numbers, strings, booleans, arrays, and objects.
  * JSON-encode the array such that an UTF-8 string is produced.
@@ -378,12 +378,12 @@ In this case, the Issuer would issue the following Disclosures:
 
 The claim `_sd_alg` indicates the hash algorithm
 used by the Issuer to generate the digests over the salts and the
-claim values.
+claim values. If the  `_sd_alg` claim is not present, a default value of `sha-256` is used.
 
 The hash algorithm identifier MUST be a hash algorithm value from the "Hash Name String" column in the IANA "Named Information Hash Algorithm" registry [@IANA.Hash.Algorithms]
 or a value defined in another specification and/or profile of this specification.
 
-To promote interoperability, implementations MUST support the SHA-256 hash algorithm.
+To promote interoperability, implementations MUST support the `sha-256` hash algorithm.
 
 See (#security_considerations) for requirements regarding entropy of the salt, minimum length of the salt, and choice of a hash algorithm.
 
@@ -1173,10 +1173,12 @@ data. The original JSON data is then used by the application. See
    * Discussion on holder binding and privacy of stored credentials
    * Add some context about SD-JWT being general-purpose despite being a product of the OAuth WG
    * More explicitly say that SD-JWTs have to be signed asymmetrically (no MAC and no `none`)
+   * Make sha-256 the default hash algorithm, if the hash alg claim is omitted
    * Use ES256 instead of RS256 in examples
    * Rename and move the c14n challenges section to an appendix
    * A bit more in security considerations for Choice of a Hash Algorithm (1st & 2nd preimage resistant and not majorly truncated)
    * Remove the notational figures from the Concepts section
+   * Change salt to always be a string (rather than any JSON type)
    * Fix the Document History (which had a premature list for -03)
 
    -02
