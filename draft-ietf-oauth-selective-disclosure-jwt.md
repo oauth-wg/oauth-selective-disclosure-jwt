@@ -199,7 +199,7 @@ conceptual level, abstracting from the data formats described in (#data_formats)
 
 ## SD-JWT and Disclosures
 
-An SD-JWT, at its core, is a digitally signed document containing digests of the selectively discloseable claims (per claim: a random salt, the claim name and the claim value) with the clear-text claims as Disclosures outside the document.
+An SD-JWT, at its core, is a digitally signed JSON document containing digests over the selectively disclosable claims with the Disclosures outside the document.
 An SD-JWT may also contain clear-text claims that are always disclosed to the Verifier.
 
 Each digest value ensures the integrity of, and maps to, the respective Disclosure.  Digest values are calculated using a hash function over the Disclosures, each of which contains the claim name, the claim value, and a random salt. The Disclosures are sent to the Holder together with the SD-JWT in the Combined Format for Issuance.
