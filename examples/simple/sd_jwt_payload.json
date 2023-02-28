@@ -1,13 +1,18 @@
 {
   "_sd": [
-    "3gm8ZXLm2mdrENd24X68zMNoTYyeobMj5xgb_vEceOA",
-    "4kWV6xN3DGESuq9pJuvqlj5JziSnwPMahKcOCDfn5Xs",
-    "9TX1T0XN7OP6AaFnPQ8-nVYrSelLJSMJS2Jeeo9xt18",
-    "AqcaqYxnK6OS05_AfPlAPVC8cqCkJlTbefg1hP9ggTM",
-    "_jZZx6doC_KnnFfaGdOw1PdbiEACYegG0ajGrEa0S60",
-    "p9G6Dp2GTC03HjA_p_BTrcdnMZjWVtserdSPNepJU5s",
-    "pWqb_tI8lD9zciVm591BdkAv-Ucz-cksP9sU6ABmwLY"
+    "K0WdiJqWohdq5Jdr8z93q9xO9fDmUATmZiE9gxPRZi0",
+    "OXaWV2cwK4AnH9stNulZuO3JO3-lMb1zVsSp_dvNkG0",
+    "VMfKfO1HMAvgzpbUyyjM3cuqiIRFX0Li1kjgQ0_PcKE",
+    "ZSxjUW-_yGpguvUkK1yfiIiB9AsxhfMDM9TryA8O8l8",
+    "ndyaj3NQnsGmUSytGY48JNN0dMkjAeRgEJsbMt_F5w0",
+    "q-b2vpqWfjCe3zvukrgLZBtnin2ZJYqWCh33SvWdgyA"
   ],
+  "address": {
+    "street_address": "123 Main St",
+    "locality": "Anytown",
+    "region": "Anystate",
+    "country": "US"
+  },
   "iss": "https://example.com/issuer",
   "iat": 1516239022,
   "exp": 1516247022,

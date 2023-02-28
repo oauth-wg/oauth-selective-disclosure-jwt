@@ -15,7 +15,16 @@ user_claims:
     "birthdate": "1940-01-01",
   }
 
-non_sd_claims: {}
+non_sd_claims:
+  {
+    "address":
+      {
+        "street_address": true,
+        "locality": true,
+        "region": true,
+        "country": true,
+      },
+  }
 
 holder_disclosed_claims:
   { "given_name": null, "family_name": null, "address": {} }

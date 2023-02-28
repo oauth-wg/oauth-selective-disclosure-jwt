@@ -1,165 +1,86 @@
 __Disclosure for `sub`:__
 
 ```
-WyJnbjRFSUszenU1T081ZkJ3VE90RS1RIiwgInN1YiIsICJqb2huX2RvZV80MiJd
+WyJ4UmFjYXZwY0lWOVZNc0NJR3NOcl9nIiwgInN1YiIsICJqb2huX2RvZV80MiJd
 ```
 
 Contents:
 
 ```
-["gn4EIK3zu5OO5fBwTOtE-Q", "sub", "john_doe_42"]
+["xRacavpcIV9VMsCIGsNr_g", "sub", "john_doe_42"]
 ```
 
-SHA-256 Hash: `AqcaqYxnK6OS05_AfPlAPVC8cqCkJlTbefg1hP9ggTM`
+SHA-256 Hash: `ndyaj3NQnsGmUSytGY48JNN0dMkjAeRgEJsbMt_F5w0`
 
 __Disclosure for `given_name`:__
 
 ```
-WyJfZWQwWEZBdENNNGk0RERCUnVYb3J3IiwgImdpdmVuX25hbWUiLCAiSm9obiJd
+WyJVOVIteHRBNWJBNDBxSUpPRFJ0MHh3IiwgImdpdmVuX25hbWUiLCAiSm9obiJd
 ```
 
 Contents:
 
 ```
-["_ed0XFAtCM4i4DDBRuXorw", "given_name", "John"]
+["U9R-xtA5bA40qIJODRt0xw", "given_name", "John"]
 ```
 
-SHA-256 Hash: `3gm8ZXLm2mdrENd24X68zMNoTYyeobMj5xgb_vEceOA`
+SHA-256 Hash: `ZSxjUW-_yGpguvUkK1yfiIiB9AsxhfMDM9TryA8O8l8`
 
 __Disclosure for `family_name`:__
 
 ```
-WyJaZExCZklMSUwtS1htQ0JkTjdXV1h3IiwgImZhbWlseV9uYW1lIiwgIkRvZSJd
+WyJJaV9nOFJEYTRNT1QwaUlBbzh6SjZnIiwgImZhbWlseV9uYW1lIiwgIkRvZSJd
 ```
 
 Contents:
 
 ```
-["ZdLBfILIL-KXmCBdN7WWXw", "family_name", "Doe"]
+["Ii_g8RDa4MOT0iIAo8zJ6g", "family_name", "Doe"]
 ```
 
-SHA-256 Hash: `_jZZx6doC_KnnFfaGdOw1PdbiEACYegG0ajGrEa0S60`
+SHA-256 Hash: `K0WdiJqWohdq5Jdr8z93q9xO9fDmUATmZiE9gxPRZi0`
 
 __Disclosure for `email`:__
 
 ```
-WyJyUkZ2ZHlyeWZIU01KYUEyWkpmOXNnIiwgImVtYWlsIiwgImpvaG5kb2VAZXhhbXBs
+WyJJNU5OVnV2NVdJZFdWOG9fRU5aeDdnIiwgImVtYWlsIiwgImpvaG5kb2VAZXhhbXBs
 ZS5jb20iXQ
 ```
 
 Contents:
 
 ```
-["rRFvdyryfHSMJaA2ZJf9sg", "email", "johndoe@example.com"]
+["I5NNVuv5WIdWV8o_ENZx7g", "email", "johndoe@example.com"]
 ```
 
-SHA-256 Hash: `9TX1T0XN7OP6AaFnPQ8-nVYrSelLJSMJS2Jeeo9xt18`
+SHA-256 Hash: `VMfKfO1HMAvgzpbUyyjM3cuqiIRFX0Li1kjgQ0_PcKE`
 
 __Disclosure for `phone_number`:__
 
 ```
-WyJURmR2aE1mTXNIeVVJMEdYQ0lxdml3IiwgInBob25lX251bWJlciIsICIrMS0yMDIt
+WyIxblo0VlNJUWRHWDdUUk4wTmprSk9RIiwgInBob25lX251bWJlciIsICIrMS0yMDIt
 NTU1LTAxMDEiXQ
 ```
 
 Contents:
 
 ```
-["TFdvhMfMsHyUI0GXCIqviw", "phone_number", "+1-202-555-0101"]
+["1nZ4VSIQdGX7TRN0NjkJOQ", "phone_number", "+1-202-555-0101"]
 ```
 
-SHA-256 Hash: `pWqb_tI8lD9zciVm591BdkAv-Ucz-cksP9sU6ABmwLY`
-
-__Disclosure for `street_address`:__
-
-```
-WyJJdGJ6WG9pMnEwWmQ2QU1HcWF3SnpBIiwgInN0cmVldF9hZGRyZXNzIiwgIjEyMyBN
-YWluIFN0Il0
-```
-
-Contents:
-
-```
-["ItbzXoi2q0Zd6AMGqawJzA", "street_address", "123 Main St"]
-```
-
-SHA-256 Hash: `mV8uRx7LkaPCBqAhTdDBcgm23IH5AsIwlrNxccWY9WA`
-
-__Disclosure for `locality`:__
-
-```
-WyJuZTlFREg4akV0OVdHZGh5Q08wa1p3IiwgImxvY2FsaXR5IiwgIkFueXRvd24iXQ
-```
-
-Contents:
-
-```
-["ne9EDH8jEt9WGdhyCO0kZw", "locality", "Anytown"]
-```
-
-SHA-256 Hash: `tpCqel3jYd25CvkVXHilgOYFsI30zkVBSmp42NAzaQI`
-
-__Disclosure for `region`:__
-
-```
-WyJPZHBNMmJuWlJUVGNlSTZ2NTl6bW9nIiwgInJlZ2lvbiIsICJBbnlzdGF0ZSJd
-```
-
-Contents:
-
-```
-["OdpM2bnZRTTceI6v59zmog", "region", "Anystate"]
-```
-
-SHA-256 Hash: `vnIUVR3q4iWE4ZN4zxMNk4ISjB3UBR3GYZpMKsoiKTM`
-
-__Disclosure for `country`:__
-
-```
-WyJhQjdsVmNTSzZpZFVES0xKMlBRX2d3IiwgImNvdW50cnkiLCAiVVMiXQ
-```
-
-Contents:
-
-```
-["aB7lVcSK6idUDKLJ2PQ_gw", "country", "US"]
-```
-
-SHA-256 Hash: `upO7PvaOT96lJ-eyboT_kKPtqcPEeTLMHOPK636uR0U`
-
-__Disclosure for `address`:__
-
-```
-WyJGazhhbG5yNjJDNVRxcFoxVVM2V1pnIiwgImFkZHJlc3MiLCB7Il9zZCI6IFsibVY4
-dVJ4N0xrYVBDQnFBaFRkREJjZ20yM0lINUFzSXdsck54Y2NXWTlXQSIsICJ0cENxZWwz
-allkMjVDdmtWWEhpbGdPWUZzSTMwemtWQlNtcDQyTkF6YVFJIiwgInVwTzdQdmFPVDk2
-bEotZXlib1Rfa0tQdHFjUEVlVExNSE9QSzYzNnVSMFUiLCAidm5JVVZSM3E0aVdFNFpO
-NHp4TU5rNElTakIzVUJSM0dZWnBNS3NvaUtUTSJdfV0
-```
-
-Contents:
-
-```
-["Fk8alnr62C5TqpZ1US6WZg", "address", {"_sd":
-["mV8uRx7LkaPCBqAhTdDBcgm23IH5AsIwlrNxccWY9WA",
-"tpCqel3jYd25CvkVXHilgOYFsI30zkVBSmp42NAzaQI",
-"upO7PvaOT96lJ-eyboT_kKPtqcPEeTLMHOPK636uR0U",
-"vnIUVR3q4iWE4ZN4zxMNk4ISjB3UBR3GYZpMKsoiKTM"]}]
-```
-
-SHA-256 Hash: `p9G6Dp2GTC03HjA_p_BTrcdnMZjWVtserdSPNepJU5s`
+SHA-256 Hash: `q-b2vpqWfjCe3zvukrgLZBtnin2ZJYqWCh33SvWdgyA`
 
 __Disclosure for `birthdate`:__
 
 ```
-WyI1c0IxanBtaTN0eHlEMVBmNFl2V2JnIiwgImJpcnRoZGF0ZSIsICIxOTQwLTAxLTAx
+WyI1N0J3Wk9abURBUXFHTFdhdGhRbklnIiwgImJpcnRoZGF0ZSIsICIxOTQwLTAxLTAx
 Il0
 ```
 
 Contents:
 
 ```
-["5sB1jpmi3txyD1Pf4YvWbg", "birthdate", "1940-01-01"]
+["57BwZOZmDAQqGLWathQnIg", "birthdate", "1940-01-01"]
 ```
 
-SHA-256 Hash: `4kWV6xN3DGESuq9pJuvqlj5JziSnwPMahKcOCDfn5Xs`
+SHA-256 Hash: `OXaWV2cwK4AnH9stNulZuO3JO3-lMb1zVsSp_dvNkG0`

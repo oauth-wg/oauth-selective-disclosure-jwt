@@ -1,4 +1,10 @@
 {
+  "address": {
+    "street_address": "123 Main St",
+    "locality": "Anytown",
+    "region": "Anystate",
+    "country": "US"
+  },
   "iss": "https://example.com/issuer",
   "iat": 1516239022,
   "exp": 1516247022,
@@ -11,7 +17,6 @@
       "y": "ZxjiWWbZMQGHVWKVQ4hbSIirsVfuecCE6t4jT9F2HZQ"
     }
   },
-  "given_name": "John",
   "family_name": "Doe",
-  "address": {}
+  "given_name": "John"
 }
