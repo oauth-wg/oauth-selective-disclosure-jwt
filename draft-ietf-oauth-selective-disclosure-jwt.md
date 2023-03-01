@@ -385,11 +385,13 @@ Issuers MUST NOT issue SD-JWTs where
 
 #### Nested Data in SD-JWTs {#nested_data}
 
-Just like any JWT, an SD-JWT MAY contain key value pairs where the value is an object. For any object in an SD-JWT, the Issuer MAY decide to either make the entire object selectively disclosable or to make its properties selectively disclosable individually. In the latter case, the Issuer MAY even choose to make some of the object's properties selectively disclosable and others not.
+Like any JSON, an object in an SD-JWT payload MAY contain key-value pairs where the value is another object. In SD-JWT, the Issuer decides for each key individually, on each level of the JSON, whether the key should be selectively disclosable or not.
 
-In any case, the `_sd` claim MUST be included in the SD-JWT at the same level as the original claim and therefore MAY appear multiple times in an SD-JWT.
+For any selectively disclosable claim, the `_sd` claim containing the hash digest MUST be included in the SD-JWT at the same level as the original claim. It follows that the `_sd` claim MAY appear multiple times in an SD-JWT and MAY even appear wihin Disclosures.
 
-The following examples show some of the options an Issuer has when producing an SD-JWT with the following End-User data.
+The following examples illustrate some of the options an Issuer has. It is up to the Issuer to decide which option to use, depending on, for example, the expected use cases for the SD-JWT, requirements for privacy, size considerations, or ecosystem requirements.
+
+The following claim set is used as an example throughout this section:
 
 <{{examples/address_only_flat/user_claims.json}}
 
@@ -418,15 +420,21 @@ In this case, the Issuer would use the following data in the Disclosures for the
 
 {{examples/address_only_structured/disclosures.md}}
 
-##### Option 3: Structured SD-JWT, only some properties selectively disclosable
-
 The Issuer may also make one sub-claim of `address` non-selectively disclosable and hide only the other sub-claims:
 
 <{{examples/address_only_structured_one_open/sd_jwt_payload.json}}
 
-In this case, the Issuer would issue the following Disclosures:
+There would be no Disclosure for `country` in this case.
 
-{{examples/address_only_structured_one_open/disclosures.md}}
+#### Option 3: Recursive SD-JWT
+
+The Issuer may also decide to make the `address` claim contents selectively disclosable recursively, i.e., the `address` claim is made selectively disclosable as well as its sub-claims:
+
+<{{examples/address_only_recursive/sd_jwt_payload.json}}
+
+The Issuer creates Disclosures first for the sub-claims and then includes their digests in the Disclosure for the `address` claim:
+
+{{examples/address_only_recursive/disclosures.md}}
 
 ### Hash Function Claim {#hash_function_claim}
 

@@ -202,10 +202,10 @@ for hash in sdjwt_at_holder._hash_to_decoded_disclosure:
     encoded_json = sdjwt_at_holder._base64url_decode(b64).decode("utf-8")
 
     iid_payload += f"__Disclosure for `{claim_name}`:__\n"
+    iid_payload += f"SHA-256 Hash: `{hash}`\n\n"
     iid_payload += f"\n```\n{textwrap_text(b64)}\n```\n\n"
     iid_payload += f"Contents:\n"
     iid_payload += f"\n```\n{textwrap_text(encoded_json)}\n```\n\n"
-    iid_payload += f"SHA-256 Hash: `{hash}`\n\n"
 
 iid_payload = iid_payload.strip()
 
