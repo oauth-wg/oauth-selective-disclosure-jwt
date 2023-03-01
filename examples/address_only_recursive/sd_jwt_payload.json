@@ -1,0 +1,10 @@
+{
+  "_sd": [
+    "Lot9gM9VOOiyFS4FOR1ykwz-V-fB_xwF63jWemIH4d0"
+  ],
+  "sub": "6c5c0a49-b589-431d-bae7-219122a9ec2c",
+  "iss": "https://example.com/issuer",
+  "iat": 1516239022,
+  "exp": 1516247022,
+  "_sd_alg": "sha-256"
+}

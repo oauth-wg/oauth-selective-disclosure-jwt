@@ -573,8 +573,8 @@ a Combined Format for Issuance:
  2. Hash all of the Disclosures separately.
  3. Find the places in the SD-JWT where the digests of the Disclosures are
     included and decode the respective plaintext values from the Disclosures at the
-    appropriate places. The processing MUST take into account that digests might not be 
-    included directly in the SD-JWT, but in other Disclosures. If any of the 
+    appropriate places. The processing MUST take into account that digests might not be
+    included directly in the SD-JWT, but in other Disclosures. If any of the
     digests cannot be found, the Holder MUST reject the SD-JWT.
 
 It is up to the Holder how to maintain the mapping between the Disclosures and the plaintext claim values to be able to display them to the End-User when needed.
@@ -610,7 +610,7 @@ To this end, Verifiers MUST follow the following steps (or equivalent):
  4. Create a copy of the SD-JWT payload, if required for further processing.
  5. Process the Disclosures. For each Disclosure provided:
     1. Calculate the digest over the base64url string as described in (#hashing_disclosures).
-    2. Find all `_sd` keys in the SD-JWT payload. For each such key: 
+    2. Find all `_sd` keys in the SD-JWT payload. For each such key:
        1. If the key does not refer to an array, the Verifier MUST reject the Presentation.
        2. Otherwise, process each digest in the `_sd` array as follows:
           1. Find the Disclosure referenced by the digests. If no such Disclosure can be found, the Verifier MUST reject the presentation.
