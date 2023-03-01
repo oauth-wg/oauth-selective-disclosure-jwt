@@ -1,4 +1,6 @@
 __Disclosure for `sub`:__
+SHA-256 Hash: `pzkHIM9sv7oZH6YKDsRqNgFGLpEKIj3c5G6UKaTsAjQ`
+
 
 ```
 WyJyU0x1em5oaUxQQkRSWkUxQ1o4OEtRIiwgInN1YiIsICJqb2huX2RvZV80MiJd
@@ -10,9 +12,9 @@ Contents:
 ["rSLuznhiLPBDRZE1CZ88KQ", "sub", "john_doe_42"]
 ```
 
-SHA-256 Hash: `pzkHIM9sv7oZH6YKDsRqNgFGLpEKIj3c5G6UKaTsAjQ`
-
 __Disclosure for `given_name`:__
+SHA-256 Hash: `S-JPBSkvqliFv1__thuXt3IzX5B_ZXm4W2qs4BoNFrA`
+
 
 ```
 WyJhYTFPYmdlUkJnODJudnpMYnRQTklRIiwgImdpdmVuX25hbWUiLCAiSm9obiJd
@@ -24,9 +26,9 @@ Contents:
 ["aa1ObgeRBg82nvzLbtPNIQ", "given_name", "John"]
 ```
 
-SHA-256 Hash: `S-JPBSkvqliFv1__thuXt3IzX5B_ZXm4W2qs4BoNFrA`
-
 __Disclosure for `family_name`:__
+SHA-256 Hash: `o-LBCDrFF6tC9ew1vAlUmw6Y30CHZF5jOUFhpx5mogI`
+
 
 ```
 WyI2VWhsZU5HUmJtc0xDOFRndTh2OFdnIiwgImZhbWlseV9uYW1lIiwgIkRvZSJd
@@ -38,9 +40,9 @@ Contents:
 ["6UhleNGRbmsLC8Tgu8v8Wg", "family_name", "Doe"]
 ```
 
-SHA-256 Hash: `o-LBCDrFF6tC9ew1vAlUmw6Y30CHZF5jOUFhpx5mogI`
-
 __Disclosure for `email`:__
+SHA-256 Hash: `bviw7pWAkbzI078ZNVa_eMZvk0tdPa5w2o9R3Zycjo4`
+
 
 ```
 WyJ2S0t6alFSOWtsbFh2OWVkNUJ1ZHZRIiwgImVtYWlsIiwgImpvaG5kb2VAZXhhbXBs
@@ -53,9 +55,9 @@ Contents:
 ["vKKzjQR9kllXv9ed5BudvQ", "email", "johndoe@example.com"]
 ```
 
-SHA-256 Hash: `bviw7pWAkbzI078ZNVa_eMZvk0tdPa5w2o9R3Zycjo4`
-
 __Disclosure for `phone_number`:__
+SHA-256 Hash: `9gZhHAhV7LZnOFZq_q7Fh8rzdqrrNM-hRWsVOlW3nuw`
+
 
 ```
 WyJVZEVmXzY0SEN0T1BpZDRFZmhPQWNRIiwgInBob25lX251bWJlciIsICIrMS0yMDIt
@@ -68,9 +70,9 @@ Contents:
 ["UdEf_64HCtOPid4EfhOAcQ", "phone_number", "+1-202-555-0101"]
 ```
 
-SHA-256 Hash: `9gZhHAhV7LZnOFZq_q7Fh8rzdqrrNM-hRWsVOlW3nuw`
-
 __Disclosure for `address`:__
+SHA-256 Hash: `5nXy0Z3QiEba1V1lJzeKhAOGQXFlKLIWCLlhf_O-cmo`
+
 
 ```
 WyJOYTNWb0ZGblZ3MjhqT0FyazdJTlZnIiwgImFkZHJlc3MiLCB7InN0cmVldF9hZGRy
@@ -85,9 +87,9 @@ Contents:
 St", "locality": "Anytown", "region": "Anystate", "country": "US"}]
 ```
 
-SHA-256 Hash: `5nXy0Z3QiEba1V1lJzeKhAOGQXFlKLIWCLlhf_O-cmo`
-
 __Disclosure for `birthdate`:__
+SHA-256 Hash: `rnAzCT6DTy4TsX9QCDv2wwAE4Ze20uRigtVNQkA52X0`
+
 
 ```
 WyJkQW9mNHNlZTFGdDBXR2dHanVjZ2pRIiwgImJpcnRoZGF0ZSIsICIxOTQwLTAxLTAx
@@ -99,5 +101,3 @@ Contents:
 ```
 ["dAof4see1Ft0WGgGjucgjQ", "birthdate", "1940-01-01"]
 ```
-
-SHA-256 Hash: `rnAzCT6DTy4TsX9QCDv2wwAE4Ze20uRigtVNQkA52X0`

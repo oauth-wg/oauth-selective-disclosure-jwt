@@ -1,4 +1,6 @@
 __Disclosure for `issuer`:__
+SHA-256 Hash: `Bee6NswQbVGQRLwt2M_iQzyZRZS-1S-ZCvEb6qrO4w4`
+
 
 ```
 WyJHdjlJTl9CR1BudmpnRzViMHZtZDhRIiwgImlzc3VlciIsIHsibmFtZSI6ICJjX2Q2
@@ -12,9 +14,9 @@ Contents:
 "IT"}]
 ```
 
-SHA-256 Hash: `Bee6NswQbVGQRLwt2M_iQzyZRZS-1S-ZCvEb6qrO4w4`
-
 __Disclosure for `document`:__
+SHA-256 Hash: `Ofw00N-WmZX4NGg_9bo-bGPb79OofOCR0rKpIRni-Ww`
+
 
 ```
 WyJxMEhFSC01RUJXZGpOVzlxQnRmWjZnIiwgImRvY3VtZW50IiwgeyJfc2QiOiBbIkJl
@@ -32,9 +34,9 @@ Contents:
 "date_of_expiry": "2031-03-22"}]
 ```
 
-SHA-256 Hash: `Ofw00N-WmZX4NGg_9bo-bGPb79OofOCR0rKpIRni-Ww`
-
 __Disclosure for `evidence`:__
+SHA-256 Hash: `_lbDEsrlRsRRIFbm4Wo7yI6OGxK_jyREGDbEbNNbE8c`
+
 
 ```
 WyJPMHQtSzliaUxqQUpPYTlCRjlVY0p3IiwgImV2aWRlbmNlIiwgW3siX3NkIjogWyJP
@@ -50,9 +52,9 @@ Contents:
 "time": "2022-04-22T11:30Z"}]]
 ```
 
-SHA-256 Hash: `_lbDEsrlRsRRIFbm4Wo7yI6OGxK_jyREGDbEbNNbE8c`
-
 __Disclosure for `date_of_birth`:__
+SHA-256 Hash: `CMibWTnxlPV4t9PikOhxL-hrLT5UCkSMAqp1ZIQEDxE`
+
 
 ```
 WyJxWGxBbGhIMkNwaGE3aGpvYnBZMVFnIiwgImRhdGVfb2ZfYmlydGgiLCAiMTkyMi0w
@@ -65,9 +67,9 @@ Contents:
 ["qXlAlhH2Cpha7hjobpY1Qg", "date_of_birth", "1922-03-13"]
 ```
 
-SHA-256 Hash: `CMibWTnxlPV4t9PikOhxL-hrLT5UCkSMAqp1ZIQEDxE`
-
 __Disclosure for `gender`:__
+SHA-256 Hash: `VdZWIPp4ngYgkSij8ZJUuxnFlVl0WB1ERhPVztWbv3U`
+
 
 ```
 WyJpUWdKZXZKYUI4YlNkd05peG8tbnRnIiwgImdlbmRlciIsICJNIl0
@@ -79,9 +81,9 @@ Contents:
 ["iQgJevJaB8bSdwNixo-ntg", "gender", "M"]
 ```
 
-SHA-256 Hash: `VdZWIPp4ngYgkSij8ZJUuxnFlVl0WB1ERhPVztWbv3U`
-
 __Disclosure for `place_of_birth`:__
+SHA-256 Hash: `5pKMzwsp6i8VcPXyFq6WUZpohJBth5LZgFqK-V86mqc`
+
 
 ```
 WyJ3QWRQUVhkQWFEUWlSZ2xBZTFjM0xnIiwgInBsYWNlX29mX2JpcnRoIiwgeyJjb3Vu
@@ -95,9 +97,9 @@ Contents:
 "locality": "Firenze"}]
 ```
 
-SHA-256 Hash: `5pKMzwsp6i8VcPXyFq6WUZpohJBth5LZgFqK-V86mqc`
-
 __Disclosure for `nationalities`:__
+SHA-256 Hash: `LxSdSlnUfIbXsO-5rmyA3Vhy4CcQzZT6GbCuPHLEzoI`
+
 
 ```
 WyI3dThvdFdMY0lUNThsWVFqR0xER2VBIiwgIm5hdGlvbmFsaXRpZXMiLCBbIklUIl1d
@@ -108,5 +110,3 @@ Contents:
 ```
 ["7u8otWLcIT58lYQjGLDGeA", "nationalities", ["IT"]]
 ```
-
-SHA-256 Hash: `LxSdSlnUfIbXsO-5rmyA3Vhy4CcQzZT6GbCuPHLEzoI`

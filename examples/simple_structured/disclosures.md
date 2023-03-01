@@ -1,4 +1,6 @@
 __Disclosure for `sub`:__
+SHA-256 Hash: `hblncirSgqjt8gTQ56jy7FUd1cpCg0orxca0C-o9aoo`
+
 
 ```
 WyIzWFQxYV8tOFBRNFlweEZnczRiUG9RIiwgInN1YiIsICI2YzVjMGE0OS1iNTg5LTQz
@@ -12,9 +14,9 @@ Contents:
 "6c5c0a49-b589-431d-bae7-219122a9ec2c"]
 ```
 
-SHA-256 Hash: `hblncirSgqjt8gTQ56jy7FUd1cpCg0orxca0C-o9aoo`
-
 __Disclosure for `given_name`:__
+SHA-256 Hash: `lagH02GaboFAO6_d2R8jpdjO-Xxnh4aVAG9cE8iV4Sg`
+
 
 ```
 WyJ3M3RSbkptLTZ4YXhtMHdWVFMxYV9nIiwgImdpdmVuX25hbWUiLCAiXHU1OTJhXHU5
@@ -27,9 +29,9 @@ Contents:
 ["w3tRnJm-6xaxm0wVTS1a_g", "given_name", "\u592a\u90ce"]
 ```
 
-SHA-256 Hash: `lagH02GaboFAO6_d2R8jpdjO-Xxnh4aVAG9cE8iV4Sg`
-
 __Disclosure for `family_name`:__
+SHA-256 Hash: `-rAXuBrq1MIGJnPr_vGdgVhinHfvtw6HMvkMQ6rk1Po`
+
 
 ```
 WyJGM3MxUENGOUt3eklEaUtKajZrekpRIiwgImZhbWlseV9uYW1lIiwgIlx1NWM3MVx1
@@ -42,9 +44,9 @@ Contents:
 ["F3s1PCF9KwzIDiKJj6kzJQ", "family_name", "\u5c71\u7530"]
 ```
 
-SHA-256 Hash: `-rAXuBrq1MIGJnPr_vGdgVhinHfvtw6HMvkMQ6rk1Po`
-
 __Disclosure for `email`:__
+SHA-256 Hash: `p3vzUx7kYcA_dOlOQpyf8Z8J4s1ZPfhXWZNFuI4JgvU`
+
 
 ```
 WyJpQl9adWNHQ3dmampRald5MEV0RVlnIiwgImVtYWlsIiwgIlwidW51c3VhbCBlbWFp
@@ -58,9 +60,9 @@ Contents:
 address\"@example.jp"]
 ```
 
-SHA-256 Hash: `p3vzUx7kYcA_dOlOQpyf8Z8J4s1ZPfhXWZNFuI4JgvU`
-
 __Disclosure for `phone_number`:__
+SHA-256 Hash: `ZRtxg42klTl-Ap_OiwNVh49ZCGM059AmHPayFqbMilE`
+
 
 ```
 WyJMR3hTaXJELTdsRHB6SWlsVHpYdXdnIiwgInBob25lX251bWJlciIsICIrODEtODAt
@@ -73,9 +75,9 @@ Contents:
 ["LGxSirD-7lDpzIilTzXuwg", "phone_number", "+81-80-1234-5678"]
 ```
 
-SHA-256 Hash: `ZRtxg42klTl-Ap_OiwNVh49ZCGM059AmHPayFqbMilE`
-
 __Disclosure for `address`:__
+SHA-256 Hash: `s2OMJlfL0E9i46-mM3sQKxJ0bEs3bNwBrzXhObM7iR0`
+
 
 ```
 WyJlT1hQUDJNYTAzNTNiai1qLTVPRGFnIiwgImFkZHJlc3MiLCB7InN0cmVldF9hZGRy
@@ -94,9 +96,9 @@ ac\u90fd\u6e2f\u533a\u829d\u516c\u5712\uff14\u4e01\u76ee\uff12\u2212
 "country": "JP"}]
 ```
 
-SHA-256 Hash: `s2OMJlfL0E9i46-mM3sQKxJ0bEs3bNwBrzXhObM7iR0`
-
 __Disclosure for `birthdate`:__
+SHA-256 Hash: `g_WrTVyjFFsppeKOjcgAK8nLTeY8IcPAYSz00xNn5Rk`
+
 
 ```
 WyJwN3dJOHpfenlzQUN4ODVYOTgtWmFRIiwgImJpcnRoZGF0ZSIsICIxOTQwLTAxLTAx
@@ -108,5 +110,3 @@ Contents:
 ```
 ["p7wI8z_zysACx85X98-ZaQ", "birthdate", "1940-01-01"]
 ```
-
-SHA-256 Hash: `g_WrTVyjFFsppeKOjcgAK8nLTeY8IcPAYSz00xNn5Rk`

@@ -1,4 +1,6 @@
 __Disclosure for `time`:__
+SHA-256 Hash: `OSXqQur4cQzXkSlbTehtzOzsZBMgAIigvZmiNCV5Vd8`
+
 
 ```
 WyJjZllESjNFR2JFTFMyYkhsTWlrQ3FBIiwgInRpbWUiLCAiMjAxMi0wNC0yM1QxODoy
@@ -11,9 +13,9 @@ Contents:
 ["cfYDJ3EGbELS2bHlMikCqA", "time", "2012-04-23T18:25Z"]
 ```
 
-SHA-256 Hash: `OSXqQur4cQzXkSlbTehtzOzsZBMgAIigvZmiNCV5Vd8`
-
 __Disclosure for `verification_process`:__
+SHA-256 Hash: `pnJqIq45n58u7BY1Z0nZYvL1nqucjI7mo_voHoq9oGU`
+
 
 ```
 WyJRWXFYWjdwdmdya3I3MjFNbkV5dVJnIiwgInZlcmlmaWNhdGlvbl9wcm9jZXNzIiwg
@@ -27,9 +29,9 @@ Contents:
 "f24c6f-6d3f-4ec5-973e-b0d8506f3bc7"]
 ```
 
-SHA-256 Hash: `pnJqIq45n58u7BY1Z0nZYvL1nqucjI7mo_voHoq9oGU`
-
 __Disclosure for `type`:__
+SHA-256 Hash: `oOBXkmNPDoEJsh5K5hgc3wdMbJJzc9Rv0hOn0mU6Ym8`
+
 
 ```
 WyJrZ2l1OHFOM1ppZ3kxZ3RGQ1owNlR3IiwgInR5cGUiLCAiZG9jdW1lbnQiXQ
@@ -41,9 +43,9 @@ Contents:
 ["kgiu8qN3Zigy1gtFCZ06Tw", "type", "document"]
 ```
 
-SHA-256 Hash: `oOBXkmNPDoEJsh5K5hgc3wdMbJJzc9Rv0hOn0mU6Ym8`
-
 __Disclosure for `method`:__
+SHA-256 Hash: `evYB510b8xzp19Q7Gn1i2EgyN0-R26oFjeBB5IDTGYI`
+
 
 ```
 WyJrMm53eWt1eGdhdERDVllxTVg3WXVRIiwgIm1ldGhvZCIsICJwaXBwIl0
@@ -55,9 +57,9 @@ Contents:
 ["k2nwykuxgatDCVYqMX7YuQ", "method", "pipp"]
 ```
 
-SHA-256 Hash: `evYB510b8xzp19Q7Gn1i2EgyN0-R26oFjeBB5IDTGYI`
-
 __Disclosure for `time`:__
+SHA-256 Hash: `Vytbjbb4wHiTvFi9WxsqJYqPPsW_nnvWvtp0U-Kuof8`
+
 
 ```
 WyJFd2VBVWt3THJnVVpJaGZZbEgwY29RIiwgInRpbWUiLCAiMjAxMi0wNC0yMlQxMToz
@@ -70,9 +72,9 @@ Contents:
 ["EweAUkwLrgUZIhfYlH0coQ", "time", "2012-04-22T11:30Z"]
 ```
 
-SHA-256 Hash: `Vytbjbb4wHiTvFi9WxsqJYqPPsW_nnvWvtp0U-Kuof8`
-
 __Disclosure for `document`:__
+SHA-256 Hash: `FPNPZmj_KaKlIP2QWB55J1gHhA14mPlbVdR9bGBgH4w`
+
 
 ```
 WyJXVDhPVC05RnJwbTk5WEpQa1UtWTdRIiwgImRvY3VtZW50IiwgeyJ0eXBlIjogImlk
@@ -89,9 +91,9 @@ Contents:
 "date_of_issuance": "2010-03-23", "date_of_expiry": "2020-03-22"}]
 ```
 
-SHA-256 Hash: `FPNPZmj_KaKlIP2QWB55J1gHhA14mPlbVdR9bGBgH4w`
-
 __Disclosure for `given_name`:__
+SHA-256 Hash: `Ylx9AxQmJxSR9CgZmFBnyKCha9qNsnA7GzrmXPBKkDo`
+
 
 ```
 WyJuVWtieGhxc2pyVTNaTEtVSGNBYWxBIiwgImdpdmVuX25hbWUiLCAiTWF4Il0
@@ -103,9 +105,9 @@ Contents:
 ["nUkbxhqsjrU3ZLKUHcAalA", "given_name", "Max"]
 ```
 
-SHA-256 Hash: `Ylx9AxQmJxSR9CgZmFBnyKCha9qNsnA7GzrmXPBKkDo`
-
 __Disclosure for `family_name`:__
+SHA-256 Hash: `fIW6zXRtRSQNcNK5gvpRsZFkaN8BMh36UwhsdZlxoTo`
+
 
 ```
 WyIyTmd0UExxQmU0QVhMVzR6SUNLWHJ3IiwgImZhbWlseV9uYW1lIiwgIk1cdTAwZmNs
@@ -118,9 +120,9 @@ Contents:
 ["2NgtPLqBe4AXLW4zICKXrw", "family_name", "M\u00fcller"]
 ```
 
-SHA-256 Hash: `fIW6zXRtRSQNcNK5gvpRsZFkaN8BMh36UwhsdZlxoTo`
-
 __Disclosure for `nationalities`:__
+SHA-256 Hash: `d7ln7xO-RREXmecBVEpwLwrEjZ3FKs_KLhCD0vL74Us`
+
 
 ```
 WyJQUy1fNnFqdFk0akpOSlF5SkNpeU5BIiwgIm5hdGlvbmFsaXRpZXMiLCBbIkRFIl1d
@@ -132,9 +134,9 @@ Contents:
 ["PS-_6qjtY4jJNJQyJCiyNA", "nationalities", ["DE"]]
 ```
 
-SHA-256 Hash: `d7ln7xO-RREXmecBVEpwLwrEjZ3FKs_KLhCD0vL74Us`
-
 __Disclosure for `birthdate`:__
+SHA-256 Hash: `U4P6UrikZAVE3mk82oLaPDiLX8hEXmEu9A6xO5j9mxE`
+
 
 ```
 WyJMNExJMTRqVGFCVEZxV080MVM5TUlRIiwgImJpcnRoZGF0ZSIsICIxOTU2LTAxLTI4
@@ -147,9 +149,9 @@ Contents:
 ["L4LI14jTaBTFqWO41S9MIQ", "birthdate", "1956-01-28"]
 ```
 
-SHA-256 Hash: `U4P6UrikZAVE3mk82oLaPDiLX8hEXmEu9A6xO5j9mxE`
-
 __Disclosure for `place_of_birth`:__
+SHA-256 Hash: `fSw3UyxwNFf_CjYCCBYCRxZCGB-LIS35Pey2T7G_cHw`
+
 
 ```
 WyJsZ1pCenNHUUZ6bGlqRFZKa2ZCVGNRIiwgInBsYWNlX29mX2JpcnRoIiwgeyJjb3Vu
@@ -164,9 +166,9 @@ Contents:
 "locality": "\u00deykkvab\u00e6jarklaustur"}]
 ```
 
-SHA-256 Hash: `fSw3UyxwNFf_CjYCCBYCRxZCGB-LIS35Pey2T7G_cHw`
-
 __Disclosure for `address`:__
+SHA-256 Hash: `OTog0pBGyAmwEqIhjSuf5Rq5UWTkIecAnutwB2nGUlk`
+
 
 ```
 WyI5VEFiRnplajZoNGFDSVc2dTZoWFZBIiwgImFkZHJlc3MiLCB7ImxvY2FsaXR5Ijog
@@ -182,9 +184,9 @@ Contents:
 "Weidenstra\u00dfe 22"}]
 ```
 
-SHA-256 Hash: `OTog0pBGyAmwEqIhjSuf5Rq5UWTkIecAnutwB2nGUlk`
-
 __Disclosure for `birth_middle_name`:__
+SHA-256 Hash: `BjJ85b1mpIvorC35da8cPRCfN0OeoBUf7ZCA3w96xnM`
+
 
 ```
 WyJZdVhXUzI3N3ZIX3RuRWZhWWw5S1R3IiwgImJpcnRoX21pZGRsZV9uYW1lIiwgIlRp
@@ -197,9 +199,9 @@ Contents:
 ["YuXWS277vH_tnEfaYl9KTw", "birth_middle_name", "Timotheus"]
 ```
 
-SHA-256 Hash: `BjJ85b1mpIvorC35da8cPRCfN0OeoBUf7ZCA3w96xnM`
-
 __Disclosure for `salutation`:__
+SHA-256 Hash: `wN-gqrZTxUtl1-v3S5wodjuAgE0YuBS66s9p4qxfgxg`
+
 
 ```
 WyJPWEVMTkhsQ2NNS051cHN0T1F1N19RIiwgInNhbHV0YXRpb24iLCAiRHIuIl0
@@ -211,9 +213,9 @@ Contents:
 ["OXELNHlCcMKNupstOQu7_Q", "salutation", "Dr."]
 ```
 
-SHA-256 Hash: `wN-gqrZTxUtl1-v3S5wodjuAgE0YuBS66s9p4qxfgxg`
-
 __Disclosure for `msisdn`:__
+SHA-256 Hash: `XqnTomboGac-QASg2Q9V1uQGRQRkXL9jkveIzNcMmSM`
+
 
 ```
 WyI2QzFBbVhiUjc5aG1zcWJfYkhfWHdBIiwgIm1zaXNkbiIsICI0OTEyMzQ1Njc4OSJd
@@ -224,5 +226,3 @@ Contents:
 ```
 ["6C1AmXbR79hmsqb_bH_XwA", "msisdn", "49123456789"]
 ```
-
-SHA-256 Hash: `XqnTomboGac-QASg2Q9V1uQGRQRkXL9jkveIzNcMmSM`

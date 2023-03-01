@@ -1,4 +1,6 @@
 __Disclosure for `source`:__
+SHA-256 Hash: `58-pb4RMdemTMJOUrs_veI29MG9G-RULZTCc4xS1mas`
+
 
 ```
 WyIwV0FEYjR5WUVfSm1EUHJRWkJNUXFRIiwgInNvdXJjZSIsIHsib3JnYW5pemF0aW9u
@@ -14,9 +16,9 @@ di Firenze", "organization_id": "c_d612", "country_code": "IT",
 "country": "Italy"}]
 ```
 
-SHA-256 Hash: `58-pb4RMdemTMJOUrs_veI29MG9G-RULZTCc4xS1mas`
-
 __Disclosure for `evidence`:__
+SHA-256 Hash: `W9Z6Ikzr-f3Zk7G0WMkqErfswUA7BUn-fBpOGqSh13E`
+
 
 ```
 WyJpX0xzRi1IZkt2dWZnOWhNNVBsM1RnIiwgImV2aWRlbmNlIiwgW3sidHlwZSI6ICJl
@@ -36,9 +38,9 @@ Contents:
 "9642-8fe652c8c040"}}]]
 ```
 
-SHA-256 Hash: `W9Z6Ikzr-f3Zk7G0WMkqErfswUA7BUn-fBpOGqSh13E`
-
 __Disclosure for `person_unique_identifier`:__
+SHA-256 Hash: `_AL6GkONfNtjx8DqvM30dW5gHR4sJPl_OojFhjIWNUM`
+
 
 ```
 WyJWakpiWEh5SXpYaWNiV3l1S0hoQnlBIiwgInBlcnNvbl91bmlxdWVfaWRlbnRpZmll
@@ -52,9 +54,9 @@ Contents:
 "TINIT-fc0d9684-1bf0-4220-9642-8fe652c8c040"]
 ```
 
-SHA-256 Hash: `_AL6GkONfNtjx8DqvM30dW5gHR4sJPl_OojFhjIWNUM`
-
 __Disclosure for `given_name`:__
+SHA-256 Hash: `3ERl4PFymfs_dkvCH_ZcNH5wYJE2t_nThbaYWRHyxAw`
+
 
 ```
 WyJNakpPOTlwZmNkWmN0S3M4R0FPMm1BIiwgImdpdmVuX25hbWUiLCAiUmFmZmFlbGxv
@@ -67,9 +69,9 @@ Contents:
 ["MjJO99pfcdZctKs8GAO2mA", "given_name", "Raffaello"]
 ```
 
-SHA-256 Hash: `3ERl4PFymfs_dkvCH_ZcNH5wYJE2t_nThbaYWRHyxAw`
-
 __Disclosure for `family_name`:__
+SHA-256 Hash: `8y_QkAi4ouaBhy9wZQhirmS-RaxJWzJatxZ6ek3ZSiA`
+
 
 ```
 WyJuaEpIVG9QS0NMV1dYZVRHTkVxR3B3IiwgImZhbWlseV9uYW1lIiwgIk1hc2NldHRp
@@ -82,9 +84,9 @@ Contents:
 ["nhJHToPKCLWWXeTGNEqGpw", "family_name", "Mascetti"]
 ```
 
-SHA-256 Hash: `8y_QkAi4ouaBhy9wZQhirmS-RaxJWzJatxZ6ek3ZSiA`
-
 __Disclosure for `date_of_birth`:__
+SHA-256 Hash: `Qz7Lp7reDpwlYSsu3JMUIK4PHvf_bNAtcQ5Hfc3tcRo`
+
 
 ```
 WyJqa052MS1TT3NNWTZ6VnFROTdKLWJ3IiwgImRhdGVfb2ZfYmlydGgiLCAiMTkyMi0w
@@ -97,9 +99,9 @@ Contents:
 ["jkNv1-SOsMY6zVqQ97J-bw", "date_of_birth", "1922-03-13"]
 ```
 
-SHA-256 Hash: `Qz7Lp7reDpwlYSsu3JMUIK4PHvf_bNAtcQ5Hfc3tcRo`
-
 __Disclosure for `gender`:__
+SHA-256 Hash: `Hvy_Ah7GRLuNQOFt8AJNj5O0Oi6-ni32XGYAhXQ_r6A`
+
 
 ```
 WyJNR0RaREFvenQ5amRVUnJYNjF6WnZnIiwgImdlbmRlciIsICJNIl0
@@ -111,9 +113,9 @@ Contents:
 ["MGDZDAozt9jdURrX61zZvg", "gender", "M"]
 ```
 
-SHA-256 Hash: `Hvy_Ah7GRLuNQOFt8AJNj5O0Oi6-ni32XGYAhXQ_r6A`
-
 __Disclosure for `place_of_birth`:__
+SHA-256 Hash: `Spps4GUVwzqIMT6gMzvxNeFMh7lqm7ZlRjM63OepEsY`
+
 
 ```
 WyJLWmtTblJIbFAwMk9KWkxzR3VkdmtRIiwgInBsYWNlX29mX2JpcnRoIiwgeyJjb3Vu
@@ -127,9 +129,9 @@ Contents:
 "locality": "Firenze"}]
 ```
 
-SHA-256 Hash: `Spps4GUVwzqIMT6gMzvxNeFMh7lqm7ZlRjM63OepEsY`
-
 __Disclosure for `nationalities`:__
+SHA-256 Hash: `7yjxvA29AfbuVtWuRm4whQsVBTTPYzNwaXpUZiY9zYw`
+
 
 ```
 WyJnbkdDbE0tZ3ZVdjdHeUlhTWJiZEV3IiwgIm5hdGlvbmFsaXRpZXMiLCBbIklUIl1d
@@ -140,5 +142,3 @@ Contents:
 ```
 ["gnGClM-gvUv7GyIaMbbdEw", "nationalities", ["IT"]]
 ```
-
-SHA-256 Hash: `7yjxvA29AfbuVtWuRm4whQsVBTTPYzNwaXpUZiY9zYw`
