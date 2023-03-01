@@ -1,43 +1,25 @@
 {
-  "_sd": [
-    "pTxyAMUZOD1sM98DMmWmZJ5zKCUPLhgRaNDipiPzEbE"
-  ],
   "verified_claims": {
     "verification": {
       "_sd": [
-        "2YRmUkluJhbeEzMQ0p4QJCZZHt38O9Yp5xQxj-s-of4"
+        "W9Z6Ikzr-f3Zk7G0WMkqErfswUA7BUn-fBpOGqSh13E"
       ],
       "trust_framework": "eidas",
-      "evidence": [
-        {
-          "_sd": [
-            "OSlizAB2reacAQs2WN6N91y8JroSUjGLefjboVc622A"
-          ],
-          "record": {
-            "_sd": [
-              "QhwR359uy52OhrNXzgSxWZvx3oB067QERgz-cRTajSE",
-              "gpVQVr4wccYxVS4WJ7EpqCpBvKD4ZPNAHdln3Bck_3Q",
-              "iJhephauvMFgH11qS3AT0G4aEIw8NvgoPOs5oL16y8o"
-            ]
-          }
-        }
-      ]
+      "assurance_level": "high"
     },
     "claims": {
       "_sd": [
-        "37pBJKgDrKRmTGOPP1U61SkSmUBaK_p6aJl3mOVLn_8",
-        "cO4KGHq-_SwGXBE4lnH9j9OF_jMhEFi6h4DTS8BpiZk",
-        "uao80EV_xmD2RvjIq5jKkCrSj8l7GR9UfgCA2E-CLp0"
-      ],
-      "person_unique_identifier":
-        "TINIT-fc0d9684-1bf0-4220-9642-8fe652c8c040",
-      "given_name": "Raffaello",
-      "family_name": "Mascetti",
-      "nationalities": [
-        "IT"
+        "3ERl4PFymfs_dkvCH_ZcNH5wYJE2t_nThbaYWRHyxAw",
+        "7yjxvA29AfbuVtWuRm4whQsVBTTPYzNwaXpUZiY9zYw",
+        "8y_QkAi4ouaBhy9wZQhirmS-RaxJWzJatxZ6ek3ZSiA",
+        "Hvy_Ah7GRLuNQOFt8AJNj5O0Oi6-ni32XGYAhXQ_r6A",
+        "Qz7Lp7reDpwlYSsu3JMUIK4PHvf_bNAtcQ5Hfc3tcRo",
+        "Spps4GUVwzqIMT6gMzvxNeFMh7lqm7ZlRjM63OepEsY",
+        "_AL6GkONfNtjx8DqvM30dW5gHR4sJPl_OojFhjIWNUM"
       ]
     }
   },
+  "birth_middle_name": "Lello",
   "iss": "https://example.com/issuer",
   "iat": 1516239022,
   "exp": 1516247022,

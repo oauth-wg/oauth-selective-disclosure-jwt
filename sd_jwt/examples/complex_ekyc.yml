@@ -17,15 +17,15 @@ user_claims:
             date_of_issuance: "2010-03-23"
             date_of_expiry: "2020-03-22"
     claims:
-      given_name: Max
-      family_name: Müller
-      nationalities:
+      !sd given_name: Max
+      !sd family_name: Müller
+      !sd nationalities:
         - DE
-      birthdate: "1956-01-28"
-      place_of_birth:
+      !sd birthdate: "1956-01-28"
+      !sd place_of_birth:
         country: IS
         locality: Þykkvabæjarklaustur
-      address:
+      !sd address:
         locality: Maxstadt
         postal_code: "12344"
         country: DE
@@ -40,9 +40,8 @@ holder_disclosed_claims:
       {
         "verification":
           {
-            "trust_framework": null,
             "time": null,
-            "evidence": [{ "type": null }],
+            "evidence": [{ "method": null }],
           },
         "claims": { "given_name": null, "family_name": null, "address": {} },
       },

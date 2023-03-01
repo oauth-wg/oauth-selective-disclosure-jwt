@@ -18,23 +18,16 @@
   "type": "IdentityCredential",
   "credentialSubject": {
     "_sd": [
-      "8Bcr2ZGImJ9FlsBNmGiLgj7XmHm-g8QOuYVSXOWoM58",
-      "8wawaYT3XNlnl0zUdP8Xri1252yHK6pjgr8JInBzMQg",
-      "NVTo4oQvI0kuqdMYeb6M_sp_ByUY7d4zcLfHB483aVY",
-      "UQ6IHUAtHqW8Xcik7GqVikWtoviseS4BKjvCmmon6xA",
-      "Um7LRM6Ol51wJZLobMeREW6HsMyO3DCCHnWtaikD-40",
-      "jIjo9ElQ4Ng2mMzs0SoWq2molpyU80OE_LENjk2Ha_8",
-      "w9rrWnA1RQ5dUOBaJDKGfAgtiW12obi1joeF_oLTaZ0",
-      "zOJJSAmcB0OqPmFkOZebY70hHI3GpJC1x4beJRtIPbM"
-    ],
-    "address": {
-      "_sd": [
-        "0mcZNz0nIGNYBI4WgKJFx9mjaaB10E59Bc_pefmm544",
-        "4zIfrBGk3TStRDz_wlxi4VgYDza81mBs_zeJ84czsS4",
-        "Hl_wpSSSagpXtSk_rGoE-xkYGVnIHBO-ZzhUWchy8bo",
-        "ySoQUT3JlKF5NdTPMWzmlDamB4TY2EMmGCgrzzJzih0"
-      ]
-    }
+      "2cj0qo1YI8aGLOPCEzIr0mexil6_9tVz5KnIpY3fszs",
+      "H033gGqGyBCT7VmtYky-1gqqTg9JT8kg9WFJTTN1iVY",
+      "RKE58nhM1GLxUmfvPaZhxNEq8kNplQYnOZlLJosLomY",
+      "S7ebWHiOEgQDLG6JcpYkuMKMCb40uxFUSUimK94MuDc",
+      "WkP5oQu7qxPAxLVPKcFuP4rD5TC0T4CekiYi333zQP4",
+      "f4nimkh9dcwJ8JK46zlad_zgyYJfZFPImAWBNh86Kb0",
+      "goqT4HD2DOmnPF1wNMLNiYuj4SgYtKjfQQHO--CSh0o",
+      "lheBqvJLJPRLsoXVF68rmkn9jL73iGCF0V5sJjPlt68",
+      "tAQ3Er6qd3UwQLrZYRe3fMF4J6MXdz5tJMJfJw48I0g"
+    ]
   },
   "exp": 1516247022,
   "_sd_alg": "sha-256"

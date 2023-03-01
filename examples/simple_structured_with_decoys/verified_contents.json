@@ -1,20 +1,16 @@
 {
-  "address": {
-    "_sd": [
-      "8Hiz8pJk-JaZwUhgGbttv2LxQb5XgUVwsWP6_60Lvzc",
-      "9r5DzMlI7E0pm2aMwNnujutXaDlJC4zrJwr--ss2m7E",
-      "ALjpcEHwOMciIacAm2zLOiUSfa4iz7gu9dhCT7bEbJo",
-      "YG7CGHua0v6hjLf63VNSyNcMAJJCR7g4rUmvCP4od1U",
-      "Ymi2gyNJpLy139on-NGURy4jdsfe7KtOYS4fgWBEm8s",
-      "pDmqmAde1eHqqqX0Mu7lPDJTL_wFs5sGFKiEvWJM8ew"
-    ]
-  },
   "iss": "https://example.com/issuer",
   "iat": 1516239022,
   "exp": 1516247022,
   "_sd_alg": "sha-256",
-  "email": "\"unusual email address\"@example.jp",
   "birthdate": "1940-01-01",
+  "email": "\"unusual email address\"@example.jp",
+  "address": {
+    "street_address": "東京都港区芝公園４丁目２−８",
+    "locality": "東京都",
+    "region": "港区",
+    "country": "JP"
+  },
   "given_name": "太郎",
   "family_name": "山田"
 }

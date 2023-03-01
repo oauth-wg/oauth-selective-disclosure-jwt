@@ -9,16 +9,14 @@ user_claims:
     locality: 東京都
     region: 港区
     country: JP
-  !sd birthdate: '1940-01-01'
-
-non_sd_claims: { "address": {} }
+  !sd birthdate: "1940-01-01"
 
 holder_disclosed_claims:
   {
     "given_name": null,
     "family_name": null,
     "birthdate": null,
-    "address": { "region": null, "country": null },
+    "address": {},
     "email": null,
   }
 

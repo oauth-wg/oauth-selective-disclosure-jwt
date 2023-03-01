@@ -1,40 +1,40 @@
 {
   "verified_claims": {
     "verification": {
-      "_sd": [
-        "2YRmUkluJhbeEzMQ0p4QJCZZHt38O9Yp5xQxj-s-of4"
-      ],
       "trust_framework": "eidas",
+      "assurance_level": "high",
       "evidence": [
         {
-          "_sd": [
-            "OSlizAB2reacAQs2WN6N91y8JroSUjGLefjboVc622A"
-          ],
+          "type": "electronic_record",
           "record": {
-            "_sd": [
-              "QhwR359uy52OhrNXzgSxWZvx3oB067QERgz-cRTajSE",
-              "gpVQVr4wccYxVS4WJ7EpqCpBvKD4ZPNAHdln3Bck_3Q",
-              "iJhephauvMFgH11qS3AT0G4aEIw8NvgoPOs5oL16y8o"
-            ]
+            "type": "eu.europa.ec.eudiw.pid.1",
+            "personal_number": "9642-8fe652c8c040",
+            "source": {
+              "organization_name": "Comune di Firenze",
+              "organization_id": "c_d612",
+              "country_code": "IT",
+              "country": "Italy"
+            }
           }
         }
       ]
     },
     "claims": {
-      "_sd": [
-        "37pBJKgDrKRmTGOPP1U61SkSmUBaK_p6aJl3mOVLn_8",
-        "cO4KGHq-_SwGXBE4lnH9j9OF_jMhEFi6h4DTS8BpiZk",
-        "uao80EV_xmD2RvjIq5jKkCrSj8l7GR9UfgCA2E-CLp0"
-      ],
-      "person_unique_identifier":
-        "TINIT-fc0d9684-1bf0-4220-9642-8fe652c8c040",
       "given_name": "Raffaello",
-      "family_name": "Mascetti",
       "nationalities": [
         "IT"
-      ]
+      ],
+      "family_name": "Mascetti",
+      "gender": "M",
+      "place_of_birth": {
+        "country": "IT",
+        "locality": "Firenze"
+      },
+      "person_unique_identifier":
+        "TINIT-fc0d9684-1bf0-4220-9642-8fe652c8c040"
     }
   },
+  "birth_middle_name": "Lello",
   "iss": "https://example.com/issuer",
   "iat": 1516239022,
   "exp": 1516247022,

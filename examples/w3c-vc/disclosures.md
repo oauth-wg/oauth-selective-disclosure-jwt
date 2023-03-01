@@ -1,171 +1,131 @@
 __Disclosure for `given_name`:__
 
 ```
-WyI5S05NMUxWcU1PVXR6Rk9iSFV4Q2J3IiwgImdpdmVuX25hbWUiLCAiSm9obiJd
+WyJuWUpCd1Q0OERQTEtYcVd1UmJ4NVNRIiwgImdpdmVuX25hbWUiLCAiSm9obiJd
 ```
 
 Contents:
 
 ```
-["9KNM1LVqMOUtzFObHUxCbw", "given_name", "John"]
+["nYJBwT48DPLKXqWuRbx5SQ", "given_name", "John"]
 ```
 
-SHA-256 Hash: `jIjo9ElQ4Ng2mMzs0SoWq2molpyU80OE_LENjk2Ha_8`
+SHA-256 Hash: `f4nimkh9dcwJ8JK46zlad_zgyYJfZFPImAWBNh86Kb0`
 
 __Disclosure for `family_name`:__
 
 ```
-WyJJeC1jVTQzcXpBUFhvU2xZclF3RnRnIiwgImZhbWlseV9uYW1lIiwgIkRvZSJd
+WyJFTXMzQjJ1LU5jUDdMeUljVnA5elhBIiwgImZhbWlseV9uYW1lIiwgIkRvZSJd
 ```
 
 Contents:
 
 ```
-["Ix-cU43qzAPXoSlYrQwFtg", "family_name", "Doe"]
+["EMs3B2u-NcP7LyIcVp9zXA", "family_name", "Doe"]
 ```
 
-SHA-256 Hash: `w9rrWnA1RQ5dUOBaJDKGfAgtiW12obi1joeF_oLTaZ0`
+SHA-256 Hash: `2cj0qo1YI8aGLOPCEzIr0mexil6_9tVz5KnIpY3fszs`
 
 __Disclosure for `email`:__
 
 ```
-WyJrbnFPOXJYYldqc2llOEtTMkJJSkFRIiwgImVtYWlsIiwgImpvaG5kb2VAZXhhbXBs
+WyJMRDdSbG5WaHZPRTVoMkFGN280ZlN3IiwgImVtYWlsIiwgImpvaG5kb2VAZXhhbXBs
 ZS5jb20iXQ
 ```
 
 Contents:
 
 ```
-["knqO9rXbWjsie8KS2BIJAQ", "email", "johndoe@example.com"]
+["LD7RlnVhvOE5h2AF7o4fSw", "email", "johndoe@example.com"]
 ```
 
-SHA-256 Hash: `NVTo4oQvI0kuqdMYeb6M_sp_ByUY7d4zcLfHB483aVY`
+SHA-256 Hash: `H033gGqGyBCT7VmtYky-1gqqTg9JT8kg9WFJTTN1iVY`
 
 __Disclosure for `phone_number`:__
 
 ```
-WyJSbVdDWEhxaE41TDg2SllqOUdYN0h3IiwgInBob25lX251bWJlciIsICIrMS0yMDIt
+WyI5OUswamRYQjkxUUtUZXd0MEJneDZ3IiwgInBob25lX251bWJlciIsICIrMS0yMDIt
 NTU1LTAxMDEiXQ
 ```
 
 Contents:
 
 ```
-["RmWCXHqhN5L86JYj9GX7Hw", "phone_number", "+1-202-555-0101"]
+["99K0jdXB91QKTewt0Bgx6w", "phone_number", "+1-202-555-0101"]
 ```
 
-SHA-256 Hash: `zOJJSAmcB0OqPmFkOZebY70hHI3GpJC1x4beJRtIPbM`
+SHA-256 Hash: `tAQ3Er6qd3UwQLrZYRe3fMF4J6MXdz5tJMJfJw48I0g`
 
-__Disclosure for `street_address`:__
-
-```
-WyJjTE84ZnZpNlVHYUstbF91QmFJYTVRIiwgInN0cmVldF9hZGRyZXNzIiwgIjEyMyBN
-YWluIFN0Il0
-```
-
-Contents:
+__Disclosure for `address`:__
 
 ```
-["cLO8fvi6UGaK-l_uBaIa5Q", "street_address", "123 Main St"]
-```
-
-SHA-256 Hash: `Hl_wpSSSagpXtSk_rGoE-xkYGVnIHBO-ZzhUWchy8bo`
-
-__Disclosure for `locality`:__
-
-```
-WyJOSzBZQU1MWUwtLXRVdi1EdGNoaU1RIiwgImxvY2FsaXR5IiwgIkFueXRvd24iXQ
+WyJhRG8xSllUX0pkek9meFdPenRqZlJBIiwgImFkZHJlc3MiLCB7InN0cmVldF9hZGRy
+ZXNzIjogIjEyMyBNYWluIFN0IiwgImxvY2FsaXR5IjogIkFueXRvd24iLCAicmVnaW9u
+IjogIkFueXN0YXRlIiwgImNvdW50cnkiOiAiVVMifV0
 ```
 
 Contents:
 
 ```
-["NK0YAMLYL--tUv-DtchiMQ", "locality", "Anytown"]
+["aDo1JYT_JdzOfxWOztjfRA", "address", {"street_address": "123 Main
+St", "locality": "Anytown", "region": "Anystate", "country": "US"}]
 ```
 
-SHA-256 Hash: `4zIfrBGk3TStRDz_wlxi4VgYDza81mBs_zeJ84czsS4`
-
-__Disclosure for `region`:__
-
-```
-WyI3c3FoSU1aMlkzOHM4aWxaY012c2RRIiwgInJlZ2lvbiIsICJBbnlzdGF0ZSJd
-```
-
-Contents:
-
-```
-["7sqhIMZ2Y38s8ilZcMvsdQ", "region", "Anystate"]
-```
-
-SHA-256 Hash: `ySoQUT3JlKF5NdTPMWzmlDamB4TY2EMmGCgrzzJzih0`
-
-__Disclosure for `country`:__
-
-```
-WyJISXlPZXkzNXEzX0ZTbDRVV0g2Mm5BIiwgImNvdW50cnkiLCAiVVMiXQ
-```
-
-Contents:
-
-```
-["HIyOey35q3_FSl4UWH62nA", "country", "US"]
-```
-
-SHA-256 Hash: `0mcZNz0nIGNYBI4WgKJFx9mjaaB10E59Bc_pefmm544`
+SHA-256 Hash: `lheBqvJLJPRLsoXVF68rmkn9jL73iGCF0V5sJjPlt68`
 
 __Disclosure for `birthdate`:__
 
 ```
-WyJpUU5VWU9tblo1N1Z5VHBRaGZnV2lnIiwgImJpcnRoZGF0ZSIsICIxOTQwLTAxLTAx
+WyJEY1EycGhyQllXRG9VWVdMbVhtYV9BIiwgImJpcnRoZGF0ZSIsICIxOTQwLTAxLTAx
 Il0
 ```
 
 Contents:
 
 ```
-["iQNUYOmnZ57VyTpQhfgWig", "birthdate", "1940-01-01"]
+["DcQ2phrBYWDoUYWLmXma_A", "birthdate", "1940-01-01"]
 ```
 
-SHA-256 Hash: `Um7LRM6Ol51wJZLobMeREW6HsMyO3DCCHnWtaikD-40`
+SHA-256 Hash: `WkP5oQu7qxPAxLVPKcFuP4rD5TC0T4CekiYi333zQP4`
 
 __Disclosure for `is_over_18`:__
 
 ```
-WyJ0cmNEb1BJUDVzeW5wWFhZU0dFc0FRIiwgImlzX292ZXJfMTgiLCB0cnVlXQ
+WyJtYUFIc0xpYWZfdW4za3VDN21Xb0J3IiwgImlzX292ZXJfMTgiLCB0cnVlXQ
 ```
 
 Contents:
 
 ```
-["trcDoPIP5synpXXYSGEsAQ", "is_over_18", true]
+["maAHsLiaf_un3kuC7mWoBw", "is_over_18", true]
 ```
 
-SHA-256 Hash: `8wawaYT3XNlnl0zUdP8Xri1252yHK6pjgr8JInBzMQg`
+SHA-256 Hash: `RKE58nhM1GLxUmfvPaZhxNEq8kNplQYnOZlLJosLomY`
 
 __Disclosure for `is_over_21`:__
 
 ```
-WyJRMnhzRWpnUnBhSE5rdUdEM2tUNUpnIiwgImlzX292ZXJfMjEiLCB0cnVlXQ
+WyIyR2hKMHZjQ0xfNzNvNUZrbHV5NndRIiwgImlzX292ZXJfMjEiLCB0cnVlXQ
 ```
 
 Contents:
 
 ```
-["Q2xsEjgRpaHNkuGD3kT5Jg", "is_over_21", true]
+["2GhJ0vcCL_73o5Fkluy6wQ", "is_over_21", true]
 ```
 
-SHA-256 Hash: `UQ6IHUAtHqW8Xcik7GqVikWtoviseS4BKjvCmmon6xA`
+SHA-256 Hash: `goqT4HD2DOmnPF1wNMLNiYuj4SgYtKjfQQHO--CSh0o`
 
 __Disclosure for `is_over_65`:__
 
 ```
-WyI0RDd2N1JWTTh2THUwN0tRVUJqOF9RIiwgImlzX292ZXJfNjUiLCB0cnVlXQ
+WyI3SHpCQUt3SktBOTNGaWh2QmcxRThRIiwgImlzX292ZXJfNjUiLCB0cnVlXQ
 ```
 
 Contents:
 
 ```
-["4D7v7RVM8vLu07KQUBj8_Q", "is_over_65", true]
+["7HzBAKwJKA93FihvBg1E8Q", "is_over_65", true]
 ```
 
-SHA-256 Hash: `8Bcr2ZGImJ9FlsBNmGiLgj7XmHm-g8QOuYVSXOWoM58`
+SHA-256 Hash: `S7ebWHiOEgQDLG6JcpYkuMKMCb40uxFUSUimK94MuDc`

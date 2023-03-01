@@ -1,18 +1,13 @@
 {
   "_sd": [
-    "K0WdiJqWohdq5Jdr8z93q9xO9fDmUATmZiE9gxPRZi0",
-    "OXaWV2cwK4AnH9stNulZuO3JO3-lMb1zVsSp_dvNkG0",
-    "VMfKfO1HMAvgzpbUyyjM3cuqiIRFX0Li1kjgQ0_PcKE",
-    "ZSxjUW-_yGpguvUkK1yfiIiB9AsxhfMDM9TryA8O8l8",
-    "ndyaj3NQnsGmUSytGY48JNN0dMkjAeRgEJsbMt_F5w0",
-    "q-b2vpqWfjCe3zvukrgLZBtnin2ZJYqWCh33SvWdgyA"
+    "5nXy0Z3QiEba1V1lJzeKhAOGQXFlKLIWCLlhf_O-cmo",
+    "9gZhHAhV7LZnOFZq_q7Fh8rzdqrrNM-hRWsVOlW3nuw",
+    "S-JPBSkvqliFv1__thuXt3IzX5B_ZXm4W2qs4BoNFrA",
+    "bviw7pWAkbzI078ZNVa_eMZvk0tdPa5w2o9R3Zycjo4",
+    "o-LBCDrFF6tC9ew1vAlUmw6Y30CHZF5jOUFhpx5mogI",
+    "pzkHIM9sv7oZH6YKDsRqNgFGLpEKIj3c5G6UKaTsAjQ",
+    "rnAzCT6DTy4TsX9QCDv2wwAE4Ze20uRigtVNQkA52X0"
   ],
-  "address": {
-    "street_address": "123 Main St",
-    "locality": "Anytown",
-    "region": "Anystate",
-    "country": "US"
-  },
   "iss": "https://example.com/issuer",
   "iat": 1516239022,
   "exp": 1516247022,

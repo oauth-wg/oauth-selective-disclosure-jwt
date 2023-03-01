@@ -30,12 +30,7 @@ holder_disclosed_claims:
   {
     "verified_claims":
       {
-        "verification":
-          {
-            "trust_framework": null,
-            "assurance_level": null,
-            "evidence": [{ "record": {"type": null} }] 
-          },
+        "verification": { "evidence": [{ "record": { "source": {} } }] },
         "claims":
           {
             "person_unique_identifier": null,
@@ -43,7 +38,7 @@ holder_disclosed_claims:
             "family_name": null,
             "nationalities": null,
             "gender": null,
-            "place_of_birth": { "country": null },
+            "place_of_birth": {},
           },
       },
   }

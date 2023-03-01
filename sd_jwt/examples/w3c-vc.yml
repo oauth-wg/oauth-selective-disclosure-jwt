@@ -25,16 +25,4 @@ user_claims:
     !sd is_over_21: true
     !sd is_over_65: true
 
-
-non_sd_claims:
-  {
-    "iss": true,
-    "jti": true,
-    "nbf": true,
-    "iat": true,
-    "cnf": { "jwk": { "kty": true, "n": true, "e": true } },
-    "type": true,
-    "credentialSubject": { "address": {} },
-  }
-
 holder_disclosed_claims: {}

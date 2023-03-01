@@ -1,52 +1,36 @@
 {
   "_sd": [
-    "3Ya8bg_ml8KnSgyVgua8l1HPYkdN7ssS_6vGbRnkTNw",
-    "I6rcUamEE5OAzAovet-1su0Mgb4uaEKJ5RDgYPYi_DM",
-    "rjURv64Uhsrgpe-U9P1T_q7TK4bjP3G8F_Z3CykmLdc"
+    "BjJ85b1mpIvorC35da8cPRCfN0OeoBUf7ZCA3w96xnM",
+    "XqnTomboGac-QASg2Q9V1uQGRQRkXL9jkveIzNcMmSM",
+    "wN-gqrZTxUtl1-v3S5wodjuAgE0YuBS66s9p4qxfgxg"
   ],
   "verified_claims": {
     "verification": {
       "_sd": [
-        "GgFGEUqd-2Cn8AKT0gfVXwmyYkETDNviRMjo_AKCtsA",
-        "GjnKmyAI6TrUx4YG6N-X9yJZ0uA2Kqewp1ekvJ9G0KY",
-        "q2T35VQTOvpqMADrW3jBXRemD599F2ZCBemJvrUfBSQ"
+        "OSXqQur4cQzXkSlbTehtzOzsZBMgAIigvZmiNCV5Vd8",
+        "pnJqIq45n58u7BY1Z0nZYvL1nqucjI7mo_voHoq9oGU"
       ],
+      "trust_framework": "de_aml",
       "evidence": [
         {
           "_sd": [
-            "QLQFvwtNvTaZPRmb3vMHTWIA9ZaOBm8mUfgqhuY8AY8",
-            "hBdJXyUTaOmovgp8TrX2WYrt3WQ-z0Vqwm0YAP6xxNQ",
-            "o3buY7u2_bjkvzrmfTPPU2R1BL9GNb4KB5pd16pkeug"
-          ],
-          "document": {
-            "_sd": [
-              "N11Sego4dmGs9nzQRkvROveCN6X0T6Ckv1pBNDCYCoI",
-              "OG7zQ_j3LG5BtnU5NTvESbQwpRpcqcMJBbb78a7XPQ4",
-              "WfvYy1hdvHfWwiNtBZgE2-q0dJoYcZkzipfCMZAlJUg",
-              "xpGtgN0HUNONQulagdZOT6SgWPm_C2fgkQAmip7zD_I"
-            ],
-            "issuer": {
-              "_sd": [
-                "Srv3vEm6xJDexblWDjqtED6xRQTzetKzjTOd0IknNGg",
-                "wNSnaiZ_nb06siPIYoCZDAj3jFSHozSlUcOGFbY_HsA"
-              ]
-            }
-          }
+            "FPNPZmj_KaKlIP2QWB55J1gHhA14mPlbVdR9bGBgH4w",
+            "Vytbjbb4wHiTvFi9WxsqJYqPPsW_nnvWvtp0U-Kuof8",
+            "evYB510b8xzp19Q7Gn1i2EgyN0-R26oFjeBB5IDTGYI",
+            "oOBXkmNPDoEJsh5K5hgc3wdMbJJzc9Rv0hOn0mU6Ym8"
+          ]
         }
       ]
     },
     "claims": {
       "_sd": [
-        "ML0NnCXe7KkX6kOm4WlE5bg8TYnZTYzn8zipMAvfPNw",
-        "c_9CKsgpZWikDSc5EmnafFdKGcwro889cTaEEzIhAkI",
-        "knODuXwf2HfAm1i8Fg83yA-vMFGP0nDsu4CBcIoH82U",
-        "m6uZJdeojYsoQG2QW5Qhn8UPVrI4m-QWDLJjwIHBaxM"
-      ],
-      "birthdate": "1956-01-28",
-      "place_of_birth": {
-        "country": "IS",
-        "locality": "Þykkvabæjarklaustur"
-      }
+        "OTog0pBGyAmwEqIhjSuf5Rq5UWTkIecAnutwB2nGUlk",
+        "U4P6UrikZAVE3mk82oLaPDiLX8hEXmEu9A6xO5j9mxE",
+        "Ylx9AxQmJxSR9CgZmFBnyKCha9qNsnA7GzrmXPBKkDo",
+        "d7ln7xO-RREXmecBVEpwLwrEjZ3FKs_KLhCD0vL74Us",
+        "fIW6zXRtRSQNcNK5gvpRsZFkaN8BMh36UwhsdZlxoTo",
+        "fSw3UyxwNFf_CjYCCBYCRxZCGB-LIS35Pey2T7G_cHw"
+      ]
     }
   },
   "iss": "https://example.com/issuer",

@@ -478,7 +478,11 @@ class SDJWTVerifier(SDJWTCommon):
             # disclosed in this dict. If so, replace them by their
             # disclosed values.
 
-            pre_output = {k: v for k, v in sd_jwt_claims.items() if k != SD_DIGESTS_KEY}
+            pre_output = {
+                k: self._unpack_disclosed_claims(v)
+                for k, v in sd_jwt_claims.items()
+                if k != SD_DIGESTS_KEY
+            }
 
             for digest in sd_jwt_claims.get(SD_DIGESTS_KEY, []):
                 if digest in self._duplicate_hash_check:

@@ -5,6 +5,9 @@
   "exp": 1516247022,
   "_sd_alg": "sha-256",
   "address": {
-    "street_address": "Schulstr. 12"
+    "street_address": "Schulstr. 12",
+    "locality": "Schulpforta",
+    "region": "Sachsen-Anhalt",
+    "country": "DE"
   }
 }

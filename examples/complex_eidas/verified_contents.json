@@ -1,48 +1,28 @@
 {
   "verified_claims": {
     "verification": {
-      "_sd": [
-        "-jYRX8cQycTkJ_Fh-8ylZ2OmLnAjbVQCkBxx0To8pkc"
-      ],
       "trust_framework": "eidas",
+      "assurance_level": "high",
       "evidence": [
         {
-          "_sd": [
-            "2MpxXxfSFLqTolUtZEh561tunJQ9pW9o_e7JwiL145s",
-            "bVtDqlCZRDZjc411k84_jxnAnA9YabFvIeIhHjzCTSk"
-          ],
-          "document": {
-            "_sd": [
-              "AA8r3st7tlAOoD37lX96nGur2fMskJ_GrCsCQzs9XdE",
-              "Eg-T7ChRLe_JVLNILyrZOPxCdOUSthZSHX1YlSGEJbE",
-              "Ka_qJP0PQ8OUC3tSU_8MdHEesDbc3JzdD1SAxE6UB2M",
-              "vCqkUAld1U_jcz1rBJk4w4xJbAx-53fpZe6KiK9l39U"
-            ],
-            "issuer": {
-              "_sd": [
-                "UI5pUPbynony9_lnPh7fJDtP0qdSH_sX9_wzAaaR5dE",
-                "wUxKa80VoF_5WJn12qB41tPeUMr2pLcC9VtbZmkQrqY"
-              ]
-            }
-          }
+          "type": "document",
+          "time": "2022-04-22T11:30Z"
         }
       ]
     },
     "claims": {
-      "_sd": [
-        "Nd4wQn_Q-4YUtY6NGe-qU-P0aDZ7WWB9mHkIVNSYLMk",
-        "lWBfMODR-JrnhEupZma3Iu-hBl44oGBK-Sd5V4nEQX0",
-        "xezk0EcJj5GJ-eQkKAma3dnsvgmIqzR4IhMTDB4qNAk"
-      ],
       "person_unique_identifier":
         "TINIT-fc0d9684-1bf0-4220-9642-8fe652c8c040",
       "given_name": "Raffaello",
       "family_name": "Mascetti",
-      "nationalities": [
-        "IT"
-      ]
+      "place_of_birth": {
+        "country": "IT",
+        "locality": "Firenze"
+      },
+      "gender": "M"
     }
   },
+  "birth_middle_name": "Lello",
   "iss": "https://example.com/issuer",
   "iat": 1516239022,
   "exp": 1516247022,
