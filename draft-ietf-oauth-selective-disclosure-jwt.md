@@ -386,7 +386,7 @@ Issuers MUST NOT issue SD-JWTs where
 
 Like any JSON, an object in an SD-JWT payload MAY contain key-value pairs where the value is another object. In SD-JWT, the Issuer decides for each key individually, on each level of the JSON, whether the key should be selectively disclosable or not.
 
-For any selectively disclosable claim, the `_sd` key containing the hash digest MUST be included in the SD-JWT at the same level as the original claim. It follows that the `_sd` key MAY appear multiple times in an SD-JWT and MAY even appear wihin Disclosures.
+For any selectively disclosable claim, the `_sd` key containing the digest value MUST be included in the SD-JWT at the same level as the original claim. It follows that the `_sd` key MAY appear multiple times in an SD-JWT and MAY even appear wihin Disclosures.
 
 The following examples illustrate some of the options an Issuer has. It is up to the Issuer to decide which option to use, depending on, for example, the expected use cases for the SD-JWT, requirements for privacy, size considerations, or ecosystem requirements.
 
