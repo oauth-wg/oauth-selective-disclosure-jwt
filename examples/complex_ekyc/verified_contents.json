@@ -1,7 +1,4 @@
 {
-  "iss": "https://example.com/issuer",
-  "iat": 1516239022,
-  "exp": 1516247022,
   "verified_claims": {
     "verification": {
       "evidence": [
@@ -21,15 +18,18 @@
         "country": "IS",
         "locality": "Þykkvabæjarklaustur"
       },
+      "family_name": "Müller",
       "address": {
         "locality": "Maxstadt",
         "postal_code": "12344",
         "country": "DE",
         "street_address": "Weidenstraße 22"
       },
-      "given_name": "Max",
-      "family_name": "Müller"
+      "given_name": "Max"
     }
   },
+  "iss": "https://example.com/issuer",
+  "iat": 1516239022,
+  "exp": 1516247022,
   "_sd_alg": "sha-256"
 }

@@ -1,15 +1,15 @@
 {
-  "iss": "https://example.com/issuer",
-  "iat": 1516239022,
-  "exp": 1516247022,
   "sub": "6c5c0a49-b589-431d-bae7-219122a9ec2c",
   "address": {
     "_sd": [
-      "62q6-wKHlEZoXA5s42_LIJ261DgCXlJk7Drpt5W7Bjk",
-      "Xy-MyccP8KfK4NqjCxZGk61nG2YGPJF0DjQi9QvFdhA",
-      "bm_k2ZheNMFDElfqshYqP2XHjjVczBOXYpNqUIfkxuA"
+      "ToD9fSNGo_SOCnTM0r0AaGjdHEIh4doXinCkKjR2fk4",
+      "bIPnfvtg9QQSGd7W9srnYOVTK-sNUFz9kr1Js7XaU4E",
+      "xWq47lkkG-K5CYfcWtHqwi9CbL9LCP3q8v5YsSlmoUQ"
     ],
     "country": "DE"
   },
+  "iss": "https://example.com/issuer",
+  "iat": 1516239022,
+  "exp": 1516247022,
   "_sd_alg": "sha-256"
 }
