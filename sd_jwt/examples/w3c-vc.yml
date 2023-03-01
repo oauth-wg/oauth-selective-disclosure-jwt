@@ -1,38 +1,30 @@
 user_claims:
-  {
-    "iss": "https://example.com",
-    "jti": "http://example.com/credentials/3732",
-    "nbf": 1541493724,
-    "iat": 1541493724,
-    "cnf":
-      {
-        "jwk":
-          {
-            "kty": "RSA",
-            "n": "0vx7agoebGcQSuuPiLJXZptN9nndrQmbXEps2aiAFbWhM78LhWx4cbbfAAtVT86zwu1RK7aPFFxuhDR1L6tSoc_BJECPebWKRXjBZCiFV4n3oknjhMstn64tZ_2W-5JsGY4Hc5n9yBXArwl93lqt7_RN5w6Cf0h4QyQ5v-65YGjQR0_FDW2QvzqY368QQMicAtaSqzs8KJZgnYb9c7d0zgdAZHzu6qMQvRL5hajrn1n91CbOpbISD08qNLyrdkt-bFTWhAI4vMQFh6WeZu0fM4lFd2NcRwr3XPksINHaQ-G_xBniIqbw0Ls1jF44-csFCur-kEgU8awapJzKnqDKgw",
-            "e": "AQAB",
-          },
-      },
-    "type": "IdentityCredential",
-    "credentialSubject":
-      {
-        "given_name": "John",
-        "family_name": "Doe",
-        "email": "johndoe@example.com",
-        "phone_number": "+1-202-555-0101",
-        "address":
-          {
-            "street_address": "123 Main St",
-            "locality": "Anytown",
-            "region": "Anystate",
-            "country": "US",
-          },
-        "birthdate": "1940-01-01",
-        "is_over_18": true,
-        "is_over_21": true,
-        "is_over_65": true,
-      },
-  }
+  iss: 'https://example.com'
+  jti: 'http://example.com/credentials/3732'
+  nbf: 1541493724
+  iat: 1541493724
+  cnf:
+    jwk:
+      kty: RSA
+      'n': >-
+        0vx7agoebGcQSuuPiLJXZptN9nndrQmbXEps2aiAFbWhM78LhWx4cbbfAAtVT86zwu1RK7aPFFxuhDR1L6tSoc_BJECPebWKRXjBZCiFV4n3oknjhMstn64tZ_2W-5JsGY4Hc5n9yBXArwl93lqt7_RN5w6Cf0h4QyQ5v-65YGjQR0_FDW2QvzqY368QQMicAtaSqzs8KJZgnYb9c7d0zgdAZHzu6qMQvRL5hajrn1n91CbOpbISD08qNLyrdkt-bFTWhAI4vMQFh6WeZu0fM4lFd2NcRwr3XPksINHaQ-G_xBniIqbw0Ls1jF44-csFCur-kEgU8awapJzKnqDKgw
+      e: AQAB
+  type: IdentityCredential
+  credentialSubject:
+    !sd given_name: John
+    !sd family_name: Doe
+    !sd email: johndoe@example.com
+    !sd phone_number: +1-202-555-0101
+    !sd address:
+      street_address: 123 Main St
+      locality: Anytown
+      region: Anystate
+      country: US
+    !sd birthdate: '1940-01-01'
+    !sd is_over_18: true
+    !sd is_over_21: true
+    !sd is_over_65: true
+
 
 non_sd_claims:
   {

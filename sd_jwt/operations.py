@@ -13,6 +13,10 @@ from jwcrypto.jws import JWS
 from sd_jwt import DEFAULT_SIGNING_ALG, DIGEST_ALG_KEY, SD_DIGESTS_KEY
 
 
+class SDKey(str):
+    pass
+
+
 class SDJWTHasSDClaimException(Exception):
     """Exception raised when input data contains the special _sd claim reserved for SD-JWT internal data."""
 
@@ -119,7 +123,6 @@ class SDJWTIssuer(SDJWTCommon):
         issuer: str,
         issuer_key,
         holder_key=None,
-        claims_structure: Optional[Dict] = None,
         iat: Optional[int] = None,
         exp: Optional[int] = None,
         sign_alg=None,
@@ -129,7 +132,6 @@ class SDJWTIssuer(SDJWTCommon):
         self._issuer = issuer
         self._issuer_key = issuer_key
         self._holder_key = holder_key
-        self._claims_structure = claims_structure or {}
         self._iat = iat or int(datetime.datetime.utcnow().timestamp())
         self._exp = exp or self._iat + (self.DEFAULT_EXP_MINS * 60)
         self._sign_alg = sign_alg or DEFAULT_SIGNING_ALG
@@ -142,9 +144,7 @@ class SDJWTIssuer(SDJWTCommon):
 
     def _assemble_sd_jwt_payload(self):
         # Create the JWS payload
-        self.sd_jwt_payload = self._create_sd_claims(
-            self._user_claims, self._claims_structure
-        )
+        self.sd_jwt_payload = self._create_sd_claims(self._user_claims)
         self.sd_jwt_payload.update(
             {
                 "iss": self._issuer,
@@ -175,7 +175,7 @@ class SDJWTIssuer(SDJWTCommon):
     def _create_decoy_claim_entry(self) -> str:
         return self._b64hash(self._generate_salt().encode("ascii"))
 
-    def _create_sd_claims(self, user_claims, non_sd_claims):
+    def _create_sd_claims(self, user_claims):
         # This function can be called recursively.
         #
         # If the user claims are a list, apply this function
@@ -183,11 +183,7 @@ class SDJWTIssuer(SDJWTCommon):
         # (which is assumed to be a list as well) is used as the
         # structure for each item in the list.
         if type(user_claims) is list:
-            if type(non_sd_claims) is not list or len(non_sd_claims) < 1:
-                reference = {}
-            else:
-                reference = non_sd_claims[0]
-            return [self._create_sd_claims(claim, reference) for claim in user_claims]
+            return [self._create_sd_claims(claim) for claim in user_claims]
 
         # If the user claims are a dictionary, apply this function
         # to each key/value pair in the dictionary. The structure
@@ -198,16 +194,14 @@ class SDJWTIssuer(SDJWTCommon):
         elif type(user_claims) is dict:
             sd_claims = {SD_DIGESTS_KEY: []}
             for key, value in user_claims.items():
-                subtree_from_here = self._create_sd_claims(
-                    value, non_sd_claims.get(key, {})
-                )
-                if key in non_sd_claims:
-                    sd_claims[key] = subtree_from_here
-                else:
+                subtree_from_here = self._create_sd_claims(value)
+                if isinstance(key, SDKey):
                     # Assemble all hash digests in the disclosures list.
                     sd_claims[SD_DIGESTS_KEY].append(
                         self._create_sd_claim_entry(key, subtree_from_here)
                     )
+                else:
+                    sd_claims[key] = subtree_from_here
 
             # Add decoy claims if requested
             if self._add_decoy_claims:

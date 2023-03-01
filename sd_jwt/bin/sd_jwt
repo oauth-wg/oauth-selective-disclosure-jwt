@@ -1,6 +1,5 @@
 #!/usr/bin/env python3
 import argparse
-import json
 import logging
 import pathlib
 import random
@@ -8,8 +7,8 @@ import sys
 
 import yaml
 from sd_jwt import __version__
-from sd_jwt.demo_utils import get_jwk, print_decoded_repr, print_repr
-from sd_jwt.operations import SDJWTCommon, SDJWTHolder, SDJWTIssuer, SDJWTVerifier
+from sd_jwt.demo_utils import get_jwk, print_decoded_repr
+from sd_jwt.operations import SDJWTCommon, SDJWTHolder, SDJWTIssuer, SDJWTVerifier, SDKey
 from sd_jwt.replace_utils import textwrap_json, textwrap_text
 
 logger = logging.getLogger("sd_jwt")
@@ -138,12 +137,25 @@ ISSUER_PUBLIC_KEY = _JWKS["ISSUER_PUBLIC_KEY"]
 
 example_identifer = _args.example.stem
 
-with open(_args.example, "r") as f:
-    example = yaml.load(f, Loader=yaml.FullLoader)
 
-for property in ("user_claims", "non_sd_claims", "holder_disclosed_claims"):
-    if property not in example:
-        sys.exit(f"Example file must define '{property}'.")
+def load_yaml_example(file):
+    class SDKeyTag(yaml.YAMLObject):
+        yaml_tag = "!sd"
+
+        @classmethod
+        def from_yaml(cls, loader, node):
+            return SDKey(loader.construct_scalar(node))
+
+    with open(_args.example, "r") as f:
+        example = yaml.load(f, Loader=yaml.FullLoader)
+
+    for property in ("user_claims", "holder_disclosed_claims"):
+        if property not in example:
+            sys.exit(f"Example file must define '{property}'.")
+
+    return example
+
+example = load_yaml_example(_args.example)
 
 ### Produce SD-JWT and SVC for selected example
 SDJWTCommon.unsafe_randomness = _args.no_randomness
@@ -152,7 +164,6 @@ sdjwt_at_issuer = SDJWTIssuer(
     settings.ISSUER,
     ISSUER_KEY,
     HOLDER_KEY if example.get("holder_binding", False) else None,
-    example["non_sd_claims"],
     iat=_args.iat,
     exp=_args.exp,
     add_decoy_claims=example.get("add_decoy_claims", False),

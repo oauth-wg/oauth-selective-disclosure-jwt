@@ -1,30 +1,15 @@
 user_claims:
-  {
-    "sub": "john_doe_42",
-    "given_name": "John",
-    "family_name": "Doe",
-    "email": "johndoe@example.com",
-    "phone_number": "+1-202-555-0101",
-    "address":
-      {
-        "street_address": "123 Main St",
-        "locality": "Anytown",
-        "region": "Anystate",
-        "country": "US",
-      },
-    "birthdate": "1940-01-01",
-  }
-
-non_sd_claims:
-  {
-    "address":
-      {
-        "street_address": true,
-        "locality": true,
-        "region": true,
-        "country": true,
-      },
-  }
+  !sd sub: john_doe_42
+  !sd given_name: John
+  !sd family_name: Doe
+  !sd email: johndoe@example.com
+  !sd phone_number: +1-202-555-0101
+  !sd address:
+    street_address: 123 Main St
+    locality: Anytown
+    region: Anystate
+    country: US
+  !sd birthdate: "1940-01-01"
 
 holder_disclosed_claims:
   { "given_name": null, "family_name": null, "address": {} }
