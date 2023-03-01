@@ -194,99 +194,45 @@ Figure: SD-JWT Issuance and Presentation Flow
 
 # Concepts
 
-In the following, the contents of SD-JWTs and Disclosures are described at a
-conceptual level, abstracting from the data formats described afterwards.
+This section describes SD-JWTs and Disclosures at a
+conceptual level, abstracting from the data formats described in (#data_formats).
 
-## Creating an SD-JWT
+## SD-JWT and Disclosures
 
-An SD-JWT, at its core, is a digitally signed document containing digests over the claims (per claim: a random salt, the claim name and the claim value).
-It MAY further contain clear-text claims that are always disclosed to the Verifier.
-It MUST be digitally signed using the Issuer's private key.
+An SD-JWT, at its core, is a digitally signed JSON document containing digests over the selectively disclosable claims with the Disclosures outside the document.
+An SD-JWT may also contain clear-text claims that are always disclosed to the Verifier.
 
-```
-SD-JWT-DOC = (METADATA, SD-CLAIMS, NON-SD-CLAIMS)
-SD-JWT = SD-JWT-DOC | SIG(SD-JWT-DOC, ISSUER-PRIV-KEY)
-```
+Each digest value ensures the integrity of, and maps to, the respective Disclosure.  Digest values are calculated using a hash function over the Disclosures, each of which contains the claim name, the claim value, and a random salt. The Disclosures are sent to the Holder together with the SD-JWT in the Combined Format for Issuance.
 
-`SD-CLAIMS` is an array of digest values that ensure the integrity of and map to the respective Disclosures.  Digest values are calculated over the Disclosures, each of which contains the claim name (`CLAIM-NAME`), the claim value (`CLAIM-VALUE`), and a random salt (`SALT`). Digests are calculated using a hash function:
+## Disclosing to a Verifier
 
-```
-SD-CLAIMS = (
-    HASH(SALT, CLAIM-NAME, CLAIM-VALUE)
-)*
-```
-
-`SD-CLAIMS` can also be nested deeper to capture more complex objects, as will be shown later.
-
-The Issuer further creates a set of Disclosures for all claims in the SD-JWT. The Disclosures are sent to the Holder together with the SD-JWT:
-
-```
-DISCLOSURES = (
-    (SALT, CLAIM-NAME, CLAIM-VALUE)
-)*
-```
-
-The SD-JWT and the Disclosures are sent to the Holder by the Issuer:
-
-```
-COMBINED-ISSUANCE = SD-JWT | DISCLOSURES
-```
-
-## Creating Holder-Selected Disclosures
-
-To disclose to a Verifier a subset of the SD-JWT claim values, a Holder selects a subset of the Disclosures and sends it to the Verifier along with the SD-JWT.
-
-```
-HOLDER-SELECTED-DISCLOSURES = (
-    (SALT, CLAIM-NAME, CLAIM-VALUE)
-)*
-```
-
-```
-COMBINED-PRESENTATION = SD-JWT | HOLDER-SELECTED-DISCLOSURES
-```
+To disclose to a Verifier a subset of the SD-JWT claim values, a Holder sends only the Disclosures of those selectively released claims to the Verifier along with the SD-JWT in the Combined Format for Presentation.
 
 ## Optional Holder Binding
 
-Some use-cases may require Holder Binding.
-
-Cryptographic Holder Binding is an optional feature, but when it is desired, `SD-JWT` must contain information about key material controlled by the Holder:
-
-```
-SD-JWT-DOC = (METADATA, HOLDER-PUBLIC-KEY, SD-CLAIMS, NON-SD-CLAIMS)
-```
+Holder Binding is an optional feature. For example, when Cryptographic Holder Binding is required by the use-case, the SD-JWT must contain information about the key material controlled by the Holder.
 
 Note: How the public key is included in SD-JWT is out of scope of this document. It can be passed by value or by reference.
 
-The Holder can then create a signed document `HOLDER-BINDING-JWT` using its private key. This document contains some
+The Holder can then create a signed document, the Holder Binding JWT, using its private key. This document contains some
 data provided by the Verifier (out of scope of this document) to ensure the freshness of the signature, for example, a nonce and an indicator of the
 intended audience for the document.
 
-```
-HOLDER-BINDING-JWT-DOC = (NONCE, AUDIENCE)
-HOLDER-BINDING-JWT = HOLDER-BINDING-JWT-DOC |
-    SIG(HOLDER-BINDING-JWT-DOC, HOLDER-PRIV-KEY)
-```
+The Holder Binding JWT is included in the Combined Format for Presentation and sent to the Verifier along with the SD-JWT and the Holder-Selected Disclosures.
 
-The Holder Binding JWT is sent to the Verifier along with the SD-JWT and the Holder-Selected Disclosures.
+Note that there may be other ways to send the Holder Binding JWT to the Verifier or to prove Holder Binding. In these cases, inclusion of the Holder Binding JWT in the Combined Format for Presentation is not required.
 
-```
-COMBINED-PRESENTATION = SD-JWT | HOLDER-SELECTED-DISCLOSURES | HOLDER-BINDING-JWT
-```
-
-Note that there may be other ways to send the Holder Binding JWT to the Verifier or to prove Holder Binding. In these cases, inclusion of the Holder Binding JWT in the `COMBINED-PRESENTATION` is not required.
-
-## Verifying Holder-Selected Disclosures
+## Verification
 
 At a high level, the Verifier
 
- * receives the `COMBINED-PRESENTATION` from the Holder and verifies the signature of the SD-JWT using the Issuer's public key,
+ * receives the Combined Format for Presentation from the Holder and verifies the signature of the SD-JWT using the Issuer's public key,
  * verifies the Holder Binding JWT, if Holder Binding is required by the Verifier's policy, using the public key included in the SD-JWT,
  * calculates the digests over the Holder-Selected Disclosures and verifies that each digest is contained in the SD-JWT.
 
 The detailed algorithm is described in (#verifier_verification).
 
-# Data Formats
+# Data Formats {#data_formats}
 
 This section defines data formats for SD-JWTs, Disclosures, Holder Binding JWTs and formats for combining these elements for transport.
 
@@ -1231,6 +1177,7 @@ data. The original JSON data is then used by the application. See
    * Use ES256 instead of RS256 in examples
    * Rename and move the c14n challenges section to an appendix
    * A bit more in security considerations for Choice of a Hash Algorithm (1st & 2nd preimage resistant and not majorly truncated)
+   * Remove the notational figures from the Concepts section
    * Change salt to always be a string (rather than any JSON type)
    * Fix the Document History (which had a premature list for -03)
 
