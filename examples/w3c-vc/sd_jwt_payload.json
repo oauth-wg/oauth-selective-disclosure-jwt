@@ -1,8 +1,9 @@
 {
-  "iss": "https://example.com/issuer",
+  "iss": "https://example.com",
+  "iat": 1541493724,
+  "exp": 1735689661,
   "jti": "http://example.com/credentials/3732",
   "nbf": 1541493724,
-  "iat": 1516239022,
   "cnf": {
     "jwk": {
       "kty": "RSA",
@@ -29,6 +30,5 @@
       "tAQ3Er6qd3UwQLrZYRe3fMF4J6MXdz5tJMJfJw48I0g"
     ]
   },
-  "exp": 1516247022,
   "_sd_alg": "sha-256"
 }

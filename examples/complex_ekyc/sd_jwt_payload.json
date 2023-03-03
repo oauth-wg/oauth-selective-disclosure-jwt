@@ -4,6 +4,9 @@
     "XqnTomboGac-QASg2Q9V1uQGRQRkXL9jkveIzNcMmSM",
     "wN-gqrZTxUtl1-v3S5wodjuAgE0YuBS66s9p4qxfgxg"
   ],
+  "iss": "https://example.com/issuer",
+  "iat": 1516239022,
+  "exp": 1735689661,
   "verified_claims": {
     "verification": {
       "_sd": [
@@ -33,8 +36,5 @@
       ]
     }
   },
-  "iss": "https://example.com/issuer",
-  "iat": 1516239022,
-  "exp": 1516247022,
   "_sd_alg": "sha-256"
 }

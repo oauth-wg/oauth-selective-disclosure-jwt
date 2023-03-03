@@ -1,4 +1,7 @@
 {
+  "iss": "https://example.com/issuer",
+  "iat": 1516239022,
+  "exp": 1735689661,
   "verified_claims": {
     "verification": {
       "trust_framework": "de_aml",
@@ -20,8 +23,5 @@
       "family_name": "Müller"
     }
   },
-  "iss": "https://example.com/issuer",
-  "iat": 1516239022,
-  "exp": 1516247022,
   "_sd_alg": "sha-256"
 }
