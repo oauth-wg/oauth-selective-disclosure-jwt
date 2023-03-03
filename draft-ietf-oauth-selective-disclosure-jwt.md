@@ -425,7 +425,7 @@ The Issuer may also make one sub-claim of `address` non-selectively disclosable 
 
 There would be no Disclosure for `country` in this case.
 
-#### Option 3: Recursive SD-JWT
+#### Option 3: SD-JWT with Recursive Disclosures
 
 The Issuer may also decide to make the `address` claim contents selectively disclosable recursively, i.e., the `address` claim is made selectively disclosable as well as its sub-claims:
 
