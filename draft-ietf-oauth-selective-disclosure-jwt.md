@@ -384,7 +384,7 @@ Issuers MUST NOT issue SD-JWTs where
 
 #### Nested Data in SD-JWTs {#nested_data}
 
-Like any JSON, an object in an SD-JWT payload MAY contain key-value pairs where the value is another object. In SD-JWT, the Issuer decides for each key individually, on each level of the JSON, whether the key should be selectively disclosable or not.
+Being JSON, an object in an SD-JWT payload MAY contain key-value pairs where the value is another object. In SD-JWT, the Issuer decides for each key individually, on each level of the JSON, whether the key should be selectively disclosable or not. This choice can be made on each level independent from whether keys higher in the hierarchy are selectively disclosable.
 
 For any selectively disclosable claim, the `_sd` key containing the digest value MUST be included in the SD-JWT at the same level as the original claim. It follows that the `_sd` key MAY appear multiple times in an SD-JWT. It MAY even appear within Disclosures.
 
