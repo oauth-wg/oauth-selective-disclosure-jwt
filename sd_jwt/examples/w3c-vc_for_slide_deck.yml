@@ -32,14 +32,17 @@ user_claims:
 non_sd_claims:
   {
     "iss": true,
+    "exp": true,
+    "iat": true,
     "cnf": { "jwk": { "kty": true, "n": true, "e": true } },
     "type": true,
     "credentialSubject": { "address": {} },
   }
 
-holder_disclosed_claims: {
-  "given_name": null,
-  "family_name": null,
-  "address": null,
-  "is_over_18": null,
-}
+holder_disclosed_claims:
+  {
+    "given_name": null,
+    "family_name": null,
+    "address": null,
+    "is_over_18": null,
+  }

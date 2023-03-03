@@ -1,59 +1,54 @@
-user_claims:
-  {
+user_claims: {
     "verified_claims":
       {
         "verification":
           {
             "trust_framework": "eidas",
             "assurance_level": "high",
-            "evidence": [
-                {
-                  "type": "electronic_record",
-                  "record": {
-                    "type": "eu.europa.ec.eudiw.pid.1",
-                    "source": {
-                        "organization_name": "Comune di Firenze",
-                        "organization_id": "c_d612", # italian ipa code, public service id.
-                        "country_code": "IT",
-                        "country": "Italy"
-                    },
-                    "personal_number": "9642-8fe652c8c040" # european personal id
-                  }
-                }
-            ]
+            "evidence": [{ "type": "electronic_record", "record": {
+                      "type": "eu.europa.ec.eudiw.pid.1",
+                      "source": {
+                          "organization_name": "Comune di Firenze",
+                          "organization_id": "c_d612", # italian ipa code, public service id.
+                          "country_code": "IT",
+                          "country": "Italy",
+                        },
+                      "personal_number": "9642-8fe652c8c040", # european personal id
+                    } }],
           },
-        "claims": {
-          "person_unique_identifier": "TINIT-fc0d9684-1bf0-4220-9642-8fe652c8c040",
-          "given_name": "Raffaello",
-          "family_name": "Mascetti",
-          "date_of_birth": "1922-03-13",
-          "gender": "M",
-          "place_of_birth": {
-            "country": "IT",
-            "locality": "Firenze"
+        "claims":
+          {
+            "person_unique_identifier": "TINIT-fc0d9684-1bf0-4220-9642-8fe652c8c040",
+            "given_name": "Raffaello",
+            "family_name": "Mascetti",
+            "date_of_birth": "1922-03-13",
+            "gender": "M",
+            "place_of_birth": { "country": "IT", "locality": "Firenze" },
+            "nationalities": ["IT"],
           },
-          "nationalities": [
-            "IT"
-          ]
-        }
       },
     "birth_middle_name": "Lello", # other optional claim not covered by eu.europa.ec.eudiw.pid.1
   }
 
 non_sd_claims:
   {
+    "iss": true,
+    "exp": true,
+    "iat": true,
     "verified_claims":
       {
-        "verification": { 
-            "trust_framework": "", 
-            "evidence": [{ "record": { "record": {"type": ""} } }] 
-        },
-        "claims": { 
+        "verification":
+          {
+            "trust_framework": "",
+            "evidence": [{ "record": { "record": { "type": "" } } }],
+          },
+        "claims":
+          {
             "person_unique_identifier": "",
-            "given_name": "", 
-            "family_name": "", 
-            "nationalities": "" 
-        },
+            "given_name": "",
+            "family_name": "",
+            "nationalities": "",
+          },
       },
   }
 
@@ -65,7 +60,7 @@ holder_disclosed_claims:
           {
             "trust_framework": null,
             "assurance_level": null,
-            "evidence": [{ "record": {"type": null} }] 
+            "evidence": [{ "record": { "type": null } }],
           },
         "claims":
           {

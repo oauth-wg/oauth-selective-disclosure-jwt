@@ -48,6 +48,9 @@ user_claims:
 
 non_sd_claims:
   {
+    "iss": true,
+    "exp": true,
+    "iat": true,
     "verified_claims":
       {
         "verification": { "evidence": [{ "document": { "issuer": {} } }] },

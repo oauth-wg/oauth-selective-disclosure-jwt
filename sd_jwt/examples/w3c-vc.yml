@@ -38,6 +38,7 @@ non_sd_claims:
   {
     "iss": true,
     "jti": true,
+    "exp": true,
     "nbf": true,
     "iat": true,
     "cnf": { "jwk": { "kty": true, "n": true, "e": true } },

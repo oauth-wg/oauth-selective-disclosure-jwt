@@ -10,9 +10,8 @@ user_claims:
       },
   }
 
-non_sd_claims: {"sub": true}
+non_sd_claims: { "iss": true, "exp": true, "iat": true, "sub": true }
 
-holder_disclosed_claims:
-  {}
+holder_disclosed_claims: {}
 
 holder_binding: False

@@ -10,9 +10,9 @@ user_claims:
       },
   }
 
-non_sd_claims: { "address": {}, "sub": true }
+non_sd_claims:
+  { "iss": true, "exp": true, "iat": true, "address": {}, "sub": true }
 
-holder_disclosed_claims:
-  {}
+holder_disclosed_claims: {}
 
 holder_binding: False
