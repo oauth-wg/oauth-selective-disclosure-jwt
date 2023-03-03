@@ -1,6 +1,8 @@
 __Disclosure for `street_address`:__
+
 SHA-256 Hash: `udFWFx_91NgCjhLTHJAvvAHwNT2vlHBsWxPIOxK2Ydo`
 
+Disclosure:
 
 ```
 WyIyUzBkSXhpSE9CblVldFBKMW5GbERBIiwgInN0cmVldF9hZGRyZXNzIiwgIlNjaHVs
@@ -14,8 +16,10 @@ Contents:
 ```
 
 __Disclosure for `locality`:__
+
 SHA-256 Hash: `1zgsu9Fe6bkbQY9zJsfPTo1uBPMVl48m4EafxJTYSu0`
 
+Disclosure:
 
 ```
 WyI5YU9BQzFHNHZlNFJjalJvTUtERWNnIiwgImxvY2FsaXR5IiwgIlNjaHVscGZvcnRh
@@ -29,8 +33,10 @@ Contents:
 ```
 
 __Disclosure for `region`:__
+
 SHA-256 Hash: `DKtN_qW_hayYCGCKihS39M3sobs1RTekxaKnMbE17-Q`
 
+Disclosure:
 
 ```
 WyJqdkZ5QUxBaGFaa0hBU0tCYUZqMGJBIiwgInJlZ2lvbiIsICJTYWNoc2VuLUFuaGFs
@@ -44,8 +50,10 @@ Contents:
 ```
 
 __Disclosure for `country`:__
+
 SHA-256 Hash: `h2DxxE80C7qRWxCQjwR96da46jr2B8bLSRwAdbZSRlo`
 
+Disclosure:
 
 ```
 WyI0dGNmbFJNZWdxUG54ZzZTUkQ2ZzBnIiwgImNvdW50cnkiLCAiREUiXQ
@@ -58,8 +66,10 @@ Contents:
 ```
 
 __Disclosure for `address`:__
+
 SHA-256 Hash: `Lot9gM9VOOiyFS4FOR1ykwz-V-fB_xwF63jWemIH4d0`
 
+Disclosure:
 
 ```
 WyJGcDBqLTd6Q2FOVFdmX3dLNjdzeGlnIiwgImFkZHJlc3MiLCB7Il9zZCI6IFsiMXpn

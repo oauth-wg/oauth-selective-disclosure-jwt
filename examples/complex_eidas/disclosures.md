@@ -1,6 +1,8 @@
 __Disclosure for `issuer`:__
+
 SHA-256 Hash: `Bee6NswQbVGQRLwt2M_iQzyZRZS-1S-ZCvEb6qrO4w4`
 
+Disclosure:
 
 ```
 WyJHdjlJTl9CR1BudmpnRzViMHZtZDhRIiwgImlzc3VlciIsIHsibmFtZSI6ICJjX2Q2
@@ -15,8 +17,10 @@ Contents:
 ```
 
 __Disclosure for `document`:__
+
 SHA-256 Hash: `Ofw00N-WmZX4NGg_9bo-bGPb79OofOCR0rKpIRni-Ww`
 
+Disclosure:
 
 ```
 WyJxMEhFSC01RUJXZGpOVzlxQnRmWjZnIiwgImRvY3VtZW50IiwgeyJfc2QiOiBbIkJl
@@ -35,8 +39,10 @@ Contents:
 ```
 
 __Disclosure for `evidence`:__
+
 SHA-256 Hash: `_lbDEsrlRsRRIFbm4Wo7yI6OGxK_jyREGDbEbNNbE8c`
 
+Disclosure:
 
 ```
 WyJPMHQtSzliaUxqQUpPYTlCRjlVY0p3IiwgImV2aWRlbmNlIiwgW3siX3NkIjogWyJP
@@ -53,8 +59,10 @@ Contents:
 ```
 
 __Disclosure for `date_of_birth`:__
+
 SHA-256 Hash: `CMibWTnxlPV4t9PikOhxL-hrLT5UCkSMAqp1ZIQEDxE`
 
+Disclosure:
 
 ```
 WyJxWGxBbGhIMkNwaGE3aGpvYnBZMVFnIiwgImRhdGVfb2ZfYmlydGgiLCAiMTkyMi0w
@@ -68,8 +76,10 @@ Contents:
 ```
 
 __Disclosure for `gender`:__
+
 SHA-256 Hash: `VdZWIPp4ngYgkSij8ZJUuxnFlVl0WB1ERhPVztWbv3U`
 
+Disclosure:
 
 ```
 WyJpUWdKZXZKYUI4YlNkd05peG8tbnRnIiwgImdlbmRlciIsICJNIl0
@@ -82,8 +92,10 @@ Contents:
 ```
 
 __Disclosure for `place_of_birth`:__
+
 SHA-256 Hash: `5pKMzwsp6i8VcPXyFq6WUZpohJBth5LZgFqK-V86mqc`
 
+Disclosure:
 
 ```
 WyJ3QWRQUVhkQWFEUWlSZ2xBZTFjM0xnIiwgInBsYWNlX29mX2JpcnRoIiwgeyJjb3Vu
@@ -98,8 +110,10 @@ Contents:
 ```
 
 __Disclosure for `nationalities`:__
+
 SHA-256 Hash: `LxSdSlnUfIbXsO-5rmyA3Vhy4CcQzZT6GbCuPHLEzoI`
 
+Disclosure:
 
 ```
 WyI3dThvdFdMY0lUNThsWVFqR0xER2VBIiwgIm5hdGlvbmFsaXRpZXMiLCBbIklUIl1d

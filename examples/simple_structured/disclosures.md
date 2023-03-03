@@ -1,6 +1,8 @@
 __Disclosure for `sub`:__
+
 SHA-256 Hash: `hblncirSgqjt8gTQ56jy7FUd1cpCg0orxca0C-o9aoo`
 
+Disclosure:
 
 ```
 WyIzWFQxYV8tOFBRNFlweEZnczRiUG9RIiwgInN1YiIsICI2YzVjMGE0OS1iNTg5LTQz
@@ -15,8 +17,10 @@ Contents:
 ```
 
 __Disclosure for `given_name`:__
+
 SHA-256 Hash: `lagH02GaboFAO6_d2R8jpdjO-Xxnh4aVAG9cE8iV4Sg`
 
+Disclosure:
 
 ```
 WyJ3M3RSbkptLTZ4YXhtMHdWVFMxYV9nIiwgImdpdmVuX25hbWUiLCAiXHU1OTJhXHU5
@@ -30,8 +34,10 @@ Contents:
 ```
 
 __Disclosure for `family_name`:__
+
 SHA-256 Hash: `-rAXuBrq1MIGJnPr_vGdgVhinHfvtw6HMvkMQ6rk1Po`
 
+Disclosure:
 
 ```
 WyJGM3MxUENGOUt3eklEaUtKajZrekpRIiwgImZhbWlseV9uYW1lIiwgIlx1NWM3MVx1
@@ -45,8 +51,10 @@ Contents:
 ```
 
 __Disclosure for `email`:__
+
 SHA-256 Hash: `p3vzUx7kYcA_dOlOQpyf8Z8J4s1ZPfhXWZNFuI4JgvU`
 
+Disclosure:
 
 ```
 WyJpQl9adWNHQ3dmampRald5MEV0RVlnIiwgImVtYWlsIiwgIlwidW51c3VhbCBlbWFp
@@ -61,8 +69,10 @@ address\"@example.jp"]
 ```
 
 __Disclosure for `phone_number`:__
+
 SHA-256 Hash: `ZRtxg42klTl-Ap_OiwNVh49ZCGM059AmHPayFqbMilE`
 
+Disclosure:
 
 ```
 WyJMR3hTaXJELTdsRHB6SWlsVHpYdXdnIiwgInBob25lX251bWJlciIsICIrODEtODAt
@@ -76,8 +86,10 @@ Contents:
 ```
 
 __Disclosure for `address`:__
+
 SHA-256 Hash: `s2OMJlfL0E9i46-mM3sQKxJ0bEs3bNwBrzXhObM7iR0`
 
+Disclosure:
 
 ```
 WyJlT1hQUDJNYTAzNTNiai1qLTVPRGFnIiwgImFkZHJlc3MiLCB7InN0cmVldF9hZGRy
@@ -97,8 +109,10 @@ ac\u90fd\u6e2f\u533a\u829d\u516c\u5712\uff14\u4e01\u76ee\uff12\u2212
 ```
 
 __Disclosure for `birthdate`:__
+
 SHA-256 Hash: `g_WrTVyjFFsppeKOjcgAK8nLTeY8IcPAYSz00xNn5Rk`
 
+Disclosure:
 
 ```
 WyJwN3dJOHpfenlzQUN4ODVYOTgtWmFRIiwgImJpcnRoZGF0ZSIsICIxOTQwLTAxLTAx
