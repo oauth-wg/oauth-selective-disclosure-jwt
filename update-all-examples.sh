@@ -4,7 +4,7 @@
 set -e
 
 OUTPUT_DIR="./examples"
-SDJWT_ARGS="--output-dir $OUTPUT_DIR --nonce XZOUco1u_gEPknxS78sWWg --iat 1516239022 --exp 1516247022 --no-randomness"
+SDJWT_ARGS="--output-dir $OUTPUT_DIR --nonce XZOUco1u_gEPknxS78sWWg --iat 1516239022 --exp 1735689661 --no-randomness"
 
 rm -r $OUTPUT_DIR/* || true
 

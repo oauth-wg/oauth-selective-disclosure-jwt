@@ -4,6 +4,8 @@ import logging
 import pathlib
 import random
 import sys
+import datetime
+
 
 import yaml
 from sd_jwt import __version__
@@ -13,10 +15,13 @@ from sd_jwt.replace_utils import textwrap_json, textwrap_text
 
 logger = logging.getLogger("sd_jwt")
 
+
 # Generate a 16-bit random number
 def generate_nonce():
     return bytes(random.getrandbits(8) for _ in range(16)).hex()
 
+
+DEFAULT_EXP_MINS = 15
 
 parser = argparse.ArgumentParser(
     description=f"{__file__} demo.",
@@ -157,15 +162,23 @@ def load_yaml_example(file):
 
 example = load_yaml_example(_args.example)
 
+### Add default claims if necessary
+iat = _args.iat or int(datetime.datetime.utcnow().timestamp())
+exp = _args.exp or iat + (DEFAULT_EXP_MINS * 60)
+claims = {
+    "iss": settings.ISSUER,
+    "iat": iat,
+    "exp": exp,
+}
+
+claims.update(example["user_claims"])
+
 ### Produce SD-JWT and SVC for selected example
 SDJWTCommon.unsafe_randomness = _args.no_randomness
 sdjwt_at_issuer = SDJWTIssuer(
-    example["user_claims"],
-    settings.ISSUER,
+    claims,
     ISSUER_KEY,
     HOLDER_KEY if example.get("holder_binding", False) else None,
-    iat=_args.iat,
-    exp=_args.exp,
     add_decoy_claims=example.get("add_decoy_claims", False),
 )
 
@@ -183,11 +196,21 @@ sdjwt_at_holder.create_presentation(
 
 ### Verify the SD-JWT using the SD-JWT-R
 
+
+# Define a function to check the issuer and retrieve the
+# matching public key
+def cb_get_issuer_key(issuer):
+    # Do not use in production - this allows to use any issuer name for demo purposes
+    if issuer == claims["iss"]:
+        return ISSUER_PUBLIC_KEY
+    else:
+        raise Exception(f"Unknown issuer: {issuer}")
+
+
 # Note: The only input from the holder is the combined presentation!
 sdjwt_at_verifier = SDJWTVerifier(
     sdjwt_at_holder.combined_presentation,
-    ISSUER_PUBLIC_KEY,
-    settings.ISSUER,
+    cb_get_issuer_key,
     settings.VERIFIER if example.get("holder_binding", False) else None,
     _args.nonce if example.get("holder_binding", False) else None,
 )
@@ -225,7 +248,9 @@ _artifacts = {
         "txt",
     ),
     "hb_jwt_payload": (
-        sdjwt_at_holder.holder_binding_jwt_payload if example.get("holder_binding") else None,
+        sdjwt_at_holder.holder_binding_jwt_payload
+        if example.get("holder_binding")
+        else None,
         "Payload of the Holder Binding JWT",
         "json",
     ),
