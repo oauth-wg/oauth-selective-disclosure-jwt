@@ -573,8 +573,8 @@ a Combined Format for Issuance:
  2. Hash all of the Disclosures separately.
  3. Find the places in the SD-JWT where the digests of the Disclosures are
     included and decode the respective plaintext values from the Disclosures at the
-    appropriate places. The processing MUST take into account that digests might not be
-    included directly in the SD-JWT, but in other Disclosures. If any of the
+    appropriate places. The processing MUST take into account that digests might be
+    included not only directly in the SD-JWT, but also in other Disclosures. If any of the
     digests cannot be found, the Holder MUST reject the SD-JWT.
 
 It is up to the Holder how to maintain the mapping between the Disclosures and the plaintext claim values to be able to display them to the End-User when needed.
