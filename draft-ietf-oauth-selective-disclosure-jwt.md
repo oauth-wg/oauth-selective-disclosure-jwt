@@ -831,7 +831,7 @@ provided by the transport protocol and does not specify any encryption
 mechanism.
 
 Implementers MUST ensure that the transport protocol provides confidentiality,
-if the privacy of End-User data or correlation attacks are a concern. Implementers MAY define an
+if the privacy of End-User data or correlation attacks by the passive observers are a concern. Implementers MAY define an
 envelope format (such as described in (#enveloping) or nesting the SD-JWT Combined Format as
 the plaintext payload of a JWE) to encrypt the SD-JWT
 and associated Disclosures when transmitted over an insecure channel.
@@ -853,7 +853,9 @@ To prevent these types of linkability, various methods, including but not limite
 - Use advanced cryptographic schemes, outside the scope of this specification.
 - Issue a batch of SD-JWTs to the Holder to enable the Holder to use a unique SD-JWT per Verifier. This only helps with Verifier/Verifier unlinkability.
 
-## Issuer Issuing only One Type of D-JWT
+Colluding Verifier/Verifier pairs correspond to RP+RP'-U Unlinkability as defined in [@ISO.27551].
+
+## Issuer Issuing One Type of SD-JWT
 
 Issuer issuing only one type of SD-JWT might have privacy implications, because if the Holder has an SD-JWT issued by that Issuer, its type and claim names can be determined.
 
@@ -917,6 +919,13 @@ TBD
 <reference anchor="ISO.29100" target="https://standards.iso.org/ittf/PubliclyAvailableStandards/index.html">
   <front>
     <title>ISO/IEC 29100:2011 Information technology — Security techniques — Privacy framework</title>
+   <date year="2011"/>
+  </front>
+</reference>
+
+<reference anchor="ISO.27551" target="https://www.iso.org/standard/72018.html">
+  <front>
+    <title>ISO/IEC 27551:2021 Information security, cybersecurity and privacy protection — Requirements for attribute-based unlinkable entity authentication</title>
    <date year="2011"/>
   </front>
 </reference>
