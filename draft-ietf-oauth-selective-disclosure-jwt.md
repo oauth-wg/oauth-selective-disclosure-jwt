@@ -69,9 +69,9 @@ signed JWT might want to disclose to Verifiers at some point. The
 ability to selectively disclose a subset of these claims depending on
 the Verifier becomes crucial to ensure minimum disclosure and prevent
 Verifiers from obtaining claims irrelevant for the transaction at hand.
-One example of such a multi-use JWT is a verifiable credential, a
-tamper-evident credential with a cryptographically verifiable authorship that
-contains claims about a subject.
+One example of such a multi-use JWT is a verifiable credential, an issuer-signed
+credential that contains the claims about a subject, and whose authenticity can be
+cryptographically verified.
 
 SD-JWTs defined in this document enable such selective disclosure of JWT claims.
 
