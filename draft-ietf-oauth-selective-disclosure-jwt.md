@@ -770,6 +770,8 @@ key-distribution method.
 
 # Privacy Considerations {#privacy_considerations}
 
+The privacy principles of [@ISO.29100] MUST be adhered to. 
+
 ## Storage of Signed User Data
 
 Wherever End-User data is stored, it represents a potential
@@ -851,6 +853,14 @@ To prevent these types of linkability, various methods, including but not limite
 - Use advanced cryptographic schemes, outside the scope of this specification.
 - Issue a batch of SD-JWTs to the Holder to enable the Holder to use a unique SD-JWT per Verifier. This only helps with Verifier/Verifier unlinkability.
 
+## Issuer Issuing only One Type of D-JWT
+
+Issuer issuing only one type of SD-JWT might have privacy implications, because if the Holder has an SD-JWT issued by that Issuer, its type and claim names can be determined.
+
+For example, if the National Cancer Institute only issued SD-JWTs with cancer registry information, it is possible to deduce that the Holder owning its SD-JWT is a cancer patient.
+
+To mitigate this issue, a group of issuers may elect to use a common Issuer identifier, or use a group signature scheme instead of an individual signature.
+
 # Acknowledgements {#Acknowledgements}
 
 We would like to thank
@@ -901,6 +911,13 @@ TBD
       <organization>Salesforce</organization>
     </author>
    <date day="8" month="Nov" year="2014"/>
+  </front>
+</reference>
+
+<reference anchor="ISO.29100" target="https://standards.iso.org/ittf/PubliclyAvailableStandards/index.html">
+  <front>
+    <title>ISO/IEC 29100:2011 Information technology — Security techniques — Privacy framework</title>
+   <date year="2011"/>
   </front>
 </reference>
 
