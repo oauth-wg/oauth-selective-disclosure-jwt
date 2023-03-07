@@ -880,6 +880,8 @@ The work on this draft was started at OAuth Security Workshop 2022 in Trondheim,
 
 # IANA Considerations {#iana_considerations}
 
+TBD
+
 ## Media Type Registration
 
 This section registers the "application/sdjwt-issuance" media type [@RFC2046] in
