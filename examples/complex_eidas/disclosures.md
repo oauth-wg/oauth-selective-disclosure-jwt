@@ -1,189 +1,126 @@
-__Disclosure for `assurance_level`:__
+__Disclosure for `issuer`:__
+
+SHA-256 Hash: `Bee6NswQbVGQRLwt2M_iQzyZRZS-1S-ZCvEb6qrO4w4`
+
+Disclosure:
 
 ```
-WyJrTjdPWk1fRElOdDlHb1FkUHFmczRRIiwgImFzc3VyYW5jZV9sZXZlbCIsICJoaWdo
-Il0
-```
-
-Contents:
-
-```
-["kN7OZM_DINt9GoQdPqfs4Q", "assurance_level", "high"]
-```
-
-SHA-256 Hash: `OKbpoO_RGyeF1FP_X4RI67ytOW5OO5pj8iAEHPPmGzQ`
-
-__Disclosure for `type`:__
-
-```
-WyI5T1NRWjF4eFZxNERCNWlucFlzMkpnIiwgInR5cGUiLCAiZG9jdW1lbnQiXQ
+WyJHdjlJTl9CR1BudmpnRzViMHZtZDhRIiwgImlzc3VlciIsIHsibmFtZSI6ICJjX2Q2
+MTIiLCAiY291bnRyeSI6ICJJVCJ9XQ
 ```
 
 Contents:
 
 ```
-["9OSQZ1xxVq4DB5inpYs2Jg", "type", "document"]
+["Gv9IN_BGPnvjgG5b0vmd8Q", "issuer", {"name": "c_d612", "country":
+"IT"}]
 ```
 
-SHA-256 Hash: `DwtOtYlPczP3j0CAGmwK_sG1PS15BePEWennozJtnc4`
+__Disclosure for `document`:__
 
-__Disclosure for `time`:__
+SHA-256 Hash: `Ofw00N-WmZX4NGg_9bo-bGPb79OofOCR0rKpIRni-Ww`
 
-```
-WyIwcTlpbzFyRmpqZWJicEE2TmVlNjJRIiwgInRpbWUiLCAiMjAyMi0wNC0yMlQxMToz
-MFoiXQ
-```
-
-Contents:
+Disclosure:
 
 ```
-["0q9io1rFjjebbpA6Nee62Q", "time", "2022-04-22T11:30Z"]
-```
-
-SHA-256 Hash: `N5X-cmduA_hEiG-2-TFHWlYFPmuPAhgMSDAd5-_0ANw`
-
-__Disclosure for `type`:__
-
-```
-WyJYTzZJX1RtTkhVR3J2REZ6aWQtcjdBIiwgInR5cGUiLCAiaWRjYXJkIl0
+WyJxMEhFSC01RUJXZGpOVzlxQnRmWjZnIiwgImRvY3VtZW50IiwgeyJfc2QiOiBbIkJl
+ZTZOc3dRYlZHUVJMd3QyTV9pUXp5WlJaUy0xUy1aQ3ZFYjZxck80dzQiXSwgInR5cGUi
+OiAiaWRjYXJkIiwgIm51bWJlciI6ICIxNTQ1NTQiLCAiZGF0ZV9vZl9pc3N1YW5jZSI6
+ICIyMDIxLTAzLTIzIiwgImRhdGVfb2ZfZXhwaXJ5IjogIjIwMzEtMDMtMjIifV0
 ```
 
 Contents:
 
 ```
-["XO6I_TmNHUGrvDFzid-r7A", "type", "idcard"]
+["q0HEH-5EBWdjNW9qBtfZ6g", "document", {"_sd":
+["Bee6NswQbVGQRLwt2M_iQzyZRZS-1S-ZCvEb6qrO4w4"], "type": "idcard",
+"number": "154554", "date_of_issuance": "2021-03-23",
+"date_of_expiry": "2031-03-22"}]
 ```
 
-SHA-256 Hash: `wnXuBaY3ZVHy7qb8zhyVqGjs5ZywuwfDxJ3pIc1vHQo`
+__Disclosure for `evidence`:__
 
-__Disclosure for `name`:__
+SHA-256 Hash: `_lbDEsrlRsRRIFbm4Wo7yI6OGxK_jyREGDbEbNNbE8c`
 
-```
-WyJxODUwNXQtYVpCUHV6TDJwdmhKLUVRIiwgIm5hbWUiLCAiY19kNjEyIl0
-```
-
-Contents:
+Disclosure:
 
 ```
-["q8505t-aZBPuzL2pvhJ-EQ", "name", "c_d612"]
-```
-
-SHA-256 Hash: `VBsVXxKHbC7-6dVZcdFg9kU7yCNsPWob4bDcVbZB4-w`
-
-__Disclosure for `country`:__
-
-```
-WyJaNkF0aDg1ZGNXUzd0RjhRQnI1MGt3IiwgImNvdW50cnkiLCAiSVQiXQ
+WyJPMHQtSzliaUxqQUpPYTlCRjlVY0p3IiwgImV2aWRlbmNlIiwgW3siX3NkIjogWyJP
+ZncwME4tV21aWDROR2dfOWJvLWJHUGI3OU9vZk9DUjByS3BJUm5pLVd3Il0sICJ0eXBl
+IjogImRvY3VtZW50IiwgInRpbWUiOiAiMjAyMi0wNC0yMlQxMTozMFoifV1d
 ```
 
 Contents:
 
 ```
-["Z6Ath85dcWS7tF8QBr50kw", "country", "IT"]
+["O0t-K9biLjAJOa9BF9UcJw", "evidence", [{"_sd":
+["Ofw00N-WmZX4NGg_9bo-bGPb79OofOCR0rKpIRni-Ww"], "type": "document",
+"time": "2022-04-22T11:30Z"}]]
 ```
-
-SHA-256 Hash: `S-K8XHQ5-TipWeWHZNcKLe4gyqoTW8QPl6XXdmnBPiI`
-
-__Disclosure for `number`:__
-
-```
-WyJMei0zUm9YdW5iSDJvTFpYTlJicUx3IiwgIm51bWJlciIsICIxNTQ1NTQiXQ
-```
-
-Contents:
-
-```
-["Lz-3RoXunbH2oLZXNRbqLw", "number", "154554"]
-```
-
-SHA-256 Hash: `30jdaA9OfGpa3Tj5XJbtWiVrl4i66my26mOnbIuwY0w`
-
-__Disclosure for `date_of_issuance`:__
-
-```
-WyJ4SkhzUTZ3YWlXSjVVUXB2dVVxNzN3IiwgImRhdGVfb2ZfaXNzdWFuY2UiLCAiMjAy
-MS0wMy0yMyJd
-```
-
-Contents:
-
-```
-["xJHsQ6waiWJ5UQpvuUq73w", "date_of_issuance", "2021-03-23"]
-```
-
-SHA-256 Hash: `PPzuOzIrbneVJ49-K3zgqOPDJvFgbipGcU1Psg2BqPY`
-
-__Disclosure for `date_of_expiry`:__
-
-```
-WyJsVFB2T2FfdXk1VGEtSF83NURSVE5RIiwgImRhdGVfb2ZfZXhwaXJ5IiwgIjIwMzEt
-MDMtMjIiXQ
-```
-
-Contents:
-
-```
-["lTPvOa_uy5Ta-H_75DRTNQ", "date_of_expiry", "2031-03-22"]
-```
-
-SHA-256 Hash: `Fsu1XL9NW1tHVpytr44jFbXwdhX1avNlRArOzRRj6FQ`
 
 __Disclosure for `date_of_birth`:__
 
+SHA-256 Hash: `CMibWTnxlPV4t9PikOhxL-hrLT5UCkSMAqp1ZIQEDxE`
+
+Disclosure:
+
 ```
-WyJIOUZBUlZiTUdSSGJrY3l6ODhaX2J3IiwgImRhdGVfb2ZfYmlydGgiLCAiMTkyMi0w
+WyJxWGxBbGhIMkNwaGE3aGpvYnBZMVFnIiwgImRhdGVfb2ZfYmlydGgiLCAiMTkyMi0w
 My0xMyJd
 ```
 
 Contents:
 
 ```
-["H9FARVbMGRHbkcyz88Z_bw", "date_of_birth", "1922-03-13"]
+["qXlAlhH2Cpha7hjobpY1Qg", "date_of_birth", "1922-03-13"]
 ```
-
-SHA-256 Hash: `zXwogmNL4aJrhL7OikfJCpDYpPNSA1SyFciDIcWP14k`
 
 __Disclosure for `gender`:__
 
+SHA-256 Hash: `VdZWIPp4ngYgkSij8ZJUuxnFlVl0WB1ERhPVztWbv3U`
+
+Disclosure:
+
 ```
-WyJ5eHNuRnJ6V3Y0VUExMFhLR1EyMTB3IiwgImdlbmRlciIsICJNIl0
+WyJpUWdKZXZKYUI4YlNkd05peG8tbnRnIiwgImdlbmRlciIsICJNIl0
 ```
 
 Contents:
 
 ```
-["yxsnFrzWv4UA10XKGQ210w", "gender", "M"]
+["iQgJevJaB8bSdwNixo-ntg", "gender", "M"]
 ```
-
-SHA-256 Hash: `9C3BrCMDx2zsqn9IhN7siBJXSyZvvJoDYzGsyHhhnZU`
 
 __Disclosure for `place_of_birth`:__
 
+SHA-256 Hash: `5pKMzwsp6i8VcPXyFq6WUZpohJBth5LZgFqK-V86mqc`
+
+Disclosure:
+
 ```
-WyI1cF9vamx3S3gwUjZSNjFkS0xOOENRIiwgInBsYWNlX29mX2JpcnRoIiwgeyJjb3Vu
+WyJ3QWRQUVhkQWFEUWlSZ2xBZTFjM0xnIiwgInBsYWNlX29mX2JpcnRoIiwgeyJjb3Vu
 dHJ5IjogIklUIiwgImxvY2FsaXR5IjogIkZpcmVuemUifV0
 ```
 
 Contents:
 
 ```
-["5p_ojlwKx0R6R61dKLN8CQ", "place_of_birth", {"country": "IT",
+["wAdPQXdAaDQiRglAe1c3Lg", "place_of_birth", {"country": "IT",
 "locality": "Firenze"}]
 ```
 
-SHA-256 Hash: `QVtNjGpLtd7NpJgfjBTMhKwwef4EE2VuEE-jBKQJueA`
+__Disclosure for `nationalities`:__
 
-__Disclosure for `birth_middle_name`:__
+SHA-256 Hash: `LxSdSlnUfIbXsO-5rmyA3Vhy4CcQzZT6GbCuPHLEzoI`
+
+Disclosure:
 
 ```
-WyJlSHhBZWQ5THNybG5ncGhKRE5aSXZnIiwgImJpcnRoX21pZGRsZV9uYW1lIiwgIkxl
-bGxvIl0
+WyI3dThvdFdMY0lUNThsWVFqR0xER2VBIiwgIm5hdGlvbmFsaXRpZXMiLCBbIklUIl1d
 ```
 
 Contents:
 
 ```
-["eHxAed9LsrlngphJDNZIvg", "birth_middle_name", "Lello"]
+["7u8otWLcIT58lYQjGLDGeA", "nationalities", ["IT"]]
 ```
-
-SHA-256 Hash: `UxYjx8bYA86RGAHOjRjntztJ16doIL9tAFREFeQCKz0`

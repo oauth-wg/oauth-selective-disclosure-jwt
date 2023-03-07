@@ -1,7 +1,7 @@
 {
   "iss": "https://example.com/issuer",
   "iat": 1516239022,
-  "exp": 1516247022,
+  "exp": 1735689661,
   "_sd_alg": "sha-256",
   "cnf": {
     "jwk": {
@@ -17,6 +17,6 @@
     "region": "Anystate",
     "country": "US"
   },
-  "family_name": "Doe",
-  "given_name": "John"
+  "given_name": "John",
+  "family_name": "Doe"
 }

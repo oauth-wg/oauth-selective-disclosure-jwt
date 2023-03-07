@@ -12,6 +12,10 @@ from jwcrypto.jws import JWS
 from sd_jwt import DEFAULT_SIGNING_ALG, DIGEST_ALG_KEY, SD_DIGESTS_KEY
 
 
+class SDKey(str):
+    pass
+
+
 class SDJWTHasSDClaimException(Exception):
     """Exception raised when input data contains the special _sd claim reserved for SD-JWT internal data."""
 
@@ -116,14 +120,12 @@ class SDJWTIssuer(SDJWTCommon):
         user_claims: Dict,
         issuer_key,
         holder_key=None,
-        claims_structure: Optional[Dict] = None,
         sign_alg=None,
         add_decoy_claims: bool = False,
     ):
         self._user_claims = user_claims
         self._issuer_key = issuer_key
         self._holder_key = holder_key
-        self._claims_structure = claims_structure or {}
         self._sign_alg = sign_alg or DEFAULT_SIGNING_ALG
         self._add_decoy_claims = add_decoy_claims
 
@@ -134,10 +136,7 @@ class SDJWTIssuer(SDJWTCommon):
 
     def _assemble_sd_jwt_payload(self):
         # Create the JWS payload
-        self.sd_jwt_payload = self._create_sd_claims(
-            self._user_claims, self._claims_structure
-        )
-
+        self.sd_jwt_payload = self._create_sd_claims(self._user_claims)
         self.sd_jwt_payload.update(
             {
                 DIGEST_ALG_KEY: self.HASH_ALG["name"],
@@ -165,17 +164,15 @@ class SDJWTIssuer(SDJWTCommon):
     def _create_decoy_claim_entry(self) -> str:
         return self._b64hash(self._generate_salt().encode("ascii"))
 
-    def _create_sd_claims(self, user_claims, non_sd_claims):
+    def _create_sd_claims(self, user_claims):
+        # This function can be called recursively.
+        #
         # If the user claims are a list, apply this function
         # to each item in the list. The first element in non_sd_claims
         # (which is assumed to be a list as well) is used as the
         # structure for each item in the list.
         if type(user_claims) is list:
-            if type(non_sd_claims) is not list or len(non_sd_claims) < 1:
-                reference = {}
-            else:
-                reference = non_sd_claims[0]
-            return [self._create_sd_claims(claim, reference) for claim in user_claims]
+            return [self._create_sd_claims(claim) for claim in user_claims]
 
         # If the user claims are a dictionary, apply this function
         # to each key/value pair in the dictionary. The structure
@@ -186,15 +183,14 @@ class SDJWTIssuer(SDJWTCommon):
         elif type(user_claims) is dict:
             sd_claims = {SD_DIGESTS_KEY: []}
             for key, value in user_claims.items():
-                if key in non_sd_claims:
-                    sd_claims[key] = self._create_sd_claims(
-                        value, non_sd_claims.get(key, {})
-                    )
-                else:
+                subtree_from_here = self._create_sd_claims(value)
+                if isinstance(key, SDKey):
                     # Assemble all hash digests in the disclosures list.
                     sd_claims[SD_DIGESTS_KEY].append(
-                        self._create_sd_claim_entry(key, value)
+                        self._create_sd_claim_entry(key, subtree_from_here)
                     )
+                else:
+                    sd_claims[key] = subtree_from_here
 
             # Add decoy claims if requested
             if self._add_decoy_claims:
@@ -309,9 +305,21 @@ class SDJWTHolder(SDJWTCommon):
                             # fake digest
                             continue
                         decoded = self._hash_to_decoded_disclosure[digest]
-                        _, key, _ = decoded
-                        if key in claims_to_disclose:
-                            self.hs_disclosures.append(self._hash_to_disclosure[digest])
+                        _, key, value = decoded
+
+                        try:
+                            if key in claims_to_disclose:
+                                self.hs_disclosures.append(
+                                    self._hash_to_disclosure[digest]
+                                )
+                        except TypeError:
+                            # claims_to_disclose is not a dict
+                            raise TypeError(
+                                f"claims_to_disclose does not contain a dict where a dict was expected (found {claims_to_disclose} instead)\n"
+                                f"Check claims_to_disclose for key: {key}, value: {value}"
+                            ) from None
+
+                        self._select_disclosures(value, claims_to_disclose.get(key, {}))
                 else:
                     self._select_disclosures(value, claims_to_disclose.get(key, {}))
 
@@ -455,7 +463,11 @@ class SDJWTVerifier(SDJWTCommon):
             return [self._unpack_disclosed_claims(c) for c in sd_jwt_claims]
 
         elif type(sd_jwt_claims) is dict:
-            output = {
+            # First, try to figure out if there are any claims to be
+            # disclosed in this dict. If so, replace them by their
+            # disclosed values.
+
+            pre_output = {
                 k: self._unpack_disclosed_claims(v)
                 for k, v in sd_jwt_claims.items()
                 if k != SD_DIGESTS_KEY
@@ -468,13 +480,16 @@ class SDJWTVerifier(SDJWTCommon):
 
                 if digest in self._hash_to_decoded_disclosure:
                     _, key, value = self._hash_to_decoded_disclosure[digest]
-                    if key in output:
+                    if key in pre_output:
                         raise ValueError(
-                            f"Duplicate key found when unpacking disclosed claim: '{key}' in {output}. This is not allowed."
+                            f"Duplicate key found when unpacking disclosed claim: '{key}' in {pre_output}. This is not allowed."
                         )
-                    output[key] = value
+                    unpacked_value = self._unpack_disclosed_claims(value)
+                    pre_output[key] = unpacked_value
 
-            return output
+            # Now, go through the dict and unpack any nested dicts.
+
+            return pre_output
 
         else:
             return sd_jwt_claims
