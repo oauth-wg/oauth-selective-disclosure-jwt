@@ -219,7 +219,7 @@ The Holder can then create a signed document, the Holder Binding JWT, using its 
 data provided by the Verifier (out of scope of this document) to ensure the freshness of the signature, for example, a nonce and an indicator of the
 intended audience for the document.
 
-The Holder Binding JWT is included in the Combined Format for Presentation and sent to the Verifier along with the SD-JWT and the Holder-Selected Disclosures.
+The Holder Binding JWT can be included in the Combined Format for Presentation and sent to the Verifier along with the SD-JWT and the Holder-Selected Disclosures.
 
 Note that there may be other ways to send the Holder Binding JWT to the Verifier or to prove Holder Binding. In these cases, inclusion of the Holder Binding JWT in the Combined Format for Presentation is not required.
 
@@ -241,7 +241,7 @@ This section defines data formats for SD-JWTs, Disclosures, Holder Binding JWTs 
 
 An SD-JWT is a JWT that MUST be signed using the Issuer's private key. The
 payload of an SD-JWT MUST contain the `_sd_alg` claim
-described in the following, MAY contain one or more selectively disclosable claims, and MAY contain a Holder's public key or a reference
+described in (#hash_function_claim). The SD-JWT payload MAY contain one or more selectively disclosable claims. It MAY also contain a Holder's public key or a reference
 thereto, as well as further claims such as `iss`, `iat`, etc. as defined or
 required by the application using SD-JWTs.
 
@@ -254,9 +254,9 @@ The Issuer MUST create a Disclosure for each selectively disclosable claim as fo
 
  * Create an array of three elements in this order:
    1. A salt value MUST be a string. See (#salt-entropy) and (#salt_minlength) for security considerations. It is RECOMMENDED to base64url-encode minimum 128 bits of cryptographically secure pseudorandom data, producing a string. The salt value MUST be unique for each claim that is to be selectively disclosed. The Issuer MUST NOT disclose the salt value to any party other than the Holder.
-   2. The claim name, or key, as it would be used in a regular JWT body. This MUST be a string.
-   3. The claim's value, as it would be used in a regular JWT body. The value MAY be of any type that is allowed in JSON, including numbers, strings, booleans, arrays, and objects.
- * JSON-encode the array such that an UTF-8 string is produced.
+   2. The claim name, or key, as it would be used in a regular JWT body. The value MUST be a string.
+   3. The claim value, as it would be used in a regular JWT body. The value MAY be of any type that is allowed in JSON, including numbers, strings, booleans, arrays, and objects.
+ * JSON-encode the array, producing an UTF-8 string.
  * base64url-encode the byte representation of the UTF-8 string, producing a US-ASCII [@RFC0020] string. This string is the Disclosure.
 
 The order is decided based on the readability considerations: salts would have a constant length within the SD-JWT, claim names would be around the same length all the time, and claim values would vary in size, potentially being large objects.
@@ -282,14 +282,14 @@ See (#disclosure_format_considerations) for some further considerations on the D
 
 #### Hashing Disclosures {#hashing_disclosures}
 
-For embedding the Disclosures in the SD-JWT, the Disclosures are hashed using the hash algorithm specified in the `_sd_alg` claim described below. The resulting digest is then included in the SD-JWT instead of the original claim value, as described next.
+For embedding the Disclosures in the SD-JWT, the Disclosures are hashed using the hash algorithm specified in the `_sd_alg` claim described in (#hash_function_claim). The resulting digest is then included in the SD-JWT instead of the original claim value, as described next.
 
 The digest MUST be taken over the US-ASCII bytes of the base64url-encoded Disclosure. This follows the convention in JWS [@RFC7515] and JWE [@RFC7516]. The bytes of the digest MUST then be base64url-encoded.
 
 It is important to note that:
 
  * The input to the hash function is the base64url-encoded Disclosure, not the bytes encoded by the base64url string.
- * The bytes of the output of the hash function are base64url-encoded, not the bytes making up the (often used) hex representation of the bytes of the digest.
+ * The bytes of the output of the hash function are base64url-encoded, and are not the bytes making up the (often used) hex representation of the bytes of the digest.
 
 For example, the
 SHA-256 digest of the Disclosure `WyI2cU1RdlJMNWhhaiIsICJmYW1pbHlfbmFtZSIsICJNw7ZiaXVzIl0` would be
@@ -306,7 +306,7 @@ To ensure readability and replicability, the examples in this specification do n
 #### Creating an SD-JWT {#creating_sd_jwt}
 
 An SD-JWT is a JWT that MUST be signed using the Issuer's private key.
-It MUST use a JWS asymmetric digital signature algorithm and
+It MUST use a JWS asymmetric digital signature algorithm. It
 MUST NOT use `none` or an identifier for a symmetric algorithm (MAC).
 
 An SD-JWT MAY contain both selectively disclosable claims and non-selectively disclosable claims, i.e., claims that are always contained in the SD-JWT in plaintext and are always visible to a Verifier.
