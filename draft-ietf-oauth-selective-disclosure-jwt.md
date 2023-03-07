@@ -853,7 +853,6 @@ To prevent these types of linkability, various methods, including but not limite
 - Use advanced cryptographic schemes, outside the scope of this specification.
 - Issue a batch of SD-JWTs to the Holder to enable the Holder to use a unique SD-JWT per Verifier. This only helps with Verifier/Verifier unlinkability.
 
-Colluding Verifier/Verifier pairs correspond to RP+RP'-U Unlinkability as defined in [@ISO.27551].
 
 ## Issuer Identifier
 
@@ -923,13 +922,6 @@ TBD
 <reference anchor="ISO.29100" target="https://standards.iso.org/ittf/PubliclyAvailableStandards/index.html">
   <front>
     <title>ISO/IEC 29100:2011 Information technology — Security techniques — Privacy framework</title>
-   <date year="2011"/>
-  </front>
-</reference>
-
-<reference anchor="ISO.27551" target="https://www.iso.org/standard/72018.html">
-  <front>
-    <title>ISO/IEC 27551:2021 Information security, cybersecurity and privacy protection — Requirements for attribute-based unlinkable entity authentication</title>
    <date year="2011"/>
   </front>
 </reference>
