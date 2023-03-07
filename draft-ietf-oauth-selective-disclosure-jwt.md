@@ -884,9 +884,9 @@ The work on this draft was started at OAuth Security Workshop 2022 in Trondheim,
 
 This section registers the "application/sdjwt-issuance" media type [@RFC2046] in
 the "Media Types" registry [@IANA.MediaTypes] in the manner described
-in [@RFC6838], which can be used to indicate that the content is a Combined Format for Issuance. 
-This section also registers the "application/sdjwt-presentation" media type 
-in the "Media Types" registry, which can be used to indicate that 
+in [@RFC6838], which can be used to indicate that the content is a Combined Format for Issuance.
+This section also registers the "application/sdjwt-presentation" media type
+in the "Media Types" registry, which can be used to indicate that
 the content is a Combined Format for Presentation.
 
 ### application/sdjwt-issuance
