@@ -136,7 +136,7 @@ Selective disclosure:
 :  Process of a Holder disclosing to a Verifier a subset of claims contained in a claim set issued by an Issuer.
 
 Selectively Disclosable JWT (SD-JWT):
-:  An Issuer-created signed JWT (JWS, [@!RFC7515])
+:  An Issuer-signed JWT (JWS, [@!RFC7515])
   that supports selective disclosure as defined in this document and can contain both regular claims and digests of selectively-disclosable claims.
 
 Disclosure:
@@ -200,9 +200,10 @@ conceptual level, abstracting from the data formats described in (#data_formats)
 ## SD-JWT and Disclosures
 
 An SD-JWT, at its core, is a digitally signed JSON document containing digests over the selectively disclosable claims with the Disclosures outside the document.
-An SD-JWT may also contain clear-text claims that are always disclosed to the Verifier.
 
 Each digest value ensures the integrity of, and maps to, the respective Disclosure.  Digest values are calculated using a hash function over the Disclosures, each of which contains the claim name, the claim value, and a random salt. The Disclosures are sent to the Holder together with the SD-JWT in the Combined Format for Issuance.
+
+An SD-JWT MAY also contain clear-text claims that are always disclosed to the Verifier.
 
 ## Disclosing to a Verifier
 
@@ -807,7 +808,7 @@ sufficient to store the result of the verification and any End-User data
 that is needed for the application.
 
 If reliable and secure key rotation and revocation is ensured according
-to (#issuer_signature_key_distribution), Issuers may MAY opt to publish
+to (#issuer_signature_key_distribution), Issuers may opt to publish
 expired or revoked private signing keys (after a grace period that
 ensures that the keys are not cached any longer at any Verifier). This
 reduces the value of any leaked credentials as the signatures on them
