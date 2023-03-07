@@ -921,8 +921,8 @@ TBD
 
 <reference anchor="ISO.29100" target="https://standards.iso.org/ittf/PubliclyAvailableStandards/index.html">
   <front>
+    <author fullname="ISO"></author>
     <title>ISO/IEC 29100:2011 Information technology — Security techniques — Privacy framework</title>
-   <date year="2011"/>
   </front>
 </reference>
 
