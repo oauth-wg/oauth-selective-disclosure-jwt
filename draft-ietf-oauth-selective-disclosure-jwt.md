@@ -603,8 +603,9 @@ Here, `eyJhbGci...emhlaUJhZzBZ` represents the SD-JWT and `eyJhb...dYALCGg` repr
 ## Mandatory digest computation of the revealed claim values by the Verifier
 
 ToDo: add text explaining mechanisms that should be adopted to ensure that
-  Verifiers validate the claim values received in HS-Disclosures JWT by calculating the
-  digests of those values and comparing them with the digests in the SD-JWT:
+
+Verifiers validate the claim values received in HS-Disclosures JWT by calculating the
+digests of those values and comparing them with the digests in the SD-JWT:
   - create a test suite that forces digest computation by the Verifiers,
     and includes negative test cases in test vectors
   - use only implementations/libraries that are compliant to the test suite
