@@ -770,7 +770,7 @@ key-distribution method.
 
 # Privacy Considerations {#privacy_considerations}
 
-The privacy principles of [@ISO.29100] MUST be adhered to.
+The privacy principles of [@ISO.29100] should be adhered to.
 
 ## Storage of Signed User Data
 
