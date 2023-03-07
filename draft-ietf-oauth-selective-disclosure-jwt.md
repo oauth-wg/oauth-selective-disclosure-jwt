@@ -428,12 +428,14 @@ calculation and the salts. To this end, the Issuer sends the Disclosure objects
 that were also used for the hash calculation, as described in (#creating_disclosures),
 to the Holder.
 
-The data format for sending the SD-JWT and the Disclosures to the Holder is
-as follows:
+The data format for sending the SD-JWT and the Disclosures to the Holder MUST be a series of base64url-encoded values, each separated from the next by a single tilde ('~') character as follows:
 
 ```
 <SD-JWT>~<Disclosure 1>~<Disclosure 2>~...~<Disclosure N>
 ```
+
+The order of the base64url-encoded values MUST be an SD-JWT followed by the Disclosures.
+
 This is called the Combined Format for Issuance.
 
 The Disclosures and SD-JWT are implicitly linked through the
@@ -452,12 +454,14 @@ For Example 1, the Combined Format for Issuance looks as follows:
 For presentation to a Verifier, the Holder sends the SD-JWT and a selected
 subset of the Disclosures to the Verifier.
 
-The data format for sending the SD-JWT and the Disclosures to the Verifier is
-as follows (line break added for readability):
+The data format for sending the SD-JWT and the Disclosures to the Verifier MUST be a series of base64url-encoded values, each separated from the next by a single tilde ('~') character as follows:
 
 ```
 <SD-JWT>~<Disclosure 1>~<Disclosure 2>~...~<Disclosure M>~<optional Holder Binding JWT>
 ```
+
+The order of the base64url-encoded values MUST be an SD-JWT, Disclosures, and an optional Holder Binding JWT.
+
 This is called the Combined Format for Presentation.
 
 The Holder MAY send any subset of the Disclosures to the Verifier, i.e.,
