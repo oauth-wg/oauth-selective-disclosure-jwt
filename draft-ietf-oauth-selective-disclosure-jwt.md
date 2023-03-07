@@ -63,17 +63,17 @@ identity. As long as the signed JWT is one-time
 use, it typically only contains those claims the user has consented to
 disclose to a specific Verifier. However, there is an increasing number
 of use cases where a signed JWT is created once and then used a number
-of times by the user (the "Holder" of the JWT). In such cases, the signed JWT needs
+of times by the user (the "Holder" of the JWT). In such use cases, the signed JWT needs
 to contain the superset of all claims the user of the
 signed JWT might want to disclose to Verifiers at some point. The
 ability to selectively disclose a subset of these claims depending on
 the Verifier becomes crucial to ensure minimum disclosure and prevent
 Verifiers from obtaining claims irrelevant for the transaction at hand.
-One example of such a multi-use JWT is a verifiable credential, an issuer-signed
+SD-JWTs defined in this document enable such selective disclosure of JWT claims.
+
+One example of a multi-use JWT is a verifiable credential, an issuer-signed
 credential that contains the claims about a subject, and whose authenticity can be
 cryptographically verified.
-
-SD-JWTs defined in this document enable such selective disclosure of JWT claims.
 
 Similar to the JWT specification on which it builds, this document is a product of the
 Web Authorization Protocol (oauth) working group. However, while both JWT and SD-JWT
@@ -82,7 +82,11 @@ JWT was developed as a general-purpose token format and has seen widespread usag
 variety of applications. SD-JWT is a selective disclosure mechanism for JWT and is
 similarly intended to be general-purpose specification.
 
-In an SD-JWT, claims can be hidden, but cryptographically protected
+While JWTs for claims describing natural persons are a common use case,
+the mechanisms defined in this document can be used for many other use
+cases as well.
+
+In an Issuer-signed SD-JWT, claims can be hidden, but cryptographically protected
 against undetected modification. When issuing the SD-JWT to the Holder,
 the Issuer also sends the cleartext counterparts of all hidden claims, the so-called
 Disclosures, separate from the SD-JWT itself.
@@ -92,10 +96,6 @@ Disclosures together with the SD-JWT to the Verifier. The Verifier
 has to verify that all disclosed claim values were part of the original,
 Issuer-signed SD-JWT. The Verifier will not, however, learn any claim
 values not disclosed in the Disclosures.
-
-While JWTs for claims describing natural persons are a common use case,
-the mechanisms defined in this document can be used for many other use
-cases as well.
 
 This document also describes an optional mechanism for Holder Binding,
 or the concept of binding an SD-JWT to key material controlled by the
