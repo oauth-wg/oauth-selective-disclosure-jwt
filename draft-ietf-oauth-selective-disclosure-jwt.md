@@ -599,7 +599,7 @@ Here, `eyJhbGci...emhlaUJhZzBZ` represents the SD-JWT and `eyJhb...dYALCGg` repr
 
 # Security Considerations {#security_considerations}
 
-Security considerations in this section help achieve the following the following properties:
+Security considerations in this section help achieve the following properties:
 
 * Claim values issued by the Issuer cannot be obtained by the adversary,
 	- if the Holder did not intend to disclose them,
