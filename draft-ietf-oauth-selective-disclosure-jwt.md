@@ -855,11 +855,15 @@ To prevent these types of linkability, various methods, including but not limite
 
 Colluding Verifier/Verifier pairs correspond to RP+RP'-U Unlinkability as defined in [@ISO.27551].
 
-## Issuer Issuing One Type of SD-JWT
+## Issuer Identifier
 
 Issuer issuing only one type of SD-JWT might have privacy implications, because if the Holder has an SD-JWT issued by that Issuer, its type and claim names can be determined.
 
 For example, if the National Cancer Institute only issued SD-JWTs with cancer registry information, it is possible to deduce that the Holder owning its SD-JWT is a cancer patient.
+
+Moreover, issuer identifier alone may reveal information about the user. 
+
+For example, when a military organization or a drug rehab center issues a vaccine credential, verifiers can deduce that the holder is a military member or has a substance use disorder.
 
 To mitigate this issue, a group of issuers may elect to use a common Issuer identifier, or use a group signature scheme instead of an individual signature.
 
