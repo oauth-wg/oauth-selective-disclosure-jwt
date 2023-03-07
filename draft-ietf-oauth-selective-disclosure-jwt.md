@@ -861,7 +861,7 @@ Issuer issuing only one type of SD-JWT might have privacy implications, because 
 
 For example, if the National Cancer Institute only issued SD-JWTs with cancer registry information, it is possible to deduce that the Holder owning its SD-JWT is a cancer patient.
 
-Moreover, issuer identifier alone may reveal information about the user. 
+Moreover, issuer identifier alone may reveal information about the user.
 
 For example, when a military organization or a drug rehab center issues a vaccine credential, verifiers can deduce that the holder is a military member or has a substance use disorder.
 
