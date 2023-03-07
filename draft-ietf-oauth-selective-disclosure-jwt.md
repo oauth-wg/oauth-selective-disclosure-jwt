@@ -880,7 +880,60 @@ The work on this draft was started at OAuth Security Workshop 2022 in Trondheim,
 
 # IANA Considerations {#iana_considerations}
 
-TBD
+## Media Type Registration
+
+This section registers the "application/sdjwt-issuance" media type [@RFC2046] in
+the "Media Types" registry [@IANA.MediaTypes] in the manner described
+in [@RFC6838], which can be used to indicate that the content is a Combined Format for Issuance. 
+This section also registers the "application/sdjwt-presentation" media type 
+in the "Media Types" registry, which can be used to indicate that 
+the content is a Combined Format for Presentation.
+
+### application/sdjwt-issuance
+
+*  Type name: application
+*  Subtype name: sdjwt-issuance
+*  Required parameters: n/a
+*  Optional parameters: n/a
+*  Encoding considerations: 8bit; application/sdjwt-issuance values are encoded as a series of base64url-encoded values, each separated from the next by a single tilde ('~') character.
+*  Security considerations: See the Security Considerations section of this document.
+*  Interoperability considerations: n/a
+*  Published specification: tbu
+*  Applications that use this media type: tbu
+*  Fragment identifier considerations: n/a
+*  Additional information:
+      Magic number(s): n/a
+      File extension(s): n/a
+      Macintosh file type code(s): n/a
+*  Person & email address to contact for further information: Daniel Fett, mail@danielfett.de
+*  Intended usage: COMMON
+*  Restrictions on usage: none
+*  Author: Daniel Fett, mail@danielfett.de
+*  Change Controller: IESG
+*  Provisional registration?  No
+
+### application/sdjwt-presentation
+
+*  Type name: application
+*  Subtype name: sdjwt-presentation
+*  Required parameters: n/a
+*  Optional parameters: n/a
+*  Encoding considerations: 8bit; application/sdjwt-presentation values are encoded as a series of base64url-encoded values (the last of which may be an empty string), each separated from the next by a single tilde ('~') character.
+*  Security considerations: See the Security Considerations section of this document.
+*  Interoperability considerations: n/a
+*  Published specification: tbu
+*  Applications that use this media type: tbu
+*  Fragment identifier considerations: n/a
+*  Additional information:
+      Magic number(s): n/a
+      File extension(s): n/a
+      Macintosh file type code(s): n/a
+*  Person & email address to contact for further information: Daniel Fett, mail@danielfett.de
+*  Intended usage: COMMON
+*  Restrictions on usage: none
+*  Author: Daniel Fett, mail@danielfett.de
+*  Change Controller: IESG
+*  Provisional registration?  No
 
 <reference anchor="OIDC" target="https://openid.net/specs/openid-connect-core-1_0.html">
   <front>
@@ -960,6 +1013,12 @@ TBD
   </front>
 </reference>
 
+<reference anchor="IANA.MediaTypes" target="https://www.iana.org/assignments/media-types/media-types.xhtml">
+  <front>
+    <author fullname="IANA"></author>
+    <title>Media Types</title>
+  </front>
+</reference>
 
 <reference anchor="IANA.JWS.Algorithms" target="https://www.iana.org/assignments/jose/jose.xhtml#web-signature-encryption-algorithms">
   <front>
