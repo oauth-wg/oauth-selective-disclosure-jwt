@@ -201,13 +201,13 @@ conceptual level, abstracting from the data formats described in (#data_formats)
 
 An SD-JWT, at its core, is a digitally signed JSON document containing digests over the selectively disclosable claims with the Disclosures outside the document.
 
-Each digest value ensures the integrity of, and maps to, the respective Disclosure.  Digest values are calculated using a hash function over the Disclosures, each of which contains the claim name, the claim value, and a random salt. The Disclosures are sent to the Holder together with the SD-JWT in the Combined Format for Issuance.
+Each digest value ensures the integrity of, and maps to, the respective Disclosure.  Digest values are calculated using a hash function over the Disclosures, each of which contains the claim name, the claim value, and a random salt. The Disclosures are sent to the Holder together with the SD-JWT in the Combined Format for Issuance defined in (#combined_format_for_issuance).
 
 An SD-JWT MAY also contain clear-text claims that are always disclosed to the Verifier.
 
 ## Disclosing to a Verifier
 
-To disclose to a Verifier a subset of the SD-JWT claim values, a Holder sends only the Disclosures of those selectively released claims to the Verifier along with the SD-JWT in the Combined Format for Presentation.
+To disclose to a Verifier a subset of the SD-JWT claim values, a Holder sends only the Disclosures of those selectively released claims to the Verifier along with the SD-JWT in the Combined Format for Presentation defined in (#combined_format_for_presentation).
 
 ## Optional Holder Binding
 
@@ -421,7 +421,7 @@ The Issuer creates the following Disclosures:
 {{examples/simple/disclosures.md}}
 
 
-## Combined Format for Issuance
+## Combined Format for Issuance {#combined_format_for_issuance}
 
 Besides the SD-JWT itself, the Holder needs to learn the raw claim values that
 are contained in the SD-JWT, along with the precise input to the digest
@@ -448,7 +448,7 @@ For Example 1, the Combined Format for Issuance looks as follows:
 
 (Line breaks for presentation only.)
 
-## Combined Format for Presentation
+## Combined Format for Presentation {#combined_format_for_presentation}
 
 For presentation to a Verifier, the Holder sends the SD-JWT and a selected
 subset of the Disclosures to the Verifier.
