@@ -83,7 +83,7 @@ variety of applications. SD-JWT is a selective disclosure mechanism for JWT and 
 similarly intended to be general-purpose specification.
 
 While JWTs for claims describing natural persons are a common use case,
-the mechanisms defined in this document can be used for many other use
+the mechanisms defined in this document can be used for other use
 cases as well.
 
 In an Issuer-signed SD-JWT, claims can be hidden, but cryptographically protected
@@ -604,7 +604,7 @@ Here, `eyJhbGci...emhlaUJhZzBZ` represents the SD-JWT and `eyJhb...dYALCGg` repr
 
 ToDo: add text explaining mechanisms that should be adopted to ensure that
 
-Verifiers validate the claim values received in HS-Disclosures JWT by calculating the
+Verifiers validate the claim values received in Disclosures by calculating the
 digests of those values and comparing them with the digests in the SD-JWT:
   - create a test suite that forces digest computation by the Verifiers,
     and includes negative test cases in test vectors
