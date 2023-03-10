@@ -884,6 +884,8 @@ TBD
 
 ## Media Type Registration
 
+### Registry Contents
+
 This section registers the "application/sdjwt-issuance" media type [@RFC2046] in
 the "Media Types" registry [@IANA.MediaTypes] in the manner described
 in [@RFC6838], which can be used to indicate that the content is a Combined Format for Issuance.
