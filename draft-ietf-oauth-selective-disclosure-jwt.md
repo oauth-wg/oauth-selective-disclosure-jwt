@@ -55,10 +55,10 @@ secured against modification using JSON Web Signature (JWS) [@!RFC7515] digital
 signatures. A consumer of a signed JWT that has checked the
 signature can safely assume that the contents of the token have not been
 modified.  However, anyone receiving an unencrypted JWT can read all the
-claims and likewise, anyone with the decryption key receiving an encrypted JWT
+claims. Likewise, anyone with the decryption key receiving a signed and encrypted JWT
 can also read all the claims.
 
-One of the common use cases of a signed JWT is representing a user's
+One of the common use cases of a signed JWT is representing user's
 identity. As long as the signed JWT is one-time
 use, it typically only contains those claims the user has consented to
 disclose to a specific Verifier. However, there is an increasing number
@@ -101,6 +101,8 @@ This document also describes an optional mechanism for Holder Binding,
 or the concept of binding an SD-JWT to key material controlled by the
 Holder. The strength of the Holder Binding is conditional upon the trust
 in the protection of the private key of the key pair an SD-JWT is bound to.
+
+SD-JWT can be used with any JSON-based representation of claims, including JSON-LD.
 
 This specification aims to be easy to implement and to leverage
 established and widely used data formats and cryptographic algorithms
@@ -913,9 +915,31 @@ TBD
   </front>
 </reference>
 
-<reference anchor="VC_DATA" target="https://www.w3.org/TR/vc_data">
+<reference anchor="VC_DATA_v2.0" target="https://www.w3.org/TR/vc-data-model-2.0/">
   <front>
     <title>Verifiable Credentials Data Model 1.0</title>
+    <author fullname="Manu Sporny">
+      <organization>Digital Bazaar</organization>
+    </author>
+    <author fullname="Orie Steele">
+      <organization>Transmute</organization>
+    </author>
+    <author fullname="Michael B. Jones">
+      <organization>Microsoft</organization>
+    </author>
+    <author fullname="Gabe Cohen">
+      <organization>Block</organization>
+    </author>
+    <author fullname="Oliver Terbu">
+      <organization>Spruce Systems. Inc.</organization>
+    </author>
+    <date day="07" month="Mar" year="2023" />
+  </front>
+</reference>
+
+<reference anchor="VC_DATA_v1.1" target="https://www.w3.org/TR/vc-data-model/">
+  <front>
+    <title>Verifiable Credentials Data Model 1.1</title>
     <author fullname="Manu Sporny">
       <organization>Digital Bazaar</organization>
     </author>
@@ -931,10 +955,25 @@ TBD
     <author fullname="Brent Zundel">
       <organization>Evernym</organization>
     </author>
-    <author fullname="David Chadwick">
-      <organization>University of Kent</organization>
+    <author fullname="Kyle Den Hartog">
+      <organization>MATTR</organization>
     </author>
-    <date day="19" month="Nov" year="2019" />
+    <date day="03" month="Mar" year="2022" />
+  </front>
+</reference>
+
+@VC_JWT
+
+<reference anchor="VC_JWT" target="https://w3c.github.io/vc-jwt/">
+  <front>
+    <title>Securing Verifiable Credentials using JSON Web Tokens</title>
+    <author fullname="Orie Steele">
+      <organization>Transmute</organization>
+    </author>
+    <author fullname="Michael B. Jones">
+      <organization>Microsoft</organization>
+    </author>
+    <date day="03" month="Mar" year="2023" />
   </front>
 </reference>
 
@@ -1041,20 +1080,21 @@ pass the following result on to the application for further processing:
 
 <{{examples/complex_ekyc/verified_contents.json}}
 
-## Example 4 - W3C Verifiable Credentials Data Model (work in progress)
+## Example 4a - W3C Verifiable Credentials Data Model v2.0, not using JSON-LD
 
 This example illustrates how the artifacts defined in this specification can be
-represented using W3C Verifiable Credentials Data Model as defined in
-[@VC_DATA].
+represented as W3C Verifiable Credentials Data Model v2.0 [@VC_DATA_v2.0] without using JSON-LD.
+It uses a content type `credential-claims-set+json` defined in [@VC_JWT], Section 3.
 
-SD-JWT is equivalent to an Issuer-signed W3C Verifiable Credential (W3C VC). Disclosures are sent alongside a VC.
+SD-JWT is equivalent to an Issuer-signed W3C Verifiable Credential (W3C VC). Disclosures are sent alongside a W3C VC.
 
-A Presentation with a Holder Binding JWT is equivalent to a Holder-signed W3C Verifiable Presentation (W3C VP).
+A Holder-signed Verifiable Presentation as defined in [@VC_DATA_v2.0] would be equivalent to
+a Combined Format for Presentation with a Holder Binding JWT.
 
-Holder Binding is applied and the Holder Binding JWT is signed using a raw public key passed in a `cnf` Claim in a W3C VC (SD-JWT).
+In this example, Holder Binding is applied and Verifiable Presentation can be signed using
+a raw public key passed in a `cnf` Claim in the SD-JWT.
 
-Below is a non-normative example of an SD-JWT represented as a verifiable credential
-encoded as JSON and signed as JWS compliant to [@VC_DATA].
+Below is a non-normative example of an SD-JWT represented as a W3C VC without using JSON-LD.
 
 The following data will be used in this example:
 
@@ -1067,6 +1107,44 @@ The payload of a corresponding SD-JWT looks as follows:
 Disclosures:
 
 {{examples/w3c-vc/disclosures.md}}
+
+## Example 4b - W3C Verifiable Credentials Data Model v1.1, using JSON-LD
+
+This example illustrates how the artifacts defined in this specification can be
+represented as W3C Verifiable Credentials Data Model v2.0 [@VC_DATA_v2.0] using JSON-LD.
+It uses a content type `credential+ld+json` defined in [@VC_DATA_v2.0], Section 6.3.
+
+SD-JWT is equivalent to an Issuer-signed W3C Verifiable Credential (W3C VC). Disclosures are sent alongside a VC.
+
+A Combined Format for Presentation with a Holder Binding JWT would be equivalent to a Holder-signed
+Verifiable Presentation as defined in [@VC_DATA_v2.0].
+
+In this example, Holder Binding is applied and a Combined Format for Presentation is signed
+using a raw public key passed in a `cnf` Claim in the SD-JWT.
+
+Below is a non-normative example of an SD-JWT represented as a W3C VC using JSON-LD.
+
+The following data will be used in this example:
+
+<{{examples/jsonld/user_claims.json}}
+
+The payload of a corresponding SD-JWT looks as follows:
+
+<{{examples/jsonld/sd_jwt_payload.json}}
+
+Disclosures:
+
+{{examples/jsonld/disclosures.md}}
+
+A Combined Format for Presentation for the SD-JWT that discloses only discloses `type`, `medicinalProductName`, `atcCode` of the vaccine,
+`type` of the `recipient`, `type`, `order` and `dateOfVaccination`,
+and has a Holder Binding JWT could look as follows:
+
+<{{examples/jsonld/combined_presentation.txt}}
+
+After the validation, the Verifier will have the following data for further processing:
+
+<{{examples/jsonld/verified_contents.json}}
 
 # Disclosure Format Considerations {#disclosure_format_considerations}
 
