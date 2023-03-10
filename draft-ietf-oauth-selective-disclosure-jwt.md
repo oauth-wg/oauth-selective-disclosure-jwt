@@ -886,17 +886,17 @@ TBD
 
 ### Registry Contents
 
-This section registers the "application/sdjwt-issuance" media type [@RFC2046] in
+This section registers the "application/sd-jwt-issuance" media type [@RFC2046] in
 the "Media Types" registry [@IANA.MediaTypes] in the manner described
 in [@RFC6838], which can be used to indicate that the content is a Combined Format for Issuance.
-This section also registers the "application/sdjwt-presentation" media type
+This section also registers the "application/sd-jwt-presentation" media type
 in the "Media Types" registry, which can be used to indicate that
 the content is a Combined Format for Presentation.
 
-### application/sdjwt-issuance
+### application/sd-jwt-issuance
 
 *  Type name: application
-*  Subtype name: sdjwt-issuance
+*  Subtype name: sd-jwt-issuance
 *  Required parameters: n/a
 *  Optional parameters: n/a
 *  Encoding considerations: 8bit; application/sdjwt-issuance values are encoded as a series of base64url-encoded values, each separated from the next by a single tilde ('~') character.
@@ -916,10 +916,10 @@ the content is a Combined Format for Presentation.
 *  Change Controller: IESG
 *  Provisional registration?  No
 
-### application/sdjwt-presentation
+### application/sd-jwt-presentation
 
 *  Type name: application
-*  Subtype name: sdjwt-presentation
+*  Subtype name: sd-jwt-presentation
 *  Required parameters: n/a
 *  Optional parameters: n/a
 *  Encoding considerations: 8bit; application/sdjwt-presentation values are encoded as a series of base64url-encoded values (the last of which may be an empty string), each separated from the next by a single tilde ('~') character.
