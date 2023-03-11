@@ -30,7 +30,7 @@ user_claims:
             "gender": "Female",
             "birthDate": "1961-08-17",
             "givenName": "Marion",
-            "familyName": "Mustermann",
+            "familyName": "Mustermann"
           },
         "type": "VaccinationEvent",
         "administeringCentre": "Praxis Sommergarten",
