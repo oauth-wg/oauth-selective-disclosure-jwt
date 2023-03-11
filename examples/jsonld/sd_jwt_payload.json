@@ -41,9 +41,6 @@
     },
     "type": "VaccinationEvent"
   },
-  "iss": "https://example.com/issuer",
-  "iat": 1516239022,
-  "exp": 1516247022,
   "_sd_alg": "sha-256",
   "cnf": {
     "jwk": {
