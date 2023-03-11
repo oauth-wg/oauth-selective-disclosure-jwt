@@ -977,6 +977,16 @@ TBD
   </front>
 </reference>
 
+<reference anchor="ISO.18013-5" target="https://www.iso.org/standard/69084.html">
+        <front>
+          <title>ISO/IEC 18013-5:2021 Personal identification — ISO-compliant driving licence — Part 5: Mobile driving licence (mDL)  application</title>
+          <author>
+            <organization> ISO/IEC JTC 1/SC 17 Cards and security devices for personal identification</organization>
+          </author>
+          <date year="2021"/>
+        </front>
+</reference>
+
 {backmatter}
 
 # Additional Examples
@@ -1067,6 +1077,42 @@ The payload of a corresponding SD-JWT looks as follows:
 Disclosures:
 
 {{examples/w3c-vc/disclosures.md}}
+
+## Example 5 - ISO/IEC 18013-5 mDL
+
+This example illustrates how the artifacts defined in this specification can
+be used to express an mDL data model defined in ISO/IEC 18013-5 [@ISO.18013-5] encoded as JSON.
+
+SD-JWT is equivalent to an `issuerSigned` object as defined in [@ISO.18013-5].
+
+A Combined Format for Presentation with a Holder Binding JWT is equivalent to a Document
+structure that contains `docType`, `issuerSigned` object and `deviceSigned` object
+as defined in [@ISO.18013-5].
+
+In this example, Holder Binding is applied and a Combined Format for Presentation is signed
+using a raw public key passed in a `cnf` Claim in the SD-JWT.
+
+Below is a non-normative example of an SD-JWT expressing an mDL data model of [@ISO.18013-5].
+
+The following data will be used in this example:
+
+<{{examples/18013-5/user_claims.json}}
+
+The payload of a corresponding SD-JWT looks as follows:
+
+<{{examples/18013-5/sd_jwt_payload.json}}
+
+Disclosures:
+
+{{examples/18013-5/disclosures.md}}
+
+A Combined Format for Presentation for the SD-JWT that discloses only discloses `nameSpace`, `issuing_authority` and `issuing_country`, and has a Holder Binding JWT could look as follows:
+
+<{{examples/18013-5/combined_presentation.txt}}
+
+After the validation, the Verifier (mDL reader) will have the following data for further processing:
+
+<{{examples/18013-5/verified_contents.json}}
 
 # Disclosure Format Considerations {#disclosure_format_considerations}
 

@@ -1,49 +1,65 @@
 {
-    "iss": "https://example.com",
-    "cnf": {
-      "jwk": {
-        "kty": "RSA",
-        "n": "0vx7agoebGcQSu....-csFCur-kEgU8awapJzKnqDKgw",
-        "e": "AQAB"
-      }
-    },
-    "docType": "org.iso.18013.5.1.mDL",
-    "version": "1.0",
-    "validityInfo": {
-      "signed\"": "2022-04-15T06:23:56Z",
-      "validFrom": "2022-04-15T06:23:56Z",
-      "validUntil": "2027-01-02T00:00:00Z"
-    },
-    "nameSpaces": {
-      "nameSpace": "org.iso.18013.5.1",
-      "expiry_date": "2030-02-22",
-      "issue_date": "2020-02-23",
-      "family_name": "John",
-      "given_name": "Doe",
-      "issuing_country": "UT",
-      "document_number": "ES24689",
-      "portrait": "data:image/gif;base64,R0lGODdhMAAwAPAAAAAAAP///ywAA
-        AAAMAAwAAAC8IyPqcvt3wCcDkiLc7C0qwyGHhSWpjQu5yqmCYsapyuvUUlvONm
-        OZtfzgFzByTB10QgxOR0TqBQejhRNzOfkVJ+5YiUqrXF5Y5lKh/DeuNcP5yLWG
-        sEbtLiOSpa/TPg7JpJHxyendzWTBfX0cxOnKPjgBzi4diinWGdkF8kjdfnycQZ
-        XZeYGejmJlZeGl9i2icVqaNVailT6F5iJ90m6mvuTS4OK05M0vDk0Q4XUtwvKO
-        zrcd3iq9uisF81M1OIcR7lEewwcLp7tuNNkM3uNna3F2JQFo97Vriy/Xl4/f1c
-        f5VWzXyym7PHhhx4dbgYKAAA7",
-      "driving_privileges": [
-        {
-          "expiry_date": "2024-10-20",
-          "issue_date": "2018-08-09",
-          "vehicle_category_code\"": "A"
-        },
-        {
-          "expiry_date": "2024-10-20",
-          "issue_date": "2017-02-20",
-          "vehicle_category_code\"": "B"
-        }
-      ],
-      "birth_date": "1980-02-05",
-      "issuing_authority": "Utopia",
-      "un_distinguishing_sign": null,
-      "age_over_21": true
+  "iss": "https://example.com",
+  "cnf": {
+    "jwk": {
+      "kty": "RSA",
+      "n": "0vx7agoebGcQSu....-csFCur-kEgU8awapJzKnqDKgw",
+      "e": "AQAB"
     }
+  },
+  "docType": "org.iso.18013.5.1.mDL",
+  "version": "1.0",
+  "validityInfo": {
+    "signed\"": "2022-04-15T06:23:56Z",
+    "validFrom": "2022-04-15T06:23:56Z",
+    "validUntil": "2027-01-02T00:00:00Z"
+  },
+  "nameSpaces": {
+    "nameSpace": "org.iso.18013.5.1",
+    "expiry_date": "2030-02-22",
+    "issue_date": "2020-02-23",
+    "family_name": "John",
+    "given_name": "Doe",
+    "issuing_country": "UT",
+    "document_number": "ES24689",
+    "portrait": "_9j_4AAQSkZJRgABAQEAkACQAAD_2wBDABMNDhEODBMRDxEVFBM
+      XHTAfHRoaHToqLCMwRT1JR0Q9Q0FMVm1dTFFoUkFDX4JgaHF1e3x7SlyGkIV3j
+      214e3b_2wBDARQVFR0ZHTgfHzh2T0NPdnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ
+      2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnb_wAARCAAYAGQDASIAAhEBAxEB_
+      8QAGwAAAwEAAwEAAAAAAAAAAAAAAAUGBAECAwf_xAAyEAABAwMDAgUCAwkAAAA
+      AAAABAgMEAAURBhIhEzEUFVFhcSJBB4GhFjVCUnORssHx_8QAFQEBAQAAAAAAA
+      AAAAAAAAAAAAAH_xAAaEQEBAQADAQAAAAAAAAAAAAAAAUERITFh_9oADAMBAAI
+      RAxEAPwClu94i2iMpx9aSvH0NA_Us-w_3Xnp-8-dwlyOh0NrhRt37s8A5zgetK
+      9R6fjLbuN0dUtbvSyhPZKSABn37Ufh_-5X_AOuf8U0hXeZq8InORLfb3py2iQo
+      oOO3fGAePet1i1BHvTbmxCmXWuVoUc4HqDUlbkzJ1_mu6dcEUEEqLpBBBPpg9_
+      wBPWvXTS0tM3mMtC_H9FZK92RxkEfOTTC-mr2tUl10Qbc9KZa5W6FYAHrwDx84
+      p3Z7vHvEPxEfcnadq0q7pNTehun5PcN2O_wBXxt_7XhoZhUqDdY5UUodQlG7Gc
+      EhQzQN7zrCLbX0sx20zF_x7XMBPtnByacXG4MW2CuVJJCEjsOST9gKgdVWeNZl
+      w2Y24lSVFa1HJUcivoT6o6Y48WWg2eD1cY_WmGpn9tykIddtL6IqzhLu7v8cYP
+      96qYz6JUdt9o5bcSFJPsai9YRpaoqJDLzCrQgp6bTJAxxjPAx-p70ya1VAgWqA
+      pUd9KHWyEIbAVt2nbjJIpg36ivosbDTnQ66nFFITv24wO_Y0lja88RJaZ8u29R
+      YTnr5xk4_lrm-so1KxAkx5keMjnaiSoJUSVAdhn0rHc3rrpm5x1KuTs1t3koXn
+      BweRgk4-RSe9lXlFcA5GaKJyz3KJ4-3vxd_T6qCndjOPyrJp-zeSQlx-v19zhX
+      u2bccAYxk-lFFFLJOjkMXJt1wegledwSM9_sCCOPat1i05GswcUlannnBtUtQx
+      x6AUUUC5_RSes6YNxeiMu8LaCSQR6dxx85p3ZrRHs0ToR9ysnctau6jRRQYdQ6
+      b88eZc8V0OkCMdPdnP5imVxtzFyhKiyQShX3HdJ9RRRT4J0aIUUJYcuz6oqVZD
+      O3gfHOM9_tVPDitQorcdhO1tsYAoooF190_GvaEFxSmnkcJcTzx6EfcVhiaPSm
+      a3JuM96epvG1Kxgcdgck5HtRRSClooooP_2Q",
+    "driving_privileges": [
+      {
+        "expiry_date": "2024-10-20",
+        "issue_date": "2018-08-09",
+        "vehicle_category_code\"": "A"
+      },
+      {
+        "expiry_date": "2024-10-20",
+        "issue_date": "2017-02-20",
+        "vehicle_category_code\"": "B"
+      }
+    ],
+    "birth_date": "1980-02-05",
+    "issuing_authority": "Utopia",
+    "un_distinguishing_sign": null,
+    "age_over_21": true
   }
+}

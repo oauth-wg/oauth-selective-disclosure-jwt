@@ -1,26 +1,26 @@
 {
-    "iss": "https://example.com",
-    "iat": 1678514709,
-    "exp": 1678515609,
-    "cnf": {
-      "jwk": {
-        "kty": "EC",
-        "crv": "P-256",
-        "x": "-7Mn2CJWdAlnZh90h-Y9u56oNpb4oBczsCtAgA-xBkk",
-        "y": "IcH6eZGevFG-_Gkk3rInbv9Cz4BOMaIqWP3XX1eqYZw"
-      }
-    },
-    "docType": "org.iso.18013.5.1.mDL",
-    "version": "1.0",
-    "validityInfo": {
-      "signed\"": "2022-04-15T06:23:56Z",
-      "validFrom": "2022-04-15T06:23:56Z",
-      "validUntil": "2027-01-02T00:00:00Z"
-    },
-    "nameSpaces": {
-      "issuing_country": "UT",
-      "nameSpace": "org.iso.18013.5.1",
-      "issuing_authority": "Utopia"
-    },
-    "_sd_alg": "sha-256"
-  }
+  "iss": "https://example.com",
+  "iat": 1678516670,
+  "exp": 1678517570,
+  "cnf": {
+    "jwk": {
+      "kty": "EC",
+      "crv": "P-256",
+      "x": "7jIrJ0veNwJa4p7WoDl9stzlxvgj3X4autz8NkR7vWQ",
+      "y": "cDE-9B9gO6h-OSA033Ua3wfVtHEdl-WBHC3dxNUkoAY"
+    }
+  },
+  "docType": "org.iso.18013.5.1.mDL",
+  "version": "1.0",
+  "validityInfo": {
+    "signed\"": "2022-04-15T06:23:56Z",
+    "validFrom": "2022-04-15T06:23:56Z",
+    "validUntil": "2027-01-02T00:00:00Z"
+  },
+  "nameSpaces": {
+    "nameSpace": "org.iso.18013.5.1",
+    "issuing_country": "UT",
+    "issuing_authority": "Utopia"
+  },
+  "_sd_alg": "sha-256"
+}

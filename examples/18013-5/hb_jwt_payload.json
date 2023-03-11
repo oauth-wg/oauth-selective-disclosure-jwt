@@ -1,5 +1,5 @@
 {
-    "nonce": "664bae6d6089391024a9c261b073fd05",
-    "aud": "https://example.com/verifier",
-    "iat": 1678496709
-  }
+  "nonce": "108da9908c03204bba107b1c896cbbbf",
+  "aud": "https://example.com/verifier",
+  "iat": 1678498670
+}
