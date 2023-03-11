@@ -20,7 +20,7 @@ user_claims:
     !sd given_name: Doe
     !sd issuing_country: UT
     !sd document_number: ES24689
-    !sd portrait: (how to express...)
+    !sd portrait: data:image/gif;base64,R0lGODdhMAAwAPAAAAAAAP///ywAAAAAMAAwAAAC8IyPqcvt3wCcDkiLc7C0qwyGHhSWpjQu5yqmCYsapyuvUUlvONmOZtfzgFzByTB10QgxOR0TqBQejhRNzOfkVJ+5YiUqrXF5Y5lKh/DeuNcP5yLWGsEbtLiOSpa/TPg7JpJHxyendzWTBfX0cxOnKPjgBzi4diinWGdkF8kjdfnycQZXZeYGejmJlZeGl9i2icVqaNVailT6F5iJ90m6mvuTS4OK05M0vDk0Q4XUtwvKOzrcd3iq9uisF81M1OIcR7lEewwcLp7tuNNkM3uNna3F2JQFo97Vriy/Xl4/f1cf5VWzXyym7PHhhx4dbgYKAAA7
     !sd driving_privileges:
       - expiry_date: "2024-10-20"
         issue_date: "2018-08-09"
@@ -30,6 +30,7 @@ user_claims:
         vehicle_category_code": B
     !sd birth_date: "1980-02-05"
     !sd issuing_authority: Utopia
+    !sd un_distinguishing_sign:
     !sd age_over_21: true
 
 holder_disclosed_claims:
@@ -41,3 +42,5 @@ holder_disclosed_claims:
         "issuing_country": null
       },
   }
+
+holder_binding: True

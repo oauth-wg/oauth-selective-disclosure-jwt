@@ -1,0 +1,49 @@
+{
+    "iss": "https://example.com",
+    "cnf": {
+      "jwk": {
+        "kty": "RSA",
+        "n": "0vx7agoebGcQSu....-csFCur-kEgU8awapJzKnqDKgw",
+        "e": "AQAB"
+      }
+    },
+    "docType": "org.iso.18013.5.1.mDL",
+    "version": "1.0",
+    "validityInfo": {
+      "signed\"": "2022-04-15T06:23:56Z",
+      "validFrom": "2022-04-15T06:23:56Z",
+      "validUntil": "2027-01-02T00:00:00Z"
+    },
+    "nameSpaces": {
+      "nameSpace": "org.iso.18013.5.1",
+      "expiry_date": "2030-02-22",
+      "issue_date": "2020-02-23",
+      "family_name": "John",
+      "given_name": "Doe",
+      "issuing_country": "UT",
+      "document_number": "ES24689",
+      "portrait": "data:image/gif;base64,R0lGODdhMAAwAPAAAAAAAP///ywAA
+        AAAMAAwAAAC8IyPqcvt3wCcDkiLc7C0qwyGHhSWpjQu5yqmCYsapyuvUUlvONm
+        OZtfzgFzByTB10QgxOR0TqBQejhRNzOfkVJ+5YiUqrXF5Y5lKh/DeuNcP5yLWG
+        sEbtLiOSpa/TPg7JpJHxyendzWTBfX0cxOnKPjgBzi4diinWGdkF8kjdfnycQZ
+        XZeYGejmJlZeGl9i2icVqaNVailT6F5iJ90m6mvuTS4OK05M0vDk0Q4XUtwvKO
+        zrcd3iq9uisF81M1OIcR7lEewwcLp7tuNNkM3uNna3F2JQFo97Vriy/Xl4/f1c
+        f5VWzXyym7PHhhx4dbgYKAAA7",
+      "driving_privileges": [
+        {
+          "expiry_date": "2024-10-20",
+          "issue_date": "2018-08-09",
+          "vehicle_category_code\"": "A"
+        },
+        {
+          "expiry_date": "2024-10-20",
+          "issue_date": "2017-02-20",
+          "vehicle_category_code\"": "B"
+        }
+      ],
+      "birth_date": "1980-02-05",
+      "issuing_authority": "Utopia",
+      "un_distinguishing_sign": null,
+      "age_over_21": true
+    }
+  }
