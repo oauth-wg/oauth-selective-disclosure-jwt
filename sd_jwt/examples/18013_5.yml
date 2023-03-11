@@ -1,0 +1,43 @@
+only copy-paste, needs to be updated:
+user_claims:
+  iss: "https://example.com"
+  cnf:
+    jwk:
+      kty: RSA
+      "n": 0vx7agoebGcQSu....-csFCur-kEgU8awapJzKnqDKgw
+      e: AQAB
+  docType: org.iso.18013.5.1.mDL
+  version: "1.0"
+  validityInfo:
+    signed": "2022-04-15T06:23:56Z"
+    validFrom: "2022-04-15T06:23:56Z"
+    validUntil: "2027-01-02T00:00:00Z"
+  nameSpaces:
+    !sd nameSpace: org.iso.18013.5.1
+    !sd expiry_date: "2030-02-22"
+    !sd issue_date: "2020-02-23"
+    !sd family_name: John
+    !sd given_name: Doe
+    !sd issuing_country: UT
+    !sd document_number: ES24689
+    !sd portrait: (how to express...)
+    !sd driving_privileges:
+      - expiry_date: "2024-10-20"
+        issue_date: "2018-08-09"
+        vehicle_category_code": A
+      - expiry_date: "2024-10-20"
+        issue_date: "2017-02-20"
+        vehicle_category_code": B
+    !sd birth_date: "1980-02-05"
+    !sd issuing_authority: Utopia
+    !sd age_over_21: true
+
+holder_disclosed_claims:
+  {
+    "nameSpaces":
+      {
+        "nameSpace": null,
+        "issuing_authority": null,
+        "issuing_country": null
+      },
+  }
