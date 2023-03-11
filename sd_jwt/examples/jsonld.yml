@@ -18,7 +18,7 @@ user_claims:
             "type": "Vaccine",
             "atcCode": "J07BX03",
             "medicinalProductName": "COVID-19 Vaccine Moderna",
-            "marketingAuthorizationHolder": "Moderna Biotech",
+            "marketingAuthorizationHolder": "Moderna Biotech"
           },
         "nextVaccinationDate": "2021-08-16T13:40:12Z",
         "countryOfVaccination": "GE",
