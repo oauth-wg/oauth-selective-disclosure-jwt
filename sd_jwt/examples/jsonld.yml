@@ -3,7 +3,7 @@ user_claims:
     "@context":
       [
         "https://www.w3.org/2018/credentials/v1",
-        "https://w3id.org/vaccination/v1",
+        "https://w3id.org/vaccination/v1"
       ],
     "type": ["VerifiableCredential", "VaccinationCertificate"],
     "issuer": "https://example.com/issuer",
