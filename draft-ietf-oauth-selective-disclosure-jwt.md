@@ -495,7 +495,7 @@ Whether to require Holder Binding is up to the Verifier's policy,
 based on the set of trust requirements such as trust frameworks it belongs to.
 
 Other ways of proving Holder Binding MAY be used when supported by the Verifier,
-e.g., when the Combined Format for Presentation is itself embedded in a
+e.g., when the Combined Format for Presentation without a Holder Binding JWT is itself embedded in a
 signed JWT. See (#enveloping) for details.
 
 If no Holder Binding JWT is included, the Combined Format for Presentation ends with
@@ -605,6 +605,10 @@ The following non-normative example shows a Combined Format for Presentation env
 ```
 
 Here, `eyJhbGci...emhlaUJhZzBZ` represents the SD-JWT and `eyJhb...dYALCGg` represents a Disclosure. The Combined Format for Presentation does not contain a Holder Binding JWT as the outer container can be signed instead.
+
+Another specification and/or profile of this specification may define other mechanisms that enable
+enveloping in a single signed JWT more than one Combined Format for Presentation without a Holder
+Binding JWT.
 
 # Security Considerations {#security_considerations}
 
