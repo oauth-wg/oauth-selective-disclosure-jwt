@@ -1082,9 +1082,9 @@ pass the following result on to the application for further processing:
 
 ## Example 4a - W3C Verifiable Credentials Data Model v2.0, not using JSON-LD
 
-This example illustrates how the artifacts defined in this specification can be
-represented as W3C Verifiable Credentials Data Model v2.0 [@VC_DATA_v2.0] without using JSON-LD.
-It uses a content type `credential-claims-set+json` defined in [@VC_JWT], Section 3.
+This example illustrates how to use the artifacts defined in this specification to secure a payload
+that is represented as a W3C Verifiable Credentials Data Model v2.0 [@VC_DATA_v2.0]
+and does not use JSON-LD. The example uses a content type `credential-claims-set+json` defined in [@VC_JWT], Section 3.
 
 SD-JWT is equivalent to an Issuer-signed W3C Verifiable Credential (W3C VC). Disclosures are sent alongside a W3C VC.
 
@@ -1108,11 +1108,11 @@ Disclosures:
 
 {{examples/w3c-vc/disclosures.md}}
 
-## Example 4b - W3C Verifiable Credentials Data Model v1.1, using JSON-LD
+## Example 4b - W3C Verifiable Credentials Data Model v2.0, using JSON-LD
 
-This example illustrates how the artifacts defined in this specification can be
-represented as W3C Verifiable Credentials Data Model v2.0 [@VC_DATA_v2.0] using JSON-LD.
-It uses a content type `credential+ld+json` defined in [@VC_DATA_v2.0], Section 6.3.
+This example illustrates how to use the artifacts defined in this specification to secure a payload
+that is represented as a W3C Verifiable Credentials Data Model v2.0 [@VC_DATA_v2.0]
+and uses JSON-LD. The example uses a content type `credential+ld+json` defined in [@VC_DATA_v2.0], Section 6.3.
 
 SD-JWT is equivalent to an Issuer-signed W3C Verifiable Credential (W3C VC). Disclosures are sent alongside a VC.
 
