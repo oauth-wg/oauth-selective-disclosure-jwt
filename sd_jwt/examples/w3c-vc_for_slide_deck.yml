@@ -1,48 +1,31 @@
 user_claims:
-  {
-    "iss": "https://example.com",
-    "cnf":
-      {
-        "jwk":
-          {
-            "kty": "RSA",
-            "n": "0vx7agoebGcQSu....-csFCur-kEgU8awapJzKnqDKgw",
-            "e": "AQAB",
-          },
-      },
-    "type": "IdentityCredential",
-    "credentialSubject":
-      {
-        "given_name": "Max",
-        "family_name": "Mustermann",
-        "email": "mustermann@example.com",
-        "address":
-          {
-            "street_address": "Musterstr. 23",
-            "locality": "Berlin",
-            "country": "DE",
-          },
-        "birthdate": "1971-12-23",
-        "is_over_18": true,
-        "is_over_21": true,
-        "is_over_65": false,
-      },
-  }
-
-non_sd_claims:
-  {
-    "iss": true,
-    "exp": true,
-    "iat": true,
-    "cnf": { "jwk": { "kty": true, "n": true, "e": true } },
-    "type": true,
-    "credentialSubject": { "address": {} },
-  }
+  iss: "https://example.com"
+  cnf:
+    jwk:
+      kty: RSA
+      "n": 0vx7agoebGcQSu....-csFCur-kEgU8awapJzKnqDKgw
+      e: AQAB
+  type: IdentityCredential
+  credentialSubject:
+    !sd given_name: Max
+    !sd family_name: Mustermann
+    !sd email: mustermann@example.com
+    !sd address:
+      street_address: Musterstr. 23
+      locality: Berlin
+      country: DE
+    !sd birthdate: "1971-12-23"
+    !sd is_over_18: true
+    !sd is_over_21: true
+    !sd is_over_65: false
 
 holder_disclosed_claims:
   {
-    "given_name": null,
-    "family_name": null,
-    "address": null,
-    "is_over_18": null,
+    "credentialSubject":
+      {
+        "given_name": null,
+        "family_name": null,
+        "address": {},
+        "is_over_18": null,
+      },
   }

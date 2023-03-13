@@ -1,0 +1,6 @@
+{
+    "yaml.customTags": [
+        "!sd scalar"
+    ],
+    "files.trimTrailingWhitespace": true
+}

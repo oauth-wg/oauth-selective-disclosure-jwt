@@ -1,52 +1,11 @@
-__Disclosure for `assurance_level`:__
-
-```
-WyJ6NEsxd3VkaTQyV2ZFNldQZ2ZsazJnIiwgImFzc3VyYW5jZV9sZXZlbCIsICJoaWdo
-Il0
-```
-
-Contents:
-
-```
-["z4K1wudi42WfE6WPgflk2g", "assurance_level", "high"]
-```
-
-SHA-256 Hash: `2YRmUkluJhbeEzMQ0p4QJCZZHt38O9Yp5xQxj-s-of4`
-
-__Disclosure for `type`:__
-
-```
-WyJDcUpHU3NYdVpVaDZ1Tmt5ZWh4U0NRIiwgInR5cGUiLCAiZWxlY3Ryb25pY19yZWNv
-cmQiXQ
-```
-
-Contents:
-
-```
-["CqJGSsXuZUh6uNkyehxSCQ", "type", "electronic_record"]
-```
-
-SHA-256 Hash: `OSlizAB2reacAQs2WN6N91y8JroSUjGLefjboVc622A`
-
-__Disclosure for `type`:__
-
-```
-WyJSOV9SQVZhTWY2Q0x2Um00Z3AzOS1nIiwgInR5cGUiLCAiZXUuZXVyb3BhLmVjLmV1
-ZGl3LnBpZC4xIl0
-```
-
-Contents:
-
-```
-["R9_RAVaMf6CLvRm4gp39-g", "type", "eu.europa.ec.eudiw.pid.1"]
-```
-
-SHA-256 Hash: `iJhephauvMFgH11qS3AT0G4aEIw8NvgoPOs5oL16y8o`
-
 __Disclosure for `source`:__
 
+SHA-256 Hash: `58-pb4RMdemTMJOUrs_veI29MG9G-RULZTCc4xS1mas`
+
+Disclosure:
+
 ```
-WyJiRU9xOGo1NjllWXpsUzcteEhXRkJnIiwgInNvdXJjZSIsIHsib3JnYW5pemF0aW9u
+WyIwV0FEYjR5WUVfSm1EUHJRWkJNUXFRIiwgInNvdXJjZSIsIHsib3JnYW5pemF0aW9u
 X25hbWUiOiAiQ29tdW5lIGRpIEZpcmVuemUiLCAib3JnYW5pemF0aW9uX2lkIjogImNf
 ZDYxMiIsICJjb3VudHJ5X2NvZGUiOiAiSVQiLCAiY291bnRyeSI6ICJJdGFseSJ9XQ
 ```
@@ -54,84 +13,150 @@ ZDYxMiIsICJjb3VudHJ5X2NvZGUiOiAiSVQiLCAiY291bnRyeSI6ICJJdGFseSJ9XQ
 Contents:
 
 ```
-["bEOq8j569eYzlS7-xHWFBg", "source", {"organization_name": "Comune
+["0WADb4yYE_JmDPrQZBMQqQ", "source", {"organization_name": "Comune
 di Firenze", "organization_id": "c_d612", "country_code": "IT",
 "country": "Italy"}]
 ```
 
-SHA-256 Hash: `_qb1Qw94yeS4uzMHeMHjZH2nH_brDyM7eV5Ueky3xVY`
+__Disclosure for `evidence`:__
 
-__Disclosure for `personal_number`:__
+SHA-256 Hash: `W9Z6Ikzr-f3Zk7G0WMkqErfswUA7BUn-fBpOGqSh13E`
+
+Disclosure:
 
 ```
-WyJaaG9OdUVtNzA5ZGtPMFRVb2V5NFdBIiwgInBlcnNvbmFsX251bWJlciIsICI5NjQy
-LThmZTY1MmM4YzA0MCJd
+WyJpX0xzRi1IZkt2dWZnOWhNNVBsM1RnIiwgImV2aWRlbmNlIiwgW3sidHlwZSI6ICJl
+bGVjdHJvbmljX3JlY29yZCIsICJyZWNvcmQiOiB7Il9zZCI6IFsiNTgtcGI0Uk1kZW1U
+TUpPVXJzX3ZlSTI5TUc5Ry1SVUxaVENjNHhTMW1hcyJdLCAidHlwZSI6ICJldS5ldXJv
+cGEuZWMuZXVkaXcucGlkLjEiLCAicGVyc29uYWxfbnVtYmVyIjogIjk2NDItOGZlNjUy
+YzhjMDQwIn19XV0
 ```
 
 Contents:
 
 ```
-["ZhoNuEm709dkO0TUoey4WA", "personal_number", "9642-8fe652c8c040"]
+["i_LsF-HfKvufg9hM5Pl3Tg", "evidence", [{"type":
+"electronic_record", "record": {"_sd":
+["58-pb4RMdemTMJOUrs_veI29MG9G-RULZTCc4xS1mas"], "type":
+"eu.europa.ec.eudiw.pid.1", "personal_number":
+"9642-8fe652c8c040"}}]]
 ```
 
-SHA-256 Hash: `BS3s_ENu82Z-WT9jdx1ZY9wz5QMnUr1OdS6lr4SOwbw`
+__Disclosure for `person_unique_identifier`:__
+
+SHA-256 Hash: `_AL6GkONfNtjx8DqvM30dW5gHR4sJPl_OojFhjIWNUM`
+
+Disclosure:
+
+```
+WyJWakpiWEh5SXpYaWNiV3l1S0hoQnlBIiwgInBlcnNvbl91bmlxdWVfaWRlbnRpZmll
+ciIsICJUSU5JVC1mYzBkOTY4NC0xYmYwLTQyMjAtOTY0Mi04ZmU2NTJjOGMwNDAiXQ
+```
+
+Contents:
+
+```
+["VjJbXHyIzXicbWyuKHhByA", "person_unique_identifier",
+"TINIT-fc0d9684-1bf0-4220-9642-8fe652c8c040"]
+```
+
+__Disclosure for `given_name`:__
+
+SHA-256 Hash: `3ERl4PFymfs_dkvCH_ZcNH5wYJE2t_nThbaYWRHyxAw`
+
+Disclosure:
+
+```
+WyJNakpPOTlwZmNkWmN0S3M4R0FPMm1BIiwgImdpdmVuX25hbWUiLCAiUmFmZmFlbGxv
+Il0
+```
+
+Contents:
+
+```
+["MjJO99pfcdZctKs8GAO2mA", "given_name", "Raffaello"]
+```
+
+__Disclosure for `family_name`:__
+
+SHA-256 Hash: `8y_QkAi4ouaBhy9wZQhirmS-RaxJWzJatxZ6ek3ZSiA`
+
+Disclosure:
+
+```
+WyJuaEpIVG9QS0NMV1dYZVRHTkVxR3B3IiwgImZhbWlseV9uYW1lIiwgIk1hc2NldHRp
+Il0
+```
+
+Contents:
+
+```
+["nhJHToPKCLWWXeTGNEqGpw", "family_name", "Mascetti"]
+```
 
 __Disclosure for `date_of_birth`:__
 
+SHA-256 Hash: `Qz7Lp7reDpwlYSsu3JMUIK4PHvf_bNAtcQ5Hfc3tcRo`
+
+Disclosure:
+
 ```
-WyJ0eVVYQTZQUGh5RTBYSVF6MUtYYUp3IiwgImRhdGVfb2ZfYmlydGgiLCAiMTkyMi0w
+WyJqa052MS1TT3NNWTZ6VnFROTdKLWJ3IiwgImRhdGVfb2ZfYmlydGgiLCAiMTkyMi0w
 My0xMyJd
 ```
 
 Contents:
 
 ```
-["tyUXA6PPhyE0XIQz1KXaJw", "date_of_birth", "1922-03-13"]
+["jkNv1-SOsMY6zVqQ97J-bw", "date_of_birth", "1922-03-13"]
 ```
-
-SHA-256 Hash: `cWgplOSX84pLObFPtRo-Q08Eg2_sm4pNEmP_Dc5FZlw`
 
 __Disclosure for `gender`:__
 
+SHA-256 Hash: `Hvy_Ah7GRLuNQOFt8AJNj5O0Oi6-ni32XGYAhXQ_r6A`
+
+Disclosure:
+
 ```
-WyJ1cFJnSW5FUm9OWUo0d2RRczhvTmVBIiwgImdlbmRlciIsICJNIl0
+WyJNR0RaREFvenQ5amRVUnJYNjF6WnZnIiwgImdlbmRlciIsICJNIl0
 ```
 
 Contents:
 
 ```
-["upRgInERoNYJ4wdQs8oNeA", "gender", "M"]
+["MGDZDAozt9jdURrX61zZvg", "gender", "M"]
 ```
-
-SHA-256 Hash: `bSAXcTJCWsR-rX1EIU8XCxKAi0d4EMVjSuNwzRmpsK0`
 
 __Disclosure for `place_of_birth`:__
 
+SHA-256 Hash: `Spps4GUVwzqIMT6gMzvxNeFMh7lqm7ZlRjM63OepEsY`
+
+Disclosure:
+
 ```
-WyI1cGpGMkpMTmd4OWxJYlJfQm9JWjN3IiwgInBsYWNlX29mX2JpcnRoIiwgeyJjb3Vu
+WyJLWmtTblJIbFAwMk9KWkxzR3VkdmtRIiwgInBsYWNlX29mX2JpcnRoIiwgeyJjb3Vu
 dHJ5IjogIklUIiwgImxvY2FsaXR5IjogIkZpcmVuemUifV0
 ```
 
 Contents:
 
 ```
-["5pjF2JLNgx9lIbR_BoIZ3w", "place_of_birth", {"country": "IT",
+["KZkSnRHlP02OJZLsGudvkQ", "place_of_birth", {"country": "IT",
 "locality": "Firenze"}]
 ```
 
-SHA-256 Hash: `d23C2t5j0QVLdDvbP7_2KdVYB-KrLbq14ZG5mqTG1io`
+__Disclosure for `nationalities`:__
 
-__Disclosure for `birth_middle_name`:__
+SHA-256 Hash: `7yjxvA29AfbuVtWuRm4whQsVBTTPYzNwaXpUZiY9zYw`
+
+Disclosure:
 
 ```
-WyJhb2hWVEdYLXBreC1vMW1zZmZkd2tRIiwgImJpcnRoX21pZGRsZV9uYW1lIiwgIkxl
-bGxvIl0
+WyJnbkdDbE0tZ3ZVdjdHeUlhTWJiZEV3IiwgIm5hdGlvbmFsaXRpZXMiLCBbIklUIl1d
 ```
 
 Contents:
 
 ```
-["aohVTGX-pkx-o1msffdwkQ", "birth_middle_name", "Lello"]
+["gnGClM-gvUv7GyIaMbbdEw", "nationalities", ["IT"]]
 ```
-
-SHA-256 Hash: `jhmbpTEsQNvnzgsR2D_TVRlVAmSMzYObIdy19Uvd62A`

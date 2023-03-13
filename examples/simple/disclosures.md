@@ -1,79 +1,93 @@
 __Disclosure for `sub`:__
 
+SHA-256 Hash: `pzkHIM9sv7oZH6YKDsRqNgFGLpEKIj3c5G6UKaTsAjQ`
+
+Disclosure:
+
 ```
-WyJkcVR2WE14UzBHYTNEb2FHbmU5eDBRIiwgInN1YiIsICJqb2huX2RvZV80MiJd
+WyJyU0x1em5oaUxQQkRSWkUxQ1o4OEtRIiwgInN1YiIsICJqb2huX2RvZV80MiJd
 ```
 
 Contents:
 
 ```
-["dqTvXMxS0Ga3DoaGne9x0Q", "sub", "john_doe_42"]
+["rSLuznhiLPBDRZE1CZ88KQ", "sub", "john_doe_42"]
 ```
-
-SHA-256 Hash: `ZkSJxxeGluIdYBb7CqkZbJVm0w2V5UrReNTzAQCYBjw`
 
 __Disclosure for `given_name`:__
 
+SHA-256 Hash: `S-JPBSkvqliFv1__thuXt3IzX5B_ZXm4W2qs4BoNFrA`
+
+Disclosure:
+
 ```
-WyIzanFjYjY3ejl3a3MwOHp3aUs3RXlRIiwgImdpdmVuX25hbWUiLCAiSm9obiJd
+WyJhYTFPYmdlUkJnODJudnpMYnRQTklRIiwgImdpdmVuX25hbWUiLCAiSm9obiJd
 ```
 
 Contents:
 
 ```
-["3jqcb67z9wks08zwiK7EyQ", "given_name", "John"]
+["aa1ObgeRBg82nvzLbtPNIQ", "given_name", "John"]
 ```
-
-SHA-256 Hash: `qqvcqnczAMgYx7EykI6wwtspyvyvK790ge7MBbQ-Nus`
 
 __Disclosure for `family_name`:__
 
+SHA-256 Hash: `o-LBCDrFF6tC9ew1vAlUmw6Y30CHZF5jOUFhpx5mogI`
+
+Disclosure:
+
 ```
-WyJxUVdtakpsMXMxUjRscWhFTkxScnJ3IiwgImZhbWlseV9uYW1lIiwgIkRvZSJd
+WyI2VWhsZU5HUmJtc0xDOFRndTh2OFdnIiwgImZhbWlseV9uYW1lIiwgIkRvZSJd
 ```
 
 Contents:
 
 ```
-["qQWmjJl1s1R4lqhENLRrrw", "family_name", "Doe"]
+["6UhleNGRbmsLC8Tgu8v8Wg", "family_name", "Doe"]
 ```
-
-SHA-256 Hash: `l9qIJ9JTQwLG7OLEICTFBVxmArw8Pjy65dD6mtQVG5c`
 
 __Disclosure for `email`:__
 
+SHA-256 Hash: `bviw7pWAkbzI078ZNVa_eMZvk0tdPa5w2o9R3Zycjo4`
+
+Disclosure:
+
 ```
-WyJLVXhTNWhFX1hiVmFjckdBYzdFRnd3IiwgImVtYWlsIiwgImpvaG5kb2VAZXhhbXBs
+WyJ2S0t6alFSOWtsbFh2OWVkNUJ1ZHZRIiwgImVtYWlsIiwgImpvaG5kb2VAZXhhbXBs
 ZS5jb20iXQ
 ```
 
 Contents:
 
 ```
-["KUxS5hE_XbVacrGAc7EFww", "email", "johndoe@example.com"]
+["vKKzjQR9kllXv9ed5BudvQ", "email", "johndoe@example.com"]
 ```
-
-SHA-256 Hash: `o1SAsJ33YMioO9pX5VeAM1lxuHF6hZW2kGdkKKBnVlo`
 
 __Disclosure for `phone_number`:__
 
+SHA-256 Hash: `9gZhHAhV7LZnOFZq_q7Fh8rzdqrrNM-hRWsVOlW3nuw`
+
+Disclosure:
+
 ```
-WyIzcXZWSjFCQURwSERTUzkzOVEtUml3IiwgInBob25lX251bWJlciIsICIrMS0yMDIt
+WyJVZEVmXzY0SEN0T1BpZDRFZmhPQWNRIiwgInBob25lX251bWJlciIsICIrMS0yMDIt
 NTU1LTAxMDEiXQ
 ```
 
 Contents:
 
 ```
-["3qvVJ1BADpHDSS939Q-Riw", "phone_number", "+1-202-555-0101"]
+["UdEf_64HCtOPid4EfhOAcQ", "phone_number", "+1-202-555-0101"]
 ```
-
-SHA-256 Hash: `SY8n2BbkX9lrY3exHlSwPRFXoD09GF8a9CPO-G8j208`
 
 __Disclosure for `address`:__
 
+SHA-256 Hash: `5nXy0Z3QiEba1V1lJzeKhAOGQXFlKLIWCLlhf_O-cmo`
+
+Disclosure:
+
 ```
-WyIweEd6bjNNaXFzY3RaSV9PcERsQWJRIiwgImFkZHJlc3MiLCB7InN0cmVldF9hZGRy
+WyJOYTNWb0ZGblZ3MjhqT0FyazdJTlZnIiwgImFkZHJlc3MiLCB7InN0cmVldF9hZGRy
 ZXNzIjogIjEyMyBNYWluIFN0IiwgImxvY2FsaXR5IjogIkFueXRvd24iLCAicmVnaW9u
 IjogIkFueXN0YXRlIiwgImNvdW50cnkiOiAiVVMifV0
 ```
@@ -81,23 +95,23 @@ IjogIkFueXN0YXRlIiwgImNvdW50cnkiOiAiVVMifV0
 Contents:
 
 ```
-["0xGzn3MiqsctZI_OpDlAbQ", "address", {"street_address": "123 Main
+["Na3VoFFnVw28jOArk7INVg", "address", {"street_address": "123 Main
 St", "locality": "Anytown", "region": "Anystate", "country": "US"}]
 ```
 
-SHA-256 Hash: `TPsGNPYA46wmBxfv2znOJhfdoN5Y1GkezbpaGZCT1ac`
-
 __Disclosure for `birthdate`:__
 
+SHA-256 Hash: `rnAzCT6DTy4TsX9QCDv2wwAE4Ze20uRigtVNQkA52X0`
+
+Disclosure:
+
 ```
-WyJFUktNMENOZUZKa2FENW1UWFZfWDh3IiwgImJpcnRoZGF0ZSIsICIxOTQwLTAxLTAx
+WyJkQW9mNHNlZTFGdDBXR2dHanVjZ2pRIiwgImJpcnRoZGF0ZSIsICIxOTQwLTAxLTAx
 Il0
 ```
 
 Contents:
 
 ```
-["ERKM0CNeFJkaD5mTXV_X8w", "birthdate", "1940-01-01"]
+["dAof4see1Ft0WGgGjucgjQ", "birthdate", "1940-01-01"]
 ```
-
-SHA-256 Hash: `NYCoSRKEYwXdpe5yduJXCxxhynEU8z-b4TyNiap77UY`

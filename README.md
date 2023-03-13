@@ -74,7 +74,8 @@ Command line usage requires that you have the necessary software installed.  See
 # Implementations
 
  * Python: [Reference/Demo Implementation](https://github.com/oauthstuff/draft-selective-disclosure-jwt)
- * Kotlin: [SD-JWT-Kotlin](https://github.com/IDunion/SD-JWT-Kotlin)
+ * Kotlin: [SD-JWT-Kotlin (ID Union)](https://github.com/IDunion/SD-JWT-Kotlin)
  * Rust: [sd_jwt](https://github.com/kushaldas/sd_jwt)
  * TypeScript: [sd-jwt](https://github.com/christianpaquin/sd-jwt)
  * TypeScript: [sd-jwt-ts](https://github.com/chike0905/sd-jwt-ts)
+ * Java: [Java Library for SD-JWT (Authlete)](https://github.com/authlete/sd-jwt)

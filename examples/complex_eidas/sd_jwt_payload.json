@@ -1,53 +1,28 @@
 {
-  "_sd": [
-    "UxYjx8bYA86RGAHOjRjntztJ16doIL9tAFREFeQCKz0"
-  ],
+  "iss": "https://example.com/issuer",
+  "iat": 1516239022,
+  "exp": 1735689661,
   "verified_claims": {
     "verification": {
       "_sd": [
-        "OKbpoO_RGyeF1FP_X4RI67ytOW5OO5pj8iAEHPPmGzQ"
+        "_lbDEsrlRsRRIFbm4Wo7yI6OGxK_jyREGDbEbNNbE8c"
       ],
       "trust_framework": "eidas",
-      "evidence": [
-        {
-          "_sd": [
-            "DwtOtYlPczP3j0CAGmwK_sG1PS15BePEWennozJtnc4",
-            "N5X-cmduA_hEiG-2-TFHWlYFPmuPAhgMSDAd5-_0ANw"
-          ],
-          "document": {
-            "_sd": [
-              "30jdaA9OfGpa3Tj5XJbtWiVrl4i66my26mOnbIuwY0w",
-              "Fsu1XL9NW1tHVpytr44jFbXwdhX1avNlRArOzRRj6FQ",
-              "PPzuOzIrbneVJ49-K3zgqOPDJvFgbipGcU1Psg2BqPY",
-              "wnXuBaY3ZVHy7qb8zhyVqGjs5ZywuwfDxJ3pIc1vHQo"
-            ],
-            "issuer": {
-              "_sd": [
-                "S-K8XHQ5-TipWeWHZNcKLe4gyqoTW8QPl6XXdmnBPiI",
-                "VBsVXxKHbC7-6dVZcdFg9kU7yCNsPWob4bDcVbZB4-w"
-              ]
-            }
-          }
-        }
-      ]
+      "assurance_level": "high"
     },
     "claims": {
       "_sd": [
-        "9C3BrCMDx2zsqn9IhN7siBJXSyZvvJoDYzGsyHhhnZU",
-        "QVtNjGpLtd7NpJgfjBTMhKwwef4EE2VuEE-jBKQJueA",
-        "zXwogmNL4aJrhL7OikfJCpDYpPNSA1SyFciDIcWP14k"
+        "5pKMzwsp6i8VcPXyFq6WUZpohJBth5LZgFqK-V86mqc",
+        "CMibWTnxlPV4t9PikOhxL-hrLT5UCkSMAqp1ZIQEDxE",
+        "LxSdSlnUfIbXsO-5rmyA3Vhy4CcQzZT6GbCuPHLEzoI",
+        "VdZWIPp4ngYgkSij8ZJUuxnFlVl0WB1ERhPVztWbv3U"
       ],
       "person_unique_identifier":
         "TINIT-fc0d9684-1bf0-4220-9642-8fe652c8c040",
       "given_name": "Raffaello",
-      "family_name": "Mascetti",
-      "nationalities": [
-        "IT"
-      ]
+      "family_name": "Mascetti"
     }
   },
-  "iss": "https://example.com/issuer",
-  "iat": 1516239022,
-  "exp": 1516247022,
+  "birth_middle_name": "Lello",
   "_sd_alg": "sha-256"
 }

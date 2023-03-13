@@ -9,8 +9,8 @@ import datetime
 
 import yaml
 from sd_jwt import __version__
-from sd_jwt.demo_utils import get_jwk, print_decoded_repr, print_repr
-from sd_jwt.operations import SDJWTCommon, SDJWTHolder, SDJWTIssuer, SDJWTVerifier
+from sd_jwt.demo_utils import get_jwk, print_decoded_repr
+from sd_jwt.operations import SDJWTCommon, SDJWTHolder, SDJWTIssuer, SDJWTVerifier, SDKey
 from sd_jwt.replace_utils import textwrap_json, textwrap_text
 
 logger = logging.getLogger("sd_jwt")
@@ -142,12 +142,25 @@ ISSUER_PUBLIC_KEY = _JWKS["ISSUER_PUBLIC_KEY"]
 
 example_identifer = _args.example.stem
 
-with open(_args.example, "r") as f:
-    example = yaml.load(f, Loader=yaml.FullLoader)
 
-for property in ("user_claims", "non_sd_claims", "holder_disclosed_claims"):
-    if property not in example:
-        sys.exit(f"Example file must define '{property}'.")
+def load_yaml_example(file):
+    class SDKeyTag(yaml.YAMLObject):
+        yaml_tag = "!sd"
+
+        @classmethod
+        def from_yaml(cls, loader, node):
+            return SDKey(loader.construct_scalar(node))
+
+    with open(_args.example, "r") as f:
+        example = yaml.load(f, Loader=yaml.FullLoader)
+
+    for property in ("user_claims", "holder_disclosed_claims"):
+        if property not in example:
+            sys.exit(f"Example file must define '{property}'.")
+
+    return example
+
+example = load_yaml_example(_args.example)
 
 ### Add default claims if necessary
 iat = _args.iat or int(datetime.datetime.utcnow().timestamp())
@@ -166,7 +179,6 @@ sdjwt_at_issuer = SDJWTIssuer(
     claims,
     ISSUER_KEY,
     HOLDER_KEY if example.get("holder_binding", False) else None,
-    example["non_sd_claims"],
     add_decoy_claims=example.get("add_decoy_claims", False),
 )
 
@@ -212,11 +224,12 @@ for hash in sdjwt_at_holder._hash_to_decoded_disclosure:
     b64 = sdjwt_at_holder._hash_to_disclosure[hash]
     encoded_json = sdjwt_at_holder._base64url_decode(b64).decode("utf-8")
 
-    iid_payload += f"__Disclosure for `{claim_name}`:__\n"
+    iid_payload += f"__Disclosure for `{claim_name}`:__\n\n"
+    iid_payload += f"SHA-256 Hash: `{hash}`\n\n"
+    iid_payload += f"Disclosure:\n"
     iid_payload += f"\n```\n{textwrap_text(b64)}\n```\n\n"
     iid_payload += f"Contents:\n"
     iid_payload += f"\n```\n{textwrap_text(encoded_json)}\n```\n\n"
-    iid_payload += f"SHA-256 Hash: `{hash}`\n\n"
 
 iid_payload = iid_payload.strip()
 

@@ -317,26 +317,27 @@ Claims that are not selectively disclosable are included in the SD-JWT in plaint
 
 Selectively disclosable claims are omitted from the SD-JWT. Instead, the digests of the respective Disclosures and potentially decoy digests are contained as an array in a new JWT claim, `_sd`.
 
-The `_sd` claim MUST be an array of strings, each string being a digest of a Disclosure or a decoy digest as described above.
+The `_sd` key MUST refer to an array of strings, each string being a digest of a Disclosure or a decoy digest as described above.
 
-The array MAY be empty in case the Issuer decided not to selectively disclose any of the claims at that level. However, it is RECOMMENDED to omit `_sd` claim in this case to save space.
+The array MAY be empty in case the Issuer decided not to selectively disclose any of the claims at that level. However, it is RECOMMENDED to omit the `_sd` key in this case to save space.
 
 The Issuer MUST hide the original order of the claims in the array. To ensure this, it is RECOMMENDED to shuffle the array of hashes, e.g., by sorting it alphanumerically or randomly. The precise method does not matter as long as it does not depend on the original order of elements.
 
 Issuers MUST NOT issue SD-JWTs where
 
  * the key `_sd` is already used for the purpose other than to contain the array of digests, or
- * the claim value contained in a Disclosure contains (at the top level or nested deeper) an object with an `_sd` key, or
  * the same Disclosure value appears more than once (in the same array or in different arrays).
 
 
 #### Nested Data in SD-JWTs {#nested_data}
 
-Just like any JWT, an SD-JWT MAY contain key value pairs where the value is an object. For any object in an SD-JWT, the Issuer MAY decide to either make the entire object selectively disclosable or to make its properties selectively disclosable individually. In the latter case, the Issuer MAY even choose to make some of the object's properties selectively disclosable and others not.
+Being JSON, an object in an SD-JWT payload MAY contain key-value pairs where the value is another object. In SD-JWT, the Issuer decides for each key individually, on each level of the JSON, whether the key should be selectively disclosable or not. This choice can be made on each level independent from whether keys higher in the hierarchy are selectively disclosable.
 
-In any case, the `_sd` claim MUST be included in the SD-JWT at the same level as the original claim and therefore MAY appear multiple times in an SD-JWT.
+For any selectively disclosable claim, the `_sd` key containing the digest value MUST be included in the SD-JWT at the same level as the original claim. It follows that the `_sd` key MAY appear multiple times in an SD-JWT. It MAY even appear within Disclosures.
 
-The following examples show some of the options an Issuer has when producing an SD-JWT with the following End-User data.
+The following examples illustrate some of the options an Issuer has. It is up to the Issuer to decide which option to use, depending on, for example, the expected use cases for the SD-JWT, requirements for privacy, size considerations, or ecosystem requirements.
+
+The following claim set is used as an example throughout this section:
 
 <{{examples/address_only_flat/user_claims.json}}
 
@@ -365,15 +366,21 @@ In this case, the Issuer would use the following data in the Disclosures for the
 
 {{examples/address_only_structured/disclosures.md}}
 
-##### Option 3: Structured SD-JWT, only some properties selectively disclosable
-
 The Issuer may also make one sub-claim of `address` non-selectively disclosable and hide only the other sub-claims:
 
 <{{examples/address_only_structured_one_open/sd_jwt_payload.json}}
 
-In this case, the Issuer would issue the following Disclosures:
+There would be no Disclosure for `country` in this case.
 
-{{examples/address_only_structured_one_open/disclosures.md}}
+#### Option 3: SD-JWT with Recursive Disclosures
+
+The Issuer may also decide to make the `address` claim contents selectively disclosable recursively, i.e., the `address` claim is made selectively disclosable as well as its sub-claims:
+
+<{{examples/address_only_recursive/sd_jwt_payload.json}}
+
+The Issuer creates Disclosures first for the sub-claims and then includes their digests in the Disclosure for the `address` claim:
+
+{{examples/address_only_recursive/disclosures.md}}
 
 ### Hash Function Claim {#hash_function_claim}
 
@@ -512,9 +519,10 @@ a Combined Format for Issuance:
  1. Separate the SD-JWT and the Disclosures in the Combined Format for Issuance.
  2. Hash all of the Disclosures separately.
  3. Find the places in the SD-JWT where the digests of the Disclosures are
-    included. If any of the digests cannot be found in the SD-JWT, the
-    Holder MUST reject the SD-JWT.
- 4. Decode Disclosures and obtain plaintext of the claim values.
+    included and decode the respective plaintext values from the Disclosures at the
+    appropriate places. The processing MUST take into account that digests might be
+    included not only directly in the SD-JWT, but also in other Disclosures. If any of the
+    digests cannot be found, the Holder MUST reject the SD-JWT.
 
 It is up to the Holder how to maintain the mapping between the Disclosures and the plaintext claim values to be able to display them to the End-User when needed.
 
@@ -530,7 +538,7 @@ For presentation to a Verifier, the Holder MUST perform the following (or equiva
 Upon receiving a Presentation, Verifiers MUST ensure that
 
  * the SD-JWT is valid, i.e., it is signed by the Issuer and the signature is valid,
- * all Disclosures are correct, i.e., their digests are referenced in the SD-JWT, and
+ * all Disclosures are correct, i.e., their digests are referenced in the SD-JWT or in other Disclosures referenced in the SD-JWT, and
  * if Holder Binding is required, the Holder Binding JWT is signed by the Holder and valid.
 
 To this end, Verifiers MUST follow the following steps (or equivalent):
@@ -549,16 +557,17 @@ To this end, Verifiers MUST follow the following steps (or equivalent):
  4. Create a copy of the SD-JWT payload, if required for further processing.
  5. Process the Disclosures. For each Disclosure provided:
     1. Calculate the digest over the base64url string as described in (#hashing_disclosures).
-    2. Find all `_sd` keys in the SD-JWT payload that contain a digest calculated in the previous step. Note that there might be more than one `_sd` arrays in on SD-JWT.
-       1. If the digest cannot be found in the SD-JWT payload, the Verifier MUST reject the Presentation.
-       2. If there is more than one place where the digest is included, the Verifier MUST reject the Presentation.
-       3. If there is a key `_sd` that does not refer to an array, the Verifier MUST reject the Presentation.
-       4. Otherwise, insert, at the level of the `_sd` claim, the claim described by the Disclosure with the claim name and claim value provided in the Disclosure.
-          1. If the Disclosure is not a JSON-encoded array of three elements, the Verifier MUST reject the Presentation.
-          2. If the claim name already exists at the same level, the Verifier MUST reject the Presentation. Note that this also means that if a Holder sends the same Disclosure multiple times, the Verifier MUST reject the Presentation.
-          3. If the claim value contains an object with an `_sd` key (at the top level or nested deeper), the Verifier MUST reject the Presentation.
-    3. Remove all `_sd` claims from the SD-JWT payload.
-    4. Remove the claim `_sd_alg` from the SD-JWT payload.
+    2. Find all `_sd` keys in the SD-JWT payload. For each such key:
+       1. If the key does not refer to an array, the Verifier MUST reject the Presentation.
+       2. Otherwise, process each digest in the `_sd` array as follows:
+          1. Find the Disclosure referenced by the digests. If no such Disclosure can be found, the Verifier MUST reject the presentation.
+          2. If the Disclosure is not a JSON-encoded array of three elements, the Verifier MUST reject the Presentation.
+          3. Insert, at the level of the `_sd` key, a new claim using the claim name and claim value from the Disclosure.
+          4. If the claim name already exists at the same level, the Verifier MUST reject the Presentation.
+          5. If the decoded value contains an `_sd` key, recursively process the key as described before.
+    3. If any digests were found more than once in the previous step, the Verifier MUST reject the Presentation.
+    4. Remove all `_sd` keys from the SD-JWT payload.
+    5. Remove the claim `_sd_alg` from the SD-JWT payload.
  6. If Holder Binding is required:
     1. If Holder Binding is provided by means not defined in this specification, verify the Holder Binding according to the method used.
     2. Otherwise, verify the Holder Binding JWT as follows:
@@ -599,6 +608,21 @@ The following non-normative example shows a Combined Format for Presentation env
 Here, `eyJhbGci...emhlaUJhZzBZ` represents the SD-JWT and `eyJhb...dYALCGg` represents a Disclosure. The Combined Format for Presentation does not contain a Holder Binding JWT as the outer container can be signed instead.
 
 # Security Considerations {#security_considerations}
+
+Security considerations in this section help achieve the following properties:
+
+* Claim values issued by the Issuer cannot be obtained by the adversary, if the Holder did not intend to disclose them.
+* Claim values that are not issued by the Issuer cannot be successfully verified by the Verifier, if the Holder forged the Disclosures.
+
+## Mandatory digest computation of the revealed claim values by the Verifier
+
+ToDo: add text explaining mechanisms that should be adopted to ensure that
+  Verifiers validate the claim values received in HS-Disclosures JWT by calculating the
+  digests of those values and comparing them with the digests in the SD-JWT:
+  - create a test suite that forces digest computation by the Verifiers,
+    and includes negative test cases in test vectors
+  - use only implementations/libraries that are compliant to the test suite
+  - etc.
 
 ## Mandatory signing of the SD-JWT
 
@@ -761,6 +785,8 @@ key-distribution method.
 
 # Privacy Considerations {#privacy_considerations}
 
+The privacy principles of [@ISO.29100] should be adhered to.
+
 ## Storage of Signed User Data
 
 Wherever End-User data is stored, it represents a potential
@@ -819,8 +845,8 @@ This specification therefore considers the confidentiality of the data to be
 provided by the transport protocol and does not specify any encryption
 mechanism.
 
-Implementers MUST ensure that the transport protocol provides confidentiality,
-if the privacy of End-User data or correlation attacks are a concern. Implementers MAY define an
+Implementers MUST ensure that the transport protocol provides confidentiality
+if the privacy of End-User data or correlation attacks by passive observers are a concern. Implementers MAY define an
 envelope format (such as described in (#enveloping) or nesting the SD-JWT Combined Format as
 the plaintext payload of a JWE) to encrypt the SD-JWT
 and associated Disclosures when transmitted over an insecure channel.
@@ -841,6 +867,19 @@ To prevent these types of linkability, various methods, including but not limite
 
 - Use advanced cryptographic schemes, outside the scope of this specification.
 - Issue a batch of SD-JWTs to the Holder to enable the Holder to use a unique SD-JWT per Verifier. This only helps with Verifier/Verifier unlinkability.
+
+
+## Issuer Identifier
+
+An Issuer issuing only one type of SD-JWT might have privacy implications, because if the Holder has an SD-JWT issued by that Issuer, its type and claim names can be determined.
+
+For example, if the National Cancer Institute only issued SD-JWTs with cancer registry information, it is possible to deduce that the Holder owning its SD-JWT is a cancer patient.
+
+Moreover, the issuer identifier alone may reveal information about the user.
+
+For example, when a military organization or a drug rehabilitation center issues a vaccine credential, verifiers can deduce that the holder is a military member or may have a substance use disorder.
+
+To mitigate this issue, a group of issuers may elect to use a common Issuer identifier. A group signature scheme outside the scope of this specification may also be used, instead of an individual signature.
 
 # Acknowledgements {#Acknowledgements}
 
@@ -892,6 +931,13 @@ TBD
       <organization>Salesforce</organization>
     </author>
    <date day="8" month="Nov" year="2014"/>
+  </front>
+</reference>
+
+<reference anchor="ISO.29100" target="https://standards.iso.org/ittf/PubliclyAvailableStandards/index.html">
+  <front>
+    <author fullname="ISO"></author>
+    <title>ISO/IEC 29100:2011 Information technology — Security techniques — Privacy framework</title>
   </front>
 </reference>
 
@@ -1161,6 +1207,7 @@ data. The original JSON data is then used by the application. See
 
    -03
 
+   * Allow for recursive disclosures
    * Discussion on holder binding and privacy of stored credentials
    * Add some context about SD-JWT being general-purpose despite being a product of the OAuth WG
    * More explicitly say that SD-JWTs have to be signed asymmetrically (no MAC and no `none`)

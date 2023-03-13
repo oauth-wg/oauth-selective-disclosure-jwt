@@ -1,33 +1,42 @@
 {
+  "iss": "https://example.com/issuer",
+  "iat": 1516239022,
+  "exp": 1735689661,
   "verified_claims": {
     "verification": {
       "trust_framework": "eidas",
+      "assurance_level": "high",
       "evidence": [
         {
+          "type": "electronic_record",
           "record": {
-            "type": "eu.europa.ec.eudiw.pid.1"
+            "type": "eu.europa.ec.eudiw.pid.1",
+            "personal_number": "9642-8fe652c8c040",
+            "source": {
+              "organization_name": "Comune di Firenze",
+              "organization_id": "c_d612",
+              "country_code": "IT",
+              "country": "Italy"
+            }
           }
         }
-      ],
-      "assurance_level": "high"
+      ]
     },
     "claims": {
-      "person_unique_identifier":
-        "TINIT-fc0d9684-1bf0-4220-9642-8fe652c8c040",
       "given_name": "Raffaello",
-      "family_name": "Mascetti",
       "nationalities": [
         "IT"
       ],
+      "family_name": "Mascetti",
       "gender": "M",
       "place_of_birth": {
         "country": "IT",
         "locality": "Firenze"
-      }
+      },
+      "person_unique_identifier":
+        "TINIT-fc0d9684-1bf0-4220-9642-8fe652c8c040"
     }
   },
-  "iss": "https://example.com/issuer",
-  "iat": 1516239022,
-  "exp": 1516247022,
+  "birth_middle_name": "Lello",
   "_sd_alg": "sha-256"
 }
