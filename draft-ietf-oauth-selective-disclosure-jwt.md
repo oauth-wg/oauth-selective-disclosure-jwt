@@ -1277,6 +1277,8 @@ data. The original JSON data is then used by the application. See
 
    [[ To be removed from the final specification ]]
 
+   -04
+
    -03
 
    * Clarify that other specifications may define enveloping multiple Combined Formats for Presentation
