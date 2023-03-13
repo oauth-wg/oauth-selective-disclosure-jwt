@@ -109,7 +109,7 @@ wherever possible.
 ## Feature Summary
 
 * This specification defines
-  - a format for an Issuer-signed JWT that enables issuing selectively disclosable claims,
+  - a format for an Issuer-signed JWT containing selectively disclosable claims,
   - a format for data associated with an Issuer-signed JWT that enables selectively disclosing claims, and
   - formats for the combined transport of an Issuer-signed JWT and the associated data during issuance and presentation.
 * The specification supports selectively disclosable claims in flat data structures
