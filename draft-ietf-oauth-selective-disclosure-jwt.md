@@ -622,16 +622,6 @@ Security considerations in this section help achieve the following properties:
 * Claim values issued by the Issuer cannot be obtained by the adversary, if the Holder did not intend to disclose them.
 * Claim values that are not issued by the Issuer cannot be successfully verified by the Verifier, if the Holder forged the Disclosures.
 
-## Mandatory digest computation of the revealed claim values by the Verifier
-
-ToDo: add text explaining mechanisms that should be adopted to ensure that
-  Verifiers validate the claim values received in HS-Disclosures JWT by calculating the
-  digests of those values and comparing them with the digests in the SD-JWT:
-  - create a test suite that forces digest computation by the Verifiers,
-    and includes negative test cases in test vectors
-  - use only implementations/libraries that are compliant to the test suite
-  - etc.
-
 ## Mandatory signing of the SD-JWT
 
 The SD-JWT MUST be signed by the Issuer to protect integrity of the issued
@@ -1289,6 +1279,11 @@ data. The original JSON data is then used by the application. See
 
    -03
 
+   * Clarify that other specifications may define enveloping multiple Combined Formats for Presentation
+   * Add an example of W3C vc-data-model that uses a JSON-LD object as the claims set
+   * Clarify requirements for the combined formats for issuance and presentation
+   * Added overview of the Security Considerations section
+   * Enhanced examples in the Privacy Considerations section
    * Allow for recursive disclosures
    * Discussion on holder binding and privacy of stored credentials
    * Add some context about SD-JWT being general-purpose despite being a product of the OAuth WG
