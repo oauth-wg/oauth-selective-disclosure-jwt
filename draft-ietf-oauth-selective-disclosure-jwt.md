@@ -784,6 +784,8 @@ key-distribution method.
 
 # Privacy Considerations {#privacy_considerations}
 
+The privacy principles of [@ISO.29100] should be adhered to.
+
 ## Storage of Signed User Data
 
 Wherever End-User data is stored, it represents a potential
@@ -842,8 +844,8 @@ This specification therefore considers the confidentiality of the data to be
 provided by the transport protocol and does not specify any encryption
 mechanism.
 
-Implementers MUST ensure that the transport protocol provides confidentiality,
-if the privacy of End-User data or correlation attacks are a concern. Implementers MAY define an
+Implementers MUST ensure that the transport protocol provides confidentiality
+if the privacy of End-User data or correlation attacks by passive observers are a concern. Implementers MAY define an
 envelope format (such as described in (#enveloping) or nesting the SD-JWT Combined Format as
 the plaintext payload of a JWE) to encrypt the SD-JWT
 and associated Disclosures when transmitted over an insecure channel.
@@ -864,6 +866,19 @@ To prevent these types of linkability, various methods, including but not limite
 
 - Use advanced cryptographic schemes, outside the scope of this specification.
 - Issue a batch of SD-JWTs to the Holder to enable the Holder to use a unique SD-JWT per Verifier. This only helps with Verifier/Verifier unlinkability.
+
+
+## Issuer Identifier
+
+An Issuer issuing only one type of SD-JWT might have privacy implications, because if the Holder has an SD-JWT issued by that Issuer, its type and claim names can be determined.
+
+For example, if the National Cancer Institute only issued SD-JWTs with cancer registry information, it is possible to deduce that the Holder owning its SD-JWT is a cancer patient.
+
+Moreover, the issuer identifier alone may reveal information about the user.
+
+For example, when a military organization or a drug rehabilitation center issues a vaccine credential, verifiers can deduce that the holder is a military member or may have a substance use disorder.
+
+To mitigate this issue, a group of issuers may elect to use a common Issuer identifier. A group signature scheme outside the scope of this specification may also be used, instead of an individual signature.
 
 # Acknowledgements {#Acknowledgements}
 
@@ -915,6 +930,13 @@ TBD
       <organization>Salesforce</organization>
     </author>
    <date day="8" month="Nov" year="2014"/>
+  </front>
+</reference>
+
+<reference anchor="ISO.29100" target="https://standards.iso.org/ittf/PubliclyAvailableStandards/index.html">
+  <front>
+    <author fullname="ISO"></author>
+    <title>ISO/IEC 29100:2011 Information technology — Security techniques — Privacy framework</title>
   </front>
 </reference>
 
