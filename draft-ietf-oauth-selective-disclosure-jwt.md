@@ -55,10 +55,10 @@ secured against modification using JSON Web Signature (JWS) [@!RFC7515] digital
 signatures. A consumer of a signed JWT that has checked the
 signature can safely assume that the contents of the token have not been
 modified.  However, anyone receiving an unencrypted JWT can read all the
-claims. Likewise, anyone with the decryption key receiving a signed and encrypted JWT
+claims. Likewise, anyone with the decryption key receiving encrypted JWT
 can also read all the claims.
 
-One of the common use cases of a signed JWT is representing user's
+One of the common use cases of a signed JWT is representing a user's
 identity. As long as the signed JWT is one-time
 use, it typically only contains those claims the user has consented to
 disclose to a specific Verifier. However, there is an increasing number
@@ -1084,15 +1084,15 @@ pass the following result on to the application for further processing:
 
 This example illustrates how to use the artifacts defined in this specification to secure a payload
 that is represented as a W3C Verifiable Credentials Data Model v2.0 [@VC_DATA_v2.0]
-and does not use JSON-LD. The example uses a content type `credential-claims-set+json` defined in [@VC_JWT], Section 3 in a `cty` JOSE Header value.
+and does not use JSON-LD to provide semantic definitions for claims. The example uses a content type `credential-claims-set+json` defined in [@VC_JWT], Section 3 in a `cty` JOSE Header value.
 
 SD-JWT is equivalent to an Issuer-signed W3C Verifiable Credential (W3C VC). Disclosures are sent alongside a W3C VC.
 
-A Holder-signed Verifiable Presentation as defined in [@VC_DATA_v2.0] would be equivalent to
+A Holder-signed Verifiable Presentation as defined in [@VC_DATA_v2.0] is equivalent to
 a Combined Format for Presentation with a Holder Binding JWT.
 
 In this example, Holder Binding is applied and Verifiable Presentation can be signed using
-a raw public key passed in a `cnf` Claim in the SD-JWT.
+a Holder's public key passed in a `cnf` Claim in the SD-JWT.
 
 Below is a non-normative example of an SD-JWT represented as a W3C VC without using JSON-LD.
 
@@ -1112,7 +1112,7 @@ Disclosures:
 
 This example illustrates how to use the artifacts defined in this specification to secure a payload
 that is represented as a W3C Verifiable Credentials Data Model v2.0 [@VC_DATA_v2.0]
-and uses JSON-LD. The example uses a content type `credential+ld+json` defined in [@VC_DATA_v2.0], Section 6.3 in a `cty` JOSE Header value.
+and uses a JSON-LD object as the claims set. The example uses a content type `credential+ld+json` defined in [@VC_DATA_v2.0], Section 6.3 in a `cty` JOSE Header value.
 
 SD-JWT is equivalent to an Issuer-signed W3C Verifiable Credential (W3C VC). Disclosures are sent alongside a VC.
 
@@ -1120,7 +1120,7 @@ A Combined Format for Presentation with a Holder Binding JWT would be equivalent
 Verifiable Presentation as defined in [@VC_DATA_v2.0].
 
 In this example, Holder Binding is applied and a Combined Format for Presentation is signed
-using a raw public key passed in a `cnf` Claim in the SD-JWT.
+using a Holder's public key passed in a `cnf` Claim in the SD-JWT.
 
 Below is a non-normative example of an SD-JWT represented as a W3C VC using JSON-LD.
 
@@ -1136,9 +1136,7 @@ Disclosures:
 
 {{examples/jsonld/disclosures.md}}
 
-A Combined Format for Presentation for the SD-JWT that discloses only discloses `type`, `medicinalProductName`, `atcCode` of the vaccine,
-`type` of the `recipient`, `type`, `order` and `dateOfVaccination`,
-and has a Holder Binding JWT could look as follows:
+The following is a non-normative example of a Combined Format for Presentation for the SD-JWT with a Holder Binding JWT. It only discloses `type`, `medicinalProductName`, `atcCode` of the vaccine, `type` of the `recipient`, `type`, `order` and `dateOfVaccination`.
 
 <{{examples/jsonld/combined_presentation.txt}}
 
