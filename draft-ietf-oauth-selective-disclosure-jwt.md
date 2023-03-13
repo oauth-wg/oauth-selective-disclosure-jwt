@@ -601,11 +601,8 @@ Here, `eyJhbGci...emhlaUJhZzBZ` represents the SD-JWT and `eyJhb...dYALCGg` repr
 
 Security considerations in this section help achieve the following properties:
 
-* Claim values issued by the Issuer cannot be obtained by the adversary,
-	- if the Holder did not intend to disclose them,
-	- even if the content of the protocol exchange was observed.
-* Claim values that are not issued by the Issuer cannot be successfully verified by the Verifier,
-  - if the Holder forged the Disclosures.
+* Claim values issued by the Issuer cannot be obtained by the adversary, if the Holder did not intend to disclose them.
+* Claim values that are not issued by the Issuer cannot be successfully verified by the Verifier, if the Holder forged the Disclosures.
 
 ## Mandatory digest computation of the revealed claim values by the Verifier
 
