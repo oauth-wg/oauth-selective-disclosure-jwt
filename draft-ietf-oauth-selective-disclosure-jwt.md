@@ -830,8 +830,8 @@ This specification therefore considers the confidentiality of the data to be
 provided by the transport protocol and does not specify any encryption
 mechanism.
 
-Implementers MUST ensure that the transport protocol provides confidentiality,
-if the privacy of End-User data or correlation attacks by the passive observers are a concern. Implementers MAY define an
+Implementers MUST ensure that the transport protocol provides confidentiality
+if the privacy of End-User data or correlation attacks by passive observers are a concern. Implementers MAY define an
 envelope format (such as described in (#enveloping) or nesting the SD-JWT Combined Format as
 the plaintext payload of a JWE) to encrypt the SD-JWT
 and associated Disclosures when transmitted over an insecure channel.
@@ -856,13 +856,13 @@ To prevent these types of linkability, various methods, including but not limite
 
 ## Issuer Identifier
 
-Issuer issuing only one type of SD-JWT might have privacy implications, because if the Holder has an SD-JWT issued by that Issuer, its type and claim names can be determined.
+An Issuer issuing only one type of SD-JWT might have privacy implications, because if the Holder has an SD-JWT issued by that Issuer, its type and claim names can be determined.
 
 For example, if the National Cancer Institute only issued SD-JWTs with cancer registry information, it is possible to deduce that the Holder owning its SD-JWT is a cancer patient.
 
-Moreover, issuer identifier alone may reveal information about the user.
+Moreover, the issuer identifier alone may reveal information about the user.
 
-For example, when a military organization or a drug rehab center issues a vaccine credential, verifiers can deduce that the holder is a military member or has a substance use disorder.
+For example, when a military organization or a drug rehabilitation center issues a vaccine credential, verifiers can deduce that the holder is a military member or may have a substance use disorder.
 
 To mitigate this issue, a group of issuers may elect to use a common Issuer identifier. A group signature scheme outside the scope of this specification may also be used, instead of an individual signature.
 
