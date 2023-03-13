@@ -606,9 +606,7 @@ The following non-normative example shows a Combined Format for Presentation env
 
 Here, `eyJhbGci...emhlaUJhZzBZ` represents the SD-JWT and `eyJhb...dYALCGg` represents a Disclosure. The Combined Format for Presentation does not contain a Holder Binding JWT as the outer container can be signed instead.
 
-Another specification and/or profile of this specification may define other mechanisms that enable
-enveloping in a single signed JWT more than one Combined Format for Presentation without a Holder
-Binding JWT.
+Other specifications or profiles of this specification may define alternative formats for transporting the Combined Format for Presentation that envelopes multiple such objects into one object, and provides Holder Binding using means other than Holder Binding JWT.
 
 # Security Considerations {#security_considerations}
 
