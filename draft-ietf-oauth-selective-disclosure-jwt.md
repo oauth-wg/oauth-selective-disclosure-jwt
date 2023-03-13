@@ -460,7 +460,7 @@ The data format for sending the SD-JWT and the Disclosures to the Verifier MUST 
 <SD-JWT>~<Disclosure 1>~<Disclosure 2>~...~<Disclosure M>~<optional Holder Binding JWT>
 ```
 
-The order of the base64url-encoded values MUST be an SD-JWT, Disclosures, and an optional Holder Binding JWT.
+The order of the base64url-encoded values MUST be an SD-JWT, Disclosures, and an optional Holder Binding JWT. In case there is no Holder Binding JWT, the last element is an empty string. The last separating tilde character MUST NOT be omitted.
 
 This is called the Combined Format for Presentation.
 
