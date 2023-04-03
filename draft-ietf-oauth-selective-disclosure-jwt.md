@@ -1280,6 +1280,8 @@ data. The original JSON data is then used by the application. See
 
    -04
 
+   * Improve description of processing of disclosures
+
    -03
 
    * Clarify that other specifications may define enveloping multiple Combined Formats for Presentation
