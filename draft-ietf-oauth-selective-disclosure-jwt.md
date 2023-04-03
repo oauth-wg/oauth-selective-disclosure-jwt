@@ -560,21 +560,22 @@ To this end, Verifiers MUST follow the following steps (or equivalent):
     3. Validate the Issuer of the SD-JWT and that the signing key belongs to this Issuer.
     4. Check that the SD-JWT is valid using `nbf`, `iat`, and `exp` claims, if provided in the SD-JWT, and not selectively disclosed.
     5. Check that the `_sd_alg` claim is present and its value is understood and the hash algorithm is deemed secure.
- 4. Create a copy of the SD-JWT payload, if required for further processing.
- 5. Process the Disclosures. For each Disclosure provided:
-    1. Calculate the digest over the base64url string as described in (#hashing_disclosures).
-    2. Find all `_sd` keys in the SD-JWT payload. For each such key:
+ 4. Process the Disclosures and `_sd` keys in the SD-JWT as follows:
+    1. Create a copy of the SD-JWT payload, if required for further processing.
+    2. For each Disclosure provided:
+       1. Calculate the digest over the base64url string as described in (#hashing_disclosures).
+    3. Find all `_sd` keys in the SD-JWT payload. For each such key:
        1. If the key does not refer to an array, the Verifier MUST reject the Presentation.
-       2. Otherwise, process each digest in the `_sd` array as follows:
-          1. Find the Disclosure referenced by the digests. If no such Disclosure can be found, the Verifier MUST reject the presentation.
+       2. Otherwise, process each entry in the `_sd` array as follows:
+          1. Using the previously calculated digests, find the matching Disclosure. If no such Disclosure can be found, the Verifier MUST reject the presentation.
           2. If the Disclosure is not a JSON-encoded array of three elements, the Verifier MUST reject the Presentation.
           3. Insert, at the level of the `_sd` key, a new claim using the claim name and claim value from the Disclosure.
           4. If the claim name already exists at the same level, the Verifier MUST reject the Presentation.
-          5. If the decoded value contains an `_sd` key, recursively process the key as described before.
-    3. If any digests were found more than once in the previous step, the Verifier MUST reject the Presentation.
-    4. Remove all `_sd` keys from the SD-JWT payload.
-    5. Remove the claim `_sd_alg` from the SD-JWT payload.
- 6. If Holder Binding is required:
+          5. If the decoded value contains an `_sd` key in an object, recursively process the key as described here.
+    4. If any digests were found more than once in the previous step, the Verifier MUST reject the Presentation.
+    5. Remove all `_sd` keys from the SD-JWT payload.
+    6. Remove the claim `_sd_alg` from the SD-JWT payload.
+ 5. If Holder Binding is required:
     1. If Holder Binding is provided by means not defined in this specification, verify the Holder Binding according to the method used.
     2. Otherwise, verify the Holder Binding JWT as follows:
        1. If Holder Binding JWT is not provided, the Verifier MUST reject the Presentation.
