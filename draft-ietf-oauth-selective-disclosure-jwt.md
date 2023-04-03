@@ -781,6 +781,22 @@ Verifiers need to ensure that they are not using expired or revoked keys
 for signature verification using reasonable and appropriate means for the given
 key-distribution method.
 
+## Progressive Redaction
+
+Issuers should be aware that when holder binding is not present,
+documents can be progressively redacted by any holder,
+and further redaction can be applied to an already disclosed token.
+
+For example, a device manufacturer might produce an SD-JWT
+containing information about upstream and downstream supply chain contributors.
+
+Each supply chain party can verify only the disclosed claims
+they have received from an upstream party, and they can
+choose to redact claims before presenting the redacted token to a downstream party.
+
+In some scenarios this behavior could be desirable,
+but if it is not, issuers are encouraged to apply holder binding.
+
 # Privacy Considerations {#privacy_considerations}
 
 The privacy principles of [@ISO.29100] should be adhered to.
