@@ -524,11 +524,12 @@ a Combined Format for Issuance:
 
  1. Separate the SD-JWT and the Disclosures in the Combined Format for Issuance.
  2. Hash all of the Disclosures separately.
- 3. Find the places in the SD-JWT where the digests of the Disclosures are
+ 3. Find the `_sd` arrays in the SD-JWT where the digests of the Disclosures are
     included and decode the respective plaintext values from the Disclosures at the
     appropriate places. The processing MUST take into account that digests might be
-    included not only directly in the SD-JWT, but also in other Disclosures. If any of the
-    digests cannot be found, the Holder MUST reject the SD-JWT.
+    included not only directly in the SD-JWT, but also in other Disclosures. If there
+    is a Disclosure with a digest that cannot be found in any `_sd` array, the SD-JWT
+    is invalid and the Holder MUST reject the SD-JWT.
 
 It is up to the Holder how to maintain the mapping between the Disclosures and the plaintext claim values to be able to display them to the End-User when needed.
 
@@ -567,7 +568,7 @@ To this end, Verifiers MUST follow the following steps (or equivalent):
     3. Find all `_sd` keys in the SD-JWT payload. For each such key:
        1. If the key does not refer to an array, the Verifier MUST reject the Presentation.
        2. Otherwise, process each entry in the `_sd` array as follows:
-          1. Using the previously calculated digests, find the matching Disclosure. If no such Disclosure can be found, the Verifier MUST reject the presentation.
+          1. Using the previously calculated digests, find the matching Disclosure. If no such Disclosure can be found, the digest MUST be ignored.
           2. If the Disclosure is not a JSON-encoded array of three elements, the Verifier MUST reject the Presentation.
           3. Insert, at the level of the `_sd` key, a new claim using the claim name and claim value from the Disclosure.
           4. If the claim name already exists at the same level, the Verifier MUST reject the Presentation.
