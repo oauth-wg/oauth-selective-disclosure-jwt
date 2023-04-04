@@ -560,7 +560,7 @@ To this end, Verifiers MUST follow the following steps (or equivalent):
     2. Validate the signature over the SD-JWT.
     3. Validate the Issuer of the SD-JWT and that the signing key belongs to this Issuer.
     4. Check that the SD-JWT is valid using `nbf`, `iat`, and `exp` claims, if provided in the SD-JWT, and not selectively disclosed.
-    5. Check that the `_sd_alg` claim is present and its value is understood and the hash algorithm is deemed secure.
+    5. Check that the `_sd_alg` claim value is understood and the hash algorithm is deemed secure.
  4. Process the Disclosures and `_sd` keys in the SD-JWT as follows:
     1. Create a copy of the SD-JWT payload, if required for further processing.
     2. For each Disclosure provided:
