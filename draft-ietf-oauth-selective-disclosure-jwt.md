@@ -886,23 +886,23 @@ To mitigate this issue, a group of issuers may elect to use a common Issuer iden
 We would like to thank
 Alen Horvat,
 Arjan Geluk,
+Christian Bormann,
 Christian Paquin,
 David Bakker,
 David Waite,
 Fabian Hauck,
+Filip Skokan,
 Giuseppe De Marco,
 John Mattsson,
-Matthew Miller,
 Justin Richer,
 Kushal Das,
+Matthew Miller,
 Mike Jones,
 Nat Sakimura,
 Orie Steele,
 Pieter Kasselman,
 Ryosuke Abe,
 Shawn Butterfield,
-Filip Skokan,
-Christian Bormann,
 Torsten Lodderstedt, and
 Vittorio Bertocci
 for their contributions (some of which substantial) to this draft and to the initial set of implementations.
