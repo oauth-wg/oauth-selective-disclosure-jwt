@@ -914,6 +914,51 @@ The work on this draft was started at OAuth Security Workshop 2022 in Trondheim,
 
 TBD
 
+## Media Type Registration
+
+This section requests registration of the "application/sd-jwt" media type [@RFC2046] in
+the "Media Types" registry [@IANA.MediaTypes] in the manner described
+in [@RFC6838], which can be used to indicate that the content is an SD-JWT.
+
+* Type name: application
+* Subtype name: sd-jwt
+* Required parameters: n/a
+* Optional parameters: n/a
+* Encoding considerations: binary; application/sd-jwt values are a series of base64url-encoded values (some of which may be the empty string) separated by period ('.') or tilde ('~') characters.
+* Security considerations: See the Security Considerations section of [[ this specification ]].
+* Interoperability considerations: n/a
+* Published specification: [[ this specification ]]
+* Applications that use this media type: TBD
+* Fragment identifier considerations: n/a
+* Additional information:
+   Magic number(s): n/a
+   File extension(s): n/a
+   Macintosh file type code(s): n/a
+* Person & email address to contact for further information: Daniel Fett, mail@danielfett.de
+* Intended usage: COMMON
+* Restrictions on usage: none
+* Author: Daniel Fett, mail@danielfett.de
+* Change Controller: IESG
+* Provisional registration?  No
+
+##  Structured Syntax Suffix Registration
+
+This section requests registration of the "+sd-jwt" structured syntax suffix in
+the "Structured Syntax Suffix" registry [@IANA.StructuredSuffix] in
+the manner described in [RFC6838], which can be used to indicate that
+the media type is encoded as an SD-JWT.
+
+* Name: SD-JWT
+* +suffix: +sd-jwt
+* References: [[ this specification ]]
+* Encoding considerations: binary; SD-JWT values are a series of base64url-encoded values (some of which may be the empty string) separated by period ('.') or tilde ('~') characters.
+* Interoperability considerations: n/a
+* Fragment identifier considerations: n/a
+* Security considerations: See the Security Considerations section of [[ this specification ]].
+* Contact: Daniel Fett, mail@danielfett.de
+* Author/Change controller: IESG
+
+
 <reference anchor="OIDC" target="https://openid.net/specs/openid-connect-core-1_0.html">
   <front>
     <title>OpenID Connect Core 1.0 incorporating errata set 1</title>
@@ -990,7 +1035,6 @@ TBD
   </front>
 </reference>
 
-@VC_JWT
 
 <reference anchor="VC_JWT" target="https://w3c.github.io/vc-jwt/">
   <front>
@@ -1041,6 +1085,20 @@ TBD
   <front>
     <author fullname="IANA"></author>
     <title>JSON Web Signature and Encryption Algorithms</title>
+  </front>
+</reference>
+
+<reference anchor="IANA.MediaTypes" target="https://www.iana.org/assignments/media-types/media-types.xhtml">
+  <front>
+    <author fullname="IANA"></author>
+    <title>Media Types</title>
+  </front>
+</reference>
+
+<reference anchor="IANA.StructuredSuffix" target="https://www.iana.org/assignments/media-type-structured-suffix/media-type-structured-suffix.xhtml">
+  <front>
+    <author fullname="IANA"></author>
+    <title>Structured Syntax Suffixs</title>
   </front>
 </reference>
 
