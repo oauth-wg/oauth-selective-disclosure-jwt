@@ -564,15 +564,15 @@ To this end, Verifiers MUST follow the following steps (or equivalent):
  4. Process the Disclosures and `_sd` keys in the SD-JWT as follows:
     1. Create a copy of the SD-JWT payload, if required for further processing.
     2. For each Disclosure provided:
-       1. Calculate the digest over the base64url string as described in (#hashing_disclosures).
-    3. Find all `_sd` keys in the SD-JWT payload. For each such key:
+       1. Calculate the digest over the base64url-encoded string as described in (#hashing_disclosures).
+    3. Find all `_sd` keys in the SD-JWT payload. For each such key perform the following steps (*):
        1. If the key does not refer to an array, the Verifier MUST reject the Presentation.
        2. Otherwise, process each entry in the `_sd` array as follows:
           1. Using the previously calculated digests, find the matching Disclosure. If no such Disclosure can be found, the digest MUST be ignored.
           2. If the Disclosure is not a JSON-encoded array of three elements, the Verifier MUST reject the Presentation.
           3. Insert, at the level of the `_sd` key, a new claim using the claim name and claim value from the Disclosure.
           4. If the claim name already exists at the same level, the Verifier MUST reject the Presentation.
-          5. If the decoded value contains an `_sd` key in an object, recursively process the key as described here.
+          5. If the decoded value contains an `_sd` key in an object, recursively process the key using the steps described in (*).
     4. If any digests were found more than once in the previous step, the Verifier MUST reject the Presentation.
     5. Remove all `_sd` keys from the SD-JWT payload.
     6. Remove the claim `_sd_alg` from the SD-JWT payload.
