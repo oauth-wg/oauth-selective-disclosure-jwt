@@ -781,21 +781,21 @@ Verifiers need to ensure that they are not using expired or revoked keys
 for signature verification using reasonable and appropriate means for the given
 key-distribution method.
 
-## Progressive Redaction
+## Selective Disclosure without Holder Binding
 
-Issuers should be aware that when holder binding is not present,
-documents can be progressively redacted by any holder,
-and further redaction can be applied to an already disclosed token.
+The Issuers and the Verifiers should be aware that when Holder Binding is not present,
+any entity that is not the original receiver can be presenting the Combined Format for Presentation.
+When doing so, that entity may be applying selective disclosure to the SD-JWT
+that has already been previously selectively disclosed.
 
 For example, a device manufacturer might produce an SD-JWT
 containing information about upstream and downstream supply chain contributors.
-
-Each supply chain party can verify only the disclosed claims
-they have received from an upstream party, and they can
-choose to redact claims before presenting the redacted token to a downstream party.
+Each supply chain party can verify only the claims that were selectively disclosed to them
+by an upstream party, and they can choose to apply selective disclosure to those claims
+when presenting to a downstream party.
 
 In some scenarios this behavior could be desirable,
-but if it is not, issuers are encouraged to apply holder binding.
+but if it is not, the Issuers are encouraged to apply Holder Binding.
 
 # Privacy Considerations {#privacy_considerations}
 
