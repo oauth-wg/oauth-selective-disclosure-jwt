@@ -925,7 +925,7 @@ in [@RFC6838], which can be used to indicate that the content is an SD-JWT.
 * Required parameters: n/a
 * Optional parameters: n/a
 * Encoding considerations: binary; application/sd-jwt values are a series of base64url-encoded values (some of which may be the empty string) separated by period ('.') or tilde ('~') characters.
-* See the Security Considerations section of [[ this specification ]], [@!RFC7519], and [@RFC8725].
+* Security considerations: See the Security Considerations section of [[ this specification ]], [@!RFC7519], and [@RFC8725].
 * Interoperability considerations: n/a
 * Published specification: [[ this specification ]]
 * Applications that use this media type: TBD
