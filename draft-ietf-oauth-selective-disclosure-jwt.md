@@ -621,8 +621,16 @@ Other specifications or profiles of this specification may define alternative fo
 
 Security considerations in this section help achieve the following properties:
 
-* Claim values issued by the Issuer cannot be obtained by the adversary, if the Holder did not intend to disclose them.
-* Claim values that are not issued by the Issuer cannot be successfully verified by the Verifier, if the Holder forged the Disclosures.
+**Selective Disclosure:** An adversary in the role of the Verifier cannot obtain
+information from an SD-JWT about any claim name or claim value that was not
+explicitly disclosed by the Holder unless that information can be derived from
+other disclosed claims or external sources.
+
+**Integrity:** The claims verified by a Verifier are a subset of the claims
+released by the Issuer, even if the Holder is malicious (i.e., a Holder cannot
+modify claim names or claim values without the Verifier noticing during verification).
+
+Additionally, Holder Binding can be achieved as described in (#holder_binding_security).
 
 ## Mandatory signing of the SD-JWT
 
