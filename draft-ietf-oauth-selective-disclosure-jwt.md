@@ -1050,13 +1050,13 @@ TBD
 
 All of the following examples are non-normative.
 
-## Example 2a: Handling Structured Claims {#example-simple_structured}
+## Example 2: Handling Structured Claims {#example-simple_structured}
 
 This example uses the following object as the set of claims that the Issuer is issuing:
 
 <{{examples/simple_structured/user_claims.json}}
 
-Note that in contrast to Example 1, here the Issuer decided to create a structured object for the `address` claim, allowing for separate disclosure of the individual members of the claim.
+Note that in contrast to Example 1, here the Issuer decided to create a structured object for the `address` claim, allowing for separate disclosure of the individual members of the claim. The Issuer further added decoy digests to the SD-JWT to prevent the Verifier from deducing the true number of claims in the address object.
 
 <{{examples/simple_structured/sd_jwt_payload.json}}
 
@@ -1068,18 +1068,6 @@ A Presentation for the SD-JWT that discloses only `region`
 and `country` of the `address` property and without a Holder Binding JWT could look as follows:
 
 <{{examples/simple_structured/combined_presentation.txt}}
-
-## Example 2b: Adding Decoys {#example-simple_structured_with_decoys}
-
-This example is based on the same set of user data as  Example 2a, but
-here, the Issuer decided to add decoy digests to the SD-JWT.
-
-The SD-JWT payload is as follows:
-
-<{{examples/simple_structured_with_decoys/sd_jwt_payload.json}}
-
-Since the Disclosures or Presentation are not affected by the decoy digests (other than a slightly larger SD-JWT), they are omitted here.
-
 
 ## Example 3 - Complex Structured SD-JWT {#example-complex-structured-sd-jwt}
 

@@ -19,3 +19,5 @@ holder_disclosed_claims:
     "address": {},
     "email": null,
   }
+
+add_decoy_claims: true

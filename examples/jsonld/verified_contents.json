@@ -1,4 +1,7 @@
 {
+  "iss": "https://example.com/issuer",
+  "iat": 1516239022,
+  "exp": 1735689661,
   "@context": [
     "https://www.w3.org/2018/credentials/v1",
     "https://w3id.org/vaccination/v1"
@@ -15,15 +18,25 @@
   "credentialSubject": {
     "vaccine": {
       "type": "Vaccine",
+      "atcCode": "J07BX03",
       "medicinalProductName": "COVID-19 Vaccine Moderna",
-      "atcCode": "J07BX03"
+      "marketingAuthorizationHolder": "Moderna Biotech"
     },
+    "nextVaccinationDate": "2021-08-16T13:40:12Z",
+    "countryOfVaccination": "GE",
+    "dateOfVaccination": "2021-06-23T13:40:12Z",
+    "order": "3/3",
     "recipient": {
-      "type": "VaccineRecipient"
+      "type": "VaccineRecipient",
+      "gender": "Female",
+      "birthDate": "1961-08-17",
+      "givenName": "Marion",
+      "familyName": "Mustermann"
     },
     "type": "VaccinationEvent",
-    "order": "3/3",
-    "dateOfVaccination": "2021-06-23T13:40:12Z"
+    "administeringCentre": "Praxis Sommergarten",
+    "batchNumber": "1626382736",
+    "healthProfessional": "883110000015376"
   },
   "_sd_alg": "sha-256",
   "cnf": {
