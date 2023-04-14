@@ -7,6 +7,7 @@ logger = logging.getLogger("sd_jwt")
 
 EXAMPLE_INDENT = 2
 EXAMPLE_MAX_WIDTH = 68
+EXAMPLE_SHORT_WIDTH = 60
 EXAMPLE_ENSURE_ASCII = False
 
 #######################################################################
@@ -44,9 +45,15 @@ def textwrap_json(data, width=EXAMPLE_MAX_WIDTH):
 
     return output
 
+
 def textwrap_text(text, width=EXAMPLE_MAX_WIDTH):
     return fill(
         text,
         width=width,
         break_on_hyphens=False,
     )
+
+
+def multiline_code(text):
+    # Add a ` character to each start and end of a line and a backslash after each line
+    return "\\\n".join(f"`{line}`" for line in text.splitlines())
