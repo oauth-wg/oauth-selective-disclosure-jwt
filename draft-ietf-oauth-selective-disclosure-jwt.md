@@ -626,9 +626,7 @@ information from an SD-JWT about any claim name or claim value that was not
 explicitly disclosed by the Holder unless that information can be derived from
 other disclosed claims or external sources.
 
-**Integrity:** The claims verified by a Verifier are a subset of the claims
-released by the Issuer, even if the Holder is malicious (i.e., a Holder cannot
-modify claim names or claim values without the Verifier noticing during verification).
+**Integrity:** A malicious Holder cannot modify names or values of selectively disclosable claims without detection by the Verifier.
 
 Additionally, Holder Binding can be achieved as described in (#holder_binding_security).
 
