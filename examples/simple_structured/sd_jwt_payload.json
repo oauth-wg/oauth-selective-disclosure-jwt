@@ -1,15 +1,22 @@
 {
   "_sd": [
-    "-rAXuBrq1MIGJnPr_vGdgVhinHfvtw6HMvkMQ6rk1Po",
-    "ZRtxg42klTl-Ap_OiwNVh49ZCGM059AmHPayFqbMilE",
-    "g_WrTVyjFFsppeKOjcgAK8nLTeY8IcPAYSz00xNn5Rk",
-    "hblncirSgqjt8gTQ56jy7FUd1cpCg0orxca0C-o9aoo",
-    "lagH02GaboFAO6_d2R8jpdjO-Xxnh4aVAG9cE8iV4Sg",
-    "p3vzUx7kYcA_dOlOQpyf8Z8J4s1ZPfhXWZNFuI4JgvU",
-    "s2OMJlfL0E9i46-mM3sQKxJ0bEs3bNwBrzXhObM7iR0"
+    "-tLyIcynje8xxh8YyDtENsXoVJ5iuJvkNucadlpAiv8",
+    "AaYi2dZcRr5RfuIPKoLd-CbMG5lfocyImWZUnwtXJmo",
+    "O2RA9HGLHwfPEnDETYxCbsDObb_ixjhuAbsqT9kfIx8",
+    "SQw2y0MQ-DH92rbcCe5UWOH8Osp_Pkk6jdU4MuvncRk",
+    "ktFM-PK3bvcgCniqChsNLIk4WQ1B8dYoC8VQoiXUD3w",
+    "xXys8mKzg-C5VOwLRwYUcSY_Xroot-SZ2A2ohUXexsE"
   ],
   "iss": "https://example.com/issuer",
   "iat": 1516239022,
   "exp": 1735689661,
+  "address": {
+    "_sd": [
+      "CbGKwxOE18qLWlOyBPpqtCedDB21qb7GrTMkhmT4ymw",
+      "TL6A9_JZbaxfLcLAfCg_vt4po8YxYhPcdUL_fGbiHDo",
+      "bLyifiZw-lh6TuZyJ9CdI22T67kWRC5Bn9Ugk3j5Hpc",
+      "c4KwZeDCgZIu2cFGYT9jqiMuPHiblGByusyfDV2pwYo"
+    ]
+  },
   "_sd_alg": "sha-256"
 }
