@@ -1,7 +1,4 @@
 {
-  "iss": "https://example.com/issuer",
-  "iat": 1516239022,
-  "exp": 1735689661,
   "@context": [
     "https://www.w3.org/2018/credentials/v1",
     "https://w3id.org/vaccination/v1"
@@ -16,27 +13,33 @@
   "name": "COVID-19 Vaccination Certificate",
   "description": "COVID-19 Vaccination Certificate",
   "credentialSubject": {
+    "_sd": [
+      "8-N936mMUuXx-Kbf6byQTDOwQoFcoapEvVPbYWiRV5M",
+      "GyDDvOMyEtqsI3vdjbaVSXJZp_WjX_JQIMVqehpr1cU",
+      "MGWjDeD0DvcvG2quwT0zT3wz72HisTJoOtimMc65Qtg",
+      "S7xgnTLcgRqHRipEu0xiEQceAaYh_mfjowFsNZORh4w",
+      "aO2ZezAuMOhmhVv0pQ-U_ZUB4py2hOHa-x7xmGywt8E",
+      "qkaVSrXEw2sbbqS5YdtU1HMNAEjMofTH_6DCxDr91LQ",
+      "ypFwyXOiHzulGDvpY46Jr1nDRexz35FYfBqJWe7xKqc"
+    ],
     "vaccine": {
-      "type": "Vaccine",
-      "atcCode": "J07BX03",
-      "medicinalProductName": "COVID-19 Vaccine Moderna",
-      "marketingAuthorizationHolder": "Moderna Biotech"
+      "_sd": [
+        "C10ypGMJiTgrgKICDu0TIJ5HSEEhRrsy-XgjPGSsxEk",
+        "HduAC5dITq5LsmcYJChAHrSanA0106-JQdkfqVI-Drs",
+        "HlXX723D-EgjoNr4nQVUbEpAg1Gaxwl74350UXfBBM0"
+      ],
+      "type": "Vaccine"
     },
-    "nextVaccinationDate": "2021-08-16T13:40:12Z",
-    "countryOfVaccination": "GE",
-    "dateOfVaccination": "2021-06-23T13:40:12Z",
-    "order": "3/3",
     "recipient": {
-      "type": "VaccineRecipient",
-      "gender": "Female",
-      "birthDate": "1961-08-17",
-      "givenName": "Marion",
-      "familyName": "Mustermann"
+      "_sd": [
+        "-KMt3FVtI_7DuaDpFZGIfE751AwqnXKpLVCQaIpl6P4",
+        "8FbBeqe_wV1ES-RU28y8DDkfQv9dlGziVdd9R3jq-fQ",
+        "Cu8JNGQ2WRs6KHKngBKEaU9r6SMfnwoVVYGTPWwvxJc",
+        "YJI42JtoLHmwv2oi45QW6wmINZXTpYBxhD4eWlmEpiw"
+      ],
+      "type": "VaccineRecipient"
     },
-    "type": "VaccinationEvent",
-    "administeringCentre": "Praxis Sommergarten",
-    "batchNumber": "1626382736",
-    "healthProfessional": "883110000015376"
+    "type": "VaccinationEvent"
   },
   "_sd_alg": "sha-256",
   "cnf": {
