@@ -1339,6 +1339,10 @@ data. The original JSON data is then used by the application. See
 
    [[ To be removed from the final specification ]]
 
+   -05
+
+   * Added initial IANA media type and structured suffix registration requests
+
    -04
 
    * Improve description of processing of disclosures
