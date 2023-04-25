@@ -783,8 +783,8 @@ key-distribution method.
 
 ## Forwarding Credentials
 
-The Issuers and the Verifiers should be aware that when Holder Binding is not present,
-any entity that is not the original receiver can be presenting the Combined Format for Presentation.
+When Holder Binding is not enforced,
+any entity in possession of a Combined Format for Presentation can forward the contents to third parties.
 When doing so, that entity may be applying selective disclosure to the SD-JWT
 that has already been previously selectively disclosed.
 
