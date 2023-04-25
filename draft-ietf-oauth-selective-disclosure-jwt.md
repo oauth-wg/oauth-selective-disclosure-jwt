@@ -1342,6 +1342,7 @@ data. The original JSON data is then used by the application. See
    -05
 
    * Added initial IANA media type and structured suffix registration requests
+   * Added considerations around forwarding credentials
 
    -04
 
