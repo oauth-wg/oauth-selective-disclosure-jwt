@@ -785,8 +785,8 @@ key-distribution method.
 
 When Holder Binding is not enforced,
 any entity in possession of a Combined Format for Presentation can forward the contents to third parties.
-When doing so, that entity may be applying selective disclosure to the SD-JWT
-that has already been previously selectively disclosed.
+When doing so, that entity may remove Disclosures such that the receiver
+learns only a subset of the claims contained in the original Combined Format for Presentation.
 
 For example, a device manufacturer might produce an SD-JWT
 containing information about upstream and downstream supply chain contributors.
