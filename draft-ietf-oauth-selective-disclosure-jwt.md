@@ -791,7 +791,7 @@ learns only a subset of the claims contained in the original Combined Format for
 For example, a device manufacturer might produce an SD-JWT
 containing information about upstream and downstream supply chain contributors.
 Each supply chain party can verify only the claims that were selectively disclosed to them
-by an upstream party, and they can choose to apply selective disclosure to those claims
+by an upstream party, and they can choose to further reduce the disclosed claims
 when presenting to a downstream party.
 
 In some scenarios this behavior could be desirable,
