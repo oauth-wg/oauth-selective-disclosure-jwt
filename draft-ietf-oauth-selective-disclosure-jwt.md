@@ -795,7 +795,7 @@ by an upstream party, and they can choose to further reduce the disclosed claims
 when presenting to a downstream party.
 
 In some scenarios this behavior could be desirable,
-but if it is not, the Issuers are encouraged to apply Holder Binding.
+but if it is not, Verifiers need to enforce Holder Binding.
 
 # Privacy Considerations {#privacy_considerations}
 
