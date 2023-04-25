@@ -783,6 +783,22 @@ Verifiers need to ensure that they are not using expired or revoked keys
 for signature verification using reasonable and appropriate means for the given
 key-distribution method.
 
+## Forwarding Credentials
+
+When Holder Binding is not enforced,
+any entity in possession of a Combined Format for Presentation can forward the contents to third parties.
+When doing so, that entity may remove Disclosures such that the receiver
+learns only a subset of the claims contained in the original Combined Format for Presentation.
+
+For example, a device manufacturer might produce an SD-JWT
+containing information about upstream and downstream supply chain contributors.
+Each supply chain party can verify only the claims that were selectively disclosed to them
+by an upstream party, and they can choose to further reduce the disclosed claims
+when presenting to a downstream party.
+
+In some scenarios this behavior could be desirable,
+but if it is not, Issuers need to support and Verifiers need to enforce Holder Binding.
+
 # Privacy Considerations {#privacy_considerations}
 
 The privacy principles of [@ISO.29100] should be adhered to.
