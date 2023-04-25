@@ -781,7 +781,7 @@ Verifiers need to ensure that they are not using expired or revoked keys
 for signature verification using reasonable and appropriate means for the given
 key-distribution method.
 
-## Selective Disclosure without Holder Binding
+## Forwarding Credentials
 
 The Issuers and the Verifiers should be aware that when Holder Binding is not present,
 any entity that is not the original receiver can be presenting the Combined Format for Presentation.
