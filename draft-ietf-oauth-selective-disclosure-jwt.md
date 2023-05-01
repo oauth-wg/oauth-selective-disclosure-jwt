@@ -562,10 +562,9 @@ To this end, Verifiers MUST follow the following steps (or equivalent):
     4. Check that the SD-JWT is valid using `nbf`, `iat`, and `exp` claims, if provided in the SD-JWT, and not selectively disclosed.
     5. Check that the `_sd_alg` claim value is understood and the hash algorithm is deemed secure.
  4. Process the Disclosures and `_sd` keys in the SD-JWT as follows:
-    1. Create a copy of the SD-JWT payload, if required for further processing.
-    2. For each Disclosure provided:
+    1. For each Disclosure provided:
        1. Calculate the digest over the base64url-encoded string as described in (#hashing_disclosures).
-    3. Find all `_sd` keys in the SD-JWT payload. For each such key perform the following steps (*):
+    2. Find all `_sd` keys in the SD-JWT payload. For each such key perform the following steps (*):
        1. If the key does not refer to an array, the Verifier MUST reject the Presentation.
        2. Otherwise, process each entry in the `_sd` array as follows:
           1. Compare the value with the digests calculated previously and find the matching Disclosure. If no such Disclosure can be found, the digest MUST be ignored.
@@ -573,9 +572,9 @@ To this end, Verifiers MUST follow the following steps (or equivalent):
           3. Insert, at the level of the `_sd` key, a new claim using the claim name and claim value from the Disclosure.
           4. If the claim name already exists at the same level, the Verifier MUST reject the Presentation.
           5. If the decoded value contains an `_sd` key in an object, recursively process the key using the steps described in (*).
-    4. If any digests were found more than once in the previous step, the Verifier MUST reject the Presentation.
-    5. Remove all `_sd` keys from the SD-JWT payload.
-    6. Remove the claim `_sd_alg` from the SD-JWT payload.
+    3. If any digests were found more than once in the previous step, the Verifier MUST reject the Presentation.
+    4. Remove all `_sd` keys from the SD-JWT payload.
+    5. Remove the claim `_sd_alg` from the SD-JWT payload.
  5. If Holder Binding is required:
     1. If Holder Binding is provided by means not defined in this specification, verify the Holder Binding according to the method used.
     2. Otherwise, verify the Holder Binding JWT as follows:
@@ -783,6 +782,22 @@ Verifiers need to ensure that they are not using expired or revoked keys
 for signature verification using reasonable and appropriate means for the given
 key-distribution method.
 
+## Forwarding Credentials
+
+When Holder Binding is not enforced,
+any entity in possession of a Combined Format for Presentation can forward the contents to third parties.
+When doing so, that entity may remove Disclosures such that the receiver
+learns only a subset of the claims contained in the original Combined Format for Presentation.
+
+For example, a device manufacturer might produce an SD-JWT
+containing information about upstream and downstream supply chain contributors.
+Each supply chain party can verify only the claims that were selectively disclosed to them
+by an upstream party, and they can choose to further reduce the disclosed claims
+when presenting to a downstream party.
+
+In some scenarios this behavior could be desirable,
+but if it is not, Issuers need to support and Verifiers need to enforce Holder Binding.
+
 # Privacy Considerations {#privacy_considerations}
 
 The privacy principles of [@ISO.29100] should be adhered to.
@@ -914,6 +929,51 @@ The work on this draft was started at OAuth Security Workshop 2022 in Trondheim,
 
 TBD
 
+## Media Type Registration
+
+This section requests registration of the "application/sd-jwt" media type [@RFC2046] in
+the "Media Types" registry [@IANA.MediaTypes] in the manner described
+in [@RFC6838], which can be used to indicate that the content is an SD-JWT.
+
+* Type name: application
+* Subtype name: sd-jwt
+* Required parameters: n/a
+* Optional parameters: n/a
+* Encoding considerations: binary; application/sd-jwt values are a series of base64url-encoded values (some of which may be the empty string) separated by period ('.') or tilde ('~') characters.
+* Security considerations: See the Security Considerations section of [[ this specification ]], [@!RFC7519], and [@RFC8725].
+* Interoperability considerations: n/a
+* Published specification: [[ this specification ]]
+* Applications that use this media type: TBD
+* Fragment identifier considerations: n/a
+* Additional information:
+   Magic number(s): n/a
+   File extension(s): n/a
+   Macintosh file type code(s): n/a
+* Person & email address to contact for further information: Daniel Fett, mail@danielfett.de
+* Intended usage: COMMON
+* Restrictions on usage: none
+* Author: Daniel Fett, mail@danielfett.de
+* Change Controller: IESG
+* Provisional registration?  No
+
+##  Structured Syntax Suffix Registration
+
+This section requests registration of the "+sd-jwt" structured syntax suffix in
+the "Structured Syntax Suffix" registry [@IANA.StructuredSuffix] in
+the manner described in [RFC6838], which can be used to indicate that
+the media type is encoded as an SD-JWT.
+
+* Name: SD-JWT
+* +suffix: +sd-jwt
+* References: [[ this specification ]]
+* Encoding considerations: binary; SD-JWT values are a series of base64url-encoded values (some of which may be the empty string) separated by period ('.') or tilde ('~') characters.
+* Interoperability considerations: n/a
+* Fragment identifier considerations: n/a
+* Security considerations: See the Security Considerations section of [[ this specification ]], [@!RFC7519], and [@RFC8725].
+* Contact: Daniel Fett, mail@danielfett.de
+* Author/Change controller: IESG
+
+
 <reference anchor="OIDC" target="https://openid.net/specs/openid-connect-core-1_0.html">
   <front>
     <title>OpenID Connect Core 1.0 incorporating errata set 1</title>
@@ -990,7 +1050,6 @@ TBD
   </front>
 </reference>
 
-@VC_JWT
 
 <reference anchor="VC_JWT" target="https://w3c.github.io/vc-jwt/">
   <front>
@@ -1041,6 +1100,20 @@ TBD
   <front>
     <author fullname="IANA"></author>
     <title>JSON Web Signature and Encryption Algorithms</title>
+  </front>
+</reference>
+
+<reference anchor="IANA.MediaTypes" target="https://www.iana.org/assignments/media-types/media-types.xhtml">
+  <front>
+    <author fullname="IANA"></author>
+    <title>Media Types</title>
+  </front>
+</reference>
+
+<reference anchor="IANA.StructuredSuffix" target="https://www.iana.org/assignments/media-type-structured-suffix/media-type-structured-suffix.xhtml">
+  <front>
+    <author fullname="IANA"></author>
+    <title>Structured Syntax Suffixs</title>
   </front>
 </reference>
 
@@ -1268,6 +1341,11 @@ data. The original JSON data is then used by the application. See
 # Document History
 
    [[ To be removed from the final specification ]]
+
+   -05
+
+   * Added initial IANA media type and structured suffix registration requests
+   * Added considerations around forwarding credentials
 
    -04
 

@@ -4,20 +4,21 @@ user_claims:
   !sd family_name: 山田
   !sd email: '"unusual email address"@example.jp'
   !sd phone_number: +81-80-1234-5678
-  !sd address:
-    street_address: 東京都港区芝公園４丁目２−８
-    locality: 東京都
-    region: 港区
-    country: JP
+  address:
+    !sd street_address: 東京都港区芝公園４丁目２−８
+    !sd locality: 東京都
+    !sd region: 港区
+    !sd country: JP
   !sd birthdate: "1940-01-01"
 
 holder_disclosed_claims:
   {
-    "given_name": null,
-    "family_name": null,
-    "birthdate": null,
-    "address": {},
-    "email": null,
+    "address": {
+      "region": null,
+      "country": null
+    },
   }
 
 add_decoy_claims: true
+holder_binding: False
+
