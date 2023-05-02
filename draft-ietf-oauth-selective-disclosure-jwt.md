@@ -1129,7 +1129,7 @@ This example uses the following object as the set of claims that the Issuer is i
 
 <{{examples/simple_structured/user_claims.json}}
 
-Note that in contrast to Example 1, here the Issuer decided to create a structured object for the `address` claim, allowing for separate disclosure of the individual members of the claim, and also added decoy digests to prevent the Verifier from deducing the true number of claims in the address object.
+In contrast to Example 1, here the Issuer decided to create a structured object for the `address` claim, allowing for separate disclosure of the individual members of the claim, and also added decoy digests to prevent the Verifier from deducing the true number of claims in the address object. The following payload is used for the SD-JWT:
 
 <{{examples/simple_structured/sd_jwt_payload.json}}
 
