@@ -1,20 +1,29 @@
 {
   "_sd": [
-    "9opWQiX5M-VgacOf5jhoeJVyBeXcfFTUL14UEu-GPtw",
-    "IkxegYyTre8YMVuqCwrvNqw7-vpZ26tXohBZl_6Y_Ec",
-    "LSGrj-lHI4O99OdIvczNPP0sXi_SOWs-fZ0U6PqLx18",
-    "QRh3DUyiRtsLePeQeI5sCa5j1--UaoM-HI5mrV5SWFU",
-    "U1c8OWdozzDh47gn344gdYkBXRtru8axdv6VKqHBGGY",
-    "XFoLOUrbF8WoaVr5FNzS2J9QrMcXNW-AKk6CEmVD_Yk",
-    "ezsEiQEV3WOb0KwUJYs-qlF539XeUYfVLv7jEcjUPCQ",
-    "iYBqLbRPvdncZaKeYCUAdvyVaI17AnO16idioVGw4HY",
-    "n_G53e94t1ieJJDZ9y0fOpWoK5iaFEl7LNHLBoI18GE",
-    "p3lcYk6DJsqg9WQpeZnSbnyBdHoM9_DUwPItDzs9-wk",
-    "sAlHezdTTGzk0vDhbkhvZ8SfgBECWB0KsdYSLp4BHMg",
-    "uhUIa8hq7DgB9W6689kl8cO5q3DvVnJ0GGrpzWLYqYM"
+    "H7QIC26TLRmWOWIZWqlE3JDki5cG5VeprTVJWfYVpgI",
+    "HTemkHzi8vElSb4qKs6W8pj5OkalTr-I02uy6mjlE9k",
+    "IG_O1HoyxAm6WzX8dbnhejWTyiNu1a2V3NpZ266-XYU",
+    "YoymiOj55SixQe6kDf_L8YuCM-e3KqEtvmIZ1zVIiWo",
+    "kjwlXbdnfjlq9hoGnUlpSxSvC9FJC9FQSvOZ7qosdQs",
+    "m6e74AtfwOyGWZbI0FYp_UUyv_DqFX9cLYf2HbhhxCs",
+    "w-kWo-F-1Tg3zNLvcaJG2sv4BL3YmFinEnVaR1lzdN4",
+    "zCskisHlC5JbSWZJ-wjDUHpziacQb9JunpXG-tI4v-o"
   ],
   "iss": "https://example.com/issuer",
   "iat": 1516239022,
   "exp": 1735689661,
+  "address": {
+    "_sd": [
+      "-BbHMWfo64APpq0nWg8956vWZ8I-DJ8w5Jqdgi1MKBM",
+      "5MMw8viS8yz15wgvjHQXPnt3xt9Y6dcqKX0Q3Eg61HU",
+      "5gfosFRCTFjzw-Z-AIybiHzIS59IL8WF2ubaY2TNHHA",
+      "DxndzC_T8a1q9ZxLNlKvuiWIUwZaFfEeNE-ma4huWkE",
+      "RR-YScyv2VOJfZBoQ23cRgiPCIkFOE2DnOxoAb0d1S0",
+      "WDkBxN7mn-O3Soc6ivCvYURY70vSvXtgvH2Lzhk9gOU",
+      "dRLsjsLyEGJ9wry-B4eMEc32L9rynYNHk-wWh_vgSs8",
+      "kQo-62_CSNN9molJSPRA30EA3NNcPcYYx3uB7oXxdUM",
+      "w1i7GGf1jCHyv-vXGTFV57MBwN94usyvswRZJ-Rkm2I"
+    ]
+  },
   "_sd_alg": "sha-256"
 }

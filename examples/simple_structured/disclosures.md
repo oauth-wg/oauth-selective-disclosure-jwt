@@ -1,134 +1,103 @@
-__Disclosure for `sub`:__
+__Claim `sub`:__
 
-SHA-256 Hash: `p3lcYk6DJsqg9WQpeZnSbnyBdHoM9_DUwPItDzs9-wk`
+ * SHA-256 Hash: `zCskisHlC5JbSWZJ-wjDUHpziacQb9JunpXG-tI4v-o`
+ * Disclosure:\
+`WyI4c0N1cEozbEoxSWRxM3VsRk1iQ2JRIiwgInN1YiIsICI2YzVjMGE0OS1i`\
+`NTg5LTQzMWQtYmFlNy0yMTkxMjJhOWVjMmMiXQ`
+ * Contents:
+`["8sCupJ3lJ1Idq3ulFMbCbQ", "sub",`\
+`"6c5c0a49-b589-431d-bae7-219122a9ec2c"]`
 
-Disclosure:
 
-```
-WyJPcDA0NHpyVkdWYlktaTh4V2ZWVUlRIiwgInN1YiIsICI2YzVjMGE0OS1iNTg5LTQz
-MWQtYmFlNy0yMTkxMjJhOWVjMmMiXQ
-```
+__Claim `given_name`:__
 
-Contents:
+ * SHA-256 Hash: `YoymiOj55SixQe6kDf_L8YuCM-e3KqEtvmIZ1zVIiWo`
+ * Disclosure:\
+`WyJkNDVuR2RKOUFtYnVIdDZTMFVmVDFRIiwgImdpdmVuX25hbWUiLCAiXHU1`\
+`OTJhXHU5MGNlIl0`
+ * Contents:
+`["d45nGdJ9AmbuHt6S0UfT1Q", "given_name", "\u592a\u90ce"]`
 
-```
-["Op044zrVGVbY-i8xWfVUIQ", "sub",
-"6c5c0a49-b589-431d-bae7-219122a9ec2c"]
-```
 
-__Disclosure for `given_name`:__
+__Claim `family_name`:__
 
-SHA-256 Hash: `n_G53e94t1ieJJDZ9y0fOpWoK5iaFEl7LNHLBoI18GE`
+ * SHA-256 Hash: `kjwlXbdnfjlq9hoGnUlpSxSvC9FJC9FQSvOZ7qosdQs`
+ * Disclosure:\
+`WyJhd296cnVrUFFqVVhDaVR2cnFRX253IiwgImZhbWlseV9uYW1lIiwgIlx1`\
+`NWM3MVx1NzUzMCJd`
+ * Contents:
+`["awozrukPQjUXCiTvrqQ_nw", "family_name", "\u5c71\u7530"]`
 
-Disclosure:
 
-```
-WyJ5TWhHMFRRZTFpSkJ0cWtTQm1qa1pBIiwgImdpdmVuX25hbWUiLCAiXHU1OTJhXHU5
-MGNlIl0
-```
+__Claim `email`:__
 
-Contents:
+ * SHA-256 Hash: `IG_O1HoyxAm6WzX8dbnhejWTyiNu1a2V3NpZ266-XYU`
+ * Disclosure:\
+`WyJ1ek5ybkNFTWV3dGFGUUpYZTFjcklBIiwgImVtYWlsIiwgIlwidW51c3Vh`\
+`bCBlbWFpbCBhZGRyZXNzXCJAZXhhbXBsZS5qcCJd`
+ * Contents:
+`["uzNrnCEMewtaFQJXe1crIA", "email", "\"unusual email`\
+`address\"@example.jp"]`
 
-```
-["yMhG0TQe1iJBtqkSBmjkZA", "given_name", "\u592a\u90ce"]
-```
 
-__Disclosure for `family_name`:__
+__Claim `phone_number`:__
 
-SHA-256 Hash: `LSGrj-lHI4O99OdIvczNPP0sXi_SOWs-fZ0U6PqLx18`
+ * SHA-256 Hash: `HTemkHzi8vElSb4qKs6W8pj5OkalTr-I02uy6mjlE9k`
+ * Disclosure:\
+`WyJiSGRLV1VhekRCZWh2anF5Nnc3WkJBIiwgInBob25lX251bWJlciIsICIr`\
+`ODEtODAtMTIzNC01Njc4Il0`
+ * Contents:
+`["bHdKWUazDBehvjqy6w7ZBA", "phone_number",`\
+`"+81-80-1234-5678"]`
 
-Disclosure:
 
-```
-WyJSSlE5Zzl4cTRmRlBjWWctelcxVmhnIiwgImZhbWlseV9uYW1lIiwgIlx1NWM3MVx1
-NzUzMCJd
-```
+__Claim `street_address`:__
 
-Contents:
+ * SHA-256 Hash: `kQo-62_CSNN9molJSPRA30EA3NNcPcYYx3uB7oXxdUM`
+ * Disclosure:\
+`WyJwbm5aU3pET05hOE04VmxZVGV3QW9BIiwgInN0cmVldF9hZGRyZXNzIiwg`\
+`Ilx1Njc3MVx1NGVhY1x1OTBmZFx1NmUyZlx1NTMzYVx1ODI5ZFx1NTE2Y1x1`\
+`NTcxMlx1ZmYxNFx1NGUwMVx1NzZlZVx1ZmYxMlx1MjIxMlx1ZmYxOCJd`
+ * Contents:
+`["pnnZSzDONa8M8VlYTewAoA", "street_address", "\u6771\u4eac\u`\
+`90fd\u6e2f\u533a\u829d\u516c\u5712\uff14\u4e01\u76ee\uff12\u`\
+`2212\uff18"]`
 
-```
-["RJQ9g9xq4fFPcYg-zW1Vhg", "family_name", "\u5c71\u7530"]
-```
 
-__Disclosure for `email`:__
+__Claim `locality`:__
 
-SHA-256 Hash: `sAlHezdTTGzk0vDhbkhvZ8SfgBECWB0KsdYSLp4BHMg`
+ * SHA-256 Hash: `DxndzC_T8a1q9ZxLNlKvuiWIUwZaFfEeNE-ma4huWkE`
+ * Disclosure:\
+`WyI0Z2EzT0I5dTNJQUxSN2NlRkljS3lRIiwgImxvY2FsaXR5IiwgIlx1Njc3`\
+`MVx1NGVhY1x1OTBmZCJd`
+ * Contents:
+`["4ga3OB9u3IALR7ceFIcKyQ", "locality", "\u6771\u4eac\u90fd"]`
 
-Disclosure:
 
-```
-WyJxU2xIZ0FBaGNtcE9zUnJhT3REUkJRIiwgImVtYWlsIiwgIlwidW51c3VhbCBlbWFp
-bCBhZGRyZXNzXCJAZXhhbXBsZS5qcCJd
-```
+__Claim `region`:__
 
-Contents:
+ * SHA-256 Hash: `WDkBxN7mn-O3Soc6ivCvYURY70vSvXtgvH2Lzhk9gOU`
+ * Disclosure:\
+`WyJOUnJPVlF1WS1lTWdOSi10czhpRW9RIiwgInJlZ2lvbiIsICJcdTZlMmZc`\
+`dTUzM2EiXQ`
+ * Contents:
+`["NRrOVQuY-eMgNJ-ts8iEoQ", "region", "\u6e2f\u533a"]`
 
-```
-["qSlHgAAhcmpOsRraOtDRBQ", "email", "\"unusual email
-address\"@example.jp"]
-```
 
-__Disclosure for `phone_number`:__
+__Claim `country`:__
 
-SHA-256 Hash: `ezsEiQEV3WOb0KwUJYs-qlF539XeUYfVLv7jEcjUPCQ`
+ * SHA-256 Hash: `w1i7GGf1jCHyv-vXGTFV57MBwN94usyvswRZJ-Rkm2I`
+ * Disclosure:\
+`WyJ4R3FYWHJvRzhxd3N2X1pMWFJDRnZRIiwgImNvdW50cnkiLCAiSlAiXQ`
+ * Contents:
+`["xGqXXroG8qwsv_ZLXRCFvQ", "country", "JP"]`
 
-Disclosure:
 
-```
-WyJzYVkzZV9nUjc4c0NPbWozUVhpXzlBIiwgInBob25lX251bWJlciIsICIrODEtODAt
-MTIzNC01Njc4Il0
-```
+__Claim `birthdate`:__
 
-Contents:
-
-```
-["saY3e_gR78sCOmj3QXi_9A", "phone_number", "+81-80-1234-5678"]
-```
-
-__Disclosure for `address`:__
-
-SHA-256 Hash: `QRh3DUyiRtsLePeQeI5sCa5j1--UaoM-HI5mrV5SWFU`
-
-Disclosure:
-
-```
-WyJ0NnZyRWdhbzZRNjNQR09qTnkwQTZnIiwgImFkZHJlc3MiLCB7Il9zZCI6IFsiNHdC
-YUtPaHVsRUxkNnp1WFJUS1NsT3A3RnI0OV9yN1BteWV6TTFnN1M0OCIsICJXQ2pHUmZ6
-eTBkZGFHTWIxVDAyVVFSbDJITHBwWkxkUlA1UHU2b3VGdlFJIiwgImZfQ0d3Q1F0TlJ6
-LU00LWFqc09sRW43VC1TY1NBVEJ2QV92aHZMcDVjRzAiLCAibGJRelR0TXNCX3JHU1dE
-dV9LOS1EaWc5ZGxuMGxXZGtHWi0tSndTNXJTMCJdLCAic3RyZWV0X2FkZHJlc3MiOiAi
-XHU2NzcxXHU0ZWFjXHU5MGZkXHU2ZTJmXHU1MzNhXHU4MjlkXHU1MTZjXHU1NzEyXHVm
-ZjE0XHU0ZTAxXHU3NmVlXHVmZjEyXHUyMjEyXHVmZjE4IiwgImxvY2FsaXR5IjogIlx1
-Njc3MVx1NGVhY1x1OTBmZCIsICJyZWdpb24iOiAiXHU2ZTJmXHU1MzNhIiwgImNvdW50
-cnkiOiAiSlAifV0
-```
-
-Contents:
-
-```
-["t6vrEgao6Q63PGOjNy0A6g", "address", {"_sd":
-["4wBaKOhulELd6zuXRTKSlOp7Fr49_r7PmyezM1g7S48",
-"WCjGRfzy0ddaGMb1T02UQRl2HLppZLdRP5Pu6ouFvQI",
-"f_CGwCQtNRz-M4-ajsOlEn7T-ScSATBvA_vhvLp5cG0",
-"lbQzTtMsB_rGSWDu_K9-Dig9dln0lWdkGZ--JwS5rS0"], "street_address": "\
-u6771\u4eac\u90fd\u6e2f\u533a\u829d\u516c\u5712\uff14\u4e01\u76ee\uf
-f12\u2212\uff18", "locality": "\u6771\u4eac\u90fd", "region":
-"\u6e2f\u533a", "country": "JP"}]
-```
-
-__Disclosure for `birthdate`:__
-
-SHA-256 Hash: `XFoLOUrbF8WoaVr5FNzS2J9QrMcXNW-AKk6CEmVD_Yk`
-
-Disclosure:
-
-```
-WyJzR2JiVVhHZkEyaTBUckxaY3Z5MTNBIiwgImJpcnRoZGF0ZSIsICIxOTQwLTAxLTAx
-Il0
-```
-
-Contents:
-
-```
-["sGbbUXGfA2i0TrLZcvy13A", "birthdate", "1940-01-01"]
-```
+ * SHA-256 Hash: `H7QIC26TLRmWOWIZWqlE3JDki5cG5VeprTVJWfYVpgI`
+ * Disclosure:\
+`WyJPYjcydmRhcDBqSEFmdmdhVklqZDdnIiwgImJpcnRoZGF0ZSIsICIxOTQw`\
+`LTAxLTAxIl0`
+ * Contents:
+`["Ob72vdap0jHAfvgaVIjd7g", "birthdate", "1940-01-01"]`

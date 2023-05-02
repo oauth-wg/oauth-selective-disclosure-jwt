@@ -2,15 +2,9 @@
   "iss": "https://example.com/issuer",
   "iat": 1516239022,
   "exp": 1735689661,
-  "_sd_alg": "sha-256",
-  "family_name": "山田",
   "address": {
-    "street_address": "東京都港区芝公園４丁目２−８",
-    "locality": "東京都",
     "region": "港区",
     "country": "JP"
   },
-  "birthdate": "1940-01-01",
-  "given_name": "太郎",
-  "email": "\"unusual email address\"@example.jp"
+  "_sd_alg": "sha-256"
 }
