@@ -1350,6 +1350,7 @@ data. The original JSON data is then used by the application. See
 
    * Added initial IANA media type and structured suffix registration requests
    * Added considerations around forwarding credentials
+   * Removed Example 2b and merged the demo of decoy digests into Example 2a
 
    -04
 
