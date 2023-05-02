@@ -168,6 +168,7 @@ def load_yaml_example(file):
 
 
 example = load_yaml_example(_args.example)
+use_decoys = example.get("add_decoy_claims", False)
 
 ### Add default claims if necessary
 iat = _args.iat or int(datetime.datetime.utcnow().timestamp())
@@ -186,7 +187,7 @@ sdjwt_at_issuer = SDJWTIssuer(
     claims,
     ISSUER_KEY,
     HOLDER_KEY if example.get("holder_binding", False) else None,
-    add_decoy_claims=example.get("add_decoy_claims", False),
+    add_decoy_claims=use_decoys,
 )
 
 ### Produce SD-JWT-R for selected example
@@ -275,6 +276,21 @@ _artifacts = {
     ),
     "verified_contents": (verified, "Verified released contents of the SD-JWT", "json"),
 }
+
+# When decoys were used, list those as well
+if use_decoys:
+    # create a list of decoy digests in markdown format
+    decoy_digests = ""
+
+    for digest in sdjwt_at_issuer.decoy_digests:
+        decoy_digests += f" * `{digest}`\n"
+
+    _artifacts["decoy_digests"] = (
+        decoy_digests,
+        "Decoy Claims",
+        "md",
+    )
+
 
 if _args.output_dir:
     logger.info(
