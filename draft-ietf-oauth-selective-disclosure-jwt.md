@@ -97,7 +97,7 @@ has to verify that all disclosed claim values were part of the original,
 Issuer-signed SD-JWT. The Verifier will not, however, learn any claim
 values not disclosed in the Disclosures.
 
-This document also describes an optional mechanism for Holder Binding,
+This document also specifies an optional mechanism for Holder Binding,
 or the concept of binding an SD-JWT to key material controlled by the
 Holder. The strength of the Holder Binding is conditional upon the trust
 in the protection of the private key of the key pair an SD-JWT is bound to.
@@ -213,12 +213,12 @@ To disclose to a Verifier a subset of the SD-JWT claim values, a Holder sends on
 
 ## Optional Holder Binding
 
-Holder Binding is an optional feature. For example, when Cryptographic Holder Binding is required by the use-case, the SD-JWT must contain information about the key material controlled by the Holder.
+Holder Binding is an optional feature. When Cryptographic Holder Binding is required by the use-case, the SD-JWT MUST contain information about the key material controlled by the Holder.
 
 Note: How the public key is included in SD-JWT is out of scope of this document. It can be passed by value or by reference.
 
-The Holder can then create a signed document, the Holder Binding JWT, using its private key. This document contains some
-data provided by the Verifier (out of scope of this document) to ensure the freshness of the signature, for example, a nonce and an indicator of the
+The Holder can then create a signed document, the Holder Binding JWT, defined in (#hb-jwt) using its private key. This document contains some
+data provided by the Verifier such as a nonce to ensure the freshness of the signature, and audience to indicate the
 intended audience for the document.
 
 The Holder Binding JWT can be included in the Combined Format for Presentation and sent to the Verifier along with the SD-JWT and the Holder-Selected Disclosures.
@@ -485,16 +485,29 @@ a Disclosure more than once.
 ### Enabling Holder Binding {#enabling_holder_binding}
 
 The Holder MAY add an optional JWT to prove Holder Binding to the Verifier.
-The precise contents of the JWT are out of scope of this specification.
-Usually, a `nonce` and `aud` claim are included to show that the proof is
-intended for the Verifier and to prevent replay attacks. How the `nonce` or
-other claims are obtained by the Holder is out of scope of this specification.
 
-Example Holder Binding JWT payload:
+#### Structure of the Holder Binding JWT {#hb-jwt}
+
+This section defines the contents of the Holder Binding JWT.
+
+The JWT MUST contain the following elements:
+  * in the JOSE header,
+    * `typ`: REQUIRED. MUST be `hb+jwt`, which explicitly types the Holder Binding JWT as recommended in Section 3.11 of [@!RFC8725].
+    * `alg`: REQUIRED. A digital signature algorithm identifier such as per IANA "JSON Web Signature and Encryption Algorithms" registry. MUST NOT be `none` or an identifier for a symmetric algorithm (MAC).
+    * `kid`: `kid`: CONDITIONAL. JOSE Header containing the key ID. MUST NOT be present if `jwk` or `x5c` is present.
+    * `jwk`: CONDITIONAL. JOSE Header containing the key material the new Credential shall be bound to. MUST NOT be present if `kid` or `x5c` is present.
+    * `x5c`: CONDITIONAL. JOSE Header containing a certificate or certificate chain corresponding to the key used to sign the JWT. This element MAY be used to convey a key attestation. In such a case, the actual key certificate will contain attributes related to the key properties. MUST NOT be present if `kid` or `jwk` is present.
+  * in the JWT body,
+    * `iss`: REQUIRED. The issuer of the Holder Binding JWT. How the value is represented is up to the protocol used and out of scope of this specification.
+    * `iat`: REQUIRED. The value of this claim MUST be the time at which the Holder Binding JWT was issued using the syntax defined in [@!RFC7519].
+    * `aud`: REQUIRED. The intended receiver of the Holder Binding JWT. How the value is represented is up to the protocol used and out of scope of this specification.
+    * `nonce`: REQUIRED. Ensures the freshness of the signature. The value type of this claim MUST be a string. How this value is obtained is up to the protocol used and out of scope of this specification.
+
+Below is a non-normative example of a Holder Binding JWT payload:
 
 <{{examples/simple/hb_jwt_payload.json}}
 
-Which is then signed by the Holder to create a JWT like the following:
+Below is a non-normative example of a JWT produced by signign a payload in the example above:
 
 <{{examples/simple/hb_jwt_serialized.txt}}
 
@@ -582,8 +595,8 @@ To this end, Verifiers MUST follow the following steps (or equivalent):
        2. Determine the public key for the Holder from the SD-JWT.
        3. Ensure that a signing algorithm was used that was deemed secure for the application. Refer to [@RFC8725], Sections 3.1 and 3.2 for details. The `none` algorithm MUST NOT be accepted.
        4. Validate the signature over the Holder Binding JWT.
-       5. Check that the Holder Binding JWT is valid using `nbf`, `iat`, and `exp` claims, if provided in the Holder Binding JWT.
-       6. Determine that the Holder Binding JWT is bound to the current transaction and was created for this Verifier (replay protection). This is usually achieved by a `nonce` and `aud` field within the Holder Binding JWT.
+       5. Check that the Holder Binding JWT is valid using `iat`, and, if provided, `nbf` and `exp` claims.
+       6. Determine that the Holder Binding JWT is bound to the current transaction and was created for this Verifier (replay protection) by validating `nonce` and `aud` claims.
 
 If any step fails, the Presentation is not valid and processing MUST be aborted.
 
