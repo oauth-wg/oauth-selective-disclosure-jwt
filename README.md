@@ -79,3 +79,4 @@ Command line usage requires that you have the necessary software installed.  See
  * TypeScript: [sd-jwt](https://github.com/christianpaquin/sd-jwt)
  * TypeScript: [sd-jwt-ts](https://github.com/chike0905/sd-jwt-ts)
  * Java: [Java Library for SD-JWT (Authlete)](https://github.com/authlete/sd-jwt)
+ * Go: [sd-jwt (TBD)](https://github.com/TBD54566975/ssi-sdk/tree/main/sd-jwt)
