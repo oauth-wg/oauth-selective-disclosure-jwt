@@ -217,7 +217,7 @@ Holder Binding is an optional feature. When Cryptographic Holder Binding is requ
 
 Note: How the public key is included in SD-JWT is out of scope of this document. It can be passed by value or by reference.
 
-The Holder can then create a signed document, the Holder Binding JWT, defined in (#hb-jwt) using its private key. This document contains some
+The Holder can then create a signed document, the Holder Binding JWT as defined in (#hb-jwt), using its private key. This document contains some
 data provided by the Verifier such as a nonce to ensure the freshness of the signature, and audience to indicate the
 intended audience for the document.
 
@@ -507,7 +507,7 @@ Below is a non-normative example of a Holder Binding JWT payload:
 
 <{{examples/simple/hb_jwt_payload.json}}
 
-Below is a non-normative example of a JWT produced by signign a payload in the example above:
+Below is a non-normative example of a JWT produced by signing a payload in the example above:
 
 <{{examples/simple/hb_jwt_serialized.txt}}
 
