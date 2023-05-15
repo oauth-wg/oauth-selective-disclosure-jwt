@@ -637,7 +637,7 @@ cannot be verified, the SD-JWT MUST be rejected.
 ## Manipulation of Disclosures
 
 Holders can manipulate the Disclosures by changing the values of the claims
-before sending them to the Issuer. The Issuer MUST check the Disclosures to
+before sending them to the Verifier. The Verifier MUST check the Disclosures to
 ensure that the values of the claims are correct, i.e., the digests of the Disclosures are actually present in the signed SD-JWT.
 
 A naive Verifier that extracts
