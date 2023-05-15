@@ -624,7 +624,7 @@ Security considerations in this section help achieve the following properties:
 **Selective Disclosure:** An adversary in the role of the Verifier cannot obtain
 information from an SD-JWT about any claim name or claim value that was not
 explicitly disclosed by the Holder unless that information can be derived from
-other disclosed claims or external sources.
+other disclosed claims or sources other than the presented SD-JWT.
 
 **Integrity:** A malicious Holder cannot modify names or values of selectively disclosable claims without detection by the Verifier.
 
