@@ -115,6 +115,8 @@ class SDJWTIssuer(SDJWTCommon):
 
     _debug_ii_disclosures_contents = []
 
+    decoy_digests = []
+
     def __init__(
         self,
         user_claims: Dict,
@@ -162,7 +164,9 @@ class SDJWTIssuer(SDJWTCommon):
         return hash
 
     def _create_decoy_claim_entry(self) -> str:
-        return self._b64hash(self._generate_salt().encode("ascii"))
+        digest = self._b64hash(self._generate_salt().encode("ascii"))
+        self.decoy_digests.append(digest)
+        return digest
 
     def _create_sd_claims(self, user_claims):
         # This function can be called recursively.
