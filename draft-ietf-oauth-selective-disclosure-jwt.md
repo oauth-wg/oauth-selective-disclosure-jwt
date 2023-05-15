@@ -628,7 +628,7 @@ other disclosed claims or external sources.
 
 **Integrity:** A malicious Holder cannot modify names or values of selectively disclosable claims without detection by the Verifier.
 
-Additionally, Holder Binding can be achieved as described in (#holder_binding_security).
+Additionally, as described in (#holder_binding_security), the application of Holder Binding can ensure that the presenter of an SD-JWT credential is the legitimate Holder of the credential.
 
 ## Mandatory signing of the SD-JWT
 
