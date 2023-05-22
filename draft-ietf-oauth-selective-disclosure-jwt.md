@@ -593,8 +593,9 @@ To this end, Verifiers MUST follow the following steps (or equivalent):
        2. Determine the public key for the Holder from the SD-JWT.
        3. Ensure that a signing algorithm was used that was deemed secure for the application. Refer to [@RFC8725], Sections 3.1 and 3.2 for details. The `none` algorithm MUST NOT be accepted.
        4. Validate the signature over the Holder Binding JWT.
-       5. Check that the Holder Binding JWT is valid using `iat`, and, if provided, `nbf` and `exp` claims.
-       6. Determine that the Holder Binding JWT is bound to the current transaction and was created for this Verifier (replay protection) by validating `nonce` and `aud` claims.
+       5. Check that the `typ` of the Holder Binding JWT is `hb+jwt`.
+       6. Check that the Holder Binding JWT is valid using `iat`, and, if provided, `nbf` and `exp` claims.
+       7. Determine that the Holder Binding JWT is bound to the current transaction and was created for this Verifier (replay protection) by validating `nonce` and `aud` claims.
 
 If any step fails, the Presentation is not valid and processing MUST be aborted.
 
