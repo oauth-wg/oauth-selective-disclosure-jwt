@@ -501,11 +501,20 @@ The JWT MUST contain the following elements:
 
 To validate the signature on the Holder Binding JWT, the Verifier MUST use the key material in the SD-JWT. If it is not clear from the SD-JWT, HB-JWT MUST specify which key material the Verifier needs to use to validate HB-JWT using JOSE header parameters such as `kid` and `x5c`.
 
+Below is a non-normative example of a Holder Binding JWT header:
+
+```
+{
+  "alg": "ES256",
+  "typ": "hb+jwt"
+}
+```
+
 Below is a non-normative example of a Holder Binding JWT payload:
 
 <{{examples/simple/hb_jwt_payload.json}}
 
-Below is a non-normative example of a JWT produced by signing a payload in the example above:
+Below is a non-normative example of a Holder Binding JWT produced by signing a payload in the example above:
 
 <{{examples/simple/hb_jwt_serialized.txt}}
 
@@ -1181,8 +1190,9 @@ With the following Disclosures:
 
 {{examples/complex_ekyc/disclosures.md}}
 
-The Verifier would receive the Issuer-signed SD-JWT together with a selection
-of the Disclosures. The Presentation in this example would look as follows:
+The following is a non-normative example of a Combined Format for Presentation
+without a Holder Binding JWT that the Verifier would receive with a selection
+of the Disclosures:
 
 <{{examples/complex_ekyc/combined_presentation.txt}}
 
