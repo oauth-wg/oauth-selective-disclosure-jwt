@@ -494,14 +494,13 @@ The JWT MUST contain the following elements:
   * in the JOSE header,
     * `typ`: REQUIRED. MUST be `hb+jwt`, which explicitly types the Holder Binding JWT as recommended in Section 3.11 of [@!RFC8725].
     * `alg`: REQUIRED. A digital signature algorithm identifier such as per IANA "JSON Web Signature and Encryption Algorithms" registry. MUST NOT be `none` or an identifier for a symmetric algorithm (MAC).
-    * `kid`: `kid`: CONDITIONAL. JOSE Header containing the key ID. MUST NOT be present if `jwk` or `x5c` is present.
-    * `jwk`: CONDITIONAL. JOSE Header containing the key material the new Credential shall be bound to. MUST NOT be present if `kid` or `x5c` is present.
-    * `x5c`: CONDITIONAL. JOSE Header containing a certificate or certificate chain corresponding to the key used to sign the JWT. This element MAY be used to convey a key attestation. In such a case, the actual key certificate will contain attributes related to the key properties. MUST NOT be present if `kid` or `jwk` is present.
   * in the JWT body,
     * `iss`: REQUIRED. The issuer of the Holder Binding JWT. How the value is represented is up to the protocol used and out of scope of this specification.
     * `iat`: REQUIRED. The value of this claim MUST be the time at which the Holder Binding JWT was issued using the syntax defined in [@!RFC7519].
     * `aud`: REQUIRED. The intended receiver of the Holder Binding JWT. How the value is represented is up to the protocol used and out of scope of this specification.
     * `nonce`: REQUIRED. Ensures the freshness of the signature. The value type of this claim MUST be a string. How this value is obtained is up to the protocol used and out of scope of this specification.
+
+To validate the signature on the Holder Binding JWT, the Verifier MUST use the key material in the SD-JWT. If it is not clear from the SD-JWT, HB-JWT MUST specify which key material the Verifier needs to use to validate HB-JWT using JOSE header parameters such as `kid` and `x5c`.
 
 Below is a non-normative example of a Holder Binding JWT payload:
 
