@@ -495,7 +495,6 @@ The JWT MUST contain the following elements:
     * `typ`: REQUIRED. MUST be `hb+jwt`, which explicitly types the Holder Binding JWT as recommended in Section 3.11 of [@!RFC8725].
     * `alg`: REQUIRED. A digital signature algorithm identifier such as per IANA "JSON Web Signature and Encryption Algorithms" registry. MUST NOT be `none` or an identifier for a symmetric algorithm (MAC).
   * in the JWT body,
-    * `iss`: REQUIRED. The issuer of the Holder Binding JWT. How the value is represented is up to the protocol used and out of scope of this specification.
     * `iat`: REQUIRED. The value of this claim MUST be the time at which the Holder Binding JWT was issued using the syntax defined in [@!RFC7519].
     * `aud`: REQUIRED. The intended receiver of the Holder Binding JWT. How the value is represented is up to the protocol used and out of scope of this specification.
     * `nonce`: REQUIRED. Ensures the freshness of the signature. The value type of this claim MUST be a string. How this value is obtained is up to the protocol used and out of scope of this specification.
