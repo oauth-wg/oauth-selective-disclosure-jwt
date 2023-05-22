@@ -49,3 +49,7 @@ share/python-wheels/
 .installed.cfg
 *.egg
 MANIFEST
+
+# Ignore output of examples except for examples.yml
+examples/*/*
+!examples/*/example.yml
