@@ -643,7 +643,7 @@ cannot be verified, the SD-JWT MUST be rejected.
 ## Manipulation of Disclosures
 
 Holders can manipulate the Disclosures by changing the values of the claims
-before sending them to the Issuer. The Issuer MUST check the Disclosures to
+before sending them to the Verifier. The Verifier MUST check the Disclosures to
 ensure that the values of the claims are correct, i.e., the digests of the Disclosures are actually present in the signed SD-JWT.
 
 A naive Verifier that extracts
@@ -924,8 +924,9 @@ Orie Steele,
 Pieter Kasselman,
 Ryosuke Abe,
 Shawn Butterfield,
-Torsten Lodderstedt, and
-Vittorio Bertocci
+Torsten Lodderstedt,
+Vittorio Bertocci, and
+Yaron Sheffer
 for their contributions (some of which substantial) to this draft and to the initial set of implementations.
 
 The work on this draft was started at OAuth Security Workshop 2022 in Trondheim, Norway.
