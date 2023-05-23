@@ -25,7 +25,7 @@ All examples in the document are created from actual running code maintained at 
 To build formatted text and HTML versions of the draft, run the following steps:
 
  - Follow the instructions in https://github.com/martinthomson/i-d-template/blob/main/doc/SETUP.md to setup the build environment.
- - Install the sd-jwt library as described in https://github.com/danielfett/sd-jwt\
+ - Install the sd-jwt library as described in https://github.com/danielfett/sd-jwt
    **or**\
    if the library was installed previously, make sure to enter the virtualenv (`source venv/bin/activate`)
  - `cd examples` to change to the examples directory
