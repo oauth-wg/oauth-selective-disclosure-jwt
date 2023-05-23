@@ -246,6 +246,7 @@ payload of an SD-JWT MUST contain the `_sd_alg` claim
 described in (#hash_function_claim). The SD-JWT payload MAY contain one or more selectively disclosable claims. It MAY also contain a Holder's public key or a reference
 thereto, as well as further claims such as `iss`, `iat`, etc. as defined or
 required by the application using SD-JWTs.
+Applications of SD-JWT SHOULD be explicitly typed using the `typ` header parameter, see (#explicit_typing) for more details.
 
 ### Selectively Disclosable Claims {#disclosable_claims}
 
@@ -804,6 +805,18 @@ when presenting to a downstream party.
 In some scenarios this behavior could be desirable,
 but if it is not, Issuers need to support and Verifiers need to enforce Holder Binding.
 
+## Explicit Typing {#explicit_typing}
+
+Section 3.11 of [@RFC8725] describes the use of explicit typing to prevent confusion attacks
+where one kind of JWT to be confused for another. SD-JWTs are also potentially
+vulnerable to such confusion attacks, so it is RECOMMENDED to specify an explicit type
+by including the `typ` header parameter when the SD-JWT is issued, and for Verifiers to check this value.
+
+When explicit typing is employed for an SD-JWT, it is RECOMMENDED that a media type name of the format
+"application/example+sd-jwt" be used, where "example" is replaced by the identifier for the specific kind of SD-JWT.
+The definition of `typ` in Section 4.1.9 of [@!RFC7515] recommends that the "application/" prefix be omitted, so
+"example+sd-jwt" would be the value of the `typ` header parameter.
+
 # Privacy Considerations {#privacy_considerations}
 
 The privacy principles of [@ISO.29100] should be adhered to.
@@ -1356,6 +1369,7 @@ data. The original JSON data is then used by the application. See
    -05
 
    * Added initial IANA media type and structured suffix registration requests
+   * Added recommendation for explicit typing of SD-JWTs
    * Added considerations around forwarding credentials
    * Removed Example 2b and merged the demo of decoy digests into Example 2a
 
