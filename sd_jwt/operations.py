@@ -241,6 +241,7 @@ class SDJWTIssuer(SDJWTCommon):
 
 class SDJWTHolder(SDJWTCommon):
     hs_disclosures: List
+    holder_binding_jwt_header: Dict
     holder_binding_jwt_payload: Dict
     holder_binding_jwt: JWS
     serialized_holder_binding_jwt: str = ""
@@ -335,6 +336,11 @@ class SDJWTHolder(SDJWTCommon):
     ):
         _alg = sign_alg or DEFAULT_SIGNING_ALG
 
+        self.holder_binding_jwt_header = {
+            "alg": _alg,
+            "typ": self.SD_JWT_R_HEADER,
+        }
+
         self.holder_binding_jwt_payload = {
             "nonce": nonce,
             "aud": aud,
@@ -342,16 +348,16 @@ class SDJWTHolder(SDJWTCommon):
         }
 
         # Sign the SD-JWT-Release using the holder's key
-        self.holder_binding_jwt = JWS(payload=dumps(self.holder_binding_jwt_payload))
+        self.holder_binding_jwt = JWS(header=dumps(self.holder_binding_jwt_header), payload=dumps(self.holder_binding_jwt_payload))
 
-        _data = {"alg": _alg}
-        if self.SD_JWT_R_HEADER:
-            _data["typ"] = self.SD_JWT_R_HEADER
+        # _data = {"alg": _alg}
+        # if self.SD_JWT_R_HEADER:
+        #    _data["typ"] = self.SD_JWT_R_HEADER
 
         self.holder_binding_jwt.add_signature(
             holder_key,
             alg=_alg,
-            protected=dumps(_data),
+        #    protected=dumps(_data),
         )
         self.serialized_holder_binding_jwt = self.holder_binding_jwt.serialize(
             compact=True
@@ -444,6 +450,11 @@ class SDJWTVerifier(SDJWTCommon):
         pubkey = JWK.from_json(dumps(holder_public_key_payload_jwk))
 
         parsed_input_holder_binding_jwt.verify(pubkey, alg=_alg)
+
+        holder_binding_jwt_header = loads(parsed_input_holder_binding_jwt.header)
+
+        if holder_binding_jwt_header["typ"] != self.SD_JWT_R_HEADER:
+            raise ValueError("Invalid header")
 
         holder_binding_jwt_payload = loads(parsed_input_holder_binding_jwt.payload)
 
