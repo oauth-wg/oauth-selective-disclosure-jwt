@@ -17,7 +17,7 @@ Contributions can be made by creating pull requests.
 The GitHub interface supports creating pull requests using the Edit (✏) button.
 
 
-# Building the Draft
+# Building the Examples & Draft
 
 All examples in the document are created from actual running code maintained at [danielfett/sd-jwt](https://github.com/danielfett/sd-jwt).
 
@@ -34,6 +34,8 @@ To build formatted text and HTML versions of the draft, run the following steps:
 
 
 Now, the draft can be compiled using `make`.
+
+The artifacts generated for the examples (e.g., serialized SD-JWTs, Disclosures, payloads, etc.) can be inspected in the subdirectories of the `examples` directory.
 
 
 # SD-JWT Implementations
