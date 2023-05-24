@@ -961,13 +961,38 @@ TBD
 
 This section requests registration of the "application/sd-jwt" media type [@RFC2046] in
 the "Media Types" registry [@IANA.MediaTypes] in the manner described
-in [@RFC6838], which can be used to indicate that the content is an SD-JWT.
+in [@RFC6838].
+
+To indicate that the content is an SD-JWT:
 
 * Type name: application
 * Subtype name: sd-jwt
 * Required parameters: n/a
 * Optional parameters: n/a
 * Encoding considerations: binary; application/sd-jwt values are a series of base64url-encoded values (some of which may be the empty string) separated by period ('.') or tilde ('~') characters.
+* Security considerations: See the Security Considerations section of [[ this specification ]], [@!RFC7519], and [@RFC8725].
+* Interoperability considerations: n/a
+* Published specification: [[ this specification ]]
+* Applications that use this media type: TBD
+* Fragment identifier considerations: n/a
+* Additional information:
+   Magic number(s): n/a
+   File extension(s): n/a
+   Macintosh file type code(s): n/a
+* Person & email address to contact for further information: Daniel Fett, mail@danielfett.de
+* Intended usage: COMMON
+* Restrictions on usage: none
+* Author: Daniel Fett, mail@danielfett.de
+* Change Controller: IESG
+* Provisional registration?  No
+
+To indicate that the content is a Holder Binding JWT:
+
+* Type name: application
+* Subtype name: hd+jwt
+* Required parameters: n/a
+* Optional parameters: n/a
+* Encoding considerations: binary; A Holder Binding JWT is a JWT; JWT values are encoded as a series of base64url-encoded values (some of which may be the empty string) separated by period ('.') characters.
 * Security considerations: See the Security Considerations section of [[ this specification ]], [@!RFC7519], and [@RFC8725].
 * Interoperability considerations: n/a
 * Published specification: [[ this specification ]]
