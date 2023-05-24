@@ -257,13 +257,6 @@ _artifacts = {
         "Combined SD-JWT and Disclosures",
         "txt",
     ),
-    "hb_jwt_header": (
-        sdjwt_at_holder.holder_binding_jwt_header
-        if example.get("holder_binding")
-        else None,
-        "Header of the Holder Binding JWT",
-        "json",
-    ),
     "hb_jwt_payload": (
         sdjwt_at_holder.holder_binding_jwt_payload
         if example.get("holder_binding")
