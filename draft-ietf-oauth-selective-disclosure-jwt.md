@@ -246,7 +246,8 @@ payload of an SD-JWT MUST contain the `_sd_alg` claim
 described in (#hash_function_claim). The SD-JWT payload MAY contain one or more selectively disclosable claims. It MAY also contain a Holder's public key or a reference
 thereto, as well as further claims such as `iss`, `iat`, etc. as defined or
 required by the application using SD-JWTs.
-Applications of SD-JWT SHOULD be explicitly typed using the `typ` header parameter, see (#explicit_typing) for more details.
+
+Applications of SD-JWT SHOULD be explicitly typed using the `typ` header parameter. See (#explicit_typing) for more details.
 
 ### Selectively Disclosable Claims {#disclosable_claims}
 
