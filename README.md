@@ -17,63 +17,30 @@ Contributions can be made by creating pull requests.
 The GitHub interface supports creating pull requests using the Edit (✏) button.
 
 
-## Running SD-JWT PoC
+# Building the Examples & Draft
 
-All examples in the document are created from [actual running code](sd_jwt/bin/sd_jwt). To run this code, install sd_jwt:
-```
-pip3 install .
-```
-
-You can read the inline documentation:
-````
-sd_jwt -h
-````
-
-You can then run the code (from the root of this repository):
-```
-sd_jwt sd_jwt/examples/simple.yml
-sd_jwt sd_jwt/examples/simple_structured.yml
-sd_jwt sd_jwt/examples/complex.yml
-```
-
-You can create your custom setting file creating a folder with a copy of
-[sd_jwt/demo_settings.py](sd_jwt/demo_settings.py) renamed to `settings.py`
-and a `__init__.py` in it. Then run `sd_jwt` specifying the custom settings path:
-
-````
-sd_jwt sd_jwt/examples/simple.yml --settings-path ./custom_settings/
-````
-
-## Updating Examples
-
-To update the examples in [draft-ietf-oauth-selective-disclosure-jwt.md](draft-ietf-oauth-selective-disclosure-jwt.md), use the provided script:
-```
-./update-all-examples.sh
-```
-
-It calls the demos with the switch `--replace-examples-in` to replace the example code in
-[draft-ietf-oauth-selective-disclosure-jwt.md](draft-ietf-oauth-selective-disclosure-jwt.md) and `--no-randomness` to ensure that the examples are always
-generated in the same way (this minimizes the changes that need to be tracked).
-
-The code creates a backup before modifying [draft-ietf-oauth-selective-disclosure-jwt.md](draft-ietf-oauth-selective-disclosure-jwt.md) in [draft-ietf-oauth-selective-disclosure-jwt.bak](draft-ietf-oauth-selective-disclosure-jwt.bak).
+All examples in the document are created from actual running code maintained at [danielfett/sd-jwt](https://github.com/danielfett/sd-jwt).
 
 
+To build formatted text and HTML versions of the draft, run the following steps:
 
-## Command Line Usage
-
-To build the HTML version locally, instead of using the GitHub Action, you can use `make`.
-
-```sh
-$ make
-```
-
-Command line usage requires that you have the necessary software installed.  See
-[the instructions](https://github.com/martinthomson/i-d-template/blob/main/doc/SETUP.md).
+ - Follow the instructions in https://github.com/martinthomson/i-d-template/blob/main/doc/SETUP.md to setup the build environment.
+ - Install the sd-jwt library as described in https://github.com/danielfett/sd-jwt
+   **or**\
+   if the library was installed previously, make sure to enter the virtualenv (`source venv/bin/activate`)
+ - `cd examples` to change to the examples directory
+ - `sd-jwt-generate example` to generate the examples
+ - `cd ..`
 
 
-# Implementations
+Now, the draft can be compiled using `make`.
 
- * Python: [Reference/Demo Implementation](https://github.com/oauthstuff/draft-selective-disclosure-jwt)
+The artifacts generated for the examples (e.g., serialized SD-JWTs, Disclosures, payloads, etc.) can be inspected in the subdirectories of the `examples` directory.
+
+
+# SD-JWT Implementations
+
+ * Python: [Reference/Demo Implementation](https://github.com/danielfett/sd-jwt)
  * Kotlin: [SD-JWT-Kotlin (ID Union)](https://github.com/IDunion/SD-JWT-Kotlin)
  * Rust: [sd_jwt](https://github.com/kushaldas/sd_jwt)
  * TypeScript: [sd-jwt](https://github.com/christianpaquin/sd-jwt)

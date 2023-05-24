@@ -26,6 +26,18 @@ jobs:
       id: setup
       run: date -u "+::set-output name=date::%FT%T"
 
+    # Install the SD-JWT tooling using pip
+    - name: "Install SD-JWT tooling"
+      run: |
+        python3 -m pip install --upgrade pip
+        python3 -m pip install git+https://github.com/danielfett/sd-jwt.git
+
+    # Build the local examples
+    - name: "Build local examples"
+      run: |
+        cd examples
+        sd-jwt-generate example
+
     - name: "Caching"
       uses: actions/cache@v3
       with:
