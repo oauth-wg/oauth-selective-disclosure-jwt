@@ -809,7 +809,7 @@ but if it is not, Issuers need to support and Verifiers need to enforce Holder B
 ## Explicit Typing {#explicit_typing}
 
 Section 3.11 of [@RFC8725] describes the use of explicit typing to prevent confusion attacks
-where one kind of JWT to be confused for another. SD-JWTs are also potentially
+in which one kind of JWT is mistaken for another. SD-JWTs are also potentially
 vulnerable to such confusion attacks, so it is RECOMMENDED to specify an explicit type
 by including the `typ` header parameter when the SD-JWT is issued, and for Verifiers to check this value.
 
