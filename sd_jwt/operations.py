@@ -28,7 +28,7 @@ class SDJWTHasSDClaimException(Exception):
 class SDJWTCommon:
     SD_JWT_HEADER = None  # "sd+jwt"
     # WiP: https://github.com/oauthstuff/draft-selective-disclosure-jwt/issues/60
-    SD_JWT_R_HEADER = "hb+jwt"
+    SD_JWT_R_HEADER = None  # "sd+jwt-r"
     # TODO: adopt a dynamic module/package loader, defs could be as string -> "fn": "hashlib.sha256"
     HASH_ALG = {"name": "sha-256", "fn": sha256}
 
