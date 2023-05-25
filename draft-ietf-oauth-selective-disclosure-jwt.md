@@ -1,5 +1,5 @@
 %%%
-title = "Selective Disclosure for JWTs (SD-JWT)"
+title = "SD-JWT: Selective Disclosure for JWT and JWS with JSON payloads"
 abbrev = "SD-JWT"
 ipr = "trust200902"
 area = "Security"
@@ -43,15 +43,20 @@ organization="Ping Identity"
 
 .# Abstract
 
-This document specifies conventions for creating JSON Web Token (JWT)
-documents that support selective disclosure of JWT claims.
+This specification defines a mechanism for selective disclosure of individual elements of a JSON object
+used as the payload of a JSON Web Signature (JWS) structure.
+It encompasses various applications, including but not limited to the selective disclosure of JSON Web Tokens (JWT) claims.
 
 {mainmatter}
 
 # Introduction {#Introduction}
 
-The JSON-based [@!RFC8259] representation of claims in a signed JSON Web Token (JWT) [@!RFC7519] is
-secured against modification using JSON Web Signature (JWS) [@!RFC7515] digital
+This document specifies conventions for creating JSON Web Signature (JWS) [@!RFC7515]
+structures with JSON [@!RFC8259] objects as the payload while supporting selective disclosure of individual elements of that JSON.
+Because JSON Web Token (JWT) [@!RFC7519] is a very prevalent application of JWS with a JSON payload, the selective disclosure of JWT claims receives primary treatment herein. However, that does not preclude the mechanism's applicability to other or more general applications of JWS with JSON payloads.
+
+The JSON-based representation of claims in a signed JWT is
+secured against modification using JWS digital
 signatures. A consumer of a signed JWT that has checked the
 signature can safely assume that the contents of the token have not been
 modified.  However, anyone receiving an unencrypted JWT can read all the
@@ -1373,6 +1378,7 @@ data. The original JSON data is then used by the application. See
    * Added recommendation for explicit typing of SD-JWTs
    * Added considerations around forwarding credentials
    * Removed Example 2b and merged the demo of decoy digests into Example 2a
+   * Updated title to be more inclusive of JWS with JSON and added some corresponding text to the Abstract and Intro
 
    -04
 
