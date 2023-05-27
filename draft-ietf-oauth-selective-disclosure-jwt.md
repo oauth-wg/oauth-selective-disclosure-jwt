@@ -604,8 +604,8 @@ To this end, Verifiers MUST follow the following steps (or equivalent):
        4. Validate the signature over the Holder Binding JWT.
        5. Check that the `typ` of the Holder Binding JWT is `hb+jwt`.
        6. Check that the creation time of the Holder Binding JWT, as determined by the `iat` claim, is within an acceptable window.
-       7. Check that the Holder Binding JWT is valid in all other respects, per [@!RFC7519] and [@!RFC8725].
        7. Determine that the Holder Binding JWT is bound to the current transaction and was created for this Verifier (replay protection) by validating `nonce` and `aud` claims.
+       8. Check that the Holder Binding JWT is valid in all other respects, per [@!RFC7519] and [@!RFC8725].
 
 If any step fails, the Presentation is not valid and processing MUST be aborted.
 
