@@ -97,7 +97,7 @@ has to verify that all disclosed claim values were part of the original,
 Issuer-signed SD-JWT. The Verifier will not, however, learn any claim
 values not disclosed in the Disclosures.
 
-This document also describes an optional mechanism for Holder Binding,
+This document also specifies an optional mechanism for Holder Binding,
 or the concept of binding an SD-JWT to key material controlled by the
 Holder. The strength of the Holder Binding is conditional upon the trust
 in the protection of the private key of the key pair an SD-JWT is bound to.
@@ -213,12 +213,12 @@ To disclose to a Verifier a subset of the SD-JWT claim values, a Holder sends on
 
 ## Optional Holder Binding
 
-Holder Binding is an optional feature. For example, when Cryptographic Holder Binding is required by the use-case, the SD-JWT must contain information about the key material controlled by the Holder.
+Holder Binding is an optional feature. When Cryptographic Holder Binding is required by the use-case, the SD-JWT MUST contain information about the key material controlled by the Holder.
 
 Note: How the public key is included in SD-JWT is out of scope of this document. It can be passed by value or by reference.
 
-The Holder can then create a signed document, the Holder Binding JWT, using its private key. This document contains some
-data provided by the Verifier (out of scope of this document) to ensure the freshness of the signature, for example, a nonce and an indicator of the
+The Holder can then create a signed document, the Holder Binding JWT as defined in (#hb-jwt), using its private key. This document contains some
+data provided by the Verifier such as a nonce to ensure the freshness of the signature, and audience to indicate the
 intended audience for the document.
 
 The Holder Binding JWT can be included in the Combined Format for Presentation and sent to the Verifier along with the SD-JWT and the Holder-Selected Disclosures.
@@ -487,16 +487,36 @@ a Disclosure more than once.
 ### Enabling Holder Binding {#enabling_holder_binding}
 
 The Holder MAY add an optional JWT to prove Holder Binding to the Verifier.
-The precise contents of the JWT are out of scope of this specification.
-Usually, a `nonce` and `aud` claim are included to show that the proof is
-intended for the Verifier and to prevent replay attacks. How the `nonce` or
-other claims are obtained by the Holder is out of scope of this specification.
 
-Example Holder Binding JWT payload:
+#### Structure of the Holder Binding JWT {#hb-jwt}
+
+This section defines the contents of the Holder Binding JWT.
+
+The JWT MUST contain the following elements:
+  * in the JOSE header,
+    * `typ`: REQUIRED. MUST be `hb+jwt`, which explicitly types the Holder Binding JWT as recommended in Section 3.11 of [@!RFC8725].
+    * `alg`: REQUIRED. A digital signature algorithm identifier such as per IANA "JSON Web Signature and Encryption Algorithms" registry. MUST NOT be `none` or an identifier for a symmetric algorithm (MAC).
+  * in the JWT body,
+    * `iat`: REQUIRED. The value of this claim MUST be the time at which the Holder Binding JWT was issued using the syntax defined in [@!RFC7519].
+    * `aud`: REQUIRED. The intended receiver of the Holder Binding JWT. How the value is represented is up to the protocol used and out of scope of this specification.
+    * `nonce`: REQUIRED. Ensures the freshness of the signature. The value type of this claim MUST be a string. How this value is obtained is up to the protocol used and out of scope of this specification.
+
+To validate the signature on the Holder Binding JWT, the Verifier MUST use the key material in the SD-JWT. If it is not clear from the SD-JWT, HB-JWT MUST specify which key material the Verifier needs to use to validate HB-JWT using JOSE header parameters such as `kid` and `x5c`.
+
+Below is a non-normative example of a Holder Binding JWT header:
+
+```
+{
+  "alg": "ES256",
+  "typ": "hb+jwt"
+}
+```
+
+Below is a non-normative example of a Holder Binding JWT payload:
 
 <{{examples/simple/hb_jwt_payload.json}}
 
-Which is then signed by the Holder to create a JWT like the following:
+Below is a non-normative example of a Holder Binding JWT produced by signing a payload in the example above:
 
 <{{examples/simple/hb_jwt_serialized.txt}}
 
@@ -584,8 +604,10 @@ To this end, Verifiers MUST follow the following steps (or equivalent):
        2. Determine the public key for the Holder from the SD-JWT.
        3. Ensure that a signing algorithm was used that was deemed secure for the application. Refer to [@RFC8725], Sections 3.1 and 3.2 for details. The `none` algorithm MUST NOT be accepted.
        4. Validate the signature over the Holder Binding JWT.
-       5. Check that the Holder Binding JWT is valid using `nbf`, `iat`, and `exp` claims, if provided in the Holder Binding JWT.
-       6. Determine that the Holder Binding JWT is bound to the current transaction and was created for this Verifier (replay protection). This is usually achieved by a `nonce` and `aud` field within the Holder Binding JWT.
+       5. Check that the `typ` of the Holder Binding JWT is `hb+jwt`.
+       6. Check that the creation time of the Holder Binding JWT, as determined by the `iat` claim, is within an acceptable window.
+       7. Determine that the Holder Binding JWT is bound to the current transaction and was created for this Verifier (replay protection) by validating `nonce` and `aud` claims.
+       8. Check that the Holder Binding JWT is valid in all other respects, per [@!RFC7519] and [@!RFC8725].
 
 If any step fails, the Presentation is not valid and processing MUST be aborted.
 
@@ -954,13 +976,38 @@ TBD
 
 This section requests registration of the "application/sd-jwt" media type [@RFC2046] in
 the "Media Types" registry [@IANA.MediaTypes] in the manner described
-in [@RFC6838], which can be used to indicate that the content is an SD-JWT.
+in [@RFC6838].
+
+To indicate that the content is an SD-JWT:
 
 * Type name: application
 * Subtype name: sd-jwt
 * Required parameters: n/a
 * Optional parameters: n/a
 * Encoding considerations: binary; application/sd-jwt values are a series of base64url-encoded values (some of which may be the empty string) separated by period ('.') or tilde ('~') characters.
+* Security considerations: See the Security Considerations section of [[ this specification ]], [@!RFC7519], and [@RFC8725].
+* Interoperability considerations: n/a
+* Published specification: [[ this specification ]]
+* Applications that use this media type: TBD
+* Fragment identifier considerations: n/a
+* Additional information:
+   Magic number(s): n/a
+   File extension(s): n/a
+   Macintosh file type code(s): n/a
+* Person & email address to contact for further information: Daniel Fett, mail@danielfett.de
+* Intended usage: COMMON
+* Restrictions on usage: none
+* Author: Daniel Fett, mail@danielfett.de
+* Change Controller: IESG
+* Provisional registration?  No
+
+To indicate that the content is a Holder Binding JWT:
+
+* Type name: application
+* Subtype name: hd+jwt
+* Required parameters: n/a
+* Optional parameters: n/a
+* Encoding considerations: binary; A Holder Binding JWT is a JWT; JWT values are encoded as a series of base64url-encoded values (some of which may be the empty string) separated by period ('.') characters.
 * Security considerations: See the Security Considerations section of [[ this specification ]], [@!RFC7519], and [@RFC8725].
 * Interoperability considerations: n/a
 * Published specification: [[ this specification ]]
@@ -1184,8 +1231,9 @@ With the following Disclosures:
 
 {{examples/complex_ekyc/disclosures.md}}
 
-The Verifier would receive the Issuer-signed SD-JWT together with a selection
-of the Disclosures. The Presentation in this example would look as follows:
+The following is a non-normative example of a Combined Format for Presentation
+without a Holder Binding JWT that the Verifier would receive with a selection
+of the Disclosures:
 
 <{{examples/complex_ekyc/combined_presentation.txt}}
 
@@ -1369,6 +1417,7 @@ data. The original JSON data is then used by the application. See
 
    -05
 
+   * Defined the structure of the Holder Binding JWT.
    * Added initial IANA media type and structured suffix registration requests
    * Added recommendation for explicit typing of SD-JWTs
    * Added considerations around forwarding credentials
