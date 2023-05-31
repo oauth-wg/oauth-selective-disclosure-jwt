@@ -87,7 +87,7 @@ mechanisms defined in this document can be used for other use cases as well.
 
 In an Issuer-signed SD-JWT, claims can be hidden, but cryptographically
 protected against undetected modification. "Claims" here refers to both
-object properties (key/value pairs) as well as array elements. When issuing the SD-JWT to
+object properties (key-value pairs) as well as array elements. When issuing the SD-JWT to
 the Holder, the Issuer also sends the cleartext counterparts of all hidden
 claims, the so-called Disclosures, separate from the SD-JWT itself.
 
@@ -142,7 +142,7 @@ Selectively Disclosable JWT (SD-JWT):
   that supports selective disclosure as defined in this document and can contain both regular claims and digests of selectively-disclosable claims.
 
 Disclosure:
-:  A combination of a salt, a cleartext claim name (in case the claim is a key/value pair and not an array element), and a cleartext claim value, all of which are used to calculate a digest for the respective claim.
+:  A combination of a salt, a cleartext claim name (in case the claim is a key-value pair and not an array element), and a cleartext claim value, all of which are used to calculate a digest for the respective claim.
 
 Cryptographic Holder Binding:
 :  Ability of the Holder to prove legitimate possession of an SD-JWT by proving
@@ -201,7 +201,7 @@ conceptual level, abstracting from the data formats described in (#data_formats)
 
 ## SD-JWT and Disclosures
 
-An SD-JWT, at its core, is a digitally signed JSON document containing digests over the selectively disclosable claims with the Disclosures outside the document. Selectively disclosable claims can be individual object properties (key/value pairs) or array elements.
+An SD-JWT, at its core, is a digitally signed JSON document containing digests over the selectively disclosable claims with the Disclosures outside the document. Selectively disclosable claims can be individual object properties (key-value pairs) or array elements.
 
 Each digest value ensures the integrity of, and maps to, the respective Disclosure.  Digest values are calculated using a hash function over the Disclosures, each of which contains the claim name (only in case the claim is an object property), the claim value, and a random salt. The Disclosures are sent to the Holder together with the SD-JWT in the Combined Format for Issuance defined in (#combined_format_for_issuance).
 
@@ -264,7 +264,7 @@ Claims that are not selectively disclosable are included in the SD-JWT in plaint
 
 ## Creating Disclosures {#creating_disclosures}
 
-Disclosures are created differently depending on whether a claim is an object property (key/value pair) or an array element.
+Disclosures are created differently depending on whether a claim is an object property (key-value pair) or an array element.
 
  * For a claim that is an object property, the Issuer creates a Disclosure as described next.
  * For a claim that is an array element, the Issuer creates a Disclosure as described in (#disclosures_for_array_elements).
@@ -347,6 +347,10 @@ The SHA-256 digest of the Disclosure
 
 ## Embedding Disclosure Digests in SD-JWTs {#embedding_disclosure_digests}
 
+Digests of disclosures are embedded into the SD-JWT instead of the original
+claims. The precise way of embedding the digests depends on the type of the
+claim, as described in the following sections.
+
 ### Object Properties
 
 Digests of Disclosures for object properties are added to an array under the new
@@ -359,9 +363,9 @@ key in this case to save space.
 
 The Issuer MUST hide the original order of the claims in the array. To ensure
 this, it is RECOMMENDED to shuffle the array of hashes (after potentially adding
-decoy digests), e.g., by sorting it alphanumerically or randomly. The precise
-method does not matter as long as it does not depend on the original order of
-elements.
+decoy digests as described in (#decoy_digests)), e.g., by sorting it
+alphanumerically or randomly. The precise method does not matter as long as it
+does not depend on the original order of elements.
 
 For example, using the digest of the object property Disclosure created above,
 the Issuer could create the following SD-JWT payload to make `family_name`
@@ -447,9 +451,12 @@ The SD-JWT is then signed by the Issuer to create a JWT like the following:
 
 ## Note on Nested Data in SD-JWTs {#nested_data}
 
-Being JSON, an object in an SD-JWT payload MAY contain key-value pairs where the value is another object. In SD-JWT, the Issuer decides for each key individually, on each level of the JSON, whether the key should be selectively disclosable or not. This choice can be made on each level independent from whether keys higher in the hierarchy are selectively disclosable.
+Being JSON, an object in an SD-JWT payload MAY contain key-value pairs where the value is another object or objects MAY be elements in arrays. In SD-JWT, the Issuer decides for each claim individually, on each level of the JSON, whether the claim should be selectively disclosable or not. This choice can be made on each level independent from whether keys higher in the hierarchy are selectively disclosable.
 
-For any selectively disclosable claim, the `_sd` key containing the digest value MUST be included in the SD-JWT at the same level as the original claim. It follows that the `_sd` key MAY appear multiple times in an SD-JWT. It MAY even appear within Disclosures.
+From this it follows that the `_sd` key containing digests MAY appear multiple
+times in an SD-JWT, and likewise, there MAY be multiple arrays within the
+hierarchy with each having selectively disclosable elements. Digests of
+selectively disclosable claims MAY even appear within other Disclosures.
 
 The following examples illustrate some of the options an Issuer has. It is up to the Issuer to decide which option to use, depending on, for example, the expected use cases for the SD-JWT, requirements for privacy, size considerations, or ecosystem requirements.
 
@@ -500,16 +507,20 @@ The Issuer creates Disclosures first for the sub-claims and then includes their 
 
 ## Hash Function Claim {#hash_function_claim}
 
-The claim `_sd_alg` indicates the hash algorithm
-used by the Issuer to generate the digests over the salts and the
-claim values. If the  `_sd_alg` claim is not present, a default value of `sha-256` is used.
+The claim `_sd_alg` indicates the hash algorithm used by the Issuer to generate
+the digests over the salts and the claim values. If the  `_sd_alg` claim is not
+present, a default value of `sha-256` is used.
 
-The hash algorithm identifier MUST be a hash algorithm value from the "Hash Name String" column in the IANA "Named Information Hash Algorithm" registry [@IANA.Hash.Algorithms]
-or a value defined in another specification and/or profile of this specification.
+The hash algorithm identifier MUST be a hash algorithm value from the "Hash Name
+String" column in the IANA "Named Information Hash Algorithm" registry
+[@IANA.Hash.Algorithms] or a value defined in another specification and/or
+profile of this specification.
 
-To promote interoperability, implementations MUST support the `sha-256` hash algorithm.
+To promote interoperability, implementations MUST support the `sha-256` hash
+algorithm.
 
-See (#security_considerations) for requirements regarding entropy of the salt, minimum length of the salt, and choice of a hash algorithm.
+See (#security_considerations) for requirements regarding entropy of the salt,
+minimum length of the salt, and choice of a hash algorithm.
 
 ## Holder Public Key Claim {#holder_public_key_claim}
 
@@ -521,7 +532,8 @@ established. For example, the Holder MAY provide a key pair to the Issuer,
 the Issuer MAY create the key pair for the Holder, or
 Holder and Issuer MAY use pre-established key material.
 
-Note: Examples in this document use `cnf` Claim defined in [@RFC7800] to include raw public key by value in SD-JWT.
+Note: Examples in this document use `cnf` Claim defined in [@RFC7800] to include
+raw public key by value in SD-JWT.
 
 
 
@@ -639,12 +651,12 @@ a Combined Format for Issuance:
 
  1. Separate the SD-JWT and the Disclosures in the Combined Format for Issuance.
  2. Hash all of the Disclosures separately.
- 3. Find the `_sd` arrays in the SD-JWT where the digests of the Disclosures are
-    included and decode the respective plaintext values from the Disclosures at the
-    appropriate places. The processing MUST take into account that digests might be
-    included not only directly in the SD-JWT, but also in other Disclosures. If there
-    is a Disclosure with a digest that cannot be found in any `_sd` array, the SD-JWT
-    is invalid and the Holder MUST reject the SD-JWT.
+ 3. Find the objects and array elements in the SD-JWT where the digests of the
+    Disclosures are included and decode the respective plaintext values from the
+    Disclosures at the appropriate places. The processing MUST take into account
+    that digests might be included not only directly in the SD-JWT, but also in
+    other Disclosures. If there is a Disclosure with a digest that cannot be
+    found, the SD-JWT is invalid and the Holder MUST reject the SD-JWT.
 
 It is up to the Holder how to maintain the mapping between the Disclosures and the plaintext claim values to be able to display them to the End-User when needed.
 
@@ -676,20 +688,27 @@ To this end, Verifiers MUST follow the following steps (or equivalent):
     3. Validate the Issuer of the SD-JWT and that the signing key belongs to this Issuer.
     4. Check that the SD-JWT is valid using `nbf`, `iat`, and `exp` claims, if provided in the SD-JWT, and not selectively disclosed.
     5. Check that the `_sd_alg` claim value is understood and the hash algorithm is deemed secure.
- 4. Process the Disclosures and `_sd` keys in the SD-JWT as follows:
+ 4. Process the Disclosures and embedded digests in the SD-JWT as follows:
     1. For each Disclosure provided:
        1. Calculate the digest over the base64url-encoded string as described in (#hashing_disclosures).
-    2. Find all `_sd` keys in the SD-JWT payload. For each such key perform the following steps (*):
-       1. If the key does not refer to an array, the Verifier MUST reject the Presentation.
-       2. Otherwise, process each entry in the `_sd` array as follows:
-          1. Compare the value with the digests calculated previously and find the matching Disclosure. If no such Disclosure can be found, the digest MUST be ignored.
-          2. If the Disclosure is not a JSON-encoded array of three elements, the Verifier MUST reject the Presentation.
-          3. Insert, at the level of the `_sd` key, a new claim using the claim name and claim value from the Disclosure.
-          4. If the claim name already exists at the same level, the Verifier MUST reject the Presentation.
-          5. If the decoded value contains an `_sd` key in an object, recursively process the key using the steps described in (*).
-    3. If any digests were found more than once in the previous step, the Verifier MUST reject the Presentation.
-    4. Remove all `_sd` keys from the SD-JWT payload.
-    5. Remove the claim `_sd_alg` from the SD-JWT payload.
+    2. (*) Identify all embedded digests in the SD-JWT as follows:
+       1. Find all objects having an `_sd` key that refers to an array.
+       2. Find all array elements that are objects with one key, that key being `...` and referring to a string.
+    3. (**) For each embedded digest:
+       1. Compare the value with the digests calculated previously and find the matching Disclosure. If no such Disclosure can be found, the digest MUST be ignored.
+       2. If the digest was found in an object's `_sd` key:
+          1. If the Disclosure is not a JSON-encoded array of three elements, the Verifier MUST reject the Presentation.
+          2. Insert, at the level of the `_sd` key, a new claim using the claim name and claim value from the Disclosure.
+          3. If the claim name already exists at the same level, the Verifier MUST reject the Presentation.
+          4. Recursively process the value using the steps described in (*) and (**).
+       3. If the digest was found in an array element:
+          1. If the Disclosure is not a JSON-encoded array of two elements, the Verifier MUST reject the Presentation.
+          2. Replace the array element with the claim value from the Disclosure.
+          3. Recursively process the value using the steps described in (*) and (**).
+    4. If any digests were found more than once in the previous step, the Verifier MUST reject the Presentation.
+    5. Remove all array elements for which the digest was not found in the previous step.
+    6. Remove all `_sd` keys from the SD-JWT payload.
+    7. Remove the claim `_sd_alg` from the SD-JWT payload.
  5. If Holder Binding is required:
     1. If Holder Binding is provided by means not defined in this specification, verify the Holder Binding according to the method used.
     2. Otherwise, verify the Holder Binding JWT as follows:
