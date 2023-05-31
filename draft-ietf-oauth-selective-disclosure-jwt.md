@@ -450,7 +450,7 @@ be added to JSON strings and base64-encoded strings (as shown in the
 next example) to adhere to the 72 character limit for lines in RFCs and
 for readability. JSON does not allow line breaks in strings.
 
-##### Option 1: Flat SD-JWT
+### Option 1: Flat SD-JWT
 
 The Issuer can decide to treat the `address` claim as a block that can either be disclosed completely or not at all. The following example shows that in this case, the entire `address` claim is treated as an object in the Disclosure.
 
@@ -460,7 +460,7 @@ The Issuer would create the following Disclosure:
 
 {{examples/address_only_flat/disclosures.md}}
 
-##### Option 2: Structured SD-JWT
+### Option 2: Structured SD-JWT
 
 The Issuer may instead decide to make the `address` claim contents selectively disclosable individually:
 
@@ -476,7 +476,7 @@ The Issuer may also make one sub-claim of `address` non-selectively disclosable 
 
 There would be no Disclosure for `country` in this case.
 
-#### Option 3: SD-JWT with Recursive Disclosures
+### Option 3: SD-JWT with Recursive Disclosures
 
 The Issuer may also decide to make the `address` claim contents selectively disclosable recursively, i.e., the `address` claim is made selectively disclosable as well as its sub-claims:
 
@@ -486,7 +486,7 @@ The Issuer creates Disclosures first for the sub-claims and then includes their 
 
 {{examples/address_only_recursive/disclosures.md}}
 
-### Hash Function Claim {#hash_function_claim}
+## Hash Function Claim {#hash_function_claim}
 
 The claim `_sd_alg` indicates the hash algorithm
 used by the Issuer to generate the digests over the salts and the
@@ -499,7 +499,7 @@ To promote interoperability, implementations MUST support the `sha-256` hash alg
 
 See (#security_considerations) for requirements regarding entropy of the salt, minimum length of the salt, and choice of a hash algorithm.
 
-### Holder Public Key Claim {#holder_public_key_claim}
+## Holder Public Key Claim {#holder_public_key_claim}
 
 If the Issuer wants to enable Holder Binding, it MAY include a public key
 associated with the Holder, or a reference thereto.
@@ -1389,7 +1389,7 @@ After the validation, the Verifier will have the following data for further proc
 
 # Disclosure Format Considerations {#disclosure_format_considerations}
 
-As described in (#disclosable_claims), the Disclosure structure is JSON containing salt and the
+As described in (#creating_disclosures), the Disclosure structure is JSON containing salt and the
 cleartext content of a claim, which is base64url encoded. The encoded value is the input used to calculate
 a digest for the respective claim. The inclusion of digest value in the signed JWT ensures the integrity of
 the claim value. Using encoded content as the input to the integrity mechanism is conceptually similar to the
