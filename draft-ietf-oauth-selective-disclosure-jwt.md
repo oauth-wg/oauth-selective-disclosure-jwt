@@ -351,7 +351,7 @@ The SHA-256 digest of the Disclosure
 
 Digests of Disclosures for object properties are added to an array under the new
 key `_sd` in the object. The `_sd` key MUST refer to an array of strings, each
-string being a digest of a Disclosure or a decoy digest as described below.
+string being a digest of a Disclosure or a decoy digest as described in (#decoy_digests).
 
 The array MAY be empty in case the Issuer decided not to selectively disclose
 any of the claims at that level. However, it is RECOMMENDED to omit the `_sd`
@@ -393,6 +393,11 @@ of the `nationalities` array selectively disclosable:
 }
 ```
 
+As described in (#verifier_verification), Verifiers ignore all selectively
+disclosable array elements for which they did not receive a Disclosure. In the
+example above, the verification process would output an array with only one
+element unless a matching Disclosure for the second element is received.
+
 ## Decoy Digests {#decoy_digests}
 
 An Issuer MAY add additional digests to the SD-JWT that are not associated with
@@ -418,19 +423,26 @@ This example uses the following object as the set of claims that the Issuer is i
 
 <{{examples/simple/user_claims.json}}
 
-The following non-normative example shows the payload of an SD-JWT. The Issuer
-is using a flat structure in this case, i.e., all of the claims in the `address` claim can only
-be disclosed in full. In (#nested_data), other options are discussed.
+The following non-normative example shows a payload of an SD-JWT for this End-User data:
 
 <{{examples/simple/sd_jwt_payload.json}}
 
-The SD-JWT is then signed by the Issuer to create a JWT like the following:
+The Issuer in this case made the following decisions:
 
-<{{examples/simple/sd_jwt_serialized.txt}}
+* The `nationalities` array is always visible, but its contents are selectively disclosable.
+* The `sub` element and essential verification data (`iss`, `iat`, `cnf`, etc.) are always visible.
+* All other End-User claims are selectively disclosable.
+* For `address`, the Issuer is using a flat structure, i.e., all of the claims
+  in the `address` claim can only be disclosed in full. Other options are
+  discussed in (#nested_data).
 
 The Issuer creates the following Disclosures:
 
 {{examples/simple/disclosures.md}}
+
+The SD-JWT is then signed by the Issuer to create a JWT like the following:
+
+<{{examples/simple/sd_jwt_serialized.txt}}
 
 
 ## Note on Nested Data in SD-JWTs {#nested_data}
@@ -1498,6 +1510,7 @@ data. The original JSON data is then used by the application. See
 
    -05
 
+   * Add support for selective disclosure of array elements.
    * Defined the structure of the Holder Binding JWT.
    * Added initial IANA media type and structured suffix registration requests
    * Added recommendation for explicit typing of SD-JWTs
