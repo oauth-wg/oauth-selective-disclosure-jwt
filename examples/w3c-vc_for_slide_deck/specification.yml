@@ -6,18 +6,17 @@ user_claims:
       "n": 0vx7agoebGcQSu....-csFCur-kEgU8awapJzKnqDKgw
       e: AQAB
   type: IdentityCredential
-  credentialSubject:
-    !sd given_name: Max
-    !sd family_name: Mustermann
-    !sd email: mustermann@example.com
-    !sd address:
-      street_address: Musterstr. 23
-      locality: Berlin
-      country: DE
-    !sd birthdate: "1971-12-23"
-    !sd is_over_18: true
-    !sd is_over_21: true
-    !sd is_over_65: false
+  !sd given_name: Max
+  !sd family_name: Mustermann
+  !sd email: mustermann@example.com
+  !sd address:
+    street_address: Musterstr. 23
+    locality: Berlin
+    country: DE
+  !sd birthdate: "1971-12-23"
+  !sd is_over_18: true
+  !sd is_over_21: true
+  !sd is_over_65: false
 
 holder_disclosed_claims:
   {

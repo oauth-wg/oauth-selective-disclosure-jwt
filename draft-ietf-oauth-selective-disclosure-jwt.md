@@ -1242,17 +1242,12 @@ pass the following result on to the application for further processing:
 
 <{{examples/complex_ekyc/verified_contents.json}}
 
-## Example 4a - W3C Verifiable Credentials Data Model v2.0, not using JSON-LD
+## Example 4a - Verifiable Credentials with JSON payload based on the SD-JWT format
 
-This example illustrates how to use the artifacts defined in this specification to secure a payload
-that is represented as a W3C Verifiable Credentials Data Model v2.0 [@VC_DATA_v2.0]
-and does not use JSON-LD to provide semantic definitions for claims. The example uses a content type `credential-claims-set+json` defined in [@VC_JWT], Section 3 in a `cty` JOSE Header value.
+This example illustrates how to use the artifacts defined in this specification to secure
+Verifiable Credentials with JSON payload based on the SD-JWT format as defined in [@I-D.ietf-draft-terbu-sd-jwt-vc].
 
-SD-JWT is equivalent to an Issuer-signed W3C Verifiable Credential (W3C VC). Disclosures are sent alongside a W3C VC.
-
-A Holder-signed Verifiable Presentation as defined in [@VC_DATA_v2.0] is equivalent to
-a Combined Format for Presentation with a Holder Binding JWT.
-
+The example uses a content type `vc+sd-jwt`.
 In this example, Holder Binding is applied and Verifiable Presentation can be signed using
 a Holder's public key passed in a `cnf` Claim in the SD-JWT.
 
