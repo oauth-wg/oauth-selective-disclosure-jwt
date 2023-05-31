@@ -170,8 +170,8 @@ ensuring continuity and separating the entity from the actor.
            |            |
            +------------+
                  |
-             Issues SD-JWT
-     and Issuer-Issued Disclosures
+            Issues SD-JWT
+           and Disclosures
                  |
                  v
            +------------+
@@ -181,7 +181,7 @@ ensuring continuity and separating the entity from the actor.
            +------------+
                  |
            Presents SD-JWT
-   and Holder-Selected Disclosures
+      and selected Disclosures
                  |
                  v
            +-------------+
