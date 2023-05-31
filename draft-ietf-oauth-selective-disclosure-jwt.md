@@ -142,7 +142,7 @@ Selectively Disclosable JWT (SD-JWT):
   that supports selective disclosure as defined in this document and can contain both regular claims and digests of selectively-disclosable claims.
 
 Disclosure:
-:  A combination of a salt, an optional cleartext claim name, and a cleartext claim value, all of which are used to calculate a digest for the respective claim.
+:  A combination of a salt, a cleartext claim name (in case the claim is a key/value pair and not an array element), and a cleartext claim value, all of which are used to calculate a digest for the respective claim.
 
 Cryptographic Holder Binding:
 :  Ability of the Holder to prove legitimate possession of an SD-JWT by proving
