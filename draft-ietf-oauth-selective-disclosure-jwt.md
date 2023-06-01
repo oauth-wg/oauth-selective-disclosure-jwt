@@ -694,20 +694,20 @@ To this end, Verifiers MUST follow the following steps (or equivalent):
     2. (*) Identify all embedded digests in the SD-JWT as follows:
        1. Find all objects having an `_sd` key that refers to an array.
        2. Find all array elements that are objects with one key, that key being `...` and referring to a string.
-    3. (**) For each embedded digest:
+    3. (**) For each embedded digest found in the previous step:
        1. Compare the value with the digests calculated previously and find the matching Disclosure. If no such Disclosure can be found, the digest MUST be ignored.
        2. If the digest was found in an object's `_sd` key:
-          1. If the Disclosure is not a JSON-encoded array of three elements, the Verifier MUST reject the Presentation.
+          1. If the respective Disclosure is not a JSON-encoded array of three elements, the Verifier MUST reject the Presentation.
           2. Insert, at the level of the `_sd` key, a new claim using the claim name and claim value from the Disclosure.
           3. If the claim name already exists at the same level, the Verifier MUST reject the Presentation.
           4. Recursively process the value using the steps described in (*) and (**).
        3. If the digest was found in an array element:
-          1. If the Disclosure is not a JSON-encoded array of two elements, the Verifier MUST reject the Presentation.
+          1. If the respective Disclosure is not a JSON-encoded array of two elements, the Verifier MUST reject the Presentation.
           2. Replace the array element with the claim value from the Disclosure.
           3. Recursively process the value using the steps described in (*) and (**).
     4. If any digests were found more than once in the previous step, the Verifier MUST reject the Presentation.
     5. Remove all array elements for which the digest was not found in the previous step.
-    6. Remove all `_sd` keys from the SD-JWT payload.
+    6. Remove all `_sd` keys and their contents from the SD-JWT payload.
     7. Remove the claim `_sd_alg` from the SD-JWT payload.
  5. If Holder Binding is required:
     1. If Holder Binding is provided by means not defined in this specification, verify the Holder Binding according to the method used.
