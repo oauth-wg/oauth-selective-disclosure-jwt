@@ -111,11 +111,9 @@ wherever possible.
 ## Feature Summary
 
 * This specification defines
-  - a format for an Issuer-signed JWT containing selectively disclosable claims (including selectively disclosable object properties, array elements, and nested data structures),
+  - a format for an Issuer-signed JWT containing selectively disclosable claims (including selectively disclosable object properties and array elements, as well as nested data structures built from these),
   - a format for data associated with an Issuer-signed JWT that enables selectively disclosing claims, and
   - formats for the combined transport of an Issuer-signed JWT and the associated data during issuance and presentation.
-* The specification supports selectively disclosable claims in flat data structures
-  as well as more complex, nested data structures.
 * This specification enables combining selectively disclosable claims with
   clear-text claims that are always disclosed.
 * For selectively disclosable claims that are object properties, both the key and value are always blinded.
@@ -247,7 +245,7 @@ MUST NOT use `none` or an identifier for a symmetric algorithm (MAC).
 
 The payload of an SD-JWT is an object according to the following rules:
 
- 1. The payload that MAY contain the `_sd_alg` key described in (#hash_function_claim).
+ 1. The payload MAY contain the `_sd_alg` key described in (#hash_function_claim).
  2. The payload MAY contain one or more digests of Disclosures to enable selective disclosure of the respective claims, created and formatted as described below.
  3. The payload MAY contain one or more decoy digests to hide the number of claims in the SD-JWT, created and formatted as described in {#decoy_digests}.
  4. The payload MAY contain one or more non-selectively disclosable claims.
@@ -279,7 +277,10 @@ For each claim that is an object property and that is to be made selectively dis
  * JSON-encode the array, producing an UTF-8 string.
  * base64url-encode the byte representation of the UTF-8 string, producing a US-ASCII [@RFC0020] string. This string is the Disclosure.
 
-The order is decided based on the readability considerations: salts would have a constant length within the SD-JWT, claim names would be around the same length all the time, and claim values would vary in size, potentially being large objects.
+The order is decided based on the readability considerations: salts would have a
+constant length within the SD-JWT, claim names would be around the same length
+all the time, and claim values would vary in size, potentially being large
+objects.
 
 The following example illustrates the steps described above.
 
@@ -290,9 +291,10 @@ The array is created as follows:
 
 The resulting Disclosure would be: `WyJfMjZiYzRMVC1hYzZxMktJNmNCVzVlcyIsICJmYW1pbHlfbmFtZSIsICJNw7ZiaXVzIl0`
 
-Note that the JSON encoding of the object is not canonicalized, so variations in white space, encoding
-of Unicode characters, and ordering of object properties are allowed. For example, the following strings
-are all valid and encode the same claim value:
+Note that the JSON encoding of the object is not canonicalized, so variations in
+white space, encoding of Unicode characters, and ordering of object properties
+are allowed. For example, the following strings are all valid and encode the
+same claim value:
 
  * A different way to encode the umlaut (two dots `¨` placed over the letter): `WyJfMjZiYzRMVC1hYzZxMktJNmNCVzVlcyIsICJmYW1pbHlfbmFtZSIsICJNXHUwMGY2Yml1cyJd`
  * No white space: `WyJfMjZiYzRMVC1hYzZxMktJNmNCVzVlcyIsImZhbWlseV9uYW1lIiwiTcO2Yml1cyJd`
@@ -308,7 +310,9 @@ For each claim that is an array element and that is to be made selectively discl
    1. The salt value as described in (#disclosures_for_object_properties).
    2. The array element that is to be hidden. This value MAY be of any type that is allowed in JSON, including numbers, strings, booleans, arrays, and objects.
 
-From the array, the Disclosure string is created as described in (#disclosures_for_object_properties).
+From the array, the Disclosure string is created as described in
+(#disclosures_for_object_properties). The same considerations regarding
+variations in the result of the JSON encoding apply.
 
 For example, a Disclosure for the second element of the `nationalities` array in the following claim set:
 
@@ -402,25 +406,6 @@ disclosable array elements for which they did not receive a Disclosure. In the
 example above, the verification process would output an array with only one
 element unless a matching Disclosure for the second element is received.
 
-## Decoy Digests {#decoy_digests}
-
-An Issuer MAY add additional digests to the SD-JWT that are not associated with
-any claim.  The purpose of such "decoy" digests is to make it more difficult for
-an attacker to see the original number of claims contained in the SD-JWT. Decoy
-digests MAY be added both to the `_sd` array for objects as well as in arrays.
-
-It is RECOMMENDED to create the decoy digests by hashing over a
-cryptographically secure random number. The bytes of the digest MUST then be
-base64url-encoded as above. The same digest function as for the Disclosures MUST
-be used.
-
-For decoy digests, no Disclosure is sent to the Holder, i.e., the Holder will
-see digests that do not correspond to any Disclosure. See
-(#decoy_digests_privacy) for additional privacy considerations.
-
-To ensure readability and replicability, the examples in this specification do
-not contain decoy digests unless explicitly stated.
-
 ## Example 1: SD-JWT {#example-1}
 
 This example uses the following object as the set of claims that the Issuer is issuing:
@@ -448,6 +433,24 @@ The SD-JWT is then signed by the Issuer to create a JWT like the following:
 
 <{{examples/simple/sd_jwt_serialized.txt}}
 
+## Decoy Digests {#decoy_digests}
+
+An Issuer MAY add additional digests to the SD-JWT that are not associated with
+any claim.  The purpose of such "decoy" digests is to make it more difficult for
+an attacker to see the original number of claims contained in the SD-JWT. Decoy
+digests MAY be added both to the `_sd` array for objects as well as in arrays.
+
+It is RECOMMENDED to create the decoy digests by hashing over a
+cryptographically secure random number. The bytes of the digest MUST then be
+base64url-encoded as above. The same digest function as for the Disclosures MUST
+be used.
+
+For decoy digests, no Disclosure is sent to the Holder, i.e., the Holder will
+see digests that do not correspond to any Disclosure. See
+(#decoy_digests_privacy) for additional privacy considerations.
+
+To ensure readability and replicability, the examples in this specification do
+not contain decoy digests unless explicitly stated.
 
 ## Note on Nested Data in SD-JWTs {#nested_data}
 
