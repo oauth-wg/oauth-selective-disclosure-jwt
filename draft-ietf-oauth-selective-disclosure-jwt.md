@@ -1124,7 +1124,7 @@ the media type is encoded as an SD-JWT.
 </reference>
 
 
-<reference anchor="VC_JWT" target="https://w3c.github.io/vc-jwt/">
+<reference anchor="VC_JWT" target="https://www.w3.org/TR/vc-jwt/"
   <front>
     <title>Securing Verifiable Credentials using JSON Web Tokens</title>
     <author fullname="Orie Steele">
