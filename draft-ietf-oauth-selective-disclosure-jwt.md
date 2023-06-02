@@ -695,7 +695,7 @@ To this end, Verifiers MUST follow the following steps (or equivalent):
     1. For each Disclosure provided:
        1. Calculate the digest over the base64url-encoded string as described in (#hashing_disclosures).
     2. (*) Identify all embedded digests in the SD-JWT as follows:
-       1. Find all objects having an `_sd` key that refers to an array.
+       1. Find all objects having an `_sd` key that refers to an array of strings.
        2. Find all array elements that are objects with one key, that key being `...` and referring to a string.
     3. (**) For each embedded digest found in the previous step:
        1. Compare the value with the digests calculated previously and find the matching Disclosure. If no such Disclosure can be found, the digest MUST be ignored.
