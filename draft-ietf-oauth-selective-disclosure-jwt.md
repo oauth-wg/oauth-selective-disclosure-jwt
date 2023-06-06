@@ -579,7 +579,7 @@ To this end, Verifiers MUST follow the following steps (or equivalent):
 
  1. Determine if Key Binding is to be checked according to the Verifier's policy
     for the use case at hand. This decision MUST NOT be based on whether
-    a Key Binding JWT is provided by the Holder or not. Refer to (#key_binding_security) for
+    a Key Binding JWT is provided by the Holder or not. Refer to (#binding_security) for
     details.
  2. Separate the Presentation into the SD-JWT, the Disclosures (if any), and the Key Binding JWT (if provided).
  3. Validate the SD-JWT:
@@ -863,7 +863,7 @@ and Issuers and Verifiers may decide to do so as well.
 Not surprisingly, a leak of such data risks revealing private data of End-Users
 to third parties. Signed End-User data, the authenticity of which
 can be easily verified by third parties, further exacerbates the risk.
-As discussed in (#key_binding_security), leaked
+As discussed in (#binding_security), leaked
 SD-JWTs may also allow attackers to impersonate Holders unless Key
 Binding is enforced and the attacker does not have access to the
 Holder's cryptographic keys. Altogether, leaked SD-JWT credentials may have
