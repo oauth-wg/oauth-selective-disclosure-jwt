@@ -13,6 +13,11 @@ user_claims:
   nationalities: [!sd "US", !sd "DE"]
 
 holder_disclosed_claims:
-  { "given_name": True, "family_name": True, "address": {}, "nationalities": [True, False] }
+  given_name: true
+  family_name: true
+  address: true
+  nationalities:
+    - true
+    - false
 
 holder_binding: True
