@@ -103,8 +103,10 @@ Issuer-signed SD-JWT. The Verifier will not, however, learn any claim
 values not disclosed in the Disclosures.
 
 This document also specifies an optional mechanism for Key Binding,
-or the concept of binding an SD-JWT to key material controlled by the
-Holder. The strength of the binding is conditional upon the trust
+which is the concept of binding an SD-JWT to a Holder's public key
+and requiring that the Holder prove possession of the corresponding
+private key when presenting the SD-JWT.
+The strength of the binding is conditional upon the trust
 in the protection of the private key of the key pair an SD-JWT is bound to.
 
 SD-JWT can be used with any JSON-based representation of claims, including JSON-LD.
