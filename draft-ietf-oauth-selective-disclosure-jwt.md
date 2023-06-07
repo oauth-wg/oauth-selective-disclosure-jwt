@@ -243,7 +243,7 @@ An SD-JWT is a JWT that MUST be signed using the Issuer's private key.
 It MUST use a JWS asymmetric digital signature algorithm. It
 MUST NOT use `none` or an identifier for a symmetric algorithm (MAC).
 
-The payload of an SD-JWT is an object according to the following rules:
+The payload of an SD-JWT is a JSON object according to the following rules:
 
  1. The payload MAY contain the `_sd_alg` key described in (#hash_function_claim).
  2. The payload MAY contain one or more digests of Disclosures to enable selective disclosure of the respective claims, created and formatted as described below.
