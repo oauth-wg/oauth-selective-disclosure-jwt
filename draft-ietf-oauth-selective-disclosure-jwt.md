@@ -151,10 +151,10 @@ Selectively Disclosable JWT (SD-JWT):
 Disclosure:
 :  A combination of a salt, a cleartext claim name, and a cleartext claim value, all of which are used to calculate a digest for the respective claim.
 
-Cryptographic Key Binding:
+Key Binding:
 :  Ability of the Holder to prove legitimate possession of an SD-JWT by proving
   control over the same private key during the issuance and presentation. An SD-JWT with Key Binding contains
-  a public key or a reference to a public key that matches to the private key controlled by the Holder.
+  a public key, or a reference to a public key, that matches to the private key controlled by the Holder.
 
 Issuer:
 :  An entity that creates SD-JWTs.
@@ -220,7 +220,7 @@ To disclose to a Verifier a subset of the SD-JWT claim values, a Holder sends on
 
 ## Optional Key Binding
 
-Key Binding is an optional feature. When Cryptographic Key Binding is required by the use-case, the SD-JWT MUST contain information about the key material controlled by the Holder.
+Key Binding is an optional feature. When Key Binding is required by the use-case, the SD-JWT MUST contain information about the key material controlled by the Holder.
 
 Note: How the public key is included in SD-JWT is out of scope of this document. It can be passed by value or by reference.
 
