@@ -397,7 +397,8 @@ of the `nationalities` array selectively disclosable:
 
 ```json
 {
-  "nationalities": ["DE", {"...": "w0I8EKcdCtUPkGCNUrfwVp2xEgNjtoIDlOxc9-PlOhs"}]
+  "nationalities": 
+    ["DE", {"...": "w0I8EKcdCtUPkGCNUrfwVp2xEgNjtoIDlOxc9-PlOhs"}]
 }
 ```
 
