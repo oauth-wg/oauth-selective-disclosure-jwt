@@ -500,6 +500,7 @@ The Holder MAY add an optional JWT to prove the Key Binding to the Verifier.
 This section defines the contents of the Key Binding JWT.
 
 The JWT MUST contain the following elements:
+
   * in the JOSE header,
     * `typ`: REQUIRED. MUST be `kb+jwt`, which explicitly types the Key Binding JWT as recommended in Section 3.11 of [@!RFC8725].
     * `alg`: REQUIRED. A digital signature algorithm identifier such as per IANA "JSON Web Signature and Encryption Algorithms" registry. MUST NOT be `none` or an identifier for a symmetric algorithm (MAC).
