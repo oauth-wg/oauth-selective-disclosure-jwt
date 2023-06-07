@@ -535,8 +535,8 @@ established. For example, the Holder MAY provide a key pair to the Issuer,
 the Issuer MAY create the key pair for the Holder, or
 Holder and Issuer MAY use pre-established key material.
 
-Note: Examples in this document use `cnf` Claim defined in [@RFC7800] to include
-raw public key by value in SD-JWT.
+Note: Examples in this document use the `cnf` Claim defined in [@RFC7800] to include
+the raw public key by value in SD-JWT.
 
 
 
