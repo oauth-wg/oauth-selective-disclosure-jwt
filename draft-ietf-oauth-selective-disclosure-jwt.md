@@ -749,8 +749,8 @@ presented at the same time, etc.
 
 It is important that a Verifier does not make its security policy
 decisions based on data that can be influenced by an attacker or that
-can be misinterpreted. For this reason, when deciding whether Holder
-binding is required or not, Verifiers MUST NOT take into account
+can be misinterpreted. For this reason, when deciding whether Key
+Binding is required or not, Verifiers MUST NOT take into account
 
  * whether a Key Binding JWT is present or not, as an attacker can
    remove the Key Binding JWT from any Presentation and present it to the
