@@ -104,7 +104,7 @@ values not disclosed in the Disclosures.
 
 This document also specifies an optional mechanism for Key Binding,
 or the concept of binding an SD-JWT to key material controlled by the
-Holder. The strength of the key binding is conditional upon the trust
+Holder. The strength of the binding is conditional upon the trust
 in the protection of the private key of the key pair an SD-JWT is bound to.
 
 SD-JWT can be used with any JSON-based representation of claims, including JSON-LD.
@@ -579,7 +579,7 @@ To this end, Verifiers MUST follow the following steps (or equivalent):
 
  1. Determine if Key Binding is to be checked according to the Verifier's policy
     for the use case at hand. This decision MUST NOT be based on whether
-    a Key Binding JWT is provided by the Holder or not. Refer to (#binding_security) for
+    a Key Binding JWT is provided by the Holder or not. Refer to (#key_binding_security) for
     details.
  2. Separate the Presentation into the SD-JWT, the Disclosures (if any), and the Key Binding JWT (if provided).
  3. Validate the SD-JWT:
@@ -656,7 +656,7 @@ other disclosed claims or sources other than the presented SD-JWT.
 
 **Integrity:** A malicious Holder cannot modify names or values of selectively disclosable claims without detection by the Verifier.
 
-Additionally, as described in (#binding_security), an Issuer binding an SD-JWT to a Holder and a Verifier checking that binding can ensure that the presenter of an SD-JWT credential is the legitimate Holder of the credential.
+Additionally, as described in (#key_binding_security), the application of Key Binding can ensure that the presenter of an SD-JWT credential is the legitimate Holder of the credential.
 
 ## Mandatory signing of the SD-JWT
 
@@ -722,62 +722,28 @@ applications).
 Furthermore, the hash algorithms MD2, MD4, MD5, RIPEMD-160, and SHA-1
 revealed fundamental weaknesses and they MUST NOT be used.
 
-## Binding to the Holder {#binding_security}
-Binding an SD-JWT credential to a Holder, and verification of the binding,
-aims to ensure that the presenter of the SD-JWT is
-actually the legitimate Holder of the credential. There are, in general,
-two approaches to such binding: claims-based binding and
-Cryptographic Key Binding.
+## Key Binding {#key_binding_security}
+Key Binding aims to ensure that the presenter of an SD-JWT credential is actually the legitimate Holder of the credential.
+An SD-JWT with Key Binding contains a public key, or a reference to a public key, that corresponds to a private key possessed by the Holder.
+The Verifier requires that the Holder prove possession of that private key when presenting the SD-JWT credential.
 
-Claims-based binding means that the Issuer includes claims in the
-SD-JWT that a Verifier can correlate with the Holder, potentially with
-the help of other credentials presented at the same time. For example,
-in a vaccination certificate, the Issuer can include a claim that
-contains the Holder's name and birthdate, and a Verifier can correlate
-this data with the Holder's passport that has to be presented together
-with the vaccination certificate - either as a digital credential or a
-physical document.
-
-Cryptographic Key Binding means that the Issuer includes some
-cryptographic data, usually a public key, belonging to the Holder. The
-Holder can then sign over some data defined by the Verifier to prove
-that the Holder is in possession of the private key.
-
-Without verifying a binding to the Holder, a Verifier only gets the proof that the
+Without Key Binding, a Verifier only gets the proof that the
 credential was issued by a particular Issuer, but the credential itself
 can be replayed by anyone who gets access to it. This means that, for
 example, after a credential was leaked to an attacker, the attacker can
 present the credential to any verifier that does not require a
 binding. But also a malicious Verifier to which the Holder presented the
 credential can present the credential to another Verifier if that other
-Verifier does not require a binding.
+Verifier does not require Key Binding.
 
-Verifiers MUST decide whether a binding to the Holder is required for a
-particular use case or not before verifying a credential. This decision
+Verifiers MUST decide whether Key Binding is required for a
+particular use case before verifying a credential. This decision
 can be informed by various factors including, but not limited to the following:
 business requirements, the use case, the type of
 binding between a Holder and its credential that is required for a use
 case, the sensitivity of the use case, the expected properties of a
 credential, the type and contents of other credentials expected to be
 presented at the same time, etc.
-
-This can be showcased based on two scenarios for a mobile driver's license use case for SD-JWT:
-
-**Scenario A:** For the verification of the driver's license when
-stopped by a police officer for exceeding a speed limit, verifying the binding of the credential may be necessary to ensure that the person
-driving the car and presenting the license is the actual Holder of the
-license. The Verifier (e.g., the software used by the police officer)
-will ensure that a Key Binding JWT is present and signed with the Holder's private
-key. Claims-based binding may be used as well, e.g., by including a
-first name, last name and a date of birth that matches that of an insurance policy paper.
-
-**Scenario B:** A rental car agency may want to ensure, for insurance
-purposes, that all drivers named on the rental contract own a
-government-issued driver's license. The signer of the rental contract
-can present the mobile driver's license of all named drivers. In this
-case, the rental car agency does not need to check the license's binding as the
-goal is not to verify the identity of the person presenting the license,
-but to verify that a license exists and is valid.
 
 It is important that a Verifier does not make its security policy
 decisions based on data that can be influenced by an attacker or that
@@ -863,7 +829,7 @@ and Issuers and Verifiers may decide to do so as well.
 Not surprisingly, a leak of such data risks revealing private data of End-Users
 to third parties. Signed End-User data, the authenticity of which
 can be easily verified by third parties, further exacerbates the risk.
-As discussed in (#binding_security), leaked
+As discussed in (#key_binding_security), leaked
 SD-JWTs may also allow attackers to impersonate Holders unless Key
 Binding is enforced and the attacker does not have access to the
 Holder's cryptographic keys. Altogether, leaked SD-JWT credentials may have
