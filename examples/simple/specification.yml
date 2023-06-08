@@ -14,4 +14,4 @@ user_claims:
 holder_disclosed_claims:
   { "given_name": null, "family_name": null, "address": {} }
 
-holder_binding: True
+key_binding: True

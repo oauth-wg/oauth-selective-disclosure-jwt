@@ -9,4 +9,4 @@ user_claims:
 holder_disclosed_claims:
   {}
 
-holder_binding: False
+key_binding: False
