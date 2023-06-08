@@ -522,11 +522,11 @@ Below is a non-normative example of a Key Binding JWT header:
 
 Below is a non-normative example of a Key Binding JWT payload:
 
-<{{examples/simple/hb_jwt_payload.json}}
+<{{examples/simple/kb_jwt_payload.json}}
 
 Below is a non-normative example of a Key Binding JWT produced by signing a payload in the example above:
 
-<{{examples/simple/hb_jwt_serialized.txt}}
+<{{examples/simple/kb_jwt_serialized.txt}}
 
 Whether to require Key Binding is up to the Verifier's policy,
 based on the set of trust requirements such as trust frameworks it belongs to.
