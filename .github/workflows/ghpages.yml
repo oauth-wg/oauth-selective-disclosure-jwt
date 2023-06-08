@@ -30,6 +30,7 @@ jobs:
     - name: "Install SD-JWT tooling"
       run: |
         python3 -m pip install --upgrade pip
+        # Reminder to change below back to git+https://github.com/danielfett/sd-jwt.git before (or right after?) merging
         python3 -m pip install git+https://github.com/bc-pi/sd-jwt.git@hb2kb
 
     # Build the local examples
