@@ -646,6 +646,8 @@ Here, `eyJhbGci...emhlaUJhZzBZ` represents the SD-JWT and `eyJhb...dYALCGg` repr
 
 Other specifications or profiles of this specification may define alternative formats for transporting the Combined Format for Presentation that envelopes multiple such objects into one object, and provides Holder Binding using means other than Holder Binding JWT.
 
+# JSON Serialization {#json_serialization}
+
 # Security Considerations {#security_considerations}
 
 Security considerations in this section help achieve the following properties:
