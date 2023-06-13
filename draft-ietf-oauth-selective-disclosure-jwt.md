@@ -1250,9 +1250,9 @@ pass the following result on to the application for further processing:
 ## Example 4a - Verifiable Credentials with JSON payload based on the SD-JWT format
 
 This example illustrates how to use the artifacts defined in this specification to secure
-Verifiable Credentials with JSON payload based on the SD-JWT format as defined in [@I-D.ietf-draft-terbu-sd-jwt-vc].
+Verifiable Credentials with JSON payload based on the SD-JWT format as defined in [@I-D.terbu-sd-jwt-vc].
 
-The example uses a content type `vc+sd-jwt`.
+The example uses a media type `vc+sd-jwt`.
 In this example, Holder Binding is applied and Verifiable Presentation can be signed using
 a Holder's public key passed in a `cnf` Claim in the SD-JWT.
 
