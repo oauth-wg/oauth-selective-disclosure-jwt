@@ -1270,16 +1270,10 @@ Disclosures:
 
 {{examples/w3c-vc/disclosures.md}}
 
-## Example 4b - W3C Verifiable Credentials Data Model v2.0, using JSON-LD
+## Example 4b - W3C Verifiable Credentials Data Model v2.0
 
 This example illustrates how to use the artifacts defined in this specification to secure a payload
-that is represented as a W3C Verifiable Credentials Data Model v2.0 [@VC_DATA_v2.0]
-and uses a JSON-LD object as the claims set. The example uses a content type `credential+ld+json` defined in [@VC_DATA_v2.0], Section 6.3 in a `cty` JOSE Header value.
-
-SD-JWT is equivalent to an Issuer-signed W3C Verifiable Credential (W3C VC). Disclosures are sent alongside a VC.
-
-A Combined Format for Presentation with a Holder Binding JWT would be equivalent to a Holder-signed
-Verifiable Presentation as defined in [@VC_DATA_v2.0].
+that is represented as a W3C Verifiable Credentials Data Model v2.0 [@VC_DATA_v2.0]. The example uses a media type `vc+ld+json` defined in [@VC_DATA_v2.0], Section 6.1 in a `typ` JOSE Header value.
 
 In this example, Holder Binding is applied and a Combined Format for Presentation is signed
 using a Holder's public key passed in a `cnf` Claim in the SD-JWT.
