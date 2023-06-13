@@ -16,6 +16,6 @@ holder_disclosed_claims:
   family_name: true
   address: true
 
-holder_binding: True
+key_binding: True
 
 serialization_format: "json"
