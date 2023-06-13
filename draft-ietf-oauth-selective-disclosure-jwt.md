@@ -648,6 +648,25 @@ Other specifications or profiles of this specification may define alternative fo
 
 # JSON Serialization {#json_serialization}
 
+(Work in progress.)
+
+For JWS JSON Serialization, the SD-JWT is represented as a JSON object according
+to [@!RFC7515]. The disclosures and are added to the unprotected header using
+the key `disclosures` (both for issuance and presentation). For presentation, a
+serialized key binding JWT MAY be added to the key `kb_jwt`.
+
+Using the same payload as in Example 1 ((#example-1)):
+
+Issuance:
+
+<{{examples/json_serialization/combined_issuance.json}}
+
+Presentation:
+
+<{{examples/json_serialization/combined_presentation.json}}
+
+
+
 # Security Considerations {#security_considerations}
 
 Security considerations in this section help achieve the following properties:
