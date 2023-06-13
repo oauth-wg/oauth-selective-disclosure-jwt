@@ -1123,20 +1123,6 @@ the media type is encoded as an SD-JWT.
   </front>
 </reference>
 
-
-<reference anchor="VC_JWT" target="https://www.w3.org/TR/vc-jwt/"
-  <front>
-    <title>Securing Verifiable Credentials using JSON Web Tokens</title>
-    <author fullname="Orie Steele">
-      <organization>Transmute</organization>
-    </author>
-    <author fullname="Michael B. Jones">
-      <organization>Microsoft</organization>
-    </author>
-    <date day="03" month="Mar" year="2023" />
-  </front>
-</reference>
-
 <reference anchor="OIDC.IDA" target="https://openid.net/specs/openid-connect-4-identity-assurance-1_0-13.html">
   <front>
     <title>OpenID Connect for Identity Assurance 1.0</title>
