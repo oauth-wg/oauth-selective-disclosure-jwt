@@ -1229,7 +1229,7 @@ Disclosures:
 ## Example 4b - W3C Verifiable Credentials Data Model v2.0
 
 This example illustrates how to use the artifacts defined in this specification to secure a payload
-that is represented as a W3C Verifiable Credentials Data Model v2.0 [@VC_DATA_v2.0]. 
+that is represented as a W3C Verifiable Credentials Data Model v2.0 [@VC_DATA_v2.0].
 The example uses a media type `vc+ld+json` defined in [@VC_DATA_v2.0], Section 6.1 in a `typ` JOSE Header value.
 
 In this example, Key Binding is applied and a Combined Format for Presentation is signed
