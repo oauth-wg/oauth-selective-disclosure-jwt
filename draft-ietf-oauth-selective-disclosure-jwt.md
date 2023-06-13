@@ -350,9 +350,10 @@ The SHA-256 digest of the Disclosure
 
 ## Embedding Disclosure Digests in SD-JWTs {#embedding_disclosure_digests}
 
-Digests of disclosures are embedded into the SD-JWT instead of the original
-claims. The precise way of embedding the digests depends on the type of the
-claim, as described in the following sections.
+For selectively disclosable claims, the digests of the Disclosures are embedded into the SD-JWT instead of the claims themselves. The precise way of embedding depends on whether a claim is an object property (key-value pair) or an array element.
+
+ * For a claim that is an object property, the Issuer embeds a Disclosure as described in (#embedding_object_properties).
+* For a claim that is an array element, the Issuer creates a Disclosure as described in (#embedding_array_elements).
 
 ### Object Properties {#embedding_object_properties}
 
