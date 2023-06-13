@@ -20,4 +20,4 @@ holder_disclosed_claims:
     - true
     - false
 
-holder_binding: True
+key_binding: True

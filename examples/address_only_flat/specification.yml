@@ -10,4 +10,4 @@ holder_disclosed_claims:
   address:
     street_address: true
 
-holder_binding: False
+key_binding: False

@@ -18,5 +18,5 @@ holder_disclosed_claims:
 
 
 add_decoy_claims: true
-holder_binding: False
+key_binding: False
 
