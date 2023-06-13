@@ -82,7 +82,7 @@ JWT was developed as a general-purpose token format and has seen widespread usag
 variety of applications. SD-JWT is a selective disclosure mechanism for JWT and is
 similarly intended to be general-purpose specification.
 
-While JWTs for claims describing natural persons are a common use case, the
+While JWTs with claims describing natural persons are a common use case, the
 mechanisms defined in this document can be used for other use cases as well.
 
 In an Issuer-signed SD-JWT, claims can be hidden, but cryptographically
@@ -111,7 +111,7 @@ wherever possible.
 ## Feature Summary
 
 * This specification defines
-  - a format for an Issuer-signed JWT containing selectively disclosable claims (including selectively disclosable object properties and array elements, as well as nested data structures built from these),
+ - a format for an Issuer-signed JWT containing selectively disclosable claims that include object properties (key-value pairs), array elements, and nested data structures built from these,
   - a format for data associated with an Issuer-signed JWT that enables selectively disclosing claims, and
   - formats for the combined transport of an Issuer-signed JWT and the associated data during issuance and presentation.
 * This specification enables combining selectively disclosable claims with
@@ -140,7 +140,7 @@ Selectively Disclosable JWT (SD-JWT):
   that supports selective disclosure as defined in this document and can contain both regular claims and digests of selectively-disclosable claims.
 
 Disclosure:
-:  A combination of a salt, a cleartext claim name (in case the claim is a key-value pair and not an array element), and a cleartext claim value, all of which are used to calculate a digest for the respective claim.
+:  A combination of a salt, a cleartext claim name (present when the claim is a key-value pair and absent when the claim is an array element), and a cleartext claim value, all of which are used to calculate a digest for the respective claim.
 
 Cryptographic Holder Binding:
 :  Ability of the Holder to prove legitimate possession of an SD-JWT by proving
@@ -201,7 +201,7 @@ conceptual level, abstracting from the data formats described in (#data_formats)
 
 An SD-JWT, at its core, is a digitally signed JSON document containing digests over the selectively disclosable claims with the Disclosures outside the document. Selectively disclosable claims can be individual object properties (key-value pairs) or array elements.
 
-Each digest value ensures the integrity of, and maps to, the respective Disclosure.  Digest values are calculated using a hash function over the Disclosures, each of which contains the claim name (only in case the claim is an object property), the claim value, and a random salt. The Disclosures are sent to the Holder together with the SD-JWT in the Combined Format for Issuance defined in (#combined_format_for_issuance).
+Each digest value ensures the integrity of, and maps to, the respective Disclosure.  Digest values are calculated using a hash function over the Disclosures, each of which contains a random salt, the claim name (only when the claim is an object property), and the claim value. The Disclosures are sent to the Holder together with the SD-JWT in the Combined Format for Issuance defined in (#combined_format_for_issuance).
 
 An SD-JWT MAY also contain clear-text claims that are always disclosed to the Verifier.
 
@@ -255,7 +255,7 @@ The payload of an SD-JWT is a JSON object according to the following rules:
 
 Applications of SD-JWT SHOULD be explicitly typed using the `typ` header parameter. See (#explicit_typing) for more details.
 
-It is the Issuer who decides which claims are selectively disclosable and which are not. However, claims controlling the validity of the SD-JWT, such as `iss`, `exp`, or `nbf` are usually included in plaintext. End-User claims MAY be included as plaintext as well, e.g., if hiding the particular claims from the Verifier does not make sense in the intended use case.
+It is the Issuer who decides which claims are selectively disclosable and which are not. However, claims controlling the validity of the SD-JWT, such as `iss`, `exp`, or `nbf` are usually included in plaintext. End-User claims MAY be included as plaintext as well, e.g., if hiding the particular claims from the Verifier is not required in the intended use case.
 
 Claims that are not selectively disclosable are included in the SD-JWT in plaintext just as they would be in any other JSON structure.
 
@@ -264,7 +264,7 @@ Claims that are not selectively disclosable are included in the SD-JWT in plaint
 
 Disclosures are created differently depending on whether a claim is an object property (key-value pair) or an array element.
 
- * For a claim that is an object property, the Issuer creates a Disclosure as described next.
+ * For a claim that is an object property, the Issuer creates a Disclosure as described in (#disclosures_for_object_properties).
  * For a claim that is an array element, the Issuer creates a Disclosure as described in (#disclosures_for_array_elements).
 
 ### Disclosures for Object Properties {#disclosures_for_object_properties}
@@ -294,7 +294,7 @@ The resulting Disclosure would be: `WyJfMjZiYzRMVC1hYzZxMktJNmNCVzVlcyIsICJmYW1p
 Note that the JSON encoding of the object is not canonicalized, so variations in
 white space, encoding of Unicode characters, and ordering of object properties
 are allowed. For example, the following strings are all valid and encode the
-same claim value:
+same claim value "Möbius":
 
  * A different way to encode the umlaut (two dots `¨` placed over the letter): `WyJfMjZiYzRMVC1hYzZxMktJNmNCVzVlcyIsICJmYW1pbHlfbmFtZSIsICJNXHUwMGY2Yml1cyJd`
  * No white space: `WyJfMjZiYzRMVC1hYzZxMktJNmNCVzVlcyIsImZhbWlseV9uYW1lIiwiTcO2Yml1cyJd`
@@ -304,14 +304,13 @@ See (#disclosure_format_considerations) for some further considerations on the D
 
 ### Disclosures for Array Elements {#disclosures_for_array_elements}
 
-For each claim that is an array element and that is to be made selectively disclosable, the Issuer MUST create a Disclosure as described above, with the following difference:
+For each claim that is an array element and that is to be made selectively disclosable, the Issuer MUST create a Disclosure as follows:
 
  * The array MUST contain two elements in this order:
    1. The salt value as described in (#disclosures_for_object_properties).
    2. The array element that is to be hidden. This value MAY be of any type that is allowed in JSON, including numbers, strings, booleans, arrays, and objects.
 
-From the array, the Disclosure string is created as described in
-(#disclosures_for_object_properties). The same considerations regarding
+The Disclosure string is created by JSON-encoding this array and base64url-encoding the byte representation of the resulting string as described in (#disclosures_for_object_properties). The same considerations regarding
 variations in the result of the JSON encoding apply.
 
 For example, a Disclosure for the second element of the `nationalities` array in the following claim set:
@@ -322,7 +321,7 @@ For example, a Disclosure for the second element of the `nationalities` array in
 }
 ```
 
-could be created as follows:
+could be created by first creating the following array:
 
 ```json
 ["lklxF5jMYlGTPUovMNIvCA", "FR"]
@@ -355,7 +354,7 @@ Digests of disclosures are embedded into the SD-JWT instead of the original
 claims. The precise way of embedding the digests depends on the type of the
 claim, as described in the following sections.
 
-### Object Properties
+### Object Properties {#embedding_object_properties}
 
 Digests of Disclosures for object properties are added to an array under the new
 key `_sd` in the object. The `_sd` key MUST refer to an array of strings, each
@@ -366,9 +365,9 @@ any of the claims at that level. However, it is RECOMMENDED to omit the `_sd`
 key in this case to save space.
 
 The Issuer MUST hide the original order of the claims in the array. To ensure
-this, it is RECOMMENDED to shuffle the array of hashes (after potentially adding
-decoy digests as described in (#decoy_digests)), e.g., by sorting it
-alphanumerically or randomly. The precise method does not matter as long as it
+this, it is RECOMMENDED to shuffle the array of hashes, e.g., by sorting it
+alphanumerically or randomly, after potentially adding
+decoy digests as described in (#decoy_digests). The precise method does not matter as long as it
 does not depend on the original order of elements.
 
 For example, using the digest of the object property Disclosure created above,
@@ -382,12 +381,12 @@ selectively disclosable:
 }
 ```
 
-### Array Elements
+### Array Elements {#embedding_array_elements}
 
 Digests of Disclosures for array elements are added to the array in the same
 position as the original claim value in the array. For each digest, an object
-of the form `{"...": "<digest>"}` is added to the array. The key MUST be the
-string `...` (three dots). The value MUST be the digest of the Disclosure as
+of the form `{"...": "<digest>"}` is added to the array. The key MUST always be the
+string `...` (three dots). The value MUST be the digest of the Disclosure created as
 described in (#hashing_disclosures). There MUST NOT be any other keys in the
 object.
 
@@ -451,9 +450,10 @@ see digests that do not correspond to any Disclosure. See
 (#decoy_digests_privacy) for additional privacy considerations.
 
 To ensure readability and replicability, the examples in this specification do
-not contain decoy digests unless explicitly stated.
+not contain decoy digests unless explicitly stated. For an example
+with decoy digests, see (#example-simple_structured).
 
-## Note on Nested Data in SD-JWTs {#nested_data}
+## Nested Data in SD-JWTs {#nested_data}
 
 Being JSON, an object in an SD-JWT payload MAY contain key-value pairs where the value is another object or objects MAY be elements in arrays. In SD-JWT, the Issuer decides for each claim individually, on each level of the JSON, whether the claim should be selectively disclosable or not. This choice can be made on each level independent from whether keys higher in the hierarchy are selectively disclosable.
 
@@ -512,7 +512,7 @@ The Issuer creates Disclosures first for the sub-claims and then includes their 
 ## Hash Function Claim {#hash_function_claim}
 
 The claim `_sd_alg` indicates the hash algorithm used by the Issuer to generate
-the digests over the salts and the claim values. If the  `_sd_alg` claim is not
+the digests as described in (#creating_disclosures). If the  `_sd_alg` claim is not
 present, a default value of `sha-256` is used.
 
 The hash algorithm identifier MUST be a hash algorithm value from the "Hash Name
@@ -656,7 +656,7 @@ a Combined Format for Issuance:
  1. Separate the SD-JWT and the Disclosures in the Combined Format for Issuance.
  2. Hash all of the Disclosures separately.
  3. Find the objects and array elements in the SD-JWT where the digests of the
-    Disclosures are included and decode the respective plaintext values from the
+    Disclosures are included by looking for `_sd` and `...` keys. Decode the respective plaintext values from the
     Disclosures at the appropriate places. The processing MUST take into account
     that digests might be included not only directly in the SD-JWT, but also in
     other Disclosures. If there is a Disclosure with a digest that cannot be
