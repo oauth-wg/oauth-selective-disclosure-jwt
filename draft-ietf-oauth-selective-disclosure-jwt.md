@@ -651,7 +651,7 @@ Other specifications or profiles of this specification may define alternative fo
 (Work in progress.)
 
 For JWS JSON Serialization, the SD-JWT is represented as a JSON object according
-to [@!RFC7515]. The disclosures and are added to the unprotected header using
+to [@!RFC7515]. The disclosures and are added to the serialized JWS using
 the key `disclosures` (both for issuance and presentation). For presentation, a
 serialized key binding JWT MAY be added to the key `kb_jwt`.
 
