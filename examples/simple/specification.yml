@@ -4,12 +4,14 @@ user_claims:
   !sd family_name: Doe
   !sd email: johndoe@example.com
   !sd phone_number: +1-202-555-0101
+  !sd phone_number_verified: true
   !sd address:
     street_address: 123 Main St
     locality: Anytown
     region: Anystate
     country: US
   !sd birthdate: "1940-01-01"
+  !sd updated_at: 1570000000
 
 holder_disclosed_claims:
   { "given_name": null, "family_name": null, "address": {} }
