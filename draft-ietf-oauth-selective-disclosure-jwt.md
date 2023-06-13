@@ -648,22 +648,29 @@ Here, `eyJhbGci...emhlaUJhZzBZ` represents the SD-JWT and `eyJhb...dYALCGg` repr
 
 Other specifications or profiles of this specification may define alternative formats for transporting the Combined Format for Presentation that envelopes multiple such objects into one object, and provides Key Binding using means other than the Key Binding JWT.
 
-# JSON Serialization {#json_serialization}
+# JWS JSON Serialization {#json_serialization}
 
-(Work in progress.)
+(Work in progress...)
 
-For JWS JSON Serialization, the SD-JWT is represented as a JSON object according
-to [@!RFC7515]. The disclosures and are added to the serialized JWS using
-the key `disclosures` (both for issuance and presentation). For presentation, a
-serialized key binding JWT MAY be added to the key `kb_jwt`.
+This section describes an optional alternate format for SD-JWT using the JWS JSON Serialization from [@!RFC7515].
 
-Using the same payload as in Example 1 ((#example-1)):
+For both the General and Flattened JSON Serialization, the SD-JWT is represented as a JSON object according
+to Section 7.2 of [@!RFC7515]. The disclosures (both for issuance and presentation) are included in the
+serialized JWS using the key `disclosures` at the top-level of the JSON object (the same level as the `payload` member). The
+value of the `disclosures` member is array of strings where each element is an individual Disclosure
+as described in (#creating_disclosures). The Issuer includes a Disclosure for each selectively
+disclosable claim of the SD-JWT payload. Whereas the Holder includes only the Disclosures
+selected for the given presentation. Additionally, for presentation with a Key Binding, the Holder adds
+the key `kb_jwt` at the top-level of the serialized JWS with a string value containing the
+Key Binding JWT as described in (#kb-jwt).
 
-Issuance:
+Using a payload similar to that from [Example 1](#example-1), the following is a non-normative example of
+a JWS JSON serialized SD-JWT from an Issuer with all the respective Disclosures.
 
 <{{examples/json_serialization/combined_issuance.json}}
 
-Presentation:
+Below is a non-normative example of a presentation of the JWS JSON serialized SD-JWT, where the Holder
+includes a Key Binding JWT and has selected to disclose `given_name`, `family_name`, and `address`.
 
 <{{examples/json_serialization/combined_presentation.json}}
 
