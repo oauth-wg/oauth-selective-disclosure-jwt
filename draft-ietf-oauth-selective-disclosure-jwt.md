@@ -545,7 +545,7 @@ the claims `given_name`, `family_name`, and `address`, as it would be sent from 
 
 <{{examples/simple/combined_presentation.txt}}
 
-# Verification and Processing
+# Verification and Processing {#verification}
 
 ## Processing by the Holder  {#holder_verification}
 
@@ -661,6 +661,10 @@ disclosable claim of the SD-JWT payload, whereas the Holder includes only the Di
 selected for the given presentation. Additionally, for presentation with a Key Binding, the Holder adds
 the key `kb_jwt` at the top-level of the serialized JWS with a string value containing the
 Key Binding JWT as described in (#kb-jwt).
+
+Verification of the JWS JSON serialized SD-JWT follows the same rules defined in (#verification),
+except that the SD-JWT does not need to be split into component parts, but disclosures and (if applicable)
+a Key Binding JWT can be found in the respective members of the JSON object.
 
 Using a payload similar to that from [Example 1](#example-1), the following is a non-normative example of
 a JWS JSON serialized SD-JWT from an Issuer with all the respective Disclosures.
