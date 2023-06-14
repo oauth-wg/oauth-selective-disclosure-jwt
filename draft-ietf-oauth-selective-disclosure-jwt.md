@@ -659,54 +659,27 @@ the claims `given_name`, `family_name`, and `address`, as it would be sent from 
 
 # Verification and Processing {#verification}
 
-## Processing by the Holder  {#holder_verification}
+## Processing of the SD-JWT {#sd_jwt_verification}
 
-The Holder MUST perform the following (or equivalent) steps when receiving
-a Combined Format for Issuance:
+Upon receiving an SD-JWT, the Wallets and the Verifiers MUST ensure that
 
- 1. Separate the SD-JWT and the Disclosures in the Combined Format for Issuance.
- 2. Hash all of the Disclosures separately.
- 3. Find the objects and array elements in the SD-JWT where the digests of the
-    Disclosures are included by looking for `_sd` and `...` keys. Decode the respective plaintext values from the
-    Disclosures at the appropriate places. The processing MUST take into account
-    that digests might be included not only directly in the SD-JWT, but also in
-    other Disclosures. If there is a Disclosure with a digest that cannot be
-    found, the SD-JWT is invalid and the Holder MUST reject the SD-JWT.
+ * the issuer-signed JWT is valid, i.e., it is signed by the Issuer and the signature is valid, and
+ * all Disclosures are correct, i.e., their digests are referenced in the issuer-signed JWT.
 
-It is up to the Holder how to maintain the mapping between the Disclosures and the plaintext claim values to be able to display them to the End-User when needed.
+The Holder and the Verifier perform the following (or equivalent) steps when receiving
+an SD-JWT:
 
-For presentation to a Verifier, the Holder MUST perform the following (or equivalent) steps:
-
- 1. Decide which Disclosures to release to the Verifier, obtaining proper End-User consent if necessary.
- 2. If Key Binding is required, create a Key Binding JWT.
- 3. Create the Combined Format for Presentation, including the selected Disclosures and, if applicable, the Key Binding JWT.
- 4. Send the Presentation to the Verifier.
-
-## Verification by the Verifier  {#verifier_verification}
-
-Upon receiving a Presentation, Verifiers MUST ensure that
-
- * the SD-JWT is valid, i.e., it is signed by the Issuer and the signature is valid,
- * all Disclosures are correct, i.e., their digests are referenced in the SD-JWT or in other Disclosures referenced in the SD-JWT, and
- * if Key Binding is required, the Key Binding JWT is signed by the Holder and valid.
-
-To this end, Verifiers MUST follow the following steps (or equivalent):
-
- 1. Determine if Key Binding is to be checked according to the Verifier's policy
-    for the use case at hand. This decision MUST NOT be based on whether
-    a Key Binding JWT is provided by the Holder or not. Refer to (#key_binding_security) for
-    details.
- 2. Separate the Presentation into the SD-JWT, the Disclosures (if any), and the Key Binding JWT (if provided).
- 3. Validate the SD-JWT:
+ 1. Separate the SD-JWT into the issuer-signed JWT and the Disclosures (if any).
+ 2. Validate the issuer-signed JWT:
     1. Ensure that a signing algorithm was used that was deemed secure for the application. Refer to [@RFC8725], Sections 3.1 and 3.2 for details. The `none` algorithm MUST NOT be accepted.
-    2. Validate the signature over the SD-JWT.
-    3. Validate the Issuer of the SD-JWT and that the signing key belongs to this Issuer.
-    4. Check that the SD-JWT is valid using `nbf`, `iat`, and `exp` claims, if provided in the SD-JWT, and not selectively disclosed.
+    2. Validate the signature over the issuer-signed JWT.
+    3. Validate the Issuer and that the signing key belongs to this Issuer.
+    4. Check that the issuer-signed JWT is valid using `nbf`, `iat`, and `exp` claims, if provided in the SD-JWT, and not selectively disclosed.
     5. Check that the `_sd_alg` claim value is understood and the hash algorithm is deemed secure.
- 4. Process the Disclosures and embedded digests in the SD-JWT as follows:
+ 3. Process the Disclosures and embedded digests in the issuser-signed JWT as follows:
     1. For each Disclosure provided:
        1. Calculate the digest over the base64url-encoded string as described in (#hashing_disclosures).
-    2. (*) Identify all embedded digests in the SD-JWT as follows:
+    2. (*) Identify all embedded digests in the issuer-signed JWT as follows:
        1. Find all objects having an `_sd` key that refers to an array of strings.
        2. Find all array elements that are objects with one key, that key being `...` and referring to a string.
     3. (**) For each embedded digest found in the previous step:
@@ -722,9 +695,37 @@ To this end, Verifiers MUST follow the following steps (or equivalent):
           3. Recursively process the value using the steps described in (*) and (**).
     4. If any digests were found more than once in the previous step, the Verifier MUST reject the Presentation.
     5. Remove all array elements for which the digest was not found in the previous step.
-    6. Remove all `_sd` keys and their contents from the SD-JWT payload.
+    6. Remove all `_sd` keys and their contents from the issuer-signed JWT payload.
     7. Remove the claim `_sd_alg` from the SD-JWT payload.
- 5. If Key Binding is required:
+
+If any step fails, the SD-JWT is not valid and processing MUST be aborted.
+
+It is up to the Holder how to maintain the mapping between the Disclosures and the plaintext claim values to be able to display them to the End-User when needed.
+
+## Processing by the Holder  {#holder_verification}
+
+For presentation to a Verifier, the Holder MUST perform the following (or equivalent) steps:
+
+ 1. Decide which Disclosures to release to the Verifier, obtaining proper End-User consent if necessary.
+ 2. If Key Binding is required, create a Key Binding JWT.
+ 3. Create the Combined Format for Presentation, including the selected Disclosures and, if applicable, the Key Binding JWT.
+ 4. Send the Presentation to the Verifier.
+
+## Verification by the Verifier  {#verifier_verification}
+
+Upon receiving a Presentation, in addition to the checks outlined in (#sd_jwt_verification), Verifiers MUST ensure that
+
+ * if Key Binding is required, the Key Binding JWT is signed by the Holder and valid.
+
+To this end, Verifiers MUST follow the following steps (or equivalent):
+
+ 1. Determine if Key Binding is to be checked according to the Verifier's policy
+    for the use case at hand. This decision MUST NOT be based on whether
+    a Key Binding JWT is provided by the Holder or not. Refer to (#key_binding_security) for
+    details.
+ 2. Separate the Presentation into the SD-JWT, and the Key Binding JWT (if provided).
+ 3. Process the SD-JWT as defined in (#sd_jwt_verification).
+ 3. If Key Binding is required:
     1. If Key Binding is provided by means not defined in this specification, verify the Key Binding according to the method used.
     2. Otherwise, verify the Key Binding JWT as follows:
        1. If a Key Binding JWT is not provided, the Verifier MUST reject the Presentation.
@@ -1081,9 +1082,11 @@ Matthew Miller,
 Mike Jones,
 Nat Sakimura,
 Orie Steele,
+Paul Bastian,
 Pieter Kasselman,
 Ryosuke Abe,
 Shawn Butterfield,
+Tobias Looker,
 Torsten Lodderstedt,
 Vittorio Bertocci, and
 Yaron Sheffer
