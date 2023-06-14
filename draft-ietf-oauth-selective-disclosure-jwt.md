@@ -395,9 +395,10 @@ The Issuer creates Disclosures first for the sub-claims and then includes their 
 
 ### Hash Function Claim {#hash_function_claim}
 
-The claim `_sd_alg` indicates the hash algorithm
-used by the Issuer to generate the digests over the salts and the
-claim values. If the  `_sd_alg` claim is not present, a default value of `sha-256` is used.
+The claim `_sd_alg` indicates the hash algorithm used by the Issuer to generate
+the digests. When used, this claim MUST appear at the top level of the SD-JWT payload. It
+MUST NOT be used in any object nested within the payload. If the  `_sd_alg`
+claim is not present at the top level, a default value of `sha-256` MUST be used.
 
 The hash algorithm identifier MUST be a hash algorithm value from the "Hash Name String" column in the IANA "Named Information Hash Algorithm" registry [@IANA.Hash.Algorithms]
 or a value defined in another specification and/or profile of this specification.
