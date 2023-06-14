@@ -1,0 +1,21 @@
+user_claims:
+  !sd sub: john_doe_42
+  !sd given_name: John
+  !sd family_name: Doe
+  !sd email: johndoe@example.com
+  !sd phone_number: +1-202-555-0101
+  !sd address:
+    street_address: 123 Main St
+    locality: Anytown
+    region: Anystate
+    country: US
+  !sd birthdate: "1940-01-01"
+
+holder_disclosed_claims:
+  given_name: true
+  family_name: true
+  address: true
+
+key_binding: True
+
+serialization_format: "json"
