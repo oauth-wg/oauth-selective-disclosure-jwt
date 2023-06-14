@@ -1422,6 +1422,7 @@ data. The original JSON data is then used by the application. See
 
    * Use the term Key Binding rather than Holder Binding
    * Defined the structure of the Key Binding JWT
+   * Added a JWS JSON Serialization
    * Added initial IANA media type and structured suffix registration requests
    * Added recommendation for explicit typing of SD-JWTs
    * Added considerations around forwarding credentials
