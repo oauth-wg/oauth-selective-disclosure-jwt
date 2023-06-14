@@ -470,7 +470,7 @@ times in an SD-JWT, and likewise, there MAY be multiple arrays within the
 hierarchy with each having selectively disclosable elements. Digests of
 selectively disclosable claims MAY even appear within other Disclosures.
 
-The following examples illustrate some of the options an Issuer has. It is up to the Issuer to decide which option to use, depending on, for example, the expected use cases for the SD-JWT, requirements for privacy, size considerations, or ecosystem requirements.
+The following examples illustrate some of the options an Issuer has. It is up to the Issuer to decide which option to use, depending on, for example, the expected use cases for the SD-JWT, requirements for privacy, size considerations, or ecosystem requirements. For more examples with nested structures, see (#example-simple_structured) and (#example-complex-structured-sd-jwt).
 
 The following claim set is used as an example throughout this section:
 
