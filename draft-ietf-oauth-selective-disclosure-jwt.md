@@ -650,8 +650,6 @@ Other specifications or profiles of this specification may define alternative fo
 
 # JWS JSON Serialization {#json_serialization}
 
-(Work in progress...)
-
 This section describes an optional alternate format for SD-JWT using the JWS JSON Serialization from [@!RFC7515].
 
 For both the General and Flattened JSON Serialization, the SD-JWT is represented as a JSON object according
