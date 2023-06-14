@@ -6,7 +6,6 @@ user_claims:
     !sd region: Sachsen-Anhalt
     !sd country: DE
 
-holder_disclosed_claims:
-  {}
+holder_disclosed_claims: {}
 
 key_binding: False

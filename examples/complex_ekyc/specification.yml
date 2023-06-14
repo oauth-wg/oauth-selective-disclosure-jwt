@@ -5,7 +5,8 @@ user_claims:
       !sd time: "2012-04-23T18:25Z"
       !sd verification_process: f24c6f-6d3f-4ec5-973e-b0d8506f3bc7
       evidence:
-        - !sd type: document
+        - !sd
+          !sd type: document
           !sd method: pipp
           !sd time: "2012-04-22T11:30Z"
           !sd document:
@@ -35,14 +36,12 @@ user_claims:
   !sd msisdn: "49123456789"
 
 holder_disclosed_claims:
-  {
-    "verified_claims":
-      {
-        "verification":
-          {
-            "time": null,
-            "evidence": [{ "method": null }],
-          },
-        "claims": { "given_name": null, "family_name": null, "address": {} },
-      },
-  }
+  verified_claims:
+    verification:
+      time: True
+      evidence:
+        - method: True
+    claims:
+      given_name: True
+      family_name: True
+      address: True

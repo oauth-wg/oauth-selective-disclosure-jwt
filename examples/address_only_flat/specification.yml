@@ -6,6 +6,8 @@ user_claims:
     region: Sachsen-Anhalt
     country: DE
 
-holder_disclosed_claims: { "address": { "street_address": true } }
+holder_disclosed_claims:
+  address:
+    street_address: true
 
 key_binding: False
