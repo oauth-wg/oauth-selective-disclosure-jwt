@@ -657,7 +657,7 @@ to Section 7.2 of [@!RFC7515]. The disclosures (both for issuance and presentati
 serialized JWS using the key `disclosures` at the top-level of the JSON object (the same level as the `payload` member). The
 value of the `disclosures` member is an array of strings where each element is an individual Disclosure
 as described in (#creating_disclosures). The Issuer includes a Disclosure for each selectively
-disclosable claim of the SD-JWT payload. Whereas the Holder includes only the Disclosures
+disclosable claim of the SD-JWT payload, whereas the Holder includes only the Disclosures
 selected for the given presentation. Additionally, for presentation with a Key Binding, the Holder adds
 the key `kb_jwt` at the top-level of the serialized JWS with a string value containing the
 Key Binding JWT as described in (#kb-jwt).
