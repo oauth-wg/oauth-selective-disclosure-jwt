@@ -12,12 +12,10 @@ user_claims:
   !sd birthdate: "1940-01-01"
 
 holder_disclosed_claims:
-  {
-    "address": {
-      "region": null,
-      "country": null
-    },
-  }
+  address:
+    region: true
+    country: true
+
 
 add_decoy_claims: true
 key_binding: False

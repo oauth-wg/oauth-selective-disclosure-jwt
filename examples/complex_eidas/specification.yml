@@ -3,8 +3,9 @@ user_claims:
     verification:
       trust_framework: eidas
       assurance_level: high
-      !sd evidence:
-        - type: document
+      evidence:
+        - !sd
+          type: document
           time: "2022-04-22T11:30Z"
           !sd document:
             type: idcard
@@ -28,10 +29,11 @@ user_claims:
   birth_middle_name: Lello
 
 holder_disclosed_claims:
-  {
-    "verified_claims":
-      {
-        "verification": { "evidence": [] },
-        "claims": { "gender": null, "place_of_birth": { "country": null } },
-      },
-  }
+  verified_claims:
+    verification:
+      evidence: [true]
+    claims:
+      gender: true
+      place_of_birth:
+        country: true
+

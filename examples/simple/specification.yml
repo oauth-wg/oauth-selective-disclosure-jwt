@@ -1,5 +1,5 @@
 user_claims:
-  !sd sub: john_doe_42
+  sub: user_42
   !sd given_name: John
   !sd family_name: Doe
   !sd email: johndoe@example.com
@@ -10,8 +10,14 @@ user_claims:
     region: Anystate
     country: US
   !sd birthdate: "1940-01-01"
+  nationalities: [!sd "US", !sd "DE"]
 
 holder_disclosed_claims:
-  { "given_name": null, "family_name": null, "address": {} }
+  given_name: true
+  family_name: true
+  address: true
+  nationalities:
+    - true
+    - false
 
 key_binding: True

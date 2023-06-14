@@ -20,12 +20,8 @@ user_claims:
     !sd is_over_65: false
 
 holder_disclosed_claims:
-  {
-    "credentialSubject":
-      {
-        "given_name": null,
-        "family_name": null,
-        "address": {},
-        "is_over_18": null,
-      },
-  }
+  credentialSubject:
+    given_name: true
+    family_name: true
+    address: {}
+    is_over_18: true
