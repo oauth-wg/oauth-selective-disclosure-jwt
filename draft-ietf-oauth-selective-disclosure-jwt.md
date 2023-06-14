@@ -659,7 +659,7 @@ the claims `given_name`, `family_name`, and `address`, as it would be sent from 
 
 # Verification and Processing {#verification}
 
-## Processing of the SD-JWT {#sd_jwt_verification}
+## Verification of the SD-JWT {#sd_jwt_verification}
 
 Upon receiving an SD-JWT, the Wallets and the Verifiers MUST ensure that
 
