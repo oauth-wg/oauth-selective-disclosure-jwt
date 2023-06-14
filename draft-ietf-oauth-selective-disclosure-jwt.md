@@ -439,7 +439,7 @@ The Issuer creates the following Disclosures:
 
 The SD-JWT is then signed by the Issuer to create a JWT like the following:
 
-<{{examples/simple/sd_jwt_serialized.txt}}
+<{{examples/simple/sd_jwt_jws_part.txt}}
 
 ## Decoy Digests {#decoy_digests}
 
@@ -576,7 +576,7 @@ digest values of the Disclosures included in the SD-JWT.
 
 For [Example 1](#example-1), the Combined Format for Issuance looks as follows:
 
-<{{examples/simple/combined_issuance.txt}}
+<{{examples/simple/sd_jwt_issuance.txt}}
 
 (Line breaks for presentation only.)
 
@@ -655,7 +655,7 @@ the `~` character after the last Disclosure.
 The following is a non-normative example of the contents of a Presentation for [Example 1](#example-1), disclosing
 the claims `given_name`, `family_name`, and `address`, as it would be sent from the Holder to the Verifier. The Key Binding JWT as shown before is included as the last element.
 
-<{{examples/simple/combined_presentation.txt}}
+<{{examples/simple/sd_jwt_presentation.txt}}
 
 # Verification and Processing {#verification}
 
@@ -788,12 +788,12 @@ a Key Binding JWT can be found in the respective members of the JSON object.
 Using a payload similar to that from [Example 1](#example-1), the following is a non-normative example of
 a JWS JSON serialized SD-JWT from an Issuer with all the respective Disclosures.
 
-<{{examples/json_serialization/combined_issuance.json}}
+<{{examples/json_serialization/sd_jwt_issuance.json}}
 
 Below is a non-normative example of a presentation of the JWS JSON serialized SD-JWT, where the Holder
 includes a Key Binding JWT and has selected to disclose `given_name`, `family_name`, and `address`.
 
-<{{examples/json_serialization/combined_presentation.json}}
+<{{examples/json_serialization/sd_jwt_presentation.json}}
 
 
 
@@ -1336,7 +1336,7 @@ The Issuer added the following decoy digests:
 A Presentation for the SD-JWT that discloses only `region`
 and `country` of the `address` property and without a Key Binding JWT could look as follows:
 
-<{{examples/simple_structured/combined_presentation.txt}}
+<{{examples/simple_structured/sd_jwt_presentation.txt}}
 
 ## Example 3 - Complex Structured SD-JWT {#example-complex-structured-sd-jwt}
 
@@ -1359,7 +1359,7 @@ The following is a non-normative example of a Combined Format for Presentation
 without a Key Binding JWT that the Verifier would receive with a selection
 of the Disclosures:
 
-<{{examples/complex_ekyc/combined_presentation.txt}}
+<{{examples/complex_ekyc/sd_jwt_presentation.txt}}
 
 After the verification of the data, the Verifier will
 pass the following result on to the application for further processing:
@@ -1424,7 +1424,7 @@ Disclosures:
 
 The following is a non-normative example of a Combined Format for Presentation for the SD-JWT with a Key Binding JWT. It only discloses `type`, `medicinalProductName`, `atcCode` of the vaccine, `type` of the `recipient`, `type`, `order` and `dateOfVaccination`.
 
-<{{examples/jsonld/combined_presentation.txt}}
+<{{examples/jsonld/sd_jwt_presentation.txt}}
 
 After the validation, the Verifier will have the following data for further processing:
 
