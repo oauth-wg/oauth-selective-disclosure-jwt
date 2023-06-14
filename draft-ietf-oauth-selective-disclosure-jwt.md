@@ -655,7 +655,7 @@ This section describes an optional alternate format for SD-JWT using the JWS JSO
 For both the General and Flattened JSON Serialization, the SD-JWT is represented as a JSON object according
 to Section 7.2 of [@!RFC7515]. The disclosures (both for issuance and presentation) are included in the
 serialized JWS using the key `disclosures` at the top-level of the JSON object (the same level as the `payload` member). The
-value of the `disclosures` member is array of strings where each element is an individual Disclosure
+value of the `disclosures` member is an array of strings where each element is an individual Disclosure
 as described in (#creating_disclosures). The Issuer includes a Disclosure for each selectively
 disclosable claim of the SD-JWT payload. Whereas the Holder includes only the Disclosures
 selected for the given presentation. Additionally, for presentation with a Key Binding, the Holder adds
