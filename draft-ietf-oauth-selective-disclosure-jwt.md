@@ -661,7 +661,7 @@ the claims `given_name`, `family_name`, and `address`, as it would be sent from 
 
 ## Verification of the SD-JWT {#sd_jwt_verification}
 
-Upon receiving an SD-JWT, the Wallets and the Verifiers MUST ensure that
+Upon receiving an SD-JWT, the Holders and the Verifiers MUST ensure that
 
  * the issuer-signed JWT is valid, i.e., it is signed by the Issuer and the signature is valid, and
  * all Disclosures are correct, i.e., their digests are referenced in the issuer-signed JWT.
@@ -708,7 +708,7 @@ For presentation to a Verifier, the Holder MUST perform the following (or equiva
 
  1. Decide which Disclosures to release to the Verifier, obtaining proper End-User consent if necessary.
  2. If Key Binding is required, create a Key Binding JWT.
- 3. Create the Combined Format for Presentation, including the selected Disclosures and, if applicable, the Key Binding JWT.
+ 3. Assemble the SD-JWT for Presentation, including the selected Disclosures and, if applicable, the Key Binding JWT.
  4. Send the Presentation to the Verifier.
 
 ## Verification by the Verifier  {#verifier_verification}
