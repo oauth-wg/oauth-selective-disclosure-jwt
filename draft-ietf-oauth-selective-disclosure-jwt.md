@@ -1430,6 +1430,30 @@ After the validation, the Verifier will have the following data for further proc
 
 <{{examples/jsonld/verified_contents.json}}
 
+## Elliptic Curve Key Used in the Examples
+
+The following Elliptic Curve public key, represented in JWK format, can be used to validate the Issuer signatures in the above examples (with line wraps within values for display purposes only):
+
+```
+{
+  "kty": "EC",
+  "crv": "P-256",
+  "x": "b28d4MwZMjw8-00CG4xfnn9SLMVMM19SlqZpVb_uNtQ",
+  "y": "Xv5zWwuoaTgdS6hV43yI6gBwTnjukmFQQnJ_kCxzqk8"
+}
+```
+
+The following EC public key, represented in JWK format, can be used to validate the Key Binding JWT signature in the above examples (with line wraps within values for display purposes only):
+
+```
+{
+  "kty": "EC",
+  "crv": "P-256",
+  "x": "TCAER19Zvu3OHF4j4W4vfSVoHIP1ILilDls7vCeGemc",
+  "y": "ZxjiWWbZMQGHVWKVQ4hbSIirsVfuecCE6t4jT9F2HZQ"
+}
+```
+
 # Disclosure Format Considerations {#disclosure_format_considerations}
 
 As described in (#creating_disclosures), the Disclosure structure is JSON containing salt and the
