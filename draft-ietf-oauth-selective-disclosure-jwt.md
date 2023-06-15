@@ -93,11 +93,11 @@ mechanisms defined in this document can be used for other use cases as well.
 In an Issuer-signed SD-JWT, claims can be hidden, but cryptographically
 protected against undetected modification. "Claims" here refers to both
 object properties (key-value pairs) as well as array elements. When issuing the SD-JWT to
-the Holder, the Issuer also sends the cleartext counterparts of all hidden
-claims, the so-called Disclosures, separate from the SD-JWT itself.
+the Holder, the Issuer includes the cleartext counterparts of all hidden
+claims, the so-called Disclosures, outside the signed JWT itself.
 
-The Holder decides which claims to disclose to a Verifier and forwards the respective
-Disclosures together with the SD-JWT to the Verifier. The Verifier
+The Holder decides which claims to disclose to a Verifier and includes the respective
+Disclosures in the SD-JWT to the Verifier. The Verifier
 has to verify that all disclosed claim values were part of the original,
 Issuer-signed SD-JWT. The Verifier will not, however, learn any claim
 values not disclosed in the Disclosures.
@@ -143,8 +143,8 @@ Selective disclosure:
 :  Process of a Holder disclosing to a Verifier a subset of claims contained in a claim set issued by an Issuer.
 
 Selectively Disclosable JWT (SD-JWT):
-:  An Issuer-signed JWT (JWS, [@!RFC7515])
-  that supports selective disclosure as defined in this document and can contain both regular claims and digests of selectively-disclosable claims.
+:  A composite structure consisting of an Issuer-signed JWT (JWS, [@!RFC7515]) and Disclosures,
+  which supports selective disclosure as defined in this document and can contain both regular claims and digests of selectively-disclosable claims.
 
 Disclosure:
 :  A combination of a salt, a cleartext claim name (present when the claim is a key-value pair and absent when the claim is an array element), and a cleartext claim value, all of which are used to calculate a digest for the respective claim.
@@ -161,10 +161,7 @@ Holder:
 :  An entity that received SD-JWTs from the Issuer and has control over them.
 
 Verifier:
-:  An entity that requests, checks and extracts the claims from an SD-JWT and respective Disclosures.
-
-Note: discuss if we want to include Client, Authorization Server for the purpose of
-ensuring continuity and separating the entity from the actor.
+:  An entity that requests, checks and extracts the claims from an SD-JWT with its respective Disclosures.
 
 # Flow Diagram
 
@@ -176,7 +173,7 @@ ensuring continuity and separating the entity from the actor.
            +------------+
                  |
             Issues SD-JWT
-           and Disclosures
+         with all Disclosures
                  |
                  v
            +------------+
@@ -186,7 +183,7 @@ ensuring continuity and separating the entity from the actor.
            +------------+
                  |
            Presents SD-JWT
-      and selected Disclosures
+      with selected Disclosures
                  |
                  v
            +-------------+
@@ -206,15 +203,15 @@ conceptual level, abstracting from the data formats described in (#data_formats)
 
 ## SD-JWT and Disclosures
 
-An SD-JWT, at its core, is a digitally signed JSON document containing digests over the selectively disclosable claims with the Disclosures outside the document. Selectively disclosable claims can be individual object properties (key-value pairs) or array elements.
+An SD-JWT, at its core, is a digitally signed JSON document containing digests over the selectively disclosable claims with the Disclosures outside the document. Disclosures can be omitted without breaking the signature but not modified. Selectively disclosable claims can be individual object properties (key-value pairs) or array elements.
 
-Each digest value ensures the integrity of, and maps to, the respective Disclosure.  Digest values are calculated using a hash function over the Disclosures, each of which contains a random salt, the claim name (only when the claim is an object property), and the claim value. The Disclosures are sent to the Holder together with the SD-JWT in the Combined Format for Issuance defined in (#combined_format_for_issuance).
+Each digest value ensures the integrity of, and maps to, the respective Disclosure.  Digest values are calculated using a hash function over the Disclosures, each of which contains a random salt, the claim name (only when the claim is an object property), and the claim value. The Disclosures are sent to the Holder as part of the SD-JWT in the format defined in (#issued_sd-jwt).
 
 An SD-JWT MAY also contain clear-text claims that are always disclosed to the Verifier.
 
 ## Disclosing to a Verifier
 
-To disclose to a Verifier a subset of the SD-JWT claim values, a Holder sends only the Disclosures of those selectively released claims to the Verifier along with the SD-JWT in the Combined Format for Presentation defined in (#combined_format_for_presentation).
+To disclose to a Verifier a subset of the SD-JWT claim values, a Holder sends only the Disclosures of those selectively released claims to the Verifier as part of the SD-JWT.
 
 ## Optional Key Binding
 
@@ -226,15 +223,15 @@ The Holder can then create a signed document, the Key Binding JWT as defined in 
 data provided by the Verifier such as a nonce to ensure the freshness of the signature, and audience to indicate the
 intended audience for the document.
 
-The Key Binding JWT can be included in the Combined Format for Presentation and sent to the Verifier along with the SD-JWT and the Holder-Selected Disclosures.
+The Key Binding JWT can be included as part of the SD-JWT and sent to the Verifier as described in (#presented_sd-jwt).
 
-Note that there may be other ways to send a Key Binding JWT to the Verifier or for the Holder to prove possession of the key material included in an SD-JWT. In these cases, inclusion of the Key Binding JWT in the Combined Format for Presentation is not required.
+Note that there may be other ways to send a Key Binding JWT to the Verifier or for the Holder to prove possession of the key material included in an SD-JWT. In these cases, inclusion of the Key Binding JWT in the SD-JWT is not required.
 
 ## Verification
 
 At a high level, the Verifier
 
- * receives the Combined Format for Presentation from the Holder and verifies the signature of the SD-JWT using the Issuer's public key,
+ * receives the SD-JWT from the Holder and verifies its signature using the Issuer's public key,
  * verifies the Key Binding JWT, if Key Binding is required by the Verifier's policy, using the public key included in the SD-JWT,
  * calculates the digests over the Holder-Selected Disclosures and verifies that each digest is contained in the SD-JWT.
 
@@ -242,7 +239,7 @@ The detailed algorithm is described in (#verifier_verification).
 
 # Data Formats {#data_formats}
 
-This section defines data formats for SD-JWTs, Disclosures, Key Binding JWTs and formats for combining these elements for transport.
+This section defines data formats for SD-JWTs including Disclosures and Key Binding JWTs.
 
 ## Format of an SD-JWT {#creating_sd_jwt}
 
@@ -338,7 +335,7 @@ The resulting Disclosure would be: `WyJsa2x4RjVqTVlsR1RQVW92TU5JdkNBIiwgIkZSIl0`
 
 ## Hashing Disclosures {#hashing_disclosures}
 
-For embedding the Disclosures in the SD-JWT, the Disclosures are hashed using the hash algorithm specified in the `_sd_alg` claim described in (#hash_function_claim). The resulting digest is then included in the SD-JWT instead of the original claim value, as described next.
+For embedding the Disclosures in the SD-JWT, the Disclosures are hashed using the hash algorithm specified in the `_sd_alg` claim described in (#hash_function_claim). The resulting digest is then included in the SD-JWT payload instead of the original claim value, as described next.
 
 The digest MUST be taken over the US-ASCII bytes of the base64url-encoded Disclosure. This follows the convention in JWS [@!RFC7515] and JWE [@RFC7516]. The bytes of the digest MUST then be base64url-encoded.
 
@@ -437,13 +434,13 @@ The Issuer creates the following Disclosures:
 
 {{examples/simple/disclosures.md}}
 
-The SD-JWT is then signed by the Issuer to create a JWT like the following:
+The payload is then signed by the Issuer to create a JWT like the following:
 
 <{{examples/simple/sd_jwt_jws_part.txt}}
 
 ## Decoy Digests {#decoy_digests}
 
-An Issuer MAY add additional digests to the SD-JWT that are not associated with
+An Issuer MAY add additional digests to the SD-JWT payload that are not associated with
 any claim.  The purpose of such "decoy" digests is to make it more difficult for
 an attacker to see the original number of claims contained in the SD-JWT. Decoy
 digests MAY be added both to the `_sd` array for objects as well as in arrays.
@@ -472,7 +469,7 @@ selectively disclosable claims MAY even appear within other Disclosures.
 
 The following examples illustrate some of the options an Issuer has. It is up to the Issuer to decide which option to use, depending on, for example, the expected use cases for the SD-JWT, requirements for privacy, size considerations, or ecosystem requirements. For more examples with nested structures, see (#example-simple_structured) and (#example-complex-structured-sd-jwt).
 
-The following claim set is used as an example throughout this section:
+The following input claim set is used as an example throughout this section:
 
 <{{examples/address_only_flat/user_claims.json}}
 
@@ -551,49 +548,47 @@ the raw public key by value in SD-JWT.
 
 
 
-## Combined Format for Issuance {#combined_format_for_issuance}
+## SD-JWT Issuance {#issued_sd-jwt}
 
-Besides the SD-JWT itself, the Holder needs to learn the raw claim values that
-are contained in the SD-JWT, along with the precise input to the digest
-calculation and the salts. To this end, the Issuer sends the Disclosure objects
-that were also used for the hash calculation, as described in (#creating_disclosures),
-to the Holder.
+In addition to the Issuer-signed JWT itself, the Holder needs to learn the raw claim values that
+it contains, along with the precise input to the digest
+calculation including the salts. To this end, the Issuer sends the Disclosures
+that were used for the hash calculation, as described in (#creating_disclosures),
+to the Holder as part of the SD-JWT.
 
-The data format for sending the SD-JWT and the Disclosures to the Holder MUST be a series of base64url-encoded values, each separated from the next by a single tilde ('~') character as follows:
+The data format for the SD-JWT is the Issuer-signed JWT followed by the Disclosures as a series of values separated by, and ending with, a single tilde ('~') character as follows:
 
 ```
-<SD-JWT>~<Disclosure 1>~<Disclosure 2>~...~<Disclosure N>
+<Issuer-signed JWT>~<Disclosure 1>~<Disclosure 2>~...~<Disclosure N>~
 ```
 
-The order of the base64url-encoded values MUST be an SD-JWT followed by the Disclosures.
+The order of the tilde separated values MUST be the Issuer-signed JWT followed by the Disclosures and
+ending with a single tilde ('~') character.
 
-This is called the Combined Format for Issuance.
-
-The Disclosures and SD-JWT are implicitly linked through the
-digest values of the Disclosures included in the SD-JWT.
+The Disclosures are implicitly linked to the SD-JWT payload through the
+digest values included therein.
 
 ### Example
 
-For [Example 1](#example-1), the Combined Format for Issuance looks as follows:
+For [Example 1](#example-1), the issued SD-JWT looks as follows:
 
 <{{examples/simple/sd_jwt_issuance.txt}}
 
 (Line breaks for presentation only.)
 
-## Combined Format for Presentation {#combined_format_for_presentation}
+## SD-JWT Presentation {#presented_sd-jwt}
 
-For presentation to a Verifier, the Holder sends the SD-JWT and a selected
-subset of the Disclosures to the Verifier.
+For presentation to a Verifier, the Holder sends the SD-JWT including only its selected
+set of the Disclosures to the Verifier.
 
-The data format for sending the SD-JWT and the Disclosures to the Verifier MUST be a series of base64url-encoded values, each separated from the next by a single tilde ('~') character as follows:
+The SD-JWT format is the same as in (#issued_sd-jwt) but including only the selected
+Disclosures. A Key Binding JWT, defined in (enabling_key_binding), MAY be included as the last element of the SD-JWT. The format is illustrated as follows:
 
 ```
-<SD-JWT>~<Disclosure 1>~<Disclosure 2>~...~<Disclosure M>~<optional Key Binding JWT>
+<Issuer-signed JWT>~<Disclosure 1>~<Disclosure 2>~...~<Disclosure M>~<optional Key Binding JWT>
 ```
 
-The order of the base64url-encoded values MUST be an SD-JWT, Disclosures, and an optional Key Binding JWT. In case there is no Key Binding JWT, the last element MUST be an empty string. The last separating tilde character MUST NOT be omitted.
-
-This is called the Combined Format for Presentation.
+The order of the tilde separated values MUST be an Issuer-signed JWT, Disclosures, and an optional Key Binding JWT. In the case there is no Key Binding JWT, the last element MUST be an empty string. The last separating tilde character MUST NOT be omitted.
 
 The Holder MAY send any subset of the Disclosures to the Verifier, i.e.,
 none, multiple, or all Disclosures. For data that the Holder does not want to reveal
@@ -644,15 +639,15 @@ Whether to require Key Binding is up to the Verifier's policy,
 based on the set of trust requirements such as trust frameworks it belongs to.
 
 Other ways of proving Key Binding MAY be used when supported by the Verifier,
-e.g., when the Combined Format for Presentation without a Key Binding JWT is itself embedded in a
+e.g., when the presented SD-JWT without a Key Binding JWT is itself embedded in a
 signed JWT. See (#enveloping) for details.
 
-If no Key Binding JWT is included, the Combined Format for Presentation ends with
+If no Key Binding JWT is included, the SD-JWT ends with
 the `~` character after the last Disclosure.
 
 ### Example
 
-The following is a non-normative example of the contents of a Presentation for [Example 1](#example-1), disclosing
+The following is a non-normative example of the contents of an SD-JWT Presentation for [Example 1](#example-1), disclosing
 the claims `given_name`, `family_name`, and `address`, as it would be sent from the Holder to the Verifier. The Key Binding JWT as shown before is included as the last element.
 
 <{{examples/simple/sd_jwt_presentation.txt}}
@@ -740,15 +735,15 @@ If any step fails, the Presentation is not valid and processing MUST be aborted.
 
 Otherwise, the processed SD-JWT payload can be passed to the application to be used for the intended purpose.
 
-# Enveloping the Combined Format for Issuance and Presentation {#enveloping}
+# Enveloping an SD-JWT Presentation {#enveloping}
 
-In some applications or transport protocols, it is desirable to put an SD-JWT and associated Disclosures into a JWT container. For example, an implementation may envelope all credentials and presentations, independent of their format, in a JWT to enable application-layer encryption during transport.
+In some applications or transport protocols, it is desirable to put an SD-JWT into an outer JWT container. For example, an implementation may envelope all credentials and presentations, independent of their format, in a JWT to enable application-layer encryption during transport.
 
-For such use cases, the SD-JWT and the respective Disclosures SHOULD be transported as a single string using the Combined Formats for Issuance and Presentation, respectively. Key Binding MAY be achieved by signing the envelope JWT instead of adding a separate Key Binding JWT as described in (#enabling_key_binding).
+For such use cases, the SD-JWT SHOULD be transported as a single string. Key Binding MAY be achieved by signing the envelope JWT instead of adding a separate Key Binding JWT as described in (#enabling_key_binding).
 
-The claim `_sd_jwt` SHOULD be used when transporting a Combined Format unless the application or protocol defines a different claim name.
+The claim `_sd_jwt` SHOULD be used when transporting an SD-JWT unless the application or protocol defines a different claim name.
 
-The following non-normative example shows a Combined Format for Presentation enveloped in a JWT payload:
+The following non-normative example shows an SD-JWT Presentation enveloped in a JWT payload:
 
 ```
 {
@@ -763,9 +758,9 @@ The following non-normative example shows a Combined Format for Presentation env
 }
 ```
 
-Here, `eyJhbGci...emhlaUJhZzBZ` represents the SD-JWT and `eyJhb...dYALCGg` represents a Disclosure. The Combined Format for Presentation does not contain a Key Binding JWT as the outer container can be signed instead.
+Here, the SD-JWT is shown where `eyJhbGci...emhlaUJhZzBZ` represents the Issuer-signed JWT and `eyJhb...dYALCGg` represents a Disclosure. The SD-JWT does not contain a Key Binding JWT as the outer container can be signed instead.
 
-Other specifications or profiles of this specification may define alternative formats for transporting the Combined Format for Presentation that envelopes multiple such objects into one object, and provides Key Binding using means other than the Key Binding JWT.
+Other specifications or profiles of this specification may define alternative formats for transporting an SD-JWT that envelope multiple such objects into one object, and provides Key Binding using means other than the Key Binding JWT.
 
 # JWS JSON Serialization {#json_serialization}
 
@@ -939,9 +934,9 @@ key-distribution method.
 ## Forwarding Credentials
 
 When Key Binding is not enforced,
-any entity in possession of a Combined Format for Presentation can forward the contents to third parties.
+any entity in possession of an SD-JWT Presentation can forward the contents to third parties.
 When doing so, that entity may remove Disclosures such that the receiver
-learns only a subset of the claims contained in the original Combined Format for Presentation.
+learns only a subset of the claims contained in the original SD-JWT.
 
 For example, a device manufacturer might produce an SD-JWT
 containing information about upstream and downstream supply chain contributors.
@@ -975,7 +970,7 @@ target for an attacker. This target can be of particularly
 high value when the data is signed by a trusted authority like an
 official national identity service. For example, in OpenID Connect,
 signed ID Tokens can be stored by Relying Parties. In the case of
-SD-JWT, Holders have to store signed SD-JWTs and associated Disclosures,
+SD-JWT, Holders have to store SD-JWTs,
 and Issuers and Verifiers may decide to do so as well.
 
 Not surprisingly, a leak of such data risks revealing private data of End-Users
@@ -993,7 +988,7 @@ store SD-JWTs only for as long as needed, including in log files.
 
 Issuers SHOULD NOT store SD-JWTs after issuance.
 
-Holders SHOULD store SD-JWTs and associated Disclosures only in
+Holders SHOULD store SD-JWTs only in
 encrypted form, and, wherever possible, use hardware-backed encryption
 in particular for the private Key Binding key. Decentralized storage
 of data, e.g., on End-User devices, SHOULD be preferred for End-User
@@ -1014,7 +1009,7 @@ can no longer be trusted to originate from the Issuer.
 
 ## Confidentiality during Transport
 
-If the SD-JWT and associated Disclosures are transmitted over an insecure
+If the SD-JWT is transmitted over an insecure
 channel during issuance or presentation, an adversary may be able to
 intercept and read the End-User's personal data or correlate the information with previous uses of the same SD-JWT.
 
@@ -1028,9 +1023,8 @@ mechanism.
 
 Implementers MUST ensure that the transport protocol provides confidentiality
 if the privacy of End-User data or correlation attacks by passive observers are a concern. Implementers MAY define an
-envelope format (such as described in (#enveloping) or nesting the SD-JWT Combined Format as
-the plaintext payload of a JWE) to encrypt the SD-JWT
-and associated Disclosures when transmitted over an insecure channel.
+envelope format (such as described in (#enveloping) or nesting the SD-JWT as
+the plaintext payload of a JWE) to encrypt the SD-JWT when transmitted over an insecure channel.
 
 ## Decoy Digests {#decoy_digests_privacy}
 
@@ -1326,7 +1320,7 @@ In contrast to [Example 1](#example-1), here the Issuer decided to create a stru
 
 <{{examples/simple_structured/sd_jwt_payload.json}}
 
-The Disclosures for this SD-JWT are as follows:
+The Disclosures of this SD-JWT are as follows:
 
 {{examples/simple_structured/disclosures.md}}
 
@@ -1334,7 +1328,7 @@ The Issuer added the following decoy digests:
 
 {{examples/simple_structured/decoy_digests.md}}
 
-A Presentation for the SD-JWT that discloses only `region`
+A presentation of the SD-JWT that discloses only `region`
 and `country` of the `address` property and without a Key Binding JWT could look as follows:
 
 <{{examples/simple_structured/sd_jwt_presentation.txt}}
@@ -1356,7 +1350,7 @@ With the following Disclosures:
 
 {{examples/complex_ekyc/disclosures.md}}
 
-The following is a non-normative example of a Combined Format for Presentation
+The following is a non-normative example of a presented SD-JWT
 without a Key Binding JWT that the Verifier would receive with a selection
 of the Disclosures:
 
@@ -1376,7 +1370,7 @@ and does not use JSON-LD to provide semantic definitions for claims. The example
 SD-JWT is equivalent to an Issuer-signed W3C Verifiable Credential (W3C VC). Disclosures are sent alongside a W3C VC.
 
 A Holder-signed Verifiable Presentation as defined in [@VC_DATA_v2.0] is equivalent to
-a Combined Format for Presentation with a Key Binding JWT.
+an SD-JWT Presentation with a Key Binding JWT.
 
 In this example, Key Binding is applied and Verifiable Presentation can be signed using
 a Holder's public key passed in a `cnf` Claim in the SD-JWT.
@@ -1403,11 +1397,11 @@ and uses a JSON-LD object as the claims set. The example uses a content type `cr
 
 SD-JWT is equivalent to an Issuer-signed W3C Verifiable Credential (W3C VC). Disclosures are sent alongside a VC.
 
-A Combined Format for Presentation with a Key Binding JWT would be equivalent to a Holder-signed
+An SD-JWT Presentation with a Key Binding JWT would be equivalent to a Holder-signed
 Verifiable Presentation as defined in [@VC_DATA_v2.0].
 
-In this example, Key Binding is applied and a Combined Format for Presentation is signed
-using a Holder's public key passed in a `cnf` Claim in the SD-JWT.
+In this example, Key Binding is applied
+using the Holder's public key passed in a `cnf` Claim in the SD-JWT.
 
 Below is a non-normative example of an SD-JWT represented as a W3C VC using JSON-LD.
 
@@ -1423,7 +1417,7 @@ Disclosures:
 
 {{examples/jsonld/disclosures.md}}
 
-The following is a non-normative example of a Combined Format for Presentation for the SD-JWT with a Key Binding JWT. It only discloses `type`, `medicinalProductName`, `atcCode` of the vaccine, `type` of the `recipient`, `type`, `order` and `dateOfVaccination`.
+The following is a non-normative example of a presented SD-JWT with Key Binding. It only discloses `type`, `medicinalProductName`, `atcCode` of the vaccine, `type` of the `recipient`, `type`, `order` and `dateOfVaccination`.
 
 <{{examples/jsonld/sd_jwt_presentation.txt}}
 
@@ -1440,7 +1434,7 @@ the claim value. Using encoded content as the input to the integrity mechanism i
 approach in JWS and particularly useful when the content, like JSON, can have differences but be semantically
 equivalent. Some further discussion of the considerations around this design decision follows.
 
-When receiving an SD-JWT with associated Disclosures, a Verifier must
+When receiving an SD-JWT, a Verifier must
 be able to re-compute digests of the disclosed claim values and, given
 the same input values, obtain the same digest values as signed by the
 Issuer.
