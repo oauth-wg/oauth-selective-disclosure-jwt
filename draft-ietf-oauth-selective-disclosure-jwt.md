@@ -118,9 +118,9 @@ wherever possible.
 ## Feature Summary
 
 * This specification defines
- - a format for an Issuer-signed JWT containing selectively disclosable claims that include object properties (key-value pairs), array elements, and nested data structures built from these,
+ - a format for the payload of an Issuer-signed JWT containing selectively disclosable claims that include object properties (key-value pairs), array elements, and nested data structures built from these,
   - a format for data associated with an Issuer-signed JWT that enables selectively disclosing claims, and
-  - formats for the combined transport of an Issuer-signed JWT and the associated data during issuance and presentation.
+  - a format for the combined transport of an Issuer-signed JWT and associated data during issuance and presentation.
 * This specification enables combining selectively disclosable claims with
   clear-text claims that are always disclosed.
 * For selectively disclosable claims that are object properties, both the key and value are always blinded.
