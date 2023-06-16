@@ -1079,6 +1079,7 @@ Orie Steele,
 Pieter Kasselman,
 Ryosuke Abe,
 Shawn Butterfield,
+Takahiko Kawasaki,
 Torsten Lodderstedt,
 Vittorio Bertocci, and
 Yaron Sheffer
