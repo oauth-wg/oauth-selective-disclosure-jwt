@@ -173,7 +173,7 @@ Verifier:
            +------------+
                  |
             Issues SD-JWT
-         with all Disclosures
+      including all Disclosures
                  |
                  v
            +------------+
@@ -183,7 +183,7 @@ Verifier:
            +------------+
                  |
            Presents SD-JWT
-      with selected Disclosures
+    including selected Disclosures
                  |
                  v
            +-------------+
