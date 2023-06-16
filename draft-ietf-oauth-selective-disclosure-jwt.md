@@ -1538,6 +1538,7 @@ data. The original JSON data is then used by the application. See
    -05
 
    * Add support for selective disclosure of array elements.
+   * Consolidate SD-JWT terminology and format
    * Use the term Key Binding rather than Holder Binding
    * Defined the structure of the Key Binding JWT
    * Added a JWS JSON Serialization
