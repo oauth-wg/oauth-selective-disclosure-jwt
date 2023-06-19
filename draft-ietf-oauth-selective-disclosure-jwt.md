@@ -119,7 +119,7 @@ wherever possible.
 
 * This specification defines
  - a format for the payload of an Issuer-signed JWT containing selectively disclosable claims that include object properties (key-value pairs), array elements, and nested data structures built from these,
- - a format for data associated with the JWT that enables selectively disclosing those claims
+ - a format for data associated with the JWT that enables selectively disclosing those claims,
  - facilities for binding the JWT to a key and associated data to prove possession thereof, and
  - a format, extending the JWS Compact Serialization, for the combined transport of the JWT and associated data that is suitable for both issuance and presentation.
 * An alternate format utilizing the JWS JSON Serialization is also specified.
