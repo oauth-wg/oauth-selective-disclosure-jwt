@@ -90,7 +90,7 @@ similarly intended to be general-purpose specification.
 While JWTs with claims describing natural persons are a common use case, the
 mechanisms defined in this document can be used for other use cases as well.
 
-In an Issuer-signed SD-JWT, claims can be hidden, but cryptographically
+In an SD-JWT, claims can be hidden, but cryptographically
 protected against undetected modification. "Claims" here refers to both
 object properties (key-value pairs) as well as array elements. When issuing the SD-JWT to
 the Holder, the Issuer includes the cleartext counterparts of all hidden
