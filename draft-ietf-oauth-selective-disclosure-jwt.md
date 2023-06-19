@@ -145,8 +145,8 @@ Selective disclosure:
 :  Process of a Holder disclosing to a Verifier a subset of claims contained in a claim set issued by an Issuer.
 
 Selectively Disclosable JWT (SD-JWT):
-:  A composite structure, consisting of an Issuer-signed JWT (JWS, [@!RFC7515]) and Disclosures,
-  that supports selective disclosure as defined in this document and can contain both regular claims and digests of selectively-disclosable claims.
+:  A composite structure, consisting of an Issuer-signed JWT (JWS, [@!RFC7515]), Disclosures, and optionally a Key Binding JWT
+ that supports selective disclosure as defined in this document. It can contain both regular claims and digests of selectively-disclosable claims.
 
 Disclosure:
 :  A combination of a salt, a cleartext claim name (present when the claim is a key-value pair and absent when the claim is an array element), and a cleartext claim value, all of which are used to calculate a digest for the respective claim.
@@ -207,7 +207,7 @@ conceptual level, abstracting from the data formats described in (#data_formats)
 
 An SD-JWT, at its core, is a digitally signed JSON document containing digests over the selectively disclosable claims with the Disclosures outside the document. Disclosures can be omitted without breaking the signature but not modified. Selectively disclosable claims can be individual object properties (key-value pairs) or array elements.
 
-Each digest value ensures the integrity of, and maps to, the respective Disclosure.  Digest values are calculated using a hash function over the Disclosures, each of which contains a random salt, the claim name (only when the claim is an object property), and the claim value. The Disclosures are sent to the Holder as part of the SD-JWT in the format defined in (#issued_sd-jwt).
+Each digest value ensures the integrity of, and maps to, the respective Disclosure.  Digest values are calculated using a hash function over the Disclosures, each of which contains a random salt, the claim name (only when the claim is an object property), and the claim value. The Disclosures are sent to the Holder as part of the SD-JWT in the format defined in (#sd-jwt-structure).
 
 An SD-JWT MAY also contain clear-text claims that are always disclosed to the Verifier.
 
@@ -225,7 +225,7 @@ The Holder can then create a signed document, the Key Binding JWT as defined in 
 data provided by the Verifier such as a nonce to ensure the freshness of the signature, and audience to indicate the
 intended audience for the document.
 
-The Key Binding JWT can be included as part of the SD-JWT and sent to the Verifier as described in (#presented_sd-jwt).
+The Key Binding JWT can be included as part of the SD-JWT and sent to the Verifier as described in (#sd-jwt-structure).
 
 Note that there may be other ways to send a Key Binding JWT to the Verifier or for the Holder to prove possession of the key material included in an SD-JWT. In these cases, inclusion of the Key Binding JWT in the SD-JWT is not required.
 
@@ -241,11 +241,11 @@ The detailed algorithm is described in (#verifier_verification).
 
 # Data Formats {#data_formats}
 
-This section defines data formats for SD-JWTs including Disclosures and Key Binding JWTs.
+This section defines data formats for SD-JWTs including the Issuer-signed JWT content, Disclosures, and Key Binding JWTs.
 
-## Format of an SD-JWT {#creating_sd_jwt}
+## SD-JWT Payload
 
-An SD-JWT is a JWT that MUST be signed using the Issuer's private key.
+An SD-JWT has a JWT component that MUST be signed using the Issuer's private key.
 It MUST use a JWS asymmetric digital signature algorithm. It
 MUST NOT use `none` or an identifier for a symmetric algorithm (MAC).
 
@@ -554,77 +554,22 @@ Holder and Issuer MAY use pre-established key material.
 Note: Examples in this document use the `cnf` Claim defined in [@RFC7800] to include
 the raw public key by value in SD-JWT.
 
+## Key Binding JWT {#kb-jwt}
 
-
-## SD-JWT Issuance {#issued_sd-jwt}
-
-In addition to the Issuer-signed JWT itself, the Holder needs to learn the raw claim values that
-it contains, along with the precise input to the digest
-calculation including the salts. To this end, the Issuer sends the Disclosures
-that were used for the hash calculation, as described in (#creating_disclosures),
-to the Holder as part of the SD-JWT.
-
-The data format for the SD-JWT is the Issuer-signed JWT followed by the Disclosures as a series of values separated by, and ending with, a single tilde ('~') character as follows:
-
-```
-<Issuer-signed JWT>~<Disclosure 1>~<Disclosure 2>~...~<Disclosure N>~
-```
-
-The order of the tilde separated values MUST be the Issuer-signed JWT followed by the Disclosures and
-ending with a single tilde ('~') character.
-
-The Disclosures are implicitly linked to the SD-JWT payload through the
-digest values included therein.
-
-### Example
-
-For [Example 1](#example-1), the issued SD-JWT looks as follows:
-
-<{{examples/simple/sd_jwt_issuance.txt}}
-
-(Line breaks for presentation only.)
-
-## SD-JWT Presentation {#presented_sd-jwt}
-
-For presentation to a Verifier, the Holder sends the SD-JWT including only its selected
-set of the Disclosures to the Verifier.
-
-The SD-JWT format is the same as in (#issued_sd-jwt) but including only the selected
-Disclosures. A Key Binding JWT, defined in (enabling_key_binding), MAY be included as the last element of the SD-JWT. The format is illustrated as follows:
-
-```
-<Issuer-signed JWT>~<Disclosure 1>~<Disclosure 2>~...~<Disclosure M>~<optional Key Binding JWT>
-```
-
-The order of the tilde separated values MUST be an Issuer-signed JWT, Disclosures, and an optional Key Binding JWT. In the case there is no Key Binding JWT, the last element MUST be an empty string. The last separating tilde character MUST NOT be omitted.
-
-The Holder MAY send any subset of the Disclosures to the Verifier, i.e.,
-none, multiple, or all Disclosures. For data that the Holder does not want to reveal
-to the Verifier, the Holder MUST NOT send Disclosures or reveal the salt values in any
-other way.
-
-A Holder MUST NOT send a Disclosure that was not included in the SD-JWT or send
-a Disclosure more than once.
-
-### Enabling Key Binding {#enabling_key_binding}
-
-The Holder MAY add an optional JWT to prove the Key Binding to the Verifier.
-
-#### Structure of the Key Binding JWT {#kb-jwt}
-
-This section defines the contents of the Key Binding JWT.
+This section defines the contents of the Key Binding JWT, which
+the Holder MAY include in the SD-JWT to prove the Key Binding to the Verifier.
 
 The JWT MUST contain the following elements:
 
-  * in the JOSE header,
+* in the JOSE header,
     * `typ`: REQUIRED. MUST be `kb+jwt`, which explicitly types the Key Binding JWT as recommended in Section 3.11 of [@!RFC8725].
     * `alg`: REQUIRED. A digital signature algorithm identifier such as per IANA "JSON Web Signature and Encryption Algorithms" registry. MUST NOT be `none` or an identifier for a symmetric algorithm (MAC).
-  * in the JWT body,
+* in the JWT body,
     * `iat`: REQUIRED. The value of this claim MUST be the time at which the Key Binding JWT was issued using the syntax defined in [@!RFC7519].
     * `aud`: REQUIRED. The intended receiver of the Key Binding JWT. How the value is represented is up to the protocol used and out of scope of this specification.
     * `nonce`: REQUIRED. Ensures the freshness of the signature. The value type of this claim MUST be a string. How this value is obtained is up to the protocol used and out of scope of this specification.
 
-To validate the signature on the Key Binding JWT, the Verifier MUST use the key material in the SD-JWT. If it is not clear from the SD-JWT, the Key Binding JWT MUST specify which key material the Verifier needs to use to validate Key Binding JWT signature using JOSE header parameters such as `kid` and `x5c`.
+To validate the signature on the Key Binding JWT, the Verifier MUST use the key material in the SD-JWT. If it is not clear from the SD-JWT, the Key Binding JWT MUST specify which key material the Verifier needs to use to validate the Key Binding JWT signature using JOSE header parameters such as `kid` and `x5c`.
 
 Below is a non-normative example of a Key Binding JWT header:
 
@@ -650,13 +595,45 @@ Other ways of proving Key Binding MAY be used when supported by the Verifier,
 e.g., when the presented SD-JWT without a Key Binding JWT is itself embedded in a
 signed JWT. See (#enveloping) for details.
 
-If no Key Binding JWT is included, the SD-JWT ends with
-the `~` character after the last Disclosure.
+## SD-JWT Structure {#sd-jwt-structure}
 
-### Example
+An SD-JWT is composed of the following:
 
-The following is a non-normative example of the contents of an SD-JWT Presentation for [Example 1](#example-1), disclosing
-the claims `given_name`, `family_name`, and `address`, as it would be sent from the Holder to the Verifier. The Key Binding JWT as shown before is included as the last element.
+* the Issuer-signed JWT
+* each respective Disclosure
+* optionally a Key Binding JWT
+
+The serialized format for the SD-JWT is the concatenation of each part delineated with a single tilde ('~') character as follows:
+
+```
+<JWT>~<Disclosure 1>~<Disclosure 2>~...~<Disclosure N>~<optional KB-JWT>
+```
+
+The order of the tilde separated values MUST be the Issuer-signed JWT, followed by any Disclosures, and lastly the optional Key Binding JWT.
+In the case that there is no Key Binding JWT, the last element MUST be an empty string and the last separating tilde character MUST NOT be omitted.
+
+The Disclosures are linked to the SD-JWT payload through the
+digest values included therein.
+
+When issued to a Holder, the Issuer includes all the relevant Disclosures in the SD-JWT.
+
+For presentation to a Verifier, the Holder sends the SD-JWT including only its selected
+set of the Disclosures to the Verifier.
+
+The Holder MAY send any subset of the Disclosures to the Verifier, i.e.,
+none, multiple, or all Disclosures. For data that the Holder does not want to reveal
+to the Verifier, the Holder MUST NOT send Disclosures or reveal the salt values in any
+other way.
+
+A Holder MUST NOT send a Disclosure that was not included in the SD-JWT or send
+a Disclosure more than once.
+
+For [Example 1](#example-1), a non-normative example of an issued SD-JWT might look as follows (with Line breaks for formatting only):
+
+<{{examples/simple/sd_jwt_issuance.txt}}
+
+The following non-normative example shows an associated SD-JWT Presentation as it would be sent from the Holder to the Verifier.
+The claims `given_name`, `family_name`, and `address` are disclosed and the Key Binding JWT is included as the last element.
 
 <{{examples/simple/sd_jwt_presentation.txt}}
 
@@ -747,7 +724,7 @@ Otherwise, the processed SD-JWT payload can be passed to the application to be u
 
 In some applications or transport protocols, it is desirable to put an SD-JWT into an outer JWT container. For example, an implementation may envelope all credentials and presentations, independent of their format, in a JWT to enable application-layer encryption during transport.
 
-For such use cases, the SD-JWT SHOULD be transported as a single string. Key Binding MAY be achieved by signing the envelope JWT instead of adding a separate Key Binding JWT as described in (#enabling_key_binding).
+For such use cases, the SD-JWT SHOULD be transported as a single string. Key Binding MAY be achieved by signing the envelope JWT instead of including a separate Key Binding JWT in the SD-JWT.
 
 The claim `_sd_jwt` SHOULD be used when transporting an SD-JWT unless the application or protocol defines a different claim name.
 
