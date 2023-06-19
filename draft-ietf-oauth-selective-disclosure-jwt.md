@@ -163,7 +163,7 @@ Holder:
 :  An entity that received SD-JWTs from the Issuer and has control over them.
 
 Verifier:
-:  An entity that requests, checks and extracts the claims from an SD-JWT with its respective Disclosures.
+:  An entity that requests, checks, and extracts the claims from an SD-JWT with its respective Disclosures.
 
 # Flow Diagram
 
