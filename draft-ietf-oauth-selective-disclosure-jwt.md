@@ -94,7 +94,7 @@ In an SD-JWT, claims can be hidden, but cryptographically
 protected against undetected modification. "Claims" here refers to both
 object properties (key-value pairs) as well as array elements. When issuing the SD-JWT to
 the Holder, the Issuer includes the cleartext counterparts of all hidden
-claims, the so-called Disclosures, as part of the SD-JWT but outside the signed payload of the JWT itself.
+claims, the so-called Disclosures, outside the signed part of the SD-JWT.
 
 The Holder decides which claims to disclose to a particular Verifier and includes the respective
 Disclosures in the SD-JWT to that Verifier. The Verifier
