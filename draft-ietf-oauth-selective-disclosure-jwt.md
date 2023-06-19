@@ -45,7 +45,7 @@ organization="Ping Identity"
 
 This specification defines a mechanism for selective disclosure of individual elements of a JSON object
 used as the payload of a JSON Web Signature (JWS) structure.
-It encompasses various applications, including but not limited to the selective disclosure of JSON Web Tokens (JWT) claims.
+It encompasses various applications, including but not limited to the selective disclosure of JSON Web Token (JWT) claims.
 
 {mainmatter}
 
@@ -94,10 +94,10 @@ In an Issuer-signed SD-JWT, claims can be hidden, but cryptographically
 protected against undetected modification. "Claims" here refers to both
 object properties (key-value pairs) as well as array elements. When issuing the SD-JWT to
 the Holder, the Issuer includes the cleartext counterparts of all hidden
-claims, the so-called Disclosures, outside the signed JWT itself.
+claims, the so-called Disclosures, as part of the SD-JWT but outside the signed payload of the JWT itself.
 
-The Holder decides which claims to disclose to a Verifier and includes the respective
-Disclosures in the SD-JWT to the Verifier. The Verifier
+The Holder decides which claims to disclose to a particular Verifier and includes the respective
+Disclosures in the SD-JWT to that Verifier. The Verifier
 has to verify that all disclosed claim values were part of the original,
 Issuer-signed SD-JWT. The Verifier will not, however, learn any claim
 values not disclosed in the Disclosures.
@@ -200,7 +200,7 @@ Figure: SD-JWT Issuance and Presentation Flow
 
 # Concepts
 
-This section describes SD-JWTs and Disclosures at a
+This section describes SD-JWTs with their respective Disclosures and Key Binding at a
 conceptual level, abstracting from the data formats described in (#data_formats).
 
 ## SD-JWT and Disclosures
@@ -253,11 +253,11 @@ The payload of an SD-JWT is a JSON object according to the following rules:
 
  1. The payload MAY contain the `_sd_alg` key described in (#hash_function_claim).
  2. The payload MAY contain one or more digests of Disclosures to enable selective disclosure of the respective claims, created and formatted as described below.
- 3. The payload MAY contain one or more decoy digests to hide the number of claims in the SD-JWT, created and formatted as described in (#decoy_digests).
+ 3. The payload MAY contain one or more decoy digests to obscure the actual number of claims in the SD-JWT, created and formatted as described in (#decoy_digests).
  4. The payload MAY contain one or more non-selectively disclosable claims.
  5. The payload MAY also contain a Holder's public key or a reference thereto, as well as further claims such as `iss`, `iat`, etc. as defined or required by the application using SD-JWTs.
  6. The payload MUST NOT contain the reserved claims `_sd` or `...` except for the purpose of transporting digests as described below.
- 7. The same digest MUST NOT appear more than once in the SD-JWT.
+ 7. The same digest value MUST NOT appear more than once in the SD-JWT.
 
 Applications of SD-JWT SHOULD be explicitly typed using the `typ` header parameter. See (#explicit_typing) for more details.
 
@@ -302,9 +302,15 @@ white space, encoding of Unicode characters, and ordering of object properties
 are allowed. For example, the following strings are all valid and encode the
 same claim value "Möbius":
 
- * A different way to encode the umlaut (two dots `¨` placed over the letter): `WyJfMjZiYzRMVC1hYzZxMktJNmNCVzVlcyIsICJmYW1pbHlfbmFtZSIsICJNXHUwMGY2Yml1cyJd`
- * No white space: `WyJfMjZiYzRMVC1hYzZxMktJNmNCVzVlcyIsImZhbWlseV9uYW1lIiwiTcO2Yml1cyJd`
- * Newline characters between elements: `WwoiXzI2YmM0TFQtYWM2cTJLSTZjQlc1ZXMiLAoiZmFtaWx5X25hbWUiLAoiTcO2Yml1cyIKXQ`
+ * A different way to encode the umlaut (two dots `¨` placed over the letter):\
+`WyJfMjZiYzRMVC1hYzZxMktJNmNCVzVlcyIsICJmYW1pbHlfbmFtZSIsICJNX`\
+`HUwMGY2Yml1cyJd`
+ * No white space:\
+`WyJfMjZiYzRMVC1hYzZxMktJNmNCVzVlcyIsImZhbWlseV9uYW1lIiwiTcO2Y`\
+`ml1cyJd`
+ * Newline characters between elements:\
+`WwoiXzI2YmM0TFQtYWM2cTJLSTZjQlc1ZXMiLAoiZmFtaWx5X25hbWUiLAoiT`\
+`cO2Yml1cyIKXQ`
 
 See (#disclosure_format_considerations) for some further considerations on the Disclosure format approach.
 
