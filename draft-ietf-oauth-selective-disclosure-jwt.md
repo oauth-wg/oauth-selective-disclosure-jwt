@@ -145,8 +145,8 @@ Selective disclosure:
 :  Process of a Holder disclosing to a Verifier a subset of claims contained in a claim set issued by an Issuer.
 
 Selectively Disclosable JWT (SD-JWT):
-:  A composite structure consisting of an Issuer-signed JWT (JWS, [@!RFC7515]) and Disclosures,
-  which supports selective disclosure as defined in this document and can contain both regular claims and digests of selectively-disclosable claims.
+:  A composite structure, consisting of an Issuer-signed JWT (JWS, [@!RFC7515]) and Disclosures,
+  that supports selective disclosure as defined in this document and can contain both regular claims and digests of selectively-disclosable claims.
 
 Disclosure:
 :  A combination of a salt, a cleartext claim name (present when the claim is a key-value pair and absent when the claim is an array element), and a cleartext claim value, all of which are used to calculate a digest for the respective claim.
