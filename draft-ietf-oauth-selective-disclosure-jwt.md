@@ -1,5 +1,5 @@
 %%%
-title = "SD-JWT: Selective Disclosure for JWT and JWS with JSON payloads"
+title = "SD-JWT: Selective Disclosure for JWT and JWS with JSON Payloads"
 abbrev = "SD-JWT"
 ipr = "trust200902"
 area = "Security"
