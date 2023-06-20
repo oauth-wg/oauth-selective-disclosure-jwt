@@ -669,7 +669,7 @@ Upon receiving an SD-JWT, a Holder or a Verifier MUST ensure that
 The Holder or the Verifier MUST perform the following (or equivalent) steps when receiving
 an SD-JWT:
 
- 1. Separate the SD-JWT into the Issuer-signed JWT and the Disclosures (if any).
+ 1. Separate the SD-JWT into the issuer-signed JWT, the Disclosures (if any), and the Key Binding JWT (if present). 
  2. Validate the Issuer-signed JWT:
     1. Ensure that a signing algorithm was used that was deemed secure for the application. Refer to [@RFC8725], Sections 3.1 and 3.2 for details. The `none` algorithm MUST NOT be accepted.
     2. Validate the signature over the Issuer-signed JWT.
@@ -704,6 +704,8 @@ It is up to the Holder how to maintain the mapping between the Disclosures and t
 
 ## Processing by the Holder  {#holder_verification}
 
+If a Key Binding JWT is received by a Holder, the SD-JWT SHOULD be rejected.
+
 For presentation to a Verifier, the Holder MUST perform the following (or equivalent) steps:
 
  1. Decide which Disclosures to release to the Verifier, obtaining proper End-User consent if necessary.
@@ -723,8 +725,7 @@ To this end, Verifiers MUST follow the following steps (or equivalent):
     for the use case at hand. This decision MUST NOT be based on whether
     a Key Binding JWT is provided by the Holder or not. Refer to (#key_binding_security) for
     details.
- 2. Separate the Presentation into the SD-JWT, and the Key Binding JWT (if provided).
- 3. Process the SD-JWT as defined in (#sd_jwt_verification).
+ 2. Process the SD-JWT as defined in (#sd_jwt_verification).
  3. If Key Binding is required:
     1. If Key Binding is provided by means not defined in this specification, verify the Key Binding according to the method used.
     2. Otherwise, verify the Key Binding JWT as follows:
