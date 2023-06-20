@@ -1418,6 +1418,21 @@ After the validation, the Verifier will have the following data for further proc
 
 <{{examples/jsonld/verified_contents.json}}
 
+## Elliptic Curve Key Used in the Examples
+
+The following Elliptic Curve public key, represented in JWK format, can be used to validate the Issuer signatures in the above examples:
+
+```
+{
+  "kty": "EC",
+  "crv": "P-256",
+  "x": "b28d4MwZMjw8-00CG4xfnn9SLMVMM19SlqZpVb_uNtQ",
+  "y": "Xv5zWwuoaTgdS6hV43yI6gBwTnjukmFQQnJ_kCxzqk8"
+}
+```
+
+The public key used to validate a Key Binding JWT can be found in the examples as the content of the `cnf` claim.
+
 # Disclosure Format Considerations {#disclosure_format_considerations}
 
 As described in (#creating_disclosures), the Disclosure structure is JSON containing salt and the
