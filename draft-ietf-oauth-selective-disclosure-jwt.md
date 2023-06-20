@@ -1443,6 +1443,8 @@ The following Elliptic Curve public key, represented in JWK format, can be used 
 }
 ```
 
+The public key used to validate a Key Binding JWT can be found in the examples as the content of the `cnf` claim.
+
 # Disclosure Format Considerations {#disclosure_format_considerations}
 
 As described in (#creating_disclosures), the Disclosure structure is JSON containing salt and the
