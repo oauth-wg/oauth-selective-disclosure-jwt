@@ -302,7 +302,7 @@ white space, encoding of Unicode characters, and ordering of object properties
 are allowed. For example, the following strings are all valid and encode the
 same claim value "Möbius":
 
- * A different way to encode the umlaut (two dots `¨` placed over the letter):\
+ * A different way to encode the unicode umlaut:\
 `WyJfMjZiYzRMVC1hYzZxMktJNmNCVzVlcyIsICJmYW1pbHlfbmFtZSIsICJNX`\
 `HUwMGY2Yml1cyJd`
  * No white space:\
