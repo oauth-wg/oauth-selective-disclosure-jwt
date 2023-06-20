@@ -661,12 +661,12 @@ the claims `given_name`, `family_name`, and `address`, as it would be sent from 
 
 ## Verification of the SD-JWT {#sd_jwt_verification}
 
-Upon receiving an SD-JWT, the Holders and the Verifiers MUST ensure that
+Upon receiving an SD-JWT, a Holder or a Verifier MUST ensure that
 
  * the issuer-signed JWT is valid, i.e., it is signed by the Issuer and the signature is valid, and
  * all Disclosures are correct, i.e., their digests are referenced in the issuer-signed JWT.
 
-The Holder and the Verifier perform the following (or equivalent) steps when receiving
+The Holder or the Verifier MUST perform the following (or equivalent) steps when receiving
 an SD-JWT:
 
  1. Separate the SD-JWT into the issuer-signed JWT and the Disclosures (if any).
