@@ -1083,7 +1083,7 @@ Disclosures:
 This example illustrates how the artifacts defined in this specification can
 be used to express an mDL data model defined in ISO/IEC 18013-5 [@ISO.18013-5] encoded as JSON.
 
-SD-JWT is equivalent to an `issuerSigned` object as defined in [@ISO.18013-5].
+An SD-JWT is equivalent to an `issuerSigned` object as defined in [@ISO.18013-5].
 
 A Combined Format for Presentation with a Holder Binding JWT is equivalent to a Document
 structure that contains `docType`, `issuerSigned` object and `deviceSigned` object
@@ -1106,7 +1106,7 @@ Disclosures:
 
 {{examples/18013-5/disclosures.md}}
 
-A Combined Format for Presentation for the SD-JWT that discloses only discloses `nameSpace`, `issuing_authority` and `issuing_country`, and has a Holder Binding JWT could look as follows:
+A Combined Format for Presentation for the SD-JWT that discloses only `nameSpace`, `issuing_authority`, and `issuing_country`, and has a Holder Binding JWT, could look as follows:
 
 <{{examples/18013-5/combined_presentation.txt}}
 
