@@ -810,16 +810,15 @@ other disclosed claims or sources other than the presented SD-JWT.
 
 Additionally, as described in (#key_binding_security), the application of Key Binding can ensure that the presenter of an SD-JWT credential is the legitimate Holder of the credential.
 
-## Mandatory signing of the Issuer-signed JWT
+## Mandatory Signing of the Issuer-signed JWT
 
 The Issuer-signed JWT MUST be signed by the Issuer to protect integrity of the issued
 claims. An attacker can modify or add claims if this JWT is not signed (e.g.,
 change the "email" attribute to take over the victim's account or add an
 attribute indicating a fake academic qualification).
 
-The Verifier MUST always check the Issuer-signed JWT signature to ensure that it
-has not been tampered with since the issuance. If the signature on the Issuer-signed JWT
-cannot be verified, it MUST be rejected.
+The Verifier MUST always check the signature of the Issuer-signed JWT to ensure that it
+has not been tampered with since the issuance. The Issuer-signed JWT MUST be rejected if the signature cannot be verified.
 
 The security of the Issuer-signed JWT depends on the security of the signature algorithm.
 Any of the JSON Web Signature and Encryption Algorithms registered in [@IANA.JWS.Algorithms]
