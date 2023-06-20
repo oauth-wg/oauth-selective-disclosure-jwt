@@ -1,9 +1,5 @@
 user_claims:
-  iss: "https://example.com"
-  jti: "http://example.com/credentials/3732"
-  nbf: 1541493724
-  iat: 1541493724
-  type: IdentityCredential
+  !sd sub: john_doe_42
   !sd given_name: John
   !sd family_name: Doe
   !sd email: johndoe@example.com
@@ -14,12 +10,12 @@ user_claims:
     region: Anystate
     country: US
   !sd birthdate: "1940-01-01"
-  !sd is_over_18: true
-  !sd is_over_21: true
-  !sd is_over_65: true
 
 holder_disclosed_claims:
-  is_over_18: true
   given_name: true
+  family_name: true
+  address: true
 
 key_binding: True
+
+serialization_format: "json"

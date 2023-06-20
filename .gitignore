@@ -17,6 +17,7 @@
 Gemfile.lock
 archive.json
 draft-ietf-oauth-selective-disclosure-jwt.xml
+draft-ietf-oauth-selective-disclosure-jwt.txt
 package-lock.json
 report.xml
 !requirements.txt
