@@ -76,7 +76,7 @@ the Verifier becomes crucial to ensure minimum disclosure and prevent
 Verifiers from obtaining claims irrelevant for the transaction at hand.
 SD-JWTs defined in this document enable such selective disclosure of JWT claims.
 
-One example of a multi-use JWT is a verifiable credential, an issuer-signed
+One example of a multi-use JWT is a verifiable credential, an Issuer-signed
 credential that contains the claims about a subject, and whose authenticity can be
 cryptographically verified.
 
@@ -663,23 +663,23 @@ the claims `given_name`, `family_name`, and `address`, as it would be sent from 
 
 Upon receiving an SD-JWT, the Holders and the Verifiers MUST ensure that
 
- * the issuer-signed JWT is valid, i.e., it is signed by the Issuer and the signature is valid, and
- * all Disclosures are correct, i.e., their digests are referenced in the issuer-signed JWT.
+ * the Issuer-signed JWT is valid, i.e., it is signed by the Issuer and the signature is valid, and
+ * all Disclosures are correct, i.e., their digests are referenced in the Issuer-signed JWT.
 
 The Holder and the Verifier perform the following (or equivalent) steps when receiving
 an SD-JWT:
 
- 1. Separate the SD-JWT into the issuer-signed JWT and the Disclosures (if any).
- 2. Validate the issuer-signed JWT:
+ 1. Separate the SD-JWT into the Issuer-signed JWT and the Disclosures (if any).
+ 2. Validate the Issuer-signed JWT:
     1. Ensure that a signing algorithm was used that was deemed secure for the application. Refer to [@RFC8725], Sections 3.1 and 3.2 for details. The `none` algorithm MUST NOT be accepted.
-    2. Validate the signature over the issuer-signed JWT.
+    2. Validate the signature over the Issuer-signed JWT.
     3. Validate the Issuer and that the signing key belongs to this Issuer.
-    4. Check that the issuer-signed JWT is valid using `nbf`, `iat`, and `exp` claims, if provided in the SD-JWT, and not selectively disclosed.
+    4. Check that the Issuer-signed JWT is valid using `nbf`, `iat`, and `exp` claims, if provided in the SD-JWT, and not selectively disclosed.
     5. Check that the `_sd_alg` claim value is understood and the hash algorithm is deemed secure.
  3. Process the Disclosures and embedded digests in the issuser-signed JWT as follows:
     1. For each Disclosure provided:
        1. Calculate the digest over the base64url-encoded string as described in (#hashing_disclosures).
-    2. (*) Identify all embedded digests in the issuer-signed JWT as follows:
+    2. (*) Identify all embedded digests in the Issuer-signed JWT as follows:
        1. Find all objects having an `_sd` key that refers to an array of strings.
        2. Find all array elements that are objects with one key, that key being `...` and referring to a string.
     3. (**) For each embedded digest found in the previous step:
@@ -695,7 +695,7 @@ an SD-JWT:
           3. Recursively process the value using the steps described in (*) and (**).
     4. If any digests were found more than once in the previous step, the SD-JWT MUST be rejected.
     5. Remove all array elements for which the digest was not found in the previous step.
-    6. Remove all `_sd` keys and their contents from the issuer-signed JWT payload.
+    6. Remove all `_sd` keys and their contents from the Issuer-signed JWT payload.
     7. Remove the claim `_sd_alg` from the SD-JWT payload.
 
 If any step fails, the SD-JWT is not valid and processing MUST be aborted.
@@ -1543,6 +1543,7 @@ data. The original JSON data is then used by the application. See
    [[ To be removed from the final specification ]]
 
    -05
+
    * Consolidate processing rules for Holder and Verifier
    * Add support for selective disclosure of array elements.
    * Use the term Key Binding rather than Holder Binding
