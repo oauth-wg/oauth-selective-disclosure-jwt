@@ -669,7 +669,7 @@ Upon receiving an SD-JWT, a Holder or a Verifier MUST ensure that
 The Holder or the Verifier MUST perform the following (or equivalent) steps when receiving
 an SD-JWT:
 
- 1. Separate the SD-JWT into the issuer-signed JWT, the Disclosures (if any), and the Key Binding JWT (if present). 
+ 1. Separate the SD-JWT into the Issuer-signed JWT, the Disclosures (if any), and the Key Binding JWT (if present). 
  2. Validate the Issuer-signed JWT:
     1. Ensure that a signing algorithm was used that was deemed secure for the application. Refer to [@RFC8725], Sections 3.1 and 3.2 for details. The `none` algorithm MUST NOT be accepted.
     2. Validate the signature over the Issuer-signed JWT.
