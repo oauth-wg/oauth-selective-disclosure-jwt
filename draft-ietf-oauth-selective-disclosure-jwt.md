@@ -1543,7 +1543,7 @@ data. The original JSON data is then used by the application. See
    [[ To be removed from the final specification ]]
 
    -05
-
+   * Consolidate processing rules for Holder and Verifier
    * Add support for selective disclosure of array elements.
    * Use the term Key Binding rather than Holder Binding
    * Defined the structure of the Key Binding JWT
