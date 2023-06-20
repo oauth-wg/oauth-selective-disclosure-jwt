@@ -98,8 +98,8 @@ claims, the so-called Disclosures, outside the signed part of the SD-JWT.
 
 The Holder decides which claims to disclose to a particular Verifier and includes the respective
 Disclosures in the SD-JWT to that Verifier. The Verifier
-has to verify that all disclosed claim values were part of the original,
-Issuer-signed SD-JWT. The Verifier will not, however, learn any claim
+has to verify that all disclosed claim values were part of the original
+Issuer-signed JWT. The Verifier will not, however, learn any claim
 values not disclosed in the Disclosures.
 
 This document also specifies an optional mechanism for Key Binding,
