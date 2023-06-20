@@ -241,7 +241,7 @@ The detailed algorithm is described in (#verifier_verification).
 
 # Data Formats {#data_formats}
 
-This section defines data formats for SD-JWTs including the Issuer-signed JWT content, Disclosures, and Key Binding JWTs.
+This section defines data formats for SD-JWT including the Issuer-signed JWT content, Disclosures, and Key Binding JWT.
 
 ## SD-JWT Payload
 
