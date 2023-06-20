@@ -1484,7 +1484,7 @@ or as
 ...
 ```
 
-The two representations `"M\u00f6bius"` and `"Möbius"` are very different on the byte-level, but yield
+The two representations of the value in `family_name` are very different on the byte-level, but yield
 equivalent objects. Same for the representations of `address`, varying in white space and order of elements in the object.
 
 The variations in white space, ordering of object properties, and
