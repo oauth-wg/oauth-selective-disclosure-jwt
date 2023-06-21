@@ -722,30 +722,25 @@ If any step fails, the Presentation is not valid and processing MUST be aborted.
 
 Otherwise, the processed SD-JWT payload can be passed to the application to be used for the intended purpose.
 
-# Enveloping an SD-JWT Presentation {#enveloping}
+# Enveloping SD-JWTs {#enveloping}
 
 In some applications or transport protocols, it is desirable to put an SD-JWT into an outer JWT container. For example, an implementation may envelope multiple credentials and presentations, independent of their format, in a JWT to enable application-layer encryption during transport.
 
 For such use cases, the SD-JWT SHOULD be transported as a single string. Key Binding MAY be achieved by signing the envelope JWT instead of including a separate Key Binding JWT in the SD-JWT.
 
-The claim `_sd_jwt` SHOULD be used when transporting an SD-JWT unless the application or protocol defines a different claim name.
-
 The following non-normative example shows an SD-JWT Presentation enveloped in a JWT payload:
 
 ```
 {
-  "iss": "https://holder.example.com",
-  "sub": "did:example:123",
   "aud": "https://verifier.example.com",
   "exp": 1590000000,
   "iat": 1580000000,
-  "nbf": 1580000000,
-  "jti": "urn:uuid:12345678-1234-1234-1234-123456789012",
+  "nonce": "iRnRdKuu1AtLM4ltc16by2XF0accSeutUescRw6BWC14",
   "_sd_jwt": "eyJhbGci...emhlaUJhZzBZ~eyJhb...dYALCGg~"
 }
 ```
 
-Here, the SD-JWT is shown where `eyJhbGci...emhlaUJhZzBZ` represents the Issuer-signed JWT and `eyJhb...dYALCGg` represents a Disclosure. The SD-JWT does not contain a Key Binding JWT as the outer container can be signed instead.
+Here, the SD-JWT is shown as the value of an `_sd_jwt` claim where `eyJhbGci...emhlaUJhZzBZ` represents the Issuer-signed JWT and `eyJhb...dYALCGg` represents a Disclosure. The SD-JWT does not contain a Key Binding JWT as the outer container can be signed instead.
 
 Other specifications or profiles of this specification may define alternative formats for transporting an SD-JWT that envelope multiple such objects into one object, and provides Key Binding using means other than the Key Binding JWT.
 
