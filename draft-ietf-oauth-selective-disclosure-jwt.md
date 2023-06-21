@@ -1371,6 +1371,15 @@ claims with a Key Binding JWT could look as follows:
 
 <{{examples/w3c-vc/sd_jwt_presentation.txt}}
 
+The payload of a corresponding Hey Binding JWT looks as follows:
+
+<{{examples/w3c-vc/kb_jwt_payload.json}}
+
+After the verification of the data, the Verifier will
+pass the following result on to the application for further processing:
+
+<{{examples/w3c-vc/verified_contents.json}}
+
 ## Example 4b - W3C Verifiable Credentials Data Model v2.0
 
 This example illustrates how to use the artifacts defined in this specification to secure a payload
@@ -1384,6 +1393,10 @@ Below is a non-normative example of an SD-JWT represented as a W3C VC using JSON
 The following data will be used in this example:
 
 <{{examples/jsonld/user_claims.json}}
+
+An issued SD-JWT might look as follows (with Line breaks for formatting only):
+
+<{{examples/jsonld/sd_jwt_issuance.txt}}
 
 The payload of a corresponding SD-JWT looks as follows:
 
