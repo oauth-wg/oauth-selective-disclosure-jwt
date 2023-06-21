@@ -1371,7 +1371,7 @@ claims with a Key Binding JWT could look as follows:
 
 <{{examples/w3c-vc/sd_jwt_presentation.txt}}
 
-The payload of a corresponding Hey Binding JWT looks as follows:
+The payload of a corresponding Key Binding JWT looks as follows:
 
 <{{examples/w3c-vc/kb_jwt_payload.json}}
 
