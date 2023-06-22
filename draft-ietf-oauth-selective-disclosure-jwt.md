@@ -1551,7 +1551,6 @@ data. The original JSON data is then used by the application. See
    * Removed Example 2b and merged the demo of decoy digests into Example 2a
    * Improved example for allowed variations in Disclosures
    * Added some text to the Abstract and Introduction to be more inclusive of JWS with JSON
-  
    -04
 
    * Improve description of processing of disclosures
