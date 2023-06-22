@@ -733,7 +733,6 @@ The following non-normative example shows an SD-JWT Presentation enveloped in a 
 ```
 {
   "aud": "https://verifier.example.com",
-  "exp": 1590000000,
   "iat": 1580000000,
   "nonce": "iRnRdKuu1AtLM4ltc16by2XF0accSeutUescRw6BWC14",
   "_sd_jwt": "eyJhbGci...emhlaUJhZzBZ~eyJhb...dYALCGg~"
