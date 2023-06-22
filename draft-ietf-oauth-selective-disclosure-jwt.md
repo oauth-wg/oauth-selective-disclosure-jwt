@@ -1,5 +1,5 @@
 %%%
-title = "SD-JWT: Selective Disclosure for JWT and JWS with JSON Payloads"
+title = "Selective Disclosure for JWTs (SD-JWT)"
 abbrev = "SD-JWT"
 ipr = "trust200902"
 area = "Security"
@@ -1554,7 +1554,7 @@ data. The original JSON data is then used by the application. See
    * Added recommendation for explicit typing of SD-JWTs
    * Added considerations around forwarding credentials
    * Removed Example 2b and merged the demo of decoy digests into Example 2a
-   * Updated title to be more inclusive of JWS with JSON and added some corresponding text to the Abstract and Intro
+   * Added some text to the Abstract and Introduction to be more inclusive of JWS with JSON
 
    -04
 
