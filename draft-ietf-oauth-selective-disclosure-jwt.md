@@ -297,12 +297,12 @@ The array is created as follows:
 
 The resulting Disclosure would be: `WyJfMjZiYzRMVC1hYzZxMktJNmNCVzVlcyIsICJmYW1pbHlfbmFtZSIsICJNw7ZiaXVzIl0`
 
-Note that the JSON encoding of the object is not canonicalized, so variations in
-white space, encoding of Unicode characters, and ordering of object properties
-are allowed. For example, the following strings are all valid and encode the
+Note that variations in whitespace, encoding of Unicode characters, ordering of object properties, etc., are allowed
+in the JSON representation and no canonicalization needs be performed before base64url-encoding.
+For example, the following strings are all valid and encode the
 same claim value "Möbius":
 
- * A different way to encode the umlaut (two dots `¨` placed over the letter):\
+ * A different way to encode the unicode umlaut:\
 `WyJfMjZiYzRMVC1hYzZxMktJNmNCVzVlcyIsICJmYW1pbHlfbmFtZSIsICJNX`\
 `HUwMGY2Yml1cyJd`
  * No white space:\
@@ -1479,7 +1479,7 @@ or as
 ...
 ```
 
-The two representations `"M\u00f6bius"` and `"Möbius"` are very different on the byte-level, but yield
+The two representations of the value in `family_name` are very different on the byte-level, but yield
 equivalent objects. Same for the representations of `address`, varying in white space and order of elements in the object.
 
 The variations in white space, ordering of object properties, and
@@ -1549,8 +1549,8 @@ data. The original JSON data is then used by the application. See
    * Added recommendation for explicit typing of SD-JWTs
    * Added considerations around forwarding credentials
    * Removed Example 2b and merged the demo of decoy digests into Example 2a
+   * Improved example for allowed variations in Disclosures
    * Added some text to the Abstract and Introduction to be more inclusive of JWS with JSON
-
    -04
 
    * Improve description of processing of disclosures
