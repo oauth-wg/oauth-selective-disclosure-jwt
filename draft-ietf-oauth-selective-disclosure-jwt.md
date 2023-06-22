@@ -297,9 +297,9 @@ The array is created as follows:
 
 The resulting Disclosure would be: `WyJfMjZiYzRMVC1hYzZxMktJNmNCVzVlcyIsICJmYW1pbHlfbmFtZSIsICJNw7ZiaXVzIl0`
 
-Note that the JSON encoding of the object is not canonicalized, so variations in
-white space, encoding of Unicode characters, and ordering of object properties
-are allowed. For example, the following strings are all valid and encode the
+Note that variations in whitespace, encoding of Unicode characters, ordering of object properties, etc., are allowed
+in the JSON representation and no canonicalization need be performed before base64url-encoding.
+For example, the following strings are all valid and encode the
 same claim value "Möbius":
 
  * A different way to encode the unicode umlaut:\
