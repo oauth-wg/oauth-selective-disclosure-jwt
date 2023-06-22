@@ -1,0 +1,42 @@
+user_claims:
+  iss: https://pid_issuer.memberstate.eu
+  iat: 1541493724
+  type: PersonIdentificationData
+  binding:
+  - !sd
+    type: CryptographicBinding2022
+      cnf:
+        jwk:
+          kty: EC
+          crv: P-256
+          x: TCAER19Zvu3OHF4j4W4vfSVoHIP1ILilDls7vCeGemc
+          y: ZxjiWWbZMQGHVWKVQ4hbSIirsVfuecCE6t4jT9F2HZQ
+  - !sd
+    type: BiometricBinding2022
+      template: "..."
+  !sd given_name: Erika
+  !sd family_name: Mustermann
+  !sd nationalities: [!sd "DE"]
+  !sd birth_family_name: Schmidt
+  !sd birthdate: '1973-01-01'
+  !sd place_of_birth: Regensburg
+  !sd address:
+    postal_code: '12345'
+    locality: Irgendwo
+    street_address: Sonnenstrasse 23
+    country_code: DE
+  !sd is_over_18: true
+  !sd is_over_21: true
+  !sd is_over_65: false
+
+holder_disclosed_claims:
+  binding:
+    - false
+    - true
+  nationalities:
+    - true
+  is_over_18: true
+  place_of_birth: true
+
+add_decoy_claims: true
+key_binding: false

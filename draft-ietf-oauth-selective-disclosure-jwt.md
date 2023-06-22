@@ -1255,6 +1255,12 @@ the media type is encoded as an SD-JWT.
   </front>
 </reference>
 
+<reference anchor="EUDIW.ARF" target="https://digital-strategy.ec.europa.eu/en/library/european-digital-identity-wallet-architecture-and-reference-framework">
+  <front>
+    <author fullname="European Commission"></author>
+    <title>The European Digital Identity Wallet Architecture and Reference Framework</title>
+  </front>
+</reference>
 
 <reference anchor="IANA.JWS.Algorithms" target="https://www.iana.org/assignments/jose/jose.xhtml#web-signature-encryption-algorithms">
   <front>
@@ -1406,6 +1412,41 @@ The following is a non-normative example of a presented SD-JWT with Key Binding.
 After the validation, the Verifier will have the following data for further processing:
 
 <{{examples/jsonld/verified_contents.json}}
+
+## Example 5: EUDIW ARF Person Identification Data (PID)  {#person_identification_data}
+
+This example illustrates how to use the artifacts defined in this specification to secure
+Person Identification Data (PID) based on the SD-JWT format as defined in [@EUDIW.ARF].
+
+This example uses the following object as the set of claims that the Issuer is issuing:
+
+<{{examples/pid/user_claims.json}}
+
+An issued SD-JWT might look as follows (with Line breaks for formatting only):
+
+<{{examples/pid/sd_jwt_issuance.txt}}
+
+The following payload is used for the SD-JWT:
+
+<{{examples/pid/sd_jwt_payload.json}}
+
+The Disclosures of this SD-JWT are as follows:
+
+{{examples/pid/disclosures.md}}
+
+The Issuer added the following decoy digests:
+
+{{examples/pid/decoy_digests.md}}
+
+A presentation of the SD-JWT without a Key Binding JWT that discloses only biometrics based holder binding (`binding` of type `BiometricBinding`)
+nationality, place of birth and the fact that the person is over 18 years old could look as follows:
+
+<{{examples/pid/sd_jwt_presentation.txt}}
+
+After the verification of the data, the Verifier will
+pass the following result on to the application for further processing:
+
+<{{examples/pid/verified_contents.json}}
 
 ## Elliptic Curve Key Used in the Examples
 
