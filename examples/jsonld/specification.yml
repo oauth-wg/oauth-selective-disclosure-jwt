@@ -40,5 +40,3 @@ holder_disclosed_claims:
       type: true
       atcCode: true
       medicinalProductName: true
-
-key_binding: true

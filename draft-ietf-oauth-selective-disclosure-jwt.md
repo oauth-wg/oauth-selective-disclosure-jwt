@@ -1,5 +1,5 @@
 %%%
-title = "SD-JWT: Selective Disclosure for JWT and JWS with JSON Payloads"
+title = "Selective Disclosure for JWTs (SD-JWT)"
 abbrev = "SD-JWT"
 ipr = "trust200902"
 area = "Security"
@@ -1230,20 +1230,6 @@ the media type is encoded as an SD-JWT.
   </front>
 </reference>
 
-
-<reference anchor="VC_JWT" target="https://w3c.github.io/vc-jwt/">
-  <front>
-    <title>Securing Verifiable Credentials using JSON Web Tokens</title>
-    <author fullname="Orie Steele">
-      <organization>Transmute</organization>
-    </author>
-    <author fullname="Michael B. Jones">
-      <organization>Microsoft</organization>
-    </author>
-    <date day="03" month="Mar" year="2023" />
-  </front>
-</reference>
-
 <reference anchor="OIDC.IDA" target="https://openid.net/specs/openid-connect-4-identity-assurance-1_0-13.html">
   <front>
     <title>OpenID Connect for Identity Assurance 1.0</title>
@@ -1354,25 +1340,22 @@ pass the following result on to the application for further processing:
 
 <{{examples/complex_ekyc/verified_contents.json}}
 
-## Example 4a - W3C Verifiable Credentials Data Model v2.0, not using JSON-LD
+## Example 4a - Verifiable Credentials with JSON payload based on the SD-JWT format
 
-This example illustrates how to use the artifacts defined in this specification to secure a payload
-that is represented as a W3C Verifiable Credentials Data Model v2.0 [@VC_DATA_v2.0]
-and does not use JSON-LD to provide semantic definitions for claims. The example uses a content type `credential-claims-set+json` defined in [@VC_JWT], Section 3 in a `cty` JOSE Header value.
+This example illustrates how to use the artifacts defined in this specification to secure
+Verifiable Credentials with JSON payload based on the SD-JWT format as defined in [@I-D.terbu-sd-jwt-vc].
 
-SD-JWT is equivalent to an Issuer-signed W3C Verifiable Credential (W3C VC). Disclosures are sent alongside a W3C VC.
-
-A Holder-signed Verifiable Presentation as defined in [@VC_DATA_v2.0] is equivalent to
-an SD-JWT Presentation with a Key Binding JWT.
 
 In this example, Key Binding is applied and Verifiable Presentation can be signed using
 a Holder's public key passed in a `cnf` Claim in the SD-JWT.
 
-Below is a non-normative example of an SD-JWT represented as a W3C VC without using JSON-LD.
-
 The following data will be used in this example:
 
 <{{examples/w3c-vc/user_claims.json}}
+
+An issued SD-JWT might look as follows (with Line breaks for formatting only):
+
+<{{examples/w3c-vc/sd_jwt_issuance.txt}}
 
 The payload of a corresponding SD-JWT looks as follows:
 
@@ -1382,16 +1365,24 @@ Disclosures:
 
 {{examples/w3c-vc/disclosures.md}}
 
-## Example 4b - W3C Verifiable Credentials Data Model v2.0, using JSON-LD
+A presentation of the SD-JWT that discloses only `given_name` and `is_over_18`
+claims with a Key Binding JWT could look as follows:
+
+<{{examples/w3c-vc/sd_jwt_presentation.txt}}
+
+The payload of a corresponding Key Binding JWT looks as follows:
+
+<{{examples/w3c-vc/kb_jwt_payload.json}}
+
+After the verification of the data, the Verifier will
+pass the following result on to the application for further processing:
+
+<{{examples/w3c-vc/verified_contents.json}}
+
+## Example 4b - W3C Verifiable Credentials Data Model v2.0
 
 This example illustrates how to use the artifacts defined in this specification to secure a payload
-that is represented as a W3C Verifiable Credentials Data Model v2.0 [@VC_DATA_v2.0]
-and uses a JSON-LD object as the claims set. The example uses a content type `credential+ld+json` defined in [@VC_DATA_v2.0], Section 6.3 in a `cty` JOSE Header value.
-
-SD-JWT is equivalent to an Issuer-signed W3C Verifiable Credential (W3C VC). Disclosures are sent alongside a VC.
-
-An SD-JWT Presentation with a Key Binding JWT would be equivalent to a Holder-signed
-Verifiable Presentation as defined in [@VC_DATA_v2.0].
+that is represented as a W3C Verifiable Credentials Data Model v2.0 [@VC_DATA_v2.0].
 
 In this example, Key Binding is applied
 using the Holder's public key passed in a `cnf` Claim in the SD-JWT.
@@ -1401,6 +1392,10 @@ Below is a non-normative example of an SD-JWT represented as a W3C VC using JSON
 The following data will be used in this example:
 
 <{{examples/jsonld/user_claims.json}}
+
+An issued SD-JWT might look as follows (with Line breaks for formatting only):
+
+<{{examples/jsonld/sd_jwt_issuance.txt}}
 
 The payload of a corresponding SD-JWT looks as follows:
 
@@ -1554,9 +1549,9 @@ data. The original JSON data is then used by the application. See
    * Added recommendation for explicit typing of SD-JWTs
    * Added considerations around forwarding credentials
    * Removed Example 2b and merged the demo of decoy digests into Example 2a
-   * Updated title to be more inclusive of JWS with JSON and added some corresponding text to the Abstract and Intro
    * Improved example for allowed variations in Disclosures
-
+   * Added some text to the Abstract and Introduction to be more inclusive of JWS with JSON
+  
    -04
 
    * Improve description of processing of disclosures
