@@ -249,7 +249,7 @@ An SD-JWT has a JWT component that MUST be signed using the Issuer's private key
 It MUST use a JWS asymmetric digital signature algorithm. It
 MUST NOT use `none` or an identifier for a symmetric algorithm (MAC).
 
-The input claim set to be used as the payload of an SD-JWT is a JSON object that:
+The input claim set to be used as the payload of an Issuer-signed JWT component of an SD-JWT is a JSON object that:
 
  1. MAY contain the `_sd_alg` key described in (#hash_function_claim).
  2. MAY contain one or more digests of Disclosures to enable selective disclosure of the respective claims, created and formatted as described below.
@@ -1545,6 +1545,8 @@ data. The original JSON data is then used by the application. See
    * Removed Example 2b and merged the demo of decoy digests into Example 2a
    * Improved example for allowed variations in Disclosures
    * Added some text to the Abstract and Introduction to be more inclusive of JWS with JSON
+   * Replaced SD-JWT `payload` with `input claim set`
+
    -04
 
    * Improve description of processing of disclosures
