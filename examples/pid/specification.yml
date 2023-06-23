@@ -4,16 +4,16 @@ user_claims:
   type: PersonIdentificationData
   binding:
   - !sd
-    type: CryptographicBinding2022
-      cnf:
-        jwk:
-          kty: EC
-          crv: P-256
-          x: TCAER19Zvu3OHF4j4W4vfSVoHIP1ILilDls7vCeGemc
-          y: ZxjiWWbZMQGHVWKVQ4hbSIirsVfuecCE6t4jT9F2HZQ
+    type: CryptographicBinding
+    cnf:
+      jwk:
+        kty: EC
+        crv: P-256
+        x: TCAER19Zvu3OHF4j4W4vfSVoHIP1ILilDls7vCeGemc
+        y: ZxjiWWbZMQGHVWKVQ4hbSIirsVfuecCE6t4jT9F2HZQ
   - !sd
-    type: BiometricBinding2022
-      template: "..."
+    type: BiometricBinding
+    template: "..."
   !sd given_name: Erika
   !sd family_name: Mustermann
   !sd nationalities: [!sd "DE"]
