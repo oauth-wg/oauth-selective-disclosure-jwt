@@ -786,7 +786,7 @@ other disclosed claims or sources other than the presented SD-JWT.
 
 Additionally, as described in (#key_binding_security), the application of Key Binding can ensure that the presenter of an SD-JWT credential is the legitimate Holder of the credential.
 
-## Mandatory Signing of the Issuer-signed JWT
+## Mandatory Signing of the Issuer-signed JWT {#sec-is-jwt}
 
 The Issuer-signed JWT MUST be signed by the Issuer to protect integrity of the issued
 claims. An attacker can modify or add claims if this JWT is not signed (e.g.,
@@ -800,7 +800,7 @@ The security of the Issuer-signed JWT depends on the security of the signature a
 Any of the JSON Web Signature and Encryption Algorithms registered in [@IANA.JWS.Algorithms]
 can be used, including post quantum algorithms, when they are ready.
 
-## Manipulation of Disclosures
+## Manipulation of Disclosures {#sec-disclosures}
 
 Holders can manipulate the Disclosures by changing the values of the claims
 before sending them to the Verifier. The Verifier MUST check the Disclosures to
@@ -893,6 +893,10 @@ particular use case and the Key Binding is not present, does not fulfill the req
 (e.g., on the signing algorithm), or no recognized
 Key Binding data is present in the SD-JWT, the Verifier will reject the
 presentation, as described in (#verifier_verification).
+
+### Key Binding JWT
+
+Issuer provided integrity protection of the SD-JWT payload and Disclosures is achieved by the signature on the Issuer-signed JWT that covers the SD-JWT payload including the digest values of the Disclosures as described in (#sec-is-jwt) and (#sec-disclosures), respectively. The Key Binding JWT, defined in (#kb-jwt), serves exclusively as a mechanism for the Holder to demonstrate possession of the private key corresponding to the public key in the SD-JWT payload. As such, the signature on the Key Binding JWT does not cover other parts of the SD-JWT. In cases where it's desirable for the Holder's signature to convey more than a proof-of-possession, such as signing over the selected Disclosures to prove those were the Disclosures selected, the SD-JWT to be presented can be embedded in another JWT (as described in [Enveloping SD-JWTs](#enveloping)) or otherwise signed by the Holder via the application protocol delivering it.
 
 ## Blinding Claim Names {#blinding-claim-names}
 
@@ -1545,6 +1549,8 @@ data. The original JSON data is then used by the application. See
    * Removed Example 2b and merged the demo of decoy digests into Example 2a
    * Improved example for allowed variations in Disclosures
    * Added some text to the Abstract and Introduction to be more inclusive of JWS with JSON
+   * Added some security considerations text about the scope of the Key Binding JWT
+
    -04
 
    * Improve description of processing of disclosures
