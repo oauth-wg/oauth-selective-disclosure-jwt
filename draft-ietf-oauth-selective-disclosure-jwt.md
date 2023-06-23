@@ -243,21 +243,21 @@ The detailed algorithm is described in (#verifier_verification).
 
 This section defines data formats for SD-JWT including the Issuer-signed JWT content, Disclosures, and Key Binding JWT.
 
-## SD-JWT Payload
+## SD-JWT Input Claim Set
 
 An SD-JWT has a JWT component that MUST be signed using the Issuer's private key.
 It MUST use a JWS asymmetric digital signature algorithm. It
 MUST NOT use `none` or an identifier for a symmetric algorithm (MAC).
 
-The payload of an SD-JWT is a JSON object according to the following rules:
+The input claim set to be used as the payload of an SD-JWT is a JSON object that:
 
- 1. The payload MAY contain the `_sd_alg` key described in (#hash_function_claim).
- 2. The payload MAY contain one or more digests of Disclosures to enable selective disclosure of the respective claims, created and formatted as described below.
- 3. The payload MAY contain one or more decoy digests to obscure the actual number of claims in the SD-JWT, created and formatted as described in (#decoy_digests).
- 4. The payload MAY contain one or more non-selectively disclosable claims.
- 5. The payload MAY also contain a Holder's public key or a reference thereto, as well as further claims such as `iss`, `iat`, etc. as defined or required by the application using SD-JWTs.
- 6. The payload MUST NOT contain the reserved claims `_sd` or `...` except for the purpose of transporting digests as described below.
- 7. The same digest value MUST NOT appear more than once in the SD-JWT.
+ 1. MAY contain the `_sd_alg` key described in (#hash_function_claim).
+ 2. MAY contain one or more digests of Disclosures to enable selective disclosure of the respective claims, created and formatted as described below.
+ 3. MAY contain one or more decoy digests to obscure the actual number of claims in the SD-JWT, created and formatted as described in (#decoy_digests).
+ 4. MAY contain one or more non-selectively disclosable claims.
+ 5. MAY also contain a Holder's public key or a reference thereto, as well as further claims such as `iss`, `iat`, etc. as defined or required by the application using SD-JWTs.
+ 6. MUST NOT contain the reserved claims `_sd` or `...` except for the purpose of transporting digests as described below.
+ 7. MUST NOT contain more than one appearance of the same digest value.
 
 Applications of SD-JWT SHOULD be explicitly typed using the `typ` header parameter. See (#explicit_typing) for more details.
 
@@ -343,7 +343,7 @@ The resulting Disclosure would be: `WyJsa2x4RjVqTVlsR1RQVW92TU5JdkNBIiwgIkZSIl0`
 
 ## Hashing Disclosures {#hashing_disclosures}
 
-For embedding the Disclosures in the SD-JWT, the Disclosures are hashed using the hash algorithm specified in the `_sd_alg` claim described in (#hash_function_claim). The resulting digest is then included in the SD-JWT payload instead of the original claim value, as described next.
+For embedding the Disclosures in the SD-JWT, the Disclosures are hashed using the hash algorithm specified in the `_sd_alg` claim described in (#hash_function_claim). The resulting digest is then included in the SD-JWT input claim set instead of the original claim value, as described next.
 
 The digest MUST be taken over the US-ASCII bytes of the base64url-encoded Disclosure. This follows the convention in JWS [@!RFC7515] and JWE [@RFC7516]. The bytes of the digest MUST then be base64url-encoded.
 
@@ -384,7 +384,7 @@ decoy digests as described in (#decoy_digests). The precise method does not matt
 does not depend on the original order of elements.
 
 For example, using the digest of the object property Disclosure created above,
-the Issuer could create the following SD-JWT payload to make `family_name`
+the Issuer could create the following SD-JWT input claim set to make `family_name`
 selectively disclosable:
 
 ```json
@@ -404,7 +404,7 @@ described in (#hashing_disclosures). There MUST NOT be any other keys in the
 object.
 
 For example, using the digest of the array element Disclosure created above,
-the Issuer could create the following SD-JWT payload to make the second element
+the Issuer could create the following SD-JWT input claim set to make the second element
 of the `nationalities` array selectively disclosable:
 
 ```json
@@ -425,7 +425,7 @@ This example uses the following object as the set of claims that the Issuer is i
 
 <{{examples/simple/user_claims.json}}
 
-The following non-normative example shows a payload of an SD-JWT for this End-User data:
+The following non-normative example shows an input claim set of an SD-JWT for this End-User data:
 
 <{{examples/simple/sd_jwt_payload.json}}
 
@@ -442,13 +442,13 @@ The Issuer creates the following Disclosures:
 
 {{examples/simple/disclosures.md}}
 
-The payload is then signed by the Issuer to create a JWT like the following:
+The input claim set is then signed by the Issuer to create a JWT like the following:
 
 <{{examples/simple/sd_jwt_jws_part.txt}}
 
 ## Decoy Digests {#decoy_digests}
 
-An Issuer MAY add additional digests to the SD-JWT payload that are not associated with
+An Issuer MAY add additional digests to the SD-JWT input claim set that are not associated with
 any claim.  The purpose of such "decoy" digests is to make it more difficult for
 an attacker to see the original number of claims contained in the SD-JWT. Decoy
 digests MAY be added both to the `_sd` array for objects as well as in arrays.
@@ -468,7 +468,7 @@ with decoy digests, see (#example-simple_structured).
 
 ## Nested Data in SD-JWTs {#nested_data}
 
-Being JSON, an object in an SD-JWT payload MAY contain key-value pairs where the value is another object or objects MAY be elements in arrays. In SD-JWT, the Issuer decides for each claim individually, on each level of the JSON, whether the claim should be selectively disclosable or not. This choice can be made on each level independent from whether keys higher in the hierarchy are selectively disclosable.
+Being JSON, an object in an SD-JWT input claim set MAY contain key-value pairs where the value is another object or objects MAY be elements in arrays. In SD-JWT, the Issuer decides for each claim individually, on each level of the JSON, whether the claim should be selectively disclosable or not. This choice can be made on each level independent from whether keys higher in the hierarchy are selectively disclosable.
 
 From this it follows that the `_sd` key containing digests MAY appear multiple
 times in an SD-JWT, and likewise, there MAY be multiple arrays within the
@@ -526,8 +526,8 @@ The Issuer creates Disclosures first for the sub-claims and then includes their 
 
 The claim `_sd_alg` indicates the hash algorithm used by the Issuer to generate
 the digests as described in (#creating_disclosures). When used, this claim MUST
-appear at the top level of the SD-JWT payload. It
-MUST NOT be used in any object nested within the payload. If the  `_sd_alg`
+appear at the top level of the SD-JWT input claim set. It
+MUST NOT be used in any object nested within the input claim set. If the  `_sd_alg`
 claim is not present at the top level, a default value of `sha-256` MUST be used.
 
 The hash algorithm identifier MUST be a hash algorithm value from the "Hash Name
@@ -580,11 +580,11 @@ Below is a non-normative example of a Key Binding JWT header:
 }
 ```
 
-Below is a non-normative example of a Key Binding JWT payload:
+Below is a non-normative example of a Key Binding JWT input claim set:
 
 <{{examples/simple/kb_jwt_payload.json}}
 
-Below is a non-normative example of a Key Binding JWT produced by signing a payload in the example above:
+Below is a non-normative example of a Key Binding JWT produced by signing a input claim set in the example above:
 
 <{{examples/simple/kb_jwt_serialized.txt}}
 
@@ -612,7 +612,7 @@ The serialized format for the SD-JWT is the concatenation of each part delineate
 The order of the tilde separated values MUST be the Issuer-signed JWT, followed by any Disclosures, and lastly the optional Key Binding JWT.
 In the case that there is no Key Binding JWT, the last element MUST be an empty string and the last separating tilde character MUST NOT be omitted.
 
-The Disclosures are linked to the SD-JWT payload through the
+The Disclosures are linked to the SD-JWT input claim set through the
 digest values included therein.
 
 When issued to a Holder, the Issuer includes all the relevant Disclosures in the SD-JWT.
@@ -675,8 +675,8 @@ an SD-JWT:
           3. Recursively process the value using the steps described in (*) and (**).
     4. If any digests were found more than once in the previous step, the SD-JWT MUST be rejected.
     5. Remove all array elements for which the digest was not found in the previous step.
-    6. Remove all `_sd` keys and their contents from the Issuer-signed JWT payload.
-    7. Remove the claim `_sd_alg` from the SD-JWT payload.
+    6. Remove all `_sd` keys and their contents from the Issuer-signed JWT input claim set.
+    7. Remove the claim `_sd_alg` from the SD-JWT input claim set.
 
 If any step fails, the SD-JWT is not valid and processing MUST be aborted.
 
@@ -720,7 +720,7 @@ To this end, Verifiers MUST follow the following steps (or equivalent):
 
 If any step fails, the Presentation is not valid and processing MUST be aborted.
 
-Otherwise, the processed SD-JWT payload can be passed to the application to be used for the intended purpose.
+Otherwise, the processed SD-JWT input claim set can be passed to the application to be used for the intended purpose.
 
 # Enveloping SD-JWTs {#enveloping}
 
@@ -752,7 +752,7 @@ to Section 7.2 of [@!RFC7515]. The disclosures (both for issuance and presentati
 serialized JWS using the key `disclosures` at the top-level of the JSON object (the same level as the `payload` member). The
 value of the `disclosures` member is an array of strings where each element is an individual Disclosure
 as described in (#creating_disclosures). The Issuer includes a Disclosure for each selectively
-disclosable claim of the SD-JWT payload, whereas the Holder includes only the Disclosures
+disclosable claim of the SD-JWT input claim set, whereas the Holder includes only the Disclosures
 selected for the given presentation. Additionally, for presentation with a Key Binding, the Holder adds
 the key `kb_jwt` at the top-level of the serialized JWS with a string value containing the
 Key Binding JWT as described in (#kb-jwt).
@@ -761,7 +761,7 @@ Verification of the JWS JSON serialized SD-JWT follows the same rules defined in
 except that the SD-JWT does not need to be split into component parts, but disclosures and (if applicable)
 a Key Binding JWT can be found in the respective members of the JSON object.
 
-Using a payload similar to that from [Example 1](#example-1), the following is a non-normative example of
+Using an input claim set similar to that from [Example 1](#example-1), the following is a non-normative example of
 a JWS JSON serialized SD-JWT from an Issuer with all the respective Disclosures.
 
 <{{examples/json_serialization/sd_jwt_issuance.json}}
@@ -807,7 +807,7 @@ before sending them to the Verifier. The Verifier MUST check the Disclosures to
 ensure that the values of the claims are correct, i.e., the digests of the Disclosures are actually present in the signed SD-JWT.
 
 A naive Verifier that extracts
-all claim values from the Disclosures (without checking the hashes) and inserts them into the SD-JWT payload
+all claim values from the Disclosures (without checking the hashes) and inserts them into the SD-JWT input claim set
 is vulnerable to this attack. However, in a structured SD-JWT, without comparing the digests of the
 Disclosures, such an implementation could not determine the correct place in a
 nested object where a claim needs to be inserted. Therefore, the naive implementation
@@ -1289,7 +1289,7 @@ This example uses the following object as the set of claims that the Issuer is i
 
 <{{examples/simple_structured/user_claims.json}}
 
-In contrast to [Example 1](#example-1), here the Issuer decided to create a structured object for the `address` claim, allowing for separate disclosure of the individual members of the claim, and also added decoy digests to prevent the Verifier from deducing the true number of claims. The following payload is used for the SD-JWT:
+In contrast to [Example 1](#example-1), here the Issuer decided to create a structured object for the `address` claim, allowing for separate disclosure of the individual members of the claim, and also added decoy digests to prevent the Verifier from deducing the true number of claims. The following input claim set is used for the SD-JWT:
 
 <{{examples/simple_structured/sd_jwt_payload.json}}
 
@@ -1315,7 +1315,7 @@ The Issuer is using the following user data:
 
 <{{examples/complex_ekyc/user_claims.json}}
 
-The Issuer in this example sends the two claims `birthdate` and `place_of_birth` in the `claims` element in plain text. The following shows the resulting SD-JWT payload:
+The Issuer in this example sends the two claims `birthdate` and `place_of_birth` in the `claims` element in plain text. The following shows the resulting SD-JWT input claim set:
 
 <{{examples/complex_ekyc/sd_jwt_payload.json}}
 
@@ -1351,7 +1351,7 @@ An issued SD-JWT might look as follows (with Line breaks for formatting only):
 
 <{{examples/w3c-vc/sd_jwt_issuance.txt}}
 
-The payload of a corresponding SD-JWT looks as follows:
+The input claim set of a corresponding SD-JWT looks as follows:
 
 <{{examples/w3c-vc/sd_jwt_payload.json}}
 
@@ -1364,7 +1364,7 @@ claims with a Key Binding JWT could look as follows:
 
 <{{examples/w3c-vc/sd_jwt_presentation.txt}}
 
-The payload of a corresponding Key Binding JWT looks as follows:
+The input claim set of a corresponding Key Binding JWT looks as follows:
 
 <{{examples/w3c-vc/kb_jwt_payload.json}}
 
@@ -1375,7 +1375,7 @@ pass the following result on to the application for further processing:
 
 ## Example 4b - W3C Verifiable Credentials Data Model v2.0
 
-This example illustrates how to use the artifacts defined in this specification to secure a payload
+This example illustrates how to use the artifacts defined in this specification to secure an input claim set
 that is represented as a W3C Verifiable Credentials Data Model v2.0 [@VC_DATA_v2.0].
 
 In this example, Key Binding is applied
@@ -1391,7 +1391,7 @@ An issued SD-JWT might look as follows (with Line breaks for formatting only):
 
 <{{examples/jsonld/sd_jwt_issuance.txt}}
 
-The payload of a corresponding SD-JWT looks as follows:
+The input claim set of a corresponding SD-JWT looks as follows:
 
 <{{examples/jsonld/sd_jwt_payload.json}}
 
