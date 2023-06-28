@@ -421,13 +421,11 @@ element unless a matching Disclosure for the second element is received.
 
 ## Example 1: SD-JWT {#example-1}
 
-This example uses the following object as the set of claims that the Issuer is issuing:
+In this example, the simplest SD-JWT is demonstrated.
+
+The Issuer is using the following input claim set:
 
 <{{examples/simple/user_claims.json}}
-
-The following non-normative example shows a payload of an SD-JWT for this End-User data:
-
-<{{examples/simple/sd_jwt_payload.json}}
 
 The Issuer in this case made the following decisions:
 
@@ -438,7 +436,11 @@ The Issuer in this case made the following decisions:
   in the `address` claim can only be disclosed in full. Other options are
   discussed in (#nested_data).
 
-The Issuer creates the following Disclosures:
+The following payload is used for the SD-JWT:
+
+<{{examples/simple/sd_jwt_payload.json}}
+
+The following Disclosures are created by the Issuer:
 
 {{examples/simple/disclosures.md}}
 
@@ -1289,24 +1291,28 @@ All of the following examples are non-normative.
 
 ## Example 2: Handling Structured Claims {#example-simple_structured}
 
-This example uses the following object as the set of claims that the Issuer is issuing:
+In this example, in contrast to [Example 1](#example-1), the Issuer decided to create a structured object for the `address` claim, allowing to separately disclose individual members of the claim.
+
+The Issuer is using the following input claim set:
 
 <{{examples/simple_structured/user_claims.json}}
 
-In contrast to [Example 1](#example-1), here the Issuer decided to create a structured object for the `address` claim, allowing for separate disclosure of the individual members of the claim, and also added decoy digests to prevent the Verifier from deducing the true number of claims. The following payload is used for the SD-JWT:
+The Issuer also decided to add decoy digests to prevent the Verifier from deducing the true number of claims.
+
+The following payload is used for the SD-JWT:
 
 <{{examples/simple_structured/sd_jwt_payload.json}}
 
-The Disclosures of this SD-JWT are as follows:
+The following Disclosures are created:
 
 {{examples/simple_structured/disclosures.md}}
 
-The Issuer added the following decoy digests:
+The following decoy digests are added:
 
 {{examples/simple_structured/decoy_digests.md}}
 
-A presentation of the SD-JWT that discloses only `region`
-and `country` of the `address` property and without a Key Binding JWT could look as follows:
+The following is how a presentation of the SD-JWT that discloses only `region`
+and `country` of the `address` property and without a Key Binding JWT could look like:
 
 <{{examples/simple_structured/sd_jwt_presentation.txt}}
 
@@ -1315,95 +1321,86 @@ and `country` of the `address` property and without a Key Binding JWT could look
 In this example, an SD-JWT with a complex object is demonstrated. Here, the data
 structures defined in OIDC4IDA [@OIDC.IDA] are used.
 
-The Issuer is using the following user data:
+The Issuer is using the following input claim set:
 
 <{{examples/complex_ekyc/user_claims.json}}
 
-The Issuer in this example sends the two claims `birthdate` and `place_of_birth` in the `claims` element in plain text. The following shows the resulting SD-JWT payload:
+The following payload is used for the SD-JWT:
 
 <{{examples/complex_ekyc/sd_jwt_payload.json}}
 
-With the following Disclosures:
+The following Disclosures are created by the Issuer:
 
 {{examples/complex_ekyc/disclosures.md}}
 
-The following is a non-normative example of a presented SD-JWT
-without a Key Binding JWT that the Verifier would receive with a selection
-of the Disclosures:
+The following is how a presentation of the SD-JWT
+without a Key Binding JWT could look like:
 
 <{{examples/complex_ekyc/sd_jwt_presentation.txt}}
 
-After the verification of the data, the Verifier will
-pass the following result on to the application for further processing:
+After the validation, the Verifier will have the following data for further processing:
 
 <{{examples/complex_ekyc/verified_contents.json}}
 
 ## Example 4a - Verifiable Credentials with JSON payload based on the SD-JWT format
 
-This example illustrates how to use the artifacts defined in this specification to secure
-Verifiable Credentials with JSON payload based on the SD-JWT format as defined in [@I-D.terbu-sd-jwt-vc].
+In this example, the artifacts defined in this specification are used to secure
+Verifiable Credentials with JSON payload based on the SD-JWT format as defined in [@I-D.terbu-sd-jwt-vc]. Key Binding is applied
+using the Holder's public key passed in a `cnf` Claim in the SD-JWT.
 
-
-In this example, Key Binding is applied and Verifiable Presentation can be signed using
-a Holder's public key passed in a `cnf` Claim in the SD-JWT.
-
-The following data will be used in this example:
+The Issuer is using the following input claim set:
 
 <{{examples/w3c-vc/user_claims.json}}
 
-An issued SD-JWT might look as follows (with Line breaks for formatting only):
+The following is the issued SD-JWT (with line breaks for formatting only):
 
 <{{examples/w3c-vc/sd_jwt_issuance.txt}}
 
-The payload of a corresponding SD-JWT looks as follows:
+The following payload is used for the SD-JWT:
 
 <{{examples/w3c-vc/sd_jwt_payload.json}}
 
-Disclosures:
+The following Disclosures are created by the Issuer:
 
 {{examples/w3c-vc/disclosures.md}}
 
-A presentation of the SD-JWT that discloses only `given_name` and `is_over_18`
-claims with a Key Binding JWT could look as follows:
+The following is how a presentation of the SD-JWT with Key Binding JWT that discloses only `given_name` and `is_over_18`
+claims with a Key Binding JWT could look like:
 
 <{{examples/w3c-vc/sd_jwt_presentation.txt}}
 
-The payload of a corresponding Key Binding JWT looks as follows:
+The following is the payload of a corresponding Key Binding JWT:
 
 <{{examples/w3c-vc/kb_jwt_payload.json}}
 
-After the verification of the data, the Verifier will
-pass the following result on to the application for further processing:
+After the validation, the Verifier will have the following data for further processing:
 
 <{{examples/w3c-vc/verified_contents.json}}
 
 ## Example 4b - W3C Verifiable Credentials Data Model v2.0
 
-This example illustrates how to use the artifacts defined in this specification to secure a payload
+In this example, the artifacts defined in this specification are used to secure a payload
 that is represented as a W3C Verifiable Credentials Data Model v2.0 [@VC_DATA_v2.0].
-
-In this example, Key Binding is applied
+Key Binding is applied
 using the Holder's public key passed in a `cnf` Claim in the SD-JWT.
 
-Below is a non-normative example of an SD-JWT represented as a W3C VC using JSON-LD.
-
-The following data will be used in this example:
+The Issuer is using the following input claim set:
 
 <{{examples/jsonld/user_claims.json}}
 
-An issued SD-JWT might look as follows (with Line breaks for formatting only):
+The following is the issued SD-JWT (with line breaks for formatting only):
 
 <{{examples/jsonld/sd_jwt_issuance.txt}}
 
-The payload of a corresponding SD-JWT looks as follows:
+The following payload is used for the SD-JWT:
 
 <{{examples/jsonld/sd_jwt_payload.json}}
 
-Disclosures:
+The following Disclosures are created by the Issuer:
 
 {{examples/jsonld/disclosures.md}}
 
-The following is a non-normative example of a presented SD-JWT with Key Binding. It only discloses `type`, `medicinalProductName`, `atcCode` of the vaccine, `type` of the `recipient`, `type`, `order` and `dateOfVaccination`.
+The following is how a presentation of the SD-JWT with Key Binding JWT that discloses only `type`, `medicinalProductName`, `atcCode` of the vaccine, `type` of the `recipient`, `type`, `order` and `dateOfVaccination` could look like:
 
 <{{examples/jsonld/sd_jwt_presentation.txt}}
 
