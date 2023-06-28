@@ -19,7 +19,6 @@ user_claims:
   !sd nationalities: [!sd "DE"]
   !sd birth_family_name: Schmidt
   !sd birthdate: '1973-01-01'
-  !sd place_of_birth: Regensburg
   !sd address:
     postal_code: '12345'
     locality: Irgendwo
@@ -31,12 +30,11 @@ user_claims:
 
 holder_disclosed_claims:
   binding:
-    - false
     - true
+    - false
   nationalities:
     - true
   is_over_18: true
-  place_of_birth: true
 
 add_decoy_claims: true
 key_binding: false
