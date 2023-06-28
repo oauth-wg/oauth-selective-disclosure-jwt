@@ -1438,7 +1438,7 @@ The Issuer added the following decoy digests:
 
 {{examples/pid/decoy_digests.md}}
 
-A presentation of the SD-JWT without a Key Binding JWT that discloses only biometrics based holder binding (`binding` of type `BiometricBinding`), 
+A presentation of the SD-JWT without a Key Binding JWT that discloses only biometrics based holder binding (`binding` of type `BiometricBinding`),
 nationality, place of birth, and the fact that the person is over 18 years old could look as follows:
 
 <{{examples/pid/sd_jwt_presentation.txt}}
