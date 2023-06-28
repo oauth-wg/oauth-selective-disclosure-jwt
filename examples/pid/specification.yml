@@ -1,5 +1,5 @@
 user_claims:
-  iss: https://pid_issuer.memberstate.eu
+  iss: https://pid-provider.memberstate.example.eu
   iat: 1541493724
   type: PersonIdentificationData
   binding:
@@ -36,5 +36,5 @@ holder_disclosed_claims:
     - true
   is_over_18: true
 
-add_decoy_claims: true
+add_decoy_claims: false
 key_binding: false
