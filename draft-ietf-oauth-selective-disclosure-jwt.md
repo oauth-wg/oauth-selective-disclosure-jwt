@@ -553,7 +553,7 @@ established. For example, the Holder MAY provide a key pair to the Issuer,
 the Issuer MAY create the key pair for the Holder, or
 Holder and Issuer MAY use pre-established key material.
 
-Note: Examples in this document use the `cnf` Claim defined in [@RFC7800] to include
+Note: Examples in this document use the `cnf` claim defined in [@RFC7800] to include
 the raw public key by value in SD-JWT.
 
 ## Key Binding JWT {#kb-jwt}
@@ -1325,7 +1325,7 @@ and `country` of the `address` property and without a Key Binding JWT could look
 
 ## Example 3 - Complex Structured SD-JWT {#example-complex-structured-sd-jwt}
 
-In this example, an SD-JWT with a complex object is demonstrated. Here, the data
+In this example, an SD-JWT with a complex object is demonstrated. The data
 structures defined in OIDC4IDA [@OIDC.IDA] are used.
 
 The Issuer is using the following input claim set:
@@ -1349,47 +1349,54 @@ After the validation, the Verifier will have the following data for further proc
 
 <{{examples/complex_ekyc/verified_contents.json}}
 
-## Example 4a - Verifiable Credentials with JSON payload based on the SD-JWT format
+## Example 4a - SD-JWT-based Verifiable Credentials (SD-JWT VC)
 
-In this example, the artifacts defined in this specification are used to secure
-Verifiable Credentials with JSON payload based on the SD-JWT format as defined in [@I-D.terbu-sd-jwt-vc]. Key Binding is applied
-using the Holder's public key passed in a `cnf` Claim in the SD-JWT.
+In this example, the artifacts defined in this specification are used to represent
+Verifiable Credentials with JSON payload as defined in [@I-D.terbu-sd-jwt-vc].
+Person Identification Data (PID) defined in [@EUDIW.ARF] is used.
+
+Key Binding is applied
+using the Holder's public key passed in a `cnf` claim in the SD-JWT.
 
 The Issuer is using the following input claim set:
 
-<{{examples/w3c-vc/user_claims.json}}
+<{{examples/arf-pid/user_claims.json}}
 
 The following is the issued SD-JWT (with line breaks for formatting only):
 
-<{{examples/w3c-vc/sd_jwt_issuance.txt}}
+<{{examples/arf-pid/sd_jwt_issuance.txt}}
 
 The following payload is used for the SD-JWT:
 
-<{{examples/w3c-vc/sd_jwt_payload.json}}
+<{{examples/arf-pid/sd_jwt_payload.json}}
 
 The following Disclosures are created by the Issuer:
 
-{{examples/w3c-vc/disclosures.md}}
+{{examples/arf-pid/disclosures.md}}
 
-The following is how a presentation of the SD-JWT with Key Binding JWT that discloses only `given_name` and `is_over_18`
-claims with a Key Binding JWT could look like:
+The following decoy digests are added:
 
-<{{examples/w3c-vc/sd_jwt_presentation.txt}}
+{{examples/simple_structured/decoy_digests.md}}
+
+The following is how a presentation of the SD-JWT with Key Binding JWT that discloses only nationality and the fact that the person is over 18 years old could look like:
+
+<{{examples/arf-pid/sd_jwt_presentation.txt}}
 
 The following is the payload of a corresponding Key Binding JWT:
 
-<{{examples/w3c-vc/kb_jwt_payload.json}}
+<{{examples/arf-pid/kb_jwt_payload.json}}
 
 After the validation, the Verifier will have the following data for further processing:
 
-<{{examples/w3c-vc/verified_contents.json}}
+<{{examples/arf-pid/verified_contents.json}}
 
 ## Example 4b - W3C Verifiable Credentials Data Model v2.0
 
-In this example, the artifacts defined in this specification are used to secure a payload
+In this example, the artifacts defined in this specification are used to represent a payload
 that is represented as a W3C Verifiable Credentials Data Model v2.0 [@VC_DATA_v2.0].
+
 Key Binding is applied
-using the Holder's public key passed in a `cnf` Claim in the SD-JWT.
+using the Holder's public key passed in a `cnf` claim in the SD-JWT.
 
 The Issuer is using the following input claim set:
 
@@ -1414,41 +1421,6 @@ The following is how a presentation of the SD-JWT with Key Binding JWT that disc
 After the validation, the Verifier will have the following data for further processing:
 
 <{{examples/jsonld/verified_contents.json}}
-
-## Example 5: EUDIW ARF Person Identification Data (PID)  {#person_identification_data}
-
-This example illustrates how to use the artifacts defined in this specification to secure
-Person Identification Data (PID) based on the SD-JWT format as defined in [@EUDIW.ARF].
-
-This example uses the following object as the SD-JWT input claim set:
-
-<{{examples/pid/user_claims.json}}
-
-An issued SD-JWT might look as follows (with Line breaks for formatting only):
-
-<{{examples/pid/sd_jwt_issuance.txt}}
-
-The following payload is used for the SD-JWT:
-
-<{{examples/pid/sd_jwt_payload.json}}
-
-The Disclosures of this SD-JWT are as follows:
-
-{{examples/pid/disclosures.md}}
-
-The Issuer added the following decoy digests:
-
-{{examples/pid/decoy_digests.md}}
-
-A presentation of the SD-JWT without a Key Binding JWT that discloses only biometrics based holder binding (`binding` of type `BiometricBinding`),
-nationality, place of birth, and the fact that the person is over 18 years old could look as follows:
-
-<{{examples/pid/sd_jwt_presentation.txt}}
-
-After the verification of the data, the Verifier passes
-the following result to the application for further processing:
-
-<{{examples/pid/verified_contents.json}}
 
 ## Elliptic Curve Key Used in the Examples
 

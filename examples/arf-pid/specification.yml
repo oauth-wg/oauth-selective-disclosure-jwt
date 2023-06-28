@@ -2,19 +2,7 @@ user_claims:
   iss: https://pid-provider.memberstate.example.eu
   iat: 1541493724
   type: PersonIdentificationData
-  binding:
-  - !sd
-    type: CryptographicBinding
-    cnf:
-      jwk:
-        kty: EC
-        crv: P-256
-        x: TCAER19Zvu3OHF4j4W4vfSVoHIP1ILilDls7vCeGemc
-        y: ZxjiWWbZMQGHVWKVQ4hbSIirsVfuecCE6t4jT9F2HZQ
-  - !sd
-    type: BiometricBinding
-    template: "..."
-  !sd given_name: Erika
+  !sd first_name: Erika
   !sd family_name: Mustermann
   !sd nationalities: [!sd "DE"]
   !sd birth_family_name: Schmidt
@@ -29,12 +17,9 @@ user_claims:
   !sd is_over_65: false
 
 holder_disclosed_claims:
-  binding:
-    - true
-    - false
   nationalities:
     - true
   is_over_18: true
 
-add_decoy_claims: false
-key_binding: false
+add_decoy_claims: true
+key_binding: true
