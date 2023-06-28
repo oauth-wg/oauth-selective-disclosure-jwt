@@ -421,7 +421,7 @@ element unless a matching Disclosure for the second element is received.
 
 ## Example 1: SD-JWT {#example-1}
 
-In this example, the simplest SD-JWT is demonstrated.
+In this example, a simple SD-JWT is demonstrated.
 
 The Issuer is using the following input claim set:
 
