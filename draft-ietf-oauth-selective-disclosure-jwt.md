@@ -1547,6 +1547,7 @@ data. The original JSON data is then used by the application. See
    * Improved example for allowed variations in Disclosures
    * Added some text to the Abstract and Introduction to be more inclusive of JWS with JSON
    * Added some security considerations text about the scope of the Key Binding JWT
+   * Aligned examples structure and used the term input claim set
 
    -04
 
