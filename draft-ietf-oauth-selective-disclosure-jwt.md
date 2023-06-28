@@ -249,14 +249,14 @@ An SD-JWT has a JWT component that MUST be signed using the Issuer's private key
 It MUST use a JWS asymmetric digital signature algorithm. It
 MUST NOT use `none` or an identifier for a symmetric algorithm (MAC).
 
-The input claim set to be used as the payload of an Issuer-signed JWT component of an SD-JWT is a JSON object that:
+The input claim set to be used as the payload of the Issuer-signed JWT component of an SD-JWT is a JSON object that
 
- 1. MAY contain the `_sd_alg` key described in (#hash_function_claim).
- 2. MAY contain one or more digests of Disclosures to enable selective disclosure of the respective claims, created and formatted as described below.
- 3. MAY contain one or more decoy digests to obscure the actual number of claims in the SD-JWT, created and formatted as described in (#decoy_digests).
- 4. MAY contain one or more non-selectively disclosable claims.
- 5. MAY also contain a Holder's public key or a reference thereto, as well as further claims such as `iss`, `iat`, etc. as defined or required by the application using SD-JWTs.
- 6. MUST NOT contain the reserved claims `_sd` or `...` except for the purpose of transporting digests as described below.
+ 1. MAY contain the `_sd_alg` key described in (#hash_function_claim),
+ 2. MAY contain one or more digests of Disclosures to enable selective disclosure of the respective claims, created and formatted as described below,
+ 3. MAY contain one or more decoy digests to obscure the actual number of claims in the SD-JWT, created and formatted as described in (#decoy_digests),
+ 4. MAY contain one or more non-selectively disclosable claims,
+ 5. MAY also contain a Holder's public key or a reference thereto, as well as further claims such as `iss`, `iat`, etc. as defined or required by the application using SD-JWTs,
+ 6. MUST NOT contain the reserved claims `_sd` or `...` except for the purpose of transporting digests as described below, and
  7. MUST NOT contain more than one appearance of the same digest value.
 
 Applications of SD-JWT SHOULD be explicitly typed using the `typ` header parameter. See (#explicit_typing) for more details.
@@ -425,7 +425,7 @@ This example uses the following object as the set of claims that the Issuer is i
 
 <{{examples/simple/user_claims.json}}
 
-The following non-normative example shows an input claim set of an SD-JWT for this End-User data:
+The following non-normative example shows the input claim set of an SD-JWT for this End-User data:
 
 <{{examples/simple/sd_jwt_payload.json}}
 
@@ -1545,7 +1545,7 @@ data. The original JSON data is then used by the application. See
    * Removed Example 2b and merged the demo of decoy digests into Example 2a
    * Improved example for allowed variations in Disclosures
    * Added some text to the Abstract and Introduction to be more inclusive of JWS with JSON
-   * Replaced SD-JWT `payload` with `input claim set`
+   * Replaced SD-JWT 'payload' with 'input claim set'
 
    -04
 
