@@ -1012,9 +1012,10 @@ provided by the transport protocol and does not specify any encryption
 mechanism.
 
 Implementers MUST ensure that the transport protocol provides confidentiality
-if the privacy of End-User data or correlation attacks by passive observers are a concern. Implementers MAY define an
-envelope format (such as described in (#enveloping) or nesting the SD-JWT as
-the plaintext payload of a JWE) to encrypt the SD-JWT when transmitted over an insecure channel.
+if the privacy of End-User data or correlation attacks by passive observers are a concern.
+
+To encrypt the SD-JWT when transmitted over an insecure channel, implementers MAY use JSON Web Encryption (JWE) [@!RFC7516] by nesting the SD-JWT as the plaintext payload of a JWE.
+Especially, when an SD-JWT is transmitted via a URL and information may be stored/cached in the browser or end up in web server logs, the SD-JWT SHOULD be encrypted using JWE.
 
 ## Decoy Digests {#decoy_digests_privacy}
 
