@@ -1538,6 +1538,7 @@ data. The original JSON data is then used by the application. See
    * Added some text to the Abstract and Introduction to be more inclusive of JWS with JSON
    * Added some security considerations text about the scope of the Key Binding JWT
    * Aligned examples structure and used the term input claim set
+   * Replaced the general SD-JWT VC example with one based on Person Identification Data (PID) from the European Digital Identity Wallet Architecture and Reference Framework
 
    -04
 
