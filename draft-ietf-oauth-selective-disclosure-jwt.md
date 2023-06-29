@@ -1353,7 +1353,7 @@ After the validation, the Verifier will have the following data for further proc
 ## Example 4a - SD-JWT-based Verifiable Credentials (SD-JWT VC)
 
 In this example, the artifacts defined in this specification are used to represent
-Verifiable Credentials with JSON payload as defined in [@I-D.terbu-sd-jwt-vc].
+SD-JWT-based Verifiable Credentials (SD-JWT VC) as defined in [@I-D.terbu-sd-jwt-vc].
 Person Identification Data (PID) defined in [@EUDIW.ARF] is used.
 
 Key Binding is applied
@@ -1379,7 +1379,7 @@ The following decoy digests are added:
 
 {{examples/simple_structured/decoy_digests.md}}
 
-The following is how a presentation of the SD-JWT with Key Binding JWT that discloses only nationality and the fact that the person is over 18 years old could look like:
+The following is how a presentation of the SD-JWT with a Key Binding JWT that discloses only nationality and the fact that the person is over 18 years old could look like:
 
 <{{examples/arf-pid/sd_jwt_presentation.txt}}
 
