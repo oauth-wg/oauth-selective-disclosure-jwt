@@ -1207,31 +1207,6 @@ the media type is encoded as an SD-JWT.
   </front>
 </reference>
 
-<reference anchor="VC_DATA_v1.1" target="https://www.w3.org/TR/vc-data-model/">
-  <front>
-    <title>Verifiable Credentials Data Model 1.1</title>
-    <author fullname="Manu Sporny">
-      <organization>Digital Bazaar</organization>
-    </author>
-    <author fullname="Grant Noble">
-      <organization>ConsenSys</organization>
-    </author>
-    <author fullname="Dave Longley">
-      <organization>Digital Bazaar</organization>
-    </author>
-    <author fullname="Daniel C. Burnett">
-      <organization>ConsenSys</organization>
-    </author>
-    <author fullname="Brent Zundel">
-      <organization>Evernym</organization>
-    </author>
-    <author fullname="Kyle Den Hartog">
-      <organization>MATTR</organization>
-    </author>
-    <date day="03" month="Mar" year="2022" />
-  </front>
-</reference>
-
 <reference anchor="OIDC.IDA" target="https://openid.net/specs/openid-connect-4-identity-assurance-1_0-13.html">
   <front>
     <title>OpenID Connect for Identity Assurance 1.0</title>
