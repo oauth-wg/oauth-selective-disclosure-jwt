@@ -553,7 +553,7 @@ established. For example, the Holder MAY provide a key pair to the Issuer,
 the Issuer MAY create the key pair for the Holder, or
 Holder and Issuer MAY use pre-established key material.
 
-Note: Examples in this document use the `cnf` claim defined in [@RFC7800] to include
+Note: The examples in this document use the `cnf` claim defined in [@RFC7800] to include
 the raw public key by value in SD-JWT.
 
 ## Key Binding JWT {#kb-jwt}
@@ -1301,7 +1301,7 @@ and `country` of the `address` property and without a Key Binding JWT could look
 
 ## Example 3 - Complex Structured SD-JWT {#example-complex-structured-sd-jwt}
 
-In this example, an SD-JWT with a complex object is demonstrated. The data
+In this example, an SD-JWT with a complex object is represented. The data
 structures defined in OIDC4IDA [@OIDC.IDA] are used.
 
 The Issuer is using the following input claim set:
