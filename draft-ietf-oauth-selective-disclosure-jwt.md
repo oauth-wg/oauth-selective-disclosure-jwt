@@ -553,7 +553,7 @@ established. For example, the Holder MAY provide a key pair to the Issuer,
 the Issuer MAY create the key pair for the Holder, or
 Holder and Issuer MAY use pre-established key material.
 
-Note: Examples in this document use the `cnf` Claim defined in [@RFC7800] to include
+Note: The examples in this document use the `cnf` claim defined in [@RFC7800] to include
 the raw public key by value in SD-JWT.
 
 ## Key Binding JWT {#kb-jwt}
@@ -1064,6 +1064,7 @@ Justin Richer,
 Kushal Das,
 Matthew Miller,
 Mike Jones,
+Mike Prorock,
 Nat Sakimura,
 Oliver Terbu,
 Orie Steele,
@@ -1206,31 +1207,6 @@ the media type is encoded as an SD-JWT.
   </front>
 </reference>
 
-<reference anchor="VC_DATA_v1.1" target="https://www.w3.org/TR/vc-data-model/">
-  <front>
-    <title>Verifiable Credentials Data Model 1.1</title>
-    <author fullname="Manu Sporny">
-      <organization>Digital Bazaar</organization>
-    </author>
-    <author fullname="Grant Noble">
-      <organization>ConsenSys</organization>
-    </author>
-    <author fullname="Dave Longley">
-      <organization>Digital Bazaar</organization>
-    </author>
-    <author fullname="Daniel C. Burnett">
-      <organization>ConsenSys</organization>
-    </author>
-    <author fullname="Brent Zundel">
-      <organization>Evernym</organization>
-    </author>
-    <author fullname="Kyle Den Hartog">
-      <organization>MATTR</organization>
-    </author>
-    <date day="03" month="Mar" year="2022" />
-  </front>
-</reference>
-
 <reference anchor="OIDC.IDA" target="https://openid.net/specs/openid-connect-4-identity-assurance-1_0-13.html">
   <front>
     <title>OpenID Connect for Identity Assurance 1.0</title>
@@ -1262,6 +1238,12 @@ the media type is encoded as an SD-JWT.
   </front>
 </reference>
 
+<reference anchor="EUDIW.ARF" target="https://digital-strategy.ec.europa.eu/en/library/european-digital-identity-wallet-architecture-and-reference-framework">
+  <front>
+    <author fullname="European Commission"></author>
+    <title>The European Digital Identity Wallet Architecture and Reference Framework</title>
+  </front>
+</reference>
 
 <reference anchor="IANA.JWS.Algorithms" target="https://www.iana.org/assignments/jose/jose.xhtml#web-signature-encryption-algorithms">
   <front>
@@ -1319,7 +1301,7 @@ and `country` of the `address` property and without a Key Binding JWT could look
 
 ## Example 3 - Complex Structured SD-JWT {#example-complex-structured-sd-jwt}
 
-In this example, an SD-JWT with a complex object is demonstrated. Here, the data
+In this example, an SD-JWT with a complex object is represented. The data
 structures defined in OIDC4IDA [@OIDC.IDA] are used.
 
 The Issuer is using the following input claim set:
@@ -1343,47 +1325,54 @@ After the validation, the Verifier will have the following data for further proc
 
 <{{examples/complex_ekyc/verified_contents.json}}
 
-## Example 4a - Verifiable Credentials with JSON payload based on the SD-JWT format
+## Example 4a - SD-JWT-based Verifiable Credentials (SD-JWT VC)
 
-In this example, the artifacts defined in this specification are used to secure
-Verifiable Credentials with JSON payload based on the SD-JWT format as defined in [@I-D.terbu-sd-jwt-vc]. Key Binding is applied
-using the Holder's public key passed in a `cnf` Claim in the SD-JWT.
+In this example, the artifacts defined in this specification are used to represent
+SD-JWT-based Verifiable Credentials (SD-JWT VC) as defined in [@I-D.terbu-sd-jwt-vc].
+Person Identification Data (PID) defined in [@EUDIW.ARF] is used.
+
+Key Binding is applied
+using the Holder's public key passed in a `cnf` claim in the SD-JWT.
 
 The Issuer is using the following input claim set:
 
-<{{examples/w3c-vc/user_claims.json}}
+<{{examples/arf-pid/user_claims.json}}
 
 The following is the issued SD-JWT (with line breaks for formatting only):
 
-<{{examples/w3c-vc/sd_jwt_issuance.txt}}
+<{{examples/arf-pid/sd_jwt_issuance.txt}}
 
 The following payload is used for the SD-JWT:
 
-<{{examples/w3c-vc/sd_jwt_payload.json}}
+<{{examples/arf-pid/sd_jwt_payload.json}}
 
 The following Disclosures are created by the Issuer:
 
-{{examples/w3c-vc/disclosures.md}}
+{{examples/arf-pid/disclosures.md}}
 
-The following is how a presentation of the SD-JWT with Key Binding JWT that discloses only `given_name` and `is_over_18`
-claims with a Key Binding JWT could look like:
+The following decoy digests are added:
 
-<{{examples/w3c-vc/sd_jwt_presentation.txt}}
+{{examples/simple_structured/decoy_digests.md}}
+
+The following is how a presentation of the SD-JWT with a Key Binding JWT that discloses only nationality and the fact that the person is over 18 years old could look like:
+
+<{{examples/arf-pid/sd_jwt_presentation.txt}}
 
 The following is the payload of a corresponding Key Binding JWT:
 
-<{{examples/w3c-vc/kb_jwt_payload.json}}
+<{{examples/arf-pid/kb_jwt_payload.json}}
 
 After the validation, the Verifier will have the following data for further processing:
 
-<{{examples/w3c-vc/verified_contents.json}}
+<{{examples/arf-pid/verified_contents.json}}
 
 ## Example 4b - W3C Verifiable Credentials Data Model v2.0
 
-In this example, the artifacts defined in this specification are used to secure a payload
+In this example, the artifacts defined in this specification are used to represent a payload
 that is represented as a W3C Verifiable Credentials Data Model v2.0 [@VC_DATA_v2.0].
+
 Key Binding is applied
-using the Holder's public key passed in a `cnf` Claim in the SD-JWT.
+using the Holder's public key passed in a `cnf` claim in the SD-JWT.
 
 The Issuer is using the following input claim set:
 
@@ -1549,6 +1538,7 @@ data. The original JSON data is then used by the application. See
    * Added some text to the Abstract and Introduction to be more inclusive of JWS with JSON
    * Added some security considerations text about the scope of the Key Binding JWT
    * Aligned examples structure and used the term input claim set
+   * Replaced the general SD-JWT VC example with one based on Person Identification Data (PID) from the European Digital Identity Wallet Architecture and Reference Framework
 
    -04
 

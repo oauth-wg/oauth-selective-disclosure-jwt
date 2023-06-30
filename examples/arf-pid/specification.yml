@@ -1,0 +1,25 @@
+user_claims:
+  iss: https://pid-provider.memberstate.example.eu
+  iat: 1541493724
+  type: PersonIdentificationData
+  !sd first_name: Erika
+  !sd family_name: Mustermann
+  !sd nationalities: [!sd "DE"]
+  !sd birth_family_name: Schmidt
+  !sd birthdate: '1973-01-01'
+  !sd address:
+    postal_code: '12345'
+    locality: Irgendwo
+    street_address: Sonnenstrasse 23
+    country_code: DE
+  !sd is_over_18: true
+  !sd is_over_21: true
+  !sd is_over_65: false
+
+holder_disclosed_claims:
+  nationalities:
+    - true
+  is_over_18: true
+
+add_decoy_claims: true
+key_binding: true

@@ -1,7 +1,6 @@
 user_claims:
   iss: "https://example.com"
   jti: "http://example.com/credentials/3732"
-  nbf: 1541493724
   iat: 1541493724
   type: IdentityCredential
   !sd given_name: John
