@@ -800,7 +800,7 @@ has not been tampered with since the issuance. The Issuer-signed JWT MUST be rej
 
 The security of the Issuer-signed JWT depends on the security of the signature algorithm.
 Any of the JSON Web Signature and Encryption Algorithms registered in [@IANA.JWS.Algorithms]
-can be used, including post quantum algorithms, when they are ready.
+can be used, including post-quantum algorithms, when they are ready.
 
 ## Manipulation of Disclosures {#sec-disclosures}
 
@@ -1539,6 +1539,13 @@ data. The original JSON data is then used by the application. See
    * Added some security considerations text about the scope of the Key Binding JWT
    * Aligned examples structure and used the term input claim set
    * Replaced the general SD-JWT VC example with one based on Person Identification Data (PID) from the European Digital Identity Wallet Architecture and Reference Framework
+   * Added/clarified some privacy considerations in Confidentiality during Transport
+   * No longer recommending a claim name for enveloped SD-JWTs
+   * Mention prospective future PQ algs for JWS
+   * Include the public key in the draft, which can be used to verify the issuer signature examples
+   * Clarify that `_sd_alg` can only be at the top level of the SD-JWT payload
+   * Externalized the SD-JWT library that generates examples
+   * Attempt to improve description of security properties
 
    -04
 
