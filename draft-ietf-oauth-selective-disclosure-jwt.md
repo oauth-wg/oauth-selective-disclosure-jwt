@@ -734,7 +734,7 @@ The following non-normative example shows an SD-JWT Presentation enveloped in a 
 
 ```
 {
-  "aud": "https://verifier.example.com",
+  "aud": "https://verifier.example.org",
   "iat": 1580000000,
   "nonce": "iRnRdKuu1AtLM4ltc16by2XF0accSeutUescRw6BWC14",
   "_sd_jwt": "eyJhbGci...emhlaUJhZzBZ~eyJhb...dYALCGg~"
@@ -1521,6 +1521,10 @@ data. The original JSON data is then used by the application. See
 # Document History
 
    [[ To be removed from the final specification ]]
+
+   -06
+
+   * Fix minor issues in some examples
 
    -05
 
