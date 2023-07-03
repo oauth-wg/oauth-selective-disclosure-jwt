@@ -1,4 +1,7 @@
 user_claims:
+  iss: null
+  exp: null
+  iat: null
   "@context":
     - "https://www.w3.org/2018/credentials/v1"
     - "https://w3id.org/vaccination/v1"
