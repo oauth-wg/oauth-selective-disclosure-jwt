@@ -1,7 +1,4 @@
 user_claims:
-  iss: null
-  exp: null
-  iat: null
   "@context":
     - "https://www.w3.org/2018/credentials/v1"
     - "https://w3id.org/vaccination/v1"
@@ -43,3 +40,5 @@ holder_disclosed_claims:
       type: true
       atcCode: true
       medicinalProductName: true
+
+include_default_claims: False # omit the normal JWT iss, exp, and iat claims from the payload
