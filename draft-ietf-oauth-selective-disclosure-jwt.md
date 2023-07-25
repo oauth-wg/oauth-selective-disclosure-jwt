@@ -207,7 +207,7 @@ conceptual level, abstracting from the data formats described in (#data_formats)
 
 An SD-JWT, at its core, is a digitally signed JSON document containing digests over the selectively disclosable claims with the Disclosures outside the document. Disclosures can be omitted without breaking the signature, and modifying them can be detected. Selectively disclosable claims can be individual object properties (key-value pairs) or array elements.
 
-Each digest value ensures the integrity of, and maps to, the respective Disclosure.  Digest values are calculated using a hash function over the Disclosures, each of which contains a random salt, the claim name (only when the claim is an object property), and the claim value. The Disclosures are sent to the Holder as part of the SD-JWT in the format defined in (#sd-jwt-structure).
+Each digest value ensures the integrity of, and maps to, the respective Disclosure.  Digest values are calculated using a hash function over the Disclosures, each of which contains a cryptographically secure random salt, the claim name (only when the claim is an object property), and the claim value. The Disclosures are sent to the Holder as part of the SD-JWT in the format defined in (#sd-jwt-structure).
 
 An SD-JWT MAY also contain clear-text claims that are always disclosed to the Verifier.
 
@@ -277,7 +277,7 @@ Disclosures are created differently depending on whether a claim is an object pr
 For each claim that is an object property and that is to be made selectively disclosable, the Issuer MUST create a Disclosure as follows:
 
  * Create an array of three elements in this order:
-   1. A salt value. MUST be a string. See (#salt-entropy) and (#salt_minlength) for security considerations. It is RECOMMENDED to base64url-encode minimum 128 bits of cryptographically secure pseudorandom data, producing a string. The salt value MUST be unique for each claim that is to be selectively disclosed. The Issuer MUST NOT disclose the salt value to any party other than the Holder.
+   1. A salt value. MUST be a string. See (#salt-entropy) and (#salt_minlength) for security considerations. It is RECOMMENDED to base64url-encode minimum 128 bits of cryptographically secure random data, producing a string. The salt value MUST be unique for each claim that is to be selectively disclosed. The Issuer MUST NOT disclose the salt value to any party other than the Holder.
    2. The claim name, or key, as it would be used in a regular JWT body. The value MUST be a string.
    3. The claim value, as it would be used in a regular JWT body. The value MAY be of any type that is allowed in JSON, including numbers, strings, booleans, arrays, and objects.
  * JSON-encode the array, producing an UTF-8 string.
