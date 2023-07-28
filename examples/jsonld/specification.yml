@@ -40,3 +40,5 @@ holder_disclosed_claims:
       type: true
       atcCode: true
       medicinalProductName: true
+
+include_default_claims: False # omit the normal JWT iss, exp, and iat claims from the payload
