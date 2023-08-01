@@ -549,7 +549,7 @@ If the Issuer wants to enable Key Binding, it includes a public key
 associated with the Holder, or a reference thereto.
 
 It is out of the scope of this document to describe how the Holder key pair is
-established. For example, the Holder MAY provide a key pair to the Issuer,
+established. For example, the Holder MAY create a key pair and provide a public key to the Issuer,
 the Issuer MAY create the key pair for the Holder, or
 Holder and Issuer MAY use pre-established key material.
 
