@@ -1,6 +1,6 @@
 identifiers:
-    issuer: "https://example.com/issuer"
-    verifier: "https://example.com/verifier"
+    issuer: "https://issuer.example.com"
+    verifier: "https://verifier.example.org"
 
 key_settings:
     key_size: 256
