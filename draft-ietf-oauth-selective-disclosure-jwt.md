@@ -602,7 +602,7 @@ signed JWT. See (#enveloping) for details.
 An SD-JWT is composed of the following:
 
 * the Issuer-signed JWT
-* The Disclosures
+* optionally the Disclosures
 * optionally a Key Binding JWT
 
 The serialized format for the SD-JWT is the concatenation of each part delineated with a single tilde ('~') character as follows:
