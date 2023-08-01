@@ -730,7 +730,7 @@ In some applications or transport protocols, it is desirable to put an SD-JWT in
 
 For such use cases, the SD-JWT SHOULD be transported as a single string. Key Binding MAY be achieved by signing the envelope JWT instead of including a separate Key Binding JWT in the SD-JWT.
 
-The following non-normative example shows an SD-JWT Presentation enveloped in a JWT payload:
+The following non-normative example shows an SD-JWT Presentation enveloped in a JWS payload:
 
 ```
 {
