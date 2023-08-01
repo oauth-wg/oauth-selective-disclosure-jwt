@@ -255,7 +255,7 @@ The payload of an SD-JWT is a JSON object according to the following rules:
  2. The payload MAY contain one or more digests of Disclosures to enable selective disclosure of the respective claims, created and formatted as described below.
  3. The payload MAY contain one or more decoy digests to obscure the actual number of claims in the SD-JWT, created and formatted as described in (#decoy_digests).
  4. The payload MAY contain one or more non-selectively disclosable claims.
- 5. The payload MAY also contain a Holder's public key or a reference thereto, as well as further claims such as `iss`, `iat`, etc. as defined or required by the application using SD-JWTs.
+ 5. The payload MAY also contain Holder's public key(s) or reference(s) thereto, as well as further claims such as `iss`, `iat`, etc. as defined or required by the application using SD-JWTs.
  6. The payload MUST NOT contain the reserved claims `_sd` or `...` except for the purpose of transporting digests as described below.
  7. The same digest value MUST NOT appear more than once in the SD-JWT.
 
@@ -658,7 +658,7 @@ an SD-JWT:
     3. Validate the Issuer and that the signing key belongs to this Issuer.
     4. Check that the Issuer-signed JWT is valid using `nbf`, `iat`, and `exp` claims, if provided in the SD-JWT, and not selectively disclosed.
     5. Check that the `_sd_alg` claim value is understood and the hash algorithm is deemed secure.
- 3. Process the Disclosures and embedded digests in the issuser-signed JWT as follows:
+ 3. Process the Disclosures and embedded digests in the Issuer-signed JWT as follows:
     1. For each Disclosure provided:
        1. Calculate the digest over the base64url-encoded string as described in (#hashing_disclosures).
     2. (*) Identify all embedded digests in the Issuer-signed JWT as follows:
@@ -743,7 +743,7 @@ The following non-normative example shows an SD-JWT Presentation enveloped in a 
 
 Here, the SD-JWT is shown as the value of an `_sd_jwt` claim where `eyJhbGci...emhlaUJhZzBZ` represents the Issuer-signed JWT and `eyJhb...dYALCGg` represents a Disclosure. The SD-JWT does not contain a Key Binding JWT as the outer container can be signed instead.
 
-Other specifications or profiles of this specification may define alternative formats for transporting an SD-JWT that envelope multiple such objects into one object, and provides Key Binding using means other than the Key Binding JWT.
+Other specifications or profiles of this specification may define alternative formats for transporting an SD-JWT that envelope multiple such objects into one object, and provide Key Binding using means other than the Key Binding JWT.
 
 # JWS JSON Serialization {#json_serialization}
 
@@ -1187,7 +1187,7 @@ the media type is encoded as an SD-JWT.
 
 <reference anchor="VC_DATA_v2.0" target="https://www.w3.org/TR/vc-data-model-2.0/">
   <front>
-    <title>Verifiable Credentials Data Model 1.0</title>
+    <title>Verifiable Credentials Data Model 2.0</title>
     <author fullname="Manu Sporny">
       <organization>Digital Bazaar</organization>
     </author>
