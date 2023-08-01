@@ -799,7 +799,7 @@ The Verifier MUST always check the signature of the Issuer-signed JWT to ensure 
 has not been tampered with since the issuance. The Issuer-signed JWT MUST be rejected if the signature cannot be verified.
 
 The security of the Issuer-signed JWT depends on the security of the signature algorithm.
-Any of the JSON Web Signature and Encryption Algorithms registered in [@IANA.JWS.Algorithms]
+Any of the JWS asymmetric digital signature algorithms registered in [@IANA.JWS.Algorithms]
 can be used, including post-quantum algorithms, when they are ready.
 
 ## Manipulation of Disclosures {#sec-disclosures}
