@@ -30,7 +30,7 @@ jobs:
     - name: "Install SD-JWT tooling"
       run: |
         python3 -m pip install --upgrade pip
-        python3 -m pip install git+https://github.com/danielfett/sd-jwt.git
+        python3 -m pip install git+https://github.com/openwallet-foundation-labs/sd-jwt-python.git
 
     # Build the local examples
     - name: "Build local examples"
