@@ -156,6 +156,9 @@ Key Binding:
   control over the same private key during the issuance and presentation. An SD-JWT with Key Binding contains
   a public key, or a reference to a public key, that matches to the private key controlled by the Holder.
 
+Key Binding JWT:
+:  A JWT for proving Key Binding as defined in (#kb-jwt).
+
 Issuer:
 :  An entity that creates SD-JWTs.
 
