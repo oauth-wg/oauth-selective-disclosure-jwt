@@ -19,13 +19,13 @@ The GitHub interface supports creating pull requests using the Edit (✏) button
 
 # Building the Examples & Draft
 
-All examples in the document are created from actual running code maintained at [danielfett/sd-jwt](https://github.com/danielfett/sd-jwt).
+All examples in the document are created from actual running code maintained at [openwallet-foundation-labs/sd-jwt-python](https://github.com/openwallet-foundation-labs/sd-jwt-python).
 
 
 To build formatted text and HTML versions of the draft, run the following steps:
 
  - Follow the instructions in https://github.com/martinthomson/i-d-template/blob/main/doc/SETUP.md to setup the build environment.
- - Install the sd-jwt library as described in https://github.com/danielfett/sd-jwt
+ - Install the sd-jwt library as described in https://github.com/openwallet-foundation-labs/sd-jwt-python
    **or**\
    if the library was installed previously, make sure to enter the virtualenv (`source venv/bin/activate`)
  - `cd examples` to change to the examples directory
@@ -40,7 +40,7 @@ The artifacts generated for the examples (e.g., serialized SD-JWTs, Disclosures,
 
 # SD-JWT Implementations
 
- * Python: [Reference/Demo Implementation](https://github.com/danielfett/sd-jwt)
+ * Python: [Reference/Demo Implementation](https://github.com/openwallet-foundation-labs/sd-jwt-python)
  * Kotlin: [SD-JWT-Kotlin (ID Union)](https://github.com/IDunion/SD-JWT-Kotlin)
  * Rust: [sd_jwt](https://github.com/kushaldas/sd_jwt)
  * TypeScript: [sd-jwt](https://github.com/christianpaquin/sd-jwt)
