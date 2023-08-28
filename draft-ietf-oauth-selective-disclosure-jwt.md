@@ -281,7 +281,7 @@ For each claim that is an object property and that is to be made selectively dis
 
  * Create an array of three elements in this order:
    1. A salt value. MUST be a string. See (#salt-entropy) and (#salt_minlength) for security considerations. It is RECOMMENDED to base64url-encode minimum 128 bits of cryptographically secure pseudorandom data, producing a string. The salt value MUST be unique for each claim that is to be selectively disclosed. The Issuer MUST NOT disclose the salt value to any party other than the Holder.
-   2. The claim name, or key, as it would be used in a regular JWT body. The value MUST be a string.
+   2. The claim name, or key, as it would be used in a regular JWT body. The value MUST be a string. The value MUST NOT be `_sd`, `...`, or a claim name existing in the object as a non-selectively disclosable claim.
    3. The claim value, as it would be used in a regular JWT body. The value MAY be of any type that is allowed in JSON, including numbers, strings, booleans, arrays, and objects.
  * JSON-encode the array, producing an UTF-8 string.
  * base64url-encode the byte representation of the UTF-8 string, producing a US-ASCII [@RFC0020] string. This string is the Disclosure.
@@ -670,13 +670,14 @@ an SD-JWT:
     3. (**) For each embedded digest found in the previous step:
        1. Compare the value with the digests calculated previously and find the matching Disclosure. If no such Disclosure can be found, the digest MUST be ignored.
        2. If the digest was found in an object's `_sd` key:
-          1. If the respective Disclosure is not a JSON-encoded array of three elements, the SD-JWT MUST be rejected.
-          2. Insert, at the level of the `_sd` key, a new claim using the claim name and claim value from the Disclosure.
-          3. If the claim name already exists at the same level, the SD-JWT MUST be rejected.
-          4. Recursively process the value using the steps described in (*) and (**).
+          1. If the respective Disclosure is not a JSON-encoded array of three elements (salt, claim name, claim value), the SD-JWT MUST be rejected.
+          2. If the claim name is `_sd` or `...`, the SD-JWT MUST be rejected.
+          3. If the claim name already exists at the level of the `_sd` key, the SD-JWT MUST be rejected.
+          4. Insert, at the level of the `_sd` key, a new claim using the claim name and claim value from the Disclosure.
+          5. Recursively process the value using the steps described in (*) and (**).
        3. If the digest was found in an array element:
-          1. If the respective Disclosure is not a JSON-encoded array of two elements, the SD-JWT MUST be rejected.
-          2. Replace the array element with the claim value from the Disclosure.
+          1. If the respective Disclosure is not a JSON-encoded array of two elements (salt, value), the SD-JWT MUST be rejected.
+          2. Replace the array element with the value from the Disclosure.
           3. Recursively process the value using the steps described in (*) and (**).
     4. If any digests were found more than once in the previous step, the SD-JWT MUST be rejected.
     5. Remove all array elements for which the digest was not found in the previous step.
@@ -1528,6 +1529,7 @@ data. The original JSON data is then used by the application. See
    -06
 
    * Fix minor issues in some examples
+   * The claim name '_sd' or '...' must not be used in a disclosure.
 
    -05
 
