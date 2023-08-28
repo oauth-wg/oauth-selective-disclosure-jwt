@@ -1531,6 +1531,7 @@ data. The original JSON data is then used by the application. See
    -06
 
    * Fix minor issues in some examples
+   * More precise wording around storing artifacts with sensitive data
 
    -05
 
