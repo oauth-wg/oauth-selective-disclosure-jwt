@@ -975,11 +975,13 @@ Binding is enforced and the attacker does not have access to the
 Holder's cryptographic keys. Altogether, leaked SD-JWT credentials may have
 a high monetary value on black markets.
 
-Due to these risks, systems implementing SD-JWT SHOULD be designed to
-minimize the amount of data that is stored. All involved parties SHOULD
-store SD-JWTs only for as long as needed, including in log files.
+Due to these risks, systems implementing SD-JWT SHOULD be designed to minimize
+the amount of data that is stored. All involved parties SHOULD store SD-JWTs
+containing privacy-sensitive data only for as long as needed, including in log
+files.
 
-Issuers SHOULD NOT store SD-JWTs after issuance.
+After Issuance, Issuers SHOULD NOT store the Issuer-signed JWT or the respective
+Disclosures if they contain privacy-sensitive data.
 
 Holders SHOULD store SD-JWTs only in
 encrypted form, and, wherever possible, use hardware-backed encryption
@@ -988,9 +990,10 @@ of data, e.g., on End-User devices, SHOULD be preferred for End-User
 credentials over centralized storage. Expired SD-JWTs SHOULD be deleted
 as soon as possible.
 
-Verifiers SHOULD NOT store SD-JWTs after verification. It may be
-sufficient to store the result of the verification and any End-User data
-that is needed for the application.
+After Verification, Verifiers SHOULD NOT store the Issuer-signed JWT or the
+respective Disclosures if they contain privacy-sensitive data. It may be
+sufficient to store the result of the verification and any End-User data that is
+needed for the application.
 
 If reliable and secure key rotation and revocation is ensured according
 to (#issuer_signature_key_distribution), Issuers may opt to publish
