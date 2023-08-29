@@ -602,7 +602,7 @@ signed JWT. See (#enveloping) for details.
 An SD-JWT is composed of the following:
 
 * the Issuer-signed JWT
-* optionally the Disclosures
+* zero or more Disclosures
 * optionally a Key Binding JWT
 
 The serialized format for the SD-JWT is the concatenation of each part delineated with a single tilde ('~') character as follows:
@@ -743,7 +743,7 @@ The following non-normative example shows an SD-JWT Presentation enveloped in a 
 
 Here, the SD-JWT is shown as the value of an `_sd_jwt` claim where `eyJhbGci...emhlaUJhZzBZ` represents the Issuer-signed JWT and `eyJhb...dYALCGg` represents a Disclosure. The SD-JWT does not contain a Key Binding JWT as the outer container can be signed instead.
 
-Other specifications or profiles of this specification may define alternative formats for transporting an SD-JWT that envelope multiple such objects into one object, and provide Key Binding using means other than the Key Binding JWT.
+Other specifications or profiles of this specification may define alternative formats for transporting an SD-JWT that envelope multiple such objects into one object and provide Key Binding using means other than the Key Binding JWT.
 
 # JWS JSON Serialization {#json_serialization}
 
