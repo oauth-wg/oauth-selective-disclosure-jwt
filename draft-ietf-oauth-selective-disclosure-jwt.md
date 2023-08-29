@@ -210,7 +210,7 @@ conceptual level, abstracting from the data formats described in (#data_formats)
 
 An SD-JWT, at its core, is a digitally signed JSON document containing digests over the selectively disclosable claims with the Disclosures outside the document. Disclosures can be omitted without breaking the signature, and modifying them can be detected. Selectively disclosable claims can be individual object properties (key-value pairs) or array elements.
 
-Each digest value ensures the integrity of, and maps to, the respective Disclosure.  Digest values are calculated using a hash function over the Disclosures, each of which contains a random salt, the claim name (only when the claim is an object property), and the claim value. The Disclosures are sent to the Holder as part of the SD-JWT in the format defined in (#sd-jwt-structure).
+Each digest value ensures the integrity of, and maps to, the respective Disclosure.  Digest values are calculated using a hash function over the Disclosures, each of which contains a cryptographically secure random salt, the claim name (only when the claim is an object property), and the claim value. The Disclosures are sent to the Holder as part of the SD-JWT in the format defined in (#sd-jwt-structure).
 
 An SD-JWT MAY also contain clear-text claims that are always disclosed to the Verifier.
 
@@ -258,7 +258,7 @@ The payload of an SD-JWT is a JSON object according to the following rules:
  2. The payload MAY contain one or more digests of Disclosures to enable selective disclosure of the respective claims, created and formatted as described below.
  3. The payload MAY contain one or more decoy digests to obscure the actual number of claims in the SD-JWT, created and formatted as described in (#decoy_digests).
  4. The payload MAY contain one or more non-selectively disclosable claims.
- 5. The payload MAY also contain a Holder's public key or a reference thereto, as well as further claims such as `iss`, `iat`, etc. as defined or required by the application using SD-JWTs.
+ 5. The payload MAY also contain Holder's public key(s) or reference(s) thereto, as well as further claims such as `iss`, `iat`, etc. as defined or required by the application using SD-JWTs.
  6. The payload MUST NOT contain the reserved claims `_sd` or `...` except for the purpose of transporting digests as described below.
  7. The same digest value MUST NOT appear more than once in the SD-JWT.
 
@@ -280,9 +280,9 @@ Disclosures are created differently depending on whether a claim is an object pr
 For each claim that is an object property and that is to be made selectively disclosable, the Issuer MUST create a Disclosure as follows:
 
  * Create an array of three elements in this order:
-   1. A salt value. MUST be a string. See (#salt-entropy) and (#salt_minlength) for security considerations. It is RECOMMENDED to base64url-encode minimum 128 bits of cryptographically secure pseudorandom data, producing a string. The salt value MUST be unique for each claim that is to be selectively disclosed. The Issuer MUST NOT disclose the salt value to any party other than the Holder.
-   2. The claim name, or key, as it would be used in a regular JWT body. The value MUST be a string.
-   3. The claim value, as it would be used in a regular JWT body. The value MAY be of any type that is allowed in JSON, including numbers, strings, booleans, arrays, and objects.
+   1. A salt value. MUST be a string. See (#salt-entropy) and (#salt_minlength) for security considerations. It is RECOMMENDED to base64url-encode minimum 128 bits of cryptographically secure random data, producing a string. The salt value MUST be unique for each claim that is to be selectively disclosed. The Issuer MUST NOT disclose the salt value to any party other than the Holder.
+   2. The claim name, or key, as it would be used in a regular JWT payload. The value MUST be a string.
+   3. The claim value, as it would be used in a regular JWT payload. The value MAY be of any type that is allowed in JSON, including numbers, strings, booleans, arrays, and objects.
  * JSON-encode the array, producing an UTF-8 string.
  * base64url-encode the byte representation of the UTF-8 string, producing a US-ASCII [@RFC0020] string. This string is the Disclosure.
 
@@ -552,7 +552,7 @@ If the Issuer wants to enable Key Binding, it includes a public key
 associated with the Holder, or a reference thereto.
 
 It is out of the scope of this document to describe how the Holder key pair is
-established. For example, the Holder MAY provide a key pair to the Issuer,
+established. For example, the Holder MAY create a key pair and provide a public key to the Issuer,
 the Issuer MAY create the key pair for the Holder, or
 Holder and Issuer MAY use pre-established key material.
 
@@ -569,7 +569,7 @@ The JWT MUST contain the following elements:
 * in the JOSE header,
     * `typ`: REQUIRED. MUST be `kb+jwt`, which explicitly types the Key Binding JWT as recommended in Section 3.11 of [@!RFC8725].
     * `alg`: REQUIRED. A digital signature algorithm identifier such as per IANA "JSON Web Signature and Encryption Algorithms" registry. MUST NOT be `none` or an identifier for a symmetric algorithm (MAC).
-* in the JWT body,
+* in the JWT payload,
     * `iat`: REQUIRED. The value of this claim MUST be the time at which the Key Binding JWT was issued using the syntax defined in [@!RFC7519].
     * `aud`: REQUIRED. The intended receiver of the Key Binding JWT. How the value is represented is up to the protocol used and out of scope of this specification.
     * `nonce`: REQUIRED. Ensures the freshness of the signature. The value type of this claim MUST be a string. How this value is obtained is up to the protocol used and out of scope of this specification.
@@ -605,7 +605,7 @@ signed JWT. See (#enveloping) for details.
 An SD-JWT is composed of the following:
 
 * the Issuer-signed JWT
-* The Disclosures
+* zero or more Disclosures
 * optionally a Key Binding JWT
 
 The serialized format for the SD-JWT is the concatenation of each part delineated with a single tilde ('~') character as follows:
@@ -661,7 +661,7 @@ an SD-JWT:
     3. Validate the Issuer and that the signing key belongs to this Issuer.
     4. Check that the Issuer-signed JWT is valid using `nbf`, `iat`, and `exp` claims, if provided in the SD-JWT, and not selectively disclosed.
     5. Check that the `_sd_alg` claim value is understood and the hash algorithm is deemed secure.
- 3. Process the Disclosures and embedded digests in the issuser-signed JWT as follows:
+ 3. Process the Disclosures and embedded digests in the Issuer-signed JWT as follows:
     1. For each Disclosure provided:
        1. Calculate the digest over the base64url-encoded string as described in (#hashing_disclosures).
     2. (*) Identify all embedded digests in the Issuer-signed JWT as follows:
@@ -733,7 +733,7 @@ In some applications or transport protocols, it is desirable to put an SD-JWT in
 
 For such use cases, the SD-JWT SHOULD be transported as a single string. Key Binding MAY be achieved by signing the envelope JWT instead of including a separate Key Binding JWT in the SD-JWT.
 
-The following non-normative example shows an SD-JWT Presentation enveloped in a JWT payload:
+The following non-normative example shows an SD-JWT Presentation enveloped in a JWT:
 
 ```
 {
@@ -746,7 +746,7 @@ The following non-normative example shows an SD-JWT Presentation enveloped in a 
 
 Here, the SD-JWT is shown as the value of an `_sd_jwt` claim where `eyJhbGci...emhlaUJhZzBZ` represents the Issuer-signed JWT and `eyJhb...dYALCGg` represents a Disclosure. The SD-JWT does not contain a Key Binding JWT as the outer container can be signed instead.
 
-Other specifications or profiles of this specification may define alternative formats for transporting an SD-JWT that envelope multiple such objects into one object, and provides Key Binding using means other than the Key Binding JWT.
+Other specifications or profiles of this specification may define alternative formats for transporting an SD-JWT that envelope multiple such objects into one object and provide Key Binding using means other than the Key Binding JWT.
 
 # JWS JSON Serialization {#json_serialization}
 
@@ -802,7 +802,7 @@ The Verifier MUST always check the signature of the Issuer-signed JWT to ensure 
 has not been tampered with since the issuance. The Issuer-signed JWT MUST be rejected if the signature cannot be verified.
 
 The security of the Issuer-signed JWT depends on the security of the signature algorithm.
-Any of the JSON Web Signature and Encryption Algorithms registered in [@IANA.JWS.Algorithms]
+Any of the JWS asymmetric digital signature algorithms registered in [@IANA.JWS.Algorithms]
 can be used, including post-quantum algorithms, when they are ready.
 
 ## Manipulation of Disclosures {#sec-disclosures}
@@ -1190,7 +1190,7 @@ the media type is encoded as an SD-JWT.
 
 <reference anchor="VC_DATA_v2.0" target="https://www.w3.org/TR/vc-data-model-2.0/">
   <front>
-    <title>Verifiable Credentials Data Model 1.0</title>
+    <title>Verifiable Credentials Data Model 2.0</title>
     <author fullname="Manu Sporny">
       <organization>Digital Bazaar</organization>
     </author>
