@@ -681,7 +681,7 @@ an SD-JWT:
     5. Remove all array elements for which the digest was not found in the previous step.
     6. Remove all `_sd` keys and their contents from the Issuer-signed JWT payload.
     7. Remove the claim `_sd_alg` from the SD-JWT payload.
- 4. Check that the SD-JWT is valid using the `nbf`, `iat`, and `exp` claims in the processed payload. If a required validity-controlling claim is missing (see (#sd-validity-claims)), the SD-JWT MUST be rejected.
+ 4. Check that the SD-JWT is valid using claims such as `nbf`, `iat`, and `exp` in the processed payload. If a required validity-controlling claim is missing (see (#sd-validity-claims)), the SD-JWT MUST be rejected.
 
 If any step fails, the SD-JWT is not valid and processing MUST be aborted.
 
@@ -916,7 +916,7 @@ the SD-JWT.
 ## Selectively-Disclosable Validity Claims {#sd-validity-claims}
 
 Claims controlling the validity of the SD-JWT, such as `nbf`, `iat`, and `exp`,
-are usually included in plaintext in the SD-JWT payload, but MAY as well be
+are usually included in plaintext in the SD-JWT payload, but MAY be
 selectively disclosable instead. In this case, however, it is up to the Holder
 to release the claims to the Verifier. A malicious Holder may try to hide, for
 example, an expiration time (`exp`) in order to get a Verifier that "fails open"
