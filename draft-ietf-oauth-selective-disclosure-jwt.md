@@ -264,7 +264,7 @@ The payload of an SD-JWT is a JSON object according to the following rules:
 
 Applications of SD-JWT SHOULD be explicitly typed using the `typ` header parameter. See (#explicit_typing) for more details.
 
-It is the Issuer who decides which claims are selectively disclosable and which are not. However, claims controlling the validity of the SD-JWT, such as `iss`, `exp`, or `nbf` are usually included in plaintext. End-User claims MAY be included as plaintext as well, e.g., if hiding the particular claims from the Verifier is not required in the intended use case.
+It is the Issuer who decides which claims are selectively disclosable and which are not. End-User claims MAY be included as plaintext as well, e.g., if hiding the particular claims from the Verifier is not required in the intended use case. See (#sd-validity-claims) for considerations on making validity-controlling claims such as `exp` selectively disclosable.
 
 Claims that are not selectively disclosable are included in the SD-JWT in plaintext just as they would be in any other JSON structure.
 
@@ -659,7 +659,6 @@ an SD-JWT:
     1. Ensure that a signing algorithm was used that was deemed secure for the application. Refer to [@RFC8725], Sections 3.1 and 3.2 for details. The `none` algorithm MUST NOT be accepted.
     2. Validate the signature over the Issuer-signed JWT.
     3. Validate the Issuer and that the signing key belongs to this Issuer.
-    4. Check that the Issuer-signed JWT is valid using `nbf`, `iat`, and `exp` claims, if provided in the SD-JWT, and not selectively disclosed.
     5. Check that the `_sd_alg` claim value is understood and the hash algorithm is deemed secure.
  3. Process the Disclosures and embedded digests in the Issuer-signed JWT as follows:
     1. For each Disclosure provided:
@@ -682,6 +681,7 @@ an SD-JWT:
     5. Remove all array elements for which the digest was not found in the previous step.
     6. Remove all `_sd` keys and their contents from the Issuer-signed JWT payload.
     7. Remove the claim `_sd_alg` from the SD-JWT payload.
+ 4. Check that the SD-JWT is valid using claims such as `nbf`, `iat`, and `exp` in the processed payload. If a required validity-controlling claim is missing (see (#sd-validity-claims)), the SD-JWT MUST be rejected.
 
 If any step fails, the SD-JWT is not valid and processing MUST be aborted.
 
@@ -912,6 +912,24 @@ disclosable are not blinded. This includes the keys of objects that themselves
 are not blinded, but contain disclosable claims. This limitation
 needs to be taken into account by Issuers when creating the structure of
 the SD-JWT.
+
+## Selectively-Disclosable Validity Claims {#sd-validity-claims}
+
+Claims controlling the validity of the SD-JWT, such as `nbf`, `iat`, and `exp`,
+are usually included in plaintext in the SD-JWT payload, but MAY be
+selectively disclosable instead. In this case, however, it is up to the Holder
+to release the claims to the Verifier. A malicious Holder may try to hide, for
+example, an expiration time (`exp`) in order to get a Verifier that "fails open"
+to accept an expired SD-JWT.
+
+Verifiers therefore MUST ensure that all claims they deem necessary for checking
+the validity of the SD-JWT are present (or disclosed, respectively) before
+checking the validity and accepting the SD-JWT. This is implemented in the last
+step of the verification defined in (#sd_jwt_verification).
+
+The precise set of required validity claims will typically be defined by
+ecosystem rules or the credential format and MAY include claims other than
+`nbf`, `iat`, and `exp`.
 
 ## Issuer Signature Key Distribution and Rotation {#issuer_signature_key_distribution}
 
@@ -1503,7 +1521,7 @@ it allows for simple and reliable interoperability without the
 requirement for a canonicalization library. To harden the source string,
 any serialization format that supports the necessary data types could
 be used in theory, like protobuf, msgpack, or pickle. In this
-specification, JSON is used and plain text values of each Disclosure are encoded using base64url-encoding
+specification, JSON is used and plaintext values of each Disclosure are encoded using base64url-encoding
 for transport. This approach means that SD-JWTs can be implemented purely based
 on widely available JWT, JSON, and Base64 encoding and decoding libraries.
 
@@ -1528,6 +1546,7 @@ data. The original JSON data is then used by the application. See
    -06
 
    * Fix minor issues in some examples
+   * Ensure claims that control validity are checked after decoding payload
 
    -05
 
