@@ -486,7 +486,7 @@ The following input claim set is used as an example throughout this section:
 
 <{{examples/address_only_flat/user_claims.json}}
 
-Important: The following examples are non-normative and are not intended to
+Important: The following examples of the structures are non-normative and are not intended to
 represent all possible options. They are also not meant to define or restrict
 how `address` can be represented in an SD-JWT.
 
