@@ -46,5 +46,6 @@ The artifacts generated for the examples (e.g., serialized SD-JWTs, Disclosures,
  * TypeScript: [sd-jwt](https://github.com/christianpaquin/sd-jwt)
  * TypeScript: [sd-jwt-ts](https://github.com/chike0905/sd-jwt-ts)
  * TypeScript: [jwt-sd](https://github.com/blu3beri/jwt-sd)
+ * TypeScript: [@meeco/sd-jwt (Meeco)](https://github.com/meeco/sd-jwt)
  * Java: [Java Library for SD-JWT (Authlete)](https://github.com/authlete/sd-jwt)
  * Go: [sd-jwt (TBD)](https://github.com/TBD54566975/ssi-sdk/tree/main/sd-jwt)
