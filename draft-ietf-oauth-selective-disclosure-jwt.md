@@ -733,18 +733,22 @@ Otherwise, the processed SD-JWT payload can be passed to the application to be u
 This section describes an optional alternate format for SD-JWT using the JWS JSON Serialization from [@!RFC7515].
 
 For both the General and Flattened JSON Serialization, the SD-JWT is represented as a JSON object according
-to Section 7.2 of [@!RFC7515]. The disclosures (both for issuance and presentation) are included in the
-serialized JWS using the key `disclosures` at the top-level of the JSON object (the same level as the `payload` member). The
+to Section 7.2 of [@!RFC7515]. The disclosures (both for issuance and presentation) SHOULD be included in the
+serialized JWS using the member name `disclosures` at the top-level of the JSON object (the same level as the `payload` member). The
 value of the `disclosures` member is an array of strings where each element is an individual Disclosure
 as described in (#creating_disclosures). The Issuer includes a Disclosure for each selectively
 disclosable claim of the SD-JWT payload, whereas the Holder includes only the Disclosures
-selected for the given presentation. Additionally, for presentation with a Key Binding, the Holder adds
-the key `kb_jwt` at the top-level of the serialized JWS with a string value containing the
-Key Binding JWT as described in (#kb-jwt).
+selected for the given presentation.
+
+Alternative methods for conveying the disclosures MAY be used (such as including them in a `disclosures`
+member of an outer JSON structure also containing the JSON Serialized SD-JWT) as dictated by a specific
+application or transport protocol. However, the details of such approaches fall outside the scope of this
+specification.
 
 Verification of the JWS JSON serialized SD-JWT follows the same rules defined in (#verification),
-except that the SD-JWT does not need to be split into component parts, but disclosures and (if applicable)
-a Key Binding JWT can be found in the respective members of the JSON object.
+except that the SD-JWT does not need to be split into component parts, the disclosures
+can be found in the respective member of the JSON object (or elsewhere), and Key Binding (if applicable)
+will be provided by means not specifically defined in this specification.
 
 Using a payload similar to that from [Example 1](#example-1), the following is a non-normative example of
 a JWS JSON serialized SD-JWT from an Issuer with all the respective Disclosures.
@@ -752,7 +756,7 @@ a JWS JSON serialized SD-JWT from an Issuer with all the respective Disclosures.
 <{{examples/json_serialization/sd_jwt_issuance.json}}
 
 Below is a non-normative example of a presentation of the JWS JSON serialized SD-JWT, where the Holder
-includes a Key Binding JWT and has selected to disclose `given_name`, `family_name`, and `address`.
+has selected to disclose `given_name`, `family_name`, and `address`.
 
 <{{examples/json_serialization/sd_jwt_presentation.json}}
 
