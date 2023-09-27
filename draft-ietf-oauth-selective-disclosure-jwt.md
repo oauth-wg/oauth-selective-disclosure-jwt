@@ -728,27 +728,6 @@ If any step fails, the Presentation is not valid and processing MUST be aborted.
 
 Otherwise, the processed SD-JWT payload can be passed to the application to be used for the intended purpose.
 
-# Enveloping SD-JWTs {#enveloping}
-
-In some applications or transport protocols, it is desirable to put an SD-JWT into an outer JWT container. For example, an implementation may envelope multiple credentials and presentations, independent of their format, in a JWT to enable application-layer encryption during transport.
-
-For such use cases, the SD-JWT SHOULD be transported as a single string. Key Binding MAY be achieved by signing the envelope JWT instead of including a separate Key Binding JWT in the SD-JWT.
-
-The following non-normative example shows an SD-JWT Presentation enveloped in a JWT:
-
-```
-{
-  "aud": "https://verifier.example.org",
-  "iat": 1580000000,
-  "nonce": "iRnRdKuu1AtLM4ltc16by2XF0accSeutUescRw6BWC14",
-  "_sd_jwt": "eyJhbGci...emhlaUJhZzBZ~eyJhb...dYALCGg~"
-}
-```
-
-Here, the SD-JWT is shown as the value of an `_sd_jwt` claim where `eyJhbGci...emhlaUJhZzBZ` represents the Issuer-signed JWT and `eyJhb...dYALCGg` represents a Disclosure. The SD-JWT does not contain a Key Binding JWT as the outer container can be signed instead.
-
-Other specifications or profiles of this specification may define alternative formats for transporting an SD-JWT that envelope multiple such objects into one object and provide Key Binding using means other than the Key Binding JWT.
-
 # JWS JSON Serialization {#json_serialization}
 
 This section describes an optional alternate format for SD-JWT using the JWS JSON Serialization from [@!RFC7515].
@@ -777,6 +756,27 @@ includes a Key Binding JWT and has selected to disclose `given_name`, `family_na
 
 <{{examples/json_serialization/sd_jwt_presentation.json}}
 
+
+# Enveloping SD-JWTs {#enveloping}
+
+In some applications or transport protocols, it is desirable to put an SD-JWT into an outer JWT container. For example, an implementation may envelope multiple credentials and presentations, independent of their format, in a JWT to enable application-layer encryption during transport.
+
+For such use cases, the SD-JWT SHOULD be transported as a single string. Key Binding MAY be achieved by signing the envelope JWT instead of including a separate Key Binding JWT in the SD-JWT.
+
+The following non-normative example shows an SD-JWT Presentation enveloped in a JWT:
+
+```
+{
+  "aud": "https://verifier.example.org",
+  "iat": 1580000000,
+  "nonce": "iRnRdKuu1AtLM4ltc16by2XF0accSeutUescRw6BWC14",
+  "_sd_jwt": "eyJhbGci...emhlaUJhZzBZ~eyJhb...dYALCGg~"
+}
+```
+
+Here, the SD-JWT is shown as the value of an `_sd_jwt` claim where `eyJhbGci...emhlaUJhZzBZ` represents the Issuer-signed JWT and `eyJhb...dYALCGg` represents a Disclosure. The SD-JWT does not contain a Key Binding JWT as the outer container can be signed instead.
+
+Other specifications or profiles of this specification may define alternative formats for transporting an SD-JWT that envelope multiple such objects into one object and provide Key Binding using means other than the Key Binding JWT.
 
 
 # Security Considerations {#security_considerations}
