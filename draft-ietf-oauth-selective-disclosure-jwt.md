@@ -1557,6 +1557,7 @@ data. The original JSON data is then used by the application. See
    * More precise wording around storing artifacts with sensitive data
    * The claim name `_sd` or `...` must not be used in a disclosure.
    * Ensure claims that control validity are checked after decoding payload
+   * Update JSON Serialization to remove the kb_jwt member and allow for the disclosures to be conveyed elsewhere
 
    -05
 
