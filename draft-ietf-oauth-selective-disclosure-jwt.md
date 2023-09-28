@@ -763,11 +763,12 @@ has selected to disclose `given_name`, `family_name`, and `address`.
 
 # Enveloping SD-JWTs {#enveloping}
 
-In some applications or transport protocols, it is desirable to put an SD-JWT into an outer JWT container. For example, an implementation may envelope multiple credentials and presentations, independent of their format, in a JWT to enable application-layer encryption during transport.
+In some applications or transport protocols, it is desirable to encapsulate an SD-JWT into an outer JWT container. For example, an implementation may enclose multiple credentials and presentations, independent of their format, in a JWT to enable application-layer encryption during transport.
 
-For such use cases, the SD-JWT SHOULD be transported as a single string. Key Binding MAY be achieved by signing the envelope JWT instead of including a separate Key Binding JWT in the SD-JWT.
+For such use cases, a compact serialized SD-JWT SHOULD be included as a single string value and a JSON serialized SD-JWT SHOULD be included as a JSON object value. Key Binding MAY be achieved by signing the envelope JWT instead of including a separate Key Binding JWT.
 
-The following non-normative example shows an SD-JWT Presentation enveloped in a JWT:
+The following non-normative example payload shows a compact serialized SD-JWT Presentation enveloped in a JWT.
+The SD-JWT is shown as the value of an `_sd_jwt` claim where `eyJhbGci...emhlaUJhZzBZ` is the Issuer-signed JWT and `eyJhb...dYALCGg` is a Disclosure. The SD-JWT does not contain a Key Binding JWT as the outer container can be signed instead.
 
 ```
 {
@@ -778,9 +779,29 @@ The following non-normative example shows an SD-JWT Presentation enveloped in a 
 }
 ```
 
-Here, the SD-JWT is shown as the value of an `_sd_jwt` claim where `eyJhbGci...emhlaUJhZzBZ` represents the Issuer-signed JWT and `eyJhb...dYALCGg` represents a Disclosure. The SD-JWT does not contain a Key Binding JWT as the outer container can be signed instead.
+This next non-normative example payload shows a JSON serialized SD-JWT enveloped in a JWT.
+The JSON serialized SD-JWT appears as the value of an `_js_sd_jwt` claim and the disclosures are included separately as a top-level claim.
+Key Binding is achieved by the signature on the enclosing JWT.
 
-Other specifications or profiles of this specification may define alternative formats for transporting an SD-JWT that envelope multiple such objects into one object and provide Key Binding using means other than the Key Binding JWT.
+```
+{
+  "aud": "https://verifier.example.org",
+  "iat": 2813308004,
+  "nonce": "8z8z9X3jUtbthem84swFAzp4aqlHf-sCqQ6eM_qmpUQ",
+  "_js_sd_jwt": {
+    "protected": "eyJhbGciOiAiRVMyNTYifQ",
+    "payload": "eyJfc2QiOiBbIjRIQm42YUlZM1d0dUdHV1R4LX...1NiJ9",
+    "signature": "y_b8KFVc2GZ1n-...PKsjU3Q",
+  }
+  "disclosures": [
+    "WyI2SWo3dE0tYTVpVlBHYm9TNXRtdlZBIiwgImZhbWlseV9uYW1...vZSJd",
+    "WyJBSngtMDk1VlBycFR0TjRRTU9xUk9BIiwgImFkZHJlc3MiLC...iVVMifV0",
+    "WyJlbHVWNU9nM2dTTklJO...V9BIiwgImdpdmVuX25hbWUiLCAiSm9obiJd"
+ ]
+}
+```
+
+Other specifications or profiles of this specification may define alternative formats for transporting an SD-JWT that envelope multiple such SD-JWTs into one object and provide Key Binding using means other than the Key Binding JWT.
 
 
 # Security Considerations {#security_considerations}
@@ -1558,6 +1579,7 @@ data. The original JSON data is then used by the application. See
    * The claim name `_sd` or `...` must not be used in a disclosure.
    * Ensure claims that control validity are checked after decoding payload
    * Update JSON Serialization to remove the kb_jwt member and allow for the disclosures to be conveyed elsewhere
+   * Expand the Enveloping SD-JWTs section to also discuss enveloping JSON serialized SD-JWTs
 
    -05
 
