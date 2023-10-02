@@ -1097,6 +1097,7 @@ Paul Bastian,
 Pieter Kasselman,
 Ryosuke Abe,
 Shawn Butterfield,
+Simon Schulz,
 Tobias Looker,
 Takahiko Kawasaki,
 Torsten Lodderstedt,
@@ -1374,10 +1375,6 @@ The following payload is used for the SD-JWT:
 The following Disclosures are created by the Issuer:
 
 {{examples/arf-pid/disclosures.md}}
-
-The following decoy digests are added:
-
-{{examples/simple_structured/decoy_digests.md}}
 
 The following is how a presentation of the SD-JWT with a Key Binding JWT that discloses only nationality and the fact that the person is over 18 years old could look like:
 
