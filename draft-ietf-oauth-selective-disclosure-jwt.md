@@ -480,18 +480,22 @@ times in an SD-JWT, and likewise, there MAY be multiple arrays within the
 hierarchy with each having selectively disclosable elements. Digests of
 selectively disclosable claims MAY even appear within other Disclosures.
 
-The following examples illustrate some of the options an Issuer has. It is up to the Issuer to decide which option to use, depending on, for example, the expected use cases for the SD-JWT, requirements for privacy, size considerations, or ecosystem requirements. For more examples with nested structures, see (#example-simple_structured) and (#example-complex-structured-sd-jwt).
+The following examples illustrate some of the options an Issuer has. It is up to the Issuer to decide which structure to use, depending on, for example, the expected use cases for the SD-JWT, requirements for privacy, size considerations, or ecosystem requirements. For more examples with nested structures, see (#example-simple_structured) and (#example-complex-structured-sd-jwt).
 
 The following input claim set is used as an example throughout this section:
 
 <{{examples/address_only_flat/user_claims.json}}
 
-Important: Throughout the examples in this document, line breaks had to
+Important: The following examples of the structures are non-normative and are not intended to
+represent all possible options. They are also not meant to define or restrict
+how `address` can be represented in an SD-JWT.
+
+Note: Throughout the examples in this document, line breaks had to
 be added to JSON strings and base64-encoded strings (as shown in the
 next example) to adhere to the 72 character limit for lines in RFCs and
 for readability. JSON does not allow line breaks in strings.
 
-### Option 1: Flat SD-JWT
+### Example: Flat SD-JWT
 
 The Issuer can decide to treat the `address` claim as a block that can either be disclosed completely or not at all. The following example shows that in this case, the entire `address` claim is treated as an object in the Disclosure.
 
@@ -501,7 +505,7 @@ The Issuer would create the following Disclosure:
 
 {{examples/address_only_flat/disclosures.md}}
 
-### Option 2: Structured SD-JWT
+### Example: Structured SD-JWT
 
 The Issuer may instead decide to make the `address` claim contents selectively disclosable individually:
 
@@ -517,7 +521,7 @@ The Issuer may also make one sub-claim of `address` non-selectively disclosable 
 
 There would be no Disclosure for `country` in this case.
 
-### Option 3: SD-JWT with Recursive Disclosures
+### Example: SD-JWT with Recursive Disclosures
 
 The Issuer may also decide to make the `address` claim contents selectively disclosable recursively, i.e., the `address` claim is made selectively disclosable as well as its sub-claims:
 
