@@ -256,6 +256,7 @@ The serialized format for the SD-JWT is the concatenation of each part delineate
 
 ```
 <Issuer-signed JWT>~<Disclosure 1>~<Disclosure 2>~...~<Disclosure N>~<optional KB-JWT>
+
 ```
 
 The order of the tilde separated values MUST be the Issuer-signed JWT, followed by any number of Disclosures, and lastly the optional Key Binding JWT.
