@@ -1135,9 +1135,9 @@ To indicate that the content is an SD-JWT:
 * Applications that use this media type: TBD
 * Fragment identifier considerations: n/a
 * Additional information:
-   Magic number(s): n/a
-   File extension(s): n/a
-   Macintosh file type code(s): n/a
+   * Magic number(s): n/a
+   * File extension(s): n/a
+   * Macintosh file type code(s): n/a
 * Person & email address to contact for further information: Daniel Fett, mail@danielfett.de
 * Intended usage: COMMON
 * Restrictions on usage: none
@@ -1158,9 +1158,9 @@ To indicate that the content is a Key Binding JWT:
 * Applications that use this media type: TBD
 * Fragment identifier considerations: n/a
 * Additional information:
-   Magic number(s): n/a
-   File extension(s): n/a
-   Macintosh file type code(s): n/a
+   * Magic number(s): n/a
+   * File extension(s): n/a
+   * Macintosh file type code(s): n/a
 * Person & email address to contact for further information: Daniel Fett, mail@danielfett.de
 * Intended usage: COMMON
 * Restrictions on usage: none
