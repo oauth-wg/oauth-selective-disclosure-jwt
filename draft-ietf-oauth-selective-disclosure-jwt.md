@@ -1118,7 +1118,7 @@ TBD
 
 ## Media Type Registration
 
-This section requests registration of the "application/sd-jwt" media type [@RFC2046] in
+This section requests registration of the following media types [@RFC2046] in
 the "Media Types" registry [@IANA.MediaTypes] in the manner described
 in [@RFC6838].
 
