@@ -1119,21 +1119,20 @@ The work on this draft was started at OAuth Security Workshop 2022 in Trondheim,
 This specification requests registration of the following Claims in the
 IANA "JSON Web Token Claims" registry [@IANA.JWT] established by [@!RFC7519].
 
-Object Property Disclosure Digests:
 
 *  Claim Name: `_sd`
 *  Claim Description: Digests of Disclosures for object properties
 *  Change Controller: IETF
 *  Specification Document(s):  [[ (#embedding_object_properties) of this specification ]]
 
-Array Element Disclosure Digest:
+<br/>
 
 *  Claim Name: `...`
 *  Claim Description: Array element disclosure digest
 *  Change Controller: IETF
 *  Specification Document(s):  [[ (#embedding_array_elements) of this specification ]]
 
-Disclosure Digest Hash Function:
+<br/>
 
 *  Claim Name: `_sd_alg`
 *  Claim Description: Hash algorithm used to generate disclosure digests
