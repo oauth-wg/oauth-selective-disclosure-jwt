@@ -1145,6 +1145,7 @@ To indicate that the content is an SD-JWT:
 * Change Controller: IETF
 * Provisional registration?  No
 
+<br/>
 To indicate that the content is a JWS JSON serialized SD-JWT:
 
 * Type name: application
@@ -1168,6 +1169,7 @@ To indicate that the content is a JWS JSON serialized SD-JWT:
 * Change Controller: IETF
 * Provisional registration?  No
 
+<br/>
 To indicate that the content is a Key Binding JWT:
 
 * Type name: application
