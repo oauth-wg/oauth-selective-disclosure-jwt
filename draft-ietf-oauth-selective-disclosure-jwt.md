@@ -1122,7 +1122,7 @@ IANA "JSON Web Token Claims" registry [@IANA.JWT] established by [@!RFC7519].
 Object Property Disclosure Digests:
 
 *  Claim Name: `_sd`
-*  Claim Description: Object property disclosure digests
+*  Claim Description: Digests of Disclosures for object properties
 *  Change Controller: IETF
 *  Specification Document(s):  [[ (#embedding_object_properties) of this specification ]]
 
