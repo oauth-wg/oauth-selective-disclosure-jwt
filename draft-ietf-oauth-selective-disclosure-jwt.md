@@ -1114,7 +1114,31 @@ The work on this draft was started at OAuth Security Workshop 2022 in Trondheim,
 
 # IANA Considerations {#iana_considerations}
 
-TBD
+## JSON Web Token Claims Registration
+
+This specification requests registration of the following Claims in the
+IANA "JSON Web Token Claims" registry [@IANA.JWT] established by [@!RFC7519].
+
+Object Property Disclosure Digests:
+
+*  Claim Name: `_sd`
+*  Claim Description: Object property disclosure digests
+*  Change Controller: IETF
+*  Specification Document(s):  [[ (#embedding_object_properties) of this specification ]]
+
+Array Element Disclosure Digest:
+
+*  Claim Name: `...`
+*  Claim Description: Array element disclosure digest
+*  Change Controller: IETF
+*  Specification Document(s):  [[ (#embedding_array_elements) of this specification ]]
+
+Disclosure Digest Hash Function:
+
+*  Claim Name: `_sd_alg`
+*  Claim Description: Hash algorithm used to generate disclosure digests
+*  Change Controller: IETF
+*  Specification Document(s):  [[ (#hash_function_claim) of this specification ]]
 
 ## Media Type Registration
 
@@ -1294,6 +1318,13 @@ the media type is encoded as an SD-JWT.
     <author fullname="IANA"></author>
     <title>Structured Syntax Suffixs</title>
   </front>
+</reference>
+
+<reference anchor="IANA.JWT" target="https://www.iana.org/assignments/jwt">
+ <front>
+  <title>JSON Web Token Claims</title>
+  <author><organization>IANA</organization></author>
+ </front>
 </reference>
 
 {backmatter}
@@ -1553,6 +1584,7 @@ data. The original JSON data is then used by the application. See
    * Fix minor issues in some examples
    * More precise wording around storing artifacts with sensitive data
    * The claim name `_sd` or `...` must not be used in a disclosure.
+   * Added JWT claims registration requests to IANA
    * Ensure claims that control validity are checked after decoding payload
 
    -05
