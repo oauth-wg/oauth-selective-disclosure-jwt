@@ -1128,7 +1128,7 @@ IANA "JSON Web Token Claims" registry [@IANA.JWT] established by [@!RFC7519].
 <br/>
 
 *  Claim Name: `...`
-*  Claim Description: Array element disclosure digest
+*  Claim Description: Digest of the Disclosure for an array element
 *  Change Controller: IETF
 *  Specification Document(s):  [[ (#embedding_array_elements) of this specification ]]
 
