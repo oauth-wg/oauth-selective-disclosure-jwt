@@ -265,10 +265,9 @@ In the case that there is no Key Binding JWT, the last element MUST be an empty 
 The Disclosures are linked to the SD-JWT payload through the
 digest values included therein.
 
-When issued to a Holder, the Issuer includes all the relevant Disclosures in the SD-JWT.
+When issuing to a Holder, the Issuer includes all the relevant Disclosures in the SD-JWT.
 
-For presentation to a Verifier, the Holder sends the SD-JWT including only its selected
-set of the Disclosures to the Verifier.
+When presenting to a Verifier, the Holder sends only the selected set of the Disclosures in the SD-JWT.
 
 The Holder MAY send any subset of the Disclosures to the Verifier, i.e.,
 none, multiple, or all Disclosures. For data that the Holder does not want to reveal
