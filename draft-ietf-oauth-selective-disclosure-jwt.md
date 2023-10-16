@@ -471,15 +471,6 @@ The JWT MUST contain the following elements:
 
 To validate the signature on the Key Binding JWT, the Verifier MUST use the key material in the SD-JWT. If it is not clear from the SD-JWT, the Key Binding JWT MUST specify which key material the Verifier needs to use to validate the Key Binding JWT signature using JOSE header parameters such as `kid` and `x5c`.
 
-Below is a non-normative example of a Key Binding JWT header:
-
-```
-{
-  "alg": "ES256",
-  "typ": "kb+jwt"
-}
-```
-
 Whether to require Key Binding is up to the Verifier's policy, based on the set
 of trust requirements such as trust frameworks it belongs to. See
 (#key_binding_security) for security considerations.
