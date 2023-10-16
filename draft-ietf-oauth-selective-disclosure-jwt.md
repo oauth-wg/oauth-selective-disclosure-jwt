@@ -519,7 +519,7 @@ The Issuer may also make one sub-claim of `address` non-selectively disclosable 
 
 <{{examples/address_only_structured_one_open/sd_jwt_payload.json}}
 
-There would be no Disclosure for `country` in this case.
+In this case there would be no Disclosure for `country` since it is provided in the clear.
 
 ### Example: SD-JWT with Recursive Disclosures
 
@@ -1080,6 +1080,7 @@ To mitigate this issue, a group of issuers may elect to use a common Issuer iden
 
 We would like to thank
 Alen Horvat,
+Anders Rundgren,
 Arjan Geluk,
 Christian Bormann,
 Christian Paquin,
