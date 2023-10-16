@@ -1119,7 +1119,7 @@ TBD
 
 ## Media Type Registration
 
-This section requests registration of the "application/sd-jwt" media type [@RFC2046] in
+This section requests registration of the following media types [@RFC2046] in
 the "Media Types" registry [@IANA.MediaTypes] in the manner described
 in [@RFC6838].
 
@@ -1136,16 +1136,41 @@ To indicate that the content is an SD-JWT:
 * Applications that use this media type: TBD
 * Fragment identifier considerations: n/a
 * Additional information:
-   Magic number(s): n/a
-   File extension(s): n/a
-   Macintosh file type code(s): n/a
+   * Magic number(s): n/a
+   * File extension(s): n/a
+   * Macintosh file type code(s): n/a
 * Person & email address to contact for further information: Daniel Fett, mail@danielfett.de
 * Intended usage: COMMON
 * Restrictions on usage: none
 * Author: Daniel Fett, mail@danielfett.de
-* Change Controller: IESG
+* Change Controller: IETF
 * Provisional registration?  No
 
+<br/>
+To indicate that the content is a JWS JSON serialized SD-JWT:
+
+* Type name: application
+* Subtype name: sd-jwt+json
+* Required parameters: n/a
+* Optional parameters: n/a
+* Encoding considerations: binary; application/sd-jwt+json values are represented as a JSON Object; UTF-8 encoding SHOULD be employed for the JSON object.
+* Security considerations: See the Security Considerations section of [[ this specification ]], and [@RFC7515].
+* Interoperability considerations: n/a
+* Published specification: [[ this specification ]]
+* Applications that use this media type: TBD
+* Fragment identifier considerations: n/a
+* Additional information:
+    * Magic number(s): n/a
+    * File extension(s): n/a
+    * Macintosh file type code(s): n/a
+* Person & email address to contact for further information: Daniel Fett, mail@danielfett.de
+* Intended usage: COMMON
+* Restrictions on usage: none
+* Author: Daniel Fett, mail@danielfett.de
+* Change Controller: IETF
+* Provisional registration?  No
+
+<br/>
 To indicate that the content is a Key Binding JWT:
 
 * Type name: application
@@ -1159,14 +1184,14 @@ To indicate that the content is a Key Binding JWT:
 * Applications that use this media type: TBD
 * Fragment identifier considerations: n/a
 * Additional information:
-   Magic number(s): n/a
-   File extension(s): n/a
-   Macintosh file type code(s): n/a
+   * Magic number(s): n/a
+   * File extension(s): n/a
+   * Macintosh file type code(s): n/a
 * Person & email address to contact for further information: Daniel Fett, mail@danielfett.de
 * Intended usage: COMMON
 * Restrictions on usage: none
 * Author: Daniel Fett, mail@danielfett.de
-* Change Controller: IESG
+* Change Controller: IETF
 * Provisional registration?  No
 
 ##  Structured Syntax Suffix Registration
@@ -1552,6 +1577,7 @@ data. The original JSON data is then used by the application. See
    -06
 
    * Fix minor issues in some examples
+   * Added IANA media type registration request for the JSON Serialization
    * More precise wording around storing artifacts with sensitive data
    * The claim name `_sd` or `...` must not be used in a disclosure.
    * Ensure claims that control validity are checked after decoding payload
