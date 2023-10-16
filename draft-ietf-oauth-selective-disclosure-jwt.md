@@ -579,7 +579,7 @@ The Issuer may also make one sub-claim of `address` non-selectively disclosable 
 
 <{{examples/address_only_structured_one_open/sd_jwt_payload.json}}
 
-There would be no Disclosure for `country` in this case.
+In this case there would be no Disclosure for `country` since it is provided in the clear.
 
 ### Example: SD-JWT with Recursive Disclosures
 
@@ -729,13 +729,47 @@ If any step fails, the Presentation is not valid and processing MUST be aborted.
 
 Otherwise, the processed SD-JWT payload can be passed to the application to be used for the intended purpose.
 
+# JWS JSON Serialization {#json_serialization}
+
+This section describes an optional alternate format for SD-JWT using the JWS JSON Serialization from [@!RFC7515].
+
+For both the General and Flattened JSON Serialization, the SD-JWT is represented as a JSON object according
+to Section 7.2 of [@!RFC7515]. The disclosures (both for issuance and presentation) SHOULD be included in the
+serialized JWS using the member name `disclosures` at the top-level of the JSON object (the same level as the `payload` member). The
+value of the `disclosures` member is an array of strings where each element is an individual Disclosure
+as described in (#creating_disclosures). The Issuer includes a Disclosure for each selectively
+disclosable claim of the SD-JWT payload, whereas the Holder includes only the Disclosures
+selected for the given presentation.
+
+Alternative methods for conveying the disclosures MAY be used (such as including them in a `disclosures`
+member of an outer JSON structure also containing the JSON Serialized SD-JWT) as dictated by a specific
+application or transport protocol. However, the details of such approaches fall outside the scope of this
+specification.
+
+Verification of the JWS JSON serialized SD-JWT follows the same rules defined in (#verification),
+except that the SD-JWT does not need to be split into component parts, the disclosures
+can be found in the respective member of the JSON object (or elsewhere), and Key Binding (if applicable)
+will be provided by means not specifically defined in this specification.
+
+Using a payload similar to that from [Example 1](#example-1), the following is a non-normative example of
+a JWS JSON serialized SD-JWT from an Issuer with all the respective Disclosures.
+
+<{{examples/json_serialization/sd_jwt_issuance.json}}
+
+Below is a non-normative example of a presentation of the JWS JSON serialized SD-JWT, where the Holder
+has selected to disclose `given_name`, `family_name`, and `address`.
+
+<{{examples/json_serialization/sd_jwt_presentation.json}}
+
+
 # Enveloping SD-JWTs {#enveloping}
 
-In some applications or transport protocols, it is desirable to put an SD-JWT into an outer JWT container. For example, an implementation may envelope multiple credentials and presentations, independent of their format, in a JWT to enable application-layer encryption during transport.
+In some applications or transport protocols, it is desirable to encapsulate an SD-JWT into an outer JWT container. For example, an implementation may enclose multiple credentials and presentations, independent of their format, in a JWT to enable application-layer encryption during transport.
 
-For such use cases, the SD-JWT SHOULD be transported as a single string. Key Binding MAY be achieved by signing the envelope JWT instead of including a separate Key Binding JWT in the SD-JWT.
+For such use cases, a compact serialized SD-JWT SHOULD be included as a single string value and a JSON serialized SD-JWT SHOULD be included as a JSON object value. Key Binding MAY be achieved by signing the envelope JWT instead of including a separate Key Binding JWT.
 
-The following non-normative example shows an SD-JWT Presentation enveloped in a JWT:
+The following non-normative example payload shows a compact serialized SD-JWT Presentation enveloped in a JWT.
+The SD-JWT is shown as the value of an `_sd_jwt` claim where `eyJhbGci...emhlaUJhZzBZ` is the Issuer-signed JWT and `eyJhb...dYALCGg` is a Disclosure. The SD-JWT does not contain a Key Binding JWT as the outer container can be signed instead.
 
 ```
 {
@@ -746,38 +780,29 @@ The following non-normative example shows an SD-JWT Presentation enveloped in a 
 }
 ```
 
-Here, the SD-JWT is shown as the value of an `_sd_jwt` claim where `eyJhbGci...emhlaUJhZzBZ` represents the Issuer-signed JWT and `eyJhb...dYALCGg` represents a Disclosure. The SD-JWT does not contain a Key Binding JWT as the outer container can be signed instead.
+This next non-normative example payload shows a JSON serialized SD-JWT enveloped in a JWT.
+The JSON serialized SD-JWT appears as the value of an `_js_sd_jwt` claim and the disclosures are included separately as a top-level claim.
+Key Binding is achieved by the signature on the enclosing JWT.
 
-Other specifications or profiles of this specification may define alternative formats for transporting an SD-JWT that envelope multiple such objects into one object and provide Key Binding using means other than the Key Binding JWT.
+```
+{
+  "aud": "https://verifier.example.org",
+  "iat": 2813308004,
+  "nonce": "8z8z9X3jUtbthem84swFAzp4aqlHf-sCqQ6eM_qmpUQ",
+  "_js_sd_jwt": {
+    "protected": "eyJhbGciOiAiRVMyNTYifQ",
+    "payload": "eyJfc2QiOiBbIjRIQm42YUlZM1d0dUdHV1R4LX...1NiJ9",
+    "signature": "y_b8KFVc2GZ1n-...PKsjU3Q",
+  }
+  "disclosures": [
+    "WyI2SWo3dE0tYTVpVlBHYm9TNXRtdlZBIiwgImZhbWlseV9uYW1...vZSJd",
+    "WyJBSngtMDk1VlBycFR0TjRRTU9xUk9BIiwgImFkZHJlc3MiLC...iVVMifV0",
+    "WyJlbHVWNU9nM2dTTklJO...V9BIiwgImdpdmVuX25hbWUiLCAiSm9obiJd"
+ ]
+}
+```
 
-# JWS JSON Serialization {#json_serialization}
-
-This section describes an optional alternate format for SD-JWT using the JWS JSON Serialization from [@!RFC7515].
-
-For both the General and Flattened JSON Serialization, the SD-JWT is represented as a JSON object according
-to Section 7.2 of [@!RFC7515]. The disclosures (both for issuance and presentation) are included in the
-serialized JWS using the key `disclosures` at the top-level of the JSON object (the same level as the `payload` member). The
-value of the `disclosures` member is an array of strings where each element is an individual Disclosure
-as described in (#creating_disclosures). The Issuer includes a Disclosure for each selectively
-disclosable claim of the SD-JWT payload, whereas the Holder includes only the Disclosures
-selected for the given presentation. Additionally, for presentation with a Key Binding, the Holder adds
-the key `kb_jwt` at the top-level of the serialized JWS with a string value containing the
-Key Binding JWT as described in (#kb-jwt).
-
-Verification of the JWS JSON serialized SD-JWT follows the same rules defined in (#verification),
-except that the SD-JWT does not need to be split into component parts, but disclosures and (if applicable)
-a Key Binding JWT can be found in the respective members of the JSON object.
-
-Using a payload similar to that from [Example 1](#example-1), the following is a non-normative example of
-a JWS JSON serialized SD-JWT from an Issuer with all the respective Disclosures.
-
-<{{examples/json_serialization/sd_jwt_issuance.json}}
-
-Below is a non-normative example of a presentation of the JWS JSON serialized SD-JWT, where the Holder
-includes a Key Binding JWT and has selected to disclose `given_name`, `family_name`, and `address`.
-
-<{{examples/json_serialization/sd_jwt_presentation.json}}
-
+Other specifications or profiles of this specification may define alternative formats for transporting an SD-JWT that envelope multiple such SD-JWTs into one object and provide Key Binding using means other than the Key Binding JWT.
 
 
 # Security Considerations {#security_considerations}
@@ -1077,6 +1102,7 @@ To mitigate this issue, a group of issuers may elect to use a common Issuer iden
 
 We would like to thank
 Alen Horvat,
+Anders Rundgren,
 Arjan Geluk,
 Christian Bormann,
 Christian Paquin,
@@ -1111,11 +1137,34 @@ The work on this draft was started at OAuth Security Workshop 2022 in Trondheim,
 
 # IANA Considerations {#iana_considerations}
 
-TBD
+## JSON Web Token Claims Registration
+
+This specification requests registration of the following Claims in the
+IANA "JSON Web Token Claims" registry [@IANA.JWT] established by [@!RFC7519].
+
+
+*  Claim Name: `_sd`
+*  Claim Description: Digests of Disclosures for object properties
+*  Change Controller: IETF
+*  Specification Document(s):  [[ (#embedding_object_properties) of this specification ]]
+
+<br/>
+
+*  Claim Name: `...`
+*  Claim Description: Digest of the Disclosure for an array element
+*  Change Controller: IETF
+*  Specification Document(s):  [[ (#embedding_array_elements) of this specification ]]
+
+<br/>
+
+*  Claim Name: `_sd_alg`
+*  Claim Description: Hash algorithm used to generate disclosure digests
+*  Change Controller: IETF
+*  Specification Document(s):  [[ (#hash_function_claim) of this specification ]]
 
 ## Media Type Registration
 
-This section requests registration of the "application/sd-jwt" media type [@RFC2046] in
+This section requests registration of the following media types [@RFC2046] in
 the "Media Types" registry [@IANA.MediaTypes] in the manner described
 in [@RFC6838].
 
@@ -1132,16 +1181,41 @@ To indicate that the content is an SD-JWT:
 * Applications that use this media type: TBD
 * Fragment identifier considerations: n/a
 * Additional information:
-   Magic number(s): n/a
-   File extension(s): n/a
-   Macintosh file type code(s): n/a
+   * Magic number(s): n/a
+   * File extension(s): n/a
+   * Macintosh file type code(s): n/a
 * Person & email address to contact for further information: Daniel Fett, mail@danielfett.de
 * Intended usage: COMMON
 * Restrictions on usage: none
 * Author: Daniel Fett, mail@danielfett.de
-* Change Controller: IESG
+* Change Controller: IETF
 * Provisional registration?  No
 
+<br/>
+To indicate that the content is a JWS JSON serialized SD-JWT:
+
+* Type name: application
+* Subtype name: sd-jwt+json
+* Required parameters: n/a
+* Optional parameters: n/a
+* Encoding considerations: binary; application/sd-jwt+json values are represented as a JSON Object; UTF-8 encoding SHOULD be employed for the JSON object.
+* Security considerations: See the Security Considerations section of [[ this specification ]], and [@RFC7515].
+* Interoperability considerations: n/a
+* Published specification: [[ this specification ]]
+* Applications that use this media type: TBD
+* Fragment identifier considerations: n/a
+* Additional information:
+    * Magic number(s): n/a
+    * File extension(s): n/a
+    * Macintosh file type code(s): n/a
+* Person & email address to contact for further information: Daniel Fett, mail@danielfett.de
+* Intended usage: COMMON
+* Restrictions on usage: none
+* Author: Daniel Fett, mail@danielfett.de
+* Change Controller: IETF
+* Provisional registration?  No
+
+<br/>
 To indicate that the content is a Key Binding JWT:
 
 * Type name: application
@@ -1155,14 +1229,14 @@ To indicate that the content is a Key Binding JWT:
 * Applications that use this media type: TBD
 * Fragment identifier considerations: n/a
 * Additional information:
-   Magic number(s): n/a
-   File extension(s): n/a
-   Macintosh file type code(s): n/a
+   * Magic number(s): n/a
+   * File extension(s): n/a
+   * Macintosh file type code(s): n/a
 * Person & email address to contact for further information: Daniel Fett, mail@danielfett.de
 * Intended usage: COMMON
 * Restrictions on usage: none
 * Author: Daniel Fett, mail@danielfett.de
-* Change Controller: IESG
+* Change Controller: IETF
 * Provisional registration?  No
 
 ##  Structured Syntax Suffix Registration
@@ -1291,6 +1365,13 @@ the media type is encoded as an SD-JWT.
     <author fullname="IANA"></author>
     <title>Structured Syntax Suffixs</title>
   </front>
+</reference>
+
+<reference anchor="IANA.JWT" target="https://www.iana.org/assignments/jwt">
+ <front>
+  <title>JSON Web Token Claims</title>
+  <author><organization>IANA</organization></author>
+ </front>
 </reference>
 
 {backmatter}
@@ -1548,10 +1629,14 @@ data. The original JSON data is then used by the application. See
    -06
 
    * Fix minor issues in some examples
+   * Added IANA media type registration request for the JSON Serialization
    * More precise wording around storing artifacts with sensitive data
    * The claim name `_sd` or `...` must not be used in a disclosure.
+   * Added JWT claims registration requests to IANA
    * Ensure claims that control validity are checked after decoding payload
    * Restructure sections around data formats and Example 1
+   * Update JSON Serialization to remove the kb_jwt member and allow for the disclosures to be conveyed elsewhere
+   * Expand the Enveloping SD-JWTs section to also discuss enveloping JSON serialized SD-JWTs
 
    -05
 
