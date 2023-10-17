@@ -1079,15 +1079,32 @@ Decoy digests increase the size of the SD-JWT. The number of decoy digests (or w
 
 ## Unlinkability
 
-Colluding Issuer/Verifier or Verifier/Verifier pairs could link issuance/presentation
-or two presentation sessions to the same user on the basis of unique values encoded in the SD-JWT
-(Issuer signature, salts, digests, etc.).
+Unlinkability is a property that prevents an adversary from associating two or
+more sessions of the same user. Two types of unlinkability are often considered:
 
-To prevent these types of linkability, various methods, including but not limited to the following ones can be used:
+- Verifier/Verifier unlinkability: Two colluding Verifiers should not be able to
+  tell that they have received presentations from the same user.
+- Issuer/Verifier unlinkability: An Issuer colluding with a Verifier should
+  not able to tell that a user that has received a credential from the Issuer
+  has presented it to the Verifier.
 
-- Use advanced cryptographic schemes, outside the scope of this specification.
-- Issue a batch of SD-JWTs to the Holder to enable the Holder to use a unique SD-JWT per Verifier. This only helps with Verifier/Verifier unlinkability.
+In both cases, unlinkability is in principle limited to cases where the
+disclosed claims do not contain information that directly or indirectly
+identifies the user. For example, when a tax ID is contained in the disclosed
+claims, the Issuer and Verifier can easily link the user's sessions. However,
+when the user only discloses a birthdate to one Verifier and a postal code to
+another Verifier, the two Verifiers should not be able to tell that they were
+talking to the same user.
 
+With SD-JWT, Issuer/Verifier unlinkablility cannot be achieved, as the issued
+SD-JWT is directly forwarded to the Verifier.
+
+Verifier/Verifier unlinkablility can be achieved using batch issuance: A batch
+of credentials based on the same claims is issued to the Holder instead of just
+a single credential. The Holder can then use a different credential for each
+Verifier or even for each session with a Verifier. New key binding keys and
+salts MUST be used for each credential in the batch to ensure that the Verifiers
+cannot link the credentials using these values.
 
 ## Issuer Identifier
 
