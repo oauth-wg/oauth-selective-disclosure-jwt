@@ -525,8 +525,8 @@ The JWT MUST contain the following elements:
 
 ### Integrity Protection of the Presentation
 
-The hash digest in `_sd_hash` ensures the integrity of the presentation. It MUST
-be taken over the US-ASCII bytes preceding the KB-JWT in the presentation, i.e.,
+The hash digest in `_sd_hash` ensures the integrity of the Presentation. It MUST
+be taken over the US-ASCII bytes preceding the KB-JWT in the Presentation, i.e.,
 the Issuer-signed JWT, a tilde character, and zero or more Disclosures selected
 for presentation to the Verifier, each followed by a tilde character:
 
@@ -743,7 +743,7 @@ To this end, Verifiers MUST follow the following steps (or equivalent):
        5. Check that the `typ` of the Key Binding JWT is `kb+jwt`.
        6. Check that the creation time of the Key Binding JWT, as determined by the `iat` claim, is within an acceptable window.
        7. Determine that the Key Binding JWT is bound to the current transaction and was created for this Verifier (replay protection) by validating `nonce` and `aud` claims.
-       8. Calculate the digest over the presentation and verify that it matches the value of the `_sd_hash` claim in the Key Binding JWT.
+       8. Calculate the digest over the Presentation and verify that it matches the value of the `_sd_hash` claim in the Key Binding JWT.
        9. Check that the Key Binding JWT is valid in all other respects, per [@!RFC7519] and [@!RFC8725].
 
 If any step fails, the Presentation is not valid and processing MUST be aborted.
