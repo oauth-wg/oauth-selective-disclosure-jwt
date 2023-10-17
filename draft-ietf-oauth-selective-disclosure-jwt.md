@@ -224,11 +224,13 @@ Key Binding is an optional feature. When Key Binding is required by the use-case
 
 Note: How the public key is included in SD-JWT is out of scope of this document. It can be passed by value or by reference.
 
-The Holder can then create a signed document, the Key Binding JWT as defined in (#kb-jwt), using its private key. This document contains some
-data provided by the Verifier such as a nonce to ensure the freshness of the signature, and audience to indicate the
-intended audience for the document.
-
-The Key Binding JWT can be included as part of the SD-JWT and sent to the Verifier as described in (#data_formats).
+For presenting an SD-JWT to a Verifier that enforces Key Binding, the Holder
+creates a signed document, the Key Binding JWT as defined in (#kb-jwt), using
+its private key. This document contains some data provided by the Verifier, such
+as a nonce, to ensure the freshness of the signature, an audience value to
+indicate the intended audience for the document, and a hash that ensures the
+integrity of the data sent to the Verifier. Details of the format of Key Binding JWTs are
+described in (#kb-jwt).
 
 Note that there may be other ways to send a Key Binding JWT to the Verifier or for the Holder to prove possession of the key material included in an SD-JWT. In these cases, inclusion of the Key Binding JWT in the SD-JWT is not required.
 
