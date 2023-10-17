@@ -533,7 +533,12 @@ for presentation to the Verifier, each followed by a tilde character:
 ```
 <Issuer-signed JWT>~<Disclosure 1>~<Disclosure 2>~...~<Disclosure N>~
 ```
+
 The bytes of the digest MUST then be base64url-encoded.
+
+The same hash algorithm as for the Disclosures MUST be used (defined by
+the `_sd_alg` element in the Issuer-signed JWT or the default value, as defined
+in (#hash_function_claim)).
 
 ### Validating the Key Binding JWT
 
@@ -738,7 +743,8 @@ To this end, Verifiers MUST follow the following steps (or equivalent):
        5. Check that the `typ` of the Key Binding JWT is `kb+jwt`.
        6. Check that the creation time of the Key Binding JWT, as determined by the `iat` claim, is within an acceptable window.
        7. Determine that the Key Binding JWT is bound to the current transaction and was created for this Verifier (replay protection) by validating `nonce` and `aud` claims.
-       8. Check that the Key Binding JWT is valid in all other respects, per [@!RFC7519] and [@!RFC8725].
+       8. Calculate the digest over the presentation and verify that it matches the value of the `_sd_hash` claim in the Key Binding JWT.
+       9. Check that the Key Binding JWT is valid in all other respects, per [@!RFC7519] and [@!RFC8725].
 
 If any step fails, the Presentation is not valid and processing MUST be aborted.
 
