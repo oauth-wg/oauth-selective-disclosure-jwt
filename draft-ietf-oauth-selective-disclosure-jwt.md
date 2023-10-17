@@ -1656,7 +1656,7 @@ data. The original JSON data is then used by the application. See
    * Ensure claims that control validity are checked after decoding payload
    * Update JSON Serialization to remove the kb_jwt member and allow for the disclosures to be conveyed elsewhere
    * Expand the Enveloping SD-JWTs section to also discuss enveloping JSON serialized SD-JWTs
-   * Improve unlinkability considerations, mention that different KB keys must be used.
+   * Improve unlinkability considerations, mention that different KB keys must be used
 
    -05
 
