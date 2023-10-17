@@ -286,7 +286,7 @@ MUST NOT use `none` or an identifier for a symmetric algorithm (MAC).
 The payload of an SD-JWT is a JSON object according to the following rules:
 
  1. The payload MAY contain the `_sd_alg` key described in (#hash_function_claim).
- 2. The payload MAY contain one or more digests of Disclosures to enable selective disclosure of the respective claims, created and formatted as described below.
+ 2. The payload MAY contain one or more digests of Disclosures to enable selective disclosure of the respective claims, created and formatted as described in (#creating_disclosures).
  3. The payload MAY contain one or more decoy digests to obscure the actual number of claims in the SD-JWT, created and formatted as described in (#decoy_digests).
  4. The payload MAY contain one or more non-selectively disclosable claims.
  5. The payload MAY also contain Holder's public key(s) or reference(s) thereto, as well as further claims such as `iss`, `iat`, etc. as defined or required by the application using SD-JWTs. See (#holder_public_key_claim) for more details.
@@ -299,6 +299,38 @@ It is the Issuer who decides which claims are selectively disclosable and which 
 
 Claims that are not selectively disclosable are included in the SD-JWT in plaintext just as they would be in any other JSON structure.
 
+
+### Hash Function Claim {#hash_function_claim}
+
+The claim `_sd_alg` indicates the hash algorithm used by the Issuer to generate
+the digests as described in (#creating_disclosures). When used, this claim MUST
+appear at the top level of the SD-JWT payload. It
+MUST NOT be used in any object nested within the payload. If the  `_sd_alg`
+claim is not present at the top level, a default value of `sha-256` MUST be used.
+
+The hash algorithm identifier MUST be a hash algorithm value from the "Hash Name
+String" column in the IANA "Named Information Hash Algorithm" registry
+[@IANA.Hash.Algorithms] or a value defined in another specification and/or
+profile of this specification.
+
+To promote interoperability, implementations MUST support the `sha-256` hash
+algorithm.
+
+See (#security_considerations) for requirements regarding entropy of the salt,
+minimum length of the salt, and choice of a hash algorithm.
+
+### Holder Public Key Claim {#holder_public_key_claim}
+
+If the Issuer wants to enable Key Binding, it includes a public key
+associated with the Holder, or a reference thereto.
+
+It is out of the scope of this document to describe how the Holder key pair is
+established. For example, the Holder MAY create a key pair and provide a public key to the Issuer,
+the Issuer MAY create the key pair for the Holder, or
+Holder and Issuer MAY use pre-established key material.
+
+Note: The examples in this document use the `cnf` claim defined in [@RFC7800] to include
+the raw public key by value in SD-JWT.
 
 ## Disclosures {#creating_disclosures}
 
@@ -453,6 +485,25 @@ disclosable array elements for which they did not receive a Disclosure. In the
 example above, the verification process would output an array with only one
 element unless a matching Disclosure for the second element is received.
 
+### Decoy Digests {#decoy_digests}
+
+An Issuer MAY add additional digests to the SD-JWT payload that are not associated with
+any claim.  The purpose of such "decoy" digests is to make it more difficult for
+an attacker to see the original number of claims contained in the SD-JWT. Decoy
+digests MAY be added both to the `_sd` array for objects as well as in arrays.
+
+It is RECOMMENDED to create the decoy digests by hashing over a
+cryptographically secure random number. The bytes of the digest MUST then be
+base64url-encoded as above. The same digest function as for the Disclosures MUST
+be used.
+
+For decoy digests, no Disclosure is sent to the Holder, i.e., the Holder will
+see digests that do not correspond to any Disclosure. See
+(#decoy_digests_privacy) for additional privacy considerations.
+
+To ensure readability and replicability, the examples in this specification do
+not contain decoy digests unless explicitly stated. For an example
+with decoy digests, see (#example-simple_structured).
 
 ## Key Binding JWT {#kb-jwt}
 
@@ -529,9 +580,7 @@ The following Key Binding JWT payload was created and signed for this presentati
 
 <{{examples/simple/kb_jwt_payload.json}}
 
-# Data Format Details
-
-## Nested Data in SD-JWTs {#nested_data}
+# Considerations on Nested Data in SD-JWTs {#nested_data}
 
 Being JSON, an object in an SD-JWT payload MAY contain key-value pairs where the value is another object or objects MAY be elements in arrays. In SD-JWT, the Issuer decides for each claim individually, on each level of the JSON, whether the claim should be selectively disclosable or not. This choice can be made on each level independent from whether keys higher in the hierarchy are selectively disclosable.
 
@@ -555,7 +604,7 @@ be added to JSON strings and base64-encoded strings (as shown in the
 next example) to adhere to the 72 character limit for lines in RFCs and
 for readability. JSON does not allow line breaks in strings.
 
-### Example: Flat SD-JWT
+## Example: Flat SD-JWT
 
 The Issuer can decide to treat the `address` claim as a block that can either be disclosed completely or not at all. The following example shows that in this case, the entire `address` claim is treated as an object in the Disclosure.
 
@@ -565,7 +614,7 @@ The Issuer would create the following Disclosure:
 
 {{examples/address_only_flat/disclosures.md}}
 
-### Example: Structured SD-JWT
+## Example: Structured SD-JWT
 
 The Issuer may instead decide to make the `address` claim contents selectively disclosable individually:
 
@@ -581,7 +630,7 @@ The Issuer may also make one sub-claim of `address` non-selectively disclosable 
 
 In this case there would be no Disclosure for `country` since it is provided in the clear.
 
-### Example: SD-JWT with Recursive Disclosures
+## Example: SD-JWT with Recursive Disclosures
 
 The Issuer may also decide to make the `address` claim contents selectively disclosable recursively, i.e., the `address` claim is made selectively disclosable as well as its sub-claims:
 
@@ -590,58 +639,6 @@ The Issuer may also decide to make the `address` claim contents selectively disc
 The Issuer creates Disclosures first for the sub-claims and then includes their digests in the Disclosure for the `address` claim:
 
 {{examples/address_only_recursive/disclosures.md}}
-
-## Decoy Digests {#decoy_digests}
-
-An Issuer MAY add additional digests to the SD-JWT payload that are not associated with
-any claim.  The purpose of such "decoy" digests is to make it more difficult for
-an attacker to see the original number of claims contained in the SD-JWT. Decoy
-digests MAY be added both to the `_sd` array for objects as well as in arrays.
-
-It is RECOMMENDED to create the decoy digests by hashing over a
-cryptographically secure random number. The bytes of the digest MUST then be
-base64url-encoded as above. The same digest function as for the Disclosures MUST
-be used.
-
-For decoy digests, no Disclosure is sent to the Holder, i.e., the Holder will
-see digests that do not correspond to any Disclosure. See
-(#decoy_digests_privacy) for additional privacy considerations.
-
-To ensure readability and replicability, the examples in this specification do
-not contain decoy digests unless explicitly stated. For an example
-with decoy digests, see (#example-simple_structured).
-
-## Hash Function Claim {#hash_function_claim}
-
-The claim `_sd_alg` indicates the hash algorithm used by the Issuer to generate
-the digests as described in (#creating_disclosures). When used, this claim MUST
-appear at the top level of the SD-JWT payload. It
-MUST NOT be used in any object nested within the payload. If the  `_sd_alg`
-claim is not present at the top level, a default value of `sha-256` MUST be used.
-
-The hash algorithm identifier MUST be a hash algorithm value from the "Hash Name
-String" column in the IANA "Named Information Hash Algorithm" registry
-[@IANA.Hash.Algorithms] or a value defined in another specification and/or
-profile of this specification.
-
-To promote interoperability, implementations MUST support the `sha-256` hash
-algorithm.
-
-See (#security_considerations) for requirements regarding entropy of the salt,
-minimum length of the salt, and choice of a hash algorithm.
-
-## Holder Public Key Claim {#holder_public_key_claim}
-
-If the Issuer wants to enable Key Binding, it includes a public key
-associated with the Holder, or a reference thereto.
-
-It is out of the scope of this document to describe how the Holder key pair is
-established. For example, the Holder MAY create a key pair and provide a public key to the Issuer,
-the Issuer MAY create the key pair for the Holder, or
-Holder and Issuer MAY use pre-established key material.
-
-Note: The examples in this document use the `cnf` claim defined in [@RFC7800] to include
-the raw public key by value in SD-JWT.
 
 # Verification and Processing {#verification}
 
