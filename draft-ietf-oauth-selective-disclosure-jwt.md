@@ -1183,9 +1183,16 @@ IANA "JSON Web Token Claims" registry [@IANA.JWT] established by [@!RFC7519].
 <br/>
 
 *  Claim Name: `_sd_alg`
-*  Claim Description: Hash algorithm used to generate disclosure digests
+*  Claim Description: Hash algorithm used to generate disclosure digests and digest over presentation
 *  Change Controller: IETF
 *  Specification Document(s):  [[ (#hash_function_claim) of this specification ]]
+
+<br/>
+
+*  Claim Name: `_sd_hash`
+*  Claim Description: Digest of the Issuer-signed JWT and Disclosures in a Presentation
+*  Change Controller: IETF
+*  Specification Document(s):  [[ (#kb-jwt) of this specification ]]
 
 ## Media Type Registration
 
