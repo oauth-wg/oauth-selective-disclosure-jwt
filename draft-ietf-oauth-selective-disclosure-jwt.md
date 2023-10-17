@@ -521,12 +521,29 @@ The JWT MUST contain the following elements:
     * `iat`: REQUIRED. The value of this claim MUST be the time at which the Key Binding JWT was issued using the syntax defined in [@!RFC7519].
     * `aud`: REQUIRED. The intended receiver of the Key Binding JWT. How the value is represented is up to the protocol used and out of scope of this specification.
     * `nonce`: REQUIRED. Ensures the freshness of the signature. The value type of this claim MUST be a string. How this value is obtained is up to the protocol used and out of scope of this specification.
+    * `_sd_hash`: REQUIRED. The base64url-encoded hash digest over the Issuer-signed JWT and the selected Disclosures as defined below.
+
+### Integrity Protection of the Presentation
+
+The hash digest in `_sd_hash` ensures the integrity of the presentation. It MUST
+be taken over the US-ASCII bytes preceding the KB-JWT in the presentation, i.e.,
+the Issuer-signed JWT, a tilde character, and zero or more Disclosures selected
+for presentation to the Verifier, each followed by a tilde character:
+
+```
+<Issuer-signed JWT>~<Disclosure 1>~<Disclosure 2>~...~<Disclosure N>~
+```
+The bytes of the digest MUST then be base64url-encoded.
+
+### Validating the Key Binding JWT
 
 To validate the signature on the Key Binding JWT, the Verifier MUST use the key material in the SD-JWT. If it is not clear from the SD-JWT, the Key Binding JWT MUST specify which key material the Verifier needs to use to validate the Key Binding JWT signature using JOSE header parameters such as `kid` and `x5c`.
 
 Whether to require Key Binding is up to the Verifier's policy, based on the set
 of trust requirements such as trust frameworks it belongs to. See
 (#key_binding_security) for security considerations.
+
+### Alternatives to a Key Binding JWT
 
 Other ways of proving Key Binding MAY be used when supported by the Verifier,
 e.g., when the presented SD-JWT without a Key Binding JWT is itself embedded in a
@@ -800,7 +817,7 @@ Key Binding is achieved by the signature on the enclosing JWT.
 }
 ```
 
-Other specifications or profiles of this specification may define alternative formats for transporting an SD-JWT that envelope multiple such SD-JWTs into one object and provide Key Binding using means other than the Key Binding JWT.
+Other specifications or profiles of this specification may define alternative formats for transporting an SD-JWT that envelope multiple such SD-JWTs into one object and provide Key Binding and integrity protection of the presentation using means other than the Key Binding JWT.
 
 
 # Security Considerations {#security_considerations}
@@ -924,10 +941,6 @@ particular use case and the Key Binding is not present, does not fulfill the req
 Key Binding data is present in the SD-JWT, the Verifier will reject the
 presentation, as described in (#verifier_verification).
 
-### Key Binding JWT
-
-Issuer provided integrity protection of the SD-JWT payload and Disclosures is achieved by the signature on the Issuer-signed JWT that covers the SD-JWT payload including the digest values of the Disclosures as described in (#sec-is-jwt) and (#sec-disclosures), respectively. The Key Binding JWT, defined in (#kb-jwt), serves exclusively as a mechanism for the Holder to demonstrate possession of the private key corresponding to the public key in the SD-JWT payload. As such, the signature on the Key Binding JWT does not cover other parts of the SD-JWT. In cases where it's desirable for the Holder's signature to convey more than a proof-of-possession, such as signing over the selected Disclosures to prove those were the Disclosures selected, the SD-JWT to be presented can be embedded in another JWT (as described in [Enveloping SD-JWTs](#enveloping)) or otherwise signed by the Holder via the application protocol delivering it.
-
 ## Blinding Claim Names {#blinding-claim-names}
 
 SD-JWT ensures that names of claims that are selectively disclosable are
@@ -982,6 +995,12 @@ when presenting to a downstream party.
 
 In some scenarios this behavior could be desirable,
 but if it is not, Issuers need to support and Verifiers need to enforce Key Binding.
+
+## Integrity of Presentation
+
+Without a Key Binding JWT as defined in (#kb-jwt), the integrity of the
+Presentation is not protected, i.e., an attacker that can intercept the
+Presentation can remove Disclosures or add new ones.
 
 ## Explicit Typing {#explicit_typing}
 
