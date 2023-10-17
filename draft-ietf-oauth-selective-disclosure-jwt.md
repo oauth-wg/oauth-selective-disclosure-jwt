@@ -289,9 +289,11 @@ The payload of an SD-JWT is a JSON object according to the following rules:
  2. The payload MAY contain one or more digests of Disclosures to enable selective disclosure of the respective claims, created and formatted as described in (#creating_disclosures).
  3. The payload MAY contain one or more decoy digests to obscure the actual number of claims in the SD-JWT, created and formatted as described in (#decoy_digests).
  4. The payload MAY contain one or more non-selectively disclosable claims.
- 5. The payload MAY also contain Holder's public key(s) or reference(s) thereto, as well as further claims such as `iss`, `iat`, etc. as defined or required by the application using SD-JWTs. See (#holder_public_key_claim) for more details.
- 6. The payload MUST NOT contain the reserved claims `_sd` or `...` except for the purpose of transporting digests as described below.
- 7. The same digest value MUST NOT appear more than once in the SD-JWT.
+ 5. The payload MAY contain the Holder's public key(s) or reference(s) thereto, as explained in (#holder_public_key_claim).
+ 6. The payload MAY contain further claims such as `iss`, `iat`, etc. as defined or required by the application using SD-JWTs.
+ 7. The payload MUST NOT contain the reserved claims `_sd` or `...` except for the purpose of transporting digests as described below.
+
+The same digest value MUST NOT appear more than once in the SD-JWT.
 
 Applications of SD-JWT SHOULD be explicitly typed using the `typ` header parameter. See (#explicit_typing) for more details.
 
@@ -430,8 +432,8 @@ The SHA-256 digest of the Disclosure
 
 For selectively disclosable claims, the digests of the Disclosures are embedded into the Issuer-signed JWT instead of the claims themselves. The precise way of embedding depends on whether a claim is an object property (key-value pair) or an array element.
 
- * For a claim that is an object property, the Issuer embeds a Disclosure as described in (#embedding_object_properties).
-* For a claim that is an array element, the Issuer creates a Disclosure as described in (#embedding_array_elements).
+ * For a claim that is an object property, the Issuer embeds a Disclosure digest as described in (#embedding_object_properties).
+ * For a claim that is an array element, the Issuer creates a Disclosure digest as described in (#embedding_array_elements).
 
 #### Object Properties {#embedding_object_properties}
 
@@ -535,6 +537,10 @@ signed JWT. See (#enveloping) for details.
 
 In this example, a simple SD-JWT is demonstrated. This example is split into issuance and presentation.
 
+Note: Throughout the examples in this document, line breaks had to be added to
+JSON strings and base64-encoded strings to adhere to the 72 character limit for
+lines in RFCs and for readability. JSON does not allow line breaks within strings.
+
 ## Issuance
 
 The Issuer is using the following input claim set:
@@ -562,7 +568,7 @@ The payload is then signed by the Issuer to create a JWT like the following:
 
 <{{examples/simple/sd_jwt_jws_part.txt}}
 
-The issued SD-JWT might look as follows (with Line breaks for formatting only):
+The issued SD-JWT might look as follows:
 
 <{{examples/simple/sd_jwt_issuance.txt}}
 
@@ -598,11 +604,6 @@ The following input claim set is used as an example throughout this section:
 Important: The following examples of the structures are non-normative and are not intended to
 represent all possible options. They are also not meant to define or restrict
 how `address` can be represented in an SD-JWT.
-
-Note: Throughout the examples in this document, line breaks had to
-be added to JSON strings and base64-encoded strings (as shown in the
-next example) to adhere to the 72 character limit for lines in RFCs and
-for readability. JSON does not allow line breaks in strings.
 
 ## Example: Flat SD-JWT
 
@@ -1443,7 +1444,7 @@ The Issuer is using the following input claim set:
 
 <{{examples/arf-pid/user_claims.json}}
 
-The following is the issued SD-JWT (with line breaks for formatting only):
+The following is the issued SD-JWT:
 
 <{{examples/arf-pid/sd_jwt_issuance.txt}}
 
@@ -1479,7 +1480,7 @@ The Issuer is using the following input claim set:
 
 <{{examples/jsonld/user_claims.json}}
 
-The following is the issued SD-JWT (with line breaks for formatting only):
+The following is the issued SD-JWT:
 
 <{{examples/jsonld/sd_jwt_issuance.txt}}
 
