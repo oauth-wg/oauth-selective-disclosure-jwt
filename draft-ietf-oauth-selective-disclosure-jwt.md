@@ -1653,6 +1653,7 @@ data. The original JSON data is then used by the application. See
 
    -06
 
+   * Added hash of Issuer-signed part and Disclosures in KB-JWT
    * Fix minor issues in some examples
    * Added IANA media type registration request for the JSON Serialization
    * More precise wording around storing artifacts with sensitive data
