@@ -1009,10 +1009,8 @@ but if it is not, Issuers need to support and Verifiers need to enforce Key Bind
 In a Presentation, the Issuer-signed JWT is integrity-protected by the Issuer's
 signature, and the Disclosures are integrity-protected by the digests included
 in the Issuer-signed JWT. However, without enforcing a Key Binding JWT as
-defined in (#kb-jwt), an attacker that can intercept the Presentation can remove
-Disclosures. The attacker could in theory also add Disclosures, but that would
-require the attacker to know the salt and claim value for the claim to be added,
-which is infeasible if the salt has sufficient entropy.
+defined in (#kb-jwt), the integrity of the set of Disclosures the 
+Holder selected to send is not ensured.
 
 ## Explicit Typing {#explicit_typing}
 
