@@ -1088,7 +1088,7 @@ more sessions of the same user. Two types of unlinkability are often considered:
   not able to tell that a user that has received a credential from the Issuer
   has presented it to the Verifier.
 
-In both cases, unlinkability is in principle limited to cases where the
+In both cases, unlinkability is limited to cases where the
 disclosed claims do not contain information that directly or indirectly
 identifies the user. For example, when a tax ID is contained in the disclosed
 claims, the Issuer and Verifier can easily link the user's sessions. However,
@@ -1096,7 +1096,7 @@ when the user only discloses a birthdate to one Verifier and a postal code to
 another Verifier, the two Verifiers should not be able to tell that they were
 talking to the same user.
 
-With SD-JWT, Issuer/Verifier unlinkablility cannot be achieved, as the issued
+Issuer/Verifier unlinkability cannot be achieved with SD-JWT, as the issued
 SD-JWT is directly forwarded to the Verifier.
 
 Verifier/Verifier unlinkablility can be achieved using batch issuance: A batch
