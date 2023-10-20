@@ -1085,7 +1085,7 @@ more sessions of the same user. Two types of unlinkability are often considered:
 - Verifier/Verifier unlinkability: Two colluding Verifiers should not be able to
   tell that they have received presentations from the same user.
 - Issuer/Verifier unlinkability: An Issuer colluding with a Verifier should
-  not able to tell that a user that has received a credential from the Issuer
+  not be able to tell that a user that has received a credential from the Issuer
   has presented it to the Verifier.
 
 In both cases, unlinkability is limited to cases where the
