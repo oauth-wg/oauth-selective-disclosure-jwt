@@ -16,7 +16,7 @@ status = "standard"
 initials="D."
 surname="Fett"
 fullname="Daniel Fett"
-organization="yes.com"
+organization="Authlete"
     [author.address]
     email = "mail@danielfett.de"
     uri = "https://danielfett.de/"
