@@ -1009,7 +1009,7 @@ In a Presentation, the Issuer-signed JWT is integrity-protected by the Issuer's
 signature, and the Disclosures are integrity-protected by the digests included
 in the Issuer-signed JWT. However, without enforcing a Key Binding JWT as
 defined in (#kb-jwt), the integrity of the set of Disclosures the
-Holder selected to send is not ensured.
+Holder disclosed is not ensured.
 
 ## Explicit Typing {#explicit_typing}
 
