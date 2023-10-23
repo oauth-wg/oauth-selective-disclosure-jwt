@@ -524,7 +524,7 @@ The JWT MUST contain the following elements:
     * `nonce`: REQUIRED. Ensures the freshness of the signature. The value type of this claim MUST be a string. How this value is obtained is up to the protocol used and out of scope of this specification.
     * `_sd_hash`: REQUIRED. The base64url-encoded hash digest over the Issuer-signed JWT and the selected Disclosures as defined below.
 
-### Integrity Protection of the Presentation
+### Integrity Protection of the Presentation {#integrity-protection-of-the-presentation}
 
 The hash digest in `_sd_hash` ensures the integrity of the Presentation. It MUST
 be taken over the US-ASCII bytes preceding the KB-JWT in the Presentation, i.e.,
@@ -744,7 +744,7 @@ To this end, Verifiers MUST follow the following steps (or equivalent):
        5. Check that the `typ` of the Key Binding JWT is `kb+jwt`.
        6. Check that the creation time of the Key Binding JWT, as determined by the `iat` claim, is within an acceptable window.
        7. Determine that the Key Binding JWT is bound to the current transaction and was created for this Verifier (replay protection) by validating `nonce` and `aud` claims.
-       8. Calculate the digest over the Presentation and verify that it matches the value of the `_sd_hash` claim in the Key Binding JWT.
+       8. Calculate the digest over the Issuer-signed JWT and Disclosures as defined in (#integrity-protection-of-the-presentation) and verify that it matches the value of the `_sd_hash` claim in the Key Binding JWT.
        9. Check that the Key Binding JWT is valid in all other respects, per [@!RFC7519] and [@!RFC8725].
 
 If any step fails, the Presentation is not valid and processing MUST be aborted.
