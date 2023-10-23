@@ -1007,9 +1007,8 @@ but if it is not, Issuers need to support and Verifiers need to enforce Key Bind
 
 In a Presentation, the Issuer-signed JWT is integrity-protected by the Issuer's
 signature, and the Disclosures are integrity-protected by the digests included
-in the Issuer-signed JWT. However, without enforcing a Key Binding JWT as
-defined in (#kb-jwt), the integrity of the set of Disclosures the
-Holder disclosed is not ensured.
+in the Issuer-signed JWT. If used, the KB-JWT, besides proving Key Binding, protects the integrity of the
+set of Disclosures the Holder disclosed.
 
 ## Explicit Typing {#explicit_typing}
 
