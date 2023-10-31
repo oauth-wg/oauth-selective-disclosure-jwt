@@ -1286,7 +1286,7 @@ the media type is encoded as an SD-JWT.
 * Fragment identifier considerations: n/a
 * Security considerations: See the Security Considerations section of [[ this specification ]], [@!RFC7519], and [@RFC8725].
 * Contact: Daniel Fett, mail@danielfett.de
-* Author/Change controller: IESG
+* Author/Change controller: IETF
 
 
 <reference anchor="OIDC" target="https://openid.net/specs/openid-connect-core-1_0.html">
