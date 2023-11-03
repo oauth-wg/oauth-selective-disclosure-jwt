@@ -51,7 +51,7 @@ jobs:
         restore-keys: i-d-
 
     - name: "Build Drafts"
-      uses: martinthomson/i-d-template@3e5cfbafc0037fee41e7fe4e6567b14b3c1be199
+      uses: martinthomson/i-d-template@v1
       with:
         token: ${{ github.token }}
 
