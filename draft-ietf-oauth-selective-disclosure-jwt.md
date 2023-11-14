@@ -1286,7 +1286,7 @@ the media type is encoded as an SD-JWT.
 * Fragment identifier considerations: n/a
 * Security considerations: See the Security Considerations section of [[ this specification ]], [@!RFC7519], and [@RFC8725].
 * Contact: Daniel Fett, mail@danielfett.de
-* Author/Change controller: IESG
+* Author/Change controller: IETF
 
 
 <reference anchor="OIDC" target="https://openid.net/specs/openid-connect-core-1_0.html">
@@ -1657,6 +1657,10 @@ data. The original JSON data is then used by the application. See
 # Document History
 
    [[ To be removed from the final specification ]]
+
+   -07
+
+   * Update change controller for the Structured Syntax Suffix registration from IESG to IETF per IANA suggestion
 
    -06
 
