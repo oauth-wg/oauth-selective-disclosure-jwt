@@ -1658,6 +1658,10 @@ data. The original JSON data is then used by the application. See
 
    [[ To be removed from the final specification ]]
 
+   -07
+
+   * Update change controller for the Structured Syntax Suffix registration from IESG to IETF per IANA suggestion
+
    -06
 
    * Added hash of Issuer-signed part and Disclosures in KB-JWT
