@@ -676,35 +676,35 @@ Upon receiving an SD-JWT, a Holder or a Verifier MUST ensure that
 The Holder or the Verifier MUST perform the following (or equivalent) steps when receiving
 an SD-JWT:
 
- 1. Separate the SD-JWT into the Issuer-signed JWT, the Disclosures (if any), and the Key Binding JWT (if present).
- 2. Validate the Issuer-signed JWT:
+1. Separate the SD-JWT into the Issuer-signed JWT, the Disclosures (if any), and the Key Binding JWT (if present).
+2. Validate the Issuer-signed JWT:
     1. Ensure that a signing algorithm was used that was deemed secure for the application. Refer to [@RFC8725], Sections 3.1 and 3.2 for details. The `none` algorithm MUST NOT be accepted.
     2. Validate the signature over the Issuer-signed JWT.
     3. Validate the Issuer and that the signing key belongs to this Issuer.
     5. Check that the `_sd_alg` claim value is understood and the hash algorithm is deemed secure.
- 3. Process the Disclosures and embedded digests in the Issuer-signed JWT as follows:
+3. Process the Disclosures and embedded digests in the Issuer-signed JWT as follows:
     1. For each Disclosure provided:
-       1. Calculate the digest over the base64url-encoded string as described in (#hashing_disclosures).
+        1. Calculate the digest over the base64url-encoded string as described in (#hashing_disclosures).
     2. (*) Identify all embedded digests in the Issuer-signed JWT as follows:
-       1. Find all objects having an `_sd` key that refers to an array of strings.
-       2. Find all array elements that are objects with one key, that key being `...` and referring to a string.
+        1. Find all objects having an `_sd` key that refers to an array of strings.
+        2. Find all array elements that are objects with one key, that key being `...` and referring to a string.
     3. (**) For each embedded digest found in the previous step:
-       1. Compare the value with the digests calculated previously and find the matching Disclosure. If no such Disclosure can be found, the digest MUST be ignored.
-       2. If the digest was found in an object's `_sd` key:
-          1. If the respective Disclosure is not a JSON-encoded array of three elements (salt, claim name, claim value), the SD-JWT MUST be rejected.
-          2. If the claim name is `_sd` or `...`, the SD-JWT MUST be rejected.
-          3. If the claim name already exists at the level of the `_sd` key, the SD-JWT MUST be rejected.
-          4. Insert, at the level of the `_sd` key, a new claim using the claim name and claim value from the Disclosure.
-          5. Recursively process the value using the steps described in (*) and (**).
-       3. If the digest was found in an array element:
-          1. If the respective Disclosure is not a JSON-encoded array of two elements (salt, value), the SD-JWT MUST be rejected.
-          2. Replace the array element with the value from the Disclosure.
-          3. Recursively process the value using the steps described in (*) and (**).
+        1. Compare the value with the digests calculated previously and find the matching Disclosure. If no such Disclosure can be found, the digest MUST be ignored.
+        2. If the digest was found in an object's `_sd` key:
+            1. If the respective Disclosure is not a JSON-encoded array of three elements (salt, claim name, claim value), the SD-JWT MUST be rejected.
+            2. If the claim name is `_sd` or `...`, the SD-JWT MUST be rejected.
+            3. If the claim name already exists at the level of the `_sd` key, the SD-JWT MUST be rejected.
+            4. Insert, at the level of the `_sd` key, a new claim using the claim name and claim value from the Disclosure.
+            5. Recursively process the value using the steps described in (*) and (**).
+        3. If the digest was found in an array element:
+            1. If the respective Disclosure is not a JSON-encoded array of two elements (salt, value), the SD-JWT MUST be rejected.
+            2. Replace the array element with the value from the Disclosure.
+            3. Recursively process the value using the steps described in (*) and (**).
     4. If any digests were found more than once in the previous step, the SD-JWT MUST be rejected.
     5. Remove all array elements for which the digest was not found in the previous step.
     6. Remove all `_sd` keys and their contents from the Issuer-signed JWT payload.
     7. Remove the claim `_sd_alg` from the SD-JWT payload.
- 4. Check that the SD-JWT is valid using claims such as `nbf`, `iat`, and `exp` in the processed payload. If a required validity-controlling claim is missing (see (#sd-validity-claims)), the SD-JWT MUST be rejected.
+4. Check that the SD-JWT is valid using claims such as `nbf`, `iat`, and `exp` in the processed payload. If a required validity-controlling claim is missing (see (#sd-validity-claims)), the SD-JWT MUST be rejected.
 
 If any step fails, the SD-JWT is not valid and processing MUST be aborted.
 
@@ -729,23 +729,23 @@ Upon receiving a Presentation, in addition to the checks outlined in (#sd_jwt_ve
 
 To this end, Verifiers MUST follow the following steps (or equivalent):
 
- 1. Determine if Key Binding is to be checked according to the Verifier's policy
-    for the use case at hand. This decision MUST NOT be based on whether
-    a Key Binding JWT is provided by the Holder or not. Refer to (#key_binding_security) for
-    details.
- 2. Process the SD-JWT as defined in (#sd_jwt_verification).
- 3. If Key Binding is required:
+1. Determine if Key Binding is to be checked according to the Verifier's policy
+   for the use case at hand. This decision MUST NOT be based on whether
+   a Key Binding JWT is provided by the Holder or not. Refer to (#key_binding_security) for
+   details.
+2. Process the SD-JWT as defined in (#sd_jwt_verification).
+3. If Key Binding is required:
     1. If Key Binding is provided by means not defined in this specification, verify the Key Binding according to the method used.
     2. Otherwise, verify the Key Binding JWT as follows:
-       1. If a Key Binding JWT is not provided, the Verifier MUST reject the Presentation.
-       2. Determine the public key for the Holder from the SD-JWT.
-       3. Ensure that a signing algorithm was used that was deemed secure for the application. Refer to [@RFC8725], Sections 3.1 and 3.2 for details. The `none` algorithm MUST NOT be accepted.
-       4. Validate the signature over the Key Binding JWT.
-       5. Check that the `typ` of the Key Binding JWT is `kb+jwt`.
-       6. Check that the creation time of the Key Binding JWT, as determined by the `iat` claim, is within an acceptable window.
-       7. Determine that the Key Binding JWT is bound to the current transaction and was created for this Verifier (replay protection) by validating `nonce` and `aud` claims.
-       8. Calculate the digest over the Issuer-signed JWT and Disclosures as defined in (#integrity-protection-of-the-presentation) and verify that it matches the value of the `_sd_hash` claim in the Key Binding JWT.
-       9. Check that the Key Binding JWT is valid in all other respects, per [@!RFC7519] and [@!RFC8725].
+        1. If a Key Binding JWT is not provided, the Verifier MUST reject the Presentation.
+        2. Determine the public key for the Holder from the SD-JWT.
+        3. Ensure that a signing algorithm was used that was deemed secure for the application. Refer to [@RFC8725], Sections 3.1 and 3.2 for details. The `none` algorithm MUST NOT be accepted.
+        4. Validate the signature over the Key Binding JWT.
+        5. Check that the `typ` of the Key Binding JWT is `kb+jwt`.
+        6. Check that the creation time of the Key Binding JWT, as determined by the `iat` claim, is within an acceptable window.
+        7. Determine that the Key Binding JWT is bound to the current transaction and was created for this Verifier (replay protection) by validating `nonce` and `aud` claims.
+        8. Calculate the digest over the Issuer-signed JWT and Disclosures as defined in (#integrity-protection-of-the-presentation) and verify that it matches the value of the `_sd_hash` claim in the Key Binding JWT.
+        9. Check that the Key Binding JWT is valid in all other respects, per [@!RFC7519] and [@!RFC8725].
 
 If any step fails, the Presentation is not valid and processing MUST be aborted.
 
