@@ -879,6 +879,8 @@ important to adhere to this principle. As such, each salt MUST be created
 in such a manner that it is cryptographically random, long enough, and
 has high entropy that it is not practical for the attacker to guess. A
 new salt MUST be chosen for each claim independently from other salts.
+See Randomness Requirements for Security [@RFC4086] for considerations
+on generating random values.
 
 ## Minimum length of the salt {#salt_minlength}
 
@@ -1660,6 +1662,7 @@ data. The original JSON data is then used by the application. See
 
    -07
 
+   * Reference RFC4086 in security considerations about salt entropy
    * Update change controller for the Structured Syntax Suffix registration from IESG to IETF per IANA suggestion
 
    -06
