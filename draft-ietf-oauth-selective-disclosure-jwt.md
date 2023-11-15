@@ -92,7 +92,7 @@ mechanisms defined in this document can be used for other use cases as well.
 
 In an SD-JWT, claims can be hidden, but cryptographically
 protected against undetected modification. "Claims" here refers to both
-object properties (key-value pairs) as well as array elements. When issuing the SD-JWT to
+object properties (name-value pairs) as well as array elements. When issuing the SD-JWT to
 the Holder, the Issuer includes the cleartext counterparts of all hidden
 claims, the so-called Disclosures, outside the signed part of the SD-JWT.
 
@@ -118,7 +118,7 @@ wherever possible.
 ## Feature Summary
 
 * This specification defines
- - a format for the payload of an Issuer-signed JWT containing selectively disclosable claims that include object properties (key-value pairs), array elements, and nested data structures built from these,
+ - a format for the payload of an Issuer-signed JWT containing selectively disclosable claims that include object properties (name-value pairs), array elements, and nested data structures built from these,
  - a format for data associated with the JWT that enables selectively disclosing those claims,
  - facilities for binding the JWT to a key and associated data to prove possession thereof, and
  - a format, extending the JWS Compact Serialization, for the combined transport of the JWT and associated data that is suitable for both issuance and presentation.
@@ -149,7 +149,7 @@ Selectively Disclosable JWT (SD-JWT):
  that supports selective disclosure as defined in this document. It can contain both regular claims and digests of selectively-disclosable claims.
 
 Disclosure:
-:  A combination of a salt, a cleartext claim name (present when the claim is a key-value pair and absent when the claim is an array element), and a cleartext claim value, all of which are used to calculate a digest for the respective claim.
+:  A combination of a salt, a cleartext claim name (present when the claim is a name-value pair and absent when the claim is an array element), and a cleartext claim value, all of which are used to calculate a digest for the respective claim.
 
 Key Binding:
 :  Ability of the Holder to prove legitimate possession of an SD-JWT by proving
@@ -208,7 +208,7 @@ conceptual level, abstracting from the data formats described in (#data_formats)
 
 ## SD-JWT and Disclosures
 
-An SD-JWT, at its core, is a digitally signed JSON document containing digests over the selectively disclosable claims with the Disclosures outside the document. Disclosures can be omitted without breaking the signature, and modifying them can be detected. Selectively disclosable claims can be individual object properties (key-value pairs) or array elements.
+An SD-JWT, at its core, is a digitally signed JSON document containing digests over the selectively disclosable claims with the Disclosures outside the document. Disclosures can be omitted without breaking the signature, and modifying them can be detected. Selectively disclosable claims can be individual object properties (name-value pairs) or array elements.
 
 Each digest value ensures the integrity of, and maps to, the respective Disclosure.  Digest values are calculated using a hash function over the Disclosures, each of which contains a cryptographically secure random salt, the claim name (only when the claim is an object property), and the claim value. The Disclosures are sent to the Holder as part of the SD-JWT in the format defined in (#data_formats).
 
@@ -337,7 +337,7 @@ the raw public key by value in SD-JWT.
 
 ## Disclosures {#creating_disclosures}
 
-Disclosures are created differently depending on whether a claim is an object property (key-value pair) or an array element.
+Disclosures are created differently depending on whether a claim is an object property (name-value pair) or an array element.
 
  * For a claim that is an object property, the Issuer creates a Disclosure as described in (#disclosures_for_object_properties).
  * For a claim that is an array element, the Issuer creates a Disclosure as described in (#disclosures_for_array_elements).
@@ -431,7 +431,7 @@ The SHA-256 digest of the Disclosure
 
 ### Embedding Disclosure Digests in SD-JWTs {#embedding_disclosure_digests}
 
-For selectively disclosable claims, the digests of the Disclosures are embedded into the Issuer-signed JWT instead of the claims themselves. The precise way of embedding depends on whether a claim is an object property (key-value pair) or an array element.
+For selectively disclosable claims, the digests of the Disclosures are embedded into the Issuer-signed JWT instead of the claims themselves. The precise way of embedding depends on whether a claim is an object property (name-value pair) or an array element.
 
  * For a claim that is an object property, the Issuer embeds a Disclosure digest as described in (#embedding_object_properties).
  * For a claim that is an array element, the Issuer creates a Disclosure digest as described in (#embedding_array_elements).
@@ -611,7 +611,7 @@ The following Key Binding JWT payload was created and signed for this presentati
 
 # Considerations on Nested Data in SD-JWTs {#nested_data}
 
-Being JSON, an object in an SD-JWT payload MAY contain key-value pairs where the value is another object or objects MAY be elements in arrays. In SD-JWT, the Issuer decides for each claim individually, on each level of the JSON, whether the claim should be selectively disclosable or not. This choice can be made on each level independent from whether keys higher in the hierarchy are selectively disclosable.
+Being JSON, an object in an SD-JWT payload MAY contain name-value pairs where the value is another object or objects MAY be elements in arrays. In SD-JWT, the Issuer decides for each claim individually, on each level of the JSON, whether the claim should be selectively disclosable or not. This choice can be made on each level independent from whether keys higher in the hierarchy are selectively disclosable.
 
 From this it follows that the `_sd` key containing digests MAY appear multiple
 times in an SD-JWT, and likewise, there MAY be multiple arrays within the
@@ -893,19 +893,32 @@ a different salt.
 
 ## Choice of a Hash Algorithm
 
-For the security of this scheme, the hash algorithm is required to be preimage resistant and second-preimage
-resistant, i.e., it is infeasible to calculate the salt and claim value that result in
-a particular digest, and, for any salt and claim value pair, it is infeasible to find a different salt and claim value pair that
-result in the same digest, respectively.
+To ensure privacy of claims that are not being selectively disclosed in a given presentation,
+the hash function MUST ensure that it is infeasible to calculate the salt and claim name-value pair
+(or any portion thereof) that results in a particular digest. This implies the hash function MUST
+be preimage resistant, but should also not allow an observer to infer any partial information about
+the undisclosed content. In the terminology of cryptographic commitment schemes, the hash function
+MUST be computationally hiding.
 
-Hash algorithms that do not meet the aforementioned requirements MUST NOT be used.
-Inclusion in the "Named Information Hash Algorithm" registry [@IANA.Hash.Algorithms]
+To ensure the integrity of selectively disclosable claims, the hash function MUST be second-preimage
+resistant. That is, for any salt and claim name-value pair, it is infeasible to find a different salt
+and claim name-value pair that result in the same digest.
+
+The hash function SHOULD also be collision resistant. Although not essential to the anticipated uses of
+SD-JWT, without collision resistance an Issuer may be able to find multiple disclosures that have the
+same hash value. The signature over the SD-JWT would not then commit the Issuer to the contents of the
+JWT, which is surprising. Where this is a concern, the collision resistance of the hash function SHOULD
+match the collision resistance of the hash function used by the signature scheme. For example, use of
+the ES512 signature algorithm would require a disclosure hash function with at least 256-bit collision
+resistance, such as SHA-512.
+
+Note that inclusion in the "Named Information Hash Algorithm" registry [@IANA.Hash.Algorithms]
 alone does not indicate a hash algorithm's suitability for use in SD-JWT (it contains several
 heavily truncated digests, such as `sha-256-32` and `sha-256-64`, which are unfit for security
 applications).
 
 Furthermore, the hash algorithms MD2, MD4, MD5, and SHA-1
-revealed fundamental weaknesses and they MUST NOT be used.
+revealed fundamental weaknesses and MUST NOT be used.
 
 ## Key Binding {#key_binding_security}
 Key Binding aims to ensure that the presenter of an SD-JWT credential is actually the legitimate Holder of the credential.
@@ -1143,6 +1156,7 @@ Matthew Miller,
 Mike Jones,
 Mike Prorock,
 Nat Sakimura,
+Neil Madden,
 Oliver Terbu,
 Orie Steele,
 Paul Bastian,
@@ -1661,6 +1675,7 @@ data. The original JSON data is then used by the application. See
    -07
 
    * Update change controller for the Structured Syntax Suffix registration from IESG to IETF per IANA suggestion
+   * Expand/rework considerations on the choice of hash algorithm
 
    -06
 
