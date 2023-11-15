@@ -960,21 +960,37 @@ the SD-JWT.
 
 ## Selectively-Disclosable Validity Claims {#sd-validity-claims}
 
-Claims controlling the validity of the SD-JWT, such as `nbf`, `iat`, and `exp`,
-are usually included in plaintext in the SD-JWT payload, but MAY be
-selectively disclosable instead. In this case, however, it is up to the Holder
-to release the claims to the Verifier. A malicious Holder may try to hide, for
+An Issuer MUST NOT allow any security-critical claim to be selectively disclosable.
+The exact list of such claims will depend on the application,
+and SHOULD be listed by any application-specific profile of SD-JWT.
+The following is a list of standard claim names that SHOULD be considered as
+security-critical by any SD-JWT Issuer:
+
+* `iss` (Issuer)
+* `aud` (Audience), although issuers may want to allow individual entries in the array to be selectively disclosable
+* `exp` (Expiration Time)
+* `nbf` (Not Before)
+* `iat` (Issued At)
+* `jti` (JWT ID)
+
+In addition, the `cnf` (Confirmation Key) claim MUST NOT be selectively disclosable.
+
+Consequently, claims controlling the validity of the SD-JWT
+will typically be included in plaintext in the SD-JWT payload. Verifiers, however, cannot
+reliably depend on that and need to operate as though security-critical claims might be
+selectively disclosable. In such a case, the onus is on the Holder
+to release the relevant claims to the Verifier. And a malicious Holder may try to hide, for
 example, an expiration time (`exp`) in order to get a Verifier that "fails open"
 to accept an expired SD-JWT.
 
 Verifiers therefore MUST ensure that all claims they deem necessary for checking
-the validity of the SD-JWT are present (or disclosed, respectively) before
-checking the validity and accepting the SD-JWT. This is implemented in the last
+the validity of an SD-JWT in the given context are present (or disclosed, respectively) during
+validation of the SD-JWT. This is implemented in the last
 step of the verification defined in (#sd_jwt_verification).
 
 The precise set of required validity claims will typically be defined by
-ecosystem rules or the credential format and MAY include claims other than
-`nbf`, `iat`, and `exp`.
+ecosystem rules, application-specific profile, or the credential format and MAY include claims other than
+those listed herein.
 
 ## Issuer Signature Key Distribution and Rotation {#issuer_signature_key_distribution}
 
@@ -1143,6 +1159,7 @@ Matthew Miller,
 Mike Jones,
 Mike Prorock,
 Nat Sakimura,
+Neil Madden,
 Oliver Terbu,
 Orie Steele,
 Paul Bastian,
@@ -1661,6 +1678,7 @@ data. The original JSON data is then used by the application. See
    -07
 
    * Update change controller for the Structured Syntax Suffix registration from IESG to IETF per IANA suggestion
+   * Strengthen security considerations around claims controlling the validity of the SD-JWT not being selectively disclosable
 
    -06
 
