@@ -893,21 +893,21 @@ a different salt.
 
 ## Choice of a Hash Algorithm
 
-To ensure privacy of claims that are not being selectively disclosed in a given presentation,
-the hash function MUST ensure that it is infeasible to calculate the salt and claim name-value pair
-(or any portion thereof) that results in a particular digest. This implies the hash function MUST
+To ensure privacy of claims that are selectively disclosable, but are not being disclosed in a given presentation,
+the hash function MUST ensure that it is infeasible to calculate any portion of the three elements
+(salt, claim name, claim value) from a particular digest. This implies the hash function MUST
 be preimage resistant, but should also not allow an observer to infer any partial information about
 the undisclosed content. In the terminology of cryptographic commitment schemes, the hash function
 MUST be computationally hiding.
 
 To ensure the integrity of selectively disclosable claims, the hash function MUST be second-preimage
-resistant. That is, for any salt and claim name-value pair, it is infeasible to find a different salt
-and claim name-value pair that result in the same digest.
+resistant. That is, for any combination of salt, claim name and claim value, it is infeasible to find a different combination of salt,
+claim name and claim value that result in the same digest.
 
 The hash function SHOULD also be collision resistant. Although not essential to the anticipated uses of
 SD-JWT, without collision resistance an Issuer may be able to find multiple disclosures that have the
-same hash value. The signature over the SD-JWT would not then commit the Issuer to the contents of the
-JWT, which is surprising. Where this is a concern, the collision resistance of the hash function SHOULD
+same hash value. In which case, the signature over the SD-JWT would not then commit the Issuer to the contents of the
+JWT. The collision resistance of the hash function used to generate digests SHOULD
 match the collision resistance of the hash function used by the signature scheme. For example, use of
 the ES512 signature algorithm would require a disclosure hash function with at least 256-bit collision
 resistance, such as SHA-512.
