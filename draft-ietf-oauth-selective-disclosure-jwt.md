@@ -961,7 +961,7 @@ the SD-JWT.
 ## Selectively-Disclosable Validity Claims {#sd-validity-claims}
 
 An Issuer MUST NOT allow any security-critical claim to be selectively disclosable.
-The exact list of such claims will depend on the application,
+The exact list of such claims will depend on the application
 and SHOULD be listed by any application-specific profile of SD-JWT.
 The following is a list of standard claim names that SHOULD be considered as
 security-critical by any SD-JWT Issuer:
