@@ -960,20 +960,17 @@ the SD-JWT.
 
 ## Selectively-Disclosable Validity Claims {#sd-validity-claims}
 
-An Issuer MUST NOT allow any security-critical claim to be selectively disclosable.
-The exact list of such claims will depend on the application
+An Issuer MUST NOT allow any security-critical content to be selectively disclosable.
+The exact list of such content will depend on the application
 and SHOULD be listed by any application-specific profile of SD-JWT.
-The following is a list of standard claim names that SHOULD be considered as
-security-critical by any SD-JWT Issuer:
+The following is a list of typical JWT claim names that SHOULD be considered as
+security-critical:
 
 * `iss` (Issuer)
-* `aud` (Audience), although issuers may want to allow individual entries in the array to be selectively disclosable
+* `aud` (Audience), although issuers MAY allow individual entries in the array to be selectively disclosable
 * `exp` (Expiration Time)
 * `nbf` (Not Before)
-* `iat` (Issued At)
-* `jti` (JWT ID)
-
-In addition, the `cnf` (Confirmation Key) claim MUST NOT be selectively disclosable.
+* `cnf` (Confirmation Key)
 
 Consequently, claims controlling the validity of the SD-JWT
 will typically be included in plaintext in the SD-JWT payload. Verifiers, however, cannot
