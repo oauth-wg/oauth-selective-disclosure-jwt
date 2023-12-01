@@ -671,7 +671,7 @@ The Issuer creates Disclosures first for the sub-claims and then includes their 
 Upon receiving an SD-JWT, a Holder or a Verifier MUST ensure that
 
  * the Issuer-signed JWT is valid, i.e., it is signed by the Issuer and the signature is valid, and
- * all Disclosures are correct, i.e., their digests are referenced in the Issuer-signed JWT.
+ * all Disclosures are valid and correspond to a digest value that appears in the Issuer-signed JWT (directly in the payload or recursively included in other Disclosures).
 
 The Holder or the Verifier MUST perform the following (or equivalent) steps when receiving
 an SD-JWT:
@@ -700,11 +700,12 @@ an SD-JWT:
             1. If the respective Disclosure is not a JSON-encoded array of two elements (salt, value), the SD-JWT MUST be rejected.
             2. Replace the array element with the value from the Disclosure.
             3. Recursively process the value using the steps described in (*) and (**).
-    4. If any digests were found more than once in the previous step, the SD-JWT MUST be rejected.
-    5. Remove all array elements for which the digest was not found in the previous step.
-    6. Remove all `_sd` keys and their contents from the Issuer-signed JWT payload.
-    7. Remove the claim `_sd_alg` from the SD-JWT payload.
-4. Check that the SD-JWT is valid using claims such as `nbf`, `iat`, and `exp` in the processed payload. If a required validity-controlling claim is missing (see (#sd-validity-claims)), the SD-JWT MUST be rejected.
+    4. Remove all array elements for which the digest was not found in the previous step.
+    5. Remove all `_sd` keys and their contents from the Issuer-signed JWT payload.
+    6. Remove the claim `_sd_alg` from the SD-JWT payload.
+4. If any digest value is encountered more than once in the Issuer-signed JWT payload (directly or recursively via other Disclosures), the SD-JWT MUST be rejected.
+5. If any Disclosure was not referenced by digest value in the Issuer-signed JWT (directly or recursively via other Disclosures), the SD-JWT MUST be rejected.
+6. Check that the SD-JWT is valid using claims such as `nbf`, `iat`, and `exp` in the processed payload. If a required validity-controlling claim is missing (see (#sd-validity-claims)), the SD-JWT MUST be rejected.
 
 If any step fails, the SD-JWT is not valid and processing MUST be aborted.
 
@@ -1151,6 +1152,7 @@ David Waite,
 Fabian Hauck,
 Filip Skokan,
 Giuseppe De Marco,
+Jacob Ward,
 John Mattsson,
 Justin Richer,
 Kushal Das,
@@ -1163,6 +1165,7 @@ Oliver Terbu,
 Orie Steele,
 Paul Bastian,
 Pieter Kasselman,
+Richard Barnes,
 Ryosuke Abe,
 Shawn Butterfield,
 Simon Schulz,
@@ -1679,6 +1682,7 @@ data. The original JSON data is then used by the application. See
    * Reference RFC4086 in security considerations about salt entropy
    * Update change controller for the Structured Syntax Suffix registration from IESG to IETF per IANA suggestion
    * Expand/rework considerations on the choice of hash algorithm
+   * Clarify validation around no duplicate digests in the payload (directly or recursively) and no unused disclosures at the end of processing
 
    -06
 
