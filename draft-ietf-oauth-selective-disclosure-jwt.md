@@ -251,7 +251,8 @@ An SD-JWT is composed of the following:
 * zero or more Disclosures, and
 * optionally a Key Binding JWT.
 
-The individual parts will be explained in the following subsections.
+The Issuer-signed JWT, Disclosures, and Key Binding JWT are explained in the
+following (#iss-signed-jwt), (#creating_disclosures), and (#kb-jwt) respectively.
 
 The serialized format for the SD-JWT is the concatenation of each part delineated with a single tilde ('~') character as follows:
 
@@ -260,8 +261,11 @@ The serialized format for the SD-JWT is the concatenation of each part delineate
 
 ```
 
-The order of the tilde separated values MUST be the Issuer-signed JWT, followed by any number of Disclosures, and lastly the optional Key Binding JWT.
-In the case that there is no Key Binding JWT, the last element MUST be an empty string and the last separating tilde character MUST NOT be omitted.
+The order of the concatenated parts MUST be the Issuer-signed JWT,
+a tilde character, zero or more Disclosures each followed by a tilde character,
+and lastly the optional Key Binding JWT.
+In the case that there is no Key Binding JWT, the last element MUST be an empty
+string and the last separating tilde character MUST NOT be omitted.
 
 The Disclosures are linked to the Issuer-signed JWT through the
 digest values included therein.
@@ -273,12 +277,27 @@ When presenting to a Verifier, the Holder sends only the selected set of the Dis
 The Holder MAY send any subset of the Disclosures to the Verifier, i.e.,
 none, some, or all Disclosures. For data that the Holder does not want to reveal
 to the Verifier, the Holder MUST NOT send Disclosures or reveal the salt values in any
-other way.
+other way. A Holder MUST NOT send a Disclosure that was not included in the issued
+SD-JWT or send a Disclosure more than once.
 
-A Holder MUST NOT send a Disclosure that was not included in the SD-JWT or send
-a Disclosure more than once.
+To further illustrate the SD-JWT format, the following example shows a few different
+SD-JWT permutations, both with and without various constituent parts.
 
-## Issuer-signed JWT Payload
+```
+An SD-JWT without Disclosures and without a KB-JWT:
+<Issuer-signed JWT>~
+
+An SD-JWT without Disclosures and with a KB-JWT:
+<Issuer-signed JWT>~<KB-JWT>
+
+An SD-JWT with Disclosures and without a KB-JWT:
+<Issuer-signed JWT>~<Disclosure 1>~<Disclosure N>~
+
+An SD-JWT with Disclosures and with a KB-JWT:
+<Issuer-signed JWT>~<Disclosure 1>~<Disclosure N>~<KB-JWT>
+```
+
+## Issuer-signed JWT {#iss-signed-jwt}
 
 An SD-JWT has a JWT component that MUST be signed using the Issuer's private key.
 It MUST use a JWS asymmetric digital signature algorithm. It
@@ -1162,6 +1181,7 @@ Neil Madden,
 Oliver Terbu,
 Orie Steele,
 Paul Bastian,
+Peter Altmann,
 Pieter Kasselman,
 Ryosuke Abe,
 Shawn Butterfield,
@@ -1679,6 +1699,7 @@ data. The original JSON data is then used by the application. See
    * Reference RFC4086 in security considerations about salt entropy
    * Update change controller for the Structured Syntax Suffix registration from IESG to IETF per IANA suggestion
    * Expand/rework considerations on the choice of hash algorithm
+   * Better describe and illustrate the tilde separated format
 
    -06
 
