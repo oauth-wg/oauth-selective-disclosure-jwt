@@ -251,8 +251,8 @@ An SD-JWT is composed of the following:
 * zero or more Disclosures, and
 * optionally a Key Binding JWT.
 
-The Issuer-signed JWT, Disclosures, and Key Binding JWT are explained in the
-following (#iss-signed-jwt), (#creating_disclosures), and (#kb-jwt) respectively.
+The Issuer-signed JWT, Disclosures, and Key Binding JWT are explained in
+(#iss-signed-jwt), (#creating_disclosures), and (#kb-jwt) respectively.
 
 The serialized format for the SD-JWT is the concatenation of each part delineated with a single tilde ('~') character as follows:
 
