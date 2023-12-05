@@ -251,7 +251,8 @@ An SD-JWT is composed of the following:
 * zero or more Disclosures, and
 * optionally a Key Binding JWT.
 
-The individual parts will be explained in the following subsections.
+The Issuer-signed JWT, Disclosures, and Key Binding JWT are explained in
+(#iss-signed-jwt), (#creating_disclosures), and (#kb-jwt) respectively.
 
 The serialized format for the SD-JWT is the concatenation of each part delineated with a single tilde ('~') character as follows:
 
@@ -260,8 +261,11 @@ The serialized format for the SD-JWT is the concatenation of each part delineate
 
 ```
 
-The order of the tilde separated values MUST be the Issuer-signed JWT, followed by any number of Disclosures, and lastly the optional Key Binding JWT.
-In the case that there is no Key Binding JWT, the last element MUST be an empty string and the last separating tilde character MUST NOT be omitted.
+The order of the concatenated parts MUST be the Issuer-signed JWT,
+a tilde character, zero or more Disclosures each followed by a tilde character,
+and lastly the optional Key Binding JWT.
+In the case that there is no Key Binding JWT, the last element MUST be an empty
+string and the last separating tilde character MUST NOT be omitted.
 
 The Disclosures are linked to the Issuer-signed JWT through the
 digest values included therein.
@@ -273,12 +277,27 @@ When presenting to a Verifier, the Holder sends only the selected set of the Dis
 The Holder MAY send any subset of the Disclosures to the Verifier, i.e.,
 none, some, or all Disclosures. For data that the Holder does not want to reveal
 to the Verifier, the Holder MUST NOT send Disclosures or reveal the salt values in any
-other way.
+other way. A Holder MUST NOT send a Disclosure that was not included in the issued
+SD-JWT or send a Disclosure more than once.
 
-A Holder MUST NOT send a Disclosure that was not included in the SD-JWT or send
-a Disclosure more than once.
+To further illustrate the SD-JWT format, the following example shows a few different
+SD-JWT permutations, both with and without various constituent parts.
 
-## Issuer-signed JWT Payload
+```
+An SD-JWT without Disclosures and without a KB-JWT:
+<Issuer-signed JWT>~
+
+An SD-JWT without Disclosures and with a KB-JWT:
+<Issuer-signed JWT>~<KB-JWT>
+
+An SD-JWT with Disclosures and without a KB-JWT:
+<Issuer-signed JWT>~<Disclosure 1>~<Disclosure N>~
+
+An SD-JWT with Disclosures and with a KB-JWT:
+<Issuer-signed JWT>~<Disclosure 1>~<Disclosure N>~<KB-JWT>
+```
+
+## Issuer-signed JWT {#iss-signed-jwt}
 
 An SD-JWT has a JWT component that MUST be signed using the Issuer's private key.
 It MUST use a JWS asymmetric digital signature algorithm. It
@@ -522,11 +541,11 @@ The JWT MUST contain the following elements:
     * `iat`: REQUIRED. The value of this claim MUST be the time at which the Key Binding JWT was issued using the syntax defined in [@!RFC7519].
     * `aud`: REQUIRED. The intended receiver of the Key Binding JWT. How the value is represented is up to the protocol used and out of scope of this specification.
     * `nonce`: REQUIRED. Ensures the freshness of the signature. The value type of this claim MUST be a string. How this value is obtained is up to the protocol used and out of scope of this specification.
-    * `_sd_hash`: REQUIRED. The base64url-encoded hash digest over the Issuer-signed JWT and the selected Disclosures as defined below.
+    * `sd_hash`: REQUIRED. The base64url-encoded hash digest over the Issuer-signed JWT and the selected Disclosures as defined below.
 
 ### Integrity Protection of the Presentation {#integrity-protection-of-the-presentation}
 
-The hash digest in `_sd_hash` ensures the integrity of the Presentation. It MUST
+The hash digest in `sd_hash` ensures the integrity of the Presentation. It MUST
 be taken over the US-ASCII bytes preceding the KB-JWT in the Presentation, i.e.,
 the Issuer-signed JWT, a tilde character, and zero or more Disclosures selected
 for presentation to the Verifier, each followed by a tilde character:
@@ -744,7 +763,7 @@ To this end, Verifiers MUST follow the following steps (or equivalent):
         5. Check that the `typ` of the Key Binding JWT is `kb+jwt`.
         6. Check that the creation time of the Key Binding JWT, as determined by the `iat` claim, is within an acceptable window.
         7. Determine that the Key Binding JWT is bound to the current transaction and was created for this Verifier (replay protection) by validating `nonce` and `aud` claims.
-        8. Calculate the digest over the Issuer-signed JWT and Disclosures as defined in (#integrity-protection-of-the-presentation) and verify that it matches the value of the `_sd_hash` claim in the Key Binding JWT.
+        8. Calculate the digest over the Issuer-signed JWT and Disclosures as defined in (#integrity-protection-of-the-presentation) and verify that it matches the value of the `sd_hash` claim in the Key Binding JWT.
         9. Check that the Key Binding JWT is valid in all other respects, per [@!RFC7519] and [@!RFC8725].
 
 If any step fails, the Presentation is not valid and processing MUST be aborted.
@@ -1162,7 +1181,9 @@ Neil Madden,
 Oliver Terbu,
 Orie Steele,
 Paul Bastian,
+Peter Altmann,
 Pieter Kasselman,
+Richard Barnes,
 Ryosuke Abe,
 Shawn Butterfield,
 Simon Schulz,
@@ -1205,7 +1226,7 @@ IANA "JSON Web Token Claims" registry [@IANA.JWT] established by [@!RFC7519].
 
 <br/>
 
-*  Claim Name: `_sd_hash`
+*  Claim Name: `sd_hash`
 *  Claim Description: Digest of the Issuer-signed JWT and Disclosures in a Presentation
 *  Change Controller: IETF
 *  Specification Document(s):  [[ (#kb-jwt) of this specification ]]
@@ -1679,6 +1700,8 @@ data. The original JSON data is then used by the application. See
    * Reference RFC4086 in security considerations about salt entropy
    * Update change controller for the Structured Syntax Suffix registration from IESG to IETF per IANA suggestion
    * Expand/rework considerations on the choice of hash algorithm
+   * Better describe and illustrate the tilde separated format
+   * Change claim name from `_sd_hash` to `sd_hash`
 
    -06
 
