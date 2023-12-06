@@ -1007,13 +1007,10 @@ security-critical:
 * `nbf` (Not Before)
 * `cnf` (Confirmation Key)
 
-Consequently, claims controlling the validity of the SD-JWT
-will typically be included in plaintext in the SD-JWT payload. Verifiers, however, cannot
+Issuers will typically include claims controlling the validity of the SD-JWT
+in plaintext in the SD-JWT payload, but there is no guarantee they would do so. Therefore, Verifiers cannot
 reliably depend on that and need to operate as though security-critical claims might be
-selectively disclosable. In such a case, the onus is on the Holder
-to release the relevant claims to the Verifier. And a malicious Holder may try to hide, for
-example, an expiration time (`exp`) in order to get a Verifier that "fails open"
-to accept an expired SD-JWT.
+selectively disclosable.
 
 Verifiers therefore MUST ensure that all claims they deem necessary for checking
 the validity of an SD-JWT in the given context are present (or disclosed, respectively) during
