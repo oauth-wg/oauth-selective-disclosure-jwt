@@ -736,9 +736,9 @@ If a Key Binding JWT is received by a Holder, the SD-JWT SHOULD be rejected.
 For presentation to a Verifier, the Holder MUST perform the following (or equivalent) steps:
 
  1. Decide which Disclosures to release to the Verifier, obtaining proper End-User consent if necessary.
- 2. If Key Binding is required, create a Key Binding JWT.
- 3. Assemble the SD-JWT for Presentation, including the Issuer-signed JWT, the selected Disclosures and, if applicable, the Key Binding JWT.
- 4. Send the Presentation to the Verifier.
+ 2. Assemble the SD-JWT for presentation, including the Issuer-signed JWT and the selected Disclosures.
+ 3. If Key Binding is required, create a Key Binding JWT and add it to the SD-JWT for presentation.
+ 4. Send the SD-JWT for presentation to the Verifier.
 
 ## Verification by the Verifier  {#verifier_verification}
 
@@ -1196,6 +1196,7 @@ Peter Altmann,
 Pieter Kasselman,
 Richard Barnes,
 Ryosuke Abe,
+Sami Rosendahl,
 Shawn Butterfield,
 Simon Schulz,
 Tobias Looker,
