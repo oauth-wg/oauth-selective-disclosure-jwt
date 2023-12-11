@@ -690,7 +690,7 @@ The Issuer creates Disclosures first for the sub-claims and then includes their 
 Upon receiving an SD-JWT, a Holder or a Verifier MUST ensure that
 
  * the Issuer-signed JWT is valid, i.e., it is signed by the Issuer and the signature is valid, and
- * all Disclosures are valid and correspond to a digest value that appears in the Issuer-signed JWT (directly in the payload or recursively included in other Disclosures).
+ * all Disclosures are valid and correspond to a respective digest value in the Issuer-signed JWT (directly in the payload or recursively included in other Disclosures).
 
 The Holder or the Verifier MUST perform the following (or equivalent) steps when receiving
 an SD-JWT:
