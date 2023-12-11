@@ -1519,7 +1519,7 @@ After the validation, the Verifier will have the following data for further proc
 ## Example 4a - SD-JWT-based Verifiable Credentials (SD-JWT VC)
 
 In this example, the artifacts defined in this specification are used to represent
-SD-JWT-based Verifiable Credentials (SD-JWT VC) as defined in [@I-D.terbu-sd-jwt-vc].
+SD-JWT-based Verifiable Credentials (SD-JWT VC) as defined in [@I-D.ietf-oauth-sd-jwt-vc].
 Person Identification Data (PID) defined in [@EUDIW.ARF] is used.
 
 Key Binding is applied
