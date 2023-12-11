@@ -994,21 +994,32 @@ the SD-JWT.
 
 ## Selectively-Disclosable Validity Claims {#sd-validity-claims}
 
-Claims controlling the validity of the SD-JWT, such as `nbf`, `iat`, and `exp`,
-are usually included in plaintext in the SD-JWT payload, but MAY be
-selectively disclosable instead. In this case, however, it is up to the Holder
-to release the claims to the Verifier. A malicious Holder may try to hide, for
-example, an expiration time (`exp`) in order to get a Verifier that "fails open"
-to accept an expired SD-JWT.
+An Issuer MUST NOT allow any content to be selectively disclosable that is critical for evaluating the
+SD-JWT's authenticity or validity.
+The exact list of such content will depend on the application
+and SHOULD be listed by any application-specific profile of SD-JWT.
+The following is a list of registered JWT claim names that SHOULD be considered as
+security-critical:
+
+* `iss` (Issuer)
+* `aud` (Audience), although issuers MAY allow individual entries in the array to be selectively disclosable
+* `exp` (Expiration Time)
+* `nbf` (Not Before)
+* `cnf` (Confirmation Key)
+
+Issuers will typically include claims controlling the validity of the SD-JWT
+in plaintext in the SD-JWT payload, but there is no guarantee they would do so. Therefore, Verifiers cannot
+reliably depend on that and need to operate as though security-critical claims might be
+selectively disclosable.
 
 Verifiers therefore MUST ensure that all claims they deem necessary for checking
-the validity of the SD-JWT are present (or disclosed, respectively) before
-checking the validity and accepting the SD-JWT. This is implemented in the last
+the validity of an SD-JWT in the given context are present (or disclosed, respectively) during
+validation of the SD-JWT. This is implemented in the last
 step of the verification defined in (#sd_jwt_verification).
 
 The precise set of required validity claims will typically be defined by
-ecosystem rules or the credential format and MAY include claims other than
-`nbf`, `iat`, and `exp`.
+ecosystem rules, application-specific profile, or the credential format and MAY include claims other than
+those listed herein.
 
 ## Issuer Signature Key Distribution and Rotation {#issuer_signature_key_distribution}
 
@@ -1699,6 +1710,7 @@ data. The original JSON data is then used by the application. See
 
    * Reference RFC4086 in security considerations about salt entropy
    * Update change controller for the Structured Syntax Suffix registration from IESG to IETF per IANA suggestion
+   * Strengthen security considerations around claims controlling the validity of the SD-JWT not being selectively disclosable
    * Expand/rework considerations on the choice of hash algorithm
    * Better describe and illustrate the tilde separated format
    * Change claim name from `_sd_hash` to `sd_hash`
