@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2023-12-10T00:58:08.925953+00:00",
+  "timestamp": "2023-12-12T00:55:03.841096+00:00",
   "repo": "oauth-wg/oauth-selective-disclosure-jwt",
   "labels": [
     {
@@ -8856,7 +8856,7 @@
       ],
       "body": "In the appendix, we should avoid suggesting that we're describing an SD-JWT VC and refer to the now-adopted SD-JWT VC spec instead.",
       "createdAt": "2023-09-08T13:26:26Z",
-      "updatedAt": "2023-10-17T18:36:49Z",
+      "updatedAt": "2023-12-11T17:40:28Z",
       "closedAt": null,
       "comments": [
         {
@@ -8879,6 +8879,13 @@
           "body": "I'm sure you are aware but the `draft-terbu-sd-jwt-vc` reference needs to be updated to `draft-ietf-oauth-sd-jwt-vc`. ",
           "createdAt": "2023-10-17T18:20:57Z",
           "updatedAt": "2023-10-17T18:36:49Z"
+        },
+        {
+          "author": "Sakurann",
+          "authorAssociation": "COLLABORATOR",
+          "body": "Actually, the current text reads ok to me? what would you change..?\r\n\r\n> In this example, the artifacts defined in this specification are used to represent SD-JWT-based Verifiable Credentials (SD-JWT VC) as defined in [[I-D.terbu-sd-jwt-vc](https://drafts.oauth.net/oauth-selective-disclosure-jwt/draft-ietf-oauth-selective-disclosure-jwt.html#I-D.terbu-sd-jwt-vc)]. Person Identification Data (PID) defined in [[EUDIW.ARF](https://drafts.oauth.net/oauth-selective-disclosure-jwt/draft-ietf-oauth-selective-disclosure-jwt.html#EUDIW.ARF)] is used.\r\n",
+          "createdAt": "2023-12-11T17:40:24Z",
+          "updatedAt": "2023-12-11T17:40:24Z"
         }
       ]
     },
@@ -9030,7 +9037,7 @@
       "id": "I_kwDOHTmVzM50fWQW",
       "title": "Clarify clause re duplicate digests",
       "url": "https://github.com/oauth-wg/oauth-selective-disclosure-jwt/issues/355",
-      "state": "OPEN",
+      "state": "CLOSED",
       "author": "danielfett",
       "authorAssociation": "MEMBER",
       "assignees": [
@@ -9041,8 +9048,8 @@
       ],
       "body": "From the mailing list\r\n--------\r\n\r\nHi Jacob,\r\n\r\nthe intention was to cover the first case you listed. We should clarify this.\r\n\r\n-Daniel\r\nAm 20.10.23 um 15:02 schrieb Jacob Ward:\r\n> Hello again,\r\n>\r\n> On a similar note to my previous email, could I get some clarity on a step in the SD-JWT verification process?\r\n>\r\n> 4. If any digests were found more than once in the previous step, the SD-JWT MUST be rejected.\r\n>\r\n> Step 4 in Section 6.1 (as shown above) could have multiple meanings in my opinion:\r\n> - The digest was found multiple times (for example in an \"_sd\" array and as an array element).\r\n> - More than one Disclosure have the same digest.\r\n>\r\n> On first reading of this I assumed that this step only covered the first of those two cases, but it has been pointed out to me by a colleague that it could cover both. If it is the case that both cases are covered by this step, then I think it would be helpful to clarify this in the text.\r\n>\r\n> Cheers,\r\n>\r\n> Jacob",
       "createdAt": "2023-10-20T14:10:02Z",
-      "updatedAt": "2023-12-01T21:14:36Z",
-      "closedAt": null,
+      "updatedAt": "2023-12-11T16:36:06Z",
+      "closedAt": "2023-12-11T16:36:06Z",
       "comments": [
         {
           "author": "bc-pi",
@@ -9279,7 +9286,7 @@
       "labels": [],
       "body": "Do we want the header `\"typ\":\"example+sd-jwt\"` in every example? I'm honestly not sure but wanted to ask b/c that looks like it's going to be the result from https://github.com/openwallet-foundation-labs/sd-jwt-python/pull/10 upstream. ",
       "createdAt": "2023-11-03T17:40:08Z",
-      "updatedAt": "2023-11-07T16:56:14Z",
+      "updatedAt": "2023-12-11T17:18:46Z",
       "closedAt": null,
       "comments": [
         {
@@ -9288,6 +9295,13 @@
           "body": "We should make a conscious decision about this, especially regarding the examples in the appendix.",
           "createdAt": "2023-11-07T16:56:14Z",
           "updatedAt": "2023-11-07T16:56:14Z"
+        },
+        {
+          "author": "Sakurann",
+          "authorAssociation": "COLLABORATOR",
+          "body": "for example 4a, it must be `vc+sd-jwt` because it is required by sd-jwt vc spec [here](https://drafts.oauth.net/oauth-sd-jwt-vc/draft-ietf-oauth-sd-jwt-vc.html#name-media-type). \r\nFor example 4b, it should be `vc+ld+json+sd-jwt`, but it can also be kept example+sd-jwt. because [W3C vc-jose-cose spec](https://www.w3.org/TR/vc-jose-cose/#securing-json-ld-verifiable-credentials-with-jose) says `The typ header parameter SHOULD be vc+ld+json+sd-jwt.`.",
+          "createdAt": "2023-12-11T17:15:44Z",
+          "updatedAt": "2023-12-11T17:18:46Z"
         }
       ]
     },
@@ -9316,7 +9330,7 @@
       "id": "I_kwDOHTmVzM52ArSv",
       "title": "stronger stance on selectively disclosable validity claims ",
       "url": "https://github.com/oauth-wg/oauth-selective-disclosure-jwt/issues/367",
-      "state": "OPEN",
+      "state": "CLOSED",
       "author": "bc-pi",
       "authorAssociation": "COLLABORATOR",
       "assignees": [
@@ -9327,8 +9341,8 @@
       ],
       "body": "from this thread https://mailarchive.ietf.org/arch/msg/oauth/5A1kXMNiIm2DBEcXCadCwUpMhgI/ Neil Madden has suggested some text (below) for the [Selectively-Disclosable Validity Claims](https://www.ietf.org/archive/id/draft-ietf-oauth-selective-disclosure-jwt-06.html#name-selectively-disclosable-val) section.  I think we can replace and/or augment and/or merge what's there with this suggestion and arrive at something reasonable that's a bit stronger about not making claims that control the validity of the SD-JWT selectively disclosable. \r\n\r\n> \r\n> An Issuer MUST NOT allow any security-critical claim to be selectively disclosable. The exact list of \u201csecurity-critical\u201d claims will depend on the application, and SHOULD be listed by any application-specific profile of SD-JWT. The following is a list of standard claim names that SHOULD be considered as security-critical by any SD-JWT Issuer:\r\n> \r\n>  * \u201ciss\u201d (Issuer)\r\n>  * \u201caud\u201d (Audience), although issuers may want to allow individual entries in the array to be selectively-disclosable\r\n>  * \u201cexp\u201d (Expiration Time)\r\n>  * \u201cnbf\u201d (Not Before)\r\n>  * \u201ciat\u201d (Issued At)\r\n>  * \u201cjti\u201d (JWT ID)\r\n> \r\n> In addition, the \u201ccnf\u201d (Confirmation Key) claim MUST NOT be selectively disclosable.",
       "createdAt": "2023-11-06T19:12:47Z",
-      "updatedAt": "2023-11-15T23:13:00Z",
-      "closedAt": null,
+      "updatedAt": "2023-12-11T16:25:03Z",
+      "closedAt": "2023-12-11T16:25:02Z",
       "comments": []
     },
     {
@@ -9359,7 +9373,7 @@
       "labels": [],
       "body": "Currently the spec says:\r\n> It MUST NOT use none or an identifier for a symmetric algorithm (MAC).\r\n\r\nTo support KB-JWTs using HS256, for example after using DH key agreement, we should allow symmetric algorithms.",
       "createdAt": "2023-11-07T15:25:28Z",
-      "updatedAt": "2023-11-07T21:29:30Z",
+      "updatedAt": "2023-12-11T17:38:54Z",
       "closedAt": null,
       "comments": [
         {
@@ -9684,7 +9698,7 @@
       "id": "I_kwDOHTmVzM52p98y",
       "title": "Validate that disclosures match the issuer JWT",
       "url": "https://github.com/oauth-wg/oauth-selective-disclosure-jwt/issues/373",
-      "state": "OPEN",
+      "state": "CLOSED",
       "author": "bifurcation",
       "authorAssociation": "NONE",
       "assignees": [
@@ -9695,8 +9709,8 @@
       ],
       "body": "SD-JWT validation processes should require that the validating party (Holder or Verifier) validate that the hash of each disclosure object appears in the Issuer JWT claims.  If this validation is not performed, then the SD-JWT format is malleable, in the sense that arbitrary additional disclosure objects can be added beyond those that the issuer intended.  This creates the opportunity for mischief, from bugs to covert channels.\r\n\r\nThis is not a difficult property to enforce.  The [validation logic](https://www.ietf.org/archive/id/draft-ietf-oauth-selective-disclosure-jwt-06.html#section-8.1) already has the validating party compute the lists of (1) hashes of disclosure objects and (2) disclosure hashes in the Issuer JWT.  So the only additional step required is to check that (1) is a subset of (2).",
       "createdAt": "2023-11-13T13:56:13Z",
-      "updatedAt": "2023-12-01T21:14:47Z",
-      "closedAt": null,
+      "updatedAt": "2023-12-11T16:36:06Z",
+      "closedAt": "2023-12-11T16:36:06Z",
       "comments": [
         {
           "author": "bc-pi",
@@ -9988,7 +10002,7 @@
       "id": "I_kwDOHTmVzM53WQf5",
       "title": "Proposal to reorder Holder steps for presentation to a Verifier",
       "url": "https://github.com/oauth-wg/oauth-selective-disclosure-jwt/issues/382",
-      "state": "OPEN",
+      "state": "CLOSED",
       "author": "srosenda",
       "authorAssociation": "NONE",
       "assignees": [
@@ -9999,8 +10013,8 @@
       ],
       "body": "In draft 06 section [8.2. ](https://www.ietf.org/archive/id/draft-ietf-oauth-selective-disclosure-jwt-06.html#section-8.2)[Processing by the Holder](https://www.ietf.org/archive/id/draft-ietf-oauth-selective-disclosure-jwt-06.html#name-processing-by-the-holder) there is a list of steps:\r\n\r\n>For presentation to a Verifier, the Holder MUST perform the following (or equivalent) steps:\r\n>\r\n>1. Decide which Disclosures to release to the Verifier, obtaining proper End-User consent if necessary.\r\n>2. If Key Binding is required, create a Key Binding JWT.\r\n>3. Assemble the SD-JWT for Presentation, including the Issuer-signed JWT, the selected Disclosures and, if applicable, the Key Binding JWT.\r\n>4. Send the Presentation to the Verifier.\r\n\r\nNow that draft 06 also has the requirement to add [Integrity Protection of the Presentation](https://www.ietf.org/archive/id/draft-ietf-oauth-selective-disclosure-jwt-06.html#name-integrity-protection-of-the) (section [5.3.1.](https://www.ietf.org/archive/id/draft-ietf-oauth-selective-disclosure-jwt-06.html#section-5.3.1)) to Key Binding JWTs, a more natural order for the steps would be to create the SD-JWT for Presentation with the selected Disclosures before the Key Binding JWT, as the presentation is needed for calculating the required `_sd_hash` digest for the Key Binding JWT.\r\n\r\nE.g. something like this:\r\n>For presentation to a Verifier, the Holder MUST perform the following (or equivalent) steps:\r\n>\r\n>1. Decide which Disclosures to release to the Verifier, obtaining proper End-User consent if necessary.\r\n>2. Assemble the SD-JWT for Presentation, including the Issuer-signed JWT and the selected Disclosures.\r\n>3. If Key Binding is required, create a Key Binding JWT and add it to the Presentation.\r\n>4. Send the Presentation to the Verifier.\r\n\r\nWith that step 2. constructs the input required for the digest computation in step 3. For extra clarity, the requirement to compute and include the integrity protection digest to the Key Binding JWT could be mentioned also here with a reference to section 5.3.1. for details.",
       "createdAt": "2023-11-20T14:26:12Z",
-      "updatedAt": "2023-12-01T00:14:06Z",
-      "closedAt": null,
+      "updatedAt": "2023-12-11T16:31:56Z",
+      "closedAt": "2023-12-11T16:31:56Z",
       "comments": [
         {
           "author": "danielfett",
@@ -10203,7 +10217,7 @@
       "labels": [],
       "body": "Consider a hypothetical API for verifying an SD-JWT with Key Binding.\r\n\r\nThese examples are inspired by https://github.com/panva/jose/blob/main/docs/functions/jwt_verify.jwtVerify.md\r\n\r\n```\r\nverified = verify<TokenType>(token: string, publicKey, { aud, nonce })\r\n```\r\n\r\nwhen token contains KBT, there are 2 payloads that could have the `aud` and `nonce` claims.\r\n\r\nAn API that addressed this possible confusion would look like:\r\n\r\n```\r\nverified = verify<TokenType>(token: string, issuerPublicKey, { \r\n  issuerSignedJwt: { aud, nonce },  // assume cnf: { jwk }\r\n  keyBindingToken: { aud, nonce }   // assume uses cnf\r\n)\r\n```\r\n\r\nThe problem is SD-JWT has 2 tokens, so the `aud` and `nonce` claims have 2 places to check.\r\n\r\nIf the idea of matching an expected nonce is confusing, focus only on the audience bit.\r\n\r\nThe issuer commits a credential to a specific audience, and the holder commits their key binding token to a specific audience.\r\n\r\nA verifier would want to check that both values are \"acceptable\", and \"acceptable\" could mean the same or different.\r\n\r\nThis is compounded by `aud` being allowed to be an array or string.\r\n\r\nIf an API was exposed that looked like this:\r\n\r\n```\r\nverified = verify<TokenType>(fnard: string, issuerPublicKey, { aud, nonce })\r\n)\r\n```\r\n\r\nI think it would be clear that the `aud` and `nonce` were checks on the key binding token, not on the issuer token.",
       "createdAt": "2023-12-07T18:16:02Z",
-      "updatedAt": "2023-12-08T17:10:54Z",
+      "updatedAt": "2023-12-11T21:52:01Z",
       "closedAt": null,
       "comments": [
         {
@@ -10219,6 +10233,62 @@
           "body": "Can you please shed some light on what you would use the 'aud' and 'nonce' in the sd-jwt for and why the verifier should consider them during validation of the presentation? In my opinion, it should look onto `aud` and `nonce` in the kb jwt only as those bind the presentation to it (aud) and the respective presentation transaction (nonce). ",
           "createdAt": "2023-12-08T17:10:52Z",
           "updatedAt": "2023-12-08T17:10:52Z"
+        },
+        {
+          "author": "OR13",
+          "authorAssociation": "CONTRIBUTOR",
+          "body": "> Can you please shed some light on what you would use the 'aud' and 'nonce' in the sd-jwt for and why the verifier should consider them during validation of the presentation?\r\n\r\n- https://learn.microsoft.com/en-us/azure/active-directory-b2c/tokens-overview#validate-claims\r\n\r\nI would expect `aud` and `nonce` in an SD-JWT (the issuer signed JWT) to have the same semantics as a JWT.\r\n\r\nOr I would expect new claims to be introduced to avoid confusion.\r\n\r\nIn the case of `aud` being present in the issuer signed JWT, I would expect the verifier to throw an error when the KBT contained A DIFFERENT `aud`.\r\n\r\nUn the case of `nonce` being present in the issuer signed JWT,  I would expect the verifier to throw an error when the KBT contained the SAME `nonce`.\r\n\r\nThis would be just forwarding the traditional binding from the 2 party model to the 3 party model.\r\n\r\nHaving established these basics, I would then specify some example cases for where audience might be different.\r\n\r\nFor example, when talking to a verifier front end, with a separate relying backend, similar to the RATS architecture:\r\n\r\nhttps://datatracker.ietf.org/doc/html/rfc9334#section-3",
+          "createdAt": "2023-12-11T15:18:42Z",
+          "updatedAt": "2023-12-11T15:23:03Z"
+        },
+        {
+          "author": "danielfett",
+          "authorAssociation": "MEMBER",
+          "body": "> > Can you please shed some light on what you would use the 'aud' and 'nonce' in the sd-jwt for and why the verifier should consider them during validation of the presentation?\r\n> \r\n>     * https://learn.microsoft.com/en-us/azure/active-directory-b2c/tokens-overview#validate-claims\r\n> \r\n> \r\n> I would expect `aud` and `nonce` in an SD-JWT (the issuer signed JWT) to have the same semantics as a JWT.\r\n\r\nWhy would these be useful in a multi-use JWT like the issuer-signed part?",
+          "createdAt": "2023-12-11T15:31:24Z",
+          "updatedAt": "2023-12-11T15:31:24Z"
+        },
+        {
+          "author": "OR13",
+          "authorAssociation": "CONTRIBUTOR",
+          "body": "`issuer` -> `sd token bound to verifier backend`  (issuer signed JWT....  aud: verifier-backend)\r\n\r\n-> \r\n\r\n`holder` -> `sd token with key binding bound to verifier front end` (key binding token.... aud: verifier-frontend)",
+          "createdAt": "2023-12-11T15:33:59Z",
+          "updatedAt": "2023-12-11T15:37:35Z"
+        },
+        {
+          "author": "danielfett",
+          "authorAssociation": "MEMBER",
+          "body": "> `issuer` -> `sd token bound to verifier backend`\r\n\r\nMy confusion comes from the assumption that in most cases, the issuer wouldn't even know the verifier, let alone a nonce. So I wouldn't expect `aud` and `nonce` in the issuer-signed part at all.",
+          "createdAt": "2023-12-11T15:38:50Z",
+          "updatedAt": "2023-12-11T15:38:50Z"
+        },
+        {
+          "author": "OR13",
+          "authorAssociation": "CONTRIBUTOR",
+          "body": "> So I wouldn't expect `aud` and `nonce` in the issuer-signed part at all.\r\n\r\nA verifier MUST NOT error, when issuer signed JWT contains `aud` and `nonce` claims?\r\n\r\nI think this is the default behavior.\r\n\r\nIn specs that build on SD-JWT, they could say this, if they wanted to further avoid confusion.\r\n\r\nWould you recommend `application/vc+ld+json` and `application/vp+ld+json` should never have `aud` and `nonce` present, and we could add a SHOULD NOT or MUST NOT to the W3C spec.",
+          "createdAt": "2023-12-11T15:42:11Z",
+          "updatedAt": "2023-12-11T15:42:44Z"
+        },
+        {
+          "author": "Sakurann",
+          "authorAssociation": "COLLABORATOR",
+          "body": "> A verifier MUST NOT error, when issuer signed JWT contains aud and nonce claims?\r\n\r\nIt might, if that's the security posture in that ecosystem/application. but this is not a general rule applicable to all sd-jwts. For example, if access token is an sd-jwt, it is very likely `aud` will be required (ex. https://datatracker.ietf.org/doc/html/rfc9068#section-2.2).\r\n\r\n> In specs that build on SD-JWT, they could say this, if they wanted to further avoid confusion.\r\n\r\nAs you say, this topic probably belongs more in specs such as sd-jwt vc, but for the reasons above, I am not sure there is a one-fits-all-verifiers/use-cases kind of guidance here that should go into an sd-jwt spec. https://drafts.oauth.net/oauth-selective-disclosure-jwt/draft-ietf-oauth-selective-disclosure-jwt.html#section-11.8 is what sd-jwt spec gives as a guidance.",
+          "createdAt": "2023-12-11T16:37:40Z",
+          "updatedAt": "2023-12-11T16:37:40Z"
+        },
+        {
+          "author": "OR13",
+          "authorAssociation": "CONTRIBUTOR",
+          "body": "This PR is also relevant: https://github.com/w3c/vc-data-model/pull/1379/files#r1422822545",
+          "createdAt": "2023-12-11T17:10:29Z",
+          "updatedAt": "2023-12-11T17:10:29Z"
+        },
+        {
+          "author": "OR13",
+          "authorAssociation": "CONTRIBUTOR",
+          "body": "Related to the `IdentityCredential`... https://github.com/WICG/identity-credential/issues/7\r\n\r\nI assume the nonce / aud for this API is binding to KBT and not the Issuer signed JWT.\r\n\r\nPerhaps the best way to close the issue in this repo is to just add some text saying:\r\n\r\n\"nonce and aud\" can be present in the Issuer Signed JWT, and they can be the same or different from the KBT.... its up to the verifier to decide if they tamper protected claims supplied are acceptable and valid per their own policies.\r\n\r\nIt is recommended that specifications that build on SD-JWT comment on `aud` and `nonce` and give guidance related to the usage of SD-JWT.",
+          "createdAt": "2023-12-11T21:50:45Z",
+          "updatedAt": "2023-12-11T21:50:45Z"
         }
       ]
     }
@@ -39164,24 +39234,26 @@
       "id": "PR_kwDOHTmVzM5fkfhH",
       "title": "Strengthen security considerations around validity claims not being selectively disclosable",
       "url": "https://github.com/oauth-wg/oauth-selective-disclosure-jwt/pull/380",
-      "state": "OPEN",
+      "state": "MERGED",
       "author": "bc-pi",
       "authorAssociation": "COLLABORATOR",
       "assignees": [],
       "labels": [],
       "body": "Strengthen security considerations around claims controlling the validity of the SD-JWT not being selectively disclosable\r\n\r\nto fix #367",
       "createdAt": "2023-11-15T23:09:52Z",
-      "updatedAt": "2023-12-06T23:49:03Z",
+      "updatedAt": "2023-12-11T16:25:02Z",
       "baseRepository": "oauth-wg/oauth-selective-disclosure-jwt",
       "baseRefName": "master",
       "baseRefOid": "f2f1eca7b3fa58a6eaa0175df9dd79d7b03fa009",
       "headRepository": "oauth-wg/oauth-selective-disclosure-jwt",
       "headRefName": "stronger-claims-of-validity",
       "headRefOid": "d459abea84fa835f188bd9bc3c04789e97b57d4a",
-      "closedAt": null,
-      "mergedAt": null,
-      "mergedBy": null,
-      "mergeCommit": null,
+      "closedAt": "2023-12-11T16:25:01Z",
+      "mergedAt": "2023-12-11T16:25:01Z",
+      "mergedBy": "bc-pi",
+      "mergeCommit": {
+        "oid": "57d6a3d1a44c93d9085bcb63cded8d71b6c3ef5d"
+      },
       "comments": [],
       "reviews": [
         {
@@ -39375,6 +39447,52 @@
               "updatedAt": "2023-12-06T23:47:05Z"
             }
           ]
+        },
+        {
+          "id": "PRR_kwDOHTmVzM5p1O85",
+          "commit": {
+            "abbreviatedOid": "d459abe"
+          },
+          "author": "Sakurann",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2023-12-11T16:11:16Z",
+          "updatedAt": "2023-12-11T16:11:16Z",
+          "comments": [
+            {
+              "originalPosition": 31,
+              "body": "there is `therefore` on line 1011, and 1015 now. I am not too strongly opinionated but we might want to improve this..\r\n\r\nmaybe something like `Therefore, Verifiers ...` -> `This means the Verifiers`.",
+              "createdAt": "2023-12-11T16:11:16Z",
+              "updatedAt": "2023-12-11T16:11:17Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOHTmVzM5p1O-w",
+          "commit": {
+            "abbreviatedOid": "d459abe"
+          },
+          "author": "Sakurann",
+          "authorAssociation": "COLLABORATOR",
+          "state": "APPROVED",
+          "body": "",
+          "createdAt": "2023-12-11T16:11:19Z",
+          "updatedAt": "2023-12-11T16:11:19Z",
+          "comments": []
+        },
+        {
+          "id": "PRR_kwDOHTmVzM5p1Ufx",
+          "commit": {
+            "abbreviatedOid": "d459abe"
+          },
+          "author": "danielfett",
+          "authorAssociation": "MEMBER",
+          "state": "APPROVED",
+          "body": "",
+          "createdAt": "2023-12-11T16:21:43Z",
+          "updatedAt": "2023-12-11T16:21:43Z",
+          "comments": []
         }
       ]
     },
@@ -39383,24 +39501,26 @@
       "id": "PR_kwDOHTmVzM5gtBAQ",
       "title": "reorder steps in Processing by the Holder",
       "url": "https://github.com/oauth-wg/oauth-selective-disclosure-jwt/pull/386",
-      "state": "OPEN",
+      "state": "MERGED",
       "author": "bc-pi",
       "authorAssociation": "COLLABORATOR",
       "assignees": [],
       "labels": [],
       "body": " to fix #382",
       "createdAt": "2023-11-29T18:59:31Z",
-      "updatedAt": "2023-12-05T17:48:57Z",
+      "updatedAt": "2023-12-11T16:31:55Z",
       "baseRepository": "oauth-wg/oauth-selective-disclosure-jwt",
       "baseRefName": "master",
       "baseRefOid": "f2f1eca7b3fa58a6eaa0175df9dd79d7b03fa009",
       "headRepository": "oauth-wg/oauth-selective-disclosure-jwt",
       "headRefName": "reorder-holder-steps-382",
-      "headRefOid": "1d88fcfd22ad846f0c2f470f8b23ae4171b6d220",
-      "closedAt": null,
-      "mergedAt": null,
-      "mergedBy": null,
-      "mergeCommit": null,
+      "headRefOid": "f333ee0835a5c1e58a85be3bc413484b5b23212b",
+      "closedAt": "2023-12-11T16:31:55Z",
+      "mergedAt": "2023-12-11T16:31:55Z",
+      "mergedBy": "bc-pi",
+      "mergeCommit": {
+        "oid": "5eb5883d6bbdb1a091f5982dd9c0e6bf88982dd7"
+      },
       "comments": [],
       "reviews": [
         {
@@ -39414,6 +39534,59 @@
           "body": "",
           "createdAt": "2023-12-05T16:03:39Z",
           "updatedAt": "2023-12-05T17:48:56Z",
+          "comments": []
+        },
+        {
+          "id": "PRR_kwDOHTmVzM5p1YHL",
+          "commit": {
+            "abbreviatedOid": "1d88fcf"
+          },
+          "author": "Sakurann",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2023-12-11T16:27:10Z",
+          "updatedAt": "2023-12-11T16:27:11Z",
+          "comments": [
+            {
+              "originalPosition": 7,
+              "body": "```suggestion\r\n 2. Assemble the SD-JWT for presentation, including the Issuer-signed JWT and the selected Disclosures.\r\n```\r\npresentation is not a defined term - this feels like remainings from old terminology",
+              "createdAt": "2023-12-11T16:27:10Z",
+              "updatedAt": "2023-12-11T16:27:11Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOHTmVzM5p1YX5",
+          "commit": {
+            "abbreviatedOid": "1d88fcf"
+          },
+          "author": "Sakurann",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2023-12-11T16:27:40Z",
+          "updatedAt": "2023-12-11T16:27:41Z",
+          "comments": [
+            {
+              "originalPosition": 9,
+              "body": "```suggestion\r\n 3. If Key Binding is required, create a Key Binding JWT and add it to the SD-JWT for presentation.\r\n 4. Send the SD-JWT for presentation to the Verifier.\r\n```",
+              "createdAt": "2023-12-11T16:27:40Z",
+              "updatedAt": "2023-12-11T16:27:41Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOHTmVzM5p1ZOX",
+          "commit": {
+            "abbreviatedOid": "1d88fcf"
+          },
+          "author": "Sakurann",
+          "authorAssociation": "COLLABORATOR",
+          "state": "APPROVED",
+          "body": "",
+          "createdAt": "2023-12-11T16:29:20Z",
+          "updatedAt": "2023-12-11T16:29:20Z",
           "comments": []
         }
       ]
@@ -39573,24 +39746,26 @@
       "id": "PR_kwDOHTmVzM5g78xp",
       "title": "Clarifications on duplicate digests and unused disclosures",
       "url": "https://github.com/oauth-wg/oauth-selective-disclosure-jwt/pull/390",
-      "state": "OPEN",
+      "state": "MERGED",
       "author": "bc-pi",
       "authorAssociation": "COLLABORATOR",
       "assignees": [],
       "labels": [],
       "body": "Clarify validation around no duplicate digests in the payload (directly or recursively) and no unused disclosures at the end of processing (to fix #373 & #355)",
       "createdAt": "2023-12-01T21:13:36Z",
-      "updatedAt": "2023-12-05T17:48:30Z",
+      "updatedAt": "2023-12-11T16:36:05Z",
       "baseRepository": "oauth-wg/oauth-selective-disclosure-jwt",
       "baseRefName": "master",
       "baseRefOid": "f2f1eca7b3fa58a6eaa0175df9dd79d7b03fa009",
       "headRepository": "oauth-wg/oauth-selective-disclosure-jwt",
       "headRefName": "disclosures-n-digests",
-      "headRefOid": "339604de1e724c191dd472c09c7a056404c86878",
-      "closedAt": null,
-      "mergedAt": null,
-      "mergedBy": null,
-      "mergeCommit": null,
+      "headRefOid": "ee54182d2793dd7c09b66ee4a5c6e170a13ec3d3",
+      "closedAt": "2023-12-11T16:36:05Z",
+      "mergedAt": "2023-12-11T16:36:05Z",
+      "mergedBy": "bc-pi",
+      "mergeCommit": {
+        "oid": "27b95a7beae65b4b67b6f6407e24e24899c5db1c"
+      },
       "comments": [],
       "reviews": [
         {
@@ -39605,6 +39780,59 @@
           "createdAt": "2023-12-05T15:59:39Z",
           "updatedAt": "2023-12-05T15:59:39Z",
           "comments": []
+        },
+        {
+          "id": "PRR_kwDOHTmVzM5p1TiA",
+          "commit": {
+            "abbreviatedOid": "339604d"
+          },
+          "author": "Sakurann",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2023-12-11T16:19:44Z",
+          "updatedAt": "2023-12-11T16:19:45Z",
+          "comments": [
+            {
+              "originalPosition": 5,
+              "body": "```suggestion\r\n * all Disclosures are valid and correspond to a respective digest value in the Issuer-signed JWT (directly in the payload or recursively included in other Disclosures).\r\n```",
+              "createdAt": "2023-12-11T16:19:44Z",
+              "updatedAt": "2023-12-11T16:34:46Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOHTmVzM5p1Xcw",
+          "commit": {
+            "abbreviatedOid": "339604d"
+          },
+          "author": "Sakurann",
+          "authorAssociation": "COLLABORATOR",
+          "state": "APPROVED",
+          "body": "",
+          "createdAt": "2023-12-11T16:26:01Z",
+          "updatedAt": "2023-12-11T16:26:01Z",
+          "comments": []
+        },
+        {
+          "id": "PRR_kwDOHTmVzM5p1YjS",
+          "commit": {
+            "abbreviatedOid": "339604d"
+          },
+          "author": "danielfett",
+          "authorAssociation": "MEMBER",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2023-12-11T16:28:02Z",
+          "updatedAt": "2023-12-11T16:28:02Z",
+          "comments": [
+            {
+              "originalPosition": 5,
+              "body": "I don't think 'the respective' works well here, as what is the respective digest is not known before the check.",
+              "createdAt": "2023-12-11T16:28:02Z",
+              "updatedAt": "2023-12-11T16:28:02Z"
+            }
+          ]
         }
       ]
     },
@@ -39753,6 +39981,61 @@
               "updatedAt": "2023-12-06T14:48:59Z"
             }
           ]
+        }
+      ]
+    },
+    {
+      "number": 396,
+      "id": "PR_kwDOHTmVzM5htStn",
+      "title": "Fix Issue #365",
+      "url": "https://github.com/oauth-wg/oauth-selective-disclosure-jwt/pull/396",
+      "state": "MERGED",
+      "author": "danielfett",
+      "authorAssociation": "MEMBER",
+      "assignees": [],
+      "labels": [],
+      "body": "",
+      "createdAt": "2023-12-11T17:18:17Z",
+      "updatedAt": "2023-12-11T17:27:30Z",
+      "baseRepository": "oauth-wg/oauth-selective-disclosure-jwt",
+      "baseRefName": "master",
+      "baseRefOid": "27b95a7beae65b4b67b6f6407e24e24899c5db1c",
+      "headRepository": "oauth-wg/oauth-selective-disclosure-jwt",
+      "headRefName": "danielfett/fix-365",
+      "headRefOid": "3d34d39c4ab1ad94114ad5a1656073efee37b30d",
+      "closedAt": "2023-12-11T17:27:30Z",
+      "mergedAt": "2023-12-11T17:27:30Z",
+      "mergedBy": "bc-pi",
+      "mergeCommit": {
+        "oid": "bc5da6bf899130574ed9866913831d5c3d7429e4"
+      },
+      "comments": [],
+      "reviews": [
+        {
+          "id": "PRR_kwDOHTmVzM5p11XD",
+          "commit": {
+            "abbreviatedOid": "e7ef268"
+          },
+          "author": "bc-pi",
+          "authorAssociation": "COLLABORATOR",
+          "state": "APPROVED",
+          "body": "",
+          "createdAt": "2023-12-11T17:21:06Z",
+          "updatedAt": "2023-12-11T17:21:06Z",
+          "comments": []
+        },
+        {
+          "id": "PRR_kwDOHTmVzM5p14r-",
+          "commit": {
+            "abbreviatedOid": "3d34d39"
+          },
+          "author": "Sakurann",
+          "authorAssociation": "COLLABORATOR",
+          "state": "APPROVED",
+          "body": "",
+          "createdAt": "2023-12-11T17:27:16Z",
+          "updatedAt": "2023-12-11T17:27:16Z",
+          "comments": []
         }
       ]
     }
