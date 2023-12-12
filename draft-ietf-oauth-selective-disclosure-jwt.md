@@ -369,7 +369,7 @@ For each claim that is an object property and that is to be made selectively dis
    2. The claim name, or key, as it would be used in a regular JWT payload. The value MUST be a string. The value MUST NOT be `_sd`, `...`, or a claim name existing in the object as a non-selectively disclosable claim.
    3. The claim value, as it would be used in a regular JWT payload. The value MAY be of any type that is allowed in JSON, including numbers, strings, booleans, arrays, and objects.
  * JSON-encode the array, producing an UTF-8 string.
- * base64url-encode the byte representation of the UTF-8 string, producing a US-ASCII [@RFC0020] string. This string is the Disclosure.
+ * base64url-encode the byte representation of the UTF-8 string, producing a US-ASCII [@!RFC0020] string. This string is the Disclosure.
 
 The order is decided based on the readability considerations: salts would have a
 constant length within the SD-JWT, claim names would be around the same length
@@ -1282,7 +1282,7 @@ To indicate that the content is a JWS JSON serialized SD-JWT:
 * Required parameters: n/a
 * Optional parameters: n/a
 * Encoding considerations: binary; application/sd-jwt+json values are represented as a JSON Object; UTF-8 encoding SHOULD be employed for the JSON object.
-* Security considerations: See the Security Considerations section of [[ this specification ]], and [@RFC7515].
+* Security considerations: See the Security Considerations section of [[ this specification ]], and [@!RFC7515].
 * Interoperability considerations: n/a
 * Published specification: [[ this specification ]]
 * Applications that use this media type: TBD
@@ -1708,6 +1708,11 @@ data. The original JSON data is then used by the application. See
 # Document History
 
    [[ To be removed from the final specification ]]
+
+   -08
+
+    * Make RFCs 0020 and 7515 normative referereces
+
 
    -07
 
