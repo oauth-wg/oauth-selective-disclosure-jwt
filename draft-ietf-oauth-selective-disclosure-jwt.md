@@ -1096,8 +1096,8 @@ when the user only discloses a birthdate to one Verifier and a postal code to
 another Verifier, the two Verifiers should not be able to tell that they were
 talking to the same user.
 
-Issuer/Verifier unlinkability cannot be achieved with SD-JWT, as the issued
-SD-JWT is directly forwarded to the Verifier.
+Issuer/Verifier unlinkability cannot be achieved in salted-hash based approaches to credentials, such as SD-JWT, as the issued
+credential is directly forwarded to the Verifier.
 
 Verifier/Verifier unlinkablility can be achieved using batch issuance: A batch
 of credentials based on the same claims is issued to the Holder instead of just
