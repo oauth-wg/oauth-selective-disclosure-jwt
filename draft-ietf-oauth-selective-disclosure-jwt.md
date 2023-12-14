@@ -427,7 +427,7 @@ could be created by first creating the following array:
 ["lklxF5jMYlGTPUovMNIvCA", "FR"]
 ```
 
-The resulting Disclosure would be: `WyJsa2x4RjVqTVlsR1RQVW92TU5JdkNBIiwgIkZSIl0`
+The resulting Disclosure would be: `WyJfMjZiYzRMVC1sa2x4RjVqTVlsR1RQVW92TU5JdkNBIiwgIkZSIl0`
 
 ### Hashing Disclosures {#hashing_disclosures}
 
