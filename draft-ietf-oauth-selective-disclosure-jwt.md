@@ -1079,32 +1079,61 @@ Decoy digests increase the size of the SD-JWT. The number of decoy digests (or w
 
 ## Unlinkability
 
-Unlinkability is a property that prevents an adversary from associating two or
-more sessions of the same user. Two types of unlinkability are often considered:
+Unlinkability is a property that prevents an adversary from correlating
+credential presentations of the same user (beyond the user's consent).
+Otherwise, an adversary might be able to learn more about the user than the user
+intended to disclose, for example:
 
-- Verifier/Verifier unlinkability: Two colluding Verifiers should not be able to
-  tell that they have received presentations from the same user.
-- Issuer/Verifier unlinkability: An Issuer colluding with a Verifier should
-  not be able to tell that a user that has received a credential from the Issuer
-  has presented it to the Verifier.
+ * Cooperating Verifiers might want to track users across services to build
+   advertising profiles.
+ * Issuers might want to track where users present their credentials to enable
+   surveillance.
+ * After a data breach at multiple Verifiers, publicly available information
+   might allow linking identifiable information presented to Verifier A with
+   originally anonymous information presented to Verifier B, therefore revealing
+   the identities of users of Verifier B.
 
-In both cases, unlinkability is limited to cases where the
-disclosed claims do not contain information that directly or indirectly
-identifies the user. For example, when a tax ID is contained in the disclosed
-claims, the Issuer and Verifier can easily link the user's sessions. However,
-when the user only discloses a birthdate to one Verifier and a postal code to
-another Verifier, the two Verifiers should not be able to tell that they were
-talking to the same user.
+The following types of unlinkability are considered here:
 
-Issuer/Verifier unlinkability cannot be achieved in salted-hash based approaches to credentials, such as SD-JWT, as the issued
-credential is directly forwarded to the Verifier.
+- Verifier/Verifier Unlinkability: Two colluding Verifiers should not be able to
+  learn that they have received presentations from the same user.
+- Issuer/Verifier Unlinkability (Honest Verifier): An Issuer of a credential
+  should not be able to tell that a user presented the credential to a certain
+  Verifier (that is behaving according to protocol).
+- Issuer/Verifier Unlinkability (Colluding/Compromised Verifier): An Issuer of a
+  credential should not be able to tell that a user presented the credential to
+  a certain Verifier (even if the Verifier colludes with the Issuer or becomes
+  compromised and leaks stored credentials from presentations).
+
+In all cases, unlinkability is limited to cases where the disclosed claims do
+not contain information that directly or indirectly identifies the user. For
+example, when a tax ID is contained in the disclosed claims, the Issuer and
+Verifier can easily link the user's transactions. However, when the user only
+discloses a birthdate to one Verifier and a postal code to another Verifier, the
+two Verifiers should not be able to tell that they were talking to the same
+user.
+
+Issuer/Verifier unlinkability with a colluding or compromised Verifier cannot be
+achieved in salted-hash based approaches to credentials, such as SD-JWT, as the
+issued credential is directly forwarded to the Verifier, who can forward it to
+the malicious Issuer.
+
+Issuer/Verifier unlinkability with an honest Verifier can be achieved. A
+'phone-home' from the Verifier to the Issuer, for example, for a revocation
+check, SHOULD be avoided, or, if that is not possible, MUST be done in a
+privacy-preserving way where details about the credential are not revealed to
+the Issuer. (Even then, timing of such requests might remain as a side-channel.)
 
 Verifier/Verifier unlinkablility can be achieved using batch issuance: A batch
 of credentials based on the same claims is issued to the Holder instead of just
 a single credential. The Holder can then use a different credential for each
 Verifier or even for each session with a Verifier. New key binding keys and
 salts MUST be used for each credential in the batch to ensure that the Verifiers
-cannot link the credentials using these values.
+cannot link the credentials using these values. Likewise, claims carrying time
+information, like `iat`, `exp`, and `nbf`, MUST either be randomized within a
+time period considered appropriate (e.g., randomize `iat` within the last 24
+hours and calculate `exp` accordingly) or rounded (e.g., rounded down to the
+beginning of the day).
 
 ## Issuer Identifier
 
