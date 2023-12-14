@@ -1,7 +1,7 @@
 user_claims:
   iss: https://pid-provider.memberstate.example.eu
   iat: 1541493724
-  type: PersonIdentificationData
+  vct: PersonIdentificationData
   !sd first_name: Erika
   !sd family_name: Mustermann
   !sd nationalities: [!sd "DE"]
@@ -23,3 +23,6 @@ holder_disclosed_claims:
 
 add_decoy_claims: false
 key_binding: true
+
+extra_header_parameters:
+  typ: "vc+sd-jwt"
