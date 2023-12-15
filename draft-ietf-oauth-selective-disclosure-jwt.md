@@ -1148,7 +1148,7 @@ Decoy digests increase the size of the SD-JWT. The number of decoy digests (or w
 ## Unlinkability
 
 Unlinkability is a property whereby adversaries are prevented from correlating
-credential presentations of the same user (beyond the user's consent).
+credential presentations of the same user beyond the user's consent.
 Otherwise, an adversary might be able to learn more about the user than the user
 intended to disclose, for example:
 
