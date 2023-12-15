@@ -1175,7 +1175,7 @@ The following types of unlinkability are considered here:
 
 In all cases, unlinkability is limited to cases where the disclosed claims do
 not contain information that directly or indirectly identifies the user. For
-example, when a tax ID is contained in the disclosed claims, the Issuer and
+example, when a taxpayer identification number is contained in the disclosed claims, the Issuer and
 Verifier can easily link the user's transactions. However, when the user only
 discloses a birthdate to one Verifier and a postal code to another Verifier, the two Verifiers should not be able to determine that they were interacting with the same user.
 
