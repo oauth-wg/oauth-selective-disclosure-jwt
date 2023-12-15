@@ -1184,11 +1184,12 @@ achieved in salted-hash based approaches to credentials, such as SD-JWT, as the
 issued credential is directly forwarded to the Verifier, who can forward it to
 the malicious Issuer.
 
-Issuer/Verifier unlinkability with an honest Verifier can be achieved. A
-'phone-home' from the Verifier to the Issuer, for example, for a revocation
-check, SHOULD be avoided, or, if that is not possible, MUST be done in a
-privacy-preserving way where details about the credential are not revealed to
-the Issuer. (Even then, timing of such requests might remain as a side-channel.)
+Contrary to that, Issuer/Verifier unlinkability with an honest Verifier can generally be achieved.
+However, a callback from the Verifier to the Issuer, such as a revocation check, could potentially
+disclose information about the credential's usage to the Verifier. Therefore, such callbacks
+SHOULD be avoided. Where they are unavoidable, they MUST be executed in a manner that
+preserves privacy and does not disclose details about the credential to the Issuer. It is
+important to note that the timing of such requests could potentially serve as a side-channel.
 
 Verifier/Verifier unlinkablility can be achieved using batch issuance: A batch
 of credentials based on the same claims is issued to the Holder instead of just
