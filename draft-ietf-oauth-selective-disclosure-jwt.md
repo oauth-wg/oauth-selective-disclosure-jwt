@@ -1712,8 +1712,8 @@ data. The original JSON data is then used by the application. See
 
    -08
 
-* Make RFCs 0020 and 7515 normative referereces
-* Editorial changes aimed at improved clairity
+* Make RFCs 0020 and 7515 normative references
+* Editorial changes aimed at improved clarity
 
 
    -07
