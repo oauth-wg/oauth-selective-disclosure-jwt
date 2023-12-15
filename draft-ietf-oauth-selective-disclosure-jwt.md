@@ -687,7 +687,7 @@ The Issuer creates Disclosures first for the sub-claims and then includes their 
 
 ## Verification of the SD-JWT {#sd_jwt_verification}
 
-Upon receiving an SD-JWT, a Holder or a Verifier MUST ensure that
+Upon receiving an SD-JWT, a Holder or a Verifier needs to ensure that
 
  * the Issuer-signed JWT is valid, i.e., it is signed by the Issuer and the signature is valid, and
  * all Disclosures are valid and correspond to a respective digest value in the Issuer-signed JWT (directly in the payload or recursively included in other Disclosures).
@@ -743,7 +743,7 @@ For presentation to a Verifier, the Holder MUST perform the following (or equiva
 
 ## Verification by the Verifier  {#verifier_verification}
 
-Upon receiving a Presentation, in addition to the checks outlined in (#sd_jwt_verification), Verifiers MUST ensure that
+Upon receiving a Presentation, in addition to the checks outlined in (#sd_jwt_verification), Verifiers need to ensure that
 
  * if Key Binding is required, the Key Binding JWT is signed by the Holder and valid.
 
