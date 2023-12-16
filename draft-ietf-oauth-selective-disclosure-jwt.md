@@ -761,7 +761,7 @@ To this end, Verifiers MUST follow the following steps (or equivalent):
         2. Determine the public key for the Holder from the SD-JWT.
         3. Ensure that a signing algorithm was used that was deemed secure for the application. Refer to [@RFC8725], Sections 3.1 and 3.2 for details. The `none` algorithm MUST NOT be accepted.
         4. Validate the signature over the Key Binding JWT per Section 5.2 of [@!RFC7515].
-        5. Check that the `typ` of the Key Binding JWT is `kb+jwt`.
+        5. Check that the `typ` of the Key Binding JWT is `kb+jwt` (see (#kb-jwt)).
         6. Check that the creation time of the Key Binding JWT, as determined by the `iat` claim, is within an acceptable window.
         7. Determine that the Key Binding JWT is bound to the current transaction and was created for this Verifier (replay protection) by validating `nonce` and `aud` claims.
         8. Calculate the digest over the Issuer-signed JWT and Disclosures as defined in (#integrity-protection-of-the-presentation) and verify that it matches the value of the `sd_hash` claim in the Key Binding JWT.
