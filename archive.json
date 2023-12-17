@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2023-12-14T00:53:56.390104+00:00",
+  "timestamp": "2023-12-17T00:58:14.924064+00:00",
   "repo": "oauth-wg/oauth-selective-disclosure-jwt",
   "labels": [
     {
@@ -10122,9 +10122,9 @@
         "bc-pi"
       ],
       "labels": [],
-      "body": "While reviewing https://github.com/w3c/vc-jose-cose/pull/190, I had to understand some of the SD-JWT verification algorithms. I noticed some issues, which I've listed here. I haven't filed individual issues yet because I'm not sure how you'll want to group them. Thanks to @OR13 for doing a first pass; any remaining mistakes are probably because I didn't take his advice.\r\n\r\n\r\n## [5.1. ](https://www.ietf.org/archive/id/draft-ietf-oauth-selective-disclosure-jwt-06.html#section-5.1)[Issuer-signed JWT Payload](https://www.ietf.org/archive/id/draft-ietf-oauth-selective-disclosure-jwt-06.html#name-issuer-signed-jwt-payload)\r\n\r\n- [ ] This should follow https://www.rfc-editor.org/rfc/rfc7515.html#section-7 by specifying \"what serialization and serialization features are used\". I see that 1.1. Feature Summary mentions the compact serialization, but that doesn't clearly say that this embedded JWT uses it.\r\n\r\n## [5.2.1. ](https://www.ietf.org/archive/id/draft-ietf-oauth-selective-disclosure-jwt-06.html#section-5.2.1)[Disclosures for Object Properties](https://www.ietf.org/archive/id/draft-ietf-oauth-selective-disclosure-jwt-06.html#name-disclosures-for-object-prop)\r\n\r\n- [x] \"The claim name, or key, as it would be used in a regular JWT payload. The value MUST be a string.\" <- I assume the \"value\" is the key, and not the key's value in the JSON object?\r\n- [x] Why is 128 bits only recommended and not required for the salt?\r\n\r\n## [5.3. ](https://www.ietf.org/archive/id/draft-ietf-oauth-selective-disclosure-jwt-06.html#section-5.3)[Key Binding JWT](https://www.ietf.org/archive/id/draft-ietf-oauth-selective-disclosure-jwt-06.html#name-key-binding-jwt)\r\n\r\n- [ ] This should follow https://www.rfc-editor.org/rfc/rfc7515.html#section-7 by specifying \"what serialization and serialization features are used\". I see that 1.1. Feature Summary mentions the compact serialization, but that doesn't clearly say that this embedded JWT uses it.\r\n\r\n## [5.3.1. ](https://www.ietf.org/archive/id/draft-ietf-oauth-selective-disclosure-jwt-06.html#section-5.3.1)[Integrity Protection of the Presentation](https://www.ietf.org/archive/id/draft-ietf-oauth-selective-disclosure-jwt-06.html#name-integrity-protection-of-the)\r\n\r\n- [ ] This mentions \"bytes preceding the KB-JWT in the Presentation\", but several other places mention \"Key Binding is provided by means not defined in this specification\", in which case the relevant bytes don't precede the KB-JWT. These should be consistent.\r\n\r\n## [8.1. ](https://www.ietf.org/archive/id/draft-ietf-oauth-selective-disclosure-jwt-06.html#section-8.1)[Verification of the SD-JWT](https://www.ietf.org/archive/id/draft-ietf-oauth-selective-disclosure-jwt-06.html#name-verification-of-the-sd-jwt)\r\n\r\n- [ ] Are \"Upon receiving an SD-JWT, a Holder or a Verifier MUST ensure that\" and \"The Holder or the Verifier MUST perform the following (or equivalent) steps when receiving an SD-JWT\" accomplishing the same thing?\r\n- [ ] \"Separate the SD-JWT\" should cite an algorithm for doing that. I think it's \"5. SD-JWT Data Formats\" which implies it's just \"split on '~'\"?\r\n- [ ] \"Ensure that a signing algorithm was used that was deemed secure\" <- This should probably be an input to the algorithm \u2026 although I think there are algorithm confusion attacks that imply that the algorithm should actually be picked based on the key the verifier has cached for the issuer rather than the claim in the JWT. I know this hasn't changed compared to JWS, but we know more about how JWS and other cryptography fails, so it'd be good to incorporate modern best practices in the interfaces here.\r\n- [ ] \"Validate the signature over the Issuer-signed JWT\" should cite an algorithm for doing that. Is that https://www.rfc-editor.org/rfc/rfc7515.html#section-5.2?\r\n- [ ] How should the application \"Validate the Issuer and that the signing key belongs to this Issuer\"? I see that the details of distribution are out of scope (Section 11.9), but this should say something about the application having a map from (issuer ID, key ID) pairs to public keys, and which fields of the Issuer-signed JWT are used to look up keys in this map.\r\n- [ ] How should the application \"Check that the _sd_alg claim value is understood\"? Where should it find the _sd_alg, in the JWT's header or payload? 5.1.1. Hash Function Claim answers this, so you could just reference that, but it would be even better to accept a set of acceptable algorithms as an argument, look up the particular field in the payload object, and save that in a variable if it's in the input set.\r\n- [ ] What's a \"claim\"? https://www.rfc-editor.org/rfc/rfc7519#section-4 says the claims are the members of the JWT's payload, but the algorithm here also uses \"claim\" to describe nested object members and array elements.\r\n- [ ] I would probably have written the algorithm to build a map of hash->disclosure and then call a recursive element-processing-and-replacing function, but this isn't too bad.\r\n- [ ] \"Remove all array elements for which the digest was not found\" probably won't confuse anyone for long, but my first reading said that an array in the payload like [1, 2, 3] would wind up empty since no digests were found for the elements.\r\n- [ ] \"Check that the SD-JWT is valid using claims such as nbf, iat, and exp\" should say where those claims are defined and what part of which object they appear on. (https://www.iana.org/assignments/jwt/jwt.xhtml#claims, and the top level of the payload, not the header, right?)\r\n- [ ] The \"required validity-controlling claim\"s should probably be an input parameter to this algorithm. Possibly all the IANA-registered JWT claim handling should be passed in, or this algorithm should return all the claims for the caller to deal with.\r\n\r\n## [8.2. ](https://www.ietf.org/archive/id/draft-ietf-oauth-selective-disclosure-jwt-06.html#section-8.2)[Processing by the Holder](https://www.ietf.org/archive/id/draft-ietf-oauth-selective-disclosure-jwt-06.html#name-processing-by-the-holder)\r\n\r\n- [ ] \"create a Key Binding JWT\" <- refer to the section that says how to do this.\r\n- [ ] \"Assemble the SD-JWT for Presentation\" <- This should at least refer to \"5. SD-JWT Data Formats\" and possibly just write out the algorithm of \"make an array of the Issuer-signed JWT, the selected Disclosures and, if applicable, the Key Binding JWT, and join the array with '~'.\"\r\n\r\n## [8.3. ](https://www.ietf.org/archive/id/draft-ietf-oauth-selective-disclosure-jwt-06.html#section-8.3)[Verification by the Verifier](https://www.ietf.org/archive/id/draft-ietf-oauth-selective-disclosure-jwt-06.html#name-verification-by-the-verifie)\r\n\r\n- [ ] This is clearer that \"Verifiers MUST ensure that\" is accomplished by the steps in the following algorithm, but I don't like the redundant MUST. You can just say \"Verifiers need to ensure that\" and then leave the normative requirements to the algorithm.\r\n- [ ] \"according to the Verifier's policy\" should be an input parameter to this algorithm, that the verifier provides along with the bytes of the presentation.\r\n- [ ] \"verify the Key Binding according to the method used\" <- how? This might be https://www.rfc-editor.org/rfc/rfc9449.html#section-6, but you should cite the details.\r\n- [ ] \"Determine the public key for the Holder\" <- how? This might be the 'cnf' claim, but you should say so.\r\n- [ ] \"Ensure that a signing algorithm was used that was deemed secure\" <- as above, this should be an input parameter to this algorithm or computed from the public key.\r\n- [ ] \"Validate the signature\" <- again, cite how to do this.\r\n- [ ] \"the typ of the Key Binding JWT\" <- is that in the header or payload? (cite 5.3. Key Binding JWT and possibly https://www.rfc-editor.org/rfc/rfc8725.html#name-use-explicit-typing)\r\n- [ ] \"within an acceptable window.\" <- should be an input parameter\r\n- [ ] \"validating nonce and aud claims\" <- The instructions for doing this should be an input parameter to this algorithm.\r\n- [x] \"Check that the Key Binding JWT is valid in all other respects\" should call a particular algorithm from the other specs that it cites.\r\n\r\n## [16. ](https://www.ietf.org/archive/id/draft-ietf-oauth-selective-disclosure-jwt-06.html#section-16)[Informative References](https://www.ietf.org/archive/id/draft-ietf-oauth-selective-disclosure-jwt-06.html#name-informative-references)\r\n\r\n- [x] Many of these should be normative. For example, base64url is used all over the normative parts of this specification, and it comes from [RFC7515] in this section.",
+      "body": "While reviewing https://github.com/w3c/vc-jose-cose/pull/190, I had to understand some of the SD-JWT verification algorithms. I noticed some issues, which I've listed here. I haven't filed individual issues yet because I'm not sure how you'll want to group them. Thanks to @OR13 for doing a first pass; any remaining mistakes are probably because I didn't take his advice.\r\n\r\n\r\n## [5.1. ](https://www.ietf.org/archive/id/draft-ietf-oauth-selective-disclosure-jwt-06.html#section-5.1)[Issuer-signed JWT Payload](https://www.ietf.org/archive/id/draft-ietf-oauth-selective-disclosure-jwt-06.html#name-issuer-signed-jwt-payload)\r\n\r\n- [x] This should follow https://www.rfc-editor.org/rfc/rfc7515.html#section-7 by specifying \"what serialization and serialization features are used\". I see that 1.1. Feature Summary mentions the compact serialization, but that doesn't clearly say that this embedded JWT uses it.\r\n\r\n## [5.2.1. ](https://www.ietf.org/archive/id/draft-ietf-oauth-selective-disclosure-jwt-06.html#section-5.2.1)[Disclosures for Object Properties](https://www.ietf.org/archive/id/draft-ietf-oauth-selective-disclosure-jwt-06.html#name-disclosures-for-object-prop)\r\n\r\n- [x] \"The claim name, or key, as it would be used in a regular JWT payload. The value MUST be a string.\" <- I assume the \"value\" is the key, and not the key's value in the JSON object?\r\n- [x] Why is 128 bits only recommended and not required for the salt?\r\n\r\n## [5.3. ](https://www.ietf.org/archive/id/draft-ietf-oauth-selective-disclosure-jwt-06.html#section-5.3)[Key Binding JWT](https://www.ietf.org/archive/id/draft-ietf-oauth-selective-disclosure-jwt-06.html#name-key-binding-jwt)\r\n\r\n- [x] This should follow https://www.rfc-editor.org/rfc/rfc7515.html#section-7 by specifying \"what serialization and serialization features are used\". I see that 1.1. Feature Summary mentions the compact serialization, but that doesn't clearly say that this embedded JWT uses it.\r\n\r\n## [5.3.1. ](https://www.ietf.org/archive/id/draft-ietf-oauth-selective-disclosure-jwt-06.html#section-5.3.1)[Integrity Protection of the Presentation](https://www.ietf.org/archive/id/draft-ietf-oauth-selective-disclosure-jwt-06.html#name-integrity-protection-of-the)\r\n\r\n- [x] This mentions \"bytes preceding the KB-JWT in the Presentation\", but several other places mention \"Key Binding is provided by means not defined in this specification\", in which case the relevant bytes don't precede the KB-JWT. These should be consistent.\r\n\r\n## [8.1. ](https://www.ietf.org/archive/id/draft-ietf-oauth-selective-disclosure-jwt-06.html#section-8.1)[Verification of the SD-JWT](https://www.ietf.org/archive/id/draft-ietf-oauth-selective-disclosure-jwt-06.html#name-verification-of-the-sd-jwt)\r\n\r\n- [x] Are \"Upon receiving an SD-JWT, a Holder or a Verifier MUST ensure that\" and \"The Holder or the Verifier MUST perform the following (or equivalent) steps when receiving an SD-JWT\" accomplishing the same thing?\r\n- [x] \"Separate the SD-JWT\" should cite an algorithm for doing that. I think it's \"5. SD-JWT Data Formats\" which implies it's just \"split on '~'\"?\r\n- [x] \"Ensure that a signing algorithm was used that was deemed secure\" <- This should probably be an input to the algorithm \u2026 although I think there are algorithm confusion attacks that imply that the algorithm should actually be picked based on the key the verifier has cached for the issuer rather than the claim in the JWT. I know this hasn't changed compared to JWS, but we know more about how JWS and other cryptography fails, so it'd be good to incorporate modern best practices in the interfaces here.\r\n- [x] \"Validate the signature over the Issuer-signed JWT\" should cite an algorithm for doing that. Is that https://www.rfc-editor.org/rfc/rfc7515.html#section-5.2?\r\n- [x] How should the application \"Validate the Issuer and that the signing key belongs to this Issuer\"? I see that the details of distribution are out of scope (Section 11.9), but this should say something about the application having a map from (issuer ID, key ID) pairs to public keys, and which fields of the Issuer-signed JWT are used to look up keys in this map.\r\n- [x] How should the application \"Check that the _sd_alg claim value is understood\"? Where should it find the _sd_alg, in the JWT's header or payload? 5.1.1. Hash Function Claim answers this, so you could just reference that, but it would be even better to accept a set of acceptable algorithms as an argument, look up the particular field in the payload object, and save that in a variable if it's in the input set.\r\n- [x] What's a \"claim\"? https://www.rfc-editor.org/rfc/rfc7519#section-4 says the claims are the members of the JWT's payload, but the algorithm here also uses \"claim\" to describe nested object members and array elements.\r\n- [x] I would probably have written the algorithm to build a map of hash->disclosure and then call a recursive element-processing-and-replacing function, but this isn't too bad.\r\n- [x] \"Remove all array elements for which the digest was not found\" probably won't confuse anyone for long, but my first reading said that an array in the payload like [1, 2, 3] would wind up empty since no digests were found for the elements.\r\n- [x] \"Check that the SD-JWT is valid using claims such as nbf, iat, and exp\" should say where those claims are defined and what part of which object they appear on. (https://www.iana.org/assignments/jwt/jwt.xhtml#claims, and the top level of the payload, not the header, right?)\r\n- [x] The \"required validity-controlling claim\"s should probably be an input parameter to this algorithm. Possibly all the IANA-registered JWT claim handling should be passed in, or this algorithm should return all the claims for the caller to deal with.\r\n\r\n## [8.2. ](https://www.ietf.org/archive/id/draft-ietf-oauth-selective-disclosure-jwt-06.html#section-8.2)[Processing by the Holder](https://www.ietf.org/archive/id/draft-ietf-oauth-selective-disclosure-jwt-06.html#name-processing-by-the-holder)\r\n\r\n- [x] \"create a Key Binding JWT\" <- refer to the section that says how to do this.\r\n- [x] \"Assemble the SD-JWT for Presentation\" <- This should at least refer to \"5. SD-JWT Data Formats\" and possibly just write out the algorithm of \"make an array of the Issuer-signed JWT, the selected Disclosures and, if applicable, the Key Binding JWT, and join the array with '~'.\"\r\n\r\n## [8.3. ](https://www.ietf.org/archive/id/draft-ietf-oauth-selective-disclosure-jwt-06.html#section-8.3)[Verification by the Verifier](https://www.ietf.org/archive/id/draft-ietf-oauth-selective-disclosure-jwt-06.html#name-verification-by-the-verifie)\r\n\r\n- [x] This is clearer that \"Verifiers MUST ensure that\" is accomplished by the steps in the following algorithm, but I don't like the redundant MUST. You can just say \"Verifiers need to ensure that\" and then leave the normative requirements to the algorithm.\r\n- [x] \"according to the Verifier's policy\" should be an input parameter to this algorithm, that the verifier provides along with the bytes of the presentation.\r\n- [x] \"verify the Key Binding according to the method used\" <- how? This might be https://www.rfc-editor.org/rfc/rfc9449.html#section-6, but you should cite the details.\r\n- [ ] \"Determine the public key for the Holder\" <- how? This might be the 'cnf' claim, but you should say so.\r\n- [x] \"Ensure that a signing algorithm was used that was deemed secure\" <- as above, this should be an input parameter to this algorithm or computed from the public key.\r\n- [x] \"Validate the signature\" <- again, cite how to do this.\r\n- [x] \"the typ of the Key Binding JWT\" <- is that in the header or payload? (cite 5.3. Key Binding JWT and possibly https://www.rfc-editor.org/rfc/rfc8725.html#name-use-explicit-typing)\r\n- [x] \"within an acceptable window.\" <- should be an input parameter\r\n- [x] \"validating nonce and aud claims\" <- The instructions for doing this should be an input parameter to this algorithm.\r\n- [x] \"Check that the Key Binding JWT is valid in all other respects\" should call a particular algorithm from the other specs that it cites.\r\n\r\n## [16. ](https://www.ietf.org/archive/id/draft-ietf-oauth-selective-disclosure-jwt-06.html#section-16)[Informative References](https://www.ietf.org/archive/id/draft-ietf-oauth-selective-disclosure-jwt-06.html#name-informative-references)\r\n\r\n- [x] Many of these should be normative. For example, base64url is used all over the normative parts of this specification, and it comes from [RFC7515] in this section.",
       "createdAt": "2023-12-01T17:50:46Z",
-      "updatedAt": "2023-12-13T22:32:24Z",
+      "updatedAt": "2023-12-16T02:44:30Z",
       "closedAt": null,
       "comments": [
         {
@@ -10161,6 +10161,118 @@
           "body": "> \"The claim name, or key, as it would be used in a regular JWT payload. The value MUST be a string.\" <- I assume the \"value\" is the key, and not the key's value in the JSON object?\r\n\r\nYes and I've tried to remove any ambiguity there by just not using the word \"value\" with d015a3de2ae50623b4a294590fb2d0249e7d33b5",
           "createdAt": "2023-12-12T23:46:10Z",
           "updatedAt": "2023-12-12T23:46:45Z"
+        },
+        {
+          "author": "bc-pi",
+          "authorAssociation": "COLLABORATOR",
+          "body": " > 5.1. Issuer-signed JWT  / 5.3. Key Binding JWT \r\n>  ... should follow https://www.rfc-editor.org/rfc/rfc7515.html#section-7 by specifying \"what serialization and serialization features are used\"  ...\r\n\r\nPer [RFC7519](https://www.rfc-editor.org/rfc/rfc7519#section-1), \"JWTs are always represented using the JWS Compact Serialization\" the compact serialization is already specified.",
+          "createdAt": "2023-12-15T22:16:33Z",
+          "updatedAt": "2023-12-15T22:16:33Z"
+        },
+        {
+          "author": "bc-pi",
+          "authorAssociation": "COLLABORATOR",
+          "body": "> 5.3.1. Integrity Protection of the Presentation\r\n>\r\n> This mentions \"bytes preceding the KB-JWT in the Presentation\", but several other places mention \"Key Binding is provided by means not defined in this specification\", in which case the relevant bytes don't precede the KB-JWT. These should be consistent.\r\n\r\nThat is for the `sd_hash` claim in Key Binding JWT so isn't relevant elsewhere. ",
+          "createdAt": "2023-12-15T22:30:25Z",
+          "updatedAt": "2023-12-15T22:30:25Z"
+        },
+        {
+          "author": "bc-pi",
+          "authorAssociation": "COLLABORATOR",
+          "body": ">  Are \"Upon receiving an SD-JWT, a Holder or a Verifier MUST ensure that\" and \"The Holder or the Verifier MUST perform the following (or equivalent) steps when receiving an SD-JWT\" accomplishing the same thing?\r\n\r\n&\r\n\r\n> This is clearer that \"Verifiers MUST ensure that\" is accomplished by the steps in the following algorithm, but I don't like the redundant MUST. You can just say \"Verifiers need to ensure that\" and then leave the normative requirements to the algorithm.\r\n\r\nYeah, with 2a0e270f2e1dbfa9664bb5ce4989a2f6a1765217 I basically applied your suggestion to both places. \r\n\r\n",
+          "createdAt": "2023-12-15T22:43:49Z",
+          "updatedAt": "2023-12-15T22:48:38Z"
+        },
+        {
+          "author": "bc-pi",
+          "authorAssociation": "COLLABORATOR",
+          "body": " > \"Validate the signature over the Issuer-signed JWT\" should cite an algorithm for doing that. Is that https://www.rfc-editor.org/rfc/rfc7515.html#section-5.2?\r\n\r\nYup 7d68d4ed9b91e49a0aa00254475bf7c116669dd6 ",
+          "createdAt": "2023-12-15T23:01:48Z",
+          "updatedAt": "2023-12-15T23:01:48Z"
+        },
+        {
+          "author": "bc-pi",
+          "authorAssociation": "COLLABORATOR",
+          "body": "> \"Separate the SD-JWT\" should cite an algorithm for doing that. I think it's \"5. SD-JWT Data Formats\" which implies it's just \"split on '~'\"? \r\n\r\nYes but I believe it's sufficiently clear in the context of the draft. ",
+          "createdAt": "2023-12-15T23:06:21Z",
+          "updatedAt": "2023-12-15T23:06:21Z"
+        },
+        {
+          "author": "bc-pi",
+          "authorAssociation": "COLLABORATOR",
+          "body": "This draft is not structured such that it has input parameters to algorithms so suggestions to make something an input parameter to an algorithm are not actionable or practical. ",
+          "createdAt": "2023-12-15T23:14:11Z",
+          "updatedAt": "2023-12-15T23:14:11Z"
+        },
+        {
+          "author": "bc-pi",
+          "authorAssociation": "COLLABORATOR",
+          "body": ">  \"Validate the signature\" <- again, cite how to do this.\r\n\r\ne9acd5ed665b107776b6b41355680470cde89f2c",
+          "createdAt": "2023-12-16T00:03:06Z",
+          "updatedAt": "2023-12-16T00:03:06Z"
+        },
+        {
+          "author": "bc-pi",
+          "authorAssociation": "COLLABORATOR",
+          "body": "> \"the typ of the Key Binding JWT\" <- is that in the header or payload? (cite 5.3. Key Binding JWT ... \r\n\r\n`typ` is a JOSE header. Will cite sec 5.3. where that's more explicit  64a4c4519668c7a63f1a0be215176657895fa0c8 ",
+          "createdAt": "2023-12-16T00:15:01Z",
+          "updatedAt": "2023-12-16T00:15:01Z"
+        },
+        {
+          "author": "bc-pi",
+          "authorAssociation": "COLLABORATOR",
+          "body": ">  \"verify the Key Binding according to the method used\" <- how? This might be https://www.rfc-editor.org/rfc/rfc9449.html#section-6, but you should cite the details.\r\n\r\nThat sentence starts with \"If Key Binding is provided by means not defined in this specification,\" so there are not specific details to cite. [Alternatives to a Key Binding JWT](https://www.ietf.org/archive/id/draft-ietf-oauth-selective-disclosure-jwt-07.html#name-alternatives-to-a-key-bindi) mentions that other ways of proving Key Binding are possible. \r\n\r\nDPoP/rfc9449 is one possibility but not the only one. Nor a particularly likely one. \r\n\r\n\r\n",
+          "createdAt": "2023-12-16T00:28:15Z",
+          "updatedAt": "2023-12-16T00:28:15Z"
+        },
+        {
+          "author": "bc-pi",
+          "authorAssociation": "COLLABORATOR",
+          "body": "> \"Check that the SD-JWT is valid using claims such as nbf, iat, and exp\" should say where those claims are defined and what part of which object they appear on. (https://www.iana.org/assignments/jwt/jwt.xhtml#claims, and the top level of the payload, not the header, right?) \r\n\r\nThe very next part of that sentence says \"in the processed payload\" and that's a non-exhaustive list of JWT claims for which a citation/reference isn't really needed.  ",
+          "createdAt": "2023-12-16T00:37:22Z",
+          "updatedAt": "2023-12-16T00:37:22Z"
+        },
+        {
+          "author": "bc-pi",
+          "authorAssociation": "COLLABORATOR",
+          "body": "> \"Remove all array elements for which the digest was not found\" probably won't confuse anyone for long, but my first reading said that an array in the payload like [1, 2, 3] would wind up empty since no digests were found for the elements.\r\n\r\nI feel like it's sufficiently clear from context and shouldn't confuse anyone for too long.",
+          "createdAt": "2023-12-16T00:41:16Z",
+          "updatedAt": "2023-12-16T00:41:16Z"
+        },
+        {
+          "author": "bc-pi",
+          "authorAssociation": "COLLABORATOR",
+          "body": ">  I would probably have written the algorithm to build a map of hash->disclosure and then call a recursive element-processing-and-replacing function, but this isn't too bad.\r\n\r\nNoted. ",
+          "createdAt": "2023-12-16T00:44:01Z",
+          "updatedAt": "2023-12-16T00:44:01Z"
+        },
+        {
+          "author": "bc-pi",
+          "authorAssociation": "COLLABORATOR",
+          "body": ">  How should the application \"Validate the Issuer and that the signing key belongs to this Issuer\"? I see that the details of distribution are out of scope (Section 11.9), but this should say something about the application having a map from (issuer ID, key ID) pairs to public keys, and which fields of the Issuer-signed JWT are used to look up keys in this map.\r\n\r\nThis draft intentionally doesn't prescribe how keys are distributed, identified, selected, trusted, etc. any more than JWT/JWS do (e.g. https://datatracker.ietf.org/doc/html/rfc7515#section-6, https://datatracker.ietf.org/doc/html/rfc7515#appendix-D, etc). A map from (issuer ID, key ID) pairs to public keys is one application but certainly not the only one. ",
+          "createdAt": "2023-12-16T00:55:32Z",
+          "updatedAt": "2023-12-16T00:55:32Z"
+        },
+        {
+          "author": "bc-pi",
+          "authorAssociation": "COLLABORATOR",
+          "body": "> How should the application \"Check that the _sd_alg claim value is understood\"? Where should it find the _sd_alg, in the JWT's header or payload? 5.1.1. Hash Function Claim answers this, so you could just reference that ... \r\n\r\nreferencing that 072a0605bcb62937e343aaa7812aa8ef86d8379f",
+          "createdAt": "2023-12-16T01:00:00Z",
+          "updatedAt": "2023-12-16T01:00:00Z"
+        },
+        {
+          "author": "bc-pi",
+          "authorAssociation": "COLLABORATOR",
+          "body": "> What's a \"claim\"? https://www.rfc-editor.org/rfc/rfc7519#section-4 says the claims are the members of the JWT's payload, but the algorithm here also uses \"claim\" to describe nested object members and array elements.\r\n\r\nThat's a somewhat existential and loaded question but common usage of the word doesn't preclude it describing nested items and array elements. And this draft is not alone in that. ",
+          "createdAt": "2023-12-16T01:06:22Z",
+          "updatedAt": "2023-12-16T01:09:00Z"
+        },
+        {
+          "author": "bc-pi",
+          "authorAssociation": "COLLABORATOR",
+          "body": "> [8.2. ](https://www.ietf.org/archive/id/draft-ietf-oauth-selective-disclosure-jwt-06.html#section-8.2)[Processing by the Holder](https://www.ietf.org/archive/id/draft-ietf-oauth-selective-disclosure-jwt-06.html#name-processing-by-the-holder)\r\n>\"create a Key Binding JWT\" <- refer to the section that says how to do this.\r\n> \"Assemble the SD-JWT for Presentation\" <- This should at least refer to \"5. SD-JWT Data Formats\" \r\n\r\ncbee5f8457f447574400377dc6f7c9fe7f1c3c18\r\n\r\n\r\n",
+          "createdAt": "2023-12-16T02:44:20Z",
+          "updatedAt": "2023-12-16T02:44:20Z"
         }
       ]
     },
@@ -38292,13 +38404,13 @@
       "labels": [],
       "body": "Addresses Issue #342 \r\n\r\nInstead of just adding text re the key binding keys, I rewrote the whole section, as the previous one was more of a placeholder.",
       "createdAt": "2023-10-17T15:21:29Z",
-      "updatedAt": "2023-11-16T17:29:08Z",
+      "updatedAt": "2023-12-15T21:12:13Z",
       "baseRepository": "oauth-wg/oauth-selective-disclosure-jwt",
       "baseRefName": "master",
-      "baseRefOid": "f7fdcf0d35b02f6d1f6e9dbfc98eec56fa842a2d",
+      "baseRefOid": "bc5da6bf899130574ed9866913831d5c3d7429e4",
       "headRepository": "oauth-wg/oauth-selective-disclosure-jwt",
       "headRefName": "danielfett/fix-342-batch-key-correllation",
-      "headRefOid": "12d6a6c4c1a99f865a940a18cad22473898517be",
+      "headRefOid": "5c22e9fce096fd0d3df9083fe0ddc65533656b64",
       "closedAt": null,
       "mergedAt": null,
       "mergedBy": null,
@@ -38732,6 +38844,376 @@
               "body": "The privacy pass architecture uses this language:\r\n\r\n>  These proofs, or tokens, are\r\n>  private in the sense that a given token cannot be linked to the\r\n>  protocol interaction where that token was initially issued.\r\n   \r\n- https://datatracker.ietf.org/doc/draft-ietf-privacypass-architecture/",
               "createdAt": "2023-10-30T19:04:12Z",
               "updatedAt": "2023-10-30T19:04:29Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOHTmVzM5qNRRP",
+          "commit": {
+            "abbreviatedOid": "12d6a6c"
+          },
+          "author": "danielfett",
+          "authorAssociation": "MEMBER",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2023-12-14T13:53:34Z",
+          "updatedAt": "2023-12-14T13:53:35Z",
+          "comments": [
+            {
+              "originalPosition": 23,
+              "body": "No, what I want to say is: The amount of information that can identify a user varies depending on context knowledge and the set of users that exist. If I'm looking at a club with 12 members all having a different birthdates, the birthdate is sufficient identifying information. If there would be a specific credential for sitting US presidents, unlinkability cannot be achieved at all, even if only the credential type is shared.\r\n\r\nSo the point is: For batch issuance, even if all keys and so on are fresh for each credential, there is an upper limit on the grade of unlinkability achievable, and it depends on the dataset shared and context knowledge etc.",
+              "createdAt": "2023-12-14T13:53:35Z",
+              "updatedAt": "2023-12-14T13:53:35Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOHTmVzM5qNSEf",
+          "commit": {
+            "abbreviatedOid": "12d6a6c"
+          },
+          "author": "danielfett",
+          "authorAssociation": "MEMBER",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2023-12-14T13:55:07Z",
+          "updatedAt": "2023-12-14T13:55:07Z",
+          "comments": [
+            {
+              "originalPosition": 31,
+              "body": "```suggestion\r\nIssuer/Verifier unlinkability cannot be achieved in salted-hash based approaches to credentials, such as SD-JWT, as the issued\r\ncredential is directly forwarded to the Verifier.\r\n```",
+              "createdAt": "2023-12-14T13:55:07Z",
+              "updatedAt": "2023-12-14T13:55:07Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOHTmVzM5qN_Lu",
+          "commit": {
+            "abbreviatedOid": "d4431fd"
+          },
+          "author": "danielfett",
+          "authorAssociation": "MEMBER",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2023-12-14T15:16:04Z",
+          "updatedAt": "2023-12-14T15:16:10Z",
+          "comments": [
+            {
+              "originalPosition": 20,
+              "body": "The difference is effectively whether the Verifier is cooperating with the attacker or whether it is just following protocol; I'll split this up accordingly.",
+              "createdAt": "2023-12-14T15:16:04Z",
+              "updatedAt": "2023-12-14T15:16:10Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOHTmVzM5qOOhs",
+          "commit": {
+            "abbreviatedOid": "d4431fd"
+          },
+          "author": "danielfett",
+          "authorAssociation": "MEMBER",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2023-12-14T15:45:29Z",
+          "updatedAt": "2023-12-14T15:45:30Z",
+          "comments": [
+            {
+              "originalPosition": 14,
+              "body": "@OR13  I'll make a bigger change to this PR hopefully addressing some of your comments, but certainly not everything. I propose that we try to get to an \"acceptable\" description first, get that merged, and then dig into the details in a separate issue.",
+              "createdAt": "2023-12-14T15:45:30Z",
+              "updatedAt": "2023-12-14T15:45:30Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOHTmVzM5qQkVc",
+          "commit": {
+            "abbreviatedOid": "d352b26"
+          },
+          "author": "bc-pi",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2023-12-14T20:56:42Z",
+          "updatedAt": "2023-12-14T20:56:43Z",
+          "comments": [
+            {
+              "originalPosition": 14,
+              "body": "This sentence doesn't feel quite right/natural to me. Though I'm not sure this suggestion is particularly great either: \r\n\r\n```suggestion\r\nUnlinkability is a property whereby adversaries are prevented from correlating\r\ncredential presentations of the same user (beyond the user's consent).\r\n```",
+              "createdAt": "2023-12-14T20:56:42Z",
+              "updatedAt": "2023-12-14T20:56:43Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOHTmVzM5qRYkt",
+          "commit": {
+            "abbreviatedOid": "d352b26"
+          },
+          "author": "peppelinux",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2023-12-15T00:01:54Z",
+          "updatedAt": "2023-12-15T00:01:54Z",
+          "comments": [
+            {
+              "originalPosition": 33,
+              "body": "```suggestion\r\n * Issuer/Verifier Unlinkability (Honest Verifier): An Issuer of a credential\r\n   should not be able to know that a user presented the credential to a certain\r\n   Verifier (that is behaving according to protocol).\r\n```\r\n\r\nIn order of priority the Issuer must not know nothing about the use of the credential, therefore It would not be able to tell this information to anybody",
+              "createdAt": "2023-12-15T00:01:54Z",
+              "updatedAt": "2023-12-15T00:03:29Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOHTmVzM5qRZPo",
+          "commit": {
+            "abbreviatedOid": "d352b26"
+          },
+          "author": "peppelinux",
+          "authorAssociation": "COLLABORATOR",
+          "state": "CHANGES_REQUESTED",
+          "body": "",
+          "createdAt": "2023-12-15T00:05:59Z",
+          "updatedAt": "2023-12-15T00:11:56Z",
+          "comments": [
+            {
+              "originalPosition": 37,
+              "body": "@danielfett this is quite similar, or equivalent, to the previous one. If the concrete information is in the brackets probably we might try a rewording without the brackets, WDYT?",
+              "createdAt": "2023-12-15T00:06:00Z",
+              "updatedAt": "2023-12-15T00:11:56Z"
+            },
+            {
+              "originalPosition": 40,
+              "body": "```suggestion\r\nUnlinkability applies only when the disclosed claims do not hold any information that could directly or indirectly lead to the identification of the user. For\r\n```",
+              "createdAt": "2023-12-15T00:07:48Z",
+              "updatedAt": "2023-12-15T00:11:56Z"
+            },
+            {
+              "originalPosition": 45,
+              "body": "```suggestion\r\ndiscloses a birthdate to one Verifier and a postal code to another Verifier, the two Verifiers should not be able to determine that they were interacting with the same user.\r\n```",
+              "createdAt": "2023-12-15T00:09:29Z",
+              "updatedAt": "2023-12-15T00:11:56Z"
+            },
+            {
+              "originalPosition": 56,
+              "body": "I didn't fully get this, or probably we might try to simplify this text",
+              "createdAt": "2023-12-15T00:11:28Z",
+              "updatedAt": "2023-12-15T00:11:56Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOHTmVzM5qUlo6",
+          "commit": {
+            "abbreviatedOid": "5114d21"
+          },
+          "author": "danielfett",
+          "authorAssociation": "MEMBER",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2023-12-15T12:08:29Z",
+          "updatedAt": "2023-12-15T12:08:29Z",
+          "comments": [
+            {
+              "originalPosition": 37,
+              "body": "You're right, let's try to remove the brackets.",
+              "createdAt": "2023-12-15T12:08:29Z",
+              "updatedAt": "2023-12-15T12:08:29Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOHTmVzM5qUmNm",
+          "commit": {
+            "abbreviatedOid": "5114d21"
+          },
+          "author": "danielfett",
+          "authorAssociation": "MEMBER",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2023-12-15T12:09:04Z",
+          "updatedAt": "2023-12-15T12:09:05Z",
+          "comments": [
+            {
+              "originalPosition": 37,
+              "body": "```suggestion\r\n * Issuer/Verifier Unlinkability (Honest Verifier): An Issuer of a credential\r\n   should not be able to know that a user presented the credential to a certain\r\n   Verifier that is behaving according to protocol.\r\n * Issuer/Verifier Unlinkability (Colluding/Compromised Verifier): An Issuer of a\r\n   credential should not be able to tell that a user presented the credential to\r\n   a certain Verifier, even if the Verifier colludes with the Issuer or becomes\r\n   compromised and leaks stored credentials from presentations.\r\n```",
+              "createdAt": "2023-12-15T12:09:05Z",
+              "updatedAt": "2023-12-15T12:09:05Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOHTmVzM5qUpX_",
+          "commit": {
+            "abbreviatedOid": "e043300"
+          },
+          "author": "danielfett",
+          "authorAssociation": "MEMBER",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2023-12-15T12:13:23Z",
+          "updatedAt": "2023-12-15T12:13:23Z",
+          "comments": [
+            {
+              "originalPosition": 54,
+              "body": "How about this?\r\n```suggestion\r\nContrary to that, Issuer/Verifier unlinkability with an honest Verifier can generally be achieved.\r\nHowever, a callback from the Verifier to the Issuer, for example, for a revocation\r\ncheck, can reveal information about the use of the credential to the Verifier. Therefore,\r\nsuch callbacks SHOULD be avoided, or, if that is not possible, MUST be done in a\r\nprivacy-preserving way where details about the credential are not revealed to\r\nthe Issuer. (Even then, timing of such requests might remain as a side-channel.)\r\n```",
+              "createdAt": "2023-12-15T12:13:23Z",
+              "updatedAt": "2023-12-15T12:13:23Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOHTmVzM5qUpsr",
+          "commit": {
+            "abbreviatedOid": "e043300"
+          },
+          "author": "danielfett",
+          "authorAssociation": "MEMBER",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2023-12-15T12:13:53Z",
+          "updatedAt": "2023-12-15T12:13:53Z",
+          "comments": [
+            {
+              "originalPosition": 54,
+              "body": "@peppelinux ",
+              "createdAt": "2023-12-15T12:13:53Z",
+              "updatedAt": "2023-12-15T12:13:53Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOHTmVzM5qUqOT",
+          "commit": {
+            "abbreviatedOid": "e043300"
+          },
+          "author": "danielfett",
+          "authorAssociation": "MEMBER",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2023-12-15T12:14:40Z",
+          "updatedAt": "2023-12-15T12:14:40Z",
+          "comments": [
+            {
+              "originalPosition": 40,
+              "body": "I like the 'limited' wording a bit more, it shows that there is an upper bound.",
+              "createdAt": "2023-12-15T12:14:40Z",
+              "updatedAt": "2023-12-15T12:14:40Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOHTmVzM5qVZw9",
+          "commit": {
+            "abbreviatedOid": "e043300"
+          },
+          "author": "peppelinux",
+          "authorAssociation": "COLLABORATOR",
+          "state": "APPROVED",
+          "body": "@danielfett I share my last comments that I'm sure that you'll consider \r\n\r\napproved, thank you!",
+          "createdAt": "2023-12-15T13:21:41Z",
+          "updatedAt": "2023-12-15T13:31:47Z",
+          "comments": [
+            {
+              "originalPosition": 14,
+              "body": "```suggestion\r\nUnlinkability is a property that prevents adversaries from correlating credential presentations of the same user beyond the user's consent.\r\n```",
+              "createdAt": "2023-12-15T13:21:41Z",
+              "updatedAt": "2023-12-15T13:31:47Z"
+            },
+            {
+              "originalPosition": 41,
+              "body": "```suggestion\r\nexample, when a taxpayer identification number is contained in the disclosed claims, the Issuer and\r\n```",
+              "createdAt": "2023-12-15T13:26:26Z",
+              "updatedAt": "2023-12-15T13:31:47Z"
+            },
+            {
+              "originalPosition": 54,
+              "body": "looks good, and I would also contribute with the followings\r\n\r\n`However, a callback from the Verifier to the Issuer, for example, for a revocation\r\ncheck, can reveal information about the use of the credential to the Verifier.` -> `A callback from the Verifier to the Issuer, such as a revocation check, could potentially disclose information about the credential's usage to the Verifier.`\r\n\r\nand also\r\n\r\n`Therefore,\r\nsuch callbacks SHOULD be avoided, or, if that is not possible, MUST be done in a\r\nprivacy-preserving way where details about the credential are not revealed to\r\nthe Issuer. (Even then, timing of such requests might remain as a side-channel.)` -> `Therefore, such callbacks SHOULD be avoided. If they are unavoidable, they MUST be executed in a manner that preserves privacy and does not disclose details about the credential to the Issuer. However, it's important to note that the timing of such requests could potentially serve as a side-channel.`\r\n",
+              "createdAt": "2023-12-15T13:30:23Z",
+              "updatedAt": "2023-12-15T13:31:47Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOHTmVzM5qWZZN",
+          "commit": {
+            "abbreviatedOid": "e043300"
+          },
+          "author": "danielfett",
+          "authorAssociation": "MEMBER",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2023-12-15T14:48:27Z",
+          "updatedAt": "2023-12-15T14:48:27Z",
+          "comments": [
+            {
+              "originalPosition": 54,
+              "body": "```suggestion\r\nContrary to that, Issuer/Verifier unlinkability with an honest Verifier can generally be achieved.\r\nHowever, a callback from the Verifier to the Issuer, such as a revocation check, could potentially\r\ndisclose information about the credential's usage to the Verifier. Therefore, such callbacks\r\nSHOULD be avoided. Where they are unavoidable, they MUST be executed in a manner that\r\npreserves privacy and does not disclose details about the credential to the Issuer. It is\r\nimportant to note that the timing of such requests could potentially serve as a side-channel.\r\n```",
+              "createdAt": "2023-12-15T14:48:27Z",
+              "updatedAt": "2023-12-15T14:48:27Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOHTmVzM5qWacT",
+          "commit": {
+            "abbreviatedOid": "e043300"
+          },
+          "author": "danielfett",
+          "authorAssociation": "MEMBER",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2023-12-15T14:49:50Z",
+          "updatedAt": "2023-12-15T14:49:50Z",
+          "comments": [
+            {
+              "originalPosition": 14,
+              "body": "How about this?\r\n```suggestion\r\nUnlinkability is a property whereby adversaries are prevented from correlating\r\ncredential presentations of the same user beyond the user's consent.\r\n```",
+              "createdAt": "2023-12-15T14:49:50Z",
+              "updatedAt": "2023-12-15T14:49:50Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOHTmVzM5qWj0c",
+          "commit": {
+            "abbreviatedOid": "62b81f9"
+          },
+          "author": "peppelinux",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2023-12-15T15:02:08Z",
+          "updatedAt": "2023-12-15T15:02:08Z",
+          "comments": [
+            {
+              "originalPosition": 14,
+              "body": "likewise, dont worry and go ahead while you can :-)",
+              "createdAt": "2023-12-15T15:02:08Z",
+              "updatedAt": "2023-12-15T15:02:08Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOHTmVzM5qY-sO",
+          "commit": {
+            "abbreviatedOid": "12d6a6c"
+          },
+          "author": "peppelinux",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2023-12-15T21:12:13Z",
+          "updatedAt": "2023-12-15T21:12:13Z",
+          "comments": [
+            {
+              "originalPosition": 20,
+              "body": "hey Dan, I don't love \"to tell\" and the concept of the speaking machines :-)\r\n\r\nWDYT about this\r\n\r\n````\r\nIssuer/Verifier unlinkability: If an Issuer and a Verifier were to collude, \r\nthey should not be able to determine that a user has presented \r\na credential from the Issuer to that Verifier.\r\n````",
+              "createdAt": "2023-12-15T21:12:13Z",
+              "updatedAt": "2023-12-15T21:12:42Z"
             }
           ]
         }
@@ -40088,14 +40570,40 @@
       "labels": [],
       "body": "which can be found at #389 ",
       "createdAt": "2023-12-12T22:17:32Z",
-      "updatedAt": "2023-12-12T23:44:51Z",
+      "updatedAt": "2023-12-16T02:43:54Z",
       "baseRepository": "oauth-wg/oauth-selective-disclosure-jwt",
       "baseRefName": "master",
       "baseRefOid": "bc5da6bf899130574ed9866913831d5c3d7429e4",
       "headRepository": "oauth-wg/oauth-selective-disclosure-jwt",
       "headRefName": "yasskin-asking",
-      "headRefOid": "d015a3de2ae50623b4a294590fb2d0249e7d33b5",
+      "headRefOid": "cbee5f8457f447574400377dc6f7c9fe7f1c3c18",
       "closedAt": null,
+      "mergedAt": null,
+      "mergedBy": null,
+      "mergeCommit": null,
+      "comments": [],
+      "reviews": []
+    },
+    {
+      "number": 398,
+      "id": "PR_kwDOHTmVzM5h9NbB",
+      "title": "Update draft-ietf-oauth-selective-disclosure-jwt.md",
+      "url": "https://github.com/oauth-wg/oauth-selective-disclosure-jwt/pull/398",
+      "state": "CLOSED",
+      "author": "francis-pouatcha",
+      "authorAssociation": "NONE",
+      "assignees": [],
+      "labels": [],
+      "body": "Fixed wrong value of base63URL String",
+      "createdAt": "2023-12-14T03:15:41Z",
+      "updatedAt": "2023-12-14T03:26:40Z",
+      "baseRepository": "oauth-wg/oauth-selective-disclosure-jwt",
+      "baseRefName": "master",
+      "baseRefOid": "bc5da6bf899130574ed9866913831d5c3d7429e4",
+      "headRepository": "francis-pouatcha/oauth-selective-disclosure-jwt",
+      "headRefName": "patch-1",
+      "headRefOid": "1f0664f972f64aa381f66e3dd9e44a9b566dc6d1",
+      "closedAt": "2023-12-14T03:26:25Z",
       "mergedAt": null,
       "mergedBy": null,
       "mergeCommit": null,
