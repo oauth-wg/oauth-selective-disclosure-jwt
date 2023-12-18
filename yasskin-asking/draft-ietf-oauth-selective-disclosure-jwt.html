@@ -1034,7 +1034,7 @@ svg :is([fill="white"], [fill^="#fff"]) {
 </tr></thead>
 <tfoot><tr>
 <td class="left">Fett, et al.</td>
-<td class="center">Expires 18 June 2024</td>
+<td class="center">Expires 20 June 2024</td>
 <td class="right">[Page]</td>
 </tr></tfoot>
 </table>
@@ -1047,12 +1047,12 @@ svg :is([fill="white"], [fill^="#fff"]) {
 <dd class="internet-draft">draft-ietf-oauth-selective-disclosure-jwt-latest</dd>
 <dt class="label-published">Published:</dt>
 <dd class="published">
-<time datetime="2023-12-16" class="published">16 December 2023</time>
+<time datetime="2023-12-18" class="published">18 December 2023</time>
     </dd>
 <dt class="label-intended-status">Intended Status:</dt>
 <dd class="intended-status">Standards Track</dd>
 <dt class="label-expires">Expires:</dt>
-<dd class="expires"><time datetime="2024-06-18">18 June 2024</time></dd>
+<dd class="expires"><time datetime="2024-06-20">20 June 2024</time></dd>
 <dt class="label-authors">Authors:</dt>
 <dd class="authors">
 <div class="author">
@@ -1107,7 +1107,7 @@ It encompasses various applications, including but not limited to the selective 
         time. It is inappropriate to use Internet-Drafts as reference
         material or to cite them other than as "work in progress."<a href="#section-boilerplate.1-3" class="pilcrow">¶</a></p>
 <p id="section-boilerplate.1-4">
-        This Internet-Draft will expire on 18 June 2024.<a href="#section-boilerplate.1-4" class="pilcrow">¶</a></p>
+        This Internet-Draft will expire on 20 June 2024.<a href="#section-boilerplate.1-4" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="copyright">
@@ -1745,12 +1745,14 @@ minimum length of the salt, and choice of a hash algorithm.<a href="#section-5.1
 <a href="#section-5.1.2" class="section-number selfRef">5.1.2. </a><a href="#name-holder-public-key-claim" class="section-name selfRef">Holder Public Key Claim</a>
           </h4>
 <p id="section-5.1.2-1">If the Issuer wants to enable Key Binding, it includes a public key
-associated with the Holder, or a reference thereto.<a href="#section-5.1.2-1" class="pilcrow">¶</a></p>
+associated with the Holder, or a reference thereto.
+The <code>jwk</code> member of the <code>cnf</code> claim as defined in Section 3.2 of <span>[<a href="#RFC7800" class="cite xref">RFC7800</a>]</span> is
+RECOMMENDED for doing so, however, other means MAY be used.<a href="#section-5.1.2-1" class="pilcrow">¶</a></p>
 <p id="section-5.1.2-2">It is out of the scope of this document to describe how the Holder key pair is
 established. For example, the Holder MAY create a key pair and provide a public key to the Issuer,
 the Issuer MAY create the key pair for the Holder, or
 Holder and Issuer MAY use pre-established key material.<a href="#section-5.1.2-2" class="pilcrow">¶</a></p>
-<p id="section-5.1.2-3">Note: The examples in this document use the <code>cnf</code> claim defined in <span>[<a href="#RFC7800" class="cite xref">RFC7800</a>]</span> to include
+<p id="section-5.1.2-3">Note: The examples throughout this document use the <code>cnf</code> claim to include
 the raw public key by value in SD-JWT.<a href="#section-5.1.2-3" class="pilcrow">¶</a></p>
 </section>
 </div>
@@ -2290,8 +2292,8 @@ ZHJ5M2xjYndIZ2VaOGtoQXYxVTFPU2xlclAwVmtCSnJXWjAifV0sICJfc2RfYWxnIjog
 InNoYS0yNTYiLCAiY25mIjogeyJqd2siOiB7Imt0eSI6ICJFQyIsICJjcnYiOiAiUC0y
 NTYiLCAieCI6ICJUQ0FFUjE5WnZ1M09IRjRqNFc0dmZTVm9ISVAxSUxpbERsczd2Q2VH
 ZW1jIiwgInkiOiAiWnhqaVdXYlpNUUdIVldLVlE0aGJTSWlyc1ZmdWVjQ0U2dDRqVDlG
-MkhaUSJ9fX0.229U5FNKqJT-6FzXCiazRcgXWrg1zxc7Xg8I8vcDgtt0VMPTJSdoDpr6
-a7TPmZBk5oLrRU4uib-L-4s74bo9mw
+MkhaUSJ9fX0.HyFCLlKjq7kJqUiaowRG7CHuq53BBDChcEDmLKGUkvr0BRqu-WVA6fPs
+XX7SpvelfKiHQWhFWriIYpk1pcelMg
 
 </pre><a href="#section-6.1-29" class="pilcrow">¶</a>
 </div>
@@ -2313,8 +2315,8 @@ ZHJ5M2xjYndIZ2VaOGtoQXYxVTFPU2xlclAwVmtCSnJXWjAifV0sICJfc2RfYWxnIjog
 InNoYS0yNTYiLCAiY25mIjogeyJqd2siOiB7Imt0eSI6ICJFQyIsICJjcnYiOiAiUC0y
 NTYiLCAieCI6ICJUQ0FFUjE5WnZ1M09IRjRqNFc0dmZTVm9ISVAxSUxpbERsczd2Q2VH
 ZW1jIiwgInkiOiAiWnhqaVdXYlpNUUdIVldLVlE0aGJTSWlyc1ZmdWVjQ0U2dDRqVDlG
-MkhaUSJ9fX0.229U5FNKqJT-6FzXCiazRcgXWrg1zxc7Xg8I8vcDgtt0VMPTJSdoDpr6
-a7TPmZBk5oLrRU4uib-L-4s74bo9mw~WyIyR0xDNDJzS1F2ZUNmR2ZyeU5STjl3IiwgI
+MkhaUSJ9fX0.HyFCLlKjq7kJqUiaowRG7CHuq53BBDChcEDmLKGUkvr0BRqu-WVA6fPs
+XX7SpvelfKiHQWhFWriIYpk1pcelMg~WyIyR0xDNDJzS1F2ZUNmR2ZyeU5STjl3IiwgI
 mdpdmVuX25hbWUiLCAiSm9obiJd~WyJlbHVWNU9nM2dTTklJOEVZbnN4QV9BIiwgImZh
 bWlseV9uYW1lIiwgIkRvZSJd~WyI2SWo3dE0tYTVpVlBHYm9TNXRtdlZBIiwgImVtYWl
 sIiwgImpvaG5kb2VAZXhhbXBsZS5jb20iXQ~WyJlSThaV205UW5LUHBOUGVOZW5IZGhR
@@ -2358,18 +2360,18 @@ ZHJ5M2xjYndIZ2VaOGtoQXYxVTFPU2xlclAwVmtCSnJXWjAifV0sICJfc2RfYWxnIjog
 InNoYS0yNTYiLCAiY25mIjogeyJqd2siOiB7Imt0eSI6ICJFQyIsICJjcnYiOiAiUC0y
 NTYiLCAieCI6ICJUQ0FFUjE5WnZ1M09IRjRqNFc0dmZTVm9ISVAxSUxpbERsczd2Q2VH
 ZW1jIiwgInkiOiAiWnhqaVdXYlpNUUdIVldLVlE0aGJTSWlyc1ZmdWVjQ0U2dDRqVDlG
-MkhaUSJ9fX0.229U5FNKqJT-6FzXCiazRcgXWrg1zxc7Xg8I8vcDgtt0VMPTJSdoDpr6
-a7TPmZBk5oLrRU4uib-L-4s74bo9mw~WyJlbHVWNU9nM2dTTklJOEVZbnN4QV9BIiwgI
+MkhaUSJ9fX0.HyFCLlKjq7kJqUiaowRG7CHuq53BBDChcEDmLKGUkvr0BRqu-WVA6fPs
+XX7SpvelfKiHQWhFWriIYpk1pcelMg~WyJlbHVWNU9nM2dTTklJOEVZbnN4QV9BIiwgI
 mZhbWlseV9uYW1lIiwgIkRvZSJd~WyJBSngtMDk1VlBycFR0TjRRTU9xUk9BIiwgImFk
 ZHJlc3MiLCB7InN0cmVldF9hZGRyZXNzIjogIjEyMyBNYWluIFN0IiwgImxvY2FsaXR5
 IjogIkFueXRvd24iLCAicmVnaW9uIjogIkFueXN0YXRlIiwgImNvdW50cnkiOiAiVVMi
 fV0~WyIyR0xDNDJzS1F2ZUNmR2ZyeU5STjl3IiwgImdpdmVuX25hbWUiLCAiSm9obiJd
 ~WyJsa2x4RjVqTVlsR1RQVW92TU5JdkNBIiwgIlVTIl0~eyJhbGciOiAiRVMyNTYiLCA
 idHlwIjogImtiK2p3dCJ9.eyJub25jZSI6ICIxMjM0NTY3ODkwIiwgImF1ZCI6ICJodH
-RwczovL3ZlcmlmaWVyLmV4YW1wbGUub3JnIiwgImlhdCI6IDE3MDI2OTQ2NTgsICJzZF
-9oYXNoIjogImpZNGMzemFNaG5mdU95eklBVHQtXzdlOEFJM3NaR3hEUEZ0dmlHQmlmV2
-8ifQ.Ckx0eUp4vl4iY3RNFBwCAvmRSSfFfL1uq4w8_iAVmLWJskR1TbO7wlTkKUDFZ2e
-OgFKtmVF6975ZUDBJ54Ekog
+RwczovL3ZlcmlmaWVyLmV4YW1wbGUub3JnIiwgImlhdCI6IDE3MDI5Mzk4MzMsICJzZF
+9oYXNoIjogIncxRWNXR3k1Z0R1MjBRLWhPYzZfcEo4YTJMekd5TW56eHhOUUMtb2Nfb3
+cifQ.Z9iTfLgBGsdxvxg9IRB3AfDuWjf9TseIfb61-QYuJZgJPEf2rQgG5vUzG2SzTky
+z4gIcf5Y7M47cvHRQUDB4Fg
 
 </pre><a href="#section-6.2-2" class="pilcrow">¶</a>
 </div>
@@ -2378,8 +2380,8 @@ OgFKtmVF6975ZUDBJ54Ekog
 <pre>{
   "nonce": "1234567890",
   "aud": "https://verifier.example.org",
-  "iat": 1702694658,
-  "sd_hash": "jY4c3zaMhnfuOyzIATt-_7e8AI3sZGxDPFtviGBifWo"
+  "iat": 1702939833,
+  "sd_hash": "w1EcWGy5gDu20Q-hOc6_pJ8a2LzGyMnzxxNQC-oc_ow"
 }
 
 </pre><a href="#section-6.2-4" class="pilcrow">¶</a>
@@ -2797,7 +2799,7 @@ details.<a href="#section-8.3-4.1" class="pilcrow">¶</a>
 <ol start="1" type="1" class="compact type-1" id="section-8.3-4.3.2.2.2">
 <li id="section-8.3-4.3.2.2.2.1">If a Key Binding JWT is not provided, the Verifier MUST reject the Presentation.<a href="#section-8.3-4.3.2.2.2.1" class="pilcrow">¶</a>
 </li>
-                  <li id="section-8.3-4.3.2.2.2.2">Determine the public key for the Holder from the SD-JWT.<a href="#section-8.3-4.3.2.2.2.2" class="pilcrow">¶</a>
+                  <li id="section-8.3-4.3.2.2.2.2">Determine the public key for the Holder from the SD-JWT (see <a href="#holder_public_key_claim" class="auto internal xref">Section 5.1.2</a>).<a href="#section-8.3-4.3.2.2.2.2" class="pilcrow">¶</a>
 </li>
                   <li id="section-8.3-4.3.2.2.2.3">Ensure that a signing algorithm was used that was deemed secure for the application. Refer to <span>[<a href="#RFC8725" class="cite xref">RFC8725</a>]</span>, Sections 3.1 and 3.2 for details. The <code>none</code> algorithm MUST NOT be accepted.<a href="#section-8.3-4.3.2.2.2.3" class="pilcrow">¶</a>
 </li>
@@ -2861,8 +2863,8 @@ a JWS JSON serialized SD-JWT from an Issuer with all the respective Disclosures.
     Aic2hhLTI1NiJ9",
   "protected":
     "eyJhbGciOiAiRVMyNTYiLCAidHlwIjogImV4YW1wbGUrc2Qtand0In0",
-  "signature": "pzHqHLclwQ4rBCWJfiS23vp9QxGBYZ2DqtjBUfBO7oxgqu4HRK84
-    0t5-I2kv0TnSqBajP5dFiKiBX2QGLuivhQ",
+  "signature": "ntu1Mwi0HcW9MJ3a2xTFfYR9qmyoAE2LvBSCsie7LvNGpTABpQiR
+    8vkjqEByo_Ga4DLDXBmCV3w4xOOncCvwYQ",
   "disclosures": [
     "WyIyR0xDNDJzS1F2ZUNmR2ZyeU5STjl3IiwgInN1YiIsICJqb2huX2RvZV80MiJ
       d",
@@ -2900,8 +2902,8 @@ has selected to disclose <code>given_name</code>, <code>family_name</code>, and 
     Aic2hhLTI1NiJ9",
   "protected":
     "eyJhbGciOiAiRVMyNTYiLCAidHlwIjogImV4YW1wbGUrc2Qtand0In0",
-  "signature": "pzHqHLclwQ4rBCWJfiS23vp9QxGBYZ2DqtjBUfBO7oxgqu4HRK84
-    0t5-I2kv0TnSqBajP5dFiKiBX2QGLuivhQ",
+  "signature": "ntu1Mwi0HcW9MJ3a2xTFfYR9qmyoAE2LvBSCsie7LvNGpTABpQiR
+    8vkjqEByo_Ga4DLDXBmCV3w4xOOncCvwYQ",
   "disclosures": [
     "WyI2SWo3dE0tYTVpVlBHYm9TNXRtdlZBIiwgImZhbWlseV9uYW1lIiwgIkRvZSJ
       d",
@@ -3652,6 +3654,10 @@ the media type is encoded as an SD-JWT.<a href="#section-14.3-1" class="pilcrow"
         <dd>
 <span class="refAuthor">Jones, M.</span>, <span class="refAuthor">Bradley, J.</span>, and <span class="refAuthor">N. Sakimura</span>, <span class="refTitle">"JSON Web Token (JWT)"</span>, <span class="seriesInfo">RFC 7519</span>, <span class="seriesInfo">DOI 10.17487/RFC7519</span>, <time datetime="2015-05" class="refDate">May 2015</time>, <span>&lt;<a href="https://www.rfc-editor.org/info/rfc7519">https://www.rfc-editor.org/info/rfc7519</a>&gt;</span>. </dd>
 <dd class="break"></dd>
+<dt id="RFC7800">[RFC7800]</dt>
+        <dd>
+<span class="refAuthor">Jones, M.</span>, <span class="refAuthor">Bradley, J.</span>, and <span class="refAuthor">H. Tschofenig</span>, <span class="refTitle">"Proof-of-Possession Key Semantics for JSON Web Tokens (JWTs)"</span>, <span class="seriesInfo">RFC 7800</span>, <span class="seriesInfo">DOI 10.17487/RFC7800</span>, <time datetime="2016-04" class="refDate">April 2016</time>, <span>&lt;<a href="https://www.rfc-editor.org/info/rfc7800">https://www.rfc-editor.org/info/rfc7800</a>&gt;</span>. </dd>
+<dd class="break"></dd>
 <dt id="RFC8174">[RFC8174]</dt>
         <dd>
 <span class="refAuthor">Leiba, B.</span>, <span class="refTitle">"Ambiguity of Uppercase vs Lowercase in RFC 2119 Key Words"</span>, <span class="seriesInfo">BCP 14</span>, <span class="seriesInfo">RFC 8174</span>, <span class="seriesInfo">DOI 10.17487/RFC8174</span>, <time datetime="2017-05" class="refDate">May 2017</time>, <span>&lt;<a href="https://www.rfc-editor.org/info/rfc8174">https://www.rfc-editor.org/info/rfc8174</a>&gt;</span>. </dd>
@@ -3718,10 +3724,6 @@ the media type is encoded as an SD-JWT.<a href="#section-14.3-1" class="pilcrow"
 <dt id="RFC7517">[RFC7517]</dt>
         <dd>
 <span class="refAuthor">Jones, M.</span>, <span class="refTitle">"JSON Web Key (JWK)"</span>, <span class="seriesInfo">RFC 7517</span>, <span class="seriesInfo">DOI 10.17487/RFC7517</span>, <time datetime="2015-05" class="refDate">May 2015</time>, <span>&lt;<a href="https://www.rfc-editor.org/info/rfc7517">https://www.rfc-editor.org/info/rfc7517</a>&gt;</span>. </dd>
-<dd class="break"></dd>
-<dt id="RFC7800">[RFC7800]</dt>
-        <dd>
-<span class="refAuthor">Jones, M.</span>, <span class="refAuthor">Bradley, J.</span>, and <span class="refAuthor">H. Tschofenig</span>, <span class="refTitle">"Proof-of-Possession Key Semantics for JSON Web Tokens (JWTs)"</span>, <span class="seriesInfo">RFC 7800</span>, <span class="seriesInfo">DOI 10.17487/RFC7800</span>, <time datetime="2016-04" class="refDate">April 2016</time>, <span>&lt;<a href="https://www.rfc-editor.org/info/rfc7800">https://www.rfc-editor.org/info/rfc7800</a>&gt;</span>. </dd>
 <dd class="break"></dd>
 <dt id="RFC8725">[RFC8725]</dt>
         <dd>
@@ -3971,8 +3973,8 @@ WUpISVo4VnUtZjlDQ3lWdWIyVWZnRWs4anZ2WGV6d0sxcF9KbmVlWFEiLCAiZ2xUM2hy
 U1U3ZlNXZ3dGNVVEWm1Xd0JUdzMyZ25VbGRJaGk4aEdWQ2FWNCIsICJydkpkNmlxNlQ1
 ZWptc0JNb0d3dU5YaDlxQUFGQVRBY2k0MG9pZEVlVnNBIiwgInVOSG9XWWhYc1poVkpD
 TkUyRHF5LXpxdDd0NjlnSkt5NVFhRnY3R3JNWDQiXX0sICJfc2RfYWxnIjogInNoYS0y
-NTYifQ.uG-TpSAEZRywXciIX9fpTg6UoUIvFe2NAuhBTCpgLFGkIovsCPi9PXJKlcw5E
-67lkOFOMDyV1xf-EdwEH7b-uw~WyJHMDJOU3JRZmpGWFE3SW8wOXN5YWpBIiwgInJlZ2
+NTYifQ.k54UN8oU3HaLewGa43ToFn4lDuoGqHu3e2W15yOUdMTerLO4ngWJD8UdQyTeL
+dgPWO2211tvPcnzYNv1TJ7myA~WyJHMDJOU3JRZmpGWFE3SW8wOXN5YWpBIiwgInJlZ2
 lvbiIsICJcdTZlMmZcdTUzM2EiXQ~WyJsa2x4RjVqTVlsR1RQVW92TU5JdkNBIiwgImN
 vdW50cnkiLCAiSlAiXQ~
 
@@ -4310,8 +4312,8 @@ ZFJtc01vIiwgIldOQS1VTks3Rl96aHNBYjlzeVdPNklJUTF1SGxUbU9VOHI4Q3ZKMGNJ
 TWsiLCAiV3hoX3NWM2lSSDliZ3JUQkppLWFZSE5DTHQtdmpoWDFzZC1pZ09mXzlsayIs
 ICJfTy13SmlIM2VuU0I0Uk9IbnRUb1FUOEptTHR6LW1oTzJmMWM4OVhvZXJRIiwgImh2
 RFhod21HY0pRc0JDQTJPdGp1TEFjd0FNcERzYVUwbmtvdmNLT3FXTkUiXX19LCAiX3Nk
-X2FsZyI6ICJzaGEtMjU2In0.wQA52fRbiJ-xc3gTIdx7pDn7_gdR9Th-e-V74KZVGzqw
-9fWrzVXgx1pthjG7O5bdPG0AkSQZeuWAyj1n9P8Qjw~WyIyR0xDNDJzS1F2ZUNmR2Zye
+X2FsZyI6ICJzaGEtMjU2In0.xCE_pmU1uri7Nqwf4psXD1cjM8r4MbMxHBsFwN4LsJp4
+jyVlKefgueZc6R7n6asUQdOSuFr42iueTWFzU0IIpA~WyIyR0xDNDJzS1F2ZUNmR2Zye
 U5STjl3IiwgInRpbWUiLCAiMjAxMi0wNC0yM1QxODoyNVoiXQ~WyJQYzMzSk0yTGNoY1
 VfbEhnZ3ZfdWZRIiwgeyJfc2QiOiBbIjl3cGpWUFd1RDdQSzBuc1FETDhCMDZsbWRnVj
 NMVnliaEh5ZFFwVE55TEkiLCAiRzVFbmhPQU9vVTlYXzZRTU52ekZYanBFQV9SYy1BRX
@@ -4412,8 +4414,8 @@ gInZjdCI6ICJQZXJzb25JZGVudGlmaWNhdGlvbkRhdGEiLCAiX3NkX2FsZyI6ICJzaGE
 tMjU2IiwgImNuZiI6IHsiandrIjogeyJrdHkiOiAiRUMiLCAiY3J2IjogIlAtMjU2Iiw
 gIngiOiAiVENBRVIxOVp2dTNPSEY0ajRXNHZmU1ZvSElQMUlMaWxEbHM3dkNlR2VtYyI
 sICJ5IjogIlp4amlXV2JaTVFHSFZXS1ZRNGhiU0lpcnNWZnVlY0NFNnQ0alQ5RjJIWlE
-ifX19.Qo92w40L9CKamXk4Lk36Vhoz8PbWQdJj9GbYSOI0xs8j4eByVtrVk8QqagqRfN
-o1jbCzNltPGKFyvehGDTh5Dg~WyIyR0xDNDJzS1F2ZUNmR2ZyeU5STjl3IiwgImZpcnN
+ifX19.0mjkgNSP3WbcEAxZO3ccT0jCnJif9rol8hgwx9UqzGP6bGDTulRRQRglavnecZ
+YyzHRosRysF3CLSQZ5CzBvsQ~WyIyR0xDNDJzS1F2ZUNmR2ZyeU5STjl3IiwgImZpcnN
 0X25hbWUiLCAiRXJpa2EiXQ~WyJlbHVWNU9nM2dTTklJOEVZbnN4QV9BIiwgImZhbWls
 eV9uYW1lIiwgIk11c3Rlcm1hbm4iXQ~WyI2SWo3dE0tYTVpVlBHYm9TNXRtdlZBIiwgI
 kRFIl0~WyJlSThaV205UW5LUHBOUGVOZW5IZGhRIiwgIm5hdGlvbmFsaXRpZXMiLCBbe
@@ -4604,16 +4606,16 @@ gInZjdCI6ICJQZXJzb25JZGVudGlmaWNhdGlvbkRhdGEiLCAiX3NkX2FsZyI6ICJzaGE
 tMjU2IiwgImNuZiI6IHsiandrIjogeyJrdHkiOiAiRUMiLCAiY3J2IjogIlAtMjU2Iiw
 gIngiOiAiVENBRVIxOVp2dTNPSEY0ajRXNHZmU1ZvSElQMUlMaWxEbHM3dkNlR2VtYyI
 sICJ5IjogIlp4amlXV2JaTVFHSFZXS1ZRNGhiU0lpcnNWZnVlY0NFNnQ0alQ5RjJIWlE
-ifX19.Qo92w40L9CKamXk4Lk36Vhoz8PbWQdJj9GbYSOI0xs8j4eByVtrVk8QqagqRfN
-o1jbCzNltPGKFyvehGDTh5Dg~WyJHMDJOU3JRZmpGWFE3SW8wOXN5YWpBIiwgImlzX29
+ifX19.0mjkgNSP3WbcEAxZO3ccT0jCnJif9rol8hgwx9UqzGP6bGDTulRRQRglavnecZ
+YyzHRosRysF3CLSQZ5CzBvsQ~WyJHMDJOU3JRZmpGWFE3SW8wOXN5YWpBIiwgImlzX29
 2ZXJfMTgiLCB0cnVlXQ~WyJlSThaV205UW5LUHBOUGVOZW5IZGhRIiwgIm5hdGlvbmFs
 aXRpZXMiLCBbeyIuLi4iOiAiSnVMMzJRWER6aXpsLUw2Q0xyZnhmanBac1gzTzZ2c2Zw
 Q1ZkMWprd0pZZyJ9XV0~WyI2SWo3dE0tYTVpVlBHYm9TNXRtdlZBIiwgIkRFIl0~eyJh
 bGciOiAiRVMyNTYiLCAidHlwIjogImtiK2p3dCJ9.eyJub25jZSI6ICIxMjM0NTY3ODk
 wIiwgImF1ZCI6ICJodHRwczovL3ZlcmlmaWVyLmV4YW1wbGUub3JnIiwgImlhdCI6IDE
-3MDI2OTQ2NTgsICJzZF9oYXNoIjogIkRMZmFtQ0M4a21aVXNPdFZhRjJzZ0dhZ0ZUWUl
-6OWpaSkFtcDR2ZDJCT1UifQ.oZCKPL7Lq9Kx4KQb8xcB6127wOCBoCDxyT-Cc1r4CLcM
-17O7zUGHowxnsLZfvmBjJ7q9lh4JarBuKYpqae9eGQ
+3MDI5Mzk4MzMsICJzZF9oYXNoIjogImt4QnNPbzBKTkQ5WmJKdElsbWVtMnN6MWZOcGt
+zRnRSWEt0U3FaZFZvcUEifQ.RO_46WDGgJhXosqVf1xCjZ3aZw8GkYUNMo7yrXPF493o
+gyVyV8G3lE-qv9Li5WRHk-jvMWtBp6ZFYw979ViP-g
 
 </pre><a href="#appendix-A.3-31" class="pilcrow">¶</a>
 </div>
@@ -4622,8 +4624,8 @@ wIiwgImF1ZCI6ICJodHRwczovL3ZlcmlmaWVyLmV4YW1wbGUub3JnIiwgImlhdCI6IDE
 <pre>{
   "nonce": "1234567890",
   "aud": "https://verifier.example.org",
-  "iat": 1702694658,
-  "sd_hash": "DLfamCC8kmZUsOtVaF2sgGagFTYIz9jZJAmp4vd2BOU"
+  "iat": 1702939833,
+  "sd_hash": "kxBsOo0JND9ZbJtIlmem2sz1fNpksFtRXKtSqZdVoqA"
 }
 
 </pre><a href="#appendix-A.3-33" class="pilcrow">¶</a>
@@ -4734,8 +4736,8 @@ VmFjY2luZVJlY2lwaWVudCJ9LCAidHlwZSI6ICJWYWNjaW5hdGlvbkV2ZW50In0sICJf
 c2RfYWxnIjogInNoYS0yNTYiLCAiY25mIjogeyJqd2siOiB7Imt0eSI6ICJFQyIsICJj
 cnYiOiAiUC0yNTYiLCAieCI6ICJUQ0FFUjE5WnZ1M09IRjRqNFc0dmZTVm9ISVAxSUxp
 bERsczd2Q2VHZW1jIiwgInkiOiAiWnhqaVdXYlpNUUdIVldLVlE0aGJTSWlyc1ZmdWVj
-Q0U2dDRqVDlGMkhaUSJ9fX0.ykJxvBMiEU6xbPbV2IeBK50QvYa8a2bXGF2mJKlCwroX
-F_jho7Whx_mfWf2Oc2I22m3rZ8oQHjvPVcNd932ADw~WyIyR0xDNDJzS1F2ZUNmR2Zye
+Q0U2dDRqVDlGMkhaUSJ9fX0.gPVf2e_MdNABnVYvt2aAa_DBgRAzay7czOOECEj2yDUN
+LccE0c8FJfqN7S_9Y0ZPJ3-V38yRXZa0bZLn1coMkQ~WyIyR0xDNDJzS1F2ZUNmR2Zye
 U5STjl3IiwgImF0Y0NvZGUiLCAiSjA3QlgwMyJd~WyJlbHVWNU9nM2dTTklJOEVZbnN4
 QV9BIiwgIm1lZGljaW5hbFByb2R1Y3ROYW1lIiwgIkNPVklELTE5IFZhY2NpbmUgTW9k
 ZXJuYSJd~WyI2SWo3dE0tYTVpVlBHYm9TNXRtdlZBIiwgIm1hcmtldGluZ0F1dGhvcml
@@ -5017,18 +5019,18 @@ VmFjY2luZVJlY2lwaWVudCJ9LCAidHlwZSI6ICJWYWNjaW5hdGlvbkV2ZW50In0sICJf
 c2RfYWxnIjogInNoYS0yNTYiLCAiY25mIjogeyJqd2siOiB7Imt0eSI6ICJFQyIsICJj
 cnYiOiAiUC0yNTYiLCAieCI6ICJUQ0FFUjE5WnZ1M09IRjRqNFc0dmZTVm9ISVAxSUxp
 bERsczd2Q2VHZW1jIiwgInkiOiAiWnhqaVdXYlpNUUdIVldLVlE0aGJTSWlyc1ZmdWVj
-Q0U2dDRqVDlGMkhaUSJ9fX0.ykJxvBMiEU6xbPbV2IeBK50QvYa8a2bXGF2mJKlCwroX
-F_jho7Whx_mfWf2Oc2I22m3rZ8oQHjvPVcNd932ADw~WyJQYzMzSk0yTGNoY1VfbEhnZ
+Q0U2dDRqVDlGMkhaUSJ9fX0.gPVf2e_MdNABnVYvt2aAa_DBgRAzay7czOOECEj2yDUN
+LccE0c8FJfqN7S_9Y0ZPJ3-V38yRXZa0bZLn1coMkQ~WyJQYzMzSk0yTGNoY1VfbEhnZ
 3ZfdWZRIiwgIm9yZGVyIiwgIjMvMyJd~WyJBSngtMDk1VlBycFR0TjRRTU9xUk9BIiwg
 ImRhdGVPZlZhY2NpbmF0aW9uIiwgIjIwMjEtMDYtMjNUMTM6NDA6MTJaIl0~WyIyR0xD
 NDJzS1F2ZUNmR2ZyeU5STjl3IiwgImF0Y0NvZGUiLCAiSjA3QlgwMyJd~WyJlbHVWNU9
 nM2dTTklJOEVZbnN4QV9BIiwgIm1lZGljaW5hbFByb2R1Y3ROYW1lIiwgIkNPVklELTE
 5IFZhY2NpbmUgTW9kZXJuYSJd~eyJhbGciOiAiRVMyNTYiLCAidHlwIjogImtiK2p3dC
 J9.eyJub25jZSI6ICIxMjM0NTY3ODkwIiwgImF1ZCI6ICJodHRwczovL3ZlcmlmaWVyL
-mV4YW1wbGUub3JnIiwgImlhdCI6IDE3MDI2OTQ2NTgsICJzZF9oYXNoIjogIlRfNDZWM
-mVEUGM4UEYtRFpJNnIxdVIzdXFwY2FDOFZCakdRM0lNaTJOb2cifQ.3UqvUb-gJ27C98
-5l2z4ccKwvgB84qGNyP5MU0aogPkCntjE4I9tUf1Vw9xHbvHudmtwWVZfKFZX2eLMrVp
-nEew
+mV4YW1wbGUub3JnIiwgImlhdCI6IDE3MDI5Mzk4MzMsICJzZF9oYXNoIjogInNESWdYR
+WRBUzE5N1U0a3BQMTlXX0s2c1JybmVsMTdEWG9hNlFSV2ljLWMifQ.kLf4bN1Fth63Vf
+_KTB6qgHtFvULIox52eiYNK5FoF3yVQQ38nV6dsUcawPzTVqeZHPBf4Iek9B5hEg3xPg
+KbLw
 
 </pre><a href="#appendix-A.4-39" class="pilcrow">¶</a>
 </div>
@@ -5208,7 +5210,9 @@ data. The original JSON data is then used by the application. See
 <ul class="compact">
 <li class="compact" id="appendix-C-3.1">Make RFCs 0020 and 7515 normative references<a href="#appendix-C-3.1" class="pilcrow">¶</a>
 </li>
-        <li class="compact" id="appendix-C-3.2">Editorial changes aimed at improved clarity<a href="#appendix-C-3.2" class="pilcrow">¶</a>
+        <li class="compact" id="appendix-C-3.2">Be a bit more prescriptive in suggesting RFC7800 cnf/jwk be used to convey the Key Binding key<a href="#appendix-C-3.2" class="pilcrow">¶</a>
+</li>
+        <li class="compact" id="appendix-C-3.3">Editorial changes aimed at improved clarity<a href="#appendix-C-3.3" class="pilcrow">¶</a>
 </li>
       </ul>
 <p id="appendix-C-4">-07<a href="#appendix-C-4" class="pilcrow">¶</a></p>
