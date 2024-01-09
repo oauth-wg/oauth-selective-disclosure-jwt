@@ -346,7 +346,7 @@ minimum length of the salt, and choice of a hash algorithm.
 If the Issuer wants to enable Key Binding, it includes a public key
 associated with the Holder, or a reference thereto.
 The `jwk` member of the `cnf` claim as defined in Section 3.2 of [@!RFC7800] is
-RECOMMENDED for doing so, however, other means MAY be used.
+suggested for doing so, however, other means can be used.
 
 It is out of the scope of this document to describe how the Holder key pair is
 established. For example, the Holder MAY create a key pair and provide a public key to the Issuer,
