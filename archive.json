@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2024-01-07T00:59:14.985866+00:00",
+  "timestamp": "2024-01-09T00:55:12.513358+00:00",
   "repo": "oauth-wg/oauth-selective-disclosure-jwt",
   "labels": [
     {
@@ -40666,13 +40666,13 @@
       "labels": [],
       "body": "which can be found at #389 ",
       "createdAt": "2023-12-12T22:17:32Z",
-      "updatedAt": "2023-12-22T14:36:42Z",
+      "updatedAt": "2024-01-08T20:37:46Z",
       "baseRepository": "oauth-wg/oauth-selective-disclosure-jwt",
       "baseRefName": "master",
-      "baseRefOid": "bc5da6bf899130574ed9866913831d5c3d7429e4",
+      "baseRefOid": "091f42f8003c45c22eda005f286be6a86b6e9a30",
       "headRepository": "oauth-wg/oauth-selective-disclosure-jwt",
       "headRefName": "yasskin-asking",
-      "headRefOid": "4442c3a06767498ee24154024d8dff987325b08f",
+      "headRefOid": "dc14f007fcb680aca236631d263c836702f9dac8",
       "closedAt": null,
       "mergedAt": null,
       "mergedBy": null,
@@ -40731,6 +40731,59 @@
               "body": "I believe this is a useful area to provide a little more guidance that was previously lacking. ",
               "createdAt": "2023-12-22T14:36:42Z",
               "updatedAt": "2023-12-22T14:36:42Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOHTmVzM5r3BDl",
+          "commit": {
+            "abbreviatedOid": "4442c3a"
+          },
+          "author": "danielfett",
+          "authorAssociation": "MEMBER",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2024-01-08T16:41:14Z",
+          "updatedAt": "2024-01-08T16:41:14Z",
+          "comments": [
+            {
+              "originalPosition": 112,
+              "body": "This looks like it needs more indentation.",
+              "createdAt": "2024-01-08T16:41:14Z",
+              "updatedAt": "2024-01-08T16:41:14Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOHTmVzM5r3BLE",
+          "commit": {
+            "abbreviatedOid": "dc14f00"
+          },
+          "author": "danielfett",
+          "authorAssociation": "MEMBER",
+          "state": "APPROVED",
+          "body": "Thanks for creating the PR!",
+          "createdAt": "2024-01-08T16:41:28Z",
+          "updatedAt": "2024-01-08T20:37:46Z",
+          "comments": []
+        },
+        {
+          "id": "PRR_kwDOHTmVzM5r3GiM",
+          "commit": {
+            "abbreviatedOid": "4442c3a"
+          },
+          "author": "bc-pi",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2024-01-08T16:53:18Z",
+          "updatedAt": "2024-01-08T16:53:19Z",
+          "comments": [
+            {
+              "originalPosition": 112,
+              "body": "The resultant output is okay https://drafts.oauth.net/oauth-selective-disclosure-jwt/yasskin-asking/draft-ietf-oauth-selective-disclosure-jwt.html#name-document-history ",
+              "createdAt": "2024-01-08T16:53:19Z",
+              "updatedAt": "2024-01-08T16:53:19Z"
             }
           ]
         }
