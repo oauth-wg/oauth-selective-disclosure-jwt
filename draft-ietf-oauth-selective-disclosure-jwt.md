@@ -1180,9 +1180,9 @@ Verifier can easily link the user's transactions. However, when the user only
 discloses a birthdate to one Verifier and a postal code to another Verifier, the two Verifiers should not be able to determine that they were interacting with the same user.
 
 Issuer/Verifier unlinkability with a colluding or compromised Verifier cannot be
-achieved in salted-hash based approaches to credentials, such as SD-JWT, as the
-issued credential is directly forwarded to the Verifier, who can forward it to
-the malicious Issuer.
+achieved in salted-hash based selective disclosure approaches, such as SD-JWT, as the
+issued credential with the Issuer's signature is directly forwarded to the Verifier, who can forward it to
+the Issuer.
 
 Contrary to that, Issuer/Verifier unlinkability with an honest Verifier can generally be achieved.
 However, a callback from the Verifier to the Issuer, such as a revocation check, could potentially
