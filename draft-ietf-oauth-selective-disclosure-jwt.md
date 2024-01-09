@@ -1149,7 +1149,7 @@ Decoy digests increase the size of the SD-JWT. The number of decoy digests (or w
 
 Unlinkability is a property whereby adversaries are prevented from correlating
 credential presentations of the same user beyond the user's consent.
-Otherwise, an adversary might be able to learn more about the user than the user
+Without unlinkability, an adversary might be able to learn more about the user than the user
 intended to disclose, for example:
 
  * Cooperating Verifiers might want to track users across services to build
@@ -1186,7 +1186,7 @@ the malicious Issuer.
 
 Contrary to that, Issuer/Verifier unlinkability with an honest Verifier can generally be achieved.
 However, a callback from the Verifier to the Issuer, such as a revocation check, could potentially
-disclose information about the credential's usage to the Verifier. Therefore, such callbacks
+disclose information about the credential's usage to the Issuer. Therefore, such callbacks
 SHOULD be avoided. Where they are unavoidable, they MUST be executed in a manner that
 preserves privacy and does not disclose details about the credential to the Issuer. It is
 important to note that the timing of such requests could potentially serve as a side-channel.
