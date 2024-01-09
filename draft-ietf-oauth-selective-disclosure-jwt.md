@@ -1167,7 +1167,7 @@ The following types of unlinkability are considered here:
    learn that they have received presentations from the same user.
  * Issuer/Verifier Unlinkability (Honest Verifier): An Issuer of a credential
    should not be able to know that a user presented the credential to a certain
-   Verifier that is behaving according to protocol.
+   Verifier that is not behaving maliciously.
  * Issuer/Verifier Unlinkability (Colluding/Compromised Verifier): An Issuer of a
    credential should not be able to tell that a user presented the credential to
    a certain Verifier, even if the Verifier colludes with the Issuer or becomes
