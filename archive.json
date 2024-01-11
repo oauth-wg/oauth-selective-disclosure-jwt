@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2024-01-09T00:55:12.513358+00:00",
+  "timestamp": "2024-01-11T00:55:30.350042+00:00",
   "repo": "oauth-wg/oauth-selective-disclosure-jwt",
   "labels": [
     {
@@ -8516,17 +8516,18 @@
       "id": "I_kwDOHTmVzM5uCHsJ",
       "title": "HMAC Issuer-signed JWT and/or KB-JWT",
       "url": "https://github.com/oauth-wg/oauth-selective-disclosure-jwt/issues/328",
-      "state": "OPEN",
+      "state": "CLOSED",
       "author": "Sakurann",
       "authorAssociation": "COLLABORATOR",
       "assignees": [],
       "labels": [
+        "duplicate",
         "discuss-first"
       ],
       "body": "[filing on behalf, not my issue]\r\nA request has been received via work in ISO to enable an option to HMAC KB JWT to enable non-repudiation.",
       "createdAt": "2023-08-11T00:29:20Z",
-      "updatedAt": "2023-11-07T18:27:20Z",
-      "closedAt": null,
+      "updatedAt": "2024-01-09T17:29:09Z",
+      "closedAt": "2024-01-09T17:29:09Z",
       "comments": [
         {
           "author": "bc-pi",
@@ -8555,6 +8556,13 @@
           "body": "reopening to have some tracking of the potential variation on this issue of having the Issuer-signed JWT to be HMAC'd",
           "createdAt": "2023-11-07T15:44:11Z",
           "updatedAt": "2023-11-07T15:44:11Z"
+        },
+        {
+          "author": "bc-pi",
+          "authorAssociation": "COLLABORATOR",
+          "body": "Closing this as it is effectively a duplicate of #369",
+          "createdAt": "2024-01-09T17:29:09Z",
+          "updatedAt": "2024-01-09T17:29:09Z"
         }
       ]
     },
@@ -9373,7 +9381,7 @@
       "labels": [],
       "body": "Currently the spec says:\r\n> It MUST NOT use none or an identifier for a symmetric algorithm (MAC).\r\n\r\nTo support KB-JWTs using HS256, for example after using DH key agreement, we should allow symmetric algorithms.",
       "createdAt": "2023-11-07T15:25:28Z",
-      "updatedAt": "2023-12-11T17:38:54Z",
+      "updatedAt": "2024-01-09T17:28:26Z",
       "closedAt": null,
       "comments": [
         {
@@ -9480,6 +9488,13 @@
           "body": "Allowing for HMAC'd KB-JWT doesn't seem unreasonable but I don't think defining the whole DH & KDF dance is appropriate at the level of this draft. So appropriate scoping and detail might be tricky. But I think it'd have to be similar to the treatment of nonce and aud in the KB-JWT now (which say \"How this value is obtained is up to the protocol used and out of scope of this specification\" and \"How the value is represented is up to the protocol used and out of scope of this specification\" respectively). ",
           "createdAt": "2023-11-07T20:26:14Z",
           "updatedAt": "2023-11-07T21:29:30Z"
+        },
+        {
+          "author": "danielfett",
+          "authorAssociation": "MEMBER",
+          "body": "Regarding the question whether we want to allow HMACs for the Issuer-signed part of the KB-JWT: For our use case, only the HMAC for the Issuer-signed part is critical. The KB-JWT can remain as-is with an asymmetric key, as a throwaway asymmetric key can be used for it.\r\n\r\n(There may be other use cases though.)",
+          "createdAt": "2024-01-09T17:28:25Z",
+          "updatedAt": "2024-01-09T17:28:25Z"
         }
       ]
     },
@@ -38427,13 +38442,13 @@
       "labels": [],
       "body": "Addresses Issue #342 \r\n\r\nInstead of just adding text re the key binding keys, I rewrote the whole section, as the previous one was more of a placeholder.",
       "createdAt": "2023-10-17T15:21:29Z",
-      "updatedAt": "2023-12-21T23:27:12Z",
+      "updatedAt": "2024-01-09T17:03:31Z",
       "baseRepository": "oauth-wg/oauth-selective-disclosure-jwt",
       "baseRefName": "master",
       "baseRefOid": "bc5da6bf899130574ed9866913831d5c3d7429e4",
       "headRepository": "oauth-wg/oauth-selective-disclosure-jwt",
       "headRefName": "danielfett/fix-342-batch-key-correllation",
-      "headRefOid": "5c22e9fce096fd0d3df9083fe0ddc65533656b64",
+      "headRefOid": "bf228ac9ea0208d630d504568e95bb753b69c72f",
       "closedAt": null,
       "mergedAt": null,
       "mergedBy": null,
@@ -39303,6 +39318,46 @@
               "body": "```suggestion\r\nContrary to that, Issuer/Verifier unlinkability with an honest Verifier can generally be achieved.\r\nHowever, a callback from the Verifier to the Issuer, such as a revocation check, could potentially\r\ndisclose information about the credential's usage to the Issuer. Therefore, such callbacks\r\nSHOULD be avoided. Where they are unavoidable, they MUST be executed in a manner that\r\npreserves privacy and does not disclose details about the credential to the Issuer. It is\r\nimportant to note that the timing of such requests could potentially serve as a side-channel.\r\n```",
               "createdAt": "2023-12-21T23:24:55Z",
               "updatedAt": "2023-12-21T23:27:12Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOHTmVzM5r-r3K",
+          "commit": {
+            "abbreviatedOid": "e79074d"
+          },
+          "author": "danielfett",
+          "authorAssociation": "MEMBER",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2024-01-09T16:57:37Z",
+          "updatedAt": "2024-01-09T16:57:37Z",
+          "comments": [
+            {
+              "originalPosition": 33,
+              "body": "```suggestion\r\n * Issuer/Verifier Unlinkability (Honest Verifier): An Issuer of a credential\r\n   should not be able to know that a user presented the credential to a certain\r\n   Verifier that is not behaving maliciously.\r\n```",
+              "createdAt": "2024-01-09T16:57:37Z",
+              "updatedAt": "2024-01-09T16:57:37Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOHTmVzM5r-szo",
+          "commit": {
+            "abbreviatedOid": "eeb902e"
+          },
+          "author": "danielfett",
+          "authorAssociation": "MEMBER",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2024-01-09T16:59:26Z",
+          "updatedAt": "2024-01-09T16:59:26Z",
+          "comments": [
+            {
+              "originalPosition": 48,
+              "body": "```suggestion\r\nIssuer/Verifier unlinkability with a colluding or compromised Verifier cannot be\r\nachieved in salted-hash based selective disclosure approaches, such as SD-JWT, as the\r\nissued credential with the Issuer's signature is directly forwarded to the Verifier, who can forward it to\r\nthe Issuer.\r\n```",
+              "createdAt": "2024-01-09T16:59:26Z",
+              "updatedAt": "2024-01-09T17:01:19Z"
             }
           ]
         }
@@ -40666,13 +40721,13 @@
       "labels": [],
       "body": "which can be found at #389 ",
       "createdAt": "2023-12-12T22:17:32Z",
-      "updatedAt": "2024-01-08T20:37:46Z",
+      "updatedAt": "2024-01-09T17:55:46Z",
       "baseRepository": "oauth-wg/oauth-selective-disclosure-jwt",
       "baseRefName": "master",
       "baseRefOid": "091f42f8003c45c22eda005f286be6a86b6e9a30",
       "headRepository": "oauth-wg/oauth-selective-disclosure-jwt",
       "headRefName": "yasskin-asking",
-      "headRefOid": "dc14f007fcb680aca236631d263c836702f9dac8",
+      "headRefOid": "11c2b68c8ab01fee93a986e549726d6834904b94",
       "closedAt": null,
       "mergedAt": null,
       "mergedBy": null,
@@ -40784,6 +40839,66 @@
               "body": "The resultant output is okay https://drafts.oauth.net/oauth-selective-disclosure-jwt/yasskin-asking/draft-ietf-oauth-selective-disclosure-jwt.html#name-document-history ",
               "createdAt": "2024-01-08T16:53:19Z",
               "updatedAt": "2024-01-08T16:53:19Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOHTmVzM5r-iFU",
+          "commit": {
+            "abbreviatedOid": "dc14f00"
+          },
+          "author": "danielfett",
+          "authorAssociation": "MEMBER",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2024-01-09T16:37:45Z",
+          "updatedAt": "2024-01-09T16:37:45Z",
+          "comments": [
+            {
+              "originalPosition": 112,
+              "body": "I didn't expect that, but in that case this is not an issue, thanks!",
+              "createdAt": "2024-01-09T16:37:45Z",
+              "updatedAt": "2024-01-09T16:37:45Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOHTmVzM5r-moe",
+          "commit": {
+            "abbreviatedOid": "dc14f00"
+          },
+          "author": "bc-pi",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2024-01-09T16:46:51Z",
+          "updatedAt": "2024-01-09T16:46:51Z",
+          "comments": [
+            {
+              "originalPosition": 5,
+              "body": "```suggestion\r\nThe `jwk` member of the `cnf` claim as defined in Section 3.2 of [@!RFC7800] is\r\nsuggested for doing so, however, other means can be used.\r\n```",
+              "createdAt": "2024-01-09T16:46:51Z",
+              "updatedAt": "2024-01-09T16:46:51Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOHTmVzM5r_G6j",
+          "commit": {
+            "abbreviatedOid": "a474e2b"
+          },
+          "author": "bc-pi",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2024-01-09T17:55:46Z",
+          "updatedAt": "2024-01-09T17:55:46Z",
+          "comments": [
+            {
+              "originalPosition": 5,
+              "body": "The text with that guidance has been changed to not use rfc2119 uppercase key words. ",
+              "createdAt": "2024-01-09T17:55:46Z",
+              "updatedAt": "2024-01-09T17:55:46Z"
             }
           ]
         }
