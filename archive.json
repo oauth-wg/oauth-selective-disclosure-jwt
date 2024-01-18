@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2024-01-16T00:55:07.110077+00:00",
+  "timestamp": "2024-01-18T00:54:47.250775+00:00",
   "repo": "oauth-wg/oauth-selective-disclosure-jwt",
   "labels": [
     {
@@ -9381,7 +9381,7 @@
       "labels": [],
       "body": "Currently the spec says:\r\n> It MUST NOT use none or an identifier for a symmetric algorithm (MAC).\r\n\r\nTo support KB-JWTs using HS256, for example after using DH key agreement, we should allow symmetric algorithms.",
       "createdAt": "2023-11-07T15:25:28Z",
-      "updatedAt": "2024-01-09T17:28:26Z",
+      "updatedAt": "2024-01-17T12:33:29Z",
       "closedAt": null,
       "comments": [
         {
@@ -9495,6 +9495,27 @@
           "body": "Regarding the question whether we want to allow HMACs for the Issuer-signed part of the KB-JWT: For our use case, only the HMAC for the Issuer-signed part is critical. The KB-JWT can remain as-is with an asymmetric key, as a throwaway asymmetric key can be used for it.\r\n\r\n(There may be other use cases though.)",
           "createdAt": "2024-01-09T17:28:25Z",
           "updatedAt": "2024-01-09T17:28:25Z"
+        },
+        {
+          "author": "paulbastian",
+          "authorAssociation": "NONE",
+          "body": "Related: https://paulbastian.github.io/jose-ecdh-mac-algorithms/draft-bastian-jose-alg-ecdh-mac.html\r\nThis mechanism may work for both SD-JWT and KB-JWT",
+          "createdAt": "2024-01-17T10:35:14Z",
+          "updatedAt": "2024-01-17T10:35:14Z"
+        },
+        {
+          "author": "awoie",
+          "authorAssociation": "NONE",
+          "body": "SD-JWT currently says:\r\n> It MUST NOT use none or an identifier for a symmetric algorithm (MAC)\r\n\r\n@paulbastian Does this mean your new ecdh algorithm is now allowed by SD-JWT?",
+          "createdAt": "2024-01-17T12:13:21Z",
+          "updatedAt": "2024-01-17T12:14:31Z"
+        },
+        {
+          "author": "paulbastian",
+          "authorAssociation": "NONE",
+          "body": "Actually, now that you say it, a spec change may not be needed as the draft defines a new alg",
+          "createdAt": "2024-01-17T12:33:28Z",
+          "updatedAt": "2024-01-17T12:33:28Z"
         }
       ]
     },
