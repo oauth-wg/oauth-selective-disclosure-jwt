@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2024-01-18T00:54:47.250775+00:00",
+  "timestamp": "2024-01-21T00:59:42.484943+00:00",
   "repo": "oauth-wg/oauth-selective-disclosure-jwt",
   "labels": [
     {
@@ -9381,7 +9381,7 @@
       "labels": [],
       "body": "Currently the spec says:\r\n> It MUST NOT use none or an identifier for a symmetric algorithm (MAC).\r\n\r\nTo support KB-JWTs using HS256, for example after using DH key agreement, we should allow symmetric algorithms.",
       "createdAt": "2023-11-07T15:25:28Z",
-      "updatedAt": "2024-01-17T12:33:29Z",
+      "updatedAt": "2024-01-20T10:13:39Z",
       "closedAt": null,
       "comments": [
         {
@@ -9516,6 +9516,20 @@
           "body": "Actually, now that you say it, a spec change may not be needed as the draft defines a new alg",
           "createdAt": "2024-01-17T12:33:28Z",
           "updatedAt": "2024-01-17T12:33:28Z"
+        },
+        {
+          "author": "bc-pi",
+          "authorAssociation": "COLLABORATOR",
+          "body": "> https://paulbastian.github.io/jose-ecdh-mac-algorithms/draft-bastian-jose-alg-ecdh-mac.html \r\n\r\ninteresting work @paulbastian! I might humbly suggest that you revisit how the header parameters are used to better align with how they are already defined in JWS. Specifically, I think the standard JWS headers https://www.rfc-editor.org/rfc/rfc7515#section-4.1 like kid/x5c/x5t/etc should be for indicating the key of the Generating Party, which is really like the signer in this case. And a new header be defined to convey the Verifying Party's key. What's in draft-bastian-jose-alg-ecdh-mac-01 currently feels kinda backwards from what JWS has. And the Generating Party's key is probably not going to be ephemeral in most cases so epk doesn't seem quite right. ",
+          "createdAt": "2024-01-19T22:10:08Z",
+          "updatedAt": "2024-01-19T22:10:08Z"
+        },
+        {
+          "author": "paulbastian",
+          "authorAssociation": "NONE",
+          "body": "> > https://paulbastian.github.io/jose-ecdh-mac-algorithms/draft-bastian-jose-alg-ecdh-mac.html \n> \n> interesting work @paulbastian! I might humbly suggest that you revisit how the header parameters are used to better align with how they are already defined in JWS. Specifically, I think the standard JWS headers https://www.rfc-editor.org/rfc/rfc7515#section-4.1 like kid/x5c/x5t/etc should be for indicating the key of the Generating Party, which is really like the signer in this case. And a new header be defined to convey the Verifying Party's key. What's in draft-bastian-jose-alg-ecdh-mac-01 currently feels kinda backwards from what JWS has. And the Generating Party's key is probably not going to be ephemeral in most cases so epk doesn't seem quite right. \n\nThanks for the feedback @bc-pi \nThe header names were the part that I was least sure about, I oriented on the ECDH-ES part of JWA. But I don't mind changing them, feel free to open an issue on the repo!",
+          "createdAt": "2024-01-20T10:13:38Z",
+          "updatedAt": "2024-01-20T10:13:38Z"
         }
       ]
     },
