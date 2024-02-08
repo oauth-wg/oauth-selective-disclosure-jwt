@@ -104,8 +104,9 @@ values not disclosed in the Disclosures.
 
 For SD-JWTs where the issuer has specified an associated public key for the
 Holder (e.g., using the `cnf` claim [@?RFC7800]), this document also defines a
-format for Fnords.  By sending a Fnord to a Verifier, the Holder can prove to
-the verifier that they hold the private key associated to the SD-JWT.
+format for SD-JWTs with Key Binding (SD-JWT-KB).  By sending an SD-JWT-KB to a
+Verifier, the Holder can prove to the verifier that they hold the private key
+associated to the SD-JWT.
 
 SD-JWT can be used with any JSON-based representation of claims, including JSON-LD.
 
@@ -130,7 +131,7 @@ This specification defines two primary data formats:
   - An alternate format extending the JWS JSON Serialization, also allowing for
     transport of the Issuer-signed JWT and disclosure data
 
-* Fnord: A format for proving posssion of a private key bound to an SD-JWT
+* SD-JWT-KB: A format for proving posssion of a private key bound to an SD-JWT
   - A facility for associating a JWT to a key pair
   - A format for a Key Binding JWT that proves possession of the private key of
     the associated key pair
@@ -174,7 +175,7 @@ Key Binding JWT (KB-JWT):
    said to "cover" a particular SD-JWT if its payload includes a hash of the
    in its `sd_hash` claim.
 
-Fnord:
+Selectively Disclosable JWT with Key Binding (SD-JWT-KB):
 : A composite structure, comprising an SD-JWT and a Key Binding JWT covering the SD-JWT.
 
 Issuer:
@@ -207,7 +208,7 @@ Verifier:
                  |
            Presents SD-JWT
     including selected Disclosures,
-       or Fnord covering SD-JWT
+     or SD-JWT-KB covering SD-JWT
                  |
                  v
            +-------------+
@@ -243,8 +244,8 @@ Key Binding is an optional feature. When Key Binding is required by the use-case
 
 Note: How the public key is included in SD-JWT is out of scope of this document. It can be passed by value or by reference.
 
-When a Verifier requires Key Binding, the Holder presents a Fnord covering the
-relevant SD-JWT.  The Fnord encodes the SD-JWT as well as a Key Binding JWT.
+When a Verifier requires Key Binding, the Holder presents an SD-JWT-KB covering the
+relevant SD-JWT.  The SD-JWT-KB encodes the SD-JWT as well as a Key Binding JWT.
 The Key Binding JWT encodes a signature by the Holder's private key over:
 
 * A hash of the SD-JWT
@@ -257,21 +258,21 @@ Details of the format of Key Binding JWTs are described in (#kb-jwt).
 
 At a high level, the Verifier
 
- * receives either an SD-JWT or a Fnord from the Holder
- * verifies the signature on the SD-JWT (or the the SD-JWT inside the Fnord) using the Issuer's public key,
- * verifies the signature on the KB-JWT using the public key included in the SD-JWT, if a Fnord was provided and the Verifier's policy requries Key Binding
+ * receives either an SD-JWT or an SD-JWT-KB from the Holder
+ * verifies the signature on the SD-JWT (or the the SD-JWT inside the SD-JWT-KB) using the Issuer's public key,
+ * verifies the signature on the KB-JWT using the public key included in the SD-JWT, if an SD-JWT-KB was provided and the Verifier's policy requries Key Binding
  * calculates the digests over the Holder-Selected Disclosures and verifies that each digest is contained in the SD-JWT.
 
 The detailed algorithm is described in (#verifier_verification).
 
-# SD-JWT and Fnord Data Formats {#data_formats}
+# SD-JWT and SD-JWT-KB Data Formats {#data_formats}
 
 An SD-JWT is composed of:
 
 * an Issuer-signed JWT, and
 * zero or more Disclosures.
 
-A Fnord is composed of:
+An SD-JWT-KB is composed of:
 
 * An SD-JWT
 * A Key Binding JWT
@@ -291,7 +292,7 @@ and lastly the optional Key Binding JWT.
 In the case that there is no Key Binding JWT, the last element MUST be an empty
 string and the last separating tilde character MUST NOT be omitted.
 
-The serialized format for a Fnord extends the SD-JWT format by concatenating a Key Binding JWT.
+The serialized format for an SD-JWT-KB extends the SD-JWT format by concatenating a Key Binding JWT.
 
 ```
 <Issuer-signed JWT>~<Disclosure 1>~<Disclosure 2>~...~<Disclosure N>~<KB-JWT>
@@ -299,7 +300,7 @@ The serialized format for a Fnord extends the SD-JWT format by concatenating a K
 
 The two formats can be distinguished by the final `~` character that is present
 on an SD-JWT.  A Verifier that expects an SD-JWT MUST verify that its final
-`~`-separated component is empty.  A Verifier that expects a Fnord MUST verify
+`~`-separated component is empty.  A Verifier that expects an SD-JWT-KB MUST verify
 that its final `~`-separated component is a valid KB-JWT.
 
 The Disclosures are linked to the Issuer-signed JWT through the
@@ -325,10 +326,10 @@ An SD-JWT without Disclosures and without a KB-JWT:
 An SD-JWT with Disclosures and without a KB-JWT:
 <Issuer-signed JWT>~<Disclosure 1>~<Disclosure N>~
 
-A Fnord covering an SD-JWT without Disclosures:
+An SD-JWT-KB covering an SD-JWT without Disclosures:
 <Issuer-signed JWT>~<KB-JWT>
 
-A Fnord covering an SD-JWT with Disclosures:
+An SD-JWT-KB covering an SD-JWT with Disclosures:
 <Issuer-signed JWT>~<Disclosure 1>~<Disclosure N>~<KB-JWT>
 ```
 
@@ -659,7 +660,7 @@ The issued SD-JWT might look as follows:
 
 ## Presentation
 
-The following non-normative example shows a Fnord as
+The following non-normative example shows an SD-JWT-KB as
 it would be sent from the Holder to the Verifier. Note that it consists of six
 `~`-separated parts, with the Issuer-signed JWT as shown above in the beginning,
 four Disclosures (for the claims `given_name`, `family_name`, `address`, and
@@ -672,8 +673,8 @@ The following Key Binding JWT payload was created and signed for this presentati
 <{{examples/simple/kb_jwt_payload.json}}
 
 If the Verifier did not require Key Binding, then the Holder could have
-presented the SD-JWT from (#issuance) directly, instead of encapsulating it in a
-Fnord.
+presented the SD-JWT from (#issuance) directly, instead of encapsulating it in
+an SD-JWT-KB.
 
 # Considerations on Nested Data in SD-JWTs {#nested_data}
 
@@ -779,8 +780,8 @@ It is up to the Holder how to maintain the mapping between the Disclosures and t
 
 ## Processing by the Holder  {#holder_verification}
 
-The Issuer MUST provide the Holder and SD-JWT, not a Fnord.  If the Holder
-receives a Fnord from the Issuer, it SHOULD be rejected.
+The Issuer MUST provide the Holder and SD-JWT, not an SD-JWT-KB.  If the Holder
+receives an SD-JWT-KB from the Issuer, it SHOULD be rejected.
 
 For presentation to a Verifier, the Holder MUST perform the following (or equivalent) steps:
 
@@ -788,15 +789,15 @@ For presentation to a Verifier, the Holder MUST perform the following (or equiva
  2. Assemble the SD-JWT, including the Issuer-signed JWT and the selected Disclosures (see (#data_formats) for the format).
  3. If Key Binding is not required, send the SD-JWT to the Verifier.
  4. Create a Key Binding JWT covering the SD-JWT.
- 5. Assemble the Fnord, including the SD-JWT and the Key Binding JWT.
- 6. Send the Fnord to the Verifier.
+ 5. Assemble the SD-JWT-KB, including the SD-JWT and the Key Binding JWT.
+ 6. Send the SD-JWT-KB to the Verifier.
 
 ## Verification by the Verifier  {#verifier_verification}
 
 Upon receiving a presentation from a Holder, in the form of either an SD-JWT or
-a Fnord, in addition to the checks outlined in (#sd_jwt_verification), Verifiers MUST ensure that
+an SD-JWT-KB, in addition to the checks outlined in (#sd_jwt_verification), Verifiers MUST ensure that
 
- * if Key Binding is required, then the Holder has provided a Fnord, and the Key
+ * if Key Binding is required, then the Holder has provided an SD-JWT-KB, and the Key
    Binding is signed by the Holder and valid.
 
 To this end, Verifiers MUST follow the following steps (or equivalent):
@@ -806,7 +807,7 @@ To this end, Verifiers MUST follow the following steps (or equivalent):
    a Key Binding JWT is provided by the Holder or not. Refer to (#key_binding_security) for
    details.
 2. If Key Binding is required and the Holder has provided an SD-JWT, the Verifier MUST reject the presentation.
-2. If the Holder has provided a Fnord, parse it into an SD-JWT and a Key Binding JWT.
+2. If the Holder has provided an SD-JWT-KB, parse it into an SD-JWT and a Key Binding JWT.
 3. Process the SD-JWT as defined in (#sd_jwt_verification).
 4. If Key Binding is required:
     1. If Key Binding is provided by means not defined in this specification, verify the Key Binding according to the method used.
@@ -1023,15 +1024,15 @@ decisions based on data that can be influenced by an attacker or that
 can be misinterpreted. For this reason, when deciding whether Key
 Binding is required or not, Verifiers MUST NOT take into account:
 
- * whether the Holder has provided a Fnord or a bare SD-JWT, since otherwise a
-   attacker could strip the KB-JWT from a Fnord and present the resulting
+ * whether the Holder has provided an SD-JWT-KB or a bare SD-JWT, since otherwise a
+   attacker could strip the KB-JWT from an SD-JWT-KB and present the resulting
    SD-JWT, or
  * whether Key Binding data is present in the SD-JWT or not, as the
    Issuer might have added the key to the SD-JWT in a format/claim that
    is not recognized by the Verifier.
 
 If a Verifier determines that Key Binding is required for a
-particular use case and the Holder presents either a bare SD-JWT or a Fnord with
+particular use case and the Holder presents either a bare SD-JWT or an SD-JWT-KB with
 an invalid Key Binding JWT, then the Verifier MUST reject the presentation, as
 described in (#verifier_verification).
 
@@ -1101,18 +1102,18 @@ when presenting to a downstream party.
 In some scenarios this behavior could be desirable,
 but if it is not, Issuers need to support and Verifiers need to enforce Key Binding.
 
-## Malleability of SD-JWTs and Fnords
+## Malleability of SD-JWTs and SD-JWT-KBs
 
 An SD-JWT is malleable, in the sense that it can be modified by adding or
 removing Disclosures and still be valid.  The signature over the Issuer-signed
 JWT assures the authenticity only of the hashes of the selectively-disclosable
 claims, not any specific set of Disclosures.
 
-A Fnord is not malleable.  The signature in the Key Binding JWT covers a
+An SD-JWT-KB is not malleable.  The signature in the Key Binding JWT covers a
 specific SD-JWT, with a specific Issuer-signed JWT and a specific set of
 Disclosures.  Thus, the signature on the Key Binding JWT, in addition to proving
 Key Binding, also assures the authenticity and integrity of the set of
-Disclosures the Holder disclosed.  The set of Disclosures in a Fnord is the set
+Disclosures the Holder disclosed.  The set of Disclosures in an SD-JWT-KB is the set
 that the Holder intended to send; no intermediate party has added, removed, or
 modified the list of Disclosures.
 
@@ -1302,7 +1303,7 @@ IANA "JSON Web Token Claims" registry [@IANA.JWT] established by [@!RFC7519].
 <br/>
 
 *  Claim Name: `sd_hash`
-*  Claim Description: Digest of the SD-JWT covered by a Fnord
+*  Claim Description: Digest of the SD-JWT covered by an SD-JWT-KB
 *  Change Controller: IETF
 *  Specification Document(s):  [[ (#kb-jwt) of this specification ]]
 
@@ -1336,13 +1337,13 @@ To indicate that the content is an SD-JWT:
 * Provisional registration?  No
 
 <br/>
-To indicate that the content is a Fnord:
+To indicate that the content is an SD-JWT-KB:
 
 * Type name: application
-* Subtype name: fnord
+* Subtype name: sd-jwt-kb
 * Required parameters: n/a
 * Optional parameters: n/a
-* Encoding considerations: binary; application/fnord values are a series of base64url-encoded values (some of which may be the empty string) separated by period ('.') or tilde ('~') characters.
+* Encoding considerations: binary; application/sd-jwt-kb values are a series of base64url-encoded values (some of which may be the empty string) separated by period ('.') or tilde ('~') characters.
 * Security considerations: See the Security Considerations section of [[ this specification ]], [@!RFC7519], and [@RFC8725].
 * Interoperability considerations: n/a
 * Published specification: [[ this specification ]]
@@ -1625,7 +1626,7 @@ The following Disclosures are created by the Issuer:
 
 {{examples/arf-pid/disclosures.md}}
 
-The following is how a Fnord over an SD-JWT that discloses only nationality and the fact that the person is over 18 years old could look like:
+The following is how an SD-JWT-KB over an SD-JWT that discloses only nationality and the fact that the person is over 18 years old could look like:
 
 <{{examples/arf-pid/sd_jwt_presentation.txt}}
 
@@ -1661,7 +1662,7 @@ The following Disclosures are created by the Issuer:
 
 {{examples/jsonld/disclosures.md}}
 
-The following is how a Fnord over an SD-JWT that discloses only `type`, `medicinalProductName`, `atcCode` of the vaccine, `type` of the `recipient`, `type`, `order` and `dateOfVaccination` could look like:
+The following is how an SD-JWT-KB over an SD-JWT that discloses only `type`, `medicinalProductName`, `atcCode` of the vaccine, `type` of the `recipient`, `type`, `order` and `dateOfVaccination` could look like:
 
 <{{examples/jsonld/sd_jwt_presentation.txt}}
 
