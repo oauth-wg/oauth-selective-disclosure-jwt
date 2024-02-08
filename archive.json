@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2024-02-06T00:51:01.497595+00:00",
+  "timestamp": "2024-02-08T00:50:51.501056+00:00",
   "repo": "oauth-wg/oauth-selective-disclosure-jwt",
   "labels": [
     {
@@ -6339,7 +6339,7 @@
       "url": "https://github.com/oauth-wg/oauth-selective-disclosure-jwt/issues/242",
       "state": "CLOSED",
       "author": "panva",
-      "authorAssociation": "NONE",
+      "authorAssociation": "MEMBER",
       "assignees": [],
       "labels": [],
       "body": "When decoys are used (_sd members not corresponding to a disclosure are added) the [Processing by the Holder](https://datatracker.ietf.org/doc/html/draft-ietf-oauth-selective-disclosure-jwt-03#section-6.1-2.3) says to\r\n\r\n> If any of the digests cannot be found, the Holder MUST reject the SD-JWT.\r\n\r\nI imagine this is not intended and the holder should ignore missing disclosures instead?\r\n\r\nSame in [Verification by the Verifier](https://datatracker.ietf.org/doc/html/draft-ietf-oauth-selective-disclosure-jwt-03#section-6.2-4.5.2.2.2.2.2.1)\r\n\r\n> Find the Disclosure referenced by the digests. If no such Disclosure can be found, the Verifier MUST reject the presentation.",
@@ -6349,7 +6349,7 @@
       "comments": [
         {
           "author": "panva",
-          "authorAssociation": "NONE",
+          "authorAssociation": "MEMBER",
           "body": "Actually the following in [Verification by the Verifier](https://datatracker.ietf.org/doc/html/draft-ietf-oauth-selective-disclosure-jwt-03#section-6.2-4.5.2.2.2.2.2.1) doesn't make sense to me at all since the whole point is to selectively not release disclosures.\r\n\r\n> If no such Disclosure can be found, the Verifier MUST reject the presentation.",
           "createdAt": "2023-03-28T13:13:18Z",
           "updatedAt": "2023-03-28T13:13:18Z"
@@ -9118,12 +9118,10 @@
       "author": "rohan-wire",
       "authorAssociation": "NONE",
       "assignees": [],
-      "labels": [
-        "pending-close"
-      ],
+      "labels": [],
       "body": "Hi,\r\nCurrently an array which holds the salt and an unblinded claim has different forms depending on whether is contains array or non-array values. Nested disclosures require potentially different combinations of disclosures.\r\n\r\nInstead, what if there was only exactly one location for the `_sd` claim array (usually at the root of the document), and the disclosure array always had the following always consistent form:\r\n\r\n- salt\r\n- claim path from the location of the parent of the `_sd` claim of the JWT\r\n- value\r\n\r\nFor example:\r\n[\"r0mhd7LctwDCTXF_YfvV0g\", [\"family_name\"], \"M\u00f6bius\"]\r\n[\"uKp1B0jI2Ezmuo8EaNRG2Q\", [\"nationalities\",\"...\"], \"FR\"]\r\n[\"CTCthBCyHMuDlXF9qtY6TA\", [\"address\",\"postcode\"], \"EC1\"]\r\n\r\nWhere `family_name` is a peer to the _sd claim array portion of the JWT,\r\n`nationalities` is to `_sd`, and \"...\" indicates this is one value in the array, and\r\n`postcode` is an element inside `address`, which is a peer to `_sd`.",
       "createdAt": "2023-10-23T23:51:38Z",
-      "updatedAt": "2023-11-27T20:17:12Z",
+      "updatedAt": "2024-02-07T16:50:49Z",
       "closedAt": "2023-11-27T19:48:45Z",
       "comments": [
         {
@@ -27884,7 +27882,7 @@
             "abbreviatedOid": "088a60c"
           },
           "author": "panva",
-          "authorAssociation": "NONE",
+          "authorAssociation": "MEMBER",
           "state": "APPROVED",
           "body": "",
           "createdAt": "2023-04-03T07:37:19Z",
