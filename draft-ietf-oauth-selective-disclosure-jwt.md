@@ -345,13 +345,15 @@ minimum length of the salt, and choice of a hash algorithm.
 
 If the Issuer wants to enable Key Binding, it includes a public key
 associated with the Holder, or a reference thereto.
+The `jwk` member of the `cnf` claim as defined in Section 3.2 of [@!RFC7800] is
+suggested for doing so, however, other means can be used.
 
 It is out of the scope of this document to describe how the Holder key pair is
 established. For example, the Holder MAY create a key pair and provide a public key to the Issuer,
 the Issuer MAY create the key pair for the Holder, or
 Holder and Issuer MAY use pre-established key material.
 
-Note: The examples in this document use the `cnf` claim defined in [@RFC7800] to include
+Note: The examples throughout this document use the `cnf` claim to include
 the raw public key by value in SD-JWT.
 
 ## Disclosures {#creating_disclosures}
@@ -366,10 +368,10 @@ For each claim that is an object property and that is to be made selectively dis
 
  * Create an array of three elements in this order:
    1. A salt value. MUST be a string. See (#salt-entropy) and (#salt_minlength) for security considerations. It is RECOMMENDED to base64url-encode minimum 128 bits of cryptographically secure random data, producing a string. The salt value MUST be unique for each claim that is to be selectively disclosed. The Issuer MUST NOT disclose the salt value to any party other than the Holder.
-   2. The claim name, or key, as it would be used in a regular JWT payload. The value MUST be a string. The value MUST NOT be `_sd`, `...`, or a claim name existing in the object as a non-selectively disclosable claim.
+   2. The claim name, or key, as it would be used in a regular JWT payload. It MUST be a string and MUST NOT be `_sd`, `...`, or a claim name existing in the object as a non-selectively disclosable claim.
    3. The claim value, as it would be used in a regular JWT payload. The value MAY be of any type that is allowed in JSON, including numbers, strings, booleans, arrays, and objects.
  * JSON-encode the array, producing an UTF-8 string.
- * base64url-encode the byte representation of the UTF-8 string, producing a US-ASCII [@RFC0020] string. This string is the Disclosure.
+ * base64url-encode the byte representation of the UTF-8 string, producing a US-ASCII [@!RFC0020] string. This string is the Disclosure.
 
 The order is decided based on the readability considerations: salts would have a
 constant length within the SD-JWT, claim names would be around the same length
@@ -687,7 +689,7 @@ The Issuer creates Disclosures first for the sub-claims and then includes their 
 
 ## Verification of the SD-JWT {#sd_jwt_verification}
 
-Upon receiving an SD-JWT, a Holder or a Verifier MUST ensure that
+Upon receiving an SD-JWT, a Holder or a Verifier needs to ensure that
 
  * the Issuer-signed JWT is valid, i.e., it is signed by the Issuer and the signature is valid, and
  * all Disclosures are valid and correspond to a respective digest value in the Issuer-signed JWT (directly in the payload or recursively included in other Disclosures).
@@ -698,9 +700,9 @@ an SD-JWT:
 1. Separate the SD-JWT into the Issuer-signed JWT, the Disclosures (if any), and the Key Binding JWT (if present).
 2. Validate the Issuer-signed JWT:
     1. Ensure that a signing algorithm was used that was deemed secure for the application. Refer to [@RFC8725], Sections 3.1 and 3.2 for details. The `none` algorithm MUST NOT be accepted.
-    2. Validate the signature over the Issuer-signed JWT.
+    2. Validate the signature over the Issuer-signed JWT per Section 5.2 of [@!RFC7515].
     3. Validate the Issuer and that the signing key belongs to this Issuer.
-    5. Check that the `_sd_alg` claim value is understood and the hash algorithm is deemed secure.
+    5. Check that the `_sd_alg` claim value is understood and the hash algorithm is deemed secure (see (#hash_function_claim)).
 3. Process the Disclosures and embedded digests in the Issuer-signed JWT as follows:
     1. For each Disclosure provided:
         1. Calculate the digest over the base64url-encoded string as described in (#hashing_disclosures).
@@ -737,13 +739,13 @@ If a Key Binding JWT is received by a Holder, the SD-JWT SHOULD be rejected.
 For presentation to a Verifier, the Holder MUST perform the following (or equivalent) steps:
 
  1. Decide which Disclosures to release to the Verifier, obtaining proper End-User consent if necessary.
- 2. Assemble the SD-JWT for presentation, including the Issuer-signed JWT and the selected Disclosures.
- 3. If Key Binding is required, create a Key Binding JWT and add it to the SD-JWT for presentation.
+ 2. Assemble the SD-JWT for presentation, including the Issuer-signed JWT and the selected Disclosures (see (#data_formats) for the format).
+ 3. If Key Binding is required, create a Key Binding JWT ((#kb-jwt)) and add it to the SD-JWT for presentation.
  4. Send the SD-JWT for presentation to the Verifier.
 
 ## Verification by the Verifier  {#verifier_verification}
 
-Upon receiving a Presentation, in addition to the checks outlined in (#sd_jwt_verification), Verifiers MUST ensure that
+Upon receiving a Presentation, in addition to the checks outlined in (#sd_jwt_verification), Verifiers need to ensure that
 
  * if Key Binding is required, the Key Binding JWT is signed by the Holder and valid.
 
@@ -758,14 +760,14 @@ To this end, Verifiers MUST follow the following steps (or equivalent):
     1. If Key Binding is provided by means not defined in this specification, verify the Key Binding according to the method used.
     2. Otherwise, verify the Key Binding JWT as follows:
         1. If a Key Binding JWT is not provided, the Verifier MUST reject the Presentation.
-        2. Determine the public key for the Holder from the SD-JWT.
+        2. Determine the public key for the Holder from the SD-JWT (see (#holder_public_key_claim)).
         3. Ensure that a signing algorithm was used that was deemed secure for the application. Refer to [@RFC8725], Sections 3.1 and 3.2 for details. The `none` algorithm MUST NOT be accepted.
-        4. Validate the signature over the Key Binding JWT.
-        5. Check that the `typ` of the Key Binding JWT is `kb+jwt`.
+        4. Validate the signature over the Key Binding JWT per Section 5.2 of [@!RFC7515].
+        5. Check that the `typ` of the Key Binding JWT is `kb+jwt` (see (#kb-jwt)).
         6. Check that the creation time of the Key Binding JWT, as determined by the `iat` claim, is within an acceptable window.
         7. Determine that the Key Binding JWT is bound to the current transaction and was created for this Verifier (replay protection) by validating `nonce` and `aud` claims.
         8. Calculate the digest over the Issuer-signed JWT and Disclosures as defined in (#integrity-protection-of-the-presentation) and verify that it matches the value of the `sd_hash` claim in the Key Binding JWT.
-        9. Check that the Key Binding JWT is valid in all other respects, per [@!RFC7519] and [@!RFC8725].
+        9. Check that the Key Binding JWT is a valid JWT in all other respects, per [@!RFC7519] and [@!RFC8725].
 
 If any step fails, the Presentation is not valid and processing MUST be aborted.
 
@@ -1183,6 +1185,7 @@ Fabian Hauck,
 Filip Skokan,
 Giuseppe De Marco,
 Jacob Ward,
+Jeffrey Yasskin,
 John Mattsson,
 Justin Richer,
 Kushal Das,
@@ -1282,7 +1285,7 @@ To indicate that the content is a JWS JSON serialized SD-JWT:
 * Required parameters: n/a
 * Optional parameters: n/a
 * Encoding considerations: binary; application/sd-jwt+json values are represented as a JSON Object; UTF-8 encoding SHOULD be employed for the JSON object.
-* Security considerations: See the Security Considerations section of [[ this specification ]], and [@RFC7515].
+* Security considerations: See the Security Considerations section of [[ this specification ]], and [@!RFC7515].
 * Interoperability considerations: n/a
 * Published specification: [[ this specification ]]
 * Applications that use this media type: TBD
@@ -1708,6 +1711,13 @@ data. The original JSON data is then used by the application. See
 # Document History
 
    [[ To be removed from the final specification ]]
+
+   -08
+
+* Make RFCs 0020 and 7515 normative references
+* Be a bit more prescriptive in suggesting RFC7800 cnf/jwk be used to convey the Key Binding key
+* Editorial changes aimed at improved clarity
+
 
    -07
 
