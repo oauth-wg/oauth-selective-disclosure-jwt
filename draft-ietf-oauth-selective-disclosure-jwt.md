@@ -1181,7 +1181,7 @@ discloses a birthdate to one Verifier and a postal code to another Verifier, the
 
 Issuer/Verifier unlinkability with a colluding or compromised Verifier cannot be
 achieved in salted-hash based selective disclosure approaches, such as SD-JWT, as the
-issued credential with the Issuer's signature is directly forwarded to the Verifier, who can forward it to
+issued credential with the Issuer's signature is directly presented to the Verifier, who can forward it to
 the Issuer.
 
 Contrary to that, Issuer/Verifier unlinkability with an honest Verifier can generally be achieved.
