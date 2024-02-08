@@ -1186,8 +1186,8 @@ the Issuer.
 
 Contrary to that, Issuer/Verifier unlinkability with an honest Verifier can generally be achieved.
 However, a callback from the Verifier to the Issuer, such as a revocation check, could potentially
-disclose information about the credential's usage to the Issuer. Therefore, such callbacks
-SHOULD be avoided. Where they are unavoidable, they MUST be executed in a manner that
+disclose information about the credential's usage to the Issuer.
+Where such callbacks are necessary, they MUST be executed in a manner that
 preserves privacy and does not disclose details about the credential to the Issuer. It is
 important to note that the timing of such requests could potentially serve as a side-channel.
 
