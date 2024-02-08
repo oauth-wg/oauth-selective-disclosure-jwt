@@ -1163,8 +1163,10 @@ intended to disclose, for example:
 
 The following types of unlinkability are considered here:
 
+ * Presentation Unlinkability: A Verifier should not be able to link two
+   presentations of the same credential.
  * Verifier/Verifier Unlinkability: Two colluding Verifiers should not be able to
-   learn that they have received presentations from the same user.
+   learn that they have received presentations of the same credential.
  * Issuer/Verifier Unlinkability (Honest Verifier): An Issuer of a credential
    should not be able to know that a user presented the credential to a certain
    Verifier that is not behaving maliciously.
