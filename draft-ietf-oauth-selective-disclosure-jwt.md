@@ -580,7 +580,7 @@ The Key Binding JWT MUST contain the following elements:
     * `nonce`: REQUIRED. Ensures the freshness of the signature. The value type of this claim MUST be a string. How this value is obtained is up to the protocol used and out of scope of this specification.
     * `sd_hash`: REQUIRED. The base64url-encoded hash digest over the Issuer-signed JWT and the selected Disclosures as defined below.
 
-### Binding to an SD-JWT {#binding-to-an-sd-jwt}
+### Binding to an SD-JWT {#integrity-protection-of-the-presentation}
 
 The hash value in `sd_hash` binds the KB-JWT to the specific SD-JWT that it
 covers.  The `sd_hash` value MUST be taken over the US-ASCII bytes of the
