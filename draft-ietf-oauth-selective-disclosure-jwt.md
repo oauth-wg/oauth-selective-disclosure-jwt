@@ -207,8 +207,7 @@ Verifier:
            +------------+
                  |
            Presents SD-JWT
-    including selected Disclosures,
-     or SD-JWT-KB covering SD-JWT
+    including selected Disclosures
                  |
                  v
            +-------------+
