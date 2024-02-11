@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2024-02-08T00:50:51.501056+00:00",
+  "timestamp": "2024-02-11T00:55:11.657402+00:00",
   "repo": "oauth-wg/oauth-selective-disclosure-jwt",
   "labels": [
     {
@@ -9910,15 +9910,15 @@
       "id": "I_kwDOHTmVzM52qH2w",
       "title": "Make SD-JWT(0) and JWT the same",
       "url": "https://github.com/oauth-wg/oauth-selective-disclosure-jwt/issues/375",
-      "state": "OPEN",
+      "state": "CLOSED",
       "author": "bifurcation",
       "authorAssociation": "NONE",
       "assignees": [],
       "labels": [],
       "body": "An SD-JWT with zero disclosures and no key binding is the same as a JWT -- you can't undo any of the selective disclosures, so you have to take the claims as they are.  But with the current document, the two cases are syntactically different: SD-JWT(0) has a `~` character at the end, and a plain JWT doesn't.\r\n\r\nThis mismatch is unfortunate for a couple of reasons.  It means that if you're taking one of these objects between SD-aware and non-SD-aware contexts, you have to have a mapping layer that adds and removes the `~`.  And it makes it impossible to use the key binding feature as-is with a plain JWT, because the key binding feature assumes that the thing being bound ends with the `~` separator.\r\n\r\nI would suggest refactoring as follows:\r\n\r\n1. Define the format of the \"SD-JWT without key binding\" thing to be simply `IssuerJWT~disclosure~...~disclosure` (no final `~`)\r\n2. Define the format of an [SD-]JWT with key binding to be `JWT~KBJWT` (with the intermediate `~`, which is absent today)\r\n\r\nThis aligns well with the distinction proposed in #374.\r\n\r\n\r\n",
       "createdAt": "2023-11-13T14:17:40Z",
-      "updatedAt": "2023-11-21T16:59:35Z",
-      "closedAt": null,
+      "updatedAt": "2024-02-08T20:21:05Z",
+      "closedAt": "2024-02-08T17:50:36Z",
       "comments": [
         {
           "author": "bc-pi",
@@ -9940,6 +9940,20 @@
           "body": "For the first case, I think distinguishing an SD-JWT without disclosures and KB-JWT (`JWT~`) from a pure JWT (`JWT`) is an important feature: It allows a receiver to always unambiguously distinguish the two cases and tell which processing is required. (It's a bad idea to put an SD-JWT into a JWT processor as it may contain SD-JWT specific structures that should be removed before further processing.)\r\n\r\nFor case three, having the last `~` enables us to distinguish between a presentation with a KB-JWT and a presentation without a KB-JWT without introspecting the last element.",
           "createdAt": "2023-11-21T16:59:35Z",
           "updatedAt": "2023-11-21T16:59:35Z"
+        },
+        {
+          "author": "Sakurann",
+          "authorAssociation": "COLLABORATOR",
+          "body": "It does not make sense to always mandating disclosing something, or always mandating KB JWT, so `SD-JWT without selective disclosure and without KB JWT` is simply a unique case of SD-JWT, so `SD-JWT~` makes more sense and as Daniel argues, what came out of and is intended to be consumed by SD-JWT library, it is better from a developer perspective to have `~` and not be consumable by a vanilla JWT library.",
+          "createdAt": "2024-02-08T17:50:36Z",
+          "updatedAt": "2024-02-08T17:50:36Z"
+        },
+        {
+          "author": "bifurcation",
+          "authorAssociation": "NONE",
+          "body": "@Sakurann I'm a little puzzled that you think the extra `~` is better for developer experience.  An SD-JWT without disclosures is literally just a JWT where some of the claims have nonsense values.\r\n\r\nBut I guess you could argue that that's a reason that an SD-JWT(0) should still not be processed by a vanilla JWT library -- because an SD-JWT will recognize the SD claim values as nonsense, as opposed to trying to interpret them. \r\n\r\nUnder that theory, I'm OK with closing this.",
+          "createdAt": "2024-02-08T20:21:04Z",
+          "updatedAt": "2024-02-08T20:21:04Z"
         }
       ]
     },
@@ -10163,7 +10177,7 @@
       "id": "I_kwDOHTmVzM54eyZt",
       "title": "Review of verification algorithms",
       "url": "https://github.com/oauth-wg/oauth-selective-disclosure-jwt/issues/389",
-      "state": "OPEN",
+      "state": "CLOSED",
       "author": "jyasskin",
       "authorAssociation": "NONE",
       "assignees": [
@@ -10174,8 +10188,8 @@
       ],
       "body": "While reviewing https://github.com/w3c/vc-jose-cose/pull/190, I had to understand some of the SD-JWT verification algorithms. I noticed some issues, which I've listed here. I haven't filed individual issues yet because I'm not sure how you'll want to group them. Thanks to @OR13 for doing a first pass; any remaining mistakes are probably because I didn't take his advice.\r\n\r\n\r\n## [5.1. ](https://www.ietf.org/archive/id/draft-ietf-oauth-selective-disclosure-jwt-06.html#section-5.1)[Issuer-signed JWT Payload](https://www.ietf.org/archive/id/draft-ietf-oauth-selective-disclosure-jwt-06.html#name-issuer-signed-jwt-payload)\r\n\r\n- [x] This should follow https://www.rfc-editor.org/rfc/rfc7515.html#section-7 by specifying \"what serialization and serialization features are used\". I see that 1.1. Feature Summary mentions the compact serialization, but that doesn't clearly say that this embedded JWT uses it.\r\n\r\n## [5.2.1. ](https://www.ietf.org/archive/id/draft-ietf-oauth-selective-disclosure-jwt-06.html#section-5.2.1)[Disclosures for Object Properties](https://www.ietf.org/archive/id/draft-ietf-oauth-selective-disclosure-jwt-06.html#name-disclosures-for-object-prop)\r\n\r\n- [x] \"The claim name, or key, as it would be used in a regular JWT payload. The value MUST be a string.\" <- I assume the \"value\" is the key, and not the key's value in the JSON object?\r\n- [x] Why is 128 bits only recommended and not required for the salt?\r\n\r\n## [5.3. ](https://www.ietf.org/archive/id/draft-ietf-oauth-selective-disclosure-jwt-06.html#section-5.3)[Key Binding JWT](https://www.ietf.org/archive/id/draft-ietf-oauth-selective-disclosure-jwt-06.html#name-key-binding-jwt)\r\n\r\n- [x] This should follow https://www.rfc-editor.org/rfc/rfc7515.html#section-7 by specifying \"what serialization and serialization features are used\". I see that 1.1. Feature Summary mentions the compact serialization, but that doesn't clearly say that this embedded JWT uses it.\r\n\r\n## [5.3.1. ](https://www.ietf.org/archive/id/draft-ietf-oauth-selective-disclosure-jwt-06.html#section-5.3.1)[Integrity Protection of the Presentation](https://www.ietf.org/archive/id/draft-ietf-oauth-selective-disclosure-jwt-06.html#name-integrity-protection-of-the)\r\n\r\n- [x] This mentions \"bytes preceding the KB-JWT in the Presentation\", but several other places mention \"Key Binding is provided by means not defined in this specification\", in which case the relevant bytes don't precede the KB-JWT. These should be consistent.\r\n\r\n## [8.1. ](https://www.ietf.org/archive/id/draft-ietf-oauth-selective-disclosure-jwt-06.html#section-8.1)[Verification of the SD-JWT](https://www.ietf.org/archive/id/draft-ietf-oauth-selective-disclosure-jwt-06.html#name-verification-of-the-sd-jwt)\r\n\r\n- [x] Are \"Upon receiving an SD-JWT, a Holder or a Verifier MUST ensure that\" and \"The Holder or the Verifier MUST perform the following (or equivalent) steps when receiving an SD-JWT\" accomplishing the same thing?\r\n- [x] \"Separate the SD-JWT\" should cite an algorithm for doing that. I think it's \"5. SD-JWT Data Formats\" which implies it's just \"split on '~'\"?\r\n- [x] \"Ensure that a signing algorithm was used that was deemed secure\" <- This should probably be an input to the algorithm \u2026 although I think there are algorithm confusion attacks that imply that the algorithm should actually be picked based on the key the verifier has cached for the issuer rather than the claim in the JWT. I know this hasn't changed compared to JWS, but we know more about how JWS and other cryptography fails, so it'd be good to incorporate modern best practices in the interfaces here.\r\n- [x] \"Validate the signature over the Issuer-signed JWT\" should cite an algorithm for doing that. Is that https://www.rfc-editor.org/rfc/rfc7515.html#section-5.2?\r\n- [x] How should the application \"Validate the Issuer and that the signing key belongs to this Issuer\"? I see that the details of distribution are out of scope (Section 11.9), but this should say something about the application having a map from (issuer ID, key ID) pairs to public keys, and which fields of the Issuer-signed JWT are used to look up keys in this map.\r\n- [x] How should the application \"Check that the _sd_alg claim value is understood\"? Where should it find the _sd_alg, in the JWT's header or payload? 5.1.1. Hash Function Claim answers this, so you could just reference that, but it would be even better to accept a set of acceptable algorithms as an argument, look up the particular field in the payload object, and save that in a variable if it's in the input set.\r\n- [x] What's a \"claim\"? https://www.rfc-editor.org/rfc/rfc7519#section-4 says the claims are the members of the JWT's payload, but the algorithm here also uses \"claim\" to describe nested object members and array elements.\r\n- [x] I would probably have written the algorithm to build a map of hash->disclosure and then call a recursive element-processing-and-replacing function, but this isn't too bad.\r\n- [x] \"Remove all array elements for which the digest was not found\" probably won't confuse anyone for long, but my first reading said that an array in the payload like [1, 2, 3] would wind up empty since no digests were found for the elements.\r\n- [x] \"Check that the SD-JWT is valid using claims such as nbf, iat, and exp\" should say where those claims are defined and what part of which object they appear on. (https://www.iana.org/assignments/jwt/jwt.xhtml#claims, and the top level of the payload, not the header, right?)\r\n- [x] The \"required validity-controlling claim\"s should probably be an input parameter to this algorithm. Possibly all the IANA-registered JWT claim handling should be passed in, or this algorithm should return all the claims for the caller to deal with.\r\n\r\n## [8.2. ](https://www.ietf.org/archive/id/draft-ietf-oauth-selective-disclosure-jwt-06.html#section-8.2)[Processing by the Holder](https://www.ietf.org/archive/id/draft-ietf-oauth-selective-disclosure-jwt-06.html#name-processing-by-the-holder)\r\n\r\n- [x] \"create a Key Binding JWT\" <- refer to the section that says how to do this.\r\n- [x] \"Assemble the SD-JWT for Presentation\" <- This should at least refer to \"5. SD-JWT Data Formats\" and possibly just write out the algorithm of \"make an array of the Issuer-signed JWT, the selected Disclosures and, if applicable, the Key Binding JWT, and join the array with '~'.\"\r\n\r\n## [8.3. ](https://www.ietf.org/archive/id/draft-ietf-oauth-selective-disclosure-jwt-06.html#section-8.3)[Verification by the Verifier](https://www.ietf.org/archive/id/draft-ietf-oauth-selective-disclosure-jwt-06.html#name-verification-by-the-verifie)\r\n\r\n- [x] This is clearer that \"Verifiers MUST ensure that\" is accomplished by the steps in the following algorithm, but I don't like the redundant MUST. You can just say \"Verifiers need to ensure that\" and then leave the normative requirements to the algorithm.\r\n- [x] \"according to the Verifier's policy\" should be an input parameter to this algorithm, that the verifier provides along with the bytes of the presentation.\r\n- [x] \"verify the Key Binding according to the method used\" <- how? This might be https://www.rfc-editor.org/rfc/rfc9449.html#section-6, but you should cite the details.\r\n- [x] \"Determine the public key for the Holder\" <- how? This might be the 'cnf' claim, but you should say so.\r\n- [x] \"Ensure that a signing algorithm was used that was deemed secure\" <- as above, this should be an input parameter to this algorithm or computed from the public key.\r\n- [x] \"Validate the signature\" <- again, cite how to do this.\r\n- [x] \"the typ of the Key Binding JWT\" <- is that in the header or payload? (cite 5.3. Key Binding JWT and possibly https://www.rfc-editor.org/rfc/rfc8725.html#name-use-explicit-typing)\r\n- [x] \"within an acceptable window.\" <- should be an input parameter\r\n- [x] \"validating nonce and aud claims\" <- The instructions for doing this should be an input parameter to this algorithm.\r\n- [x] \"Check that the Key Binding JWT is valid in all other respects\" should call a particular algorithm from the other specs that it cites.\r\n\r\n## [16. ](https://www.ietf.org/archive/id/draft-ietf-oauth-selective-disclosure-jwt-06.html#section-16)[Informative References](https://www.ietf.org/archive/id/draft-ietf-oauth-selective-disclosure-jwt-06.html#name-informative-references)\r\n\r\n- [x] Many of these should be normative. For example, base64url is used all over the normative parts of this specification, and it comes from [RFC7515] in this section.",
       "createdAt": "2023-12-01T17:50:46Z",
-      "updatedAt": "2023-12-22T14:06:31Z",
-      "closedAt": null,
+      "updatedAt": "2024-02-08T17:29:20Z",
+      "closedAt": "2024-02-08T17:29:20Z",
       "comments": [
         {
           "author": "bc-pi",
@@ -38475,18 +38489,33 @@
       "labels": [],
       "body": "Addresses Issue #342 \r\n\r\nInstead of just adding text re the key binding keys, I rewrote the whole section, as the previous one was more of a placeholder.",
       "createdAt": "2023-10-17T15:21:29Z",
-      "updatedAt": "2024-01-09T17:03:31Z",
+      "updatedAt": "2024-02-09T13:20:36Z",
       "baseRepository": "oauth-wg/oauth-selective-disclosure-jwt",
       "baseRefName": "master",
-      "baseRefOid": "bc5da6bf899130574ed9866913831d5c3d7429e4",
+      "baseRefOid": "c6bebaa649fe9d3974ca0cdc002da42341ebfd74",
       "headRepository": "oauth-wg/oauth-selective-disclosure-jwt",
       "headRefName": "danielfett/fix-342-batch-key-correllation",
-      "headRefOid": "bf228ac9ea0208d630d504568e95bb753b69c72f",
+      "headRefOid": "3fbe94182b9107281c1d1e5ea490ba9038c0c39d",
       "closedAt": null,
       "mergedAt": null,
       "mergedBy": null,
       "mergeCommit": null,
-      "comments": [],
+      "comments": [
+        {
+          "author": "Denisthemalice",
+          "authorAssociation": "NONE",
+          "body": "Instead of one section (12.4) about \"Unlinkability\", there should be two sections:\r\n\r\n\"Unlinkability between Verifiers\" means that two Verifiers when colluding, should not be able to know whether two digital presentations are presented by the same user.\r\n\r\n\"Untrackability by an issuer\" means that an Issuer should not be able to know to which Verifier a digital presentation will be or has been presented by a user.\r\n\r\nNote:  In the second case, there is no need to have a collusion between an Issuer and a Verifier.\r\n",
+          "createdAt": "2024-02-09T09:18:53Z",
+          "updatedAt": "2024-02-09T09:18:53Z"
+        },
+        {
+          "author": "Denisthemalice",
+          "authorAssociation": "NONE",
+          "body": "\r\nInstead of one section about \"Unlinkability\", there should be two sections:\r\n\r\n\"**Unlinkability between Verifiers**\" means that two Verifiers when colluding, should not be able to know whether two digital presentations are presented by the same user.\r\n\r\n\"**Untrackability by an issuer**\" means that an Issuer should not be able to know to which Verifier a digital presentation will be or has been presented by a user.\r\n\r\nNote:  In the second case, there is no need to have a collusion between an Issuer and a Verifier.\r\n",
+          "createdAt": "2024-02-09T09:21:03Z",
+          "updatedAt": "2024-02-09T09:21:03Z"
+        }
+      ],
       "reviews": [
         {
           "id": "PRR_kwDOHTmVzM5kUSO7",
@@ -39393,6 +39422,105 @@
               "updatedAt": "2024-01-09T17:01:19Z"
             }
           ]
+        },
+        {
+          "id": "PRR_kwDOHTmVzM5va-mj",
+          "commit": {
+            "abbreviatedOid": "bf228ac"
+          },
+          "author": "Sakurann",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2024-02-08T06:17:58Z",
+          "updatedAt": "2024-02-08T06:17:58Z",
+          "comments": [
+            {
+              "originalPosition": 29,
+              "body": "during OID4VCI privacy considerations discussion @jogu talked about the same verifier correlating the user across multiple presentations.",
+              "createdAt": "2024-02-08T06:17:58Z",
+              "updatedAt": "2024-02-08T06:17:58Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOHTmVzM5va_Pe",
+          "commit": {
+            "abbreviatedOid": "bf228ac"
+          },
+          "author": "Sakurann",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2024-02-08T06:20:27Z",
+          "updatedAt": "2024-02-08T06:23:32Z",
+          "comments": [
+            {
+              "originalPosition": 47,
+              "body": "```suggestion\r\nissued credential with the Issuer's signature is directly presented to the Verifier, who can forward it to\r\n```\r\nthe first `directly presented/forwarded` is upon user consent from the wallet to the verifier, right? if so, presented feels more natural than forwarding..?",
+              "createdAt": "2024-02-08T06:20:27Z",
+              "updatedAt": "2024-02-08T06:23:32Z"
+            },
+            {
+              "originalPosition": 53,
+              "body": "I am not sure I am ok with `SHOULD be avoided`, given that there are ways to abstract from the issuer who is calling its status endpoint for example.\r\n\r\n```suggestion\r\ndisclose information about the credential's usage to the Issuer.\r\nWhere such callbacks are necessary, they MUST be executed in a manner that\r\n```",
+              "createdAt": "2024-02-08T06:22:42Z",
+              "updatedAt": "2024-02-08T06:23:32Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOHTmVzM5viJqp",
+          "commit": {
+            "abbreviatedOid": "a1cbe27"
+          },
+          "author": "bc-pi",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2024-02-08T20:42:52Z",
+          "updatedAt": "2024-02-08T20:42:52Z",
+          "comments": [
+            {
+              "originalPosition": 59,
+              "body": "```suggestion\r\nVerifier/Verifier unlinkablility and presentation unlinkablility can be achieved using batch issuance: A batch\r\n```\r\n\r\nNow that https://github.com/oauth-wg/oauth-selective-disclosure-jwt/pull/354/commits/a1cbe276fcd1b5d85ac00a8985e3fd0fb7039f13 introduced presentation unlinkability and the flow of this whole section (where the unlinkablility types are first described and then later discussed) it seems like it warrants a mention here. WDYT?",
+              "createdAt": "2024-02-08T20:42:52Z",
+              "updatedAt": "2024-02-08T20:54:07Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOHTmVzM5vkbYt",
+          "commit": {
+            "abbreviatedOid": "9db3040"
+          },
+          "author": "danielfett",
+          "authorAssociation": "MEMBER",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2024-02-09T07:49:25Z",
+          "updatedAt": "2024-02-09T07:49:25Z",
+          "comments": [
+            {
+              "originalPosition": 29,
+              "body": "This is solved now.",
+              "createdAt": "2024-02-09T07:49:25Z",
+              "updatedAt": "2024-02-09T07:49:25Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOHTmVzM5vmiCz",
+          "commit": {
+            "abbreviatedOid": "3fbe941"
+          },
+          "author": "bc-pi",
+          "authorAssociation": "COLLABORATOR",
+          "state": "APPROVED",
+          "body": "",
+          "createdAt": "2024-02-09T13:20:36Z",
+          "updatedAt": "2024-02-09T13:20:36Z",
+          "comments": []
         }
       ]
     },
@@ -40544,13 +40672,13 @@
       "labels": [],
       "body": "This PR limits the scope of the term \"SD-JWT\" so that it refers only to an Issuer-signed JWT and a set of disclosures.  We introduce the term \"Fnord\" to refer to an SD-JWT with key binding.  As a bonus, we are able to clean up stale uses of Presentation, which mostly, but not always align with Fnord.\r\n\r\n\"[Fnord](https://en.wikipedia.org/wiki/Fnord)\" is deliberately nonsensical, of course.  We should replace this with a more intuitive word.  We could reintroduce \"Presentation\" for this, with the allowance that one might \"present\" either a Presentation or an SD-JWT.  Or we could pick another term, suggestions welcome.\r\n\r\nI have tried to be fairly minimal in the changes here.  In particular, I have not changed any of the algorithms, though I suspect they would be clearer if a bit more separate.  I have rewritten a few paragraphs, especially close to the top and in the Security Considerations.\r\n\r\nFixes #374\r\nFixes #392 ",
       "createdAt": "2023-12-05T23:02:33Z",
-      "updatedAt": "2023-12-23T01:11:48Z",
+      "updatedAt": "2024-02-10T14:01:51Z",
       "baseRepository": "oauth-wg/oauth-selective-disclosure-jwt",
       "baseRefName": "master",
-      "baseRefOid": "f2f1eca7b3fa58a6eaa0175df9dd79d7b03fa009",
+      "baseRefOid": "c6bebaa649fe9d3974ca0cdc002da42341ebfd74",
       "headRepository": "bifurcation/oauth-selective-disclosure-jwt",
       "headRefName": "fnord",
-      "headRefOid": "d150ec24a8a369af4976c2739d8b97ac5650e603",
+      "headRefOid": "2f918e9d508b2e2111516dfb1d0a5c862e43c6b7",
       "closedAt": null,
       "mergedAt": null,
       "mergedBy": null,
@@ -40569,6 +40697,20 @@
           "body": "I find it immensely challenging to read and review this PR with `Fnord` being used as a term. please replace it with some specific term that we can bikeshed. ",
           "createdAt": "2023-12-23T01:11:47Z",
           "updatedAt": "2023-12-23T01:11:47Z"
+        },
+        {
+          "author": "Sakurann",
+          "authorAssociation": "COLLABORATOR",
+          "body": "@bifurcation can you please replace `Fnord` with `SD-JWT/KB`, which is a short form for `SD-JWT with Key Binding` (`SD-JWT+KB` could have worked too, but we were just worried it will be confused with media types, etc.), so that reviewing is easier.",
+          "createdAt": "2024-02-08T17:58:56Z",
+          "updatedAt": "2024-02-08T18:00:09Z"
+        },
+        {
+          "author": "bifurcation",
+          "authorAssociation": "NONE",
+          "body": "@Sakurann - Changed to `SD-JWT-KB`, since the `SD-JWT/KB` looked weird to me (division seemed like the wrong metaphor) and `SD-JWT~KB` seemed a little too cute.  Also merged `master` while I was at it.",
+          "createdAt": "2024-02-08T20:22:46Z",
+          "updatedAt": "2024-02-08T20:22:46Z"
         }
       ],
       "reviews": [
@@ -40684,6 +40826,112 @@
               "updatedAt": "2023-12-06T14:48:59Z"
             }
           ]
+        },
+        {
+          "id": "PRR_kwDOHTmVzM5vqRZu",
+          "commit": {
+            "abbreviatedOid": "f96695e"
+          },
+          "author": "bc-pi",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2024-02-10T00:20:56Z",
+          "updatedAt": "2024-02-10T00:26:49Z",
+          "comments": [
+            {
+              "originalPosition": 97,
+              "body": "```suggestion\r\n    including selected Disclosures\r\n```",
+              "createdAt": "2024-02-10T00:20:56Z",
+              "updatedAt": "2024-02-10T00:26:49Z"
+            },
+            {
+              "originalPosition": 94,
+              "body": "this read kinda awkward to me and I think things can be general in a flow diagram like this \r\n```suggestion\r\n           Presents SD-JWT-KB\r\n```",
+              "createdAt": "2024-02-10T00:26:35Z",
+              "updatedAt": "2024-02-10T00:26:49Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOHTmVzM5vqbsI",
+          "commit": {
+            "abbreviatedOid": "dbce481"
+          },
+          "author": "bc-pi",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2024-02-10T04:18:58Z",
+          "updatedAt": "2024-02-10T04:18:58Z",
+          "comments": [
+            {
+              "originalPosition": 94,
+              "body": "wait, what the... why can't I commit this suggestion anymore? ",
+              "createdAt": "2024-02-10T04:18:58Z",
+              "updatedAt": "2024-02-10T04:18:59Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOHTmVzM5vqbs9",
+          "commit": {
+            "abbreviatedOid": "f96695e"
+          },
+          "author": "bc-pi",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2024-02-10T04:19:29Z",
+          "updatedAt": "2024-02-10T04:19:30Z",
+          "comments": [
+            {
+              "originalPosition": 94,
+              "body": "```suggestion\r\n           Presents SD-JWT-KB\r\n```",
+              "createdAt": "2024-02-10T04:19:30Z",
+              "updatedAt": "2024-02-10T04:19:30Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOHTmVzM5vqbuU",
+          "commit": {
+            "abbreviatedOid": "f96695e"
+          },
+          "author": "bc-pi",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2024-02-10T04:20:28Z",
+          "updatedAt": "2024-02-10T04:20:29Z",
+          "comments": [
+            {
+              "originalPosition": 94,
+              "body": "```suggestion\r\n           Presents SD-JWT~KB\r\n```",
+              "createdAt": "2024-02-10T04:20:28Z",
+              "updatedAt": "2024-02-10T04:20:29Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOHTmVzM5vrkVJ",
+          "commit": {
+            "abbreviatedOid": "ea2500e"
+          },
+          "author": "bc-pi",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2024-02-10T14:01:36Z",
+          "updatedAt": "2024-02-10T14:01:36Z",
+          "comments": [
+            {
+              "originalPosition": 218,
+              "body": "changing the ref broken the build  \r\n```suggestion\r\n### Binding to an SD-JWT {#integrity-protection-of-the-presentation}\r\n```",
+              "createdAt": "2024-02-10T14:01:36Z",
+              "updatedAt": "2024-02-10T14:01:36Z"
+            }
+          ]
         }
       ]
     },
@@ -40747,24 +40995,26 @@
       "id": "PR_kwDOHTmVzM5h1wJE",
       "title": "Items from Jeffrey Yasskin's review",
       "url": "https://github.com/oauth-wg/oauth-selective-disclosure-jwt/pull/397",
-      "state": "OPEN",
+      "state": "MERGED",
       "author": "bc-pi",
       "authorAssociation": "COLLABORATOR",
       "assignees": [],
       "labels": [],
       "body": "which can be found at #389 ",
       "createdAt": "2023-12-12T22:17:32Z",
-      "updatedAt": "2024-01-09T17:55:46Z",
+      "updatedAt": "2024-02-08T17:29:19Z",
       "baseRepository": "oauth-wg/oauth-selective-disclosure-jwt",
       "baseRefName": "master",
       "baseRefOid": "091f42f8003c45c22eda005f286be6a86b6e9a30",
       "headRepository": "oauth-wg/oauth-selective-disclosure-jwt",
       "headRefName": "yasskin-asking",
       "headRefOid": "11c2b68c8ab01fee93a986e549726d6834904b94",
-      "closedAt": null,
-      "mergedAt": null,
-      "mergedBy": null,
-      "mergeCommit": null,
+      "closedAt": "2024-02-08T17:29:19Z",
+      "mergedAt": "2024-02-08T17:29:19Z",
+      "mergedBy": "bc-pi",
+      "mergeCommit": {
+        "oid": "c6bebaa649fe9d3974ca0cdc002da42341ebfd74"
+      },
       "comments": [
         {
           "author": "Sakurann",
@@ -40932,6 +41182,79 @@
               "body": "The text with that guidance has been changed to not use rfc2119 uppercase key words. ",
               "createdAt": "2024-01-09T17:55:46Z",
               "updatedAt": "2024-01-09T17:55:46Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOHTmVzM5va8Gi",
+          "commit": {
+            "abbreviatedOid": "11c2b68"
+          },
+          "author": "Sakurann",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2024-02-08T06:06:13Z",
+          "updatedAt": "2024-02-08T06:06:14Z",
+          "comments": [
+            {
+              "originalPosition": 13,
+              "body": "```suggestion\r\nNote: The examples throughout this document use the `cnf` claim ([@RFC7800]) to include\r\n```\r\nwas there anything wrong with referencing RFC7800..?",
+              "createdAt": "2024-02-08T06:06:13Z",
+              "updatedAt": "2024-02-08T06:06:14Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOHTmVzM5va-EW",
+          "commit": {
+            "abbreviatedOid": "11c2b68"
+          },
+          "author": "Sakurann",
+          "authorAssociation": "COLLABORATOR",
+          "state": "APPROVED",
+          "body": "one nit, otherwise looks good - thank you, Brian!",
+          "createdAt": "2024-02-08T06:15:38Z",
+          "updatedAt": "2024-02-08T06:15:38Z",
+          "comments": []
+        },
+        {
+          "id": "PRR_kwDOHTmVzM5vex63",
+          "commit": {
+            "abbreviatedOid": "11c2b68"
+          },
+          "author": "bc-pi",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2024-02-08T14:18:21Z",
+          "updatedAt": "2024-02-08T14:18:22Z",
+          "comments": [
+            {
+              "originalPosition": 13,
+              "body": "There's a RFC7800 reference just a few lines before this in the same short subsection. ",
+              "createdAt": "2024-02-08T14:18:21Z",
+              "updatedAt": "2024-02-08T14:18:22Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOHTmVzM5vgtch",
+          "commit": {
+            "abbreviatedOid": "11c2b68"
+          },
+          "author": "bc-pi",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2024-02-08T17:29:07Z",
+          "updatedAt": "2024-02-08T17:29:07Z",
+          "comments": [
+            {
+              "originalPosition": 13,
+              "body": "\"fine\" ",
+              "createdAt": "2024-02-08T17:29:07Z",
+              "updatedAt": "2024-02-08T17:29:08Z"
             }
           ]
         }
