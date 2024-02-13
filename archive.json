@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2024-02-11T00:55:11.657402+00:00",
+  "timestamp": "2024-02-13T00:51:51.467511+00:00",
   "repo": "oauth-wg/oauth-selective-disclosure-jwt",
   "labels": [
     {
@@ -8864,7 +8864,7 @@
       ],
       "body": "In the appendix, we should avoid suggesting that we're describing an SD-JWT VC and refer to the now-adopted SD-JWT VC spec instead.",
       "createdAt": "2023-09-08T13:26:26Z",
-      "updatedAt": "2023-12-11T17:40:28Z",
+      "updatedAt": "2024-02-12T22:06:27Z",
       "closedAt": null,
       "comments": [
         {
@@ -8884,9 +8884,9 @@
         {
           "author": "bc-pi",
           "authorAssociation": "COLLABORATOR",
-          "body": "I'm sure you are aware but the `draft-terbu-sd-jwt-vc` reference needs to be updated to `draft-ietf-oauth-sd-jwt-vc`. ",
+          "body": "~~I'm sure you are aware but the `draft-terbu-sd-jwt-vc` reference needs to be updated to `draft-ietf-oauth-sd-jwt-vc`.~~ ",
           "createdAt": "2023-10-17T18:20:57Z",
-          "updatedAt": "2023-10-17T18:36:49Z"
+          "updatedAt": "2024-02-12T22:06:27Z"
         },
         {
           "author": "Sakurann",
@@ -10428,9 +10428,17 @@
       "labels": [],
       "body": "It seems like it could be helpful to implementors, allowing them to quickly validate whether what they have is syntactically an SD-JWT or an SD-JWT with key binding.  Something like:\r\n\r\n```\r\nbase64url ::= ALPHA / DIGIT / \"-\" / \"_\"\r\nJWT ::= base64url \".\" base64url \".\" base64url\r\nSD-JWT ::= JWT \"~\" [base64url \"~\"]*\r\nFnord ::= SD-JWT JWT\r\n```",
       "createdAt": "2023-12-05T22:57:48Z",
-      "updatedAt": "2023-12-05T22:57:48Z",
+      "updatedAt": "2024-02-12T21:51:04Z",
       "closedAt": null,
-      "comments": []
+      "comments": [
+        {
+          "author": "bc-pi",
+          "authorAssociation": "COLLABORATOR",
+          "body": "> It seems like it could be helpful to implementors, allowing them to quickly validate whether what they have is syntactically an SD-JWT or an SD-JWT with key binding. Something like:\r\n> \r\n> ```\r\n> base64url ::= ALPHA / DIGIT / \"-\" / \"_\"\r\n> JWT ::= base64url \".\" base64url \".\" base64url\r\n> SD-JWT ::= JWT \"~\" [base64url \"~\"]*\r\n> Fnord ::= SD-JWT JWT\r\n> ```\r\n\r\nThe actual helpfulness of ABNF IMHO really depends on the readers familiarity with ABNF. I don't know that such familiarity is particularity prevalent. But, as long as it's correct, it doesn't hurt to include either.  And while I'm not overly familiar with ABNF myself, I know enough to know that that isn't valid ABNF and doesn't quite correctly convey the SD-JWT constructs. I've endeavored* to fix it up but am not 100% sure this is correct either:\r\n\r\n```\r\nALPHA = %x41-5A / %x61-7A ; A-Z / a-z\r\nDIGIT = %x30-39 ; 0-9\r\nbase64url = 1*(ALPHA / DIGIT / \"-\" / \"_\")\r\nJWT = base64url \".\" base64url \".\" base64url\r\nSD-JWT = JWT \"~\" *[base64url \"~\"]\r\nSD-JWT-KB = SD-JWT JWT\r\n```\r\n\r\n\\* with a bit of help from https://author-tools.ietf.org/abnf ",
+          "createdAt": "2024-02-12T21:49:49Z",
+          "updatedAt": "2024-02-12T21:51:04Z"
+        }
+      ]
     },
     {
       "number": 395,
@@ -40672,7 +40680,7 @@
       "labels": [],
       "body": "This PR limits the scope of the term \"SD-JWT\" so that it refers only to an Issuer-signed JWT and a set of disclosures.  We introduce the term \"Fnord\" to refer to an SD-JWT with key binding.  As a bonus, we are able to clean up stale uses of Presentation, which mostly, but not always align with Fnord.\r\n\r\n\"[Fnord](https://en.wikipedia.org/wiki/Fnord)\" is deliberately nonsensical, of course.  We should replace this with a more intuitive word.  We could reintroduce \"Presentation\" for this, with the allowance that one might \"present\" either a Presentation or an SD-JWT.  Or we could pick another term, suggestions welcome.\r\n\r\nI have tried to be fairly minimal in the changes here.  In particular, I have not changed any of the algorithms, though I suspect they would be clearer if a bit more separate.  I have rewritten a few paragraphs, especially close to the top and in the Security Considerations.\r\n\r\nFixes #374\r\nFixes #392 ",
       "createdAt": "2023-12-05T23:02:33Z",
-      "updatedAt": "2024-02-10T14:01:51Z",
+      "updatedAt": "2024-02-12T23:58:17Z",
       "baseRepository": "oauth-wg/oauth-selective-disclosure-jwt",
       "baseRefName": "master",
       "baseRefOid": "c6bebaa649fe9d3974ca0cdc002da42341ebfd74",
@@ -40930,6 +40938,292 @@
               "body": "changing the ref broken the build  \r\n```suggestion\r\n### Binding to an SD-JWT {#integrity-protection-of-the-presentation}\r\n```",
               "createdAt": "2024-02-10T14:01:36Z",
               "updatedAt": "2024-02-10T14:01:36Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOHTmVzM5v00_Q",
+          "commit": {
+            "abbreviatedOid": "f96695e"
+          },
+          "author": "Sakurann",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2024-02-12T20:06:17Z",
+          "updatedAt": "2024-02-12T20:06:17Z",
+          "comments": [
+            {
+              "originalPosition": 94,
+              "body": "I don't know how to solve it, just know it happened to me before too...",
+              "createdAt": "2024-02-12T20:06:17Z",
+              "updatedAt": "2024-02-12T20:06:17Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOHTmVzM5v1au_",
+          "commit": {
+            "abbreviatedOid": "f96695e"
+          },
+          "author": "bc-pi",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2024-02-12T20:57:34Z",
+          "updatedAt": "2024-02-12T20:57:35Z",
+          "comments": [
+            {
+              "originalPosition": 94,
+              "body": "I *think* what happened is that I committed a different related nearby suggestion (that the UI wouldn't let me do in one shot) that basically put the PR into a state of having no changes near here and thus talking this area out of the scope of suggestible changes that github will let you make in the UI. If that jumble of words even makes any sense. I \"solved\" it by making the changes locally and pushing to Richard's branch with 2db05069e9d8cb749142a30a4285a416fbdfc88a and then ea2500ec6ac09aba9c2988078df708f1fb1369a8 which is probably a breach of some etiquette but was the best I could manage as the situation unfolded. ",
+              "createdAt": "2024-02-12T20:57:35Z",
+              "updatedAt": "2024-02-12T20:57:35Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOHTmVzM5v1fpx",
+          "commit": {
+            "abbreviatedOid": "2f918e9"
+          },
+          "author": "bc-pi",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2024-02-12T21:04:16Z",
+          "updatedAt": "2024-02-12T21:04:17Z",
+          "comments": [
+            {
+              "originalPosition": 170,
+              "body": ">  that the SD-JWT in a Fnord MUST have visible key binding information (e.g., cnf). If that claim is selectively disclosable, it MUST be disclosed when used in a Fnord.\r\n\r\nThe WG draft (published a few days after that comment) has language to that effect https://www.ietf.org/archive/id/draft-ietf-oauth-selective-disclosure-jwt-07.html#name-selectively-disclosable-val ",
+              "createdAt": "2024-02-12T21:04:17Z",
+              "updatedAt": "2024-02-12T21:04:17Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOHTmVzM5v2LzU",
+          "commit": {
+            "abbreviatedOid": "d150ec2"
+          },
+          "author": "bc-pi",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2024-02-12T22:27:09Z",
+          "updatedAt": "2024-02-12T22:27:09Z",
+          "comments": [
+            {
+              "originalPosition": 170,
+              "body": "also current line 170 of the PR has \"To be compatible with Key Binding, an SD-JWT MUST contain\r\n  the public key corresponding to the private key controlled by the Holder (or a reference to this public key).\"",
+              "createdAt": "2024-02-12T22:27:09Z",
+              "updatedAt": "2024-02-12T22:27:09Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOHTmVzM5v2Nw7",
+          "commit": {
+            "abbreviatedOid": "2f918e9"
+          },
+          "author": "bc-pi",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2024-02-12T22:33:43Z",
+          "updatedAt": "2024-02-12T22:35:19Z",
+          "comments": [
+            {
+              "originalPosition": 249,
+              "body": "```suggestion\r\ntilde-separated parts, with the Issuer-signed JWT as shown above in the beginning,\r\n```",
+              "createdAt": "2024-02-12T22:33:43Z",
+              "updatedAt": "2024-02-12T22:35:19Z"
+            },
+            {
+              "originalPosition": 176,
+              "body": "\"~-separated\" looks rather funky when reading it - I think using the word tilde here would be more good \r\n\r\n```suggestion\r\ntilde-separated component is empty.  A Verifier that expects an SD-JWT-KB MUST verify\r\nthat its final tilde-separated component is a valid KB-JWT.\r\n```",
+              "createdAt": "2024-02-12T22:35:11Z",
+              "updatedAt": "2024-02-12T22:35:19Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOHTmVzM5v2QWf",
+          "commit": {
+            "abbreviatedOid": "2f918e9"
+          },
+          "author": "bc-pi",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2024-02-12T22:40:47Z",
+          "updatedAt": "2024-02-12T22:40:48Z",
+          "comments": [
+            {
+              "originalPosition": 234,
+              "body": "seem to  be too many words in this sentence - does this still say what you wanted to say? \r\n```suggestion\r\nThe Verifier MUST ensure that the key with which it validates the signature on\r\nthe Key Binding JWT is the key specified in the SD-JWT as the Holder's\r\n```",
+              "createdAt": "2024-02-12T22:40:47Z",
+              "updatedAt": "2024-02-12T22:40:48Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOHTmVzM5v2UDI",
+          "commit": {
+            "abbreviatedOid": "2f918e9"
+          },
+          "author": "bc-pi",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2024-02-12T22:51:44Z",
+          "updatedAt": "2024-02-12T22:51:44Z",
+          "comments": [
+            {
+              "originalPosition": 258,
+              "body": "the SD-JWT from (#issuance) includes many more Disclosures than the example in this section. So this sentence isn't quite right and could be confusing/misleading. Meanwhile I don't think what it's trying to say is needed right here. So:\r\n\r\n```suggestion\r\n```",
+              "createdAt": "2024-02-12T22:51:44Z",
+              "updatedAt": "2024-02-12T22:51:44Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOHTmVzM5v2UYp",
+          "commit": {
+            "abbreviatedOid": "2f918e9"
+          },
+          "author": "bc-pi",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2024-02-12T22:52:58Z",
+          "updatedAt": "2024-02-12T22:52:58Z",
+          "comments": [
+            {
+              "originalPosition": 276,
+              "body": "```suggestion\r\nThe Issuer MUST provide the Holder an SD-JWT, not an SD-JWT-KB.  If the Holder\r\n```",
+              "createdAt": "2024-02-12T22:52:58Z",
+              "updatedAt": "2024-02-12T22:52:58Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOHTmVzM5v2WB8",
+          "commit": {
+            "abbreviatedOid": "2f918e9"
+          },
+          "author": "bc-pi",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2024-02-12T22:59:28Z",
+          "updatedAt": "2024-02-12T22:59:28Z",
+          "comments": [
+            {
+              "originalPosition": 267,
+              "body": "this is now a bit awkward as it kinda implies that, if it were an SD-JWT-KB, that it's already been separated into SD-JWT and KB parts. Which is different than prior to the PR. ",
+              "createdAt": "2024-02-12T22:59:28Z",
+              "updatedAt": "2024-02-12T22:59:28Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOHTmVzM5v2X6N",
+          "commit": {
+            "abbreviatedOid": "2f918e9"
+          },
+          "author": "bc-pi",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2024-02-12T23:07:16Z",
+          "updatedAt": "2024-02-12T23:07:16Z",
+          "comments": [
+            {
+              "originalPosition": 286,
+              "body": "it's a little abrupt/disjoint that if this condition is met, send the SD-JWT to the Verifier and end, otherwise do the next steps  ",
+              "createdAt": "2024-02-12T23:07:16Z",
+              "updatedAt": "2024-02-12T23:07:16Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOHTmVzM5v2g6W",
+          "commit": {
+            "abbreviatedOid": "2f918e9"
+          },
+          "author": "bc-pi",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2024-02-12T23:39:16Z",
+          "updatedAt": "2024-02-12T23:39:16Z",
+          "comments": [
+            {
+              "originalPosition": 451,
+              "body": "Probably makes sense to add this but I am really not looking forward to folks wanting to have `sd-jwt-kb` as the value of `typ` header in the SD-JWT itself... ",
+              "createdAt": "2024-02-12T23:39:16Z",
+              "updatedAt": "2024-02-12T23:39:16Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOHTmVzM5v2hsf",
+          "commit": {
+            "abbreviatedOid": "2f918e9"
+          },
+          "author": "bc-pi",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2024-02-12T23:40:20Z",
+          "updatedAt": "2024-02-12T23:40:20Z",
+          "comments": [
+            {
+              "originalPosition": 513,
+              "body": "somewhere down below there should be a document history bullet added for this ",
+              "createdAt": "2024-02-12T23:40:20Z",
+              "updatedAt": "2024-02-12T23:40:20Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOHTmVzM5v2mOw",
+          "commit": {
+            "abbreviatedOid": "2f918e9"
+          },
+          "author": "Sakurann",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2024-02-12T23:57:38Z",
+          "updatedAt": "2024-02-12T23:57:38Z",
+          "comments": [
+            {
+              "originalPosition": 310,
+              "body": "steps 4.1 should come before steps in lines 808 and 809 (there are two steps 2 btw). in other words, the verifier need to know what mechanism it is using for key binding before rejecting because there is no KB JWT",
+              "createdAt": "2024-02-12T23:57:38Z",
+              "updatedAt": "2024-02-12T23:57:38Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOHTmVzM5v2mXe",
+          "commit": {
+            "abbreviatedOid": "2f918e9"
+          },
+          "author": "Sakurann",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2024-02-12T23:58:17Z",
+          "updatedAt": "2024-02-12T23:58:17Z",
+          "comments": [
+            {
+              "originalPosition": 267,
+              "body": "> it kinda implies that, if it were an SD-JWT-KB, that it's already been separated into SD-JWT and KB parts.\r\n\r\nI am not sure it does. this section is being clear that it applies only to the verification of sd-jwt and not sd-jwt-kb. if this is still a concern, making sure verification by the verifier is probably a better section to claritfy this?",
+              "createdAt": "2024-02-12T23:58:17Z",
+              "updatedAt": "2024-02-12T23:58:17Z"
             }
           ]
         }
