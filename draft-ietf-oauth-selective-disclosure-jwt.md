@@ -1149,15 +1149,62 @@ Decoy digests increase the size of the SD-JWT. The number of decoy digests (or w
 
 ## Unlinkability
 
-Colluding Issuer/Verifier or Verifier/Verifier pairs could link issuance/presentation
-or two presentation sessions to the same user on the basis of unique values encoded in the SD-JWT
-(Issuer signature, salts, digests, etc.).
+Unlinkability is a property whereby adversaries are prevented from correlating
+credential presentations of the same user beyond the user's consent.
+Without unlinkability, an adversary might be able to learn more about the user than the user
+intended to disclose, for example:
 
-To prevent these types of linkability, various methods, including but not limited to the following ones can be used:
+ * Cooperating Verifiers might want to track users across services to build
+   advertising profiles.
+ * Issuers might want to track where users present their credentials to enable
+   surveillance.
+ * After a data breach at multiple Verifiers, publicly available information
+   might allow linking identifiable information presented to Verifier A with
+   originally anonymous information presented to Verifier B, therefore revealing
+   the identities of users of Verifier B.
 
-- Use advanced cryptographic schemes, outside the scope of this specification.
-- Issue a batch of SD-JWTs to the Holder to enable the Holder to use a unique SD-JWT per Verifier. This only helps with Verifier/Verifier unlinkability.
+The following types of unlinkability are considered here:
 
+ * Presentation Unlinkability: A Verifier should not be able to link two
+   presentations of the same credential.
+ * Verifier/Verifier Unlinkability: Two colluding Verifiers should not be able to
+   learn that they have received presentations of the same credential.
+ * Issuer/Verifier Unlinkability (Honest Verifier): An Issuer of a credential
+   should not be able to know that a user presented the credential to a certain
+   Verifier that is not behaving maliciously.
+ * Issuer/Verifier Unlinkability (Colluding/Compromised Verifier): An Issuer of a
+   credential should not be able to tell that a user presented the credential to
+   a certain Verifier, even if the Verifier colludes with the Issuer or becomes
+   compromised and leaks stored credentials from presentations.
+
+In all cases, unlinkability is limited to cases where the disclosed claims do
+not contain information that directly or indirectly identifies the user. For
+example, when a taxpayer identification number is contained in the disclosed claims, the Issuer and
+Verifier can easily link the user's transactions. However, when the user only
+discloses a birthdate to one Verifier and a postal code to another Verifier, the two Verifiers should not be able to determine that they were interacting with the same user.
+
+Issuer/Verifier unlinkability with a colluding or compromised Verifier cannot be
+achieved in salted-hash based selective disclosure approaches, such as SD-JWT, as the
+issued credential with the Issuer's signature is directly presented to the Verifier, who can forward it to
+the Issuer.
+
+Contrary to that, Issuer/Verifier unlinkability with an honest Verifier can generally be achieved.
+However, a callback from the Verifier to the Issuer, such as a revocation check, could potentially
+disclose information about the credential's usage to the Issuer.
+Where such callbacks are necessary, they MUST be executed in a manner that
+preserves privacy and does not disclose details about the credential to the Issuer. It is
+important to note that the timing of such requests could potentially serve as a side-channel.
+
+Verifier/Verifier unlinkablility and presentation unlinkablility can be achieved using batch issuance: A batch
+of credentials based on the same claims is issued to the Holder instead of just
+a single credential. The Holder can then use a different credential for each
+Verifier or even for each session with a Verifier. New key binding keys and
+salts MUST be used for each credential in the batch to ensure that the Verifiers
+cannot link the credentials using these values. Likewise, claims carrying time
+information, like `iat`, `exp`, and `nbf`, MUST either be randomized within a
+time period considered appropriate (e.g., randomize `iat` within the last 24
+hours and calculate `exp` accordingly) or rounded (e.g., rounded down to the
+beginning of the day).
 
 ## Issuer Identifier
 
@@ -1741,6 +1788,7 @@ data. The original JSON data is then used by the application. See
    * Restructure sections around data formats and Example 1
    * Update JSON Serialization to remove the kb_jwt member and allow for the disclosures to be conveyed elsewhere
    * Expand the Enveloping SD-JWTs section to also discuss enveloping JSON serialized SD-JWTs
+   * Improve unlinkability considerations, mention that different KB keys must be used
 
    -05
 
