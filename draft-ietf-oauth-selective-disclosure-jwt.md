@@ -1764,6 +1764,7 @@ data. The original JSON data is then used by the application. See
 * Make RFCs 0020 and 7515 normative references
 * Be a bit more prescriptive in suggesting RFC7800 cnf/jwk be used to convey the Key Binding key
 * Editorial changes aimed at improved clarity
+* Improve unlinkability considerations, mention that different KB keys must be used
 
 
    -07
@@ -1788,7 +1789,6 @@ data. The original JSON data is then used by the application. See
    * Restructure sections around data formats and Example 1
    * Update JSON Serialization to remove the kb_jwt member and allow for the disclosures to be conveyed elsewhere
    * Expand the Enveloping SD-JWTs section to also discuss enveloping JSON serialized SD-JWTs
-   * Improve unlinkability considerations, mention that different KB keys must be used
 
    -05
 
