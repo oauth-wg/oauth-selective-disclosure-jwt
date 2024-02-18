@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2024-02-15T00:51:44.129238+00:00",
+  "timestamp": "2024-02-18T00:54:32.614041+00:00",
   "repo": "oauth-wg/oauth-selective-disclosure-jwt",
   "labels": [
     {
@@ -40776,7 +40776,7 @@
       "labels": [],
       "body": "This PR limits the scope of the term \"SD-JWT\" so that it refers only to an Issuer-signed JWT and a set of disclosures.  We introduce the term \"Fnord\" to refer to an SD-JWT with key binding.  As a bonus, we are able to clean up stale uses of Presentation, which mostly, but not always align with Fnord.\r\n\r\n\"[Fnord](https://en.wikipedia.org/wiki/Fnord)\" is deliberately nonsensical, of course.  We should replace this with a more intuitive word.  We could reintroduce \"Presentation\" for this, with the allowance that one might \"present\" either a Presentation or an SD-JWT.  Or we could pick another term, suggestions welcome.\r\n\r\nI have tried to be fairly minimal in the changes here.  In particular, I have not changed any of the algorithms, though I suspect they would be clearer if a bit more separate.  I have rewritten a few paragraphs, especially close to the top and in the Security Considerations.\r\n\r\nFixes #374\r\nFixes #392 ",
       "createdAt": "2023-12-05T23:02:33Z",
-      "updatedAt": "2024-02-13T16:58:48Z",
+      "updatedAt": "2024-02-16T22:39:48Z",
       "baseRepository": "oauth-wg/oauth-selective-disclosure-jwt",
       "baseRefName": "master",
       "baseRefOid": "c6bebaa649fe9d3974ca0cdc002da42341ebfd74",
@@ -41244,9 +41244,9 @@
           "comments": [
             {
               "originalPosition": 286,
-              "body": "it's a little abrupt/disjoint that if this condition is met, send the SD-JWT to the Verifier and end, otherwise do the next steps  ",
+              "body": "it's a little abrupt/disjoint that if this condition is met, send the SD-JWT to the Verifier and end, otherwise do the next steps. But the next steps are listed regardless. I dunno, can this bit be reworked / reflowed somehow?   ",
               "createdAt": "2024-02-12T23:07:16Z",
-              "updatedAt": "2024-02-12T23:07:16Z"
+              "updatedAt": "2024-02-15T22:29:38Z"
             }
           ]
         },
@@ -41347,6 +41347,46 @@
               "body": "Well it's a change from what was here before where this section was about general verification of the sd-jwt, which could have kb or not, and the process starts with splitting it up into the component parts. Maybe it doesn't matter though.",
               "createdAt": "2024-02-13T01:52:35Z",
               "updatedAt": "2024-02-13T01:52:35Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOHTmVzM5waFHx",
+          "commit": {
+            "abbreviatedOid": "2f918e9"
+          },
+          "author": "c2bo",
+          "authorAssociation": "NONE",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2024-02-16T19:42:31Z",
+          "updatedAt": "2024-02-16T19:42:32Z",
+          "comments": [
+            {
+              "originalPosition": 129,
+              "body": "```suggestion\r\n * verifies the signature on the KB-JWT using the public key included in the SD-JWT, if an SD-JWT-KB was provided and the Verifier's policy requires Key Binding\r\n```\r\nI was also wondering if it should explicitly say \"included (or referenced)\" here as well  - similar to line 171?",
+              "createdAt": "2024-02-16T19:42:32Z",
+              "updatedAt": "2024-02-16T20:07:49Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOHTmVzM5wbNTv",
+          "commit": {
+            "abbreviatedOid": "2f918e9"
+          },
+          "author": "bc-pi",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2024-02-16T22:39:47Z",
+          "updatedAt": "2024-02-16T22:39:48Z",
+          "comments": [
+            {
+              "originalPosition": 129,
+              "body": "> I was also wondering if it should explicitly say \"included (or referenced)\" here as well - similar to line 171?\r\n\r\nprobably yeah... \r\n```suggestion\r\n * verifies the signature on the KB-JWT using the public key included (or referenced) in the SD-JWT, if an SD-JWT-KB was provided and the Verifier's policy requires Key Binding\r\n```",
+              "createdAt": "2024-02-16T22:39:48Z",
+              "updatedAt": "2024-02-16T22:40:23Z"
             }
           ]
         }
@@ -41815,6 +41855,46 @@
           "body": "",
           "createdAt": "2024-02-14T09:20:31Z",
           "updatedAt": "2024-02-14T09:20:31Z",
+          "comments": []
+        }
+      ]
+    },
+    {
+      "number": 401,
+      "id": "PR_kwDOHTmVzM5nJIcz",
+      "title": "Move 'Improve unlinkability considerations' doc history entry to the correct draft (-08)",
+      "url": "https://github.com/oauth-wg/oauth-selective-disclosure-jwt/pull/401",
+      "state": "OPEN",
+      "author": "bc-pi",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "",
+      "createdAt": "2024-02-16T23:30:46Z",
+      "updatedAt": "2024-02-17T01:30:51Z",
+      "baseRepository": "oauth-wg/oauth-selective-disclosure-jwt",
+      "baseRefName": "master",
+      "baseRefOid": "b3816fa9628e2a94deaa0ea744132914103c21d7",
+      "headRepository": "oauth-wg/oauth-selective-disclosure-jwt",
+      "headRefName": "fix-doc-history-miss-by-dr",
+      "headRefOid": "9773f9f287ef016fa0c80201c9f0bac159ad3ec7",
+      "closedAt": null,
+      "mergedAt": null,
+      "mergedBy": null,
+      "mergeCommit": null,
+      "comments": [],
+      "reviews": [
+        {
+          "id": "PRR_kwDOHTmVzM5wbqCG",
+          "commit": {
+            "abbreviatedOid": "9773f9f"
+          },
+          "author": "Sakurann",
+          "authorAssociation": "COLLABORATOR",
+          "state": "APPROVED",
+          "body": "",
+          "createdAt": "2024-02-17T01:30:51Z",
+          "updatedAt": "2024-02-17T01:30:51Z",
           "comments": []
         }
       ]
