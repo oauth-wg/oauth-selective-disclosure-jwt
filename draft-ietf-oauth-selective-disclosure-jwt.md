@@ -299,9 +299,8 @@ An SD-JWT with Disclosures and with a KB-JWT:
 
 ## Issuer-signed JWT {#iss-signed-jwt}
 
-An SD-JWT has a JWT component that MUST be signed using the Issuer's private key.
-It MUST use a JWS asymmetric digital signature algorithm. It
-MUST NOT use `none` or an identifier for a symmetric algorithm (MAC).
+An SD-JWT has a JWT component that MUST be signed using the Issuer's private
+key. It MUST NOT use the `none` algorithm.
 
 The payload of an SD-JWT is a JSON object according to the following rules:
 
@@ -538,7 +537,7 @@ The JWT MUST contain the following elements:
 
 * in the JOSE header,
     * `typ`: REQUIRED. MUST be `kb+jwt`, which explicitly types the Key Binding JWT as recommended in Section 3.11 of [@!RFC8725].
-    * `alg`: REQUIRED. A digital signature algorithm identifier such as per IANA "JSON Web Signature and Encryption Algorithms" registry. MUST NOT be `none` or an identifier for a symmetric algorithm (MAC).
+    * `alg`: REQUIRED. A digital signature algorithm identifier such as per IANA "JSON Web Signature and Encryption Algorithms" registry. MUST NOT be `none`.
 * in the JWT payload,
     * `iat`: REQUIRED. The value of this claim MUST be the time at which the Key Binding JWT was issued using the syntax defined in [@!RFC7519].
     * `aud`: REQUIRED. The intended receiver of the Key Binding JWT. How the value is represented is up to the protocol used and out of scope of this specification.
@@ -1763,7 +1762,9 @@ data. The original JSON data is then used by the application. See
 
 * Make RFCs 0020 and 7515 normative references
 * Be a bit more prescriptive in suggesting RFC7800 cnf/jwk be used to convey the Key Binding key
+* Do not disallow HMAC any longer.
 * Editorial changes aimed at improved clarity
+* Improve unlinkability considerations, mention that different KB keys must be used
 
 
    -07
@@ -1788,7 +1789,6 @@ data. The original JSON data is then used by the application. See
    * Restructure sections around data formats and Example 1
    * Update JSON Serialization to remove the kb_jwt member and allow for the disclosures to be conveyed elsewhere
    * Expand the Enveloping SD-JWTs section to also discuss enveloping JSON serialized SD-JWTs
-   * Improve unlinkability considerations, mention that different KB keys must be used
 
    -05
 
