@@ -309,7 +309,7 @@ The payload of an SD-JWT is a JSON object according to the following rules:
  2. The payload MAY contain one or more digests of Disclosures to enable selective disclosure of the respective claims, created and formatted as described in (#creating_disclosures).
  3. The payload MAY contain one or more decoy digests to obscure the actual number of claims in the SD-JWT, created and formatted as described in (#decoy_digests).
  4. The payload MAY contain one or more non-selectively disclosable claims.
- 5. The payload MAY contain the Holder's public key(s) or reference(s) thereto, as explained in (#holder_public_key_claim).
+ 5. The payload MAY contain the Holder's public key(s) or reference(s) thereto, as explained in (#key_binding).
  6. The payload MAY contain further claims such as `iss`, `iat`, etc. as defined or required by the application using SD-JWTs.
  7. The payload MUST NOT contain the reserved claims `_sd` or `...` except for the purpose of transporting digests as described below.
 
@@ -341,7 +341,7 @@ algorithm.
 See (#security_considerations) for requirements regarding entropy of the salt,
 minimum length of the salt, and choice of a hash algorithm.
 
-### Holder Public Key Claim {#holder_public_key_claim}
+### Key Binding {#key_binding}
 
 If the Issuer wants to enable Key Binding, it includes a public key
 associated with the Holder, or a reference thereto.
@@ -760,7 +760,7 @@ To this end, Verifiers MUST follow the following steps (or equivalent):
     1. If Key Binding is provided by means not defined in this specification, verify the Key Binding according to the method used.
     2. Otherwise, verify the Key Binding JWT as follows:
         1. If a Key Binding JWT is not provided, the Verifier MUST reject the Presentation.
-        2. Determine the public key for the Holder from the SD-JWT (see (#holder_public_key_claim)).
+        2. Determine the public key for the Holder from the SD-JWT (see (#key_binding)).
         3. Ensure that a signing algorithm was used that was deemed secure for the application. Refer to [@RFC8725], Sections 3.1 and 3.2 for details. The `none` algorithm MUST NOT be accepted.
         4. Validate the signature over the Key Binding JWT per Section 5.2 of [@!RFC7515].
         5. Check that the `typ` of the Key Binding JWT is `kb+jwt` (see (#kb-jwt)).
