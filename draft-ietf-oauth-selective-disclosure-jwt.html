@@ -1180,7 +1180,7 @@ It encompasses various applications, including but not limited to the selective 
                     <p id="section-toc.1-1.5.2.1.2.1.1"><a href="#section-5.1.1" class="auto internal xref">5.1.1</a>.  <a href="#name-hash-function-claim" class="internal xref">Hash Function Claim</a></p>
 </li>
                   <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.5.2.1.2.2">
-                    <p id="section-toc.1-1.5.2.1.2.2.1"><a href="#section-5.1.2" class="auto internal xref">5.1.2</a>.  <a href="#name-holder-public-key-claim" class="internal xref">Holder Public Key Claim</a></p>
+                    <p id="section-toc.1-1.5.2.1.2.2.1"><a href="#section-5.1.2" class="auto internal xref">5.1.2</a>.  <a href="#name-key-binding" class="internal xref">Key Binding</a></p>
 </li>
                 </ul>
 </li>
@@ -1284,7 +1284,7 @@ It encompasses various applications, including but not limited to the selective 
                 <p id="section-toc.1-1.11.2.5.1"><a href="#section-11.5" class="auto internal xref">11.5</a>.  <a href="#name-choice-of-a-hash-algorithm" class="internal xref">Choice of a Hash Algorithm</a></p>
 </li>
               <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.11.2.6">
-                <p id="section-toc.1-1.11.2.6.1"><a href="#section-11.6" class="auto internal xref">11.6</a>.  <a href="#name-key-binding" class="internal xref">Key Binding</a></p>
+                <p id="section-toc.1-1.11.2.6.1"><a href="#section-11.6" class="auto internal xref">11.6</a>.  <a href="#name-key-binding-2" class="internal xref">Key Binding</a></p>
 </li>
               <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.11.2.7">
                 <p id="section-toc.1-1.11.2.7.1"><a href="#section-11.7" class="auto internal xref">11.7</a>.  <a href="#name-blinding-claim-names" class="internal xref">Blinding Claim Names</a></p>
@@ -1707,7 +1707,7 @@ key. It MUST NOT use the <code>none</code> algorithm.<a href="#section-5.1-1" cl
 </li>
           <li id="section-5.1-3.4">The payload MAY contain one or more non-selectively disclosable claims.<a href="#section-5.1-3.4" class="pilcrow">¶</a>
 </li>
-          <li id="section-5.1-3.5">The payload MAY contain the Holder's public key(s) or reference(s) thereto, as explained in <a href="#holder_public_key_claim" class="auto internal xref">Section 5.1.2</a>.<a href="#section-5.1-3.5" class="pilcrow">¶</a>
+          <li id="section-5.1-3.5">The payload MAY contain the Holder's public key(s) or reference(s) thereto, as explained in <a href="#key_binding" class="auto internal xref">Section 5.1.2</a>.<a href="#section-5.1-3.5" class="pilcrow">¶</a>
 </li>
           <li id="section-5.1-3.6">The payload MAY contain further claims such as <code>iss</code>, <code>iat</code>, etc. as defined or required by the application using SD-JWTs.<a href="#section-5.1-3.6" class="pilcrow">¶</a>
 </li>
@@ -1738,10 +1738,10 @@ algorithm.<a href="#section-5.1.1-3" class="pilcrow">¶</a></p>
 minimum length of the salt, and choice of a hash algorithm.<a href="#section-5.1.1-4" class="pilcrow">¶</a></p>
 </section>
 </div>
-<div id="holder_public_key_claim">
+<div id="key_binding">
 <section id="section-5.1.2">
-          <h4 id="name-holder-public-key-claim">
-<a href="#section-5.1.2" class="section-number selfRef">5.1.2. </a><a href="#name-holder-public-key-claim" class="section-name selfRef">Holder Public Key Claim</a>
+          <h4 id="name-key-binding">
+<a href="#section-5.1.2" class="section-number selfRef">5.1.2. </a><a href="#name-key-binding" class="section-name selfRef">Key Binding</a>
           </h4>
 <p id="section-5.1.2-1">If the Issuer wants to enable Key Binding, it includes a public key
 associated with the Holder, or a reference thereto.
@@ -2291,8 +2291,8 @@ ZHJ5M2xjYndIZ2VaOGtoQXYxVTFPU2xlclAwVmtCSnJXWjAifV0sICJfc2RfYWxnIjog
 InNoYS0yNTYiLCAiY25mIjogeyJqd2siOiB7Imt0eSI6ICJFQyIsICJjcnYiOiAiUC0y
 NTYiLCAieCI6ICJUQ0FFUjE5WnZ1M09IRjRqNFc0dmZTVm9ISVAxSUxpbERsczd2Q2VH
 ZW1jIiwgInkiOiAiWnhqaVdXYlpNUUdIVldLVlE0aGJTSWlyc1ZmdWVjQ0U2dDRqVDlG
-MkhaUSJ9fX0.bxHxgLvrs29q13Pboh9rbSYC90aopyLsWfiRVs1A-s9_Mhq4pR1GknUu
-NbHmZmd2kZH0DQ9q_lsIioX9t2B7-g
+MkhaUSJ9fX0.yIG1ldiwVlBu9n-KAaWG3DoZ82ejC0PHYrAWjO8tza5G9O-64i1yRVPU
+I-0qm8-aH3zBVHWGXxecNjMJG2hh5g
 
 </pre><a href="#section-6.1-29" class="pilcrow">¶</a>
 </div>
@@ -2314,8 +2314,8 @@ ZHJ5M2xjYndIZ2VaOGtoQXYxVTFPU2xlclAwVmtCSnJXWjAifV0sICJfc2RfYWxnIjog
 InNoYS0yNTYiLCAiY25mIjogeyJqd2siOiB7Imt0eSI6ICJFQyIsICJjcnYiOiAiUC0y
 NTYiLCAieCI6ICJUQ0FFUjE5WnZ1M09IRjRqNFc0dmZTVm9ISVAxSUxpbERsczd2Q2VH
 ZW1jIiwgInkiOiAiWnhqaVdXYlpNUUdIVldLVlE0aGJTSWlyc1ZmdWVjQ0U2dDRqVDlG
-MkhaUSJ9fX0.bxHxgLvrs29q13Pboh9rbSYC90aopyLsWfiRVs1A-s9_Mhq4pR1GknUu
-NbHmZmd2kZH0DQ9q_lsIioX9t2B7-g~WyIyR0xDNDJzS1F2ZUNmR2ZyeU5STjl3IiwgI
+MkhaUSJ9fX0.yIG1ldiwVlBu9n-KAaWG3DoZ82ejC0PHYrAWjO8tza5G9O-64i1yRVPU
+I-0qm8-aH3zBVHWGXxecNjMJG2hh5g~WyIyR0xDNDJzS1F2ZUNmR2ZyeU5STjl3IiwgI
 mdpdmVuX25hbWUiLCAiSm9obiJd~WyJlbHVWNU9nM2dTTklJOEVZbnN4QV9BIiwgImZh
 bWlseV9uYW1lIiwgIkRvZSJd~WyI2SWo3dE0tYTVpVlBHYm9TNXRtdlZBIiwgImVtYWl
 sIiwgImpvaG5kb2VAZXhhbXBsZS5jb20iXQ~WyJlSThaV205UW5LUHBOUGVOZW5IZGhR
@@ -2359,18 +2359,18 @@ ZHJ5M2xjYndIZ2VaOGtoQXYxVTFPU2xlclAwVmtCSnJXWjAifV0sICJfc2RfYWxnIjog
 InNoYS0yNTYiLCAiY25mIjogeyJqd2siOiB7Imt0eSI6ICJFQyIsICJjcnYiOiAiUC0y
 NTYiLCAieCI6ICJUQ0FFUjE5WnZ1M09IRjRqNFc0dmZTVm9ISVAxSUxpbERsczd2Q2VH
 ZW1jIiwgInkiOiAiWnhqaVdXYlpNUUdIVldLVlE0aGJTSWlyc1ZmdWVjQ0U2dDRqVDlG
-MkhaUSJ9fX0.bxHxgLvrs29q13Pboh9rbSYC90aopyLsWfiRVs1A-s9_Mhq4pR1GknUu
-NbHmZmd2kZH0DQ9q_lsIioX9t2B7-g~WyJlbHVWNU9nM2dTTklJOEVZbnN4QV9BIiwgI
+MkhaUSJ9fX0.yIG1ldiwVlBu9n-KAaWG3DoZ82ejC0PHYrAWjO8tza5G9O-64i1yRVPU
+I-0qm8-aH3zBVHWGXxecNjMJG2hh5g~WyJlbHVWNU9nM2dTTklJOEVZbnN4QV9BIiwgI
 mZhbWlseV9uYW1lIiwgIkRvZSJd~WyJBSngtMDk1VlBycFR0TjRRTU9xUk9BIiwgImFk
 ZHJlc3MiLCB7InN0cmVldF9hZGRyZXNzIjogIjEyMyBNYWluIFN0IiwgImxvY2FsaXR5
 IjogIkFueXRvd24iLCAicmVnaW9uIjogIkFueXN0YXRlIiwgImNvdW50cnkiOiAiVVMi
 fV0~WyIyR0xDNDJzS1F2ZUNmR2ZyeU5STjl3IiwgImdpdmVuX25hbWUiLCAiSm9obiJd
 ~WyJsa2x4RjVqTVlsR1RQVW92TU5JdkNBIiwgIlVTIl0~eyJhbGciOiAiRVMyNTYiLCA
 idHlwIjogImtiK2p3dCJ9.eyJub25jZSI6ICIxMjM0NTY3ODkwIiwgImF1ZCI6ICJodH
-RwczovL3ZlcmlmaWVyLmV4YW1wbGUub3JnIiwgImlhdCI6IDE3MDg0NDc1MTcsICJzZF
-9oYXNoIjogInlxMkVVV2hHTEJMRHJ2MmZVMDZ4VTlxTDlCeWg3VlRqb3NQR1JiUzFpNU
-EifQ.rRjeP64iaThTKkCdUmybdpEopyGqaIA4JiHJ-jHrbeU_ixC96Y5YO21JEqRfuus
-K9iFaQVKvXiAKMF28TW4BtA
+RwczovL3ZlcmlmaWVyLmV4YW1wbGUub3JnIiwgImlhdCI6IDE3MDg0NDc2ODcsICJzZF
+9oYXNoIjogIi1JMkg1U1JHakxmNFFaNWM4Z2pFRnp0alNRWEt3cjZRcmh1UGZNVVBGeW
+8ifQ.Pwixt6T2Odp2XmjTp3tw4sUw62AdlTKmVGCtz_vbqcXD7V27PA9PP23YzaSpw4v
+2MRGS9rUImBvzH08q7iVvSw
 
 </pre><a href="#section-6.2-2" class="pilcrow">¶</a>
 </div>
@@ -2379,8 +2379,8 @@ K9iFaQVKvXiAKMF28TW4BtA
 <pre>{
   "nonce": "1234567890",
   "aud": "https://verifier.example.org",
-  "iat": 1708447517,
-  "sd_hash": "yq2EUWhGLBLDrv2fU06xU9qL9Byh7VTjosPGRbS1i5A"
+  "iat": 1708447687,
+  "sd_hash": "-I2H5SRGjLf4QZ5c8gjEFztjSQXKwr6QrhuPfMUPFyo"
 }
 
 </pre><a href="#section-6.2-4" class="pilcrow">¶</a>
@@ -2798,7 +2798,7 @@ details.<a href="#section-8.3-4.1" class="pilcrow">¶</a>
 <ol start="1" type="1" class="compact type-1" id="section-8.3-4.3.2.2.2">
 <li id="section-8.3-4.3.2.2.2.1">If a Key Binding JWT is not provided, the Verifier MUST reject the Presentation.<a href="#section-8.3-4.3.2.2.2.1" class="pilcrow">¶</a>
 </li>
-                  <li id="section-8.3-4.3.2.2.2.2">Determine the public key for the Holder from the SD-JWT (see <a href="#holder_public_key_claim" class="auto internal xref">Section 5.1.2</a>).<a href="#section-8.3-4.3.2.2.2.2" class="pilcrow">¶</a>
+                  <li id="section-8.3-4.3.2.2.2.2">Determine the public key for the Holder from the SD-JWT (see <a href="#key_binding" class="auto internal xref">Section 5.1.2</a>).<a href="#section-8.3-4.3.2.2.2.2" class="pilcrow">¶</a>
 </li>
                   <li id="section-8.3-4.3.2.2.2.3">Ensure that a signing algorithm was used that was deemed secure for the application. Refer to <span>[<a href="#RFC8725" class="cite xref">RFC8725</a>]</span>, Sections 3.1 and 3.2 for details. The <code>none</code> algorithm MUST NOT be accepted.<a href="#section-8.3-4.3.2.2.2.3" class="pilcrow">¶</a>
 </li>
@@ -2862,8 +2862,8 @@ a JWS JSON serialized SD-JWT from an Issuer with all the respective Disclosures.
     Aic2hhLTI1NiJ9",
   "protected":
     "eyJhbGciOiAiRVMyNTYiLCAidHlwIjogImV4YW1wbGUrc2Qtand0In0",
-  "signature": "T-EZwswIienFTRVzruYSIBPWAYb0VNH4aGM5WacD2clLv51lIFP5
-    IwAxVO-b520EBKvAoRU8kp-4psgZqwASGw",
+  "signature": "Ne94P5hR_KBn-3RlvGFSkkSN5pWisYHr2a2M7yCFRg4_qIrQTa5R
+    reXANLQ12Z8mu4dIqXlE443VezmHgTBpaQ",
   "disclosures": [
     "WyIyR0xDNDJzS1F2ZUNmR2ZyeU5STjl3IiwgInN1YiIsICJqb2huX2RvZV80MiJ
       d",
@@ -2901,8 +2901,8 @@ has selected to disclose <code>given_name</code>, <code>family_name</code>, and 
     Aic2hhLTI1NiJ9",
   "protected":
     "eyJhbGciOiAiRVMyNTYiLCAidHlwIjogImV4YW1wbGUrc2Qtand0In0",
-  "signature": "T-EZwswIienFTRVzruYSIBPWAYb0VNH4aGM5WacD2clLv51lIFP5
-    IwAxVO-b520EBKvAoRU8kp-4psgZqwASGw",
+  "signature": "Ne94P5hR_KBn-3RlvGFSkkSN5pWisYHr2a2M7yCFRg4_qIrQTa5R
+    reXANLQ12Z8mu4dIqXlE443VezmHgTBpaQ",
   "disclosures": [
     "WyI2SWo3dE0tYTVpVlBHYm9TNXRtdlZBIiwgImZhbWlseV9uYW1lIiwgIkRvZSJ
       d",
@@ -3068,8 +3068,8 @@ revealed fundamental weaknesses and MUST NOT be used.<a href="#section-11.5-5" c
 </div>
 <div id="key_binding_security">
 <section id="section-11.6">
-        <h3 id="name-key-binding">
-<a href="#section-11.6" class="section-number selfRef">11.6. </a><a href="#name-key-binding" class="section-name selfRef">Key Binding</a>
+        <h3 id="name-key-binding-2">
+<a href="#section-11.6" class="section-number selfRef">11.6. </a><a href="#name-key-binding-2" class="section-name selfRef">Key Binding</a>
         </h3>
 <p id="section-11.6-1">Key Binding aims to ensure that the presenter of an SD-JWT credential is actually the legitimate Holder of the credential.
 An SD-JWT with Key Binding contains a public key, or a reference to a public key, that corresponds to a private key possessed by the Holder.
@@ -4022,8 +4022,8 @@ WUpISVo4VnUtZjlDQ3lWdWIyVWZnRWs4anZ2WGV6d0sxcF9KbmVlWFEiLCAiZ2xUM2hy
 U1U3ZlNXZ3dGNVVEWm1Xd0JUdzMyZ25VbGRJaGk4aEdWQ2FWNCIsICJydkpkNmlxNlQ1
 ZWptc0JNb0d3dU5YaDlxQUFGQVRBY2k0MG9pZEVlVnNBIiwgInVOSG9XWWhYc1poVkpD
 TkUyRHF5LXpxdDd0NjlnSkt5NVFhRnY3R3JNWDQiXX0sICJfc2RfYWxnIjogInNoYS0y
-NTYifQ.mIVVyubZM9XQRZ_-5B9OoTdhzWhdi0N8SVVvLjeOKqq3iyNBKv1wEDpiw7Wfe
-vFO4XDdwiln6t5qrrA6yGzvYA~WyJHMDJOU3JRZmpGWFE3SW8wOXN5YWpBIiwgInJlZ2
+NTYifQ.haALi5MlLk0kJJPb3CGGVRasj169PnK6l_qTaROSk2ux0ldR0Ef37rOhY96EN
+9CoZ2QlR1wafzFdTty1KE6yDA~WyJHMDJOU3JRZmpGWFE3SW8wOXN5YWpBIiwgInJlZ2
 lvbiIsICJcdTZlMmZcdTUzM2EiXQ~WyJsa2x4RjVqTVlsR1RQVW92TU5JdkNBIiwgImN
 vdW50cnkiLCAiSlAiXQ~
 
@@ -4361,8 +4361,8 @@ ZFJtc01vIiwgIldOQS1VTks3Rl96aHNBYjlzeVdPNklJUTF1SGxUbU9VOHI4Q3ZKMGNJ
 TWsiLCAiV3hoX3NWM2lSSDliZ3JUQkppLWFZSE5DTHQtdmpoWDFzZC1pZ09mXzlsayIs
 ICJfTy13SmlIM2VuU0I0Uk9IbnRUb1FUOEptTHR6LW1oTzJmMWM4OVhvZXJRIiwgImh2
 RFhod21HY0pRc0JDQTJPdGp1TEFjd0FNcERzYVUwbmtvdmNLT3FXTkUiXX19LCAiX3Nk
-X2FsZyI6ICJzaGEtMjU2In0.njIvmcKzJgB0dHU154qoA6Lef1IJsJQ8mYBvds_2QJRY
-pzF2tre3kioXaEqS5dTGr28ysZZLJKrXbDxcNc9TJQ~WyIyR0xDNDJzS1F2ZUNmR2Zye
+X2FsZyI6ICJzaGEtMjU2In0.g1ukClWX5Z99P_-L5EIcBrQ4oAX_qEqxZnPUR5dNO-az
+NRtHyPC63Tw4Gmcrta77ANE0ZNEZKI6bdraQWcWm8Q~WyIyR0xDNDJzS1F2ZUNmR2Zye
 U5STjl3IiwgInRpbWUiLCAiMjAxMi0wNC0yM1QxODoyNVoiXQ~WyJQYzMzSk0yTGNoY1
 VfbEhnZ3ZfdWZRIiwgeyJfc2QiOiBbIjl3cGpWUFd1RDdQSzBuc1FETDhCMDZsbWRnVj
 NMVnliaEh5ZFFwVE55TEkiLCAiRzVFbmhPQU9vVTlYXzZRTU52ekZYanBFQV9SYy1BRX
@@ -4463,8 +4463,8 @@ gInZjdCI6ICJQZXJzb25JZGVudGlmaWNhdGlvbkRhdGEiLCAiX3NkX2FsZyI6ICJzaGE
 tMjU2IiwgImNuZiI6IHsiandrIjogeyJrdHkiOiAiRUMiLCAiY3J2IjogIlAtMjU2Iiw
 gIngiOiAiVENBRVIxOVp2dTNPSEY0ajRXNHZmU1ZvSElQMUlMaWxEbHM3dkNlR2VtYyI
 sICJ5IjogIlp4amlXV2JaTVFHSFZXS1ZRNGhiU0lpcnNWZnVlY0NFNnQ0alQ5RjJIWlE
-ifX19.W-iugy5RJlKiIlZR3AsKNq0Fb2k_jjGRHhRtqGUNqcs0E4M4m4bqej_iZwgCDV
-5Bb_FCrVtPbsAf3_ByhkrUOw~WyIyR0xDNDJzS1F2ZUNmR2ZyeU5STjl3IiwgImZpcnN
+ifX19.Fikr95hYPfLQvoQ5J-ntoVVG6nCSWRLn1KACjzm7-76wja4IZBvoqBu1ZZ4i4m
+WCKa9t5n8_iZMyy3t7pwna0A~WyIyR0xDNDJzS1F2ZUNmR2ZyeU5STjl3IiwgImZpcnN
 0X25hbWUiLCAiRXJpa2EiXQ~WyJlbHVWNU9nM2dTTklJOEVZbnN4QV9BIiwgImZhbWls
 eV9uYW1lIiwgIk11c3Rlcm1hbm4iXQ~WyI2SWo3dE0tYTVpVlBHYm9TNXRtdlZBIiwgI
 kRFIl0~WyJlSThaV205UW5LUHBOUGVOZW5IZGhRIiwgIm5hdGlvbmFsaXRpZXMiLCBbe
@@ -4655,16 +4655,16 @@ gInZjdCI6ICJQZXJzb25JZGVudGlmaWNhdGlvbkRhdGEiLCAiX3NkX2FsZyI6ICJzaGE
 tMjU2IiwgImNuZiI6IHsiandrIjogeyJrdHkiOiAiRUMiLCAiY3J2IjogIlAtMjU2Iiw
 gIngiOiAiVENBRVIxOVp2dTNPSEY0ajRXNHZmU1ZvSElQMUlMaWxEbHM3dkNlR2VtYyI
 sICJ5IjogIlp4amlXV2JaTVFHSFZXS1ZRNGhiU0lpcnNWZnVlY0NFNnQ0alQ5RjJIWlE
-ifX19.W-iugy5RJlKiIlZR3AsKNq0Fb2k_jjGRHhRtqGUNqcs0E4M4m4bqej_iZwgCDV
-5Bb_FCrVtPbsAf3_ByhkrUOw~WyJHMDJOU3JRZmpGWFE3SW8wOXN5YWpBIiwgImlzX29
+ifX19.Fikr95hYPfLQvoQ5J-ntoVVG6nCSWRLn1KACjzm7-76wja4IZBvoqBu1ZZ4i4m
+WCKa9t5n8_iZMyy3t7pwna0A~WyJHMDJOU3JRZmpGWFE3SW8wOXN5YWpBIiwgImlzX29
 2ZXJfMTgiLCB0cnVlXQ~WyJlSThaV205UW5LUHBOUGVOZW5IZGhRIiwgIm5hdGlvbmFs
 aXRpZXMiLCBbeyIuLi4iOiAiSnVMMzJRWER6aXpsLUw2Q0xyZnhmanBac1gzTzZ2c2Zw
 Q1ZkMWprd0pZZyJ9XV0~WyI2SWo3dE0tYTVpVlBHYm9TNXRtdlZBIiwgIkRFIl0~eyJh
 bGciOiAiRVMyNTYiLCAidHlwIjogImtiK2p3dCJ9.eyJub25jZSI6ICIxMjM0NTY3ODk
 wIiwgImF1ZCI6ICJodHRwczovL3ZlcmlmaWVyLmV4YW1wbGUub3JnIiwgImlhdCI6IDE
-3MDg0NDc1MTcsICJzZF9oYXNoIjogIm1NdGQ1UnB3Y3A4Q0xmaDExRTBTVnFkLXdrZ0w
-tNS1xbDR2TWNCRzBnV3cifQ.lRndNx1G4ADSpiq98-SKRZ_y-4NI4dQE7KDcLmSsChFn
-TMKaLQ14lDyIMGUr0mwrs9l6YLi-9_zeHhxgFq-B3w
+3MDg0NDc2ODcsICJzZF9oYXNoIjogIlpjM3VVQW9xbEJJb3J4Y2d0NE56eXdUQVJUOWg
+0NUQ4R3AtRXc5RTFfT3cifQ.fpkg8ZdGbGMBy5m7QPUsITNg_qb0-mK3-1bySUYyAmdc
+Mb4eT-ztGPz27UofFr4NB9_pawJsxTG5jeyFmDyi2Q
 
 </pre><a href="#appendix-A.3-31" class="pilcrow">¶</a>
 </div>
@@ -4673,8 +4673,8 @@ TMKaLQ14lDyIMGUr0mwrs9l6YLi-9_zeHhxgFq-B3w
 <pre>{
   "nonce": "1234567890",
   "aud": "https://verifier.example.org",
-  "iat": 1708447517,
-  "sd_hash": "mMtd5Rpwcp8CLfh11E0SVqd-wkgL-5-ql4vMcBG0gWw"
+  "iat": 1708447687,
+  "sd_hash": "Zc3uUAoqlBIorxcgt4NzywTART9h45D8Gp-Ew9E1_Ow"
 }
 
 </pre><a href="#appendix-A.3-33" class="pilcrow">¶</a>
@@ -4785,8 +4785,8 @@ VmFjY2luZVJlY2lwaWVudCJ9LCAidHlwZSI6ICJWYWNjaW5hdGlvbkV2ZW50In0sICJf
 c2RfYWxnIjogInNoYS0yNTYiLCAiY25mIjogeyJqd2siOiB7Imt0eSI6ICJFQyIsICJj
 cnYiOiAiUC0yNTYiLCAieCI6ICJUQ0FFUjE5WnZ1M09IRjRqNFc0dmZTVm9ISVAxSUxp
 bERsczd2Q2VHZW1jIiwgInkiOiAiWnhqaVdXYlpNUUdIVldLVlE0aGJTSWlyc1ZmdWVj
-Q0U2dDRqVDlGMkhaUSJ9fX0.2eAHfKcfoSE6-TlPT4pfq21wESSbPay7TyMjpFzrvkzQ
-5_cFMQLg_Tn3I6_pTS5QwDG89AKcRbtpiwfaykWQWQ~WyIyR0xDNDJzS1F2ZUNmR2Zye
+Q0U2dDRqVDlGMkhaUSJ9fX0.A2Xm0o4hOv4fqMupVMRA1fnpmKU4WBGM8qRDpD9IZcGq
+9x8j7X-hJqhriF11jBC4i5d_SpC4M6rjYfb4og2-Og~WyIyR0xDNDJzS1F2ZUNmR2Zye
 U5STjl3IiwgImF0Y0NvZGUiLCAiSjA3QlgwMyJd~WyJlbHVWNU9nM2dTTklJOEVZbnN4
 QV9BIiwgIm1lZGljaW5hbFByb2R1Y3ROYW1lIiwgIkNPVklELTE5IFZhY2NpbmUgTW9k
 ZXJuYSJd~WyI2SWo3dE0tYTVpVlBHYm9TNXRtdlZBIiwgIm1hcmtldGluZ0F1dGhvcml
@@ -5068,18 +5068,18 @@ VmFjY2luZVJlY2lwaWVudCJ9LCAidHlwZSI6ICJWYWNjaW5hdGlvbkV2ZW50In0sICJf
 c2RfYWxnIjogInNoYS0yNTYiLCAiY25mIjogeyJqd2siOiB7Imt0eSI6ICJFQyIsICJj
 cnYiOiAiUC0yNTYiLCAieCI6ICJUQ0FFUjE5WnZ1M09IRjRqNFc0dmZTVm9ISVAxSUxp
 bERsczd2Q2VHZW1jIiwgInkiOiAiWnhqaVdXYlpNUUdIVldLVlE0aGJTSWlyc1ZmdWVj
-Q0U2dDRqVDlGMkhaUSJ9fX0.2eAHfKcfoSE6-TlPT4pfq21wESSbPay7TyMjpFzrvkzQ
-5_cFMQLg_Tn3I6_pTS5QwDG89AKcRbtpiwfaykWQWQ~WyJQYzMzSk0yTGNoY1VfbEhnZ
+Q0U2dDRqVDlGMkhaUSJ9fX0.A2Xm0o4hOv4fqMupVMRA1fnpmKU4WBGM8qRDpD9IZcGq
+9x8j7X-hJqhriF11jBC4i5d_SpC4M6rjYfb4og2-Og~WyJQYzMzSk0yTGNoY1VfbEhnZ
 3ZfdWZRIiwgIm9yZGVyIiwgIjMvMyJd~WyJBSngtMDk1VlBycFR0TjRRTU9xUk9BIiwg
 ImRhdGVPZlZhY2NpbmF0aW9uIiwgIjIwMjEtMDYtMjNUMTM6NDA6MTJaIl0~WyIyR0xD
 NDJzS1F2ZUNmR2ZyeU5STjl3IiwgImF0Y0NvZGUiLCAiSjA3QlgwMyJd~WyJlbHVWNU9
 nM2dTTklJOEVZbnN4QV9BIiwgIm1lZGljaW5hbFByb2R1Y3ROYW1lIiwgIkNPVklELTE
 5IFZhY2NpbmUgTW9kZXJuYSJd~eyJhbGciOiAiRVMyNTYiLCAidHlwIjogImtiK2p3dC
 J9.eyJub25jZSI6ICIxMjM0NTY3ODkwIiwgImF1ZCI6ICJodHRwczovL3ZlcmlmaWVyL
-mV4YW1wbGUub3JnIiwgImlhdCI6IDE3MDg0NDc1MTcsICJzZF9oYXNoIjogIk0wZ002S
-UNVejFwUHhDNFJ6eDZMQkY3WW9FT2xxUEdoRVRySFZTRWVwV1kifQ.bNdvKCZgGpmbFR
-CRhDP1q7qrFxS3K41rsMR17C32adgKrwDPLLjboL_yFyEgidFSbYqwOvuk9X_ie8L07x
-YrRQ
+mV4YW1wbGUub3JnIiwgImlhdCI6IDE3MDg0NDc2ODcsICJzZF9oYXNoIjogIlVpV1cwU
+mZMQjAtTExReEtCVjJTNmNpOGhsTEJ6RnFwdWdjYjNNZ3g0WVUifQ.n7SskXsyam-56j
+WD30U3eEzMgnpxJrfpHQP19z0_KS9ThjUyOqepxWldjj04wOYt8NaCCzYpRdkoC4MGqY
+56zQ
 
 </pre><a href="#appendix-A.4-39" class="pilcrow">¶</a>
 </div>
