@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2024-02-18T00:54:32.614041+00:00",
+  "timestamp": "2024-02-20T00:50:31.604941+00:00",
   "repo": "oauth-wg/oauth-selective-disclosure-jwt",
   "labels": [
     {
@@ -41797,7 +41797,7 @@
       "labels": [],
       "body": "This addresses Issue #369. The rest of the text still refers to asymmetric signatures, but technically, an HMAC is now allowed.",
       "createdAt": "2024-02-13T17:38:26Z",
-      "updatedAt": "2024-02-14T09:20:31Z",
+      "updatedAt": "2024-02-19T13:38:10Z",
       "baseRepository": "oauth-wg/oauth-selective-disclosure-jwt",
       "baseRefName": "master",
       "baseRefOid": "b3816fa9628e2a94deaa0ea744132914103c21d7",
@@ -41812,9 +41812,9 @@
         {
           "author": "bc-pi",
           "authorAssociation": "COLLABORATOR",
-          "body": "> Just noting that an MAC issuer key is usually not referred to as a private key. Maybe put private in brackets, but I'm unsure.\r\n\r\nThe scope of this PR was intentionally to only remove the explicit prohibition on MAC. Not to explain how it might work or adjust other language about asymmetric signatures or private keys or similar. ",
+          "body": "> Just noting that an MAC issuer key is usually not referred to as a private key. Maybe put private in brackets, but I'm unsure.\r\n\r\nThe scope of this PR was intentionally to only remove the explicit prohibition on MAC. Not to explain how it might work or adjust other language about asymmetric signatures or private keys or similar. Just remove the explicit prohibition so that, should some deployment/ecosystem/jurisdiction need to MAC for whatever reason, it's not directly going against a normative must. ",
           "createdAt": "2024-02-13T23:43:56Z",
-          "updatedAt": "2024-02-13T23:45:33Z"
+          "updatedAt": "2024-02-19T13:38:10Z"
         }
       ],
       "reviews": [
