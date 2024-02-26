@@ -1567,9 +1567,10 @@ After the validation, the Verifier will have the following data for further proc
 
 ## Example 4a - SD-JWT-based Verifiable Credentials (SD-JWT VC)
 
-In this example, the artifacts defined in this specification are used to represent
-SD-JWT-based Verifiable Credentials (SD-JWT VC) as defined in [@I-D.ietf-oauth-sd-jwt-vc].
-Person Identification Data (PID) defined in [@EUDIW.ARF] is used.
+This example shows how the artifacts defined in this specification
+could hypothetically be used to express an
+SD-JWT-based Verifiable Credential [@I-D.ietf-oauth-sd-jwt-vc] with
+Person Identification Data (PID) defined in [@EUDIW.ARF].
 
 Key Binding is applied
 using the Holder's public key passed in a `cnf` claim in the SD-JWT.
@@ -1604,8 +1605,8 @@ After the validation, the Verifier will have the following data for further proc
 
 ## Example 4b - W3C Verifiable Credentials Data Model v2.0
 
-In this example, the artifacts defined in this specification are used to represent a payload
-that is represented as a W3C Verifiable Credentials Data Model v2.0 [@VC_DATA_v2.0].
+This hypothetical example shows how a W3C Verifiable Credentials Data Model v2.0 [@VC_DATA_v2.0]
+payload might be expressed using the artifacts defined in this specification.
 
 Key Binding is applied
 using the Holder's public key passed in a `cnf` claim in the SD-JWT.
@@ -1765,7 +1766,7 @@ data. The original JSON data is then used by the application. See
 * Do not disallow HMAC any longer.
 * Editorial changes aimed at improved clarity
 * Improve unlinkability considerations, mention that different KB keys must be used
-
+* Be more explicit that the VCDM and SD-JWT VC examples are only illustrative and do not define anything
 
    -07
 
