@@ -780,7 +780,7 @@ application or transport protocol. However, the details of such approaches fall 
 specification.
 
 Verification of the JWS JSON serialized SD-JWT follows the same rules defined in (#verification),
-except that the SD-JWT does not need to be split into component parts, the disclosures
+except that the SD-JWT does not need to be split into component parts and the disclosures
 can be found in the respective member of the JSON object (or elsewhere).
 
 Using a payload similar to that from [Example 1](#example-1), the following is a non-normative example of
