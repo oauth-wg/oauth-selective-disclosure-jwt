@@ -43,6 +43,7 @@ The artifacts generated for the examples (e.g., serialized SD-JWTs, Disclosures,
  * Python: [Reference/Demo Implementation](https://github.com/openwallet-foundation-labs/sd-jwt-python)
  * Kotlin: [SD-JWT-Kotlin (ID Union)](https://github.com/IDunion/SD-JWT-Kotlin)
  * Rust: [sd_jwt](https://github.com/kushaldas/sd_jwt)
+ * TypeScript: [sd-jwt-js](https://github.com/openwallet-foundation-labs/sd-jwt-js)
  * TypeScript: [sd-jwt](https://github.com/christianpaquin/sd-jwt)
  * TypeScript: [sd-jwt-ts](https://github.com/chike0905/sd-jwt-ts)
  * TypeScript: [jwt-sd](https://github.com/blu3beri/jwt-sd)

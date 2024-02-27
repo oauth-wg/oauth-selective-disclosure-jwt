@@ -231,8 +231,6 @@ indicate the intended audience for the document, and a hash that ensures the
 integrity of the data sent from the Holder to the Verifier. Details of the format of Key Binding JWTs are
 described in (#kb-jwt).
 
-Note that there may be other ways to send a Key Binding JWT to the Verifier or for the Holder to prove possession of the key material included in an SD-JWT. In these cases, inclusion of the Key Binding JWT in the SD-JWT is not required.
-
 ## Verification
 
 At a high level, the Verifier
@@ -569,12 +567,6 @@ Whether to require Key Binding is up to the Verifier's policy, based on the set
 of trust requirements such as trust frameworks it belongs to. See
 (#key_binding_security) for security considerations.
 
-### Alternatives to a Key Binding JWT
-
-Other ways of proving Key Binding MAY be used when supported by the Verifier,
-e.g., when the presented SD-JWT without a Key Binding JWT is itself embedded in a
-signed JWT. See (#enveloping) for details.
-
 
 # Example 1: SD-JWT {#example-1}
 
@@ -756,17 +748,15 @@ To this end, Verifiers MUST follow the following steps (or equivalent):
    details.
 2. Process the SD-JWT as defined in (#sd_jwt_verification).
 3. If Key Binding is required:
-    1. If Key Binding is provided by means not defined in this specification, verify the Key Binding according to the method used.
-    2. Otherwise, verify the Key Binding JWT as follows:
-        1. If a Key Binding JWT is not provided, the Verifier MUST reject the Presentation.
-        2. Determine the public key for the Holder from the SD-JWT (see (#key_binding)).
-        3. Ensure that a signing algorithm was used that was deemed secure for the application. Refer to [@RFC8725], Sections 3.1 and 3.2 for details. The `none` algorithm MUST NOT be accepted.
-        4. Validate the signature over the Key Binding JWT per Section 5.2 of [@!RFC7515].
-        5. Check that the `typ` of the Key Binding JWT is `kb+jwt` (see (#kb-jwt)).
-        6. Check that the creation time of the Key Binding JWT, as determined by the `iat` claim, is within an acceptable window.
-        7. Determine that the Key Binding JWT is bound to the current transaction and was created for this Verifier (replay protection) by validating `nonce` and `aud` claims.
-        8. Calculate the digest over the Issuer-signed JWT and Disclosures as defined in (#integrity-protection-of-the-presentation) and verify that it matches the value of the `sd_hash` claim in the Key Binding JWT.
-        9. Check that the Key Binding JWT is a valid JWT in all other respects, per [@!RFC7519] and [@!RFC8725].
+    1. If a Key Binding JWT is not provided, the Verifier MUST reject the Presentation.
+    2. Determine the public key for the Holder from the SD-JWT (see (#key_binding)).
+    3. Ensure that a signing algorithm was used that was deemed secure for the application. Refer to [@RFC8725], Sections 3.1 and 3.2 for details. The `none` algorithm MUST NOT be accepted.
+    4. Validate the signature over the Key Binding JWT per Section 5.2 of [@!RFC7515].
+    5. Check that the `typ` of the Key Binding JWT is `kb+jwt` (see (#kb-jwt)).
+    6. Check that the creation time of the Key Binding JWT, as determined by the `iat` claim, is within an acceptable window.
+    7. Determine that the Key Binding JWT is bound to the current transaction and was created for this Verifier (replay protection) by validating `nonce` and `aud` claims.
+    8. Calculate the digest over the Issuer-signed JWT and Disclosures as defined in (#integrity-protection-of-the-presentation) and verify that it matches the value of the `sd_hash` claim in the Key Binding JWT.
+    9. Check that the Key Binding JWT is a valid JWT in all other respects, per [@!RFC7519] and [@!RFC8725].
 
 If any step fails, the Presentation is not valid and processing MUST be aborted.
 
@@ -790,9 +780,8 @@ application or transport protocol. However, the details of such approaches fall 
 specification.
 
 Verification of the JWS JSON serialized SD-JWT follows the same rules defined in (#verification),
-except that the SD-JWT does not need to be split into component parts, the disclosures
-can be found in the respective member of the JSON object (or elsewhere), and Key Binding (if applicable)
-will be provided by means not specifically defined in this specification.
+except that the SD-JWT does not need to be split into component parts and the disclosures
+can be found in the respective member of the JSON object (or elsewhere).
 
 Using a payload similar to that from [Example 1](#example-1), the following is a non-normative example of
 a JWS JSON serialized SD-JWT from an Issuer with all the respective Disclosures.
@@ -803,49 +792,6 @@ Below is a non-normative example of a presentation of the JWS JSON serialized SD
 has selected to disclose `given_name`, `family_name`, and `address`.
 
 <{{examples/json_serialization/sd_jwt_presentation.json}}
-
-
-# Enveloping SD-JWTs {#enveloping}
-
-In some applications or transport protocols, it is desirable to encapsulate an SD-JWT into an outer JWT container. For example, an implementation may enclose multiple credentials and presentations, independent of their format, in a JWT to enable application-layer encryption during transport.
-
-For such use cases, a compact serialized SD-JWT SHOULD be included as a single string value and a JSON serialized SD-JWT SHOULD be included as a JSON object value. Key Binding MAY be achieved by signing the envelope JWT instead of including a separate Key Binding JWT.
-
-The following non-normative example payload shows a compact serialized SD-JWT Presentation enveloped in a JWT.
-The SD-JWT is shown as the value of an `_sd_jwt` claim where `eyJhbGci...emhlaUJhZzBZ` is the Issuer-signed JWT and `eyJhb...dYALCGg` is a Disclosure. The SD-JWT does not contain a Key Binding JWT as the outer container can be signed instead.
-
-```
-{
-  "aud": "https://verifier.example.org",
-  "iat": 1580000000,
-  "nonce": "iRnRdKuu1AtLM4ltc16by2XF0accSeutUescRw6BWC14",
-  "_sd_jwt": "eyJhbGci...emhlaUJhZzBZ~eyJhb...dYALCGg~"
-}
-```
-
-This next non-normative example payload shows a JSON serialized SD-JWT enveloped in a JWT.
-The JSON serialized SD-JWT appears as the value of an `_js_sd_jwt` claim and the disclosures are included separately as a top-level claim.
-Key Binding is achieved by the signature on the enclosing JWT.
-
-```
-{
-  "aud": "https://verifier.example.org",
-  "iat": 2813308004,
-  "nonce": "8z8z9X3jUtbthem84swFAzp4aqlHf-sCqQ6eM_qmpUQ",
-  "_js_sd_jwt": {
-    "protected": "eyJhbGciOiAiRVMyNTYifQ",
-    "payload": "eyJfc2QiOiBbIjRIQm42YUlZM1d0dUdHV1R4LX...1NiJ9",
-    "signature": "y_b8KFVc2GZ1n-...PKsjU3Q",
-  }
-  "disclosures": [
-    "WyI2SWo3dE0tYTVpVlBHYm9TNXRtdlZBIiwgImZhbWlseV9uYW1...vZSJd",
-    "WyJBSngtMDk1VlBycFR0TjRRTU9xUk9BIiwgImFkZHJlc3MiLC...iVVMifV0",
-    "WyJlbHVWNU9nM2dTTklJO...V9BIiwgImdpdmVuX25hbWUiLCAiSm9obiJd"
- ]
-}
-```
-
-Other specifications or profiles of this specification may define alternative formats for transporting an SD-JWT that envelope multiple such SD-JWTs into one object and provide Key Binding and integrity protection of the presentation using means other than the Key Binding JWT.
 
 
 # Security Considerations {#security_considerations}
@@ -1567,10 +1513,11 @@ After the validation, the Verifier will have the following data for further proc
 
 ## Example 4a - SD-JWT-based Verifiable Credentials (SD-JWT VC)
 
-This example shows how the artifacts defined in this specification
-could hypothetically be used to express an
-SD-JWT-based Verifiable Credential [@I-D.ietf-oauth-sd-jwt-vc] with
-Person Identification Data (PID) defined in [@EUDIW.ARF].
+This example shows how the artifacts defined in this specification could be
+used in the context of SD-JWT-based Verifiable
+Credentials (SD-JWT VC) [@I-D.ietf-oauth-sd-jwt-vc] to represent the concept of
+a Person Identification Data (PID) [@EUDIW.ARF] using the data of
+a German citizen.
 
 Key Binding is applied
 using the Holder's public key passed in a `cnf` claim in the SD-JWT.
@@ -1767,6 +1714,8 @@ data. The original JSON data is then used by the application. See
 * Editorial changes aimed at improved clarity
 * Improve unlinkability considerations, mention that different KB keys must be used
 * Be more explicit that the VCDM and SD-JWT VC examples are only illustrative and do not define anything
+* Remove mention of unspecified key binding methods and the Enveloping SD-JWTs section
+* Update PID example
 
    -07
 
@@ -1777,6 +1726,7 @@ data. The original JSON data is then used by the application. See
    * Clarify validation around no duplicate digests in the payload (directly or recursively) and no unused disclosures at the end of processing
    * Better describe and illustrate the tilde separated format
    * Change claim name from `_sd_hash` to `sd_hash`
+
 
    -06
 
