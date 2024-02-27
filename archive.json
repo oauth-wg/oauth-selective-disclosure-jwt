@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2024-02-25T00:54:41.514706+00:00",
+  "timestamp": "2024-02-27T00:50:28.902500+00:00",
   "repo": "oauth-wg/oauth-selective-disclosure-jwt",
   "labels": [
     {
@@ -77,11 +77,6 @@
       "name": "pending-close",
       "description": "",
       "color": "6C5669"
-    },
-    {
-      "name": "-03",
-      "description": "",
-      "color": "4EF539"
     }
   ],
   "issues": [
@@ -8874,11 +8869,11 @@
         "danielfett"
       ],
       "labels": [
-        "ready-for-PR"
+        "has-PR"
       ],
       "body": "In the appendix, we should avoid suggesting that we're describing an SD-JWT VC and refer to the now-adopted SD-JWT VC spec instead.",
       "createdAt": "2023-09-08T13:26:26Z",
-      "updatedAt": "2024-02-12T22:06:27Z",
+      "updatedAt": "2024-02-26T20:52:58Z",
       "closedAt": null,
       "comments": [
         {
@@ -9715,7 +9710,7 @@
       ],
       "body": "Recursive redaction makes it much more complex to validate and handle SD-JWT objects.\r\n\r\nIt requires that disclosure be processed in a particular order, and since this order is known only to the redactor, the disclosures in the SD-JWT must be listed in a specific order to communicate the order.\r\n\r\nIt complicates the matching of disclosure objects to redacted fields, which you need to do in order to validate that the disclosures match the Issuer JWT, or to offer an API of the form \"delete the disclosure for `/address/street_address`\".  Without recursion, you are matching the list of disclosures against the claims in the Issuer JWT.  With recursion, you are matching the list of disclosures against the issuer JWT _and all other disclosures_.\r\n\r\nIt complicates selective disclosure.  Now, if I opt not to disclose a field, I may have rendered some disclosure further down the line meaningless.  So instead of just deleting one disclosure, I also have to search through the disclosed value for further SD hashes, and delete the corresponding disclosures.\r\n\r\nIn principle, we could add specification text that would address these issues.  But it would be a significant amount of text for what seems like a fairly niche feature.  Seems better just to delete the feature and keep things simple. ",
       "createdAt": "2023-11-13T13:48:09Z",
-      "updatedAt": "2024-02-20T17:41:55Z",
+      "updatedAt": "2024-02-25T19:40:05Z",
       "closedAt": null,
       "comments": [
         {
@@ -9756,9 +9751,9 @@
         {
           "author": "bc-pi",
           "authorAssociation": "COLLABORATOR",
-          "body": "Honestly, I thought recursive redaction was kinda niche too but a nontrivial number of people have wanted/supported it. And the algorithm defined in the spec right now does accommodate it without a lot of extra complexity. Yes that algorithm works by traversing the JSON of the Issuer-singed JWT and pulling in the content of each referenced disclosure (and that content can also recursively reference other disclosures.  That seems like a perfectly natural algorithm to me.  \r\n",
+          "body": "Honestly, I thought recursive redaction was kinda niche too but a nontrivial number of people have wanted/supported it. And the algorithm defined in the spec right now does accommodate it without a lot of extra complexity. Yes that algorithm works by traversing the JSON of the Issuer-singed JWT and pulling in the content of each referenced disclosure (and that content can also recursively reference other disclosures).  That seems like a perfectly natural algorithm to me.  \r\n",
           "createdAt": "2023-11-13T19:47:04Z",
-          "updatedAt": "2023-11-13T20:04:30Z"
+          "updatedAt": "2024-02-25T19:40:05Z"
         },
         {
           "author": "bifurcation",
@@ -10168,7 +10163,7 @@
       ],
       "body": "The algorithm in [Section 8.3](https://www.ietf.org/archive/id/draft-ietf-oauth-selective-disclosure-jwt-06.html#section-8.3) includes the following branch:\r\n\r\n> If Key Binding is provided by means not defined in this specification, verify the Key Binding according to the method used.\r\n\r\nWe should remove that branch.  If an implementation is doing something outside this specification, their behavior can deviate arbitrarily from what the specification says.  It's not the job of this specification to cover everything that a verifier might possibly do.\r\n",
       "createdAt": "2023-11-22T15:24:58Z",
-      "updatedAt": "2024-02-23T22:38:35Z",
+      "updatedAt": "2024-02-25T19:53:48Z",
       "closedAt": null,
       "comments": [
         {
@@ -10212,6 +10207,13 @@
           "body": "PR #404 removes mention of unspecified key binding methods and the Enveloping SD-JWTs section",
           "createdAt": "2024-02-20T23:51:20Z",
           "updatedAt": "2024-02-20T23:51:20Z"
+        },
+        {
+          "author": "bc-pi",
+          "authorAssociation": "COLLABORATOR",
+          "body": "> discussed during the editor's call - agreed to remove specific references that allow additional key binding mechanisms, to encourage interoperability using the mechanisms defined in the spec and because even without the text those additional mechanisms are not precluded as spec makes it clear KB JWT is optional.\r\n\r\nPR https://github.com/oauth-wg/oauth-selective-disclosure-jwt/pull/404 does that\r\n\r\n> @danielfett to open a separate issue on updating section 9 to reflect most recent implementation experience.\r\n\r\nAnd issue #403 is that.\r\n\r\n",
+          "createdAt": "2024-02-25T19:53:47Z",
+          "updatedAt": "2024-02-25T19:53:47Z"
         }
       ]
     },
@@ -40850,7 +40852,7 @@
       "labels": [],
       "body": "This PR limits the scope of the term \"SD-JWT\" so that it refers only to an Issuer-signed JWT and a set of disclosures.  We introduce the term \"Fnord\" to refer to an SD-JWT with key binding.  As a bonus, we are able to clean up stale uses of Presentation, which mostly, but not always align with Fnord.\r\n\r\n\"[Fnord](https://en.wikipedia.org/wiki/Fnord)\" is deliberately nonsensical, of course.  We should replace this with a more intuitive word.  We could reintroduce \"Presentation\" for this, with the allowance that one might \"present\" either a Presentation or an SD-JWT.  Or we could pick another term, suggestions welcome.\r\n\r\nI have tried to be fairly minimal in the changes here.  In particular, I have not changed any of the algorithms, though I suspect they would be clearer if a bit more separate.  I have rewritten a few paragraphs, especially close to the top and in the Security Considerations.\r\n\r\nFixes #374\r\nFixes #392 ",
       "createdAt": "2023-12-05T23:02:33Z",
-      "updatedAt": "2024-02-22T16:04:44Z",
+      "updatedAt": "2024-02-26T23:40:57Z",
       "baseRepository": "oauth-wg/oauth-selective-disclosure-jwt",
       "baseRefName": "master",
       "baseRefOid": "c6bebaa649fe9d3974ca0cdc002da42341ebfd74",
@@ -40903,6 +40905,13 @@
           "body": "> @Sakurann - Changed to `SD-JWT-KB`, since the `SD-JWT/KB` looked weird to me (division seemed like the wrong metaphor) and `SD-JWT~KB` seemed a little too cute. Also merged `master` while I was at it.\r\n\r\nI think I like the aesthethics of `SD-JWT+KB` or `SD-JWT/KB` or `SD-JWT|KB` more than `SD-JWT-KB`.",
           "createdAt": "2024-02-20T16:51:00Z",
           "updatedAt": "2024-02-20T16:51:00Z"
+        },
+        {
+          "author": "bc-pi",
+          "authorAssociation": "COLLABORATOR",
+          "body": "> > @Sakurann - Changed to `SD-JWT-KB`, since the `SD-JWT/KB` looked weird to me (division seemed like the wrong metaphor) and `SD-JWT~KB` seemed a little too cute. Also merged `master` while I was at it.\r\n> \r\n> I think I like the aesthethics of `SD-JWT+KB` or `SD-JWT/KB` or `SD-JWT|KB` more than `SD-JWT-KB`.\r\n\r\nI think aesthethics is spelled aesthetics but otherwise agree (I'm usually the one misspelling things so happy not to be this time...). \r\n\r\nI'd lean towards `SD-JWT+KB` (but did smile at `SD-JWT~KB` despite being a little too cute).",
+          "createdAt": "2024-02-26T21:33:33Z",
+          "updatedAt": "2024-02-26T23:40:57Z"
         }
       ],
       "reviews": [
@@ -41675,9 +41684,9 @@
           "comments": [
             {
               "originalPosition": 11,
-              "body": "\"is binding as SD-JWT to a\" should be \"is binding an SD-JWT to a\"? ",
+              "body": "\"is binding as SD-JWT to a\" should be \"is binding an SD-JWT to a\"? \r\n\r\n```suggestion\r\nFor SD-JWTs where the issuer is binding an SD-JWT to a public key associated to the\r\nHolder (e.g., using the `cnf` claim [@?RFC7800]), this document also defines a\r\n```",
               "createdAt": "2024-02-20T22:47:33Z",
-              "updatedAt": "2024-02-20T22:47:33Z"
+              "updatedAt": "2024-02-26T21:18:43Z"
             }
           ]
         },
@@ -41718,6 +41727,26 @@
               "body": "It was defined (and registered) by DPoP https://www.rfc-editor.org/rfc/rfc9449.html#section-6.1 FWIW. But to @Sakurann's implied point, it's probably not appropriate as the main example in this draft. Or necessarily appropriate/needed as an example at all in this draft. I think the `jwk` confirmation method should be encouraged as much as possible in the SD-JWT context. ",
               "createdAt": "2024-02-22T16:04:44Z",
               "updatedAt": "2024-02-22T16:04:44Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOHTmVzM5xXrq9",
+          "commit": {
+            "abbreviatedOid": "2f918e9"
+          },
+          "author": "bc-pi",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2024-02-26T21:16:08Z",
+          "updatedAt": "2024-02-26T21:16:09Z",
+          "comments": [
+            {
+              "originalPosition": 258,
+              "body": "The suggestion to delete was b/c of it being not quite right. This tries to fix that. \r\n```suggestion\r\nIf the Verifier did not require Key Binding, then the Holder could have\r\npresented the SD-JWT with selected Disclosures directly, instead of encapsulating it in\r\nan SD-JWT-KB.\r\n\r\n```",
+              "createdAt": "2024-02-26T21:16:08Z",
+              "updatedAt": "2024-02-26T21:16:09Z"
             }
           ]
         }
@@ -42334,6 +42363,32 @@
       "headRepository": "oauth-wg/oauth-selective-disclosure-jwt",
       "headRefName": "remove-mention-of-unspecified-key-binding-methods",
       "headRefOid": "ac343528927f6c86df85581b803218cc8af228f2",
+      "closedAt": null,
+      "mergedAt": null,
+      "mergedBy": null,
+      "mergeCommit": null,
+      "comments": [],
+      "reviews": []
+    },
+    {
+      "number": 405,
+      "id": "PR_kwDOHTmVzM5n9vZ6",
+      "title": "be more explicit that VC examples do not define anything",
+      "url": "https://github.com/oauth-wg/oauth-selective-disclosure-jwt/pull/405",
+      "state": "OPEN",
+      "author": "bc-pi",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "be more explicit that the VCDM and SD-JWT VC examples are only illustrative and do not define anything (for #341)\r\n\r\npreview links to the two relevant appendix sections: \r\nhttps://drafts.oauth.net/oauth-selective-disclosure-jwt/examples-are-only-examples/draft-ietf-oauth-selective-disclosure-jwt.html#appendix-A.3\r\n\r\nhttps://drafts.oauth.net/oauth-selective-disclosure-jwt/examples-are-only-examples/draft-ietf-oauth-selective-disclosure-jwt.html#appendix-A.4\r\n",
+      "createdAt": "2024-02-26T20:47:27Z",
+      "updatedAt": "2024-02-26T20:52:05Z",
+      "baseRepository": "oauth-wg/oauth-selective-disclosure-jwt",
+      "baseRefName": "master",
+      "baseRefOid": "fc36fd86ce101c5f003ac977f78a23bd79fa634c",
+      "headRepository": "oauth-wg/oauth-selective-disclosure-jwt",
+      "headRefName": "examples-are-only-examples",
+      "headRefOid": "667adf6f8b4af429d47c334fdef8260f542e2b38",
       "closedAt": null,
       "mergedAt": null,
       "mergedBy": null,
