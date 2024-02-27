@@ -1777,6 +1777,7 @@ data. The original JSON data is then used by the application. See
    * Clarify validation around no duplicate digests in the payload (directly or recursively) and no unused disclosures at the end of processing
    * Better describe and illustrate the tilde separated format
    * Change claim name from `_sd_hash` to `sd_hash`
+   * Update PID example
 
    -06
 
