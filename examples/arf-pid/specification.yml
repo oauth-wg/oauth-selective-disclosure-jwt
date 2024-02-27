@@ -1,6 +1,6 @@
 user_claims:
   vct: https://bmi.bund.example/credential/pid/1.0
-  vct#integrity: sha256-jo8433ot48utul8ura33
+  #vct#integrity: sha256-jo8433ot48utul8ura33
   !sd given_name: Erika
   !sd family_name: Mustermann
   !sd birthdate: '1963-08-12'
@@ -37,8 +37,8 @@ user_claims:
 holder_disclosed_claims:
   nationalities:
     - true
-  age_equal_or_over:
-    '18': true
+  #age_equal_or_over:
+  #  '18': true
 
 add_decoy_claims: false
 key_binding: true

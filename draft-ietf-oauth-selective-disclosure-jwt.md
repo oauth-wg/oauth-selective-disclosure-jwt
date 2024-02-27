@@ -1538,7 +1538,7 @@ The following Disclosures are created by the Issuer:
 
 {{examples/arf-pid/disclosures.md}}
 
-The following is how a presentation of the SD-JWT with a Key Binding JWT that discloses only nationality and the fact that the person is over 18 years old could look like:
+The following shows a presentation of the SD-JWT with a Key Binding JWT that discloses only the nationality of the Holder:
 
 <{{examples/arf-pid/sd_jwt_presentation.txt}}
 
