@@ -1567,9 +1567,11 @@ After the validation, the Verifier will have the following data for further proc
 
 ## Example 4a - SD-JWT-based Verifiable Credentials (SD-JWT VC)
 
-In this example, the artifacts defined in this specification are used to represent
-SD-JWT-based Verifiable Credentials (SD-JWT VC) as defined in [@I-D.ietf-oauth-sd-jwt-vc].
-Person Identification Data (PID) defined in [@EUDIW.ARF] is used.
+This example shows how the artifacts defined in this specification could be
+used in the context of SD-JWT-based Verifiable
+Credentials (SD-JWT VC) [@I-D.ietf-oauth-sd-jwt-vc] to represent the concept of
+a Person Identification Data (PID) [@EUDIW.ARF] using the data of
+a German citizen.
 
 Key Binding is applied
 using the Holder's public key passed in a `cnf` claim in the SD-JWT.
@@ -1776,6 +1778,7 @@ data. The original JSON data is then used by the application. See
    * Clarify validation around no duplicate digests in the payload (directly or recursively) and no unused disclosures at the end of processing
    * Better describe and illustrate the tilde separated format
    * Change claim name from `_sd_hash` to `sd_hash`
+   * Update PID example
 
    -06
 
