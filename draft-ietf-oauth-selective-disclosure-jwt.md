@@ -1567,10 +1567,10 @@ After the validation, the Verifier will have the following data for further proc
 
 ## Example 4a - SD-JWT-based Verifiable Credentials (SD-JWT VC)
 
-In this example, the artifacts defined in this specification are used in
-the context of SD-JWT-based Verifiable Credentials (SD-JWT VC)
-[@I-D.ietf-oauth-sd-jwt-vc] to represent a Person Identification Data
-(PID) [@EUDIW.ARF] of a German citizen.
+This example shows how the artifacts defined in this specification could
+hypothetically be used in the context of SD-JWT-based Verifiable
+Credentials (SD-JWT VC) [@I-D.ietf-oauth-sd-jwt-vc] to represent a
+Person Identification Data (PID) [@EUDIW.ARF] of a German citizen.
 
 Key Binding is applied
 using the Holder's public key passed in a `cnf` claim in the SD-JWT.
