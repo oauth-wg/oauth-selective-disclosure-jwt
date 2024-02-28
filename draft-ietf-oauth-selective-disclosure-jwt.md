@@ -1552,8 +1552,8 @@ After the validation, the Verifier will have the following data for further proc
 
 ## Example 4b - W3C Verifiable Credentials Data Model v2.0
 
-This hypothetical example shows how a W3C Verifiable Credentials Data Model v2.0 [@VC_DATA_v2.0]
-payload might be expressed using the artifacts defined in this specification.
+This non-normative example illustrates how the artifacts defined in this specification
+could be used to express a W3C Verifiable Credentials Data Model v2.0 [@VC_DATA_v2.0] payload.
 
 Key Binding is applied
 using the Holder's public key passed in a `cnf` claim in the SD-JWT.
