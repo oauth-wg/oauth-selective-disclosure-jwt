@@ -668,7 +668,7 @@ The following Key Binding JWT payload was created and signed for this presentati
 <{{examples/simple/kb_jwt_payload.json}}
 
 If the Verifier did not require Key Binding, then the Holder could have
-presented the SD-JWT from (#issuance) directly, instead of encapsulating it in
+presented the SD-JWT with selected Disclosures directly, instead of encapsulating it in
 an SD-JWT-KB.
 
 # Considerations on Nested Data in SD-JWTs {#nested_data}
