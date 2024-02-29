@@ -1456,7 +1456,7 @@ the media type is encoded as an SD-JWT.
 
 # Additional Examples
 
-Important: The following examples are not normative and provided for
+Important: The following examples are not normative and are provided for
 illustrative purposes only. In particular, neither the structure of the claims
 nor the selection of selectively disclosable claims is normative.
 
