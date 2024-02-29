@@ -1458,7 +1458,11 @@ the media type is encoded as an SD-JWT.
 
 # Additional Examples
 
-All of the following examples are non-normative.
+Important: The following examples are not normative and are provided for
+illustrative purposes only. In particular, neither the structure of the claims
+nor the selection of selectively disclosable claims is normative.
+
+Line breaks have been added for readability.
 
 ## Example 2: Handling Structured Claims {#example-simple_structured}
 
@@ -1554,8 +1558,8 @@ After the validation, the Verifier will have the following data for further proc
 
 ## Example 4b - W3C Verifiable Credentials Data Model v2.0
 
-In this example, the artifacts defined in this specification are used to represent a payload
-that is represented as a W3C Verifiable Credentials Data Model v2.0 [@VC_DATA_v2.0].
+This non-normative example illustrates how the artifacts defined in this specification
+could be used to express a W3C Verifiable Credentials Data Model v2.0 [@VC_DATA_v2.0] payload.
 
 Key Binding is applied
 using the Holder's public key passed in a `cnf` claim in the SD-JWT.
@@ -1715,9 +1719,10 @@ data. The original JSON data is then used by the application. See
 * Do not disallow HMAC any longer.
 * Editorial changes aimed at improved clarity
 * Improve unlinkability considerations, mention that different KB keys must be used
+* Be more explicit that the VCDM and SD-JWT VC examples are only illustrative and do not define anything
 * Remove mention of unspecified key binding methods and the Enveloping SD-JWTs section
 * Editorial updates aimed at more consistent treatment of a Disclosure vs the contents of a Disclosure
-
+* Update PID example
 
    -07
 
@@ -1728,7 +1733,7 @@ data. The original JSON data is then used by the application. See
    * Clarify validation around no duplicate digests in the payload (directly or recursively) and no unused disclosures at the end of processing
    * Better describe and illustrate the tilde separated format
    * Change claim name from `_sd_hash` to `sd_hash`
-   * Update PID example
+
 
    -06
 
