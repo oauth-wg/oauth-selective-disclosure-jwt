@@ -102,11 +102,12 @@ has to verify that all disclosed claim values were part of the original
 Issuer-signed JWT. The Verifier will not, however, learn any claim
 values not disclosed in the Disclosures.
 
-For SD-JWTs where the issuer has specified an associated public key for the
+For SD-JWTs where the issuer is binding an SD-JWT to a public key associated to the
 Holder (e.g., using the `cnf` claim [@?RFC7800]), this document also defines a
-format for SD-JWTs with Key Binding (SD-JWT-KB).  By sending an SD-JWT-KB to a
+format for SD-JWTs with Key Binding (SD-JWT-KB).  By optionally sending an SD-JWT-KB to a
 Verifier, the Holder can prove to the verifier that they hold the private key
-associated to the SD-JWT.
+associated to the SD-JWT. The strength of the binding is conditional upon the trust
+in the protection of the private key of the key pair an SD-JWT is bound to.
 
 SD-JWT can be used with any JSON-based representation of claims, including JSON-LD.
 
@@ -118,8 +119,7 @@ wherever possible.
 
 This specification defines two primary data formats:
 
-* SD-JWT: A format for signed, selectively-disclosable JSON content, together
-  with a set of selectively disclosed claims
+* SD-JWT is a composite structure issued by the issuer that consists of the following:
   - A format for the payload of an Issuer-signed JWT containing selectively
     disclosable claims that include object properties (name-value pairs), array
     elements, and nested data structures built from these
@@ -131,7 +131,7 @@ This specification defines two primary data formats:
   - An alternate format extending the JWS JSON Serialization, also allowing for
     transport of the Issuer-signed JWT and disclosure data
 
-* SD-JWT-KB: A format for proving posssion of a private key bound to an SD-JWT
+* SD-JWT-KB: A composite structure that is presented to the verifier that consists of the following:
   - A facility for associating a JWT to a key pair
   - A format for a Key Binding JWT that proves possession of the private key of
     the associated key pair
@@ -167,7 +167,7 @@ Disclosure:
 
 Key Binding:
 :  Ability of the Holder to prove legitimate possession of an SD-JWT by proving
-  control over the same private key during the issuance and presentation. To be compatible with Key Binding, an SD-JWT MUST contain
+  control over the same private key during the issuance and presentation. To be compatible with Key Binding, an SD-JWT contains
   the public key corresponding to the private key controlled by the Holder (or a reference to this public key).
 
 Key Binding JWT (KB-JWT):
@@ -259,7 +259,7 @@ At a high level, the Verifier
 
  * receives either an SD-JWT or an SD-JWT-KB from the Holder
  * verifies the signature on the SD-JWT (or the the SD-JWT inside the SD-JWT-KB) using the Issuer's public key,
- * verifies the signature on the KB-JWT using the public key included in the SD-JWT, if an SD-JWT-KB was provided and the Verifier's policy requries Key Binding
+ * verifies the signature on the KB-JWT using the public key included (or referenced) in the SD-JWT, if an SD-JWT-KB was provided and the Verifier's policy requires Key Binding
  * calculates the digests over the Holder-Selected Disclosures and verifies that each digest is contained in the SD-JWT.
 
 The detailed algorithm is described in (#verifier_verification).
@@ -299,8 +299,8 @@ The serialized format for an SD-JWT-KB extends the SD-JWT format by concatenatin
 
 The two formats can be distinguished by the final `~` character that is present
 on an SD-JWT.  A Verifier that expects an SD-JWT MUST verify that its final
-`~`-separated component is empty.  A Verifier that expects an SD-JWT-KB MUST verify
-that its final `~`-separated component is a valid KB-JWT.
+tilde-separated component is empty.  A Verifier that expects an SD-JWT-KB MUST verify
+that its final tilde-separated component is a valid KB-JWT.
 
 The Disclosures are linked to the Issuer-signed JWT through the
 digest values included therein.
@@ -578,7 +578,7 @@ The Key Binding JWT MUST contain the following elements:
     * `iat`: REQUIRED. The value of this claim MUST be the time at which the Key Binding JWT was issued using the syntax defined in [@!RFC7519].
     * `aud`: REQUIRED. The intended receiver of the Key Binding JWT. How the value is represented is up to the protocol used and out of scope of this specification.
     * `nonce`: REQUIRED. Ensures the freshness of the signature. The value type of this claim MUST be a string. How this value is obtained is up to the protocol used and out of scope of this specification.
-    * `sd_hash`: REQUIRED. The base64url-encoded hash digest over the Issuer-signed JWT and the selected Disclosures as defined below.
+    * `sd_hash`: REQUIRED. The base64url-encoded hash value over the Issuer-signed JWT and the selected Disclosures as defined below.
 
 ### Binding to an SD-JWT {#integrity-protection-of-the-presentation}
 
@@ -601,7 +601,7 @@ in (#hash_function_claim)).
 ### Validating the Key Binding JWT
 
 The Verifier MUST ensure that the key with which it validates the signature on
-the Key Binding JWT is the key specified in the SD-JWT as the using the Holder's
+the Key Binding JWT is the key specified in the SD-JWT as the Holder's
 public key.  For example, if the SD-JWT contains a `cnf` value of type `jkt`,
 the Verifier would confirm that the public key's JWK Thumbprint matches the `jkt`
 value.  Or if the SD-JWT contains a `cnf` value of type `jwk`, then the Verifier
@@ -661,7 +661,7 @@ The issued SD-JWT might look as follows:
 
 The following non-normative example shows an SD-JWT-KB as
 it would be sent from the Holder to the Verifier. Note that it consists of six
-`~`-separated parts, with the Issuer-signed JWT as shown above in the beginning,
+tilde-separated parts, with the Issuer-signed JWT as shown above in the beginning,
 four Disclosures (for the claims `given_name`, `family_name`, `address`, and
 `nationalities`) in the middle, and the Key Binding JWT as the last element.
 
@@ -779,7 +779,7 @@ It is up to the Holder how to maintain the mapping between the Disclosures and t
 
 ## Processing by the Holder  {#holder_verification}
 
-The Issuer MUST provide the Holder and SD-JWT, not an SD-JWT-KB.  If the Holder
+The Issuer MUST provide the Holder an SD-JWT, not an SD-JWT-KB.  If the Holder
 receives an SD-JWT-KB from the Issuer, it SHOULD be rejected.
 
 For presentation to a Verifier, the Holder MUST perform the following (or equivalent) steps:
