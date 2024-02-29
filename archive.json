@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2024-02-27T00:50:28.902500+00:00",
+  "timestamp": "2024-02-29T00:50:40.246625+00:00",
   "repo": "oauth-wg/oauth-selective-disclosure-jwt",
   "labels": [
     {
@@ -9202,13 +9202,16 @@
       "state": "OPEN",
       "author": "rohan-wire",
       "authorAssociation": "NONE",
-      "assignees": [],
+      "assignees": [
+        "bc-pi"
+      ],
       "labels": [
+        "has-PR",
         "editorial"
       ],
       "body": "Hi,\r\n\r\nDisclosure is used at least two ways in the document.\r\n\r\n- to refer to the array containing the salt, (maybe name), and value.\r\n- to refer to the base64url encoded string \r\n\r\nIt's easy to understand how this could have happened, as both contain logically the same information. I propose explicitly calling these:\r\n\r\n- **disclosure array**, and \r\n- **disclosure presentation**\r\n\r\nI also propose calling the hash/digest of the disclosure the **disclosure digest** in full in every use. The only time we would use \"disclosure\" without one of these modifiers is talking about the process of disclosing in general.\r\n\r\nAs for the plaintext of the claims that can be disclosed, I propose **blinded claim**.\r\n\r\nSo the first paragraph of Section 4.1 would read:\r\n\r\nAn SD-JWT consists of:\r\n\r\n- a signed JSON document, \r\n- a list of _disclosure presentations_ (each of which reveals a _blinded claim_), and \r\n- optionally an _issuer key binding_ (discussed in Section 4.3). \r\n\r\nThe signed JSON document (the JWT body) contains plaintext claims; and _disclosure digests_, each of which either refers to a specific _blinded claim_ or is a _decoy_. The holder can include zero or more disclosure presentations without breaking the signature of the JWT body. The contents of the blinded claims cannot be modified, because the corresponding digest would no longer match any digest in the JWT body. Blinded claims can be individual object properties (key-value pairs) or array elements.",
       "createdAt": "2023-10-24T12:42:33Z",
-      "updatedAt": "2023-10-30T09:06:06Z",
+      "updatedAt": "2024-02-28T23:54:01Z",
       "closedAt": null,
       "comments": [
         {
@@ -9224,6 +9227,13 @@
           "body": "The current document attempts to mostly use \"Disclosure\" to mean the base64url encoded string. I think that works okay. Places where it's referring to the decoded JSON array should be fixed to be more clear. So I think I agree that \"disclosure\" and where needed \"disclosure contents\" would be good. \r\n\r\n",
           "createdAt": "2023-10-25T21:36:36Z",
           "updatedAt": "2023-10-25T21:36:36Z"
+        },
+        {
+          "author": "bc-pi",
+          "authorAssociation": "COLLABORATOR",
+          "body": "PR #410 has editorial updates for more consistent treatment of a Disclosure vs the contents of a Disclosure ",
+          "createdAt": "2024-02-28T23:54:00Z",
+          "updatedAt": "2024-02-28T23:54:00Z"
         }
       ]
     },
@@ -9594,9 +9604,17 @@
       ],
       "body": "Abbreviations appear in this document without first being defined, e.g., KB-JWT. \r\nIt would make it easier for the readers if the document has an abbreviation section near the top of the document. \r\nProposal: \r\nCreate a new section 2.1 Abbreviation and collect all the abbreviations.",
       "createdAt": "2023-11-07T15:30:36Z",
-      "updatedAt": "2024-02-20T17:46:17Z",
+      "updatedAt": "2024-02-27T17:41:09Z",
       "closedAt": null,
-      "comments": []
+      "comments": [
+        {
+          "author": "Sakurann",
+          "authorAssociation": "COLLABORATOR",
+          "body": "need to do after #394 is resolved to do a PR.",
+          "createdAt": "2024-02-27T17:40:00Z",
+          "updatedAt": "2024-02-27T17:40:00Z"
+        }
+      ]
     },
     {
       "number": 371,
@@ -9704,13 +9722,13 @@
       "state": "OPEN",
       "author": "bifurcation",
       "authorAssociation": "NONE",
-      "assignees": [],
-      "labels": [
-        "ready-for-PR"
+      "assignees": [
+        "bifurcation"
       ],
+      "labels": [],
       "body": "Recursive redaction makes it much more complex to validate and handle SD-JWT objects.\r\n\r\nIt requires that disclosure be processed in a particular order, and since this order is known only to the redactor, the disclosures in the SD-JWT must be listed in a specific order to communicate the order.\r\n\r\nIt complicates the matching of disclosure objects to redacted fields, which you need to do in order to validate that the disclosures match the Issuer JWT, or to offer an API of the form \"delete the disclosure for `/address/street_address`\".  Without recursion, you are matching the list of disclosures against the claims in the Issuer JWT.  With recursion, you are matching the list of disclosures against the issuer JWT _and all other disclosures_.\r\n\r\nIt complicates selective disclosure.  Now, if I opt not to disclose a field, I may have rendered some disclosure further down the line meaningless.  So instead of just deleting one disclosure, I also have to search through the disclosed value for further SD hashes, and delete the corresponding disclosures.\r\n\r\nIn principle, we could add specification text that would address these issues.  But it would be a significant amount of text for what seems like a fairly niche feature.  Seems better just to delete the feature and keep things simple. ",
       "createdAt": "2023-11-13T13:48:09Z",
-      "updatedAt": "2024-02-25T19:40:05Z",
+      "updatedAt": "2024-02-27T17:39:29Z",
       "closedAt": null,
       "comments": [
         {
@@ -10152,7 +10170,7 @@
       "id": "I_kwDOHTmVzM53mf8k",
       "title": "Remove mention of unspecified key binding methods",
       "url": "https://github.com/oauth-wg/oauth-selective-disclosure-jwt/issues/383",
-      "state": "OPEN",
+      "state": "CLOSED",
       "author": "bifurcation",
       "authorAssociation": "NONE",
       "assignees": [
@@ -10163,8 +10181,8 @@
       ],
       "body": "The algorithm in [Section 8.3](https://www.ietf.org/archive/id/draft-ietf-oauth-selective-disclosure-jwt-06.html#section-8.3) includes the following branch:\r\n\r\n> If Key Binding is provided by means not defined in this specification, verify the Key Binding according to the method used.\r\n\r\nWe should remove that branch.  If an implementation is doing something outside this specification, their behavior can deviate arbitrarily from what the specification says.  It's not the job of this specification to cover everything that a verifier might possibly do.\r\n",
       "createdAt": "2023-11-22T15:24:58Z",
-      "updatedAt": "2024-02-25T19:53:48Z",
-      "closedAt": null,
+      "updatedAt": "2024-02-27T17:26:57Z",
+      "closedAt": "2024-02-27T17:26:57Z",
       "comments": [
         {
           "author": "bc-pi",
@@ -10527,12 +10545,10 @@
       "author": "bifurcation",
       "authorAssociation": "NONE",
       "assignees": [],
-      "labels": [
-        "ready-for-PR"
-      ],
+      "labels": [],
       "body": "It seems like it could be helpful to implementors, allowing them to quickly validate whether what they have is syntactically an SD-JWT or an SD-JWT with key binding.  Something like:\r\n\r\n```\r\nbase64url ::= ALPHA / DIGIT / \"-\" / \"_\"\r\nJWT ::= base64url \".\" base64url \".\" base64url\r\nSD-JWT ::= JWT \"~\" [base64url \"~\"]*\r\nFnord ::= SD-JWT JWT\r\n```",
       "createdAt": "2023-12-05T22:57:48Z",
-      "updatedAt": "2024-02-20T17:44:15Z",
+      "updatedAt": "2024-02-27T17:40:26Z",
       "closedAt": null,
       "comments": [
         {
@@ -10569,6 +10585,13 @@
           "body": "(SD-JWT-KB part of the ABNF depends on another PR)",
           "createdAt": "2024-02-20T17:44:14Z",
           "updatedAt": "2024-02-20T17:44:14Z"
+        },
+        {
+          "author": "Sakurann",
+          "authorAssociation": "COLLABORATOR",
+          "body": "need to wait after #394 is resolved to do a PR.",
+          "createdAt": "2024-02-27T17:40:25Z",
+          "updatedAt": "2024-02-27T17:40:25Z"
         }
       ]
     },
@@ -10577,7 +10600,7 @@
       "id": "I_kwDOHTmVzM55ExJI",
       "title": "Audacious Presentations",
       "url": "https://github.com/oauth-wg/oauth-selective-disclosure-jwt/issues/395",
-      "state": "OPEN",
+      "state": "CLOSED",
       "author": "OR13",
       "authorAssociation": "CONTRIBUTOR",
       "assignees": [],
@@ -10586,8 +10609,8 @@
       ],
       "body": "Consider a hypothetical API for verifying an SD-JWT with Key Binding.\r\n\r\nThese examples are inspired by https://github.com/panva/jose/blob/main/docs/functions/jwt_verify.jwtVerify.md\r\n\r\n```\r\nverified = verify<TokenType>(token: string, publicKey, { aud, nonce })\r\n```\r\n\r\nwhen token contains KBT, there are 2 payloads that could have the `aud` and `nonce` claims.\r\n\r\nAn API that addressed this possible confusion would look like:\r\n\r\n```\r\nverified = verify<TokenType>(token: string, issuerPublicKey, { \r\n  issuerSignedJwt: { aud, nonce },  // assume cnf: { jwk }\r\n  keyBindingToken: { aud, nonce }   // assume uses cnf\r\n)\r\n```\r\n\r\nThe problem is SD-JWT has 2 tokens, so the `aud` and `nonce` claims have 2 places to check.\r\n\r\nIf the idea of matching an expected nonce is confusing, focus only on the audience bit.\r\n\r\nThe issuer commits a credential to a specific audience, and the holder commits their key binding token to a specific audience.\r\n\r\nA verifier would want to check that both values are \"acceptable\", and \"acceptable\" could mean the same or different.\r\n\r\nThis is compounded by `aud` being allowed to be an array or string.\r\n\r\nIf an API was exposed that looked like this:\r\n\r\n```\r\nverified = verify<TokenType>(fnard: string, issuerPublicKey, { aud, nonce })\r\n)\r\n```\r\n\r\nI think it would be clear that the `aud` and `nonce` were checks on the key binding token, not on the issuer token.",
       "createdAt": "2023-12-07T18:16:02Z",
-      "updatedAt": "2024-02-20T17:43:05Z",
-      "closedAt": null,
+      "updatedAt": "2024-02-27T17:32:02Z",
+      "closedAt": "2024-02-27T17:32:02Z",
       "comments": [
         {
           "author": "OR13",
@@ -10677,10 +10700,28 @@
       "author": "danielfett",
       "authorAssociation": "MEMBER",
       "assignees": [],
-      "labels": [],
+      "labels": [
+        "ready-for-PR"
+      ],
       "body": "Through discussions in the EUDI context, we found that the current JSON Serialization design is not well-suited for existing implementations. We now also better understand the original use cases that lead us to include this section into the spec in the first place and we agreed that we should update it as follows:\r\n\r\n* The disclosures should go into the unprotected header (to be defined: What happens when there are multiple signatures and therefore multiple unprotected headers with disclosures?)\r\n* There should be a way to put the key binding JWT into the unprotected header (to be defined: What happens when there are multiple signatures and therefore multiple places where a KB JWT could go?). The way the hash is built could remain unchanged, but the order of disclosures needs to be clearly defined if they can show up in multiple headers. This would also solve #392.\r\n\r\nThe new flattened format could be:\r\n```json\r\n{\r\n  \"payload\":\"eyJfc2QiOiBbIjR...Aic2hhLTI1NiJ9\",\r\n  \"protected\":\"eyJhbGciOiAiRVMyNTYiLCAidHlwIjogImV4YW1wbGUrc2Qtand0In0\",\r\n  \"signature\":\"oL5lornrs6CFBMu...4HQby6OaaLqAw\",\r\n  \"header\":{\r\n    \"disclosures\":[\r\n      \"WyI2SWo3dE0tYTVpVlBH...W1lIiwgIkRvZSJd\",\r\n      \"WyJBSngtMDk1VlBycFR...ImFkZHJlc3MiLCB7InN0cmVldF9\",\r\n      \"WyJlbHVWNU9nM2dTT...VuX25hbWUiLCAiSm9obiJd\"\r\n    ],\r\n    \"kb_jwt\":\"eyJhbGciOiAiRVMyNTYiLCAidHlwIjogI...bGUrc2Qtand0In0\"\r\n  }\r\n}\r\n```\r\n\r\nAnd the new general format could be:\r\n```json\r\n{\r\n  \"payload\":\"eyJfc2QiOiBbIjR...Aic2hhLTI1NiJ9\",\r\n  \"signatures\":[\r\n    {\r\n      \"protected\":\"eyJhbGciOiAiRVMyNTYiLCAidHlwIjogImV4YW1wbGUrc2Qtand0In0\",\r\n      \"signature\":\"oL5lornrs6CFBMu...4HQby6OaaLqAw\",\r\n      \"header\":{\r\n        \"disclosures\":[\r\n          \"WyI2SWo3dE0tYTVpVlBH...W1lIiwgIkRvZSJd\",\r\n          \"WyJBSngtMDk1VlBycFR...ImFkZHJlc3MiLCB7InN0cmVldF9\",\r\n          \"WyJlbHVWNU9nM2dTT...VuX25hbWUiLCAiSm9obiJd\"\r\n        ],\r\n        \"kb_jwt\":\"eyJhbGciOiAiRVMyNTYiLCAidHlwIjogI...bGUrc2Qtand0In0\"\r\n      }\r\n    },\r\n    {\r\n      \"protected\":\"eyJhbGciOiAiRVMyNTYiLCAidHlwIjogImV4YW1wbGUrc2Qtand0In0\",\r\n      \"signature\":\"oL5lornrs6CFBMu...4HQby6OaaLqAw\"\r\n    }\r\n  ]\r\n}\r\n```\r\n",
       "createdAt": "2024-02-20T17:58:14Z",
-      "updatedAt": "2024-02-20T17:58:14Z",
+      "updatedAt": "2024-02-27T17:32:22Z",
+      "closedAt": null,
+      "comments": []
+    },
+    {
+      "number": 409,
+      "id": "I_kwDOHTmVzM6AnKPO",
+      "title": "disclosing age_equal_or_over not working",
+      "url": "https://github.com/oauth-wg/oauth-selective-disclosure-jwt/issues/409",
+      "state": "OPEN",
+      "author": "bc-pi",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "> We should probably chase this down sometime sooner rather than later \r\n> (some issue with the yaml or a bug in the library maybe?).\r\n\r\n_Originally posted by @bc-pi in https://github.com/oauth-wg/oauth-selective-disclosure-jwt/pull/408#discussion_r1505105674_\r\n            ",
+      "createdAt": "2024-02-27T22:52:28Z",
+      "updatedAt": "2024-02-27T22:53:03Z",
       "closedAt": null,
       "comments": []
     }
@@ -42349,26 +42390,95 @@
       "id": "PR_kwDOHTmVzM5ndFaV",
       "title": "Remove mention of unspecified key binding methods",
       "url": "https://github.com/oauth-wg/oauth-selective-disclosure-jwt/pull/404",
-      "state": "OPEN",
+      "state": "MERGED",
       "author": "bc-pi",
       "authorAssociation": "COLLABORATOR",
       "assignees": [],
       "labels": [],
       "body": "Remove mention of unspecified key binding methods and the Enveloping SD-JWTs section (issue #383)\r\n\r\nEditor's copy preview of this PR: https://drafts.oauth.net/oauth-selective-disclosure-jwt/remove-mention-of-unspecified-key-binding-methods/draft-ietf-oauth-selective-disclosure-jwt.html",
       "createdAt": "2024-02-20T23:48:22Z",
-      "updatedAt": "2024-02-20T23:50:12Z",
+      "updatedAt": "2024-02-27T17:26:57Z",
       "baseRepository": "oauth-wg/oauth-selective-disclosure-jwt",
       "baseRefName": "master",
       "baseRefOid": "fc36fd86ce101c5f003ac977f78a23bd79fa634c",
       "headRepository": "oauth-wg/oauth-selective-disclosure-jwt",
       "headRefName": "remove-mention-of-unspecified-key-binding-methods",
-      "headRefOid": "ac343528927f6c86df85581b803218cc8af228f2",
-      "closedAt": null,
-      "mergedAt": null,
-      "mergedBy": null,
-      "mergeCommit": null,
+      "headRefOid": "4db52a2363147492652ed6a7f7744876b38fe285",
+      "closedAt": "2024-02-27T17:26:57Z",
+      "mergedAt": "2024-02-27T17:26:57Z",
+      "mergedBy": "danielfett",
+      "mergeCommit": {
+        "oid": "894905aa7985a3e7e7636ff740a8b8fbd9fd111f"
+      },
       "comments": [],
-      "reviews": []
+      "reviews": [
+        {
+          "id": "PRR_kwDOHTmVzM5xcSWJ",
+          "commit": {
+            "abbreviatedOid": "ac34352"
+          },
+          "author": "danielfett",
+          "authorAssociation": "MEMBER",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2024-02-27T11:25:15Z",
+          "updatedAt": "2024-02-27T11:25:15Z",
+          "comments": [
+            {
+              "originalPosition": 52,
+              "body": "```suggestion\r\nexcept that the SD-JWT does not need to be split into component parts and the disclosures\r\n```",
+              "createdAt": "2024-02-27T11:25:15Z",
+              "updatedAt": "2024-02-27T11:25:16Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOHTmVzM5xcSdu",
+          "commit": {
+            "abbreviatedOid": "ac34352"
+          },
+          "author": "danielfett",
+          "authorAssociation": "MEMBER",
+          "state": "APPROVED",
+          "body": "Thank you, approved with one nit.",
+          "createdAt": "2024-02-27T11:25:31Z",
+          "updatedAt": "2024-02-27T11:25:31Z",
+          "comments": []
+        },
+        {
+          "id": "PRR_kwDOHTmVzM5xgBJ1",
+          "commit": {
+            "abbreviatedOid": "4db52a2"
+          },
+          "author": "Sakurann",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2024-02-27T17:11:33Z",
+          "updatedAt": "2024-02-27T17:11:33Z",
+          "comments": [
+            {
+              "originalPosition": 25,
+              "body": "```suggestion\r\n3. If Key Binding JWT is required:\r\n```\r\n\r\nif Key Binding is required, but can be provided using means other than KB JWT, the current 3.1 is too strict",
+              "createdAt": "2024-02-27T17:11:33Z",
+              "updatedAt": "2024-02-27T17:11:34Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOHTmVzM5xgMlB",
+          "commit": {
+            "abbreviatedOid": "4db52a2"
+          },
+          "author": "Sakurann",
+          "authorAssociation": "COLLABORATOR",
+          "state": "APPROVED",
+          "body": "noting that this change solidifies that to be compliant to the sd-jwt spec, one must use kb jwt for key binding, more than merely removing a note that key binding can be provided using means other than kb jwt.",
+          "createdAt": "2024-02-27T17:21:55Z",
+          "updatedAt": "2024-02-27T17:21:55Z",
+          "comments": []
+        }
+      ]
     },
     {
       "number": 405,
@@ -42380,15 +42490,540 @@
       "authorAssociation": "COLLABORATOR",
       "assignees": [],
       "labels": [],
-      "body": "be more explicit that the VCDM and SD-JWT VC examples are only illustrative and do not define anything (for #341)\r\n\r\npreview links to the two relevant appendix sections: \r\nhttps://drafts.oauth.net/oauth-selective-disclosure-jwt/examples-are-only-examples/draft-ietf-oauth-selective-disclosure-jwt.html#appendix-A.3\r\n\r\nhttps://drafts.oauth.net/oauth-selective-disclosure-jwt/examples-are-only-examples/draft-ietf-oauth-selective-disclosure-jwt.html#appendix-A.4\r\n",
+      "body": "be more explicit that the VCDM and SD-JWT VC examples are only illustrative and do not define anything (for #341)\r\n\r\npreview links to the two relevant appendix parts: \r\nhttps://drafts.oauth.net/oauth-selective-disclosure-jwt/examples-are-only-examples/draft-ietf-oauth-selective-disclosure-jwt.html#appendix-A\r\n\r\nhttps://drafts.oauth.net/oauth-selective-disclosure-jwt/examples-are-only-examples/draft-ietf-oauth-selective-disclosure-jwt.html#appendix-A.4\r\n",
       "createdAt": "2024-02-26T20:47:27Z",
-      "updatedAt": "2024-02-26T20:52:05Z",
+      "updatedAt": "2024-02-29T00:50:20Z",
+      "baseRepository": "oauth-wg/oauth-selective-disclosure-jwt",
+      "baseRefName": "master",
+      "baseRefOid": "894905aa7985a3e7e7636ff740a8b8fbd9fd111f",
+      "headRepository": "oauth-wg/oauth-selective-disclosure-jwt",
+      "headRefName": "examples-are-only-examples",
+      "headRefOid": "01495b4e900cc132cc8452bca9a0176d18a1c3d6",
+      "closedAt": null,
+      "mergedAt": null,
+      "mergedBy": null,
+      "mergeCommit": null,
+      "comments": [
+        {
+          "author": "Sakurann",
+          "authorAssociation": "COLLABORATOR",
+          "body": "discussed to add a sentence at line 1513 that data structure and claim names are hypothetical. @sakurann to do",
+          "createdAt": "2024-02-27T17:00:15Z",
+          "updatedAt": "2024-02-27T17:01:16Z"
+        },
+        {
+          "author": "bc-pi",
+          "authorAssociation": "COLLABORATOR",
+          "body": "> discussed to add a sentence at line 1513 that data structure and claim names are hypothetical. @Sakurann to do\r\n\r\nPerspective text from SD-JWT VC that tries to say similar things:\r\n> Important: The following examples are not normative and provided for\r\n> ~~illustration~~ illustrative purposes only. In particular, neither the structure of the claims\r\n> nor the selection of selectively disclosable claims are normative.",
+          "createdAt": "2024-02-27T18:00:11Z",
+          "updatedAt": "2024-02-27T18:35:58Z"
+        },
+        {
+          "author": "bc-pi",
+          "authorAssociation": "COLLABORATOR",
+          "body": "> > discussed to add a sentence at line 1513 that data structure and claim names are hypothetical. @Sakurann to do\r\n> \r\n> Perspective text from SD-JWT VC that tries to say similar things:\r\n> \r\n> > Important: The following examples are not normative and provided for\r\n> > ~illustration~ illustrative purposes only. In particular, neither the structure of the claims\r\n> > nor the selection of selectively disclosable claims are normative.\r\n\r\nI added that text at start of the whole examples appendix 0bd026ba5f802a79c790822f875ea348647fb11c\r\n\r\nAnd updated the text at the start of the VCDM example along the lines of @Sakurann's suggestion 30c847c605fd06064ade786ff9c3f134b9ff32af \r\n\r\nI think this one is ready for review again. ",
+          "createdAt": "2024-02-28T19:57:50Z",
+          "updatedAt": "2024-02-28T19:57:50Z"
+        }
+      ],
+      "reviews": [
+        {
+          "id": "PRR_kwDOHTmVzM5xcRzE",
+          "commit": {
+            "abbreviatedOid": "667adf6"
+          },
+          "author": "danielfett",
+          "authorAssociation": "MEMBER",
+          "state": "APPROVED",
+          "body": "",
+          "createdAt": "2024-02-27T11:24:04Z",
+          "updatedAt": "2024-02-27T11:24:04Z",
+          "comments": []
+        },
+        {
+          "id": "PRR_kwDOHTmVzM5xfrmE",
+          "commit": {
+            "abbreviatedOid": "667adf6"
+          },
+          "author": "Sakurann",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2024-02-27T16:43:55Z",
+          "updatedAt": "2024-02-27T16:43:55Z",
+          "comments": [
+            {
+              "originalPosition": 21,
+              "body": "I think the language should align with another example.\r\n\r\n```suggestion\r\nThis is a non-normative example how the artifacts defined in this specification\r\ncould be used to express a W3C Verifiable Credentials Data Model v2.0 [@VC_DATA_v2.0] payload.\r\n```",
+              "createdAt": "2024-02-27T16:43:55Z",
+              "updatedAt": "2024-02-27T16:45:32Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOHTmVzM5xfroF",
+          "commit": {
+            "abbreviatedOid": "667adf6"
+          },
+          "author": "Sakurann",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2024-02-27T16:43:57Z",
+          "updatedAt": "2024-02-27T16:43:57Z",
+          "comments": [
+            {
+              "originalPosition": 10,
+              "body": "`hypothetical` feels too strong to me.\r\n\r\n```suggestion\r\nThis is a non-normative example how the artifacts defined in this specification\r\ncould be used to express an SD-JWT-based Verifiable Credential [@I-D.ietf-oauth-sd-jwt-vc] with\r\nPerson Identification Data (PID) defined in [@EUDIW.ARF].\r\n```",
+              "createdAt": "2024-02-27T16:43:57Z",
+              "updatedAt": "2024-02-27T16:44:45Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOHTmVzM5xfxqC",
+          "commit": {
+            "abbreviatedOid": "667adf6"
+          },
+          "author": "Sakurann",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2024-02-27T16:50:30Z",
+          "updatedAt": "2024-02-27T16:50:30Z",
+          "comments": [
+            {
+              "originalPosition": 10,
+              "body": "or something like this:\r\n\r\n```suggestion\r\nThis example shows how the artifacts defined in this specification could be used to represent\r\nSD-JWT-based Verifiable Credentials (SD-JWT VC) as defined in [@I-D.ietf-oauth-sd-jwt-vc].\r\n```",
+              "createdAt": "2024-02-27T16:50:30Z",
+              "updatedAt": "2024-02-27T16:54:20Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOHTmVzM5xf5Aw",
+          "commit": {
+            "abbreviatedOid": "667adf6"
+          },
+          "author": "Sakurann",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2024-02-27T16:59:22Z",
+          "updatedAt": "2024-02-27T16:59:23Z",
+          "comments": [
+            {
+              "originalPosition": 10,
+              "body": "ok, so I think editors discussed to merge #407 first, and not cover in this PR?",
+              "createdAt": "2024-02-27T16:59:23Z",
+              "updatedAt": "2024-02-27T16:59:23Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOHTmVzM5xgt_S",
+          "commit": {
+            "abbreviatedOid": "ff541be"
+          },
+          "author": "bc-pi",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2024-02-27T18:02:57Z",
+          "updatedAt": "2024-02-27T18:02:57Z",
+          "comments": [
+            {
+              "originalPosition": 18,
+              "body": "I just happened to notice this was in the wrong draft revision when resolving conflicts merging in master ",
+              "createdAt": "2024-02-27T18:02:57Z",
+              "updatedAt": "2024-02-27T18:02:57Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOHTmVzM5xg0HR",
+          "commit": {
+            "abbreviatedOid": "667adf6"
+          },
+          "author": "bc-pi",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2024-02-27T18:11:14Z",
+          "updatedAt": "2024-02-27T18:11:15Z",
+          "comments": [
+            {
+              "originalPosition": 10,
+              "body": "#407 was merged and addresses this part ",
+              "createdAt": "2024-02-27T18:11:14Z",
+              "updatedAt": "2024-02-27T18:11:15Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOHTmVzM5xg18Z",
+          "commit": {
+            "abbreviatedOid": "ff541be"
+          },
+          "author": "danielfett",
+          "authorAssociation": "MEMBER",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2024-02-27T18:13:38Z",
+          "updatedAt": "2024-02-27T18:13:38Z",
+          "comments": [
+            {
+              "originalPosition": 18,
+              "body": "Thanks, I seem to be bad at putting changelog entries in the right place.",
+              "createdAt": "2024-02-27T18:13:38Z",
+              "updatedAt": "2024-02-27T18:13:38Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOHTmVzM5xg6Mv",
+          "commit": {
+            "abbreviatedOid": "667adf6"
+          },
+          "author": "bc-pi",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2024-02-27T18:19:17Z",
+          "updatedAt": "2024-02-27T18:19:18Z",
+          "comments": [
+            {
+              "originalPosition": 21,
+              "body": "riffing on @Sakurann's suggestion \r\n```suggestion\r\nThis non-normative example illustrates how the artifacts defined in this specification\r\ncould be used to express a W3C Verifiable Credentials Data Model v2.0 [@VC_DATA_v2.0] payload.\r\n```",
+              "createdAt": "2024-02-27T18:19:17Z",
+              "updatedAt": "2024-02-28T16:40:13Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOHTmVzM5xhCrf",
+          "commit": {
+            "abbreviatedOid": "ff541be"
+          },
+          "author": "bc-pi",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2024-02-27T18:29:06Z",
+          "updatedAt": "2024-02-27T18:29:06Z",
+          "comments": [
+            {
+              "originalPosition": 18,
+              "body": "Maybe because I indented -08 differently than the others? It's my fault... ",
+              "createdAt": "2024-02-27T18:29:06Z",
+              "updatedAt": "2024-02-27T18:29:06Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOHTmVzM5xs_Mv",
+          "commit": {
+            "abbreviatedOid": "0bd026b"
+          },
+          "author": "Sakurann",
+          "authorAssociation": "COLLABORATOR",
+          "state": "APPROVED",
+          "body": "minor suggestion, but LGTM - thank you.",
+          "createdAt": "2024-02-28T23:05:47Z",
+          "updatedAt": "2024-02-28T23:05:47Z",
+          "comments": []
+        },
+        {
+          "id": "PRR_kwDOHTmVzM5xs_WC",
+          "commit": {
+            "abbreviatedOid": "0bd026b"
+          },
+          "author": "Sakurann",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2024-02-28T23:06:25Z",
+          "updatedAt": "2024-02-28T23:06:26Z",
+          "comments": [
+            {
+              "originalPosition": 7,
+              "body": "```suggestion\r\nnor the selection of selectively disclosable claims is normative.\r\n```\r\n\r\nneither ... or ... is ... . I think",
+              "createdAt": "2024-02-28T23:06:25Z",
+              "updatedAt": "2024-02-28T23:06:26Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOHTmVzM5xtaGO",
+          "commit": {
+            "abbreviatedOid": "5402c1d"
+          },
+          "author": "bc-pi",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2024-02-29T00:50:09Z",
+          "updatedAt": "2024-02-29T00:50:09Z",
+          "comments": [
+            {
+              "originalPosition": 5,
+              "body": "```suggestion\r\nImportant: The following examples are not normative and are provided for\r\n```",
+              "createdAt": "2024-02-29T00:50:09Z",
+              "updatedAt": "2024-02-29T00:50:10Z"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "number": 406,
+      "id": "PR_kwDOHTmVzM5oDE6h",
+      "title": "doc: add owf sd-jwt typescript package",
+      "url": "https://github.com/oauth-wg/oauth-selective-disclosure-jwt/pull/406",
+      "state": "MERGED",
+      "author": "lukasjhan",
+      "authorAssociation": "CONTRIBUTOR",
+      "assignees": [],
+      "labels": [],
+      "body": "Hello guys, I am currently working on a Typescript implementation of SD-JWT at Open Wallet Foundation.\r\nI want to post a link to my library here\r\n\r\nAdditionally, \r\n\r\n- Our homepage: https://sdjwt.js.org \r\n- Debugging website: https://sdjwt.co\r\n\r\nIf it looks good to add the homepage and debugging site as well, please let me know and I will edit it. :)\r\n\r\nThank you.",
+      "createdAt": "2024-02-27T13:50:14Z",
+      "updatedAt": "2024-02-27T17:11:11Z",
+      "baseRepository": "oauth-wg/oauth-selective-disclosure-jwt",
+      "baseRefName": "master",
+      "baseRefOid": "fc36fd86ce101c5f003ac977f78a23bd79fa634c",
+      "headRepository": "lukasjhan/oauth-selective-disclosure-jwt",
+      "headRefName": "doc/owf-sd-jwt",
+      "headRefOid": "cdea39bbba295f1b072748ee6274763aa816d1d5",
+      "closedAt": "2024-02-27T17:11:11Z",
+      "mergedAt": "2024-02-27T17:11:10Z",
+      "mergedBy": "danielfett",
+      "mergeCommit": {
+        "oid": "1e4e78feae2bfdbc43086d289fe6bc61eeb02bd3"
+      },
+      "comments": [],
+      "reviews": [
+        {
+          "id": "PRR_kwDOHTmVzM5xfZwF",
+          "commit": {
+            "abbreviatedOid": "cdea39b"
+          },
+          "author": "danielfett",
+          "authorAssociation": "MEMBER",
+          "state": "APPROVED",
+          "body": "",
+          "createdAt": "2024-02-27T16:25:00Z",
+          "updatedAt": "2024-02-27T16:25:00Z",
+          "comments": []
+        },
+        {
+          "id": "PRR_kwDOHTmVzM5xfa8k",
+          "commit": {
+            "abbreviatedOid": "cdea39b"
+          },
+          "author": "Sakurann",
+          "authorAssociation": "COLLABORATOR",
+          "state": "APPROVED",
+          "body": "thank you! I think you should add your debugging page next to your GH repo page. also, great domains :)",
+          "createdAt": "2024-02-27T16:26:42Z",
+          "updatedAt": "2024-02-27T16:26:42Z",
+          "comments": []
+        },
+        {
+          "id": "PRR_kwDOHTmVzM5xfd9O",
+          "commit": {
+            "abbreviatedOid": "cdea39b"
+          },
+          "author": "bc-pi",
+          "authorAssociation": "COLLABORATOR",
+          "state": "APPROVED",
+          "body": "",
+          "createdAt": "2024-02-27T16:30:37Z",
+          "updatedAt": "2024-02-27T16:30:37Z",
+          "comments": []
+        }
+      ]
+    },
+    {
+      "number": 407,
+      "id": "PR_kwDOHTmVzM5oEb4z",
+      "title": "Update PID example",
+      "url": "https://github.com/oauth-wg/oauth-selective-disclosure-jwt/pull/407",
+      "state": "MERGED",
+      "author": "danielfett",
+      "authorAssociation": "MEMBER",
+      "assignees": [],
+      "labels": [],
+      "body": "Update the PID example to what our current thinking for the design is. Conflicts with PR #405, but that should be easy to resolve (just use the change from this PR).\r\n\r\nLink for all the link afficionados: https://drafts.oauth.net/oauth-selective-disclosure-jwt/danielfett/update-pid-example/draft-ietf-oauth-selective-disclosure-jwt.html#name-example-4a-sd-jwt-based-ver",
+      "createdAt": "2024-02-27T16:24:39Z",
+      "updatedAt": "2024-02-27T17:57:30Z",
       "baseRepository": "oauth-wg/oauth-selective-disclosure-jwt",
       "baseRefName": "master",
       "baseRefOid": "fc36fd86ce101c5f003ac977f78a23bd79fa634c",
       "headRepository": "oauth-wg/oauth-selective-disclosure-jwt",
-      "headRefName": "examples-are-only-examples",
-      "headRefOid": "667adf6f8b4af429d47c334fdef8260f542e2b38",
+      "headRefName": "danielfett/update-pid-example",
+      "headRefOid": "98fb1a5b686efa5d5b1f3c165af033270f02b9b0",
+      "closedAt": "2024-02-27T17:10:06Z",
+      "mergedAt": "2024-02-27T17:10:06Z",
+      "mergedBy": "danielfett",
+      "mergeCommit": {
+        "oid": "4342a53680c2f5c70c5d4cc103cbd0005222a92e"
+      },
+      "comments": [],
+      "reviews": [
+        {
+          "id": "PRR_kwDOHTmVzM5xf27Y",
+          "commit": {
+            "abbreviatedOid": "2ac9367"
+          },
+          "author": "Sakurann",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2024-02-27T16:56:25Z",
+          "updatedAt": "2024-02-27T16:56:25Z",
+          "comments": [
+            {
+              "originalPosition": 10,
+              "body": "```suggestion\r\nThis example shows how the artifacts defined in this specification could be\r\nused in the context of SD-JWT-based Verifiable\r\nCredentials (SD-JWT VC) [@I-D.ietf-oauth-sd-jwt-vc] to represent the concept of\r\na Person Identification Data (PID) [@EUDIW.ARF] using the data of\r\na German citizen.\r\n```",
+              "createdAt": "2024-02-27T16:56:25Z",
+              "updatedAt": "2024-02-27T17:08:35Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOHTmVzM5xf_zu",
+          "commit": {
+            "abbreviatedOid": "2ac9367"
+          },
+          "author": "Sakurann",
+          "authorAssociation": "COLLABORATOR",
+          "state": "APPROVED",
+          "body": "",
+          "createdAt": "2024-02-27T17:09:30Z",
+          "updatedAt": "2024-02-27T17:09:30Z",
+          "comments": []
+        },
+        {
+          "id": "PRR_kwDOHTmVzM5xgAG-",
+          "commit": {
+            "abbreviatedOid": "98fb1a5"
+          },
+          "author": "bc-pi",
+          "authorAssociation": "COLLABORATOR",
+          "state": "APPROVED",
+          "body": "",
+          "createdAt": "2024-02-27T17:10:00Z",
+          "updatedAt": "2024-02-27T17:10:00Z",
+          "comments": []
+        },
+        {
+          "id": "PRR_kwDOHTmVzM5xgpo2",
+          "commit": {
+            "abbreviatedOid": "98fb1a5"
+          },
+          "author": "bc-pi",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2024-02-27T17:57:23Z",
+          "updatedAt": "2024-02-27T17:57:30Z",
+          "comments": [
+            {
+              "originalPosition": 19,
+              "body": "wait... you keep putting these in the wrong draft # ",
+              "createdAt": "2024-02-27T17:57:23Z",
+              "updatedAt": "2024-02-27T17:57:30Z"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "number": 408,
+      "id": "PR_kwDOHTmVzM5oF2Hh",
+      "title": "Fix the PID example",
+      "url": "https://github.com/oauth-wg/oauth-selective-disclosure-jwt/pull/408",
+      "state": "OPEN",
+      "author": "danielfett",
+      "authorAssociation": "MEMBER",
+      "assignees": [],
+      "labels": [],
+      "body": "Remove `vct#integrity` that is not yet defined and remove the disclosure of the age which for whatever reason didn't work.",
+      "createdAt": "2024-02-27T19:22:53Z",
+      "updatedAt": "2024-02-28T12:57:08Z",
+      "baseRepository": "oauth-wg/oauth-selective-disclosure-jwt",
+      "baseRefName": "master",
+      "baseRefOid": "894905aa7985a3e7e7636ff740a8b8fbd9fd111f",
+      "headRepository": "oauth-wg/oauth-selective-disclosure-jwt",
+      "headRefName": "danielfett/fix-pid-example",
+      "headRefOid": "17aa50a3f78dfaa1348eb1e5a4272ce2d534454b",
+      "closedAt": null,
+      "mergedAt": null,
+      "mergedBy": null,
+      "mergeCommit": null,
+      "comments": [],
+      "reviews": [
+        {
+          "id": "PRR_kwDOHTmVzM5xi1pc",
+          "commit": {
+            "abbreviatedOid": "17aa50a"
+          },
+          "author": "bc-pi",
+          "authorAssociation": "COLLABORATOR",
+          "state": "APPROVED",
+          "body": "Looks okay to address the immediate issues now. ",
+          "createdAt": "2024-02-27T22:45:06Z",
+          "updatedAt": "2024-02-27T22:46:04Z",
+          "comments": [
+            {
+              "originalPosition": 14,
+              "body": "We should probably chase this down sometime sooner rather than later (some issue with the yaml or a bug in the library maybe?). ",
+              "createdAt": "2024-02-27T22:45:06Z",
+              "updatedAt": "2024-02-27T22:46:04Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOHTmVzM5xnlpA",
+          "commit": {
+            "abbreviatedOid": "17aa50a"
+          },
+          "author": "bc-pi",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2024-02-28T12:57:07Z",
+          "updatedAt": "2024-02-28T12:57:08Z",
+          "comments": [
+            {
+              "originalPosition": 14,
+              "body": "created \"disclosing age_equal_or_over not working\" #409 to track it",
+              "createdAt": "2024-02-28T12:57:07Z",
+              "updatedAt": "2024-02-28T12:57:21Z"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "number": 410,
+      "id": "PR_kwDOHTmVzM5oO0fQ",
+      "title": "more consistent treatment of a Disclosure vs its contents",
+      "url": "https://github.com/oauth-wg/oauth-selective-disclosure-jwt/pull/410",
+      "state": "OPEN",
+      "author": "bc-pi",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "Editorial updates for more consistent treatment of a Disclosure vs the contents of a Disclosure (to fix #358 Confusing terminology)\r\n\r\nEditor's draft PR preview: https://drafts.oauth.net/oauth-selective-disclosure-jwt/somewhat-less-confusing-terminology/draft-ietf-oauth-selective-disclosure-jwt.html",
+      "createdAt": "2024-02-28T23:52:40Z",
+      "updatedAt": "2024-02-28T23:55:21Z",
+      "baseRepository": "oauth-wg/oauth-selective-disclosure-jwt",
+      "baseRefName": "master",
+      "baseRefOid": "894905aa7985a3e7e7636ff740a8b8fbd9fd111f",
+      "headRepository": "oauth-wg/oauth-selective-disclosure-jwt",
+      "headRefName": "somewhat-less-confusing-terminology",
+      "headRefOid": "27c751f6db56cf6648eb240232d543b1016ad386",
       "closedAt": null,
       "mergedAt": null,
       "mergedBy": null,
