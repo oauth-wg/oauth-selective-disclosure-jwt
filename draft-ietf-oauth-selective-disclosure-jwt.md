@@ -330,9 +330,8 @@ An SD-JWT-KB covering an SD-JWT with Disclosures:
 
 ## Issuer-signed JWT {#iss-signed-jwt}
 
-An SD-JWT has a JWT component that MUST be signed using the Issuer's private key.
-It MUST use a JWS asymmetric digital signature algorithm. It
-MUST NOT use `none` or an identifier for a symmetric algorithm (MAC).
+An SD-JWT has a JWT component that MUST be signed using the Issuer's private
+key. It MUST NOT use the `none` algorithm.
 
 The payload of an SD-JWT is a JSON object according to the following rules:
 
@@ -340,7 +339,7 @@ The payload of an SD-JWT is a JSON object according to the following rules:
  2. The payload MAY contain one or more digests of Disclosures to enable selective disclosure of the respective claims, created and formatted as described in (#creating_disclosures).
  3. The payload MAY contain one or more decoy digests to obscure the actual number of claims in the SD-JWT, created and formatted as described in (#decoy_digests).
  4. The payload MAY contain one or more non-selectively disclosable claims.
- 5. The payload MAY contain the Holder's public key(s) or reference(s) thereto, as explained in (#holder_public_key_claim).
+ 5. The payload MAY contain the Holder's public key(s) or reference(s) thereto, as explained in (#key_binding).
  6. The payload MAY contain further claims such as `iss`, `iat`, etc. as defined or required by the application using SD-JWTs.
  7. The payload MUST NOT contain the reserved claims `_sd` or `...` except for the purpose of transporting digests as described below.
 
@@ -372,7 +371,7 @@ algorithm.
 See (#security_considerations) for requirements regarding entropy of the salt,
 minimum length of the salt, and choice of a hash algorithm.
 
-### Holder Public Key Claim {#holder_public_key_claim}
+### Key Binding {#key_binding}
 
 If the Issuer wants to enable Key Binding, it includes a public key
 associated with the Holder, or a reference thereto.
@@ -569,7 +568,7 @@ The Key Binding JWT MUST contain the following elements:
 
 * in the JOSE header,
     * `typ`: REQUIRED. MUST be `kb+jwt`, which explicitly types the Key Binding JWT as recommended in Section 3.11 of [@!RFC8725].
-    * `alg`: REQUIRED. A digital signature algorithm identifier such as per IANA "JSON Web Signature and Encryption Algorithms" registry. MUST NOT be `none` or an identifier for a symmetric algorithm (MAC).
+    * `alg`: REQUIRED. A digital signature algorithm identifier such as per IANA "JSON Web Signature and Encryption Algorithms" registry. MUST NOT be `none`.
 * in the JWT payload,
     * `iat`: REQUIRED. The value of this claim MUST be the time at which the Key Binding JWT was issued using the syntax defined in [@!RFC7519].
     * `aud`: REQUIRED. The intended receiver of the Key Binding JWT. How the value is represented is up to the protocol used and out of scope of this specification.
@@ -606,12 +605,6 @@ Verifier could parse the provided JWK and use it to verify the Key Binding JWT.
 Whether to require Key Binding is up to the Verifier's policy, based on the set
 of trust requirements such as trust frameworks it belongs to. See
 (#key_binding_security) for security considerations.
-
-### Alternatives to a Key Binding JWT
-
-Other ways of proving Key Binding MAY be used when supported by the Verifier,
-e.g., when the presented SD-JWT without a Key Binding JWT is itself embedded in a
-signed JWT. See (#enveloping) for details.
 
 
 # Example 1: SD-JWT {#example-1}
@@ -839,7 +832,7 @@ application or transport protocol. However, the details of such approaches fall 
 specification.
 
 Verification of the JWS JSON serialized SD-JWT follows the same rules defined in (#verification),
-except that the SD-JWT does not need to be split into component parts, the disclosures
+except that the SD-JWT does not need to be split into component parts and the disclosures
 can be found in the respective member of the JSON object (or elsewhere).
 
 Using a payload similar to that from [Example 1](#example-1), the following is a non-normative example of
@@ -851,49 +844,6 @@ Below is a non-normative example of a presentation of the JWS JSON serialized SD
 has selected to disclose `given_name`, `family_name`, and `address`.
 
 <{{examples/json_serialization/sd_jwt_presentation.json}}
-
-
-# Enveloping SD-JWTs {#enveloping}
-
-In some applications or transport protocols, it is desirable to encapsulate an SD-JWT into an outer JWT container. For example, an implementation may enclose multiple credentials and presentations, independent of their format, in a JWT to enable application-layer encryption during transport.
-
-For such use cases, a compact serialized SD-JWT SHOULD be included as a single string value and a JSON serialized SD-JWT SHOULD be included as a JSON object value. Key Binding MAY be achieved by signing the envelope JWT instead of including a separate Key Binding JWT.
-
-The following non-normative example payload shows a compact serialized SD-JWT enveloped in a JWT.
-The SD-JWT is shown as the value of an `_sd_jwt` claim where `eyJhbGci...emhlaUJhZzBZ` is the Issuer-signed JWT and `eyJhb...dYALCGg` is a Disclosure.
-
-```
-{
-  "aud": "https://verifier.example.org",
-  "iat": 1580000000,
-  "nonce": "iRnRdKuu1AtLM4ltc16by2XF0accSeutUescRw6BWC14",
-  "_sd_jwt": "eyJhbGci...emhlaUJhZzBZ~eyJhb...dYALCGg~"
-}
-```
-
-This next non-normative example payload shows a JSON serialized SD-JWT enveloped in a JWT.
-The JSON serialized SD-JWT appears as the value of an `_js_sd_jwt` claim and the disclosures are included separately as a top-level claim.
-Key Binding is achieved by the signature on the enclosing JWT.
-
-```
-{
-  "aud": "https://verifier.example.org",
-  "iat": 2813308004,
-  "nonce": "8z8z9X3jUtbthem84swFAzp4aqlHf-sCqQ6eM_qmpUQ",
-  "_js_sd_jwt": {
-    "protected": "eyJhbGciOiAiRVMyNTYifQ",
-    "payload": "eyJfc2QiOiBbIjRIQm42YUlZM1d0dUdHV1R4LX...1NiJ9",
-    "signature": "y_b8KFVc2GZ1n-...PKsjU3Q",
-  }
-  "disclosures": [
-    "WyI2SWo3dE0tYTVpVlBHYm9TNXRtdlZBIiwgImZhbWlseV9uYW1...vZSJd",
-    "WyJBSngtMDk1VlBycFR0TjRRTU9xUk9BIiwgImFkZHJlc3MiLC...iVVMifV0",
-    "WyJlbHVWNU9nM2dTTklJO...V9BIiwgImdpdmVuX25hbWUiLCAiSm9obiJd"
- ]
-}
-```
-
-Other specifications or profiles of this specification may define alternative formats for transporting an SD-JWT that envelope multiple such SD-JWTs into one object and provide Key Binding and integrity protection of the presentation using means other than the Key Binding JWT.
 
 
 # Security Considerations {#security_considerations}
@@ -1204,15 +1154,62 @@ Decoy digests increase the size of the SD-JWT. The number of decoy digests (or w
 
 ## Unlinkability
 
-Colluding Issuer/Verifier or Verifier/Verifier pairs could link issuance/presentation
-or two presentation sessions to the same user on the basis of unique values encoded in the SD-JWT
-(Issuer signature, salts, digests, etc.).
+Unlinkability is a property whereby adversaries are prevented from correlating
+credential presentations of the same user beyond the user's consent.
+Without unlinkability, an adversary might be able to learn more about the user than the user
+intended to disclose, for example:
 
-To prevent these types of linkability, various methods, including but not limited to the following ones can be used:
+ * Cooperating Verifiers might want to track users across services to build
+   advertising profiles.
+ * Issuers might want to track where users present their credentials to enable
+   surveillance.
+ * After a data breach at multiple Verifiers, publicly available information
+   might allow linking identifiable information presented to Verifier A with
+   originally anonymous information presented to Verifier B, therefore revealing
+   the identities of users of Verifier B.
 
-- Use advanced cryptographic schemes, outside the scope of this specification.
-- Issue a batch of SD-JWTs to the Holder to enable the Holder to use a unique SD-JWT per Verifier. This only helps with Verifier/Verifier unlinkability.
+The following types of unlinkability are considered here:
 
+ * Presentation Unlinkability: A Verifier should not be able to link two
+   presentations of the same credential.
+ * Verifier/Verifier Unlinkability: Two colluding Verifiers should not be able to
+   learn that they have received presentations of the same credential.
+ * Issuer/Verifier Unlinkability (Honest Verifier): An Issuer of a credential
+   should not be able to know that a user presented the credential to a certain
+   Verifier that is not behaving maliciously.
+ * Issuer/Verifier Unlinkability (Colluding/Compromised Verifier): An Issuer of a
+   credential should not be able to tell that a user presented the credential to
+   a certain Verifier, even if the Verifier colludes with the Issuer or becomes
+   compromised and leaks stored credentials from presentations.
+
+In all cases, unlinkability is limited to cases where the disclosed claims do
+not contain information that directly or indirectly identifies the user. For
+example, when a taxpayer identification number is contained in the disclosed claims, the Issuer and
+Verifier can easily link the user's transactions. However, when the user only
+discloses a birthdate to one Verifier and a postal code to another Verifier, the two Verifiers should not be able to determine that they were interacting with the same user.
+
+Issuer/Verifier unlinkability with a colluding or compromised Verifier cannot be
+achieved in salted-hash based selective disclosure approaches, such as SD-JWT, as the
+issued credential with the Issuer's signature is directly presented to the Verifier, who can forward it to
+the Issuer.
+
+Contrary to that, Issuer/Verifier unlinkability with an honest Verifier can generally be achieved.
+However, a callback from the Verifier to the Issuer, such as a revocation check, could potentially
+disclose information about the credential's usage to the Issuer.
+Where such callbacks are necessary, they MUST be executed in a manner that
+preserves privacy and does not disclose details about the credential to the Issuer. It is
+important to note that the timing of such requests could potentially serve as a side-channel.
+
+Verifier/Verifier unlinkablility and presentation unlinkablility can be achieved using batch issuance: A batch
+of credentials based on the same claims is issued to the Holder instead of just
+a single credential. The Holder can then use a different credential for each
+Verifier or even for each session with a Verifier. New key binding keys and
+salts MUST be used for each credential in the batch to ensure that the Verifiers
+cannot link the credentials using these values. Likewise, claims carrying time
+information, like `iat`, `exp`, and `nbf`, MUST either be randomized within a
+time period considered appropriate (e.g., randomize `iat` within the last 24
+hours and calculate `exp` accordingly) or rounded (e.g., rounded down to the
+beginning of the day).
 
 ## Issuer Identifier
 
@@ -1543,7 +1540,11 @@ the media type is encoded as an SD-JWT.
 
 # Additional Examples
 
-All of the following examples are non-normative.
+Important: The following examples are not normative and are provided for
+illustrative purposes only. In particular, neither the structure of the claims
+nor the selection of selectively disclosable claims is normative.
+
+Line breaks have been added for readability.
 
 ## Example 2: Handling Structured Claims {#example-simple_structured}
 
@@ -1599,9 +1600,11 @@ After the validation, the Verifier will have the following data for further proc
 
 ## Example 4a - SD-JWT-based Verifiable Credentials (SD-JWT VC)
 
-In this example, the artifacts defined in this specification are used to represent
-SD-JWT-based Verifiable Credentials (SD-JWT VC) as defined in [@I-D.ietf-oauth-sd-jwt-vc].
-Person Identification Data (PID) defined in [@EUDIW.ARF] is used.
+This example shows how the artifacts defined in this specification could be
+used in the context of SD-JWT-based Verifiable
+Credentials (SD-JWT VC) [@I-D.ietf-oauth-sd-jwt-vc] to represent the concept of
+a Person Identification Data (PID) [@EUDIW.ARF] using the data of
+a German citizen.
 
 Key Binding is applied
 using the Holder's public key passed in a `cnf` claim in the SD-JWT.
@@ -1636,8 +1639,8 @@ After the validation, the Verifier will have the following data for further proc
 
 ## Example 4b - W3C Verifiable Credentials Data Model v2.0
 
-In this example, the artifacts defined in this specification are used to represent a payload
-that is represented as a W3C Verifiable Credentials Data Model v2.0 [@VC_DATA_v2.0].
+This non-normative example illustrates how the artifacts defined in this specification
+could be used to express a W3C Verifiable Credentials Data Model v2.0 [@VC_DATA_v2.0] payload.
 
 Key Binding is applied
 using the Holder's public key passed in a `cnf` claim in the SD-JWT.
@@ -1794,7 +1797,12 @@ data. The original JSON data is then used by the application. See
 
 * Make RFCs 0020 and 7515 normative references
 * Be a bit more prescriptive in suggesting RFC7800 cnf/jwk be used to convey the Key Binding key
+* Do not disallow HMAC any longer.
 * Editorial changes aimed at improved clarity
+* Improve unlinkability considerations, mention that different KB keys must be used
+* Be more explicit that the VCDM and SD-JWT VC examples are only illustrative and do not define anything
+* Remove mention of unspecified key binding methods and the Enveloping SD-JWTs section
+* Update PID example
 * Distinguished SD-JWT from SD-JWT-KB
 
    -07
@@ -1806,6 +1814,7 @@ data. The original JSON data is then used by the application. See
    * Clarify validation around no duplicate digests in the payload (directly or recursively) and no unused disclosures at the end of processing
    * Better describe and illustrate the tilde separated format
    * Change claim name from `_sd_hash` to `sd_hash`
+
 
    -06
 
