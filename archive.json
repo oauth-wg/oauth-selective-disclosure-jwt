@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2024-02-29T00:50:40.246625+00:00",
+  "timestamp": "2024-03-03T00:53:50.014526+00:00",
   "repo": "oauth-wg/oauth-selective-disclosure-jwt",
   "labels": [
     {
@@ -8862,7 +8862,7 @@
       "id": "I_kwDOHTmVzM5wg-HR",
       "title": "Change how VC formats are described",
       "url": "https://github.com/oauth-wg/oauth-selective-disclosure-jwt/issues/341",
-      "state": "OPEN",
+      "state": "CLOSED",
       "author": "danielfett",
       "authorAssociation": "MEMBER",
       "assignees": [
@@ -8873,8 +8873,8 @@
       ],
       "body": "In the appendix, we should avoid suggesting that we're describing an SD-JWT VC and refer to the now-adopted SD-JWT VC spec instead.",
       "createdAt": "2023-09-08T13:26:26Z",
-      "updatedAt": "2024-02-26T20:52:58Z",
-      "closedAt": null,
+      "updatedAt": "2024-02-29T13:08:48Z",
+      "closedAt": "2024-02-29T13:08:48Z",
       "comments": [
         {
           "author": "danielfett",
@@ -9116,7 +9116,7 @@
       ],
       "body": "There are various sentences like:\r\n\r\n> When Key Binding is not enforced, any entity in possession of an SD-JWT Presentation can forward the contents to third parties\r\n\r\nwhere presentation has a capital P as if it's a defined term. Probably it should have an actual definition (I can't find one) but if not it should probably be lower cased?",
       "createdAt": "2023-10-23T14:06:47Z",
-      "updatedAt": "2024-02-20T16:55:05Z",
+      "updatedAt": "2024-03-01T21:59:24Z",
       "closedAt": null,
       "comments": [
         {
@@ -9132,6 +9132,13 @@
           "body": "I don't think just removing the capitalization helps.  It's still an undefined term.  In the spirit of #374, it seems like we actually want two concepts here, (1) handing someone an Issuer JWT + disclosures, where they can verify its integrity, drop disclosures and/or hand it to someone else, and (2) handing someone an Issuer JWT + disclosures + KB JWT, where the only thing they can do is verify it.",
           "createdAt": "2023-11-22T16:59:44Z",
           "updatedAt": "2023-11-22T16:59:44Z"
+        },
+        {
+          "author": "bc-pi",
+          "authorAssociation": "COLLABORATOR",
+          "body": "I think https://github.com/oauth-wg/oauth-selective-disclosure-jwt/issues/384 goes a long way towards addressing this. ",
+          "createdAt": "2024-03-01T21:59:23Z",
+          "updatedAt": "2024-03-01T21:59:23Z"
         }
       ]
     },
@@ -9604,7 +9611,7 @@
       ],
       "body": "Abbreviations appear in this document without first being defined, e.g., KB-JWT. \r\nIt would make it easier for the readers if the document has an abbreviation section near the top of the document. \r\nProposal: \r\nCreate a new section 2.1 Abbreviation and collect all the abbreviations.",
       "createdAt": "2023-11-07T15:30:36Z",
-      "updatedAt": "2024-02-27T17:41:09Z",
+      "updatedAt": "2024-03-01T21:53:45Z",
       "closedAt": null,
       "comments": [
         {
@@ -9613,6 +9620,13 @@
           "body": "need to do after #394 is resolved to do a PR.",
           "createdAt": "2024-02-27T17:40:00Z",
           "updatedAt": "2024-02-27T17:40:00Z"
+        },
+        {
+          "author": "bc-pi",
+          "authorAssociation": "COLLABORATOR",
+          "body": "#394 does introduce more abbreviations where the terms are defined so might obsolete the need for a new section. ",
+          "createdAt": "2024-03-01T21:53:44Z",
+          "updatedAt": "2024-03-01T21:53:44Z"
         }
       ]
     },
@@ -40893,13 +40907,13 @@
       "labels": [],
       "body": "This PR limits the scope of the term \"SD-JWT\" so that it refers only to an Issuer-signed JWT and a set of disclosures.  We introduce the term \"Fnord\" to refer to an SD-JWT with key binding.  As a bonus, we are able to clean up stale uses of Presentation, which mostly, but not always align with Fnord.\r\n\r\n\"[Fnord](https://en.wikipedia.org/wiki/Fnord)\" is deliberately nonsensical, of course.  We should replace this with a more intuitive word.  We could reintroduce \"Presentation\" for this, with the allowance that one might \"present\" either a Presentation or an SD-JWT.  Or we could pick another term, suggestions welcome.\r\n\r\nI have tried to be fairly minimal in the changes here.  In particular, I have not changed any of the algorithms, though I suspect they would be clearer if a bit more separate.  I have rewritten a few paragraphs, especially close to the top and in the Security Considerations.\r\n\r\nFixes #374\r\nFixes #392 ",
       "createdAt": "2023-12-05T23:02:33Z",
-      "updatedAt": "2024-02-26T23:40:57Z",
+      "updatedAt": "2024-03-01T20:44:51Z",
       "baseRepository": "oauth-wg/oauth-selective-disclosure-jwt",
       "baseRefName": "master",
-      "baseRefOid": "c6bebaa649fe9d3974ca0cdc002da42341ebfd74",
+      "baseRefOid": "e13ecce1ba7ddb835d7b9a38372ec2afba59ba84",
       "headRepository": "bifurcation/oauth-selective-disclosure-jwt",
       "headRefName": "fnord",
-      "headRefOid": "2f918e9d508b2e2111516dfb1d0a5c862e43c6b7",
+      "headRefOid": "0b7c5ce03dc75a460c228c62f6898bdc8a347f83",
       "closedAt": null,
       "mergedAt": null,
       "mergedBy": null,
@@ -41790,6 +41804,214 @@
               "updatedAt": "2024-02-26T21:16:09Z"
             }
           ]
+        },
+        {
+          "id": "PRR_kwDOHTmVzM5xuOpK",
+          "commit": {
+            "abbreviatedOid": "2f918e9"
+          },
+          "author": "bifurcation",
+          "authorAssociation": "NONE",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2024-02-29T05:12:08Z",
+          "updatedAt": "2024-02-29T05:20:11Z",
+          "comments": [
+            {
+              "originalPosition": 14,
+              "body": "I personally don't think this sentence is that helpful.  It is universally true of any system that relies on cryptographic keys, and doesn't need to be restated here.  But if folks are keen, it seems harmless.",
+              "createdAt": "2024-02-29T05:12:08Z",
+              "updatedAt": "2024-02-29T05:20:11Z"
+            },
+            {
+              "originalPosition": 47,
+              "body": "I would generally prefer that the `SD-JWT` and `SD-JWT-KB` entries be grammatically parallel, but I don't feel strongly.",
+              "createdAt": "2024-02-29T05:13:28Z",
+              "updatedAt": "2024-02-29T05:20:11Z"
+            },
+            {
+              "originalPosition": 56,
+              "body": "That's different.  What you're describing is hiding the fields within the object vs. hiding the field itself.  You're not actually hiding the `address` field, you're hiding fields within that object.  Even if you hide all the fields, you still reveal that it's an object.\r\n\r\nThere is no syntax here by which you can reveal that there is a field with a given name in an object without revealing anything about the contents of that field.",
+              "createdAt": "2024-02-29T05:18:26Z",
+              "updatedAt": "2024-02-29T05:20:11Z"
+            },
+            {
+              "originalPosition": 76,
+              "body": "```suggestion\r\n  control over the same private key during the issuance and presentation. To be compatible with Key Binding, an SD-JWT contains\r\n```",
+              "createdAt": "2024-02-29T05:20:01Z",
+              "updatedAt": "2024-02-29T05:20:11Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOHTmVzM5xuVNm",
+          "commit": {
+            "abbreviatedOid": "fef3db5"
+          },
+          "author": "bifurcation",
+          "authorAssociation": "NONE",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2024-02-29T05:21:48Z",
+          "updatedAt": "2024-02-29T15:40:11Z",
+          "comments": [
+            {
+              "originalPosition": 87,
+              "body": "It means that the `sd_hash` of the key binding JWT matches the SD-JWT.  Maybe we should define this as a term?",
+              "createdAt": "2024-02-29T05:21:48Z",
+              "updatedAt": "2024-02-29T15:40:11Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOHTmVzM5xzHQd",
+          "commit": {
+            "abbreviatedOid": "b94409d"
+          },
+          "author": "bifurcation",
+          "authorAssociation": "NONE",
+          "state": "COMMENTED",
+          "body": "OK, I just pushed a commit that I think addresses all the comments here.",
+          "createdAt": "2024-02-29T15:41:15Z",
+          "updatedAt": "2024-02-29T16:00:49Z",
+          "comments": [
+            {
+              "originalPosition": 56,
+              "body": "This text is from pre-existing bullets, but I agree it's not super necessary.",
+              "createdAt": "2024-02-29T15:41:15Z",
+              "updatedAt": "2024-02-29T16:00:49Z"
+            },
+            {
+              "originalPosition": 87,
+              "body": "Actually, it is defined, in the definition of \"Key Binding JWT\"",
+              "createdAt": "2024-02-29T15:42:36Z",
+              "updatedAt": "2024-02-29T16:00:49Z"
+            },
+            {
+              "originalPosition": 267,
+              "body": "I added a comment above to mention that the SD-JWT may have come out of an SD-JWT-KB. \r\n",
+              "createdAt": "2024-02-29T15:52:12Z",
+              "updatedAt": "2024-02-29T16:00:49Z"
+            },
+            {
+              "originalPosition": 286,
+              "body": "Refactored to make the two cases parallel.",
+              "createdAt": "2024-02-29T15:53:24Z",
+              "updatedAt": "2024-02-29T16:00:49Z"
+            },
+            {
+              "originalPosition": 310,
+              "body": "I would actually prefer to just scrap 4.1.  If folks want to use some other KB method, they need to update their processing accordingly.",
+              "createdAt": "2024-02-29T15:55:09Z",
+              "updatedAt": "2024-02-29T16:00:49Z"
+            },
+            {
+              "originalPosition": 451,
+              "body": "Yes, this would indicate that you're talking about an SD-JWT-KB, and a plain SD-JWT is unacceptable.  For example, you could use it in an HTTP Accept header.  I don't feel super strongly about this, though.",
+              "createdAt": "2024-02-29T15:58:07Z",
+              "updatedAt": "2024-02-29T16:00:49Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOHTmVzM5x9hPd",
+          "commit": {
+            "abbreviatedOid": "0b7c5ce"
+          },
+          "author": "bc-pi",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2024-03-01T20:24:47Z",
+          "updatedAt": "2024-03-01T20:24:47Z",
+          "comments": [
+            {
+              "originalPosition": 87,
+              "body": "It's not my most favorite term but the \"Key Binding JWT\" definition right above does indeed say 'A Key Binding JWT is said to \"cover\" a particular SD-JWT if its payload includes a hash of the in its `sd_hash` claim.' ",
+              "createdAt": "2024-03-01T20:24:47Z",
+              "updatedAt": "2024-03-01T20:24:47Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOHTmVzM5x9lsx",
+          "commit": {
+            "abbreviatedOid": "0b7c5ce"
+          },
+          "author": "bc-pi",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2024-03-01T20:37:52Z",
+          "updatedAt": "2024-03-01T20:37:52Z",
+          "comments": [
+            {
+              "originalPosition": 234,
+              "body": "these 4 lines now just aren't quite right (if jwk or jwk...) - here's an attempt to fix by shortening and simplifying: \r\n\r\n```suggestion\r\nkey.  For example, if the SD-JWT contains a `cnf` value with a `jwk` member, the\r\ncould parse the provided JWK and use it to verify the Key Binding JWT.\r\n```",
+              "createdAt": "2024-03-01T20:37:52Z",
+              "updatedAt": "2024-03-01T20:37:52Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOHTmVzM5x9mf6",
+          "commit": {
+            "abbreviatedOid": "0b7c5ce"
+          },
+          "author": "bc-pi",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2024-03-01T20:40:35Z",
+          "updatedAt": "2024-03-01T20:40:36Z",
+          "comments": [
+            {
+              "originalPosition": 266,
+              "body": "```suggestion\r\nUpon receiving an SD-JWT, either directly or as a component of an SD-JWT-KB, a Holder\r\n```",
+              "createdAt": "2024-03-01T20:40:35Z",
+              "updatedAt": "2024-03-01T20:41:49Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOHTmVzM5x9oCj",
+          "commit": {
+            "abbreviatedOid": "0b7c5ce"
+          },
+          "author": "bc-pi",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2024-03-01T20:42:55Z",
+          "updatedAt": "2024-03-01T20:42:56Z",
+          "comments": [
+            {
+              "originalPosition": 267,
+              "body": "Thanks, I made a minor suggestion to that wording but otherwise think it's good enough to allay my concern here. ",
+              "createdAt": "2024-03-01T20:42:55Z",
+              "updatedAt": "2024-03-01T20:42:56Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOHTmVzM5x9pMf",
+          "commit": {
+            "abbreviatedOid": "0b7c5ce"
+          },
+          "author": "bc-pi",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2024-03-01T20:44:51Z",
+          "updatedAt": "2024-03-01T20:44:51Z",
+          "comments": [
+            {
+              "originalPosition": 513,
+              "body": "thanks @bifurcation - I now see a document history bullet somewhere down below for this change \r\n",
+              "createdAt": "2024-03-01T20:44:51Z",
+              "updatedAt": "2024-03-01T20:44:51Z"
+            }
+          ]
         }
       ]
     },
@@ -42485,24 +42707,26 @@
       "id": "PR_kwDOHTmVzM5n9vZ6",
       "title": "be more explicit that VC examples do not define anything",
       "url": "https://github.com/oauth-wg/oauth-selective-disclosure-jwt/pull/405",
-      "state": "OPEN",
+      "state": "MERGED",
       "author": "bc-pi",
       "authorAssociation": "COLLABORATOR",
       "assignees": [],
       "labels": [],
       "body": "be more explicit that the VCDM and SD-JWT VC examples are only illustrative and do not define anything (for #341)\r\n\r\npreview links to the two relevant appendix parts: \r\nhttps://drafts.oauth.net/oauth-selective-disclosure-jwt/examples-are-only-examples/draft-ietf-oauth-selective-disclosure-jwt.html#appendix-A\r\n\r\nhttps://drafts.oauth.net/oauth-selective-disclosure-jwt/examples-are-only-examples/draft-ietf-oauth-selective-disclosure-jwt.html#appendix-A.4\r\n",
       "createdAt": "2024-02-26T20:47:27Z",
-      "updatedAt": "2024-02-29T00:50:20Z",
+      "updatedAt": "2024-02-29T13:08:47Z",
       "baseRepository": "oauth-wg/oauth-selective-disclosure-jwt",
       "baseRefName": "master",
       "baseRefOid": "894905aa7985a3e7e7636ff740a8b8fbd9fd111f",
       "headRepository": "oauth-wg/oauth-selective-disclosure-jwt",
       "headRefName": "examples-are-only-examples",
       "headRefOid": "01495b4e900cc132cc8452bca9a0176d18a1c3d6",
-      "closedAt": null,
-      "mergedAt": null,
-      "mergedBy": null,
-      "mergeCommit": null,
+      "closedAt": "2024-02-29T13:08:47Z",
+      "mergedAt": "2024-02-29T13:08:47Z",
+      "mergedBy": "bc-pi",
+      "mergeCommit": {
+        "oid": "e13ecce1ba7ddb835d7b9a38372ec2afba59ba84"
+      },
       "comments": [
         {
           "author": "Sakurann",
@@ -42524,6 +42748,13 @@
           "body": "> > discussed to add a sentence at line 1513 that data structure and claim names are hypothetical. @Sakurann to do\r\n> \r\n> Perspective text from SD-JWT VC that tries to say similar things:\r\n> \r\n> > Important: The following examples are not normative and provided for\r\n> > ~illustration~ illustrative purposes only. In particular, neither the structure of the claims\r\n> > nor the selection of selectively disclosable claims are normative.\r\n\r\nI added that text at start of the whole examples appendix 0bd026ba5f802a79c790822f875ea348647fb11c\r\n\r\nAnd updated the text at the start of the VCDM example along the lines of @Sakurann's suggestion 30c847c605fd06064ade786ff9c3f134b9ff32af \r\n\r\nI think this one is ready for review again. ",
           "createdAt": "2024-02-28T19:57:50Z",
           "updatedAt": "2024-02-28T19:57:50Z"
+        },
+        {
+          "author": "bc-pi",
+          "authorAssociation": "COLLABORATOR",
+          "body": "The only changes Dr. @danielfett hasn't seen since he approved are text he wrote/suggested borrowed from SD-JWT VC so I think it's ok to go ahead and merge. ",
+          "createdAt": "2024-02-29T13:06:47Z",
+          "updatedAt": "2024-02-29T13:06:47Z"
         }
       ],
       "reviews": [
@@ -42772,6 +43003,26 @@
               "updatedAt": "2024-02-29T00:50:10Z"
             }
           ]
+        },
+        {
+          "id": "PRR_kwDOHTmVzM5xtaq8",
+          "commit": {
+            "abbreviatedOid": "0bd026b"
+          },
+          "author": "bc-pi",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2024-02-29T00:51:09Z",
+          "updatedAt": "2024-02-29T00:51:10Z",
+          "comments": [
+            {
+              "originalPosition": 7,
+              "body": "is it is ",
+              "createdAt": "2024-02-29T00:51:09Z",
+              "updatedAt": "2024-02-29T00:51:10Z"
+            }
+          ]
         }
       ]
     },
@@ -42950,7 +43201,7 @@
       "labels": [],
       "body": "Remove `vct#integrity` that is not yet defined and remove the disclosure of the age which for whatever reason didn't work.",
       "createdAt": "2024-02-27T19:22:53Z",
-      "updatedAt": "2024-02-28T12:57:08Z",
+      "updatedAt": "2024-02-29T17:38:43Z",
       "baseRepository": "oauth-wg/oauth-selective-disclosure-jwt",
       "baseRefName": "master",
       "baseRefOid": "894905aa7985a3e7e7636ff740a8b8fbd9fd111f",
@@ -42971,9 +43222,9 @@
           "author": "bc-pi",
           "authorAssociation": "COLLABORATOR",
           "state": "APPROVED",
-          "body": "Looks okay to address the immediate issues now. ",
+          "body": "~~Looks okay to address the immediate issues now.~~",
           "createdAt": "2024-02-27T22:45:06Z",
-          "updatedAt": "2024-02-27T22:46:04Z",
+          "updatedAt": "2024-02-29T17:36:02Z",
           "comments": [
             {
               "originalPosition": 14,
@@ -43002,6 +43253,19 @@
               "updatedAt": "2024-02-28T12:57:21Z"
             }
           ]
+        },
+        {
+          "id": "PRR_kwDOHTmVzM5x0JDP",
+          "commit": {
+            "abbreviatedOid": "17aa50a"
+          },
+          "author": "bc-pi",
+          "authorAssociation": "COLLABORATOR",
+          "state": "CHANGES_REQUESTED",
+          "body": "https://github.com/oauth-wg/oauth-selective-disclosure-jwt/pull/411 changes the quoting in the yaml so the age_equal_or_over 18 works, which i think is preferable to this ",
+          "createdAt": "2024-02-29T17:38:43Z",
+          "updatedAt": "2024-02-29T17:38:43Z",
+          "comments": []
         }
       ]
     },
@@ -43017,13 +43281,39 @@
       "labels": [],
       "body": "Editorial updates for more consistent treatment of a Disclosure vs the contents of a Disclosure (to fix #358 Confusing terminology)\r\n\r\nEditor's draft PR preview: https://drafts.oauth.net/oauth-selective-disclosure-jwt/somewhat-less-confusing-terminology/draft-ietf-oauth-selective-disclosure-jwt.html",
       "createdAt": "2024-02-28T23:52:40Z",
-      "updatedAt": "2024-02-28T23:55:21Z",
+      "updatedAt": "2024-02-29T13:21:35Z",
       "baseRepository": "oauth-wg/oauth-selective-disclosure-jwt",
       "baseRefName": "master",
-      "baseRefOid": "894905aa7985a3e7e7636ff740a8b8fbd9fd111f",
+      "baseRefOid": "e13ecce1ba7ddb835d7b9a38372ec2afba59ba84",
       "headRepository": "oauth-wg/oauth-selective-disclosure-jwt",
       "headRefName": "somewhat-less-confusing-terminology",
-      "headRefOid": "27c751f6db56cf6648eb240232d543b1016ad386",
+      "headRefOid": "1f5d02c098e9edfe048fed8ffcb9e8e50425947c",
+      "closedAt": null,
+      "mergedAt": null,
+      "mergedBy": null,
+      "mergeCommit": null,
+      "comments": [],
+      "reviews": []
+    },
+    {
+      "number": 411,
+      "id": "PR_kwDOHTmVzM5oUmgR",
+      "title": "Fix PID example's age disclosure",
+      "url": "https://github.com/oauth-wg/oauth-selective-disclosure-jwt/pull/411",
+      "state": "OPEN",
+      "author": "bc-pi",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "Fix the disclosure of the age >= 18 in the PID example (something with type conversion and quoting in the yaml) and remove the not yet defined vct#integrity\r\n\r\nfixes issue #409\r\n\r\nalternative to PR #408 \r\n\r\n\r\nhttps://drafts.oauth.net/oauth-selective-disclosure-jwt/fix-age-in-pid-example/draft-ietf-oauth-selective-disclosure-jwt.html#appendix-A.3-57 does now have ~ `\"age_equal_or_over\": {\"18\": true} ` show up\r\n\r\n",
+      "createdAt": "2024-02-29T17:35:03Z",
+      "updatedAt": "2024-02-29T22:56:01Z",
+      "baseRepository": "oauth-wg/oauth-selective-disclosure-jwt",
+      "baseRefName": "master",
+      "baseRefOid": "e13ecce1ba7ddb835d7b9a38372ec2afba59ba84",
+      "headRepository": "oauth-wg/oauth-selective-disclosure-jwt",
+      "headRefName": "fix-age-in-pid-example",
+      "headRefOid": "d8b5930acaefe4471adcb169e5ce73473720de4c",
       "closedAt": null,
       "mergedAt": null,
       "mergedBy": null,
