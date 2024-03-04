@@ -1809,7 +1809,7 @@ data. The original JSON data is then used by the application. See
    * Remove mention of unspecified key binding methods and the Enveloping SD-JWTs section
    * Editorial updates aimed at more consistent treatment of a Disclosure vs the contents of a Disclosure
    * Update PID example
-
+   * Be more explicit that the VCDM and SD-JWT VC examples are only illustrative and do not define anything
 
    -07
 
