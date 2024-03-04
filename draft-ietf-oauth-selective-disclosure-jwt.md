@@ -598,10 +598,8 @@ in (#hash_function_claim)).
 
 The Verifier MUST ensure that the key with which it validates the signature on
 the Key Binding JWT is the key specified in the SD-JWT as the Holder's public
-key.  For example, if the SD-JWT contains a `cnf` value of type `jwk`, the
-Verifier would confirm that the public key's JWK represents the same key as the
-`jwk` value.  Or if the SD-JWT contains a `cnf` value of type `jwk`, then the
-Verifier could parse the provided JWK and use it to verify the Key Binding JWT.
+key.  For example, if the SD-JWT contains a `cnf` value with a `jwk` member, the
+could parse the provided JWK and use it to verify the Key Binding JWT.
 
 Whether to require Key Binding is up to the Verifier's policy, based on the set
 of trust requirements such as trust frameworks it belongs to. See
@@ -724,7 +722,7 @@ The Issuer creates Disclosures first for the sub-claims and then includes their 
 
 ## Verification of the SD-JWT {#sd_jwt_verification}
 
-Upon receiving an SD-JWT, for example as a component of an SD-JWT-KB, a Holder
+Upon receiving an SD-JWT, either directly or as a component of an SD-JWT-KB, a Holder
 or a Verifier needs to ensure that:
 
  * the Issuer-signed JWT is valid, i.e., it is signed by the Issuer and the signature is valid, and
