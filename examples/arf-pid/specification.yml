@@ -1,6 +1,6 @@
 user_claims:
   vct: https://bmi.bund.example/credential/pid/1.0
-  vct#integrity: sha256-jo8433ot48utul8ura33
+#  vct#integrity: sha256-jo8433ot48utul8ura33
   !sd given_name: Erika
   !sd family_name: Mustermann
   !sd birthdate: '1963-08-12'
@@ -19,12 +19,12 @@ user_claims:
     country: DE
   !sd also_known_as: Schwester Agnes
   age_equal_or_over:
-    !sd '12': true
-    !sd '14': true
-    !sd '16': true
-    !sd '18': true
-    !sd '21': true
-    !sd '65': false
+    !sd "12": true
+    !sd "14": true
+    !sd "16": true
+    !sd "18": true
+    !sd "21": true
+    !sd "65": false
 
   #cnf:
   #  jwk:
@@ -38,7 +38,7 @@ holder_disclosed_claims:
   nationalities:
     - true
   age_equal_or_over:
-    '18': true
+    "18": true
 
 add_decoy_claims: false
 key_binding: true
