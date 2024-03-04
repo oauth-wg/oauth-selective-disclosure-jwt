@@ -1714,15 +1714,15 @@ data. The original JSON data is then used by the application. See
 
    -08
 
-* Make RFCs 0020 and 7515 normative references
-* Be a bit more prescriptive in suggesting RFC7800 cnf/jwk be used to convey the Key Binding key
-* Do not disallow HMAC any longer.
-* Editorial changes aimed at improved clarity
-* Improve unlinkability considerations, mention that different KB keys must be used
-* Be more explicit that the VCDM and SD-JWT VC examples are only illustrative and do not define anything
-* Remove mention of unspecified key binding methods and the Enveloping SD-JWTs section
-* Editorial updates aimed at more consistent treatment of a Disclosure vs the contents of a Disclosure
-* Update PID example
+   * Make RFCs 0020 and 7515 normative references
+   * Be a bit more prescriptive in suggesting RFC7800 cnf/jwk be used to convey the Key Binding key
+   * Editorial changes aimed at improved clarity
+   * Improve unlinkability considerations, mention that different KB keys must be used
+   * Remove the explicit prohibition on HMAC
+   * Remove mention of unspecified key binding methods and the Enveloping SD-JWTs section
+   * Editorial updates aimed at more consistent treatment of a Disclosure vs the contents of a Disclosure
+   * Update PID example
+   * Be more explicit that the VCDM and SD-JWT VC examples are only illustrative and do not define anything
 
    -07
 
