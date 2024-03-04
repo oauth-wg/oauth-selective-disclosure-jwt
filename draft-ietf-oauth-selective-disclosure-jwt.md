@@ -800,7 +800,7 @@ To this end, Verifiers MUST follow the following steps (or equivalent):
 3. If the Holder has provided an SD-JWT-KB, parse it into an SD-JWT and a Key Binding JWT.
 4. Process the SD-JWT as defined in (#sd_jwt_verification).
 5. If Key Binding is required:
-    1. Determine the public key for the Holder from the SD-JWT (see (#holder_public_key_claim)).
+    1. Determine the public key for the Holder from the SD-JWT (see (#key_binding)).
     2. Ensure that a signing algorithm was used that was deemed secure for the application. Refer to [@RFC8725], Sections 3.1 and 3.2 for details. The `none` algorithm MUST NOT be accepted.
     3. Validate the signature over the Key Binding JWT per Section 5.2 of [@!RFC7515].
     4. Check that the `typ` of the Key Binding JWT is `kb+jwt` (see (#kb-jwt)).
