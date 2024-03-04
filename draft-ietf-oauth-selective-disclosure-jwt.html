@@ -1500,7 +1500,7 @@ that supports selective disclosure as defined in this document. It can contain b
 </dd>
         <dd class="break"></dd>
 <dt id="section-2-1.5">Disclosure:</dt>
-        <dd style="margin-left: 1.5em" id="section-2-1.6">A combination of a salt, a cleartext claim name (present when the claim is a name-value pair and absent when the claim is an array element), and a cleartext claim value, all of which are used to calculate a digest for the respective claim.<a href="#section-2-1.6" class="pilcrow">¶</a>
+        <dd style="margin-left: 1.5em" id="section-2-1.6">A JSON array containing a combination of a salt, a cleartext claim name (present when the claim is a name-value pair and absent when the claim is an array element), and a cleartext claim value, which is base64url-encoded and used to calculate a digest for the respective claim. The term Disclosure refers to the whole base64url-encoded string.<a href="#section-2-1.6" class="pilcrow">¶</a>
 </dd>
         <dd class="break"></dd>
 <dt id="section-2-1.7">Key Binding:</dt>
@@ -1583,7 +1583,8 @@ conceptual level, abstracting from the data formats described in <a href="#data_
 <a href="#section-4.1" class="section-number selfRef">4.1. </a><a href="#name-sd-jwt-and-disclosures" class="section-name selfRef">SD-JWT and Disclosures</a>
         </h3>
 <p id="section-4.1-1">An SD-JWT, at its core, is a digitally signed JSON document containing digests over the selectively disclosable claims with the Disclosures outside the document. Disclosures can be omitted without breaking the signature, and modifying them can be detected. Selectively disclosable claims can be individual object properties (name-value pairs) or array elements.<a href="#section-4.1-1" class="pilcrow">¶</a></p>
-<p id="section-4.1-2">Each digest value ensures the integrity of, and maps to, the respective Disclosure.  Digest values are calculated using a hash function over the Disclosures, each of which contains a cryptographically secure random salt, the claim name (only when the claim is an object property), and the claim value. The Disclosures are sent to the Holder as part of the SD-JWT in the format defined in <a href="#data_formats" class="auto internal xref">Section 5</a>.<a href="#section-4.1-2" class="pilcrow">¶</a></p>
+<p id="section-4.1-2">Each digest value ensures the integrity of, and maps to, the respective Disclosure.  Digest values are calculated using a hash function over the Disclosures, each of which contains a cryptographically secure random salt, the claim name (only when the claim is an object property), and the claim value. The Disclosures are sent to the Holder as part of the SD-JWT in the format defined in <a href="#data_formats" class="auto internal xref">Section 5</a>.
+When presenting an SD-JWT to a Verifier, the Holder only includes the Disclosures for the claims that it wants to reveal to that Verifier.<a href="#section-4.1-2" class="pilcrow">¶</a></p>
 <p id="section-4.1-3">An SD-JWT MAY also contain clear-text claims that are always disclosed to the Verifier.<a href="#section-4.1-3" class="pilcrow">¶</a></p>
 </section>
 </div>
@@ -1772,7 +1773,7 @@ the raw public key by value in SD-JWT.<a href="#section-5.1.2-3" class="pilcrow"
 <li class="compact" id="section-5.2.1-2.1">
               <p id="section-5.2.1-2.1.1">Create an array of three elements in this order:<a href="#section-5.2.1-2.1.1" class="pilcrow">¶</a></p>
 <ol start="1" type="1" class="compact type-1" id="section-5.2.1-2.1.2">
-<li id="section-5.2.1-2.1.2.1">A salt value. MUST be a string. See <a href="#salt-entropy" class="auto internal xref">Section 10.3</a> and <a href="#salt_minlength" class="auto internal xref">Section 10.4</a> for security considerations. It is RECOMMENDED to base64url-encode minimum 128 bits of cryptographically secure random data, producing a string. The salt value MUST be unique for each claim that is to be selectively disclosed. The Issuer MUST NOT disclose the salt value to any party other than the Holder.<a href="#section-5.2.1-2.1.2.1" class="pilcrow">¶</a>
+<li id="section-5.2.1-2.1.2.1">A salt value. MUST be a string. See <a href="#salt-entropy" class="auto internal xref">Section 10.3</a> and <a href="#salt_minlength" class="auto internal xref">Section 10.4</a> for security considerations. It is RECOMMENDED to base64url-encode minimum 128 bits of cryptographically secure random data, producing a string. The salt value MUST be unique for each claim that is to be selectively disclosed. The Issuer MUST NOT reveal the salt value to any party other than the Holder.<a href="#section-5.2.1-2.1.2.1" class="pilcrow">¶</a>
 </li>
                 <li id="section-5.2.1-2.1.2.2">The claim name, or key, as it would be used in a regular JWT payload. It MUST be a string and MUST NOT be <code>_sd</code>, <code>...</code>, or a claim name existing in the object as a non-selectively disclosable claim.<a href="#section-5.2.1-2.1.2.2" class="pilcrow">¶</a>
 </li>
@@ -1859,8 +1860,8 @@ variations in the result of the JSON encoding apply.<a href="#section-5.2.2-3" c
           <h4 id="name-hashing-disclosures">
 <a href="#section-5.2.3" class="section-number selfRef">5.2.3. </a><a href="#name-hashing-disclosures" class="section-name selfRef">Hashing Disclosures</a>
           </h4>
-<p id="section-5.2.3-1">For embedding the Disclosures in the SD-JWT, the Disclosures are hashed using the hash algorithm specified in the <code>_sd_alg</code> claim described in <a href="#hash_function_claim" class="auto internal xref">Section 5.1.1</a>. The resulting digest is then included in the SD-JWT payload instead of the original claim value, as described next.<a href="#section-5.2.3-1" class="pilcrow">¶</a></p>
-<p id="section-5.2.3-2">The digest MUST be taken over the US-ASCII bytes of the base64url-encoded Disclosure. This follows the convention in JWS <span>[<a href="#RFC7515" class="cite xref">RFC7515</a>]</span> and JWE <span>[<a href="#RFC7516" class="cite xref">RFC7516</a>]</span>. The bytes of the digest MUST then be base64url-encoded.<a href="#section-5.2.3-2" class="pilcrow">¶</a></p>
+<p id="section-5.2.3-1">For embedding references to the Disclosures in the SD-JWT, each Disclosure is hashed using the hash algorithm specified in the <code>_sd_alg</code> claim described in <a href="#hash_function_claim" class="auto internal xref">Section 5.1.1</a>. The resulting digest is then included in the SD-JWT payload instead of the original claim value, as described next.<a href="#section-5.2.3-1" class="pilcrow">¶</a></p>
+<p id="section-5.2.3-2">The digest MUST be taken over the US-ASCII bytes of the base64url-encoded value that is the Disclosure. This follows the convention in JWS <span>[<a href="#RFC7515" class="cite xref">RFC7515</a>]</span> and JWE <span>[<a href="#RFC7516" class="cite xref">RFC7516</a>]</span>. The bytes of the digest MUST then be base64url-encoded.<a href="#section-5.2.3-2" class="pilcrow">¶</a></p>
 <p id="section-5.2.3-3">It is important to note that:<a href="#section-5.2.3-3" class="pilcrow">¶</a></p>
 <ul class="compact">
 <li class="compact" id="section-5.2.3-4.1">The input to the hash function MUST be the base64url-encoded Disclosure, not the bytes encoded by the base64url string.<a href="#section-5.2.3-4.1" class="pilcrow">¶</a>
@@ -2274,8 +2275,8 @@ ZHJ5M2xjYndIZ2VaOGtoQXYxVTFPU2xlclAwVmtCSnJXWjAifV0sICJfc2RfYWxnIjog
 InNoYS0yNTYiLCAiY25mIjogeyJqd2siOiB7Imt0eSI6ICJFQyIsICJjcnYiOiAiUC0y
 NTYiLCAieCI6ICJUQ0FFUjE5WnZ1M09IRjRqNFc0dmZTVm9ISVAxSUxpbERsczd2Q2VH
 ZW1jIiwgInkiOiAiWnhqaVdXYlpNUUdIVldLVlE0aGJTSWlyc1ZmdWVjQ0U2dDRqVDlG
-MkhaUSJ9fX0.9Wj1DgbyvGQ5l05WE4eBbed3WCY2WJCttwhkHlVIWXqBy9Nn2MnOGZBd
-ibyyBrw1JuFpzaMl1pNjPJxUh38wFQ
+MkhaUSJ9fX0.0c7rxDf1UykLol-M1P9bpIbgFGz1HJ6AGcO_zsPfnHINt8uk6Kj9TaEK
+NDTCi8PK3M5UPVbomT17P8F6acCwTw
 
 </pre><a href="#section-6.1-29" class="pilcrow">¶</a>
 </div>
@@ -2297,8 +2298,8 @@ ZHJ5M2xjYndIZ2VaOGtoQXYxVTFPU2xlclAwVmtCSnJXWjAifV0sICJfc2RfYWxnIjog
 InNoYS0yNTYiLCAiY25mIjogeyJqd2siOiB7Imt0eSI6ICJFQyIsICJjcnYiOiAiUC0y
 NTYiLCAieCI6ICJUQ0FFUjE5WnZ1M09IRjRqNFc0dmZTVm9ISVAxSUxpbERsczd2Q2VH
 ZW1jIiwgInkiOiAiWnhqaVdXYlpNUUdIVldLVlE0aGJTSWlyc1ZmdWVjQ0U2dDRqVDlG
-MkhaUSJ9fX0.9Wj1DgbyvGQ5l05WE4eBbed3WCY2WJCttwhkHlVIWXqBy9Nn2MnOGZBd
-ibyyBrw1JuFpzaMl1pNjPJxUh38wFQ~WyIyR0xDNDJzS1F2ZUNmR2ZyeU5STjl3IiwgI
+MkhaUSJ9fX0.0c7rxDf1UykLol-M1P9bpIbgFGz1HJ6AGcO_zsPfnHINt8uk6Kj9TaEK
+NDTCi8PK3M5UPVbomT17P8F6acCwTw~WyIyR0xDNDJzS1F2ZUNmR2ZyeU5STjl3IiwgI
 mdpdmVuX25hbWUiLCAiSm9obiJd~WyJlbHVWNU9nM2dTTklJOEVZbnN4QV9BIiwgImZh
 bWlseV9uYW1lIiwgIkRvZSJd~WyI2SWo3dE0tYTVpVlBHYm9TNXRtdlZBIiwgImVtYWl
 sIiwgImpvaG5kb2VAZXhhbXBsZS5jb20iXQ~WyJlSThaV205UW5LUHBOUGVOZW5IZGhR
@@ -2342,18 +2343,18 @@ ZHJ5M2xjYndIZ2VaOGtoQXYxVTFPU2xlclAwVmtCSnJXWjAifV0sICJfc2RfYWxnIjog
 InNoYS0yNTYiLCAiY25mIjogeyJqd2siOiB7Imt0eSI6ICJFQyIsICJjcnYiOiAiUC0y
 NTYiLCAieCI6ICJUQ0FFUjE5WnZ1M09IRjRqNFc0dmZTVm9ISVAxSUxpbERsczd2Q2VH
 ZW1jIiwgInkiOiAiWnhqaVdXYlpNUUdIVldLVlE0aGJTSWlyc1ZmdWVjQ0U2dDRqVDlG
-MkhaUSJ9fX0.9Wj1DgbyvGQ5l05WE4eBbed3WCY2WJCttwhkHlVIWXqBy9Nn2MnOGZBd
-ibyyBrw1JuFpzaMl1pNjPJxUh38wFQ~WyJlbHVWNU9nM2dTTklJOEVZbnN4QV9BIiwgI
+MkhaUSJ9fX0.0c7rxDf1UykLol-M1P9bpIbgFGz1HJ6AGcO_zsPfnHINt8uk6Kj9TaEK
+NDTCi8PK3M5UPVbomT17P8F6acCwTw~WyJlbHVWNU9nM2dTTklJOEVZbnN4QV9BIiwgI
 mZhbWlseV9uYW1lIiwgIkRvZSJd~WyJBSngtMDk1VlBycFR0TjRRTU9xUk9BIiwgImFk
 ZHJlc3MiLCB7InN0cmVldF9hZGRyZXNzIjogIjEyMyBNYWluIFN0IiwgImxvY2FsaXR5
 IjogIkFueXRvd24iLCAicmVnaW9uIjogIkFueXN0YXRlIiwgImNvdW50cnkiOiAiVVMi
 fV0~WyIyR0xDNDJzS1F2ZUNmR2ZyeU5STjl3IiwgImdpdmVuX25hbWUiLCAiSm9obiJd
 ~WyJsa2x4RjVqTVlsR1RQVW92TU5JdkNBIiwgIlVTIl0~eyJhbGciOiAiRVMyNTYiLCA
 idHlwIjogImtiK2p3dCJ9.eyJub25jZSI6ICIxMjM0NTY3ODkwIiwgImF1ZCI6ICJodH
-RwczovL3ZlcmlmaWVyLmV4YW1wbGUub3JnIiwgImlhdCI6IDE3MDk1NjU1NzQsICJzZF
-9oYXNoIjogIkJXOTc3MlFvZllHWk15Nm5fdC0yQWZfODBCSlZNdnBjQ2RGWHoxUEJfUF
-EifQ.4F6yU-b87Bs8s40Z1larwB7EDivSPU8eTijqXpdH7cBT5SX88gIP7Z3djuSZ8lX
-HsdJbqinB6V6zdvNKuXtccQ
+RwczovL3ZlcmlmaWVyLmV4YW1wbGUub3JnIiwgImlhdCI6IDE3MDk1Njg4MTQsICJzZF
+9oYXNoIjogIm9ZRlMwZEhaSXdtOTJYaEtvMFN3OUVXT3BZOVVrX3FNZ2xUWlhqeVpJS0
+0ifQ.GI2nWnJtqGUthB17wmmOYOYqSai3Oej8LYXIn4h5z4oawQHvgxpCTr-iuWKBAlP
+rzVs_Jr5eXaOy-zh2PKKMKw
 
 </pre><a href="#section-6.2-2" class="pilcrow">¶</a>
 </div>
@@ -2362,8 +2363,8 @@ HsdJbqinB6V6zdvNKuXtccQ
 <pre>{
   "nonce": "1234567890",
   "aud": "https://verifier.example.org",
-  "iat": 1709565574,
-  "sd_hash": "BW9772QofYGZMy6n_t-2Af_80BJVMvpcCdFXz1PB_PQ"
+  "iat": 1709568814,
+  "sd_hash": "oYFS0dHZIwm92XhKo0Sw9EWOpY9Uk_qMglTZXjyZIKM"
 }
 
 </pre><a href="#section-6.2-4" class="pilcrow">¶</a>
@@ -2641,7 +2642,7 @@ how <code>address</code> can be represented in an SD-JWT.<a href="#section-7-6" 
 <ul class="compact">
 <li class="compact" id="section-8.1-2.1">the Issuer-signed JWT is valid, i.e., it is signed by the Issuer and the signature is valid, and<a href="#section-8.1-2.1" class="pilcrow">¶</a>
 </li>
-          <li class="compact" id="section-8.1-2.2">all Disclosures are valid and correspond to a respective digest value in the Issuer-signed JWT (directly in the payload or recursively included in other Disclosures).<a href="#section-8.1-2.2" class="pilcrow">¶</a>
+          <li class="compact" id="section-8.1-2.2">all Disclosures are valid and correspond to a respective digest value in the Issuer-signed JWT (directly in the payload or recursively included in the contents of other Disclosures).<a href="#section-8.1-2.2" class="pilcrow">¶</a>
 </li>
         </ul>
 <p id="section-8.1-3">The Holder or the Verifier MUST perform the following (or equivalent) steps when receiving
@@ -2689,7 +2690,7 @@ an SD-JWT:<a href="#section-8.1-3" class="pilcrow">¶</a></p>
                   <li id="section-8.1-4.3.2.3.2.2">
                     <p id="section-8.1-4.3.2.3.2.2.1">If the digest was found in an object's <code>_sd</code> key:<a href="#section-8.1-4.3.2.3.2.2.1" class="pilcrow">¶</a></p>
 <ol start="1" type="1" class="compact type-1" id="section-8.1-4.3.2.3.2.2.2">
-<li id="section-8.1-4.3.2.3.2.2.2.1">If the respective Disclosure is not a JSON-encoded array of three elements (salt, claim name, claim value), the SD-JWT MUST be rejected.<a href="#section-8.1-4.3.2.3.2.2.2.1" class="pilcrow">¶</a>
+<li id="section-8.1-4.3.2.3.2.2.2.1">If the contents of the respective Disclosure is not a JSON-encoded array of three elements (salt, claim name, claim value), the SD-JWT MUST be rejected.<a href="#section-8.1-4.3.2.3.2.2.2.1" class="pilcrow">¶</a>
 </li>
                       <li id="section-8.1-4.3.2.3.2.2.2.2">If the claim name is <code>_sd</code> or <code>...</code>, the SD-JWT MUST be rejected.<a href="#section-8.1-4.3.2.3.2.2.2.2" class="pilcrow">¶</a>
 </li>
@@ -2704,7 +2705,7 @@ an SD-JWT:<a href="#section-8.1-3" class="pilcrow">¶</a></p>
                   <li id="section-8.1-4.3.2.3.2.3">
                     <p id="section-8.1-4.3.2.3.2.3.1">If the digest was found in an array element:<a href="#section-8.1-4.3.2.3.2.3.1" class="pilcrow">¶</a></p>
 <ol start="1" type="1" class="compact type-1" id="section-8.1-4.3.2.3.2.3.2">
-<li id="section-8.1-4.3.2.3.2.3.2.1">If the respective Disclosure is not a JSON-encoded array of two elements (salt, value), the SD-JWT MUST be rejected.<a href="#section-8.1-4.3.2.3.2.3.2.1" class="pilcrow">¶</a>
+<li id="section-8.1-4.3.2.3.2.3.2.1">If the contents of the respective Disclosure is not a JSON-encoded array of two elements (salt, value), the SD-JWT MUST be rejected.<a href="#section-8.1-4.3.2.3.2.3.2.1" class="pilcrow">¶</a>
 </li>
                       <li id="section-8.1-4.3.2.3.2.3.2.2">Replace the array element with the value from the Disclosure.<a href="#section-8.1-4.3.2.3.2.3.2.2" class="pilcrow">¶</a>
 </li>
@@ -2808,18 +2809,18 @@ details.<a href="#section-8.3-4.1" class="pilcrow">¶</a>
       </h2>
 <p id="section-9-1">This section describes an optional alternate format for SD-JWT using the JWS JSON Serialization from <span>[<a href="#RFC7515" class="cite xref">RFC7515</a>]</span>.<a href="#section-9-1" class="pilcrow">¶</a></p>
 <p id="section-9-2">For both the General and Flattened JSON Serialization, the SD-JWT is represented as a JSON object according
-to Section 7.2 of <span>[<a href="#RFC7515" class="cite xref">RFC7515</a>]</span>. The disclosures (both for issuance and presentation) SHOULD be included in the
+to Section 7.2 of <span>[<a href="#RFC7515" class="cite xref">RFC7515</a>]</span>. The Disclosures (both for issuance and presentation) SHOULD be included in the
 serialized JWS using the member name <code>disclosures</code> at the top-level of the JSON object (the same level as the <code>payload</code> member). The
 value of the <code>disclosures</code> member is an array of strings where each element is an individual Disclosure
 as described in <a href="#creating_disclosures" class="auto internal xref">Section 5.2</a>. The Issuer includes a Disclosure for each selectively
 disclosable claim of the SD-JWT payload, whereas the Holder includes only the Disclosures
 selected for the given presentation.<a href="#section-9-2" class="pilcrow">¶</a></p>
-<p id="section-9-3">Alternative methods for conveying the disclosures MAY be used (such as including them in a <code>disclosures</code>
+<p id="section-9-3">Alternative methods for conveying the Disclosures MAY be used (such as including them in a <code>disclosures</code>
 member of an outer JSON structure also containing the JSON Serialized SD-JWT) as dictated by a specific
 application or transport protocol. However, the details of such approaches fall outside the scope of this
 specification.<a href="#section-9-3" class="pilcrow">¶</a></p>
 <p id="section-9-4">Verification of the JWS JSON serialized SD-JWT follows the same rules defined in <a href="#verification" class="auto internal xref">Section 4.4</a>,
-except that the SD-JWT does not need to be split into component parts and the disclosures
+except that the SD-JWT does not need to be split into component parts and the Disclosures
 can be found in the respective member of the JSON object (or elsewhere).<a href="#section-9-4" class="pilcrow">¶</a></p>
 <p id="section-9-5">Using a payload similar to that from <a href="#example-1">Example 1</a>, the following is a non-normative example of
 a JWS JSON serialized SD-JWT from an Issuer with all the respective Disclosures.<a href="#section-9-5" class="pilcrow">¶</a></p>
@@ -2837,8 +2838,8 @@ a JWS JSON serialized SD-JWT from an Issuer with all the respective Disclosures.
     Aic2hhLTI1NiJ9",
   "protected":
     "eyJhbGciOiAiRVMyNTYiLCAidHlwIjogImV4YW1wbGUrc2Qtand0In0",
-  "signature": "99gb-JOimrhxWgPwid_Uz9stGMcoHOGoZr9-3Jd8dHeWBm4e7HI_
-    FffHkXll8gKa-QSih5hALyCT_IJYVMmChA",
+  "signature": "6QBSFn7laLFyjirCj2_xuWvSCLJm31IAIlU9ryLs8hZ1HvzIs6ZB
+    eMeCEADZwXgr6I4qx79LYvbWVi4SdTtZUw",
   "disclosures": [
     "WyIyR0xDNDJzS1F2ZUNmR2ZyeU5STjl3IiwgInN1YiIsICJqb2huX2RvZV80MiJ
       d",
@@ -2876,8 +2877,8 @@ has selected to disclose <code>given_name</code>, <code>family_name</code>, and 
     Aic2hhLTI1NiJ9",
   "protected":
     "eyJhbGciOiAiRVMyNTYiLCAidHlwIjogImV4YW1wbGUrc2Qtand0In0",
-  "signature": "99gb-JOimrhxWgPwid_Uz9stGMcoHOGoZr9-3Jd8dHeWBm4e7HI_
-    FffHkXll8gKa-QSih5hALyCT_IJYVMmChA",
+  "signature": "6QBSFn7laLFyjirCj2_xuWvSCLJm31IAIlU9ryLs8hZ1HvzIs6ZB
+    eMeCEADZwXgr6I4qx79LYvbWVi4SdTtZUw",
   "disclosures": [
     "WyI2SWo3dE0tYTVpVlBHYm9TNXRtdlZBIiwgImZhbWlseV9uYW1lIiwgIkRvZSJ
       d",
@@ -3350,6 +3351,7 @@ Paul Bastian,
 Peter Altmann,
 Pieter Kasselman,
 Richard Barnes,
+Rohan Mahy,
 Ryosuke Abe,
 Sami Rosendahl,
 Shawn Butterfield,
@@ -3400,7 +3402,7 @@ IANA "JSON Web Token Claims" registry <span>[<a href="#IANA.JWT" class="cite xre
 <ul class="compact">
 <li class="compact" id="section-13.1-6.1">Claim Name: <code>_sd_alg</code><a href="#section-13.1-6.1" class="pilcrow">¶</a>
 </li>
-          <li class="compact" id="section-13.1-6.2">Claim Description: Hash algorithm used to generate disclosure digests and digest over presentation<a href="#section-13.1-6.2" class="pilcrow">¶</a>
+          <li class="compact" id="section-13.1-6.2">Claim Description: Hash algorithm used to generate Disclosure digests and digest over presentation<a href="#section-13.1-6.2" class="pilcrow">¶</a>
 </li>
           <li class="compact" id="section-13.1-6.3">Change Controller: IETF<a href="#section-13.1-6.3" class="pilcrow">¶</a>
 </li>
@@ -3956,8 +3958,8 @@ WUpISVo4VnUtZjlDQ3lWdWIyVWZnRWs4anZ2WGV6d0sxcF9KbmVlWFEiLCAiZ2xUM2hy
 U1U3ZlNXZ3dGNVVEWm1Xd0JUdzMyZ25VbGRJaGk4aEdWQ2FWNCIsICJydkpkNmlxNlQ1
 ZWptc0JNb0d3dU5YaDlxQUFGQVRBY2k0MG9pZEVlVnNBIiwgInVOSG9XWWhYc1poVkpD
 TkUyRHF5LXpxdDd0NjlnSkt5NVFhRnY3R3JNWDQiXX0sICJfc2RfYWxnIjogInNoYS0y
-NTYifQ.j367k2kKrzrmxFOU6P5JErQqvPoE9VgmrF7eYPjIa01mRVQRotb13zBc2dxmt
-czGQYhXmmcTV0ez1x-iK5jKSw~WyJHMDJOU3JRZmpGWFE3SW8wOXN5YWpBIiwgInJlZ2
+NTYifQ.IJKVGNpa_ZhBSlQ9-Pk8QOZdkQ2H09cGMZVHWGUprrUqJtz8qR-0ThNPTKiCb
+9IrYBpwFLRq9GqF1ZbpeeIX8w~WyJHMDJOU3JRZmpGWFE3SW8wOXN5YWpBIiwgInJlZ2
 lvbiIsICJcdTZlMmZcdTUzM2EiXQ~WyJsa2x4RjVqTVlsR1RQVW92TU5JdkNBIiwgImN
 vdW50cnkiLCAiSlAiXQ~
 
@@ -4295,8 +4297,8 @@ ZFJtc01vIiwgIldOQS1VTks3Rl96aHNBYjlzeVdPNklJUTF1SGxUbU9VOHI4Q3ZKMGNJ
 TWsiLCAiV3hoX3NWM2lSSDliZ3JUQkppLWFZSE5DTHQtdmpoWDFzZC1pZ09mXzlsayIs
 ICJfTy13SmlIM2VuU0I0Uk9IbnRUb1FUOEptTHR6LW1oTzJmMWM4OVhvZXJRIiwgImh2
 RFhod21HY0pRc0JDQTJPdGp1TEFjd0FNcERzYVUwbmtvdmNLT3FXTkUiXX19LCAiX3Nk
-X2FsZyI6ICJzaGEtMjU2In0.27a1Qyzdzx8kXasN82aNLE9oY4C6ZwBsUuK7uESc0jz3
-JliFPiiP_SosrhWZ1DSzmIG3BVG0ar9VWr8fHmpaiw~WyIyR0xDNDJzS1F2ZUNmR2Zye
+X2FsZyI6ICJzaGEtMjU2In0.IaBaXX2-gAi2oE3UHn43N2hC8DJECKiZZiSmWCTq4PNp
+Rw8RzUw-vZoPYasYLqrBbqXXFvjCPCXJ8i43feAiRQ~WyIyR0xDNDJzS1F2ZUNmR2Zye
 U5STjl3IiwgInRpbWUiLCAiMjAxMi0wNC0yM1QxODoyNVoiXQ~WyJQYzMzSk0yTGNoY1
 VfbEhnZ3ZfdWZRIiwgeyJfc2QiOiBbIjl3cGpWUFd1RDdQSzBuc1FETDhCMDZsbWRnVj
 NMVnliaEh5ZFFwVE55TEkiLCAiRzVFbmhPQU9vVTlYXzZRTU52ekZYanBFQV9SYy1BRX
@@ -4416,8 +4418,8 @@ oeTJyMDE4dnJzSmpvLVZqZDZnNnl0N0Fhb25Lb25uaXVKOXplbDNqbyIsICJxcDdaX0t
 6ICJzaGEtMjU2IiwgImNuZiI6IHsiandrIjogeyJrdHkiOiAiRUMiLCAiY3J2IjogIlA
 tMjU2IiwgIngiOiAiVENBRVIxOVp2dTNPSEY0ajRXNHZmU1ZvSElQMUlMaWxEbHM3dkN
 lR2VtYyIsICJ5IjogIlp4amlXV2JaTVFHSFZXS1ZRNGhiU0lpcnNWZnVlY0NFNnQ0alQ
-5RjJIWlEifX19.aCgJsjMQAZxuvUDjrE8_5-TG3cFhqupoh-kdhPkCFq2Fd87pvkOpNr
-Fzgep2hu44YrM720qtTcGsWCNxAs3iaQ~WyIyR0xDNDJzS1F2ZUNmR2ZyeU5STjl3Iiw
+5RjJIWlEifX19.T8teElPFbIoK10pPo0j2O264wmw-fWlNFNzscquL93CnqO0LJE6taK
+v5r9e71EDmIdYMVypXytnnm3vVDwAX3w~WyIyR0xDNDJzS1F2ZUNmR2ZyeU5STjl3Iiw
 gImdpdmVuX25hbWUiLCAiRXJpa2EiXQ~WyJlbHVWNU9nM2dTTklJOEVZbnN4QV9BIiwg
 ImZhbWlseV9uYW1lIiwgIk11c3Rlcm1hbm4iXQ~WyI2SWo3dE0tYTVpVlBHYm9TNXRtd
 lZBIiwgImJpcnRoZGF0ZSIsICIxOTYzLTA4LTEyIl0~WyJlSThaV205UW5LUHBOUGVOZ
@@ -4772,14 +4774,14 @@ oeTJyMDE4dnJzSmpvLVZqZDZnNnl0N0Fhb25Lb25uaXVKOXplbDNqbyIsICJxcDdaX0t
 6ICJzaGEtMjU2IiwgImNuZiI6IHsiandrIjogeyJrdHkiOiAiRUMiLCAiY3J2IjogIlA
 tMjU2IiwgIngiOiAiVENBRVIxOVp2dTNPSEY0ajRXNHZmU1ZvSElQMUlMaWxEbHM3dkN
 lR2VtYyIsICJ5IjogIlp4amlXV2JaTVFHSFZXS1ZRNGhiU0lpcnNWZnVlY0NFNnQ0alQ
-5RjJIWlEifX19.aCgJsjMQAZxuvUDjrE8_5-TG3cFhqupoh-kdhPkCFq2Fd87pvkOpNr
-Fzgep2hu44YrM720qtTcGsWCNxAs3iaQ~WyJuUHVvUW5rUkZxM0JJZUFtN0FuWEZBIiw
+5RjJIWlEifX19.T8teElPFbIoK10pPo0j2O264wmw-fWlNFNzscquL93CnqO0LJE6taK
+v5r9e71EDmIdYMVypXytnnm3vVDwAX3w~WyJuUHVvUW5rUkZxM0JJZUFtN0FuWEZBIiw
 gIm5hdGlvbmFsaXRpZXMiLCBbIkRFIl1d~WyJNMEpiNTd0NDF1YnJrU3V5ckRUM3hBIi
 wgIjE4IiwgdHJ1ZV0~eyJhbGciOiAiRVMyNTYiLCAidHlwIjogImtiK2p3dCJ9.eyJub
 25jZSI6ICIxMjM0NTY3ODkwIiwgImF1ZCI6ICJodHRwczovL3ZlcmlmaWVyLmV4YW1wb
-GUub3JnIiwgImlhdCI6IDE3MDk1NjU1NzQsICJzZF9oYXNoIjogIlp3bW1tdkNkeVZDU
-W1KVEVWVFo4YTc5blExSHliLXk3UmdnLTNLSWRteU0ifQ.CGJAAZoccBfB2OQWru0zWj
-uV_ta1EIkaC6qEYZWhT4SfkvzUckgVHMgwnPDI2hpOhxdcKhGoweB3n0tJoJVlAg
+GUub3JnIiwgImlhdCI6IDE3MDk1Njg4MTQsICJzZF9oYXNoIjogIkVlS2lVUHFOX3JCa
+UZoVnlSVUFfTDN0YmRad0pGOGQyV21yRUVRTE9OR2cifQ.pdXt50G0gedmWppJLEob9i
+dnnEqygF43Qjg-X1lA5up1RvgGAenCWyK5yV9AAHN9MXQeeYgC3gGKhmyM0kmzCg
 
 </pre><a href="#appendix-A.3-53" class="pilcrow">¶</a>
 </div>
@@ -4788,8 +4790,8 @@ uV_ta1EIkaC6qEYZWhT4SfkvzUckgVHMgwnPDI2hpOhxdcKhGoweB3n0tJoJVlAg
 <pre>{
   "nonce": "1234567890",
   "aud": "https://verifier.example.org",
-  "iat": 1709565574,
-  "sd_hash": "ZwmmmvCdyVCQmJTEVTZ8a79nQ1Hyb-y7Rgg-3KIdmyM"
+  "iat": 1709568814,
+  "sd_hash": "EeKiUPqN_rBiFhVyRUA_L3tbdZwJF8d2WmrEEQLONGg"
 }
 
 </pre><a href="#appendix-A.3-55" class="pilcrow">¶</a>
@@ -4902,8 +4904,8 @@ VmFjY2luZVJlY2lwaWVudCJ9LCAidHlwZSI6ICJWYWNjaW5hdGlvbkV2ZW50In0sICJf
 c2RfYWxnIjogInNoYS0yNTYiLCAiY25mIjogeyJqd2siOiB7Imt0eSI6ICJFQyIsICJj
 cnYiOiAiUC0yNTYiLCAieCI6ICJUQ0FFUjE5WnZ1M09IRjRqNFc0dmZTVm9ISVAxSUxp
 bERsczd2Q2VHZW1jIiwgInkiOiAiWnhqaVdXYlpNUUdIVldLVlE0aGJTSWlyc1ZmdWVj
-Q0U2dDRqVDlGMkhaUSJ9fX0.nUsfAWvZ4lSkUYKcYxB6SpIro9-LitbSuzRKJ_hB8CHy
-RRWjAnwe5kJtypA7wh8_BkDBHxn6OaxeWOna2x6--A~WyIyR0xDNDJzS1F2ZUNmR2Zye
+Q0U2dDRqVDlGMkhaUSJ9fX0.S8eFqKzsSKMxx7mDn32eHSclrRecygMU-pGMojtQp9TG
+-wPJpx-IgNTiZze08l6VCp9S4gY1RCKGgIkDNoAbgg~WyIyR0xDNDJzS1F2ZUNmR2Zye
 U5STjl3IiwgImF0Y0NvZGUiLCAiSjA3QlgwMyJd~WyJlbHVWNU9nM2dTTklJOEVZbnN4
 QV9BIiwgIm1lZGljaW5hbFByb2R1Y3ROYW1lIiwgIkNPVklELTE5IFZhY2NpbmUgTW9k
 ZXJuYSJd~WyI2SWo3dE0tYTVpVlBHYm9TNXRtdlZBIiwgIm1hcmtldGluZ0F1dGhvcml
@@ -5185,18 +5187,18 @@ VmFjY2luZVJlY2lwaWVudCJ9LCAidHlwZSI6ICJWYWNjaW5hdGlvbkV2ZW50In0sICJf
 c2RfYWxnIjogInNoYS0yNTYiLCAiY25mIjogeyJqd2siOiB7Imt0eSI6ICJFQyIsICJj
 cnYiOiAiUC0yNTYiLCAieCI6ICJUQ0FFUjE5WnZ1M09IRjRqNFc0dmZTVm9ISVAxSUxp
 bERsczd2Q2VHZW1jIiwgInkiOiAiWnhqaVdXYlpNUUdIVldLVlE0aGJTSWlyc1ZmdWVj
-Q0U2dDRqVDlGMkhaUSJ9fX0.nUsfAWvZ4lSkUYKcYxB6SpIro9-LitbSuzRKJ_hB8CHy
-RRWjAnwe5kJtypA7wh8_BkDBHxn6OaxeWOna2x6--A~WyJQYzMzSk0yTGNoY1VfbEhnZ
+Q0U2dDRqVDlGMkhaUSJ9fX0.S8eFqKzsSKMxx7mDn32eHSclrRecygMU-pGMojtQp9TG
+-wPJpx-IgNTiZze08l6VCp9S4gY1RCKGgIkDNoAbgg~WyJQYzMzSk0yTGNoY1VfbEhnZ
 3ZfdWZRIiwgIm9yZGVyIiwgIjMvMyJd~WyJBSngtMDk1VlBycFR0TjRRTU9xUk9BIiwg
 ImRhdGVPZlZhY2NpbmF0aW9uIiwgIjIwMjEtMDYtMjNUMTM6NDA6MTJaIl0~WyIyR0xD
 NDJzS1F2ZUNmR2ZyeU5STjl3IiwgImF0Y0NvZGUiLCAiSjA3QlgwMyJd~WyJlbHVWNU9
 nM2dTTklJOEVZbnN4QV9BIiwgIm1lZGljaW5hbFByb2R1Y3ROYW1lIiwgIkNPVklELTE
 5IFZhY2NpbmUgTW9kZXJuYSJd~eyJhbGciOiAiRVMyNTYiLCAidHlwIjogImtiK2p3dC
 J9.eyJub25jZSI6ICIxMjM0NTY3ODkwIiwgImF1ZCI6ICJodHRwczovL3ZlcmlmaWVyL
-mV4YW1wbGUub3JnIiwgImlhdCI6IDE3MDk1NjU1NzQsICJzZF9oYXNoIjogImprMWRqO
-EtIaVR4Ulpmc3BBOWRacTFtSUF1OUJZank0V3VJU1dYSWR3TncifQ.oktiCOqCHI4EQT
-SQGM0Rw_xFPnUgXR-HJRUGm_kAyfRRF2cNaG71jmizKbOo1KM6fo25DuiZBO2qikL8J9
-QlKw
+mV4YW1wbGUub3JnIiwgImlhdCI6IDE3MDk1Njg4MTQsICJzZF9oYXNoIjogIjN1dzZNe
+llQRVRPbUV0ekNTeUs3SEtJbTg3VGdnX21vb2dvQzF6SkNoTHcifQ.ZSP68pl4m6MPhU
+q3SnzzYAAqagdA8L35ySvTVJYyR0TMzP9idfeh0Py2qssi7mB8ruG0JsZvD6VdzJ-OYC
+XvpQ
 
 </pre><a href="#appendix-A.4-39" class="pilcrow">¶</a>
 </div>
@@ -5350,7 +5352,7 @@ it allows for simple and reliable interoperability without the
 requirement for a canonicalization library. To harden the source string,
 any serialization format that supports the necessary data types could
 be used in theory, like protobuf, msgpack, or pickle. In this
-specification, JSON is used and plaintext values of each Disclosure are encoded using base64url-encoding
+specification, JSON is used and plaintext contents of each Disclosure are encoded using base64url-encoding
 for transport. This approach means that SD-JWTs can be implemented purely based
 on widely available JWT, JSON, and Base64 encoding and decoding libraries.<a href="#appendix-B-15" class="pilcrow">¶</a></p>
 <p id="appendix-B-16">A Verifier can then easily check the digest over the source string before
@@ -5388,7 +5390,9 @@ data. The original JSON data is then used by the application. See
 </li>
         <li class="compact" id="appendix-C-3.7">Remove mention of unspecified key binding methods and the Enveloping SD-JWTs section<a href="#appendix-C-3.7" class="pilcrow">¶</a>
 </li>
-        <li class="compact" id="appendix-C-3.8">Update PID example<a href="#appendix-C-3.8" class="pilcrow">¶</a>
+        <li class="compact" id="appendix-C-3.8">Editorial updates aimed at more consistent treatment of a Disclosure vs the contents of a Disclosure<a href="#appendix-C-3.8" class="pilcrow">¶</a>
+</li>
+        <li class="compact" id="appendix-C-3.9">Update PID example<a href="#appendix-C-3.9" class="pilcrow">¶</a>
 </li>
       </ul>
 <p id="appendix-C-4">-07<a href="#appendix-C-4" class="pilcrow">¶</a></p>
