@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2024-03-03T00:53:50.014526+00:00",
+  "timestamp": "2024-03-05T00:50:53.617418+00:00",
   "repo": "oauth-wg/oauth-selective-disclosure-jwt",
   "labels": [
     {
@@ -9116,7 +9116,7 @@
       ],
       "body": "There are various sentences like:\r\n\r\n> When Key Binding is not enforced, any entity in possession of an SD-JWT Presentation can forward the contents to third parties\r\n\r\nwhere presentation has a capital P as if it's a defined term. Probably it should have an actual definition (I can't find one) but if not it should probably be lower cased?",
       "createdAt": "2023-10-23T14:06:47Z",
-      "updatedAt": "2024-03-01T21:59:24Z",
+      "updatedAt": "2024-03-04T03:07:43Z",
       "closedAt": null,
       "comments": [
         {
@@ -9136,9 +9136,16 @@
         {
           "author": "bc-pi",
           "authorAssociation": "COLLABORATOR",
-          "body": "I think https://github.com/oauth-wg/oauth-selective-disclosure-jwt/issues/384 goes a long way towards addressing this. ",
+          "body": "I think ~~https://github.com/oauth-wg/oauth-selective-disclosure-jwt/issues/384~~ goes a long way towards addressing this.\r\n\r\nI meant #394, sorry.",
           "createdAt": "2024-03-01T21:59:23Z",
-          "updatedAt": "2024-03-01T21:59:23Z"
+          "updatedAt": "2024-03-04T03:07:43Z"
+        },
+        {
+          "author": "Sakurann",
+          "authorAssociation": "COLLABORATOR",
+          "body": "(I think you meant 394, @bc-pi..?)",
+          "createdAt": "2024-03-04T02:54:49Z",
+          "updatedAt": "2024-03-04T02:54:49Z"
         }
       ]
     },
@@ -9206,7 +9213,7 @@
       "id": "I_kwDOHTmVzM50xpNK",
       "title": "Confusing terminology",
       "url": "https://github.com/oauth-wg/oauth-selective-disclosure-jwt/issues/358",
-      "state": "OPEN",
+      "state": "CLOSED",
       "author": "rohan-wire",
       "authorAssociation": "NONE",
       "assignees": [
@@ -9218,8 +9225,8 @@
       ],
       "body": "Hi,\r\n\r\nDisclosure is used at least two ways in the document.\r\n\r\n- to refer to the array containing the salt, (maybe name), and value.\r\n- to refer to the base64url encoded string \r\n\r\nIt's easy to understand how this could have happened, as both contain logically the same information. I propose explicitly calling these:\r\n\r\n- **disclosure array**, and \r\n- **disclosure presentation**\r\n\r\nI also propose calling the hash/digest of the disclosure the **disclosure digest** in full in every use. The only time we would use \"disclosure\" without one of these modifiers is talking about the process of disclosing in general.\r\n\r\nAs for the plaintext of the claims that can be disclosed, I propose **blinded claim**.\r\n\r\nSo the first paragraph of Section 4.1 would read:\r\n\r\nAn SD-JWT consists of:\r\n\r\n- a signed JSON document, \r\n- a list of _disclosure presentations_ (each of which reveals a _blinded claim_), and \r\n- optionally an _issuer key binding_ (discussed in Section 4.3). \r\n\r\nThe signed JSON document (the JWT body) contains plaintext claims; and _disclosure digests_, each of which either refers to a specific _blinded claim_ or is a _decoy_. The holder can include zero or more disclosure presentations without breaking the signature of the JWT body. The contents of the blinded claims cannot be modified, because the corresponding digest would no longer match any digest in the JWT body. Blinded claims can be individual object properties (key-value pairs) or array elements.",
       "createdAt": "2023-10-24T12:42:33Z",
-      "updatedAt": "2024-02-28T23:54:01Z",
-      "closedAt": null,
+      "updatedAt": "2024-03-04T16:13:11Z",
+      "closedAt": "2024-03-04T16:13:11Z",
       "comments": [
         {
           "author": "danielfett",
@@ -10728,15 +10735,15 @@
       "id": "I_kwDOHTmVzM6AnKPO",
       "title": "disclosing age_equal_or_over not working",
       "url": "https://github.com/oauth-wg/oauth-selective-disclosure-jwt/issues/409",
-      "state": "OPEN",
+      "state": "CLOSED",
       "author": "bc-pi",
       "authorAssociation": "COLLABORATOR",
       "assignees": [],
       "labels": [],
       "body": "> We should probably chase this down sometime sooner rather than later \r\n> (some issue with the yaml or a bug in the library maybe?).\r\n\r\n_Originally posted by @bc-pi in https://github.com/oauth-wg/oauth-selective-disclosure-jwt/pull/408#discussion_r1505105674_\r\n            ",
       "createdAt": "2024-02-27T22:52:28Z",
-      "updatedAt": "2024-02-27T22:53:03Z",
-      "closedAt": null,
+      "updatedAt": "2024-03-04T15:19:04Z",
+      "closedAt": "2024-03-04T15:19:04Z",
       "comments": []
     }
   ],
@@ -40907,13 +40914,13 @@
       "labels": [],
       "body": "This PR limits the scope of the term \"SD-JWT\" so that it refers only to an Issuer-signed JWT and a set of disclosures.  We introduce the term \"Fnord\" to refer to an SD-JWT with key binding.  As a bonus, we are able to clean up stale uses of Presentation, which mostly, but not always align with Fnord.\r\n\r\n\"[Fnord](https://en.wikipedia.org/wiki/Fnord)\" is deliberately nonsensical, of course.  We should replace this with a more intuitive word.  We could reintroduce \"Presentation\" for this, with the allowance that one might \"present\" either a Presentation or an SD-JWT.  Or we could pick another term, suggestions welcome.\r\n\r\nI have tried to be fairly minimal in the changes here.  In particular, I have not changed any of the algorithms, though I suspect they would be clearer if a bit more separate.  I have rewritten a few paragraphs, especially close to the top and in the Security Considerations.\r\n\r\nFixes #374\r\nFixes #392 ",
       "createdAt": "2023-12-05T23:02:33Z",
-      "updatedAt": "2024-03-01T20:44:51Z",
+      "updatedAt": "2024-03-04T17:57:59Z",
       "baseRepository": "oauth-wg/oauth-selective-disclosure-jwt",
       "baseRefName": "master",
-      "baseRefOid": "e13ecce1ba7ddb835d7b9a38372ec2afba59ba84",
+      "baseRefOid": "7dd0444e630ecbdf9e65a5f6c839ec3bcc515a9e",
       "headRepository": "bifurcation/oauth-selective-disclosure-jwt",
       "headRefName": "fnord",
-      "headRefOid": "0b7c5ce03dc75a460c228c62f6898bdc8a347f83",
+      "headRefOid": "950bdd3bfe207d5fdc07234dd9ce1f265fbbc443",
       "closedAt": null,
       "mergedAt": null,
       "mergedBy": null,
@@ -41689,9 +41696,9 @@
           "comments": [
             {
               "originalPosition": 87,
-              "body": "```suggestion\r\n: A composite structure, comprising an SD-JWT and a Key Binding JWT.\r\n```\r\nnot sure what `covering the SD-JWT` is supposed to mean..",
+              "body": "```suggestion\r\n: A composite structure, comprising an SD-JWT and a Key Binding JWT tied to that SD-JWT.\r\n```\r\nnot sure what `covering the SD-JWT` is supposed to mean..",
               "createdAt": "2024-02-20T07:19:16Z",
-              "updatedAt": "2024-02-20T07:28:02Z"
+              "updatedAt": "2024-03-04T03:18:21Z"
             },
             {
               "originalPosition": 56,
@@ -42010,6 +42017,199 @@
               "body": "thanks @bifurcation - I now see a document history bullet somewhere down below for this change \r\n",
               "createdAt": "2024-03-01T20:44:51Z",
               "updatedAt": "2024-03-01T20:44:51Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOHTmVzM5yCtqP",
+          "commit": {
+            "abbreviatedOid": "0b7c5ce"
+          },
+          "author": "Sakurann",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2024-03-04T03:18:07Z",
+          "updatedAt": "2024-03-04T03:18:07Z",
+          "comments": [
+            {
+              "originalPosition": 87,
+              "body": "it's not intuitive, at least to me... Can we simply say `tied to that SD-JWT` (I modified the suggestion above)",
+              "createdAt": "2024-03-04T03:18:07Z",
+              "updatedAt": "2024-03-04T03:18:07Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOHTmVzM5yCtte",
+          "commit": {
+            "abbreviatedOid": "0b7c5ce"
+          },
+          "author": "Sakurann",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2024-03-04T03:18:29Z",
+          "updatedAt": "2024-03-04T03:18:29Z",
+          "comments": [
+            {
+              "originalPosition": 75,
+              "body": "```suggestion\r\n   said to \"be tied\" a particular SD-JWT if its payload includes a hash of the\r\n```\r\nif suggestion in the comment below gets accepted",
+              "createdAt": "2024-03-04T03:18:29Z",
+              "updatedAt": "2024-03-04T03:18:44Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOHTmVzM5yCt9B",
+          "commit": {
+            "abbreviatedOid": "0b7c5ce"
+          },
+          "author": "Sakurann",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2024-03-04T03:20:17Z",
+          "updatedAt": "2024-03-04T03:20:18Z",
+          "comments": [
+            {
+              "originalPosition": 451,
+              "body": "maybe we can add this in a separate PR..?",
+              "createdAt": "2024-03-04T03:20:17Z",
+              "updatedAt": "2024-03-04T03:20:18Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOHTmVzM5yCuIC",
+          "commit": {
+            "abbreviatedOid": "0b7c5ce"
+          },
+          "author": "Sakurann",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2024-03-04T03:21:36Z",
+          "updatedAt": "2024-03-04T03:21:36Z",
+          "comments": [
+            {
+              "originalPosition": 404,
+              "body": "I had to google \"malleable\", but guess that's only me..?",
+              "createdAt": "2024-03-04T03:21:36Z",
+              "updatedAt": "2024-03-04T03:21:37Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOHTmVzM5yGVbQ",
+          "commit": {
+            "abbreviatedOid": "0b7c5ce"
+          },
+          "author": "bc-pi",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2024-03-04T13:03:22Z",
+          "updatedAt": "2024-03-04T13:03:22Z",
+          "comments": [
+            {
+              "originalPosition": 87,
+              "body": "There are several other uses of cover or covering the SD-JWT in this PR FWIW that would also need to be modified.",
+              "createdAt": "2024-03-04T13:03:22Z",
+              "updatedAt": "2024-03-04T13:15:49Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOHTmVzM5yHzV3",
+          "commit": {
+            "abbreviatedOid": "0b7c5ce"
+          },
+          "author": "OR13",
+          "authorAssociation": "CONTRIBUTOR",
+          "state": "APPROVED",
+          "body": "",
+          "createdAt": "2024-03-04T15:39:24Z",
+          "updatedAt": "2024-03-04T15:39:24Z",
+          "comments": []
+        },
+        {
+          "id": "PRR_kwDOHTmVzM5yH2-l",
+          "commit": {
+            "abbreviatedOid": "0b7c5ce"
+          },
+          "author": "OR13",
+          "authorAssociation": "CONTRIBUTOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2024-03-04T15:45:33Z",
+          "updatedAt": "2024-03-04T15:45:34Z",
+          "comments": [
+            {
+              "originalPosition": 404,
+              "body": "Integrity is probably a more well known term",
+              "createdAt": "2024-03-04T15:45:33Z",
+              "updatedAt": "2024-03-04T15:45:34Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOHTmVzM5yH3OO",
+          "commit": {
+            "abbreviatedOid": "0b7c5ce"
+          },
+          "author": "OR13",
+          "authorAssociation": "CONTRIBUTOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2024-03-04T15:45:58Z",
+          "updatedAt": "2024-03-04T15:45:58Z",
+          "comments": [
+            {
+              "originalPosition": 75,
+              "body": "\"protect\" ? \"assure\" ?",
+              "createdAt": "2024-03-04T15:45:58Z",
+              "updatedAt": "2024-03-04T15:45:58Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOHTmVzM5yI3z3",
+          "commit": {
+            "abbreviatedOid": "74f7b5a"
+          },
+          "author": "bc-pi",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2024-03-04T17:44:05Z",
+          "updatedAt": "2024-03-04T17:44:05Z",
+          "comments": [
+            {
+              "originalPosition": 516,
+              "body": "```suggestion\r\n   * Be more explicit that the VCDM and SD-JWT VC examples are only illustrative and do not define anything\r\n```",
+              "createdAt": "2024-03-04T17:44:05Z",
+              "updatedAt": "2024-03-04T17:44:23Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOHTmVzM5yI-Qh",
+          "commit": {
+            "abbreviatedOid": "e5329f7"
+          },
+          "author": "bc-pi",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2024-03-04T17:57:21Z",
+          "updatedAt": "2024-03-04T17:57:22Z",
+          "comments": [
+            {
+              "originalPosition": 333,
+              "body": "ref is broken \r\n```suggestion\r\n    1. Determine the public key for the Holder from the SD-JWT (see (#key_binding)).\r\n```",
+              "createdAt": "2024-03-04T17:57:22Z",
+              "updatedAt": "2024-03-04T17:57:41Z"
             }
           ]
         }
@@ -43194,25 +43394,33 @@
       "id": "PR_kwDOHTmVzM5oF2Hh",
       "title": "Fix the PID example",
       "url": "https://github.com/oauth-wg/oauth-selective-disclosure-jwt/pull/408",
-      "state": "OPEN",
+      "state": "CLOSED",
       "author": "danielfett",
       "authorAssociation": "MEMBER",
       "assignees": [],
       "labels": [],
       "body": "Remove `vct#integrity` that is not yet defined and remove the disclosure of the age which for whatever reason didn't work.",
       "createdAt": "2024-02-27T19:22:53Z",
-      "updatedAt": "2024-02-29T17:38:43Z",
+      "updatedAt": "2024-03-04T15:19:39Z",
       "baseRepository": "oauth-wg/oauth-selective-disclosure-jwt",
       "baseRefName": "master",
       "baseRefOid": "894905aa7985a3e7e7636ff740a8b8fbd9fd111f",
       "headRepository": "oauth-wg/oauth-selective-disclosure-jwt",
       "headRefName": "danielfett/fix-pid-example",
       "headRefOid": "17aa50a3f78dfaa1348eb1e5a4272ce2d534454b",
-      "closedAt": null,
+      "closedAt": "2024-03-04T15:19:38Z",
       "mergedAt": null,
       "mergedBy": null,
       "mergeCommit": null,
-      "comments": [],
+      "comments": [
+        {
+          "author": "danielfett",
+          "authorAssociation": "MEMBER",
+          "body": "#411 is better than this :-)",
+          "createdAt": "2024-03-04T15:19:38Z",
+          "updatedAt": "2024-03-04T15:19:38Z"
+        }
+      ],
       "reviews": [
         {
           "id": "PRR_kwDOHTmVzM5xi1pc",
@@ -43274,50 +43482,232 @@
       "id": "PR_kwDOHTmVzM5oO0fQ",
       "title": "more consistent treatment of a Disclosure vs its contents",
       "url": "https://github.com/oauth-wg/oauth-selective-disclosure-jwt/pull/410",
-      "state": "OPEN",
+      "state": "MERGED",
       "author": "bc-pi",
       "authorAssociation": "COLLABORATOR",
       "assignees": [],
       "labels": [],
       "body": "Editorial updates for more consistent treatment of a Disclosure vs the contents of a Disclosure (to fix #358 Confusing terminology)\r\n\r\nEditor's draft PR preview: https://drafts.oauth.net/oauth-selective-disclosure-jwt/somewhat-less-confusing-terminology/draft-ietf-oauth-selective-disclosure-jwt.html",
       "createdAt": "2024-02-28T23:52:40Z",
-      "updatedAt": "2024-02-29T13:21:35Z",
+      "updatedAt": "2024-03-04T16:13:10Z",
       "baseRepository": "oauth-wg/oauth-selective-disclosure-jwt",
       "baseRefName": "master",
       "baseRefOid": "e13ecce1ba7ddb835d7b9a38372ec2afba59ba84",
       "headRepository": "oauth-wg/oauth-selective-disclosure-jwt",
       "headRefName": "somewhat-less-confusing-terminology",
       "headRefOid": "1f5d02c098e9edfe048fed8ffcb9e8e50425947c",
-      "closedAt": null,
-      "mergedAt": null,
-      "mergedBy": null,
-      "mergeCommit": null,
+      "closedAt": "2024-03-04T16:13:10Z",
+      "mergedAt": "2024-03-04T16:13:10Z",
+      "mergedBy": "bc-pi",
+      "mergeCommit": {
+        "oid": "d2d76798327b2652f8083b32ccf61d21ef76bd70"
+      },
       "comments": [],
-      "reviews": []
+      "reviews": [
+        {
+          "id": "PRR_kwDOHTmVzM5yCogj",
+          "commit": {
+            "abbreviatedOid": "1f5d02c"
+          },
+          "author": "Sakurann",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2024-03-04T02:52:32Z",
+          "updatedAt": "2024-03-04T02:52:33Z",
+          "comments": [
+            {
+              "originalPosition": 34,
+              "body": "```suggestion\r\nThe digest MUST be taken over the Disclosure, i.e., the US-ASCII bytes of the base64url-encoded value. This follows the convention in JWS [@!RFC7515] and JWE [@RFC7516]. The bytes of the digest MUST then be base64url-encoded.\r\n```",
+              "createdAt": "2024-03-04T02:52:32Z",
+              "updatedAt": "2024-03-04T16:10:33Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOHTmVzM5yCoqk",
+          "commit": {
+            "abbreviatedOid": "1f5d02c"
+          },
+          "author": "Sakurann",
+          "authorAssociation": "COLLABORATOR",
+          "state": "APPROVED",
+          "body": "made one suggestion, but overall, looks good to me! thank you!",
+          "createdAt": "2024-03-04T02:53:35Z",
+          "updatedAt": "2024-03-04T02:53:35Z",
+          "comments": []
+        },
+        {
+          "id": "PRR_kwDOHTmVzM5yHodK",
+          "commit": {
+            "abbreviatedOid": "1f5d02c"
+          },
+          "author": "danielfett",
+          "authorAssociation": "MEMBER",
+          "state": "APPROVED",
+          "body": "Looks good to me, thank you!",
+          "createdAt": "2024-03-04T15:21:06Z",
+          "updatedAt": "2024-03-04T15:21:06Z",
+          "comments": []
+        },
+        {
+          "id": "PRR_kwDOHTmVzM5yHpFz",
+          "commit": {
+            "abbreviatedOid": "1f5d02c"
+          },
+          "author": "danielfett",
+          "authorAssociation": "MEMBER",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2024-03-04T15:22:12Z",
+          "updatedAt": "2024-03-04T15:22:12Z",
+          "comments": [
+            {
+              "originalPosition": 34,
+              "body": "\"i.e.\" would work slightly better than the \"which is\" in this case, but I'm also fine with the original wording.",
+              "createdAt": "2024-03-04T15:22:12Z",
+              "updatedAt": "2024-03-04T15:22:12Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOHTmVzM5yIG-g",
+          "commit": {
+            "abbreviatedOid": "1f5d02c"
+          },
+          "author": "bc-pi",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2024-03-04T16:12:37Z",
+          "updatedAt": "2024-03-04T16:12:37Z",
+          "comments": [
+            {
+              "originalPosition": 34,
+              "body": "ok w/ not changing ",
+              "createdAt": "2024-03-04T16:12:37Z",
+              "updatedAt": "2024-03-04T16:12:37Z"
+            }
+          ]
+        }
+      ]
     },
     {
       "number": 411,
       "id": "PR_kwDOHTmVzM5oUmgR",
       "title": "Fix PID example's age disclosure",
       "url": "https://github.com/oauth-wg/oauth-selective-disclosure-jwt/pull/411",
-      "state": "OPEN",
+      "state": "MERGED",
       "author": "bc-pi",
       "authorAssociation": "COLLABORATOR",
       "assignees": [],
       "labels": [],
       "body": "Fix the disclosure of the age >= 18 in the PID example (something with type conversion and quoting in the yaml) and remove the not yet defined vct#integrity\r\n\r\nfixes issue #409\r\n\r\nalternative to PR #408 \r\n\r\n\r\nhttps://drafts.oauth.net/oauth-selective-disclosure-jwt/fix-age-in-pid-example/draft-ietf-oauth-selective-disclosure-jwt.html#appendix-A.3-57 does now have ~ `\"age_equal_or_over\": {\"18\": true} ` show up\r\n\r\n",
       "createdAt": "2024-02-29T17:35:03Z",
-      "updatedAt": "2024-02-29T22:56:01Z",
+      "updatedAt": "2024-03-04T15:19:03Z",
       "baseRepository": "oauth-wg/oauth-selective-disclosure-jwt",
       "baseRefName": "master",
       "baseRefOid": "e13ecce1ba7ddb835d7b9a38372ec2afba59ba84",
       "headRepository": "oauth-wg/oauth-selective-disclosure-jwt",
       "headRefName": "fix-age-in-pid-example",
       "headRefOid": "d8b5930acaefe4471adcb169e5ce73473720de4c",
-      "closedAt": null,
-      "mergedAt": null,
-      "mergedBy": null,
-      "mergeCommit": null,
+      "closedAt": "2024-03-04T15:19:03Z",
+      "mergedAt": "2024-03-04T15:19:03Z",
+      "mergedBy": "danielfett",
+      "mergeCommit": {
+        "oid": "53822424dbaab149e847bc7d7110a5ed6e8a79fc"
+      },
+      "comments": [
+        {
+          "author": "danielfett",
+          "authorAssociation": "MEMBER",
+          "body": "I wouldn't have expected that this fixes anything, but TIL I guess?",
+          "createdAt": "2024-03-04T15:18:42Z",
+          "updatedAt": "2024-03-04T15:18:42Z"
+        }
+      ],
+      "reviews": [
+        {
+          "id": "PRR_kwDOHTmVzM5yCsiP",
+          "commit": {
+            "abbreviatedOid": "d8b5930"
+          },
+          "author": "Sakurann",
+          "authorAssociation": "COLLABORATOR",
+          "state": "APPROVED",
+          "body": "",
+          "createdAt": "2024-03-04T03:09:45Z",
+          "updatedAt": "2024-03-04T03:09:45Z",
+          "comments": []
+        },
+        {
+          "id": "PRR_kwDOHTmVzM5yHnI4",
+          "commit": {
+            "abbreviatedOid": "d8b5930"
+          },
+          "author": "danielfett",
+          "authorAssociation": "MEMBER",
+          "state": "APPROVED",
+          "body": "Thanks for fixing this!",
+          "createdAt": "2024-03-04T15:18:56Z",
+          "updatedAt": "2024-03-04T15:18:56Z",
+          "comments": []
+        }
+      ]
+    },
+    {
+      "number": 412,
+      "id": "PR_kwDOHTmVzM5oncqB",
+      "title": "Tidy up the -08 Document History",
+      "url": "https://github.com/oauth-wg/oauth-selective-disclosure-jwt/pull/412",
+      "state": "MERGED",
+      "author": "bc-pi",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "",
+      "createdAt": "2024-03-04T17:09:29Z",
+      "updatedAt": "2024-03-04T17:11:47Z",
+      "baseRepository": "oauth-wg/oauth-selective-disclosure-jwt",
+      "baseRefName": "master",
+      "baseRefOid": "d2d76798327b2652f8083b32ccf61d21ef76bd70",
+      "headRepository": "oauth-wg/oauth-selective-disclosure-jwt",
+      "headRefName": "tidy-08-history",
+      "headRefOid": "cfd1ad7720a6480c468a0f0ee6e1d8acd8195e9f",
+      "closedAt": "2024-03-04T17:11:47Z",
+      "mergedAt": "2024-03-04T17:11:47Z",
+      "mergedBy": "bc-pi",
+      "mergeCommit": {
+        "oid": "a6b8fe9493c075c5ff143230fc0020d805897929"
+      },
+      "comments": [],
+      "reviews": []
+    },
+    {
+      "number": 413,
+      "id": "PR_kwDOHTmVzM5onivt",
+      "title": "Just add -09 to the Document History to help future PRs remember",
+      "url": "https://github.com/oauth-wg/oauth-selective-disclosure-jwt/pull/413",
+      "state": "MERGED",
+      "author": "bc-pi",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "",
+      "createdAt": "2024-03-04T17:25:05Z",
+      "updatedAt": "2024-03-04T17:27:13Z",
+      "baseRepository": "oauth-wg/oauth-selective-disclosure-jwt",
+      "baseRefName": "master",
+      "baseRefOid": "a6b8fe9493c075c5ff143230fc0020d805897929",
+      "headRepository": "oauth-wg/oauth-selective-disclosure-jwt",
+      "headRefName": "starting-09",
+      "headRefOid": "7187ec242db185b87c79e8983f9c4b758c230c0d",
+      "closedAt": "2024-03-04T17:27:13Z",
+      "mergedAt": "2024-03-04T17:27:13Z",
+      "mergedBy": "bc-pi",
+      "mergeCommit": {
+        "oid": "7dd0444e630ecbdf9e65a5f6c839ec3bcc515a9e"
+      },
       "comments": [],
       "reviews": []
     }
