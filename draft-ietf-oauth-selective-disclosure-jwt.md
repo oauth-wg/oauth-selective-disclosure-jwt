@@ -778,12 +778,13 @@ unprotected header parameters are defined:
    Disclosure as described in (#creating_disclosures).
  * `kb_jwt`: A Key Binding JWT as described in (#kb-jwt).
 
-If a Key Binding JWT is present, the digest in the `sd_hash` claim MUST be taken over
-a string built as described in (#integrity-protection-of-the-presentation),
-where the Issuer-signed JWT is built by concatenating the protected header, the
-payload, and the unprotected header of the JWS JSON serialized SD-JWT using a
-`.` character as a separator, and using the Disclosures from the `disclosures`
-member of the unprotected header.
+If a Key Binding JWT is present, the digest in the `sd_hash` claim MUST be taken
+over a string built as described in (#integrity-protection-of-the-presentation).
+The "Issuer-signed JWT" part is built by concatenating the protected header, the
+payload, and the signature of the JWS JSON serialized SD-JWT using a `.`
+character as a separator, and using the Disclosures from the `disclosures`
+member of the unprotected header. In case of multiple signatures, only the first
+one is used.
 
 ## Flattened JSON Serialization
 
