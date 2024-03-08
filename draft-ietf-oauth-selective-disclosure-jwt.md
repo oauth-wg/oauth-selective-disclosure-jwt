@@ -790,24 +790,14 @@ member of the unprotected header.
 In case of the Flattened JSON Serialization, there is only one unprotected
 header.
 
-The following is a non-normative example of a JWS JSON serialized SD-JWT with
-Key Binding using the Flattened JSON Serialization:
+The following is a non-normative example of a JWS JSON serialized SD-JWT as
+issued using the Flattened JSON Serialization:
 
-```json
-{
-  "payload":"eyJfc2QiOiBbIjR...Aic2hhLTI1NiJ9",
-  "protected":"eyJhbGciOiAiRVMyNTYiLCAidHlwIjogImV4YW1wbGUrc2Qtand0In0",
-  "signature":"oL5lornrs6CFBMu...4HQby6OaaLqAw",
-  "header":{
-    "disclosures":[
-      "WyI2SWo3dE0tYTVpVlBH...W1lIiwgIkRvZSJd",
-      "WyJBSngtMDk1VlBycFR...ImFkZHJlc3MiLCB7InN0cmVldF9",
-      "WyJlbHVWNU9nM2dTT...VuX25hbWUiLCAiSm9obiJd"
-    ],
-    "kb_jwt":"eyJhbGciOiAiRVMyNTYiLCAidHlwIjogI...bGUrc2Qtand0In0"
-  }
-}
-```
+<{{examples/json_serialization_flattened/sd_jwt_issuance.json}}
+
+The following is a presentation including a Key Binding JWT and two Disclosures:
+
+<{{examples/json_serialization_flattened/sd_jwt_presentation.json}}
 
 ## General JSON Serialization
 
@@ -816,32 +806,11 @@ headers (one per signature). If present, `disclosures` and `kb_jwt`, MUST be
 included in the first unprotected header and MUST NOT be present in any
 following unprotected headers.
 
-The following is a non-normative example of a JWS JSON serialized SD-JWT with
-Key Binding using the General JSON Serialization:
+The following is a non-normative example of a presentation of a JWS JSON
+serialized SD-JWT including a Key Binding JWT using the General JSON
+Serialization:
 
-```json
-{
-  "payload":"eyJfc2QiOiBbIjR...Aic2hhLTI1NiJ9",
-  "signatures":[
-    {
-      "protected":"eyJhbGciOiAiRVMyNTYiLCAidHlwIjogImV4YW1wbGUrc2Qtand0In0",
-      "signature":"oL5lornrs6CFBMu...4HQby6OaaLqAw",
-      "header":{
-        "disclosures":[
-          "WyI2SWo3dE0tYTVpVlBH...W1lIiwgIkRvZSJd",
-          "WyJBSngtMDk1VlBycFR...ImFkZHJlc3MiLCB7InN0cmVldF9",
-          "WyJlbHVWNU9nM2dTT...VuX25hbWUiLCAiSm9obiJd"
-        ],
-        "kb_jwt":"eyJhbGciOiAiRVMyNTYiLCAidHlwIjogI...bGUrc2Qtand0In0"
-      }
-    },
-    {
-      "protected":"eyJhbGciOiAiRVMyNTYiLCAidHlwIjogImV4YW1wbGUrc2Qtand0In0",
-      "signature":"oL5lornrs6CFBMu...4HQby6OaaLqAw"
-    }
-  ]
-}
-```
+<{{examples/json_serialization_general/sd_jwt_presentation.json}}
 
 ## Verification of the JWS JSON Serialized SD-JWT
 
