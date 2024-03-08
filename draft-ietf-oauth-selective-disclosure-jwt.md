@@ -765,35 +765,94 @@ Otherwise, the processed SD-JWT payload can be passed to the application to be u
 
 # JWS JSON Serialization {#json_serialization}
 
-This section describes an optional alternate format for SD-JWT using the JWS JSON Serialization from [@!RFC7515].
+This section describes an alternative format for SD-JWT using the JWS JSON
+Serialization from [@!RFC7515]. Supporting this format is OPTIONAL.
 
-For both the General and Flattened JSON Serialization, the SD-JWT is represented as a JSON object according
-to Section 7.2 of [@!RFC7515]. The Disclosures (both for issuance and presentation) SHOULD be included in the
-serialized JWS using the member name `disclosures` at the top-level of the JSON object (the same level as the `payload` member). The
-value of the `disclosures` member is an array of strings where each element is an individual Disclosure
-as described in (#creating_disclosures). The Issuer includes a Disclosure for each selectively
-disclosable claim of the SD-JWT payload, whereas the Holder includes only the Disclosures
-selected for the given presentation.
+## New Unprotected Header Parameters {#json_serialization_unprotected_headers}
 
-Alternative methods for conveying the Disclosures MAY be used (such as including them in a `disclosures`
-member of an outer JSON structure also containing the JSON Serialized SD-JWT) as dictated by a specific
-application or transport protocol. However, the details of such approaches fall outside the scope of this
-specification.
+For both the General and Flattened JSON Serialization, the SD-JWT is represented
+as a JSON object according to Section 7.2 of [@!RFC7515]. The following new
+unprotected header parameters are defined:
 
-Verification of the JWS JSON serialized SD-JWT follows the same rules defined in (#verification),
-except that the SD-JWT does not need to be split into component parts and the Disclosures
-can be found in the respective member of the JSON object (or elsewhere).
+ * `disclosures`: An array of strings where each element is an individual
+   Disclosure as described in (#creating_disclosures).
+ * `kb_jwt`: A Key Binding JWT as described in (#kb-jwt).
 
-Using a payload similar to that from [Example 1](#example-1), the following is a non-normative example of
-a JWS JSON serialized SD-JWT from an Issuer with all the respective Disclosures.
+If a Key Binding JWT is present, the digest in the `sd_hash` claim MUST be taken over
+a string built as described in (#integrity-protection-of-the-presentation),
+where the Issuer-signed JWT is built by concatenating the protected header, the
+payload, and the unprotected header of the JWS JSON serialized SD-JWT using a
+`.` character as a separator, and using the Disclosures from the `disclosures`
+member of the unprotected header.
 
-<{{examples/json_serialization/sd_jwt_issuance.json}}
+## Flattened JSON Serialization
 
-Below is a non-normative example of a presentation of the JWS JSON serialized SD-JWT, where the Holder
-has selected to disclose `given_name`, `family_name`, and `address`.
+In case of the Flattened JSON Serialization, there is only one unprotected
+header.
 
-<{{examples/json_serialization/sd_jwt_presentation.json}}
+The following is a non-normative example of a JWS JSON serialized SD-JWT with
+Key Binding using the Flattened JSON Serialization:
 
+```json
+{
+  "payload":"eyJfc2QiOiBbIjR...Aic2hhLTI1NiJ9",
+  "protected":"eyJhbGciOiAiRVMyNTYiLCAidHlwIjogImV4YW1wbGUrc2Qtand0In0",
+  "signature":"oL5lornrs6CFBMu...4HQby6OaaLqAw",
+  "header":{
+    "disclosures":[
+      "WyI2SWo3dE0tYTVpVlBH...W1lIiwgIkRvZSJd",
+      "WyJBSngtMDk1VlBycFR...ImFkZHJlc3MiLCB7InN0cmVldF9",
+      "WyJlbHVWNU9nM2dTT...VuX25hbWUiLCAiSm9obiJd"
+    ],
+    "kb_jwt":"eyJhbGciOiAiRVMyNTYiLCAidHlwIjogI...bGUrc2Qtand0In0"
+  }
+}
+```
+
+## General JSON Serialization
+
+In case of the General JSON Serialization, there are multiple unprotected
+headers (one per signature). If present, `disclosures` and `kb_jwt`, MUST be
+included in the first unprotected header and MUST NOT be present in any
+following unprotected headers.
+
+The following is a non-normative example of a JWS JSON serialized SD-JWT with
+Key Binding using the General JSON Serialization:
+
+```json
+{
+  "payload":"eyJfc2QiOiBbIjR...Aic2hhLTI1NiJ9",
+  "signatures":[
+    {
+      "protected":"eyJhbGciOiAiRVMyNTYiLCAidHlwIjogImV4YW1wbGUrc2Qtand0In0",
+      "signature":"oL5lornrs6CFBMu...4HQby6OaaLqAw",
+      "header":{
+        "disclosures":[
+          "WyI2SWo3dE0tYTVpVlBH...W1lIiwgIkRvZSJd",
+          "WyJBSngtMDk1VlBycFR...ImFkZHJlc3MiLCB7InN0cmVldF9",
+          "WyJlbHVWNU9nM2dTT...VuX25hbWUiLCAiSm9obiJd"
+        ],
+        "kb_jwt":"eyJhbGciOiAiRVMyNTYiLCAidHlwIjogI...bGUrc2Qtand0In0"
+      }
+    },
+    {
+      "protected":"eyJhbGciOiAiRVMyNTYiLCAidHlwIjogImV4YW1wbGUrc2Qtand0In0",
+      "signature":"oL5lornrs6CFBMu...4HQby6OaaLqAw"
+    }
+  ]
+}
+```
+
+## Verification of the JWS JSON Serialized SD-JWT
+
+Verification of the JWS JSON serialized SD-JWT follows the same rules defined in
+(#verification), except for the following aspects:
+
+ * The SD-JWT does not need to be split into component parts and the Disclosures
+   can be found in the respective member of the JSON object.
+ * To verify the digest in `sd_hash` in the Key Binding JWT, the Verifier MUST
+   assemble the string to be hashed as described in
+   (#json_serialization_unprotected_headers).
 
 # Security Considerations {#security_considerations}
 
