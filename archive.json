@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2024-03-07T00:41:30.621189+00:00",
+  "timestamp": "2024-03-10T00:54:41.790342+00:00",
   "repo": "oauth-wg/oauth-selective-disclosure-jwt",
   "labels": [
     {
@@ -6365,7 +6365,7 @@
         },
         {
           "author": "c2bo",
-          "authorAssociation": "NONE",
+          "authorAssociation": "MEMBER",
           "body": "Don't we then also need something at the end of Verification by the Verifier - `5.  Process the Disclosures.  For each Disclosure provided:` that makes sure all of the provided disclosures match a digest in the payload and reject if that is not the case or am I missing something here?",
           "createdAt": "2023-03-30T11:09:38Z",
           "updatedAt": "2023-03-30T11:09:38Z"
@@ -6440,7 +6440,7 @@
       "url": "https://github.com/oauth-wg/oauth-selective-disclosure-jwt/issues/244",
       "state": "CLOSED",
       "author": "c2bo",
-      "authorAssociation": "NONE",
+      "authorAssociation": "MEMBER",
       "assignees": [],
       "labels": [],
       "body": "When implementing the validation of a SD-JWT, we will run into problems (or rather increased complexity) for recursive disclosures if they are not presented in order. If we take the current example for recursive disclosures:\r\n\r\n**address Disclosure:**\r\n```\r\nWyJGcDBqLTd6Q2FOVFdmX3dLNjdzeGlnIiwgImFkZHJlc3MiLCB7Il9zZCI6IFsiMXpn\r\nc3U5RmU2YmtiUVk5ekpzZlBUbzF1QlBNVmw0OG00RWFmeEpUWVN1MCIsICJES3ROX3FX\r\nX2hheVlDR0NLaWhTMzlNM3NvYnMxUlRla3hhS25NYkUxNy1RIiwgImgyRHh4RTgwQzdx\r\nUld4Q1Fqd1I5NmRhNDZqcjJCOGJMU1J3QWRiWlNSbG8iLCAidWRGV0Z4XzkxTmdDamhM\r\nVEhKQXZ2QUh3TlQydmxIQnNXeFBJT3hLMllkbyJdfV0\r\n```\r\n**address Content:**\r\n```\r\n[\"Fp0j-7zCaNTWf_wK67sxig\", \"address\", {\"_sd\":\r\n[\"1zgsu9Fe6bkbQY9zJsfPTo1uBPMVl48m4EafxJTYSu0\",\r\n\"DKtN_qW_hayYCGCKihS39M3sobs1RTekxaKnMbE17-Q\",\r\n\"h2DxxE80C7qRWxCQjwR96da46jr2B8bLSRwAdbZSRlo\",\r\n\"udFWFx_91NgCjhLTHJAvvAHwNT2vlHBsWxPIOxK2Ydo\"]}]\r\n```\r\n\r\n**street_address Disclosure:**\r\n```\r\nWyIyUzBkSXhpSE9CblVldFBKMW5GbERBIiwgInN0cmVldF9hZGRyZXNzIiwgIlNjaHVs\r\nc3RyLiAxMiJd\r\n```\r\n**street_address Content:**\r\n```\r\n[\"2S0dIxiHOBnUetPJ1nFlDA\", \"street_address\", \"Schulstr. 12\"]\r\n```\r\n**streed_address digest:**\r\n```\r\nudFWFx_91NgCjhLTHJAvvAHwNT2vlHBsWxPIOxK2Ydo\r\n```\r\n\r\nThese should imho be presented in order: The `streed_address` disclosure that is referencing a digest from the `_sd` element from the `address` disclosure should be presented only after the address disclosure is presented. This would make the implementation of validation quite a bit easier because you need to hold less internal state or avoid re-ordering the disclosures before further processing them.\r\n\r\nDoes it make sense to you to put this burden of ordering on the holder (when creating the presentation) instead of the verifier?",
@@ -6464,7 +6464,7 @@
         },
         {
           "author": "c2bo",
-          "authorAssociation": "NONE",
+          "authorAssociation": "MEMBER",
           "body": "That is the way i did an initial/experimental implementation (which also made sense in my mind), but the steps provided in the spec start with the disclosures and then process all `_sd` fields for each disclosure unless I am misunderstanding this part?\r\n\r\n```\r\n 5.  Process the Disclosures.  For each Disclosure provided:\r\n\r\n       1.  Calculate the digest over the base64url string as described\r\n           in Section 5.1.1.2.\r\n\r\n       2.  Find all _sd keys in the SD-JWT payload.  For each such key:\r\n\r\n           1.  If the key does not refer to an array, the Verifier MUST\r\n               reject the Presentation.\r\n\r\n           2.  Otherwise, process each digest in the _sd array as\r\n               follows:\r\n\r\n               1.  Find the Disclosure referenced by the digests.  If no\r\n                   such Disclosure can be found, the Verifier MUST\r\n                   reject the presentation.\r\n\r\n               2.  If the Disclosure is not a JSON-encoded array of\r\n                   three elements, the Verifier MUST reject the\r\n                   Presentation.\r\n\r\n               3.  Insert, at the level of the _sd key, a new claim\r\n                   using the claim name and claim value from the\r\n                   Disclosure.\r\n\r\n               4.  If the claim name already exists at the same level,\r\n                   the Verifier MUST reject the Presentation.\r\n\r\n               5.  If the decoded value contains an _sd key, recursively\r\n                   process the key as described before.\r\n\r\n       3.  If any digests were found more than once in the previous\r\n           step, the Verifier MUST reject the Presentation.\r\n\r\n       4.  Remove all _sd keys from the SD-JWT payload.\r\n\r\n       5.  Remove the claim _sd_alg from the SD-JWT payload.\r\n```\r\n\r\nAfter re-reading this, I guess the \"for each Disclosure provided\" part needs to be moved to part 5.1 - otherwise the removal of _sd and _sd_alg also don't work or make sense?\r\n\r\nSo basically:\r\n- calculate digests for all disclosures\r\n- walk over the jwt payload and find all _sd fields (digests)\r\n- find disclosures that match the digest (the reject part here is wrong)\r\n  -  if this contains new _sd fields walk them recursively\r\n- check that all disclosures were consumed\r\n- remove all _sd keys from payload\r\n- remove _sd_alg from payload\r\n",
           "createdAt": "2023-03-30T14:57:37Z",
           "updatedAt": "2023-03-30T14:57:37Z"
@@ -6485,7 +6485,7 @@
         },
         {
           "author": "c2bo",
-          "authorAssociation": "NONE",
+          "authorAssociation": "MEMBER",
           "body": "Does this make sense to you?\r\n```\r\n 5.  Process the Disclosures:\r\n\r\n       1. For each Disclosure provided:\r\n     \r\n               1.  Calculate the digest over the base64url string as described\r\n                    in Section 5.1.1.2.\r\n\r\n       2.  Find all _sd keys in the SD-JWT payload.  For each such key:\r\n       \r\n               1.  If the key does not refer to an array, the Verifier MUST\r\n                   reject the Presentation.\r\n\r\n               2.  Otherwise, process each digest in the _sd array as\r\n                   follows:\r\n\r\n                      1.  Find the Disclosure referenced by the digest. If no such\r\n                           Disclosure can be found, the digests MUST be ignored.\r\n\r\n                      2.  If the Disclosure is not a JSON-encoded array of\r\n                          three elements, the Verifier MUST reject the \r\n                          Presentation.\r\n\r\n                      3.  Insert, at the level of the _sd key, a new claim\r\n                          using the claim name and claim value from the\r\n                          Disclosure.\r\n\r\n                      4.  If the claim name already exists at the same level,\r\n                           the Verifier MUST reject the Presentation.\r\n\r\n                      5.  If the decoded value contains an _sd key, recursively\r\n                          process the key as described before.\r\n\r\n       3.   If any digests were found more than once in the previous\r\n           step, the Verifier MUST reject the Presentation.\r\n\r\n       4.  If any disclosures did not correspond to a digest in the jwt\r\n          payload, the Verifier MUST reject the Presentation.\r\n\r\n       5.  Remove all _sd keys from the SD-JWT payload.\r\n\r\n       6.  Remove the claim _sd_alg from the SD-JWT payload.\r\n```",
           "createdAt": "2023-03-31T17:06:04Z",
           "updatedAt": "2023-03-31T17:06:04Z"
@@ -6506,7 +6506,7 @@
         },
         {
           "author": "c2bo",
-          "authorAssociation": "NONE",
+          "authorAssociation": "MEMBER",
           "body": "There seems to be no benefit in adding a disclosure that is not used from a holder side, so not finding the digest for a provided disclosure seems to be an indicator that something went wrong / is missing?\r\nWe can leave that part out - it just felt that this is a clear indicator that something went wrong.",
           "createdAt": "2023-04-03T07:09:15Z",
           "updatedAt": "2023-04-03T07:09:15Z"
@@ -6520,7 +6520,7 @@
         },
         {
           "author": "c2bo",
-          "authorAssociation": "NONE",
+          "authorAssociation": "MEMBER",
           "body": "We can leave it out or add a small remark, that it is up to the verifier how to deal with such a case.",
           "createdAt": "2023-04-03T07:19:22Z",
           "updatedAt": "2023-04-03T07:19:22Z"
@@ -10726,9 +10726,17 @@
       ],
       "body": "Through discussions in the EUDI context, we found that the current JSON Serialization design is not well-suited for existing implementations. We now also better understand the original use cases that lead us to include this section into the spec in the first place and we agreed that we should update it as follows:\r\n\r\n* The disclosures should go into the unprotected header (to be defined: What happens when there are multiple signatures and therefore multiple unprotected headers with disclosures?)\r\n* There should be a way to put the key binding JWT into the unprotected header (to be defined: What happens when there are multiple signatures and therefore multiple places where a KB JWT could go?). The way the hash is built could remain unchanged, but the order of disclosures needs to be clearly defined if they can show up in multiple headers. This would also solve #392.\r\n\r\nThe new flattened format could be:\r\n```json\r\n{\r\n  \"payload\":\"eyJfc2QiOiBbIjR...Aic2hhLTI1NiJ9\",\r\n  \"protected\":\"eyJhbGciOiAiRVMyNTYiLCAidHlwIjogImV4YW1wbGUrc2Qtand0In0\",\r\n  \"signature\":\"oL5lornrs6CFBMu...4HQby6OaaLqAw\",\r\n  \"header\":{\r\n    \"disclosures\":[\r\n      \"WyI2SWo3dE0tYTVpVlBH...W1lIiwgIkRvZSJd\",\r\n      \"WyJBSngtMDk1VlBycFR...ImFkZHJlc3MiLCB7InN0cmVldF9\",\r\n      \"WyJlbHVWNU9nM2dTT...VuX25hbWUiLCAiSm9obiJd\"\r\n    ],\r\n    \"kb_jwt\":\"eyJhbGciOiAiRVMyNTYiLCAidHlwIjogI...bGUrc2Qtand0In0\"\r\n  }\r\n}\r\n```\r\n\r\nAnd the new general format could be:\r\n```json\r\n{\r\n  \"payload\":\"eyJfc2QiOiBbIjR...Aic2hhLTI1NiJ9\",\r\n  \"signatures\":[\r\n    {\r\n      \"protected\":\"eyJhbGciOiAiRVMyNTYiLCAidHlwIjogImV4YW1wbGUrc2Qtand0In0\",\r\n      \"signature\":\"oL5lornrs6CFBMu...4HQby6OaaLqAw\",\r\n      \"header\":{\r\n        \"disclosures\":[\r\n          \"WyI2SWo3dE0tYTVpVlBH...W1lIiwgIkRvZSJd\",\r\n          \"WyJBSngtMDk1VlBycFR...ImFkZHJlc3MiLCB7InN0cmVldF9\",\r\n          \"WyJlbHVWNU9nM2dTT...VuX25hbWUiLCAiSm9obiJd\"\r\n        ],\r\n        \"kb_jwt\":\"eyJhbGciOiAiRVMyNTYiLCAidHlwIjogI...bGUrc2Qtand0In0\"\r\n      }\r\n    },\r\n    {\r\n      \"protected\":\"eyJhbGciOiAiRVMyNTYiLCAidHlwIjogImV4YW1wbGUrc2Qtand0In0\",\r\n      \"signature\":\"oL5lornrs6CFBMu...4HQby6OaaLqAw\"\r\n    }\r\n  ]\r\n}\r\n```\r\n",
       "createdAt": "2024-02-20T17:58:14Z",
-      "updatedAt": "2024-02-27T17:32:22Z",
+      "updatedAt": "2024-03-08T10:10:40Z",
       "closedAt": null,
-      "comments": []
+      "comments": [
+        {
+          "author": "danielfett",
+          "authorAssociation": "MEMBER",
+          "body": "Here is a first draft, it would be great to get some feedback: https://github.com/oauth-wg/oauth-selective-disclosure-jwt/pull/414/files\r\n\r\nI'll update the code for the Python library later on.",
+          "createdAt": "2024-03-08T10:10:38Z",
+          "updatedAt": "2024-03-08T10:10:38Z"
+        }
+      ]
     },
     {
       "number": 409,
@@ -39887,7 +39895,7 @@
             "abbreviatedOid": "071f5a4"
           },
           "author": "c2bo",
-          "authorAssociation": "NONE",
+          "authorAssociation": "MEMBER",
           "state": "COMMENTED",
           "body": "",
           "createdAt": "2023-11-02T23:11:54Z",
@@ -41508,7 +41516,7 @@
             "abbreviatedOid": "2f918e9"
           },
           "author": "c2bo",
-          "authorAssociation": "NONE",
+          "authorAssociation": "MEMBER",
           "state": "COMMENTED",
           "body": "",
           "createdAt": "2024-02-16T19:42:31Z",
@@ -43710,6 +43718,61 @@
       },
       "comments": [],
       "reviews": []
+    },
+    {
+      "number": 414,
+      "id": "PR_kwDOHTmVzM5pEG3E",
+      "title": "Rework JSON Serialization section",
+      "url": "https://github.com/oauth-wg/oauth-selective-disclosure-jwt/pull/414",
+      "state": "OPEN",
+      "author": "danielfett",
+      "authorAssociation": "MEMBER",
+      "assignees": [],
+      "labels": [],
+      "body": "This addresses Issue #403 and #392 \r\n\r\nUses [this](https://github.com/openwallet-foundation-labs/sd-jwt-python/pull/19) new branch in sd-jwt-python.\r\n\r\nRendered version: https://drafts.oauth.net/oauth-selective-disclosure-jwt/danielfett/new-json-serialization/draft-ietf-oauth-selective-disclosure-jwt.html",
+      "createdAt": "2024-03-08T10:09:19Z",
+      "updatedAt": "2024-03-09T00:21:15Z",
+      "baseRepository": "oauth-wg/oauth-selective-disclosure-jwt",
+      "baseRefName": "master",
+      "baseRefOid": "7dd0444e630ecbdf9e65a5f6c839ec3bcc515a9e",
+      "headRepository": "oauth-wg/oauth-selective-disclosure-jwt",
+      "headRefName": "danielfett/new-json-serialization",
+      "headRefOid": "aeb2ad84db0889396422955e83565e45a47d20fd",
+      "closedAt": null,
+      "mergedAt": null,
+      "mergedBy": null,
+      "mergeCommit": null,
+      "comments": [
+        {
+          "author": "bc-pi",
+          "authorAssociation": "COLLABORATOR",
+          "body": "This one needs a doc history entry under -09 :) ",
+          "createdAt": "2024-03-09T00:21:14Z",
+          "updatedAt": "2024-03-09T00:21:14Z"
+        }
+      ],
+      "reviews": [
+        {
+          "id": "PRR_kwDOHTmVzM5yw4v3",
+          "commit": {
+            "abbreviatedOid": "aeb2ad8"
+          },
+          "author": "bc-pi",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2024-03-08T17:28:09Z",
+          "updatedAt": "2024-03-08T17:28:09Z",
+          "comments": [
+            {
+              "originalPosition": 40,
+              "body": "My first read of this last sentence had me thinking it was only about using the first signature value for constructing the \"Issuer-signed JWT\" part for input to the `sd_hash`. \r\n\r\nBut I think it's also trying to say that, in the case of multiple signatures in the general serialization, the `disclosures` can only show up (and be used for constructing the `sd_hash` input) in the `header` of first of the `signatures` array.  And that the `kb_jwt` has to be there too.\r\n\r\nAnd now I see that is what is said in the General JSON Serialization subsection below. Sorry!\r\n\r\nBut a bit more clarity here might still be good? I don't know that this is that much better but maybe:\r\n\r\n```suggestion\r\none is used for the Disclosures and Key Binding JWT. \r\n```\r\n\r\nSide note: using only the first one feels kinda icky TBH and the general issue was one reason I'd tried to avoid using the unprotected header for the SD-JWT pieces. But it seems a pragmatic way to do this given all the factors and constraints involved.",
+              "createdAt": "2024-03-08T17:28:09Z",
+              "updatedAt": "2024-03-08T17:36:05Z"
+            }
+          ]
+        }
+      ]
     }
   ]
 }
