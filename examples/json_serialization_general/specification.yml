@@ -1,0 +1,38 @@
+user_claims:
+  !sd sub: john_doe_42
+  !sd given_name: John
+  !sd family_name: Doe
+  !sd birthdate: "1940-01-01"
+
+holder_disclosed_claims:
+  given_name: true
+  family_name: true
+
+key_binding: True
+
+serialization_format: "json"
+
+settings_override:
+  key_settings:
+    key_size: 256
+    kty: EC
+    issuer_keys:
+      - kty: EC
+        d: Ur2bNKuBPOrAaxsRnbSH6hIhmNTxSGXshDSUD1a1y7g
+        crv: P-256
+        x: b28d4MwZMjw8-00CG4xfnn9SLMVMM19SlqZpVb_uNtQ
+        y: Xv5zWwuoaTgdS6hV43yI6gBwTnjukmFQQnJ_kCxzqk8
+        kid: issuer-key-1
+      - kty: EC
+        crv: P-256
+        d: WsGosxrp0XK7VEviPL9xBm3fBb7Xys2vLhPGhESNoXY
+        x: bN-hp3IN0GZB3OlaQnHDPhY4nZsZbQyo4wY-y1NWCvA
+        y: vaSsH5jt9zt3aQvTvrSaFYLyjPG9Ug-2vntoNXlCbVU
+        kid: issuer-key-2
+
+    holder_key:
+      kty: EC
+      d: 5K5SCos8zf9zRemGGUl6yfok-_NiiryNZsvANWMhF-I
+      crv: P-256
+      x: TCAER19Zvu3OHF4j4W4vfSVoHIP1ILilDls7vCeGemc
+      y: ZxjiWWbZMQGHVWKVQ4hbSIirsVfuecCE6t4jT9F2HZQ

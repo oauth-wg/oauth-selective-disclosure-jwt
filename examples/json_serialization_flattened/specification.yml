@@ -1,0 +1,13 @@
+user_claims:
+  !sd sub: john_doe_42
+  !sd given_name: John
+  !sd family_name: Doe
+  !sd birthdate: "1940-01-01"
+
+holder_disclosed_claims:
+  given_name: true
+  family_name: true
+
+key_binding: True
+
+serialization_format: "json"
