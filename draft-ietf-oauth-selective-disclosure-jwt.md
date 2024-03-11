@@ -784,7 +784,7 @@ The "Issuer-signed JWT" part is built by concatenating the protected header, the
 payload, and the signature of the JWS JSON serialized SD-JWT using a `.`
 character as a separator, and using the Disclosures from the `disclosures`
 member of the unprotected header. In case of multiple signatures, only the first
-one is used for the Disclosures and Key Binding JWT. 
+one is used for the Disclosures and Key Binding JWT.
 
 ## Flattened JSON Serialization
 
@@ -1742,6 +1742,8 @@ data. The original JSON data is then used by the application. See
    [[ To be removed from the final specification ]]
 
    -09
+
+   * New structure for JSON-serialized SD-JWTs/KB-JWTs to better align with JAdES.
 
    -08
 
