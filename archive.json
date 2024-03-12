@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2024-03-10T00:54:41.790342+00:00",
+  "timestamp": "2024-03-12T00:11:04.533931+00:00",
   "repo": "oauth-wg/oauth-selective-disclosure-jwt",
   "labels": [
     {
@@ -43731,13 +43731,13 @@
       "labels": [],
       "body": "This addresses Issue #403 and #392 \r\n\r\nUses [this](https://github.com/openwallet-foundation-labs/sd-jwt-python/pull/19) new branch in sd-jwt-python.\r\n\r\nRendered version: https://drafts.oauth.net/oauth-selective-disclosure-jwt/danielfett/new-json-serialization/draft-ietf-oauth-selective-disclosure-jwt.html",
       "createdAt": "2024-03-08T10:09:19Z",
-      "updatedAt": "2024-03-09T00:21:15Z",
+      "updatedAt": "2024-03-11T13:06:56Z",
       "baseRepository": "oauth-wg/oauth-selective-disclosure-jwt",
       "baseRefName": "master",
       "baseRefOid": "7dd0444e630ecbdf9e65a5f6c839ec3bcc515a9e",
       "headRepository": "oauth-wg/oauth-selective-disclosure-jwt",
       "headRefName": "danielfett/new-json-serialization",
-      "headRefOid": "aeb2ad84db0889396422955e83565e45a47d20fd",
+      "headRefOid": "0c5136cf299b1da27fa80274e44ca7df743a7058",
       "closedAt": null,
       "mergedAt": null,
       "mergedBy": null,
@@ -43749,6 +43749,13 @@
           "body": "This one needs a doc history entry under -09 :) ",
           "createdAt": "2024-03-09T00:21:14Z",
           "updatedAt": "2024-03-09T00:21:14Z"
+        },
+        {
+          "author": "danielfett",
+          "authorAssociation": "MEMBER",
+          "body": "> This one needs a doc history entry under -09 :)\r\n\r\nAdded!",
+          "createdAt": "2024-03-11T08:53:43Z",
+          "updatedAt": "2024-03-11T08:53:43Z"
         }
       ],
       "reviews": [
@@ -43771,6 +43778,101 @@
               "updatedAt": "2024-03-08T17:36:05Z"
             }
           ]
+        },
+        {
+          "id": "PRR_kwDOHTmVzM5y3wyr",
+          "commit": {
+            "abbreviatedOid": "aeb2ad8"
+          },
+          "author": "danielfett",
+          "authorAssociation": "MEMBER",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2024-03-11T08:50:15Z",
+          "updatedAt": "2024-03-11T08:50:15Z",
+          "comments": [
+            {
+              "originalPosition": 40,
+              "body": "Thanks, I think the clarification is useful! If we can come up with a better way than just using the first disclosure, I would be open to that.",
+              "createdAt": "2024-03-11T08:50:15Z",
+              "updatedAt": "2024-03-11T08:50:15Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOHTmVzM5y54vX",
+          "commit": {
+            "abbreviatedOid": "aeb2ad8"
+          },
+          "author": "bc-pi",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2024-03-11T13:06:56Z",
+          "updatedAt": "2024-03-11T13:06:56Z",
+          "comments": [
+            {
+              "originalPosition": 40,
+              "body": "Yeah, with the General JSON Serialization and wanting to use the unprotected headers for JAdES, I think that going with the first signature element is probably the most reasonable thing to do.",
+              "createdAt": "2024-03-11T13:06:56Z",
+              "updatedAt": "2024-03-11T13:06:56Z"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "number": 415,
+      "id": "PR_kwDOHTmVzM5pN_ky",
+      "title": "Add Kotlin & Swift implementations from EUDIW",
+      "url": "https://github.com/oauth-wg/oauth-selective-disclosure-jwt/pull/415",
+      "state": "MERGED",
+      "author": "babisRoutis",
+      "authorAssociation": "CONTRIBUTOR",
+      "assignees": [],
+      "labels": [],
+      "body": "This PR updates the README to add two implementations of the SD-JWT specification from [EUDIW](https://github.com/eu-digital-identity-wallet).\r\n\r\n* Kotlin: [eudi-lib-jvm-sdjwt (EU Digital Identity Wallet)](https://github.com/eu-digital-identity-wallet/eudi-lib-jvm-sdjwt-kt)\r\n * Swift: [eudi-lib-sdjwt-swift (EU Digital Identity Wallet)](https://github.com/eu-digital-identity-wallet/eudi-lib-sdjwt-swift)\r\n",
+      "createdAt": "2024-03-11T09:38:49Z",
+      "updatedAt": "2024-03-11T15:07:22Z",
+      "baseRepository": "oauth-wg/oauth-selective-disclosure-jwt",
+      "baseRefName": "master",
+      "baseRefOid": "7dd0444e630ecbdf9e65a5f6c839ec3bcc515a9e",
+      "headRepository": "babisRoutis/oauth-selective-disclosure-jwt",
+      "headRefName": "add-eudiw-impl",
+      "headRefOid": "1144c74ce200e96499b287b706aab4bc76c56e81",
+      "closedAt": "2024-03-11T15:07:22Z",
+      "mergedAt": "2024-03-11T15:07:22Z",
+      "mergedBy": "bc-pi",
+      "mergeCommit": {
+        "oid": "f4acb369884de2872acf4f89bae188f9dbecce7a"
+      },
+      "comments": [],
+      "reviews": [
+        {
+          "id": "PRR_kwDOHTmVzM5y55hE",
+          "commit": {
+            "abbreviatedOid": "1144c74"
+          },
+          "author": "bc-pi",
+          "authorAssociation": "COLLABORATOR",
+          "state": "APPROVED",
+          "body": "",
+          "createdAt": "2024-03-11T13:08:31Z",
+          "updatedAt": "2024-03-11T13:08:31Z",
+          "comments": []
+        },
+        {
+          "id": "PRR_kwDOHTmVzM5y6hs-",
+          "commit": {
+            "abbreviatedOid": "1144c74"
+          },
+          "author": "danielfett",
+          "authorAssociation": "MEMBER",
+          "state": "APPROVED",
+          "body": "",
+          "createdAt": "2024-03-11T14:11:40Z",
+          "updatedAt": "2024-03-11T14:11:40Z",
+          "comments": []
         }
       ]
     }
