@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2024-03-12T00:11:04.533931+00:00",
+  "timestamp": "2024-03-14T00:11:08.725578+00:00",
   "repo": "oauth-wg/oauth-selective-disclosure-jwt",
   "labels": [
     {
@@ -40922,7 +40922,7 @@
       "labels": [],
       "body": "This PR limits the scope of the term \"SD-JWT\" so that it refers only to an Issuer-signed JWT and a set of disclosures.  We introduce the term \"Fnord\" to refer to an SD-JWT with key binding.  As a bonus, we are able to clean up stale uses of Presentation, which mostly, but not always align with Fnord.\r\n\r\n\"[Fnord](https://en.wikipedia.org/wiki/Fnord)\" is deliberately nonsensical, of course.  We should replace this with a more intuitive word.  We could reintroduce \"Presentation\" for this, with the allowance that one might \"present\" either a Presentation or an SD-JWT.  Or we could pick another term, suggestions welcome.\r\n\r\nI have tried to be fairly minimal in the changes here.  In particular, I have not changed any of the algorithms, though I suspect they would be clearer if a bit more separate.  I have rewritten a few paragraphs, especially close to the top and in the Security Considerations.\r\n\r\nFixes #374\r\nFixes #392 ",
       "createdAt": "2023-12-05T23:02:33Z",
-      "updatedAt": "2024-03-04T17:57:59Z",
+      "updatedAt": "2024-03-13T16:27:51Z",
       "baseRepository": "oauth-wg/oauth-selective-disclosure-jwt",
       "baseRefName": "master",
       "baseRefOid": "7dd0444e630ecbdf9e65a5f6c839ec3bcc515a9e",
@@ -42062,9 +42062,9 @@
           "comments": [
             {
               "originalPosition": 75,
-              "body": "```suggestion\r\n   said to \"be tied\" a particular SD-JWT if its payload includes a hash of the\r\n```\r\nif suggestion in the comment below gets accepted",
+              "body": "```suggestion\r\n   said to be \"tied to\" a particular SD-JWT if its payload includes a hash of the\r\n```\r\nif suggestion in the comment below gets accepted",
               "createdAt": "2024-03-04T03:18:29Z",
-              "updatedAt": "2024-03-04T03:18:44Z"
+              "updatedAt": "2024-03-12T17:18:02Z"
             }
           ]
         },
@@ -42218,6 +42218,410 @@
               "body": "ref is broken \r\n```suggestion\r\n    1. Determine the public key for the Holder from the SD-JWT (see (#key_binding)).\r\n```",
               "createdAt": "2024-03-04T17:57:22Z",
               "updatedAt": "2024-03-04T17:57:41Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOHTmVzM5zIhDx",
+          "commit": {
+            "abbreviatedOid": "950bdd3"
+          },
+          "author": "danielfett",
+          "authorAssociation": "MEMBER",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2024-03-12T16:40:44Z",
+          "updatedAt": "2024-03-12T16:40:44Z",
+          "comments": [
+            {
+              "originalPosition": 451,
+              "body": "@bifurcation Please add a note under the first paragraph of \"Media Type Registration\" saying:\r\n\r\n> Note: For the media type value used in the `typ` header in the Issuer-signed JWT itself, see (#explicit_typing).\r\n\r\n(That's Section 10.12)",
+              "createdAt": "2024-03-12T16:40:44Z",
+              "updatedAt": "2024-03-12T16:53:24Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOHTmVzM5zJFiI",
+          "commit": {
+            "abbreviatedOid": "950bdd3"
+          },
+          "author": "bc-pi",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2024-03-12T17:22:45Z",
+          "updatedAt": "2024-03-12T17:22:45Z",
+          "comments": [
+            {
+              "originalPosition": 443,
+              "body": "empty parts aren't applicable with sd-jwt-kb \r\n\r\n```suggestion\r\n* Encoding considerations: binary; application/sd-jwt-kb values are a series of base64url-encoded values separated by period ('.') or tilde ('~') characters.\r\n```",
+              "createdAt": "2024-03-12T17:22:45Z",
+              "updatedAt": "2024-03-12T21:57:57Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOHTmVzM5zJL3L",
+          "commit": {
+            "abbreviatedOid": "950bdd3"
+          },
+          "author": "bc-pi",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2024-03-12T17:29:45Z",
+          "updatedAt": "2024-03-12T17:29:45Z",
+          "comments": [
+            {
+              "originalPosition": 87,
+              "body": "Editors discussed this on a call and agree that we prefer saying \"tied to\". I'll make the corresponding comments/suggestions. ",
+              "createdAt": "2024-03-12T17:29:45Z",
+              "updatedAt": "2024-03-12T17:29:45Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOHTmVzM5zJMw8",
+          "commit": {
+            "abbreviatedOid": "950bdd3"
+          },
+          "author": "bc-pi",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2024-03-12T17:30:31Z",
+          "updatedAt": "2024-03-12T17:55:49Z",
+          "comments": [
+            {
+              "originalPosition": 185,
+              "body": "```suggestion\r\nAn SD-JWT-KB without Disclosures:\r\n```",
+              "createdAt": "2024-03-12T17:30:55Z",
+              "updatedAt": "2024-03-12T17:55:49Z"
+            },
+            {
+              "originalPosition": 188,
+              "body": "```suggestion\r\nAn SD-JWT-KB with Disclosures:\r\n```",
+              "createdAt": "2024-03-12T17:31:10Z",
+              "updatedAt": "2024-03-12T17:55:49Z"
+            },
+            {
+              "originalPosition": 219,
+              "body": "```suggestion\r\nThe hash value in the `sd_hash` claim binds the KB-JWT to the specific SD-JWT.\r\nThe `sd_hash` value MUST be taken over the US-ASCII bytes of the\r\n```",
+              "createdAt": "2024-03-12T17:42:42Z",
+              "updatedAt": "2024-03-12T17:55:49Z"
+            },
+            {
+              "originalPosition": 296,
+              "body": "```suggestion\r\n    1. Create a Key Binding JWT tied to the SD-JWT.\r\n```",
+              "createdAt": "2024-03-12T17:43:03Z",
+              "updatedAt": "2024-03-12T17:55:49Z"
+            },
+            {
+              "originalPosition": 105,
+              "body": "```suggestion\r\nWhen a Verifier requires Key Binding, the Holder presents an SD-JWT-KB, which includes the\r\nrelevant SD-JWT.  The SD-JWT-KB encodes the SD-JWT as well as a Key Binding JWT.\r\n```",
+              "createdAt": "2024-03-12T17:47:58Z",
+              "updatedAt": "2024-03-12T17:55:49Z"
+            },
+            {
+              "originalPosition": 428,
+              "body": "```suggestion\r\n*  Claim Description: Digest of the SD-JWT tied to the KB-JWT \r\n```",
+              "createdAt": "2024-03-12T17:50:51Z",
+              "updatedAt": "2024-03-12T17:55:49Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOHTmVzM5zJjGK",
+          "commit": {
+            "abbreviatedOid": "2f918e9"
+          },
+          "author": "bc-pi",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2024-03-12T17:56:16Z",
+          "updatedAt": "2024-03-12T17:56:16Z",
+          "comments": [
+            {
+              "originalPosition": 87,
+              "body": "Those corresponding comments/suggestions aren't quite as straightforward as I'd expected. But it's done. ",
+              "createdAt": "2024-03-12T17:56:16Z",
+              "updatedAt": "2024-03-12T17:56:17Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOHTmVzM5zM-qy",
+          "commit": {
+            "abbreviatedOid": "950bdd3"
+          },
+          "author": "bc-pi",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2024-03-12T22:00:13Z",
+          "updatedAt": "2024-03-12T22:00:14Z",
+          "comments": [
+            {
+              "originalPosition": 49,
+              "body": "```suggestion\r\n  - A format extending the SD-JWT format for the combind transport of the SD-JWT\r\n```",
+              "createdAt": "2024-03-12T22:00:14Z",
+              "updatedAt": "2024-03-12T22:00:14Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOHTmVzM5zNEEI",
+          "commit": {
+            "abbreviatedOid": "950bdd3"
+          },
+          "author": "bc-pi",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2024-03-12T22:09:17Z",
+          "updatedAt": "2024-03-12T22:09:17Z",
+          "comments": [
+            {
+              "originalPosition": 76,
+              "body": "```suggestion\r\nSD-JWT in its `sd_hash` claim.\r\n```",
+              "createdAt": "2024-03-12T22:09:17Z",
+              "updatedAt": "2024-03-12T22:09:17Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOHTmVzM5zNYSE",
+          "commit": {
+            "abbreviatedOid": "950bdd3"
+          },
+          "author": "bc-pi",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2024-03-12T22:45:40Z",
+          "updatedAt": "2024-03-12T22:45:40Z",
+          "comments": [
+            {
+              "originalPosition": 404,
+              "body": "During a call earlier today @danielfett said he'd suggest changes to rework the text in this section to avoid the use of \"malleable\" and rather talk about what integrity is and is not provided in each case.  \r\n\r\nIn the meantime, this would update the subsection title accordingly (and would work with the current text too): \r\n\r\n```suggestion\r\n## Integrity of SD-JWTs and SD-JWT-KBs\r\n```",
+              "createdAt": "2024-03-12T22:45:40Z",
+              "updatedAt": "2024-03-12T22:52:12Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOHTmVzM5zNguZ",
+          "commit": {
+            "abbreviatedOid": "950bdd3"
+          },
+          "author": "bc-pi",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2024-03-12T23:18:59Z",
+          "updatedAt": "2024-03-12T23:19:00Z",
+          "comments": [
+            {
+              "originalPosition": 419,
+              "body": "Here is an attempt at suggested changes to rework the text in this section to avoid the use of \"malleable\" and instead talk about more about integrity. I'd be happy to have @danielfett suggest a better alternative but wanted to put something out there:\r\n\r\n```suggestion\r\nWith an SD-JWT, the Issuer-signed JWT is integrity-protected by the Issuer's\r\nsignature, and the values of the Disclosures are integrity-protected by the digests\r\nincluded therein. The specific set of Disclosures, however,\r\nis not integrity-protected - the SD-JWT can be modified by adding or\r\nremoving Disclosures and still be valid.\r\n\r\nWith an SD-JWT-KB, the set of selected Disclosures is integrity-protected.   \r\nThe signature in the Key Binding JWT covers a\r\nspecific SD-JWT, with a specific Issuer-signed JWT and a specific set of\r\nDisclosures.  Thus, the signature on the Key Binding JWT, in addition to proving\r\nKey Binding, also assures the authenticity and integrity of the set of\r\nDisclosures the Holder disclosed.  The set of Disclosures in an SD-JWT-KB is the set\r\nthat the Holder intended to send; no intermediate party has added, removed, or\r\nmodified the list of Disclosures.\r\n```",
+              "createdAt": "2024-03-12T23:19:00Z",
+              "updatedAt": "2024-03-12T23:19:57Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOHTmVzM5zPvrg",
+          "commit": {
+            "abbreviatedOid": "950bdd3"
+          },
+          "author": "danielfett",
+          "authorAssociation": "MEMBER",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2024-03-13T09:02:40Z",
+          "updatedAt": "2024-03-13T09:02:41Z",
+          "comments": [
+            {
+              "originalPosition": 13,
+              "body": "It would be better to focus on the fact that the SD-JWT-KB can be used for proving something instead of focusing on the binding in the first sentence.\r\n```suggestion\r\nThis document also defines a format for SD-JWTs with Key Binding (SD-JWT-KB).\r\nBy optionally sending an SD-JWT-KB to a\r\nVerifier, the Holder can prove to the verifier that they hold the private key\r\nassociated to the SD-JWT (e.g., using the `cnf` claim [@?RFC7800]). The strength of the binding is conditional upon the trust\r\n```",
+              "createdAt": "2024-03-13T09:02:41Z",
+              "updatedAt": "2024-03-13T09:02:41Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOHTmVzM5zPx_l",
+          "commit": {
+            "abbreviatedOid": "950bdd3"
+          },
+          "author": "danielfett",
+          "authorAssociation": "MEMBER",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2024-03-13T09:07:17Z",
+          "updatedAt": "2024-03-13T09:07:17Z",
+          "comments": [
+            {
+              "originalPosition": 33,
+              "body": "```suggestion\r\n1. SD-JWT is a composite structure issued by the Issuer that consists of the following:\r\n```",
+              "createdAt": "2024-03-13T09:07:17Z",
+              "updatedAt": "2024-03-13T09:07:17Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOHTmVzM5zP4SN",
+          "commit": {
+            "abbreviatedOid": "950bdd3"
+          },
+          "author": "danielfett",
+          "authorAssociation": "MEMBER",
+          "state": "APPROVED",
+          "body": "I suggested some changes, but overall I'm quite happy with the PR as it is now. Thanks @bifurcation!\r\n\r\nEdit: I still think we should call it \"SD-JWT+KB\", which nicely captures that the KB is an \"add-on\".",
+          "createdAt": "2024-03-13T09:19:07Z",
+          "updatedAt": "2024-03-13T10:01:05Z",
+          "comments": [
+            {
+              "originalPosition": 43,
+              "body": "I'm aware that the proposed change is mostly re-using old text, but with the recent changes around JWS JSON-serialization, I propose to reword as follows:\r\n\r\n```suggestion\r\n  - A format for enabling selective disclosure in nested JSON data structures,\r\n    supporting selectively disclosable object properties (name-value pairs) and array elements\r\n  - A format for encoding the selectively disclosable data items\r\n  - A format extending the JWS Compact Serialization, allowing for the combined\r\n    transport of the Issuer-signed JSON data structure and the disclosable data items\r\n  - An alternate format extending the JWS JSON Serialization, also allowing for\r\n    transport of the Issuer-signed JSON data structure and disclosure data\r\n```",
+              "createdAt": "2024-03-13T09:19:07Z",
+              "updatedAt": "2024-03-13T09:56:14Z"
+            },
+            {
+              "originalPosition": 50,
+              "body": "```suggestion\r\n2. SD-JWT-KB is a composite structure that is presented to the verifier that consists of the following:\r\n  - A facility for associating an SD-JWT to a key pair\r\n  - A format for a Key Binding JWT (KB-JWT) that proves possession of the private key of\r\n    the associated key pair\r\n  - A format extending the SD-JWT format for the combined transport of the SD-JWT\r\n    and the KB-JWT\r\n```",
+              "createdAt": "2024-03-13T09:21:28Z",
+              "updatedAt": "2024-03-13T09:56:14Z"
+            },
+            {
+              "originalPosition": 122,
+              "body": "```suggestion\r\n * receives either an SD-JWT or an SD-JWT-KB from the Holder,\r\n * verifies the signature on the SD-JWT (or the the SD-JWT inside the SD-JWT-KB) using the Issuer's public key, and\r\n * verifies the signature on the KB-JWT using the public key included (or referenced) in the SD-JWT, if the Verifier's policy requires Key Binding.\r\n```\r\nSuggest to remove the \"if an SD-JWT-KB was provided\" part as it may be misleading.",
+              "createdAt": "2024-03-13T09:29:07Z",
+              "updatedAt": "2024-03-13T09:56:14Z"
+            },
+            {
+              "originalPosition": 130,
+              "body": "```suggestion\r\nAn SD-JWT is composed of\r\n```",
+              "createdAt": "2024-03-13T09:32:36Z",
+              "updatedAt": "2024-03-13T09:56:14Z"
+            },
+            {
+              "originalPosition": 136,
+              "body": "```suggestion\r\nAn SD-JWT-KB is composed of\r\n```",
+              "createdAt": "2024-03-13T09:32:47Z",
+              "updatedAt": "2024-03-13T09:56:14Z"
+            },
+            {
+              "originalPosition": 142,
+              "body": "```suggestion\r\n* an SD-JWT, and\r\n* a Key Binding JWT.\r\n```",
+              "createdAt": "2024-03-13T09:33:12Z",
+              "updatedAt": "2024-03-13T09:56:14Z"
+            },
+            {
+              "originalPosition": 110,
+              "body": "```suggestion\r\nThe Key Binding JWT encodes a signature by the Holder's private key over\r\n\r\n* a hash of the SD-JWT,\r\n* a nonce to ensure the freshness of the signature, and\r\n* an audience value to indicate the intended audience for the document.\r\n```",
+              "createdAt": "2024-03-13T09:33:38Z",
+              "updatedAt": "2024-03-13T09:56:14Z"
+            },
+            {
+              "originalPosition": 167,
+              "body": "```suggestion\r\non an SD-JWT.  A Verifier that expects an SD-JWT MUST verify that the final\r\n```",
+              "createdAt": "2024-03-13T09:37:10Z",
+              "updatedAt": "2024-03-13T09:56:14Z"
+            },
+            {
+              "originalPosition": 75,
+              "body": "```suggestion\r\n:  A JWT for proving Key Binding as defined in (#kb-jwt).  A Key Binding JWT is\r\n   said to \"be tied to\" a particular SD-JWT if its payload includes a hash of the\r\n```",
+              "createdAt": "2024-03-13T09:37:55Z",
+              "updatedAt": "2024-03-13T09:56:14Z"
+            },
+            {
+              "originalPosition": 199,
+              "body": "```suggestion\r\nThis section defines the Key Binding JWT, which encodes a\r\nsignature over an SD-JWT by the Holder's private key.\r\n```",
+              "createdAt": "2024-03-13T09:39:15Z",
+              "updatedAt": "2024-03-13T09:56:14Z"
+            },
+            {
+              "originalPosition": 202,
+              "body": "```suggestion\r\nThe Key Binding JWT MUST be a JWT according to [@!RFC7519] and its payload MUST contain the following elements:\r\n```",
+              "createdAt": "2024-03-13T09:40:00Z",
+              "updatedAt": "2024-03-13T09:56:14Z"
+            },
+            {
+              "originalPosition": 297,
+              "body": "```suggestion\r\n    2. Assemble the SD-JWT-KB by concatenating the SD-JWT and the Key Binding JWT.\r\n```",
+              "createdAt": "2024-03-13T09:43:44Z",
+              "updatedAt": "2024-03-13T09:56:14Z"
+            },
+            {
+              "originalPosition": 304,
+              "body": "We avoided normative language here in this \"summary\" in order to not duplicate the normative requirement defined below.\r\n```suggestion\r\nan SD-JWT-KB, in addition to the checks outlined in (#sd_jwt_verification), Verifiers need to ensure that\r\n```",
+              "createdAt": "2024-03-13T09:45:09Z",
+              "updatedAt": "2024-03-13T09:56:14Z"
+            },
+            {
+              "originalPosition": 308,
+              "body": "```suggestion\r\n * if Key Binding is required, then the Holder has provided an SD-JWT-KB, and \r\n * the Key Binding JWT is signed by the Holder and valid.\r\n```",
+              "createdAt": "2024-03-13T09:46:04Z",
+              "updatedAt": "2024-03-13T09:56:14Z"
+            },
+            {
+              "originalPosition": 382,
+              "body": "As above, we should not duplicate the normative language.\r\n```suggestion\r\nan invalid Key Binding JWT, then the Verifier will reject the presentation\r\nwhen following the verification steps described in (#verifier_verification).\r\n```",
+              "createdAt": "2024-03-13T09:50:10Z",
+              "updatedAt": "2024-03-13T09:56:14Z"
+            },
+            {
+              "originalPosition": 393,
+              "body": "```suggestion\r\nAny entity in possession of an SD-JWT (including an SD-JWT extracted from an SD-JWT-KB) can forward it to any third party\r\nthat does not enforce Key Binding.\r\n```",
+              "createdAt": "2024-03-13T09:52:07Z",
+              "updatedAt": "2024-03-13T09:56:14Z"
+            },
+            {
+              "originalPosition": 419,
+              "body": "This is perfect, thanks @bc-pi!",
+              "createdAt": "2024-03-13T09:53:17Z",
+              "updatedAt": "2024-03-13T09:56:14Z"
+            },
+            {
+              "originalPosition": 428,
+              "body": "The other way round?\r\n```suggestion\r\n*  Claim Description: Digest of the SD-JWT to which the KB-JWT is tied\r\n```",
+              "createdAt": "2024-03-13T09:54:05Z",
+              "updatedAt": "2024-03-13T09:56:14Z"
+            },
+            {
+              "originalPosition": 487,
+              "body": "```suggestion\r\nThe following is how an SD-JWT-KB that discloses only nationality and the fact that the person is over 18 years old could look like:\r\n```",
+              "createdAt": "2024-03-13T09:55:24Z",
+              "updatedAt": "2024-03-13T09:56:14Z"
+            },
+            {
+              "originalPosition": 496,
+              "body": "```suggestion\r\nThe following is how an SD-JWT-KB that discloses only `type`, `medicinalProductName`, `atcCode` of the vaccine, `type` of the `recipient`, `type`, `order` and `dateOfVaccination` could look like:\r\n```",
+              "createdAt": "2024-03-13T09:55:39Z",
+              "updatedAt": "2024-03-13T09:56:14Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOHTmVzM5zUKS5",
+          "commit": {
+            "abbreviatedOid": "950bdd3"
+          },
+          "author": "bc-pi",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2024-03-13T16:27:51Z",
+          "updatedAt": "2024-03-13T16:27:51Z",
+          "comments": [
+            {
+              "originalPosition": 428,
+              "body": "> The other way round? \r\n\r\nyeah, I think you are right (removing my backwards suggestion)",
+              "createdAt": "2024-03-13T16:27:51Z",
+              "updatedAt": "2024-03-13T16:29:03Z"
             }
           ]
         }
@@ -43833,7 +44237,7 @@
       "labels": [],
       "body": "This PR updates the README to add two implementations of the SD-JWT specification from [EUDIW](https://github.com/eu-digital-identity-wallet).\r\n\r\n* Kotlin: [eudi-lib-jvm-sdjwt (EU Digital Identity Wallet)](https://github.com/eu-digital-identity-wallet/eudi-lib-jvm-sdjwt-kt)\r\n * Swift: [eudi-lib-sdjwt-swift (EU Digital Identity Wallet)](https://github.com/eu-digital-identity-wallet/eudi-lib-sdjwt-swift)\r\n",
       "createdAt": "2024-03-11T09:38:49Z",
-      "updatedAt": "2024-03-11T15:07:22Z",
+      "updatedAt": "2024-03-12T10:10:42Z",
       "baseRepository": "oauth-wg/oauth-selective-disclosure-jwt",
       "baseRefName": "master",
       "baseRefOid": "7dd0444e630ecbdf9e65a5f6c839ec3bcc515a9e",
