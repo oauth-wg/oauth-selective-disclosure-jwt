@@ -102,11 +102,10 @@ has to verify that all disclosed claim values were part of the original
 Issuer-signed JWT. The Verifier will not, however, learn any claim
 values not disclosed in the Disclosures.
 
-For SD-JWTs where the issuer is binding an SD-JWT to a public key associated to the
-Holder (e.g., using the `cnf` claim [@?RFC7800]), this document also defines a
-format for SD-JWTs with Key Binding (SD-JWT-KB).  By optionally sending an SD-JWT-KB to a
+This document also defines a format for SD-JWTs with Key Binding (SD-JWT-KB).
+By optionally sending an SD-JWT-KB to a
 Verifier, the Holder can prove to the verifier that they hold the private key
-associated to the SD-JWT. The strength of the binding is conditional upon the trust
+associated to the SD-JWT (e.g., using the `cnf` claim [@?RFC7800]). The strength of the binding is conditional upon the trust
 in the protection of the private key of the key pair an SD-JWT is bound to.
 
 SD-JWT can be used with any JSON-based representation of claims, including JSON-LD.
@@ -119,24 +118,21 @@ wherever possible.
 
 This specification defines two primary data formats:
 
-1. SD-JWT is a composite structure issued by the issuer that consists of the following:
-  - A format for the payload of an Issuer-signed JWT containing selectively
-    disclosable claims that include object properties (name-value pairs), array
-    elements, and nested data structures built from these
-  - A format for data associated with the JWT that enables selectively
-    disclosing those claims
+1. SD-JWT is a composite structure issued by the Issuer that consists of the following:
+  - A format for enabling selective disclosure in nested JSON data structures,
+    supporting selectively disclosable object properties (name-value pairs) and array elements
+  - A format for encoding the selectively disclosable data items
   - A format extending the JWS Compact Serialization, allowing for the combined
-    transport of the Issuer-signed JWT and the disclosure data for selectively
-    disclosed claims
+    transport of the Issuer-signed JSON data structure and the disclosable data items
   - An alternate format extending the JWS JSON Serialization, also allowing for
-    transport of the Issuer-signed JWT and disclosure data
+    transport of the Issuer-signed JSON data structure and disclosure data
 
 2. SD-JWT-KB is a composite structure that is presented to the verifier that consists of the following:
-  - A facility for associating a JWT to a key pair
-  - A format for a Key Binding JWT that proves possession of the private key of
+  - A facility for associating an SD-JWT to a key pair
+  - A format for a Key Binding JWT (KB-JWT) that proves possession of the private key of
     the associated key pair
-  - A format extending the SD-JWT format for the combind transport fo the SD-JWT
-    and the proof of possession
+  - A format extending the SD-JWT format for the combined transport of the SD-JWT
+    and the KB-JWT
 
 ## Conventions and Terminology
 
@@ -168,11 +164,11 @@ Key Binding:
 
 Key Binding JWT (KB-JWT):
 :  A JWT for proving Key Binding as defined in (#kb-jwt).  A Key Binding JWT is
-   said to "cover" a particular SD-JWT if its payload includes a hash of the
-   in its `sd_hash` claim.
+   said to "be tied to" a particular SD-JWT if its payload includes a hash of the
+SD-JWT in its `sd_hash` claim.
 
 Selectively Disclosable JWT with Key Binding (SD-JWT-KB):
-: A composite structure, comprising an SD-JWT and a Key Binding JWT covering the SD-JWT.
+: A composite structure, comprising an SD-JWT and a Key Binding JWT tied to that SD-JWT.
 
 Issuer:
 :  An entity that creates SD-JWTs.
