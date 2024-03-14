@@ -1029,7 +1029,7 @@ key-distribution method.
 
 ## Forwarding Credentials
 
-Any entity in possession of an SD-JWT can forward it to any third party
+Any entity in possession of an SD-JWT (including an SD-JWT extracted from an SD-JWT-KB) can forward it to any third party
 that does not enforce Key Binding.
 When doing so, that entity may remove Disclosures such that the receiver
 learns only a subset of the claims contained in the original SD-JWT.
@@ -1292,7 +1292,7 @@ IANA "JSON Web Token Claims" registry [@IANA.JWT] established by [@!RFC7519].
 <br/>
 
 *  Claim Name: `sd_hash`
-*  Claim Description: Digest of the SD-JWT covered by an SD-JWT-KB
+*  Claim Description: Digest of the SD-JWT to which the KB-JWT is tied
 *  Change Controller: IETF
 *  Specification Document(s):  [[ (#kb-jwt) of this specification ]]
 
@@ -1332,7 +1332,7 @@ To indicate that the content is an SD-JWT-KB:
 * Subtype name: sd-jwt-kb
 * Required parameters: n/a
 * Optional parameters: n/a
-* Encoding considerations: binary; application/sd-jwt-kb values are a series of base64url-encoded values (some of which may be the empty string) separated by period ('.') or tilde ('~') characters.
+* Encoding considerations: binary; application/sd-jwt-kb values are a series of base64url-encoded values separated by period ('.') or tilde ('~') characters.
 * Security considerations: See the Security Considerations section of [[ this specification ]], [@!RFC7519], and [@RFC8725].
 * Interoperability considerations: n/a
 * Published specification: [[ this specification ]]
@@ -1621,7 +1621,7 @@ The following Disclosures are created by the Issuer:
 
 {{examples/arf-pid/disclosures.md}}
 
-The following is how an SD-JWT-KB over an SD-JWT that discloses only nationality and the fact that the person is over 18 years old could look like:
+The following is how an SD-JWT-KB that discloses only nationality and the fact that the person is over 18 years old could look like:
 
 <{{examples/arf-pid/sd_jwt_presentation.txt}}
 
@@ -1657,7 +1657,7 @@ The following Disclosures are created by the Issuer:
 
 {{examples/jsonld/disclosures.md}}
 
-The following is how an SD-JWT-KB over an SD-JWT that discloses only `type`, `medicinalProductName`, `atcCode` of the vaccine, `type` of the `recipient`, `type`, `order` and `dateOfVaccination` could look like:
+The following is how an SD-JWT-KB that discloses only `type`, `medicinalProductName`, `atcCode` of the vaccine, `type` of the `recipient`, `type`, `order` and `dateOfVaccination` could look like:
 
 <{{examples/jsonld/sd_jwt_presentation.txt}}
 
