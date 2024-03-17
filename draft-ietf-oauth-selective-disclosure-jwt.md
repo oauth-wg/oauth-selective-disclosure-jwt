@@ -1304,7 +1304,7 @@ This section requests registration of the following media types [@RFC2046] in
 the "Media Types" registry [@IANA.MediaTypes] in the manner described
 in [@RFC6838].
 
-Note: For the media type value used in the typ header in the Issuer-signed JWT
+Note: For the media type value used in the `typ` header in the Issuer-signed JWT
 itself, see (#explicit_typing).
 
 To indicate that the content is an SD-JWT:
