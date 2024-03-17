@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2024-03-14T00:11:08.725578+00:00",
+  "timestamp": "2024-03-17T00:12:38.514272+00:00",
   "repo": "oauth-wg/oauth-selective-disclosure-jwt",
   "labels": [
     {
@@ -40922,13 +40922,13 @@
       "labels": [],
       "body": "This PR limits the scope of the term \"SD-JWT\" so that it refers only to an Issuer-signed JWT and a set of disclosures.  We introduce the term \"Fnord\" to refer to an SD-JWT with key binding.  As a bonus, we are able to clean up stale uses of Presentation, which mostly, but not always align with Fnord.\r\n\r\n\"[Fnord](https://en.wikipedia.org/wiki/Fnord)\" is deliberately nonsensical, of course.  We should replace this with a more intuitive word.  We could reintroduce \"Presentation\" for this, with the allowance that one might \"present\" either a Presentation or an SD-JWT.  Or we could pick another term, suggestions welcome.\r\n\r\nI have tried to be fairly minimal in the changes here.  In particular, I have not changed any of the algorithms, though I suspect they would be clearer if a bit more separate.  I have rewritten a few paragraphs, especially close to the top and in the Security Considerations.\r\n\r\nFixes #374\r\nFixes #392 ",
       "createdAt": "2023-12-05T23:02:33Z",
-      "updatedAt": "2024-03-13T16:27:51Z",
+      "updatedAt": "2024-03-14T21:43:57Z",
       "baseRepository": "oauth-wg/oauth-selective-disclosure-jwt",
       "baseRefName": "master",
       "baseRefOid": "7dd0444e630ecbdf9e65a5f6c839ec3bcc515a9e",
       "headRepository": "bifurcation/oauth-selective-disclosure-jwt",
       "headRefName": "fnord",
-      "headRefOid": "950bdd3bfe207d5fdc07234dd9ce1f265fbbc443",
+      "headRefOid": "707d3d02155517ad84f3869a336ca7d61ccbd503",
       "closedAt": null,
       "mergedAt": null,
       "mergedBy": null,
@@ -42622,6 +42622,66 @@
               "body": "> The other way round? \r\n\r\nyeah, I think you are right (removing my backwards suggestion)",
               "createdAt": "2024-03-13T16:27:51Z",
               "updatedAt": "2024-03-13T16:29:03Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOHTmVzM5zYA90",
+          "commit": {
+            "abbreviatedOid": "950bdd3"
+          },
+          "author": "bifurcation",
+          "authorAssociation": "NONE",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2024-03-14T04:35:26Z",
+          "updatedAt": "2024-03-14T04:35:26Z",
+          "comments": [
+            {
+              "originalPosition": 87,
+              "body": "I don't love \"tied to\", but I can live with it.",
+              "createdAt": "2024-03-14T04:35:26Z",
+              "updatedAt": "2024-03-14T04:35:26Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOHTmVzM5zYBwv",
+          "commit": {
+            "abbreviatedOid": "950bdd3"
+          },
+          "author": "bifurcation",
+          "authorAssociation": "NONE",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2024-03-14T04:39:41Z",
+          "updatedAt": "2024-03-14T04:39:41Z",
+          "comments": [
+            {
+              "originalPosition": 404,
+              "body": "I hesitate to make this change, because \"Integrity\" is about what can't be changed, and this section is about what *can* be changed.",
+              "createdAt": "2024-03-14T04:39:41Z",
+              "updatedAt": "2024-03-14T04:39:41Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOHTmVzM5zb4Le",
+          "commit": {
+            "abbreviatedOid": "950bdd3"
+          },
+          "author": "bc-pi",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2024-03-14T13:18:22Z",
+          "updatedAt": "2024-03-14T13:18:22Z",
+          "comments": [
+            {
+              "originalPosition": 404,
+              "body": "This and the proposed changes below say essentially the same thing. But just re-framed using \"Integrity\" and talking about what can't be changed, which also then describes what can be changed. I belive it's a more productive way to present the concepts. And it avoids the word \"malleable\" which @Sakurann (and the editors) didn't believe was particularly appropriate. ",
+              "createdAt": "2024-03-14T13:18:22Z",
+              "updatedAt": "2024-03-14T13:18:22Z"
             }
           ]
         }
