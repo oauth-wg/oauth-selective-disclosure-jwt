@@ -1043,7 +1043,7 @@ when presenting to a downstream party.
 In some scenarios this behavior could be desirable,
 but if it is not, Issuers need to support and Verifiers need to enforce Key Binding.
 
-## Malleability of SD-JWTs and SD-JWT-KBs
+## Integrity of SD-JWTs and SD-JWT-KBs
 
 With an SD-JWT, the Issuer-signed JWT is integrity-protected by the Issuer's
 signature, and the values of the Disclosures are integrity-protected by the digests
