@@ -1045,12 +1045,14 @@ but if it is not, Issuers need to support and Verifiers need to enforce Key Bind
 
 ## Malleability of SD-JWTs and SD-JWT-KBs
 
-An SD-JWT is malleable, in the sense that it can be modified by adding or
-removing Disclosures and still be valid.  The signature over the Issuer-signed
-JWT assures the authenticity only of the hashes of the selectively-disclosable
-claims, not any specific set of Disclosures.
+With an SD-JWT, the Issuer-signed JWT is integrity-protected by the Issuer's
+signature, and the values of the Disclosures are integrity-protected by the digests
+included therein. The specific set of Disclosures, however,
+is not integrity-protected - the SD-JWT can be modified by adding or
+removing Disclosures and still be valid.
 
-An SD-JWT-KB is not malleable.  The signature in the Key Binding JWT covers a
+With an SD-JWT-KB, the set of selected Disclosures is integrity-protected.   
+The signature in the Key Binding JWT covers a
 specific SD-JWT, with a specific Issuer-signed JWT and a specific set of
 Disclosures.  Thus, the signature on the Key Binding JWT, in addition to proving
 Key Binding, also assures the authenticity and integrity of the set of
