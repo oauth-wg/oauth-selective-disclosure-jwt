@@ -783,7 +783,7 @@ For presentation to a Verifier, the Holder MUST perform the following (or equiva
 Upon receiving a presentation from a Holder, in the form of either an SD-JWT or
 an SD-JWT-KB, in addition to the checks outlined in (#sd_jwt_verification), Verifiers need to ensure that
 
- * if Key Binding is required, then the Holder has provided an SD-JWT-KB, and 
+ * if Key Binding is required, then the Holder has provided an SD-JWT-KB, and
  * the Key Binding JWT is signed by the Holder and valid.
 
 To this end, Verifiers MUST follow the following steps (or equivalent):
