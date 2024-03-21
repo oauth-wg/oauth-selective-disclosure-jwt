@@ -714,7 +714,7 @@ an SD-JWT:
             2. Replace the array element with the value from the Disclosure.
             3. Recursively process the value using the steps described in (*) and (**).
     4. Remove all array elements for which the digest was not found in the previous step.
-    5. Remove all `_sd` keys and their contents from the Issuer-signed JWT payload.
+    5. Remove all `_sd` keys and their contents from the Issuer-signed JWT payload. If this results in an object with no properties, it should be represented as an empty object `{}`.
     6. Remove the claim `_sd_alg` from the SD-JWT payload.
 4. If any digest value is encountered more than once in the Issuer-signed JWT payload (directly or recursively via other Disclosures), the SD-JWT MUST be rejected.
 5. If any Disclosure was not referenced by digest value in the Issuer-signed JWT (directly or recursively via other Disclosures), the SD-JWT MUST be rejected.
@@ -1183,6 +1183,7 @@ John Mattsson,
 Justin Richer,
 Kushal Das,
 Matthew Miller,
+Michael Fraser,
 Mike Jones,
 Mike Prorock,
 Nat Sakimura,
