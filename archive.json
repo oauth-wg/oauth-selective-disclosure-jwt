@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2024-03-19T00:11:39.529666+00:00",
+  "timestamp": "2024-03-21T00:12:25.916899+00:00",
   "repo": "oauth-wg/oauth-selective-disclosure-jwt",
   "labels": [
     {
@@ -10752,6 +10752,93 @@
       "createdAt": "2024-02-27T22:52:28Z",
       "updatedAt": "2024-03-04T15:19:04Z",
       "closedAt": "2024-03-04T15:19:04Z",
+      "comments": []
+    },
+    {
+      "number": 416,
+      "id": "I_kwDOHTmVzM6Cw3Gv",
+      "title": "Add Test suite for SD-JWT",
+      "url": "https://github.com/oauth-wg/oauth-selective-disclosure-jwt/issues/416",
+      "state": "OPEN",
+      "author": "lukasjhan",
+      "authorAssociation": "CONTRIBUTOR",
+      "assignees": [],
+      "labels": [],
+      "body": "HI! I and @yunseorim1116 made a Test suite project for checking SD-JWT implementation.\r\nYou can check it here: https://github.com/lukasjhan/sd-jwt-test-api\r\nIt was written in TypeScript. It is in API server format and is distributed using docker.\r\n\r\nI'm curious about your opinions on this project. \r\nIf this is okay, How about write it in a standard document or put it in README?\r\n\r\nThank you",
+      "createdAt": "2024-03-19T01:59:10Z",
+      "updatedAt": "2024-03-19T02:12:19Z",
+      "closedAt": null,
+      "comments": []
+    },
+    {
+      "number": 417,
+      "id": "I_kwDOHTmVzM6DC16y",
+      "title": "state what salt does",
+      "url": "https://github.com/oauth-wg/oauth-selective-disclosure-jwt/issues/417",
+      "state": "OPEN",
+      "author": "bc-pi",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "question from an email, \r\n\r\n>  ... rookie question on your draft for SD-JWT. What is the use case of the salt, and how does it help to hide the claim values? \r\n\r\nmy response:\r\n\r\n> I was going to point you to some text in the draft that explains it but unfortunately couldn't find such text. That's maybe something that should be fixed. Sections [10.3](https://www.ietf.org/archive/id/draft-ietf-oauth-selective-disclosure-jwt-08.html#section-10.3) - 10.5  kinda say something about it but the reason is mostly just implied. Basically the salt makes it computationally infeasible to enumerate a potential value space for a claim name/value into the hash function to try and find the matching hash value. Thereby making impossible brute force style attempts to 'reverse' a hash value by hashing all reasonable input values to try and find a match to the hash value. If that makes any sense? To put it another way (which may or may not be helpful), the salt makes it computationally infeasible to guess the preimage of the digest. \r\n\r\nThe exchange makes me think a brief mention/explanation what salt does/provides in the SD-JWT context would be a worthwhile addition. Maybe just add or modify a sentence or two in sec 10.3. ",
+      "createdAt": "2024-03-20T21:01:00Z",
+      "updatedAt": "2024-03-20T21:17:01Z",
+      "closedAt": null,
+      "comments": [
+        {
+          "author": "larryzhu2018",
+          "authorAssociation": "NONE",
+          "body": "Hi Brian, just check for understanding: does the issuer send the clear text values of the disclosed claims to the holder and verifier or does the issuer only send the salted hashes?\r\n\r\n           +------------+\r\n           |            |\r\n           |   Issuer   |\r\n           |            |\r\n           +------------+\r\n                 |\r\n            Issues SD-JWT\r\n      including all Disclosures\r\n                 |\r\n                 v\r\n           +------------+\r\n           |            |\r\n           |   Holder   |\r\n           |            |\r\n           +------------+\r\n                 |\r\n           Presents SD-JWT\r\n    including selected Disclosures\r\n                 |\r\n                 v\r\n           +-------------+\r\n           |             |+\r\n           |  Verifiers  ||+\r\n           |             |||\r\n           +-------------+||\r\n            +-------------+|\r\n             +-------------+",
+          "createdAt": "2024-03-20T21:07:01Z",
+          "updatedAt": "2024-03-20T21:07:31Z"
+        },
+        {
+          "author": "bc-pi",
+          "authorAssociation": "COLLABORATOR",
+          "body": "I'm sorry but I don't quite understand the question or how it relates to the small change I'm suggesting in this issue. ",
+          "createdAt": "2024-03-20T21:17:00Z",
+          "updatedAt": "2024-03-20T21:17:00Z"
+        }
+      ]
+    },
+    {
+      "number": 418,
+      "id": "I_kwDOHTmVzM6DC4qT",
+      "title": "Explicit clarification over correct formatting of objects with no disclosed elements",
+      "url": "https://github.com/oauth-wg/oauth-selective-disclosure-jwt/issues/418",
+      "state": "OPEN",
+      "author": "MichaelFraser99",
+      "authorAssociation": "CONTRIBUTOR",
+      "assignees": [],
+      "labels": [],
+      "body": "If we take the following example of an SD-JWT:\r\n\r\n`eyJhbGciOiJSUzI1NiIsInR5cCI6ImFwcGxpY2F0aW9uL2pzb24rc2Qtand0In0.eyJfc2QiOlsienctOU1SQXdtcUJXeTFUOEVua0JvZ2lyVEpfU2NTbnZfSGlCenhOWXFUNCJdLCJjbmYiOnsiZSI6IkFRQUIiLCJrdHkiOiJSU0EiLCJuIjoidlpEc29UMW5HVjR4X1gzck9HTGUzOF8tQmpibVUtUWxlSjRIZU1Fbl9GRUZLaEhTc1ZIR1dsR28xZ2pBckR5a2d5d0VTQVg0dEhqdURMUFZiODlkNzQ2eVJIRVF3aXRIbU5sTE40c1NGQUd1MWNJSU1iUDNuM3RrSWtYQlh5U25pMXNCanV4b3lnMFU1UmJQd1lMN2J0NklqWS04OWljd2ZjTVV1N2p3aV80dFk2SUUyQXpTbm9sQi1RN21tS2o1ZXNWeEJ3RTIzTkdlamp2NmNvLWNtTFVZMEhuZFE2QXo1RldKbjlGRTA3RlFOeHQwVXNLaGZDTi05eGVnVXR1c1lDX3IyZlg2SnRsYy1UYWlwQWV5WEZ2RFVIVHVUSEdWSHNseGN5NFhPVS15WnE2OFhGaHJUQnZRTVNKV1dxRDR0MjYyXzlIR2k2QlEzVmlpbE51ZDd3In0sImZhbWlseV9uYW1lIjoiTcO8bGxlciIsImdpdmVuX25hbWUiOiJNYXgifQ.xj0X10080FANgzrdpfWrbF0DO0Y3KwiJzoO8-C-pj_DU6xjrG9kX9Nbh6rFhD1iuX_aGL-tXQwXaiGrgWLC72ws_mleRkQ6cvibl-ej9mr45iqZ2vd9rQavBh_q5v9AoKI3vu763ZEp49b_Z02acOWbIK9LlmSf3_hivHvV8mV5tpUCaSxD8JQ8tWbD5q5WhPofeAprm0_ygj4JmF0EuC_ARPmAZEK8of9kIKTgRKsLQuAPreQId8Sg7tTZaSLL4D47DZlWY0ioO2wn6QyYXIbHFnx01EKbsk_I3F0ha4P0h0UPif3KcIRh_tGkrjazejAv7mXd0jJLjF9CEGJzNYw~WyI1eWZHRjVxZnhKN2ViOXN0anBIR3dRIiwiYWRkcmVzcyIseyJfc2QiOlsiaFRiS1NZdVBaaW5qMVBja1N1Z0pfdnRhc3dFVEYxR0xPSVRpRnM1Wnl1dyIsIk0xU3FsVWNyZ1Ewc1FuRE1Vek5nVVFXVXBWM19XWEN0YzN3QWNNMUx4Y2siLCJ1OTdHb1cwRnZiVkl3dElBdWJGZEFIbTVjaG5wc0VFVm1jTzVGNUJxeG5JIl19XQ~`\r\n\r\nWhere there is a single provided disclosure that decodes to:\r\n\r\n`[\r\n   [\"5yfGF5qfxJ7eb9stjpHGwQ\",\"address\",{\"_sd\":[\"hTbKSYuPZinj1PckSugJ_vtaswETF1GLOITiFs5Zyuw\",\"M1SqlUcrgQ0sQnDMUzNgUQWUpV3_WXCtc3wAcM1Lxck\",\"u97GoW0FvbVIwtIAubFdAHm5chnpsEEVmcO5F5BqxnI\"]}]\r\n]`\r\n\r\nThe disclosure value is an address claim which has all of it's values as disclosable. In the given scenario where the presence of the address claim has been disclosed yet none of the contents disclosed, I believe it would be good to be explicit over the desired result here\r\n\r\nReading through the steps in 8.1. I think the implicit correct result would be to have the above boil down to\r\n`{\r\n  \"cnf\": {\r\n    \"e\": \"AQAB\",\r\n    \"kty\": \"RSA\",\r\n    \"n\": \"vZDsoT1nGV4x_X3rOGLe38_-BjbmU-QleJ4HeMEn_FEFKhHSsVHGWlGo1gjArDykgywESAX4tHjuDLPVb89d746yRHEQwitHmNlLN4sSFAGu1cIIMbP3n3tkIkXBXySni1sBjuxoyg0U5RbPwYL7bt6IjY-89icwfcMUu7jwi_4tY6IE2AzSnolB-Q7mmKj5esVxBwE23NGejjv6co-cmLUY0HndQ6Az5FWJn9FE07FQNxt0UsKhfCN-9xegUtusYC_r2fX6Jtlc-TaipAeyXFvDUHTuTHGVHslxcy4XOU-yZq68XFhrTBvQMSJWWqD4t262_9HGi6BQ3ViilNud7w\"\r\n  },\r\n  \"family_name\": \"M\u00fcller\",\r\n  \"given_name\": \"Max\",\r\n  \"address\": {}\r\n}`\r\n\r\nwhere `address` is an empty object. I think explicitly specifying this in the spec would be valuable\r\n\r\nPossibly something worded akin to:\r\n`In the scenario where an object claim's presence is disclosed yet the entire contents of the object has not been, the result should be an empty object`",
+      "createdAt": "2024-03-20T21:08:02Z",
+      "updatedAt": "2024-03-20T22:41:31Z",
+      "closedAt": null,
+      "comments": [
+        {
+          "author": "bc-pi",
+          "authorAssociation": "COLLABORATOR",
+          "body": "I do think it's implied as you described but an explicit clarification would be worthwhile. Something like the wording would work but I'm not sure where to fit it in easily with the current text. Probably a note in https://www.ietf.org/archive/id/draft-ietf-oauth-selective-disclosure-jwt-08.html#section-8.1 somewhere. https://www.ietf.org/archive/id/draft-ietf-oauth-selective-disclosure-jwt-08.html#section-8.1-4.3.2.5 is the the step that would leave the empty object - so maybe a note on that step (worded slightly differently to fit there)? Or just a note near the end of 8.1 somewhere? ",
+          "createdAt": "2024-03-20T22:11:33Z",
+          "updatedAt": "2024-03-20T22:41:31Z"
+        }
+      ]
+    },
+    {
+      "number": 419,
+      "id": "I_kwDOHTmVzM6DDHrv",
+      "title": "why can't cnf be the only way to bind to a holder public key?",
+      "url": "https://github.com/oauth-wg/oauth-selective-disclosure-jwt/issues/419",
+      "state": "OPEN",
+      "author": "bc-pi",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "Right after the IETF 119 OAuth session yesterday in a talk with @selfissued and @ve7jtb that started with discussion of PR #394, the question again came up (with some surprise on their part) as to why the `cnf` claim isn't the one and only way specified to put the holder's public key in the issuer-signed JWT. I honestly had a hard time giving a good rational for SD-JWT not being more prescriptive with it's requirements here.\r\n\r\nIt seems that using the `cnf` claim exclusively would be more straightforward and much better for interop. \r\n\r\n@bifurcation has previously made similar comments, \"it seems like there's an unnecessary level of ambiguity around how the Issuer-signed JWT binds to a holder public key.  Can we not just say `cnf`?  Why do we need more?  This point actually worries me more than [others] -- without clarity on this, there is no hope of writing stacks that interop.\"\r\n\r\nUsing the `cnf` claim exclusively could also help with some clarity in the [security considerations](https://www.ietf.org/archive/id/draft-ietf-oauth-selective-disclosure-jwt-08.html#section-10.6) where there currently has to be wording like \"[if there's] no recognized Key Binding data is present in the SD-JWT...\" and \" ... the Issuer might have added the key to the SD-JWT in a format/claim that is not recognized by the Verifier.\".\r\n\r\n",
+      "createdAt": "2024-03-20T21:49:13Z",
+      "updatedAt": "2024-03-20T21:55:16Z",
+      "closedAt": null,
       "comments": []
     }
   ],
@@ -40922,7 +41009,7 @@
       "labels": [],
       "body": "This PR limits the scope of the term \"SD-JWT\" so that it refers only to an Issuer-signed JWT and a set of disclosures.  We introduce the term \"Fnord\" to refer to an SD-JWT with key binding.  As a bonus, we are able to clean up stale uses of Presentation, which mostly, but not always align with Fnord.\r\n\r\n\"[Fnord](https://en.wikipedia.org/wiki/Fnord)\" is deliberately nonsensical, of course.  We should replace this with a more intuitive word.  We could reintroduce \"Presentation\" for this, with the allowance that one might \"present\" either a Presentation or an SD-JWT.  Or we could pick another term, suggestions welcome.\r\n\r\nI have tried to be fairly minimal in the changes here.  In particular, I have not changed any of the algorithms, though I suspect they would be clearer if a bit more separate.  I have rewritten a few paragraphs, especially close to the top and in the Security Considerations.\r\n\r\nFixes #374\r\nFixes #392 ",
       "createdAt": "2023-12-05T23:02:33Z",
-      "updatedAt": "2024-03-17T11:22:15Z",
+      "updatedAt": "2024-03-20T00:18:58Z",
       "baseRepository": "oauth-wg/oauth-selective-disclosure-jwt",
       "baseRefName": "master",
       "baseRefOid": "7dd0444e630ecbdf9e65a5f6c839ec3bcc515a9e",
@@ -42764,6 +42851,19 @@
               "updatedAt": "2024-03-17T06:32:35Z"
             }
           ]
+        },
+        {
+          "id": "PRR_kwDOHTmVzM50FzQj",
+          "commit": {
+            "abbreviatedOid": "c3522b2"
+          },
+          "author": "selfissued",
+          "authorAssociation": "COLLABORATOR",
+          "state": "CHANGES_REQUESTED",
+          "body": "The presence or absence of a key binding doesn't make it a different data structure.  Rather, it's an instance of use or non-use of an optional feature.\r\n\r\nWe shouldn't bifurcate the data structure by using a different media type depending upon whether the optional feature is used or not.",
+          "createdAt": "2024-03-20T00:18:58Z",
+          "updatedAt": "2024-03-20T00:18:58Z",
+          "comments": []
         }
       ]
     },
