@@ -1051,7 +1051,7 @@ included therein. The specific set of Disclosures, however,
 is not integrity-protected - the SD-JWT can be modified by adding or
 removing Disclosures and still be valid.
 
-With an SD-JWT-KB, the set of selected Disclosures is integrity-protected.   
+With an SD-JWT-KB, the set of selected Disclosures is integrity-protected.
 The signature in the Key Binding JWT covers a
 specific SD-JWT, with a specific Issuer-signed JWT and a specific set of
 Disclosures.  Thus, the signature on the Key Binding JWT, in addition to proving
