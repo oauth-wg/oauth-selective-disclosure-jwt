@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2024-03-21T00:12:25.916899+00:00",
+  "timestamp": "2024-03-24T00:13:16.491450+00:00",
   "repo": "oauth-wg/oauth-selective-disclosure-jwt",
   "labels": [
     {
@@ -10780,9 +10780,9 @@
       "authorAssociation": "COLLABORATOR",
       "assignees": [],
       "labels": [],
-      "body": "question from an email, \r\n\r\n>  ... rookie question on your draft for SD-JWT. What is the use case of the salt, and how does it help to hide the claim values? \r\n\r\nmy response:\r\n\r\n> I was going to point you to some text in the draft that explains it but unfortunately couldn't find such text. That's maybe something that should be fixed. Sections [10.3](https://www.ietf.org/archive/id/draft-ietf-oauth-selective-disclosure-jwt-08.html#section-10.3) - 10.5  kinda say something about it but the reason is mostly just implied. Basically the salt makes it computationally infeasible to enumerate a potential value space for a claim name/value into the hash function to try and find the matching hash value. Thereby making impossible brute force style attempts to 'reverse' a hash value by hashing all reasonable input values to try and find a match to the hash value. If that makes any sense? To put it another way (which may or may not be helpful), the salt makes it computationally infeasible to guess the preimage of the digest. \r\n\r\nThe exchange makes me think a brief mention/explanation what salt does/provides in the SD-JWT context would be a worthwhile addition. Maybe just add or modify a sentence or two in sec 10.3. ",
+      "body": "question from an email, \r\n\r\n>  ... rookie question on your draft for SD-JWT. What is the use case of the salt, and how does it help to hide the claim values? \r\n\r\nmy response:\r\n\r\n> I was going to point you to some text in the draft that explains it but unfortunately couldn't find such text. That's maybe something that should be fixed. Sections [10.3](https://www.ietf.org/archive/id/draft-ietf-oauth-selective-disclosure-jwt-08.html#section-10.3) - 10.5  kinda say something about it but the reason is mostly just implied. Basically the salt makes it computationally infeasible to enumerate a potential value space for a claim name/value into the hash function to try and find the matching hash value. Thereby making impossible brute force style attempts to 'reverse' a hash value by hashing all reasonable input values to try and find a match to the hash value. If that makes any sense? To put it another way (which may or may not be helpful), the salt makes it computationally infeasible to guess the preimage of the digest. \r\n\r\nThe exchange makes me think a brief mention/explanation what salt does/provides in the SD-JWT context would be a worthwhile addition. Maybe just add or modify a sentence or two in sec 10.3. And/or something in https://www.ietf.org/archive/id/draft-ietf-oauth-selective-disclosure-jwt-08.html#section-5.2.1-2.1.2.1 where the salt value in the Disclosure is introduced/described.  ",
       "createdAt": "2024-03-20T21:01:00Z",
-      "updatedAt": "2024-03-20T21:17:01Z",
+      "updatedAt": "2024-03-21T10:16:24Z",
       "closedAt": null,
       "comments": [
         {
@@ -10798,6 +10798,13 @@
           "body": "I'm sorry but I don't quite understand the question or how it relates to the small change I'm suggesting in this issue. ",
           "createdAt": "2024-03-20T21:17:00Z",
           "updatedAt": "2024-03-20T21:17:00Z"
+        },
+        {
+          "author": "selfissued",
+          "authorAssociation": "COLLABORATOR",
+          "body": "FYI, I was asked what the salt does by an IETF attendee yesterday.  I support explaining this in the draft.",
+          "createdAt": "2024-03-21T00:20:47Z",
+          "updatedAt": "2024-03-21T00:20:47Z"
         }
       ]
     },
@@ -10828,7 +10835,7 @@
     {
       "number": 419,
       "id": "I_kwDOHTmVzM6DDHrv",
-      "title": "why can't cnf be the only way to bind to a holder public key?",
+      "title": "why isn't cnf the only way to bind to a holder public key?",
       "url": "https://github.com/oauth-wg/oauth-selective-disclosure-jwt/issues/419",
       "state": "OPEN",
       "author": "bc-pi",
@@ -10837,9 +10844,24 @@
       "labels": [],
       "body": "Right after the IETF 119 OAuth session yesterday in a talk with @selfissued and @ve7jtb that started with discussion of PR #394, the question again came up (with some surprise on their part) as to why the `cnf` claim isn't the one and only way specified to put the holder's public key in the issuer-signed JWT. I honestly had a hard time giving a good rational for SD-JWT not being more prescriptive with it's requirements here.\r\n\r\nIt seems that using the `cnf` claim exclusively would be more straightforward and much better for interop. \r\n\r\n@bifurcation has previously made similar comments, \"it seems like there's an unnecessary level of ambiguity around how the Issuer-signed JWT binds to a holder public key.  Can we not just say `cnf`?  Why do we need more?  This point actually worries me more than [others] -- without clarity on this, there is no hope of writing stacks that interop.\"\r\n\r\nUsing the `cnf` claim exclusively could also help with some clarity in the [security considerations](https://www.ietf.org/archive/id/draft-ietf-oauth-selective-disclosure-jwt-08.html#section-10.6) where there currently has to be wording like \"[if there's] no recognized Key Binding data is present in the SD-JWT...\" and \" ... the Issuer might have added the key to the SD-JWT in a format/claim that is not recognized by the Verifier.\".\r\n\r\n",
       "createdAt": "2024-03-20T21:49:13Z",
-      "updatedAt": "2024-03-20T21:55:16Z",
+      "updatedAt": "2024-03-21T05:51:28Z",
       "closedAt": null,
-      "comments": []
+      "comments": [
+        {
+          "author": "selfissued",
+          "authorAssociation": "COLLABORATOR",
+          "body": "I support defining `cnf` as the way to do holder binding.\r\n\r\nI'll note that `cnf` is extensible via a registry, so should the existing `cnf` parameters not work for a use case, a new one can be defined and used.",
+          "createdAt": "2024-03-21T00:24:04Z",
+          "updatedAt": "2024-03-21T00:24:04Z"
+        },
+        {
+          "author": "bifurcation",
+          "authorAssociation": "NONE",
+          "body": "Yep, this sounds good to me. ",
+          "createdAt": "2024-03-21T04:38:20Z",
+          "updatedAt": "2024-03-21T04:38:20Z"
+        }
+      ]
     }
   ],
   "pulls": [
@@ -41009,13 +41031,13 @@
       "labels": [],
       "body": "This PR limits the scope of the term \"SD-JWT\" so that it refers only to an Issuer-signed JWT and a set of disclosures.  We introduce the term \"Fnord\" to refer to an SD-JWT with key binding.  As a bonus, we are able to clean up stale uses of Presentation, which mostly, but not always align with Fnord.\r\n\r\n\"[Fnord](https://en.wikipedia.org/wiki/Fnord)\" is deliberately nonsensical, of course.  We should replace this with a more intuitive word.  We could reintroduce \"Presentation\" for this, with the allowance that one might \"present\" either a Presentation or an SD-JWT.  Or we could pick another term, suggestions welcome.\r\n\r\nI have tried to be fairly minimal in the changes here.  In particular, I have not changed any of the algorithms, though I suspect they would be clearer if a bit more separate.  I have rewritten a few paragraphs, especially close to the top and in the Security Considerations.\r\n\r\nFixes #374\r\nFixes #392 ",
       "createdAt": "2023-12-05T23:02:33Z",
-      "updatedAt": "2024-03-20T00:18:58Z",
+      "updatedAt": "2024-03-21T12:24:39Z",
       "baseRepository": "oauth-wg/oauth-selective-disclosure-jwt",
       "baseRefName": "master",
-      "baseRefOid": "7dd0444e630ecbdf9e65a5f6c839ec3bcc515a9e",
+      "baseRefOid": "f4acb369884de2872acf4f89bae188f9dbecce7a",
       "headRepository": "bifurcation/oauth-selective-disclosure-jwt",
       "headRefName": "fnord",
-      "headRefOid": "c3522b209c62b41aa633e48e6cdaf007c265cc83",
+      "headRefOid": "3732e67a870dc6c31a4fd1a4132d9d70e371063f",
       "closedAt": null,
       "mergedAt": null,
       "mergedBy": null,
@@ -41069,6 +41091,20 @@
           "body": "> > @Sakurann - Changed to `SD-JWT-KB`, since the `SD-JWT/KB` looked weird to me (division seemed like the wrong metaphor) and `SD-JWT~KB` seemed a little too cute. Also merged `master` while I was at it.\r\n> \r\n> I think I like the aesthethics of `SD-JWT+KB` or `SD-JWT/KB` or `SD-JWT|KB` more than `SD-JWT-KB`.\r\n\r\nI think aesthethics is spelled aesthetics but otherwise agree (I'm usually the one misspelling things so happy not to be this time...). \r\n\r\nI'd lean towards `SD-JWT+KB` (but did smile at `SD-JWT~KB` despite being a little too cute).",
           "createdAt": "2024-02-26T21:33:33Z",
           "updatedAt": "2024-02-26T23:40:57Z"
+        },
+        {
+          "author": "bifurcation",
+          "authorAssociation": "NONE",
+          "body": "@selfissued - The point of this PR is that Key Binding isn't just an optional feature -- it's a feature that causes a security failure if you forget to check that it's enabled.  Just like it's a basic security principle that one API endpoint should never accept both signed and unsigned data (because of the trivial downgrade risk, see `\"alg\": \"none\"`), there should never be a verification process that will accept both SD-JWT and SD-JWT-KB.  Thus, we should talk about them as separate things.",
+          "createdAt": "2024-03-21T07:20:52Z",
+          "updatedAt": "2024-03-21T07:21:29Z"
+        },
+        {
+          "author": "bc-pi",
+          "authorAssociation": "COLLABORATOR",
+          "body": "Note for posterity that the meeting notes https://notes.ietf.org/notes-ietf-119-oauth# have some more of the discussion around this and related topics that happened on the Wednesday of IETF 119. Although I don't think there's anything particularity novel there that's not been expressed in this PR or the linked issue(s).  \r\n\r\n",
+          "createdAt": "2024-03-21T09:11:33Z",
+          "updatedAt": "2024-03-21T09:11:33Z"
         }
       ],
       "reviews": [
@@ -42864,6 +42900,46 @@
           "createdAt": "2024-03-20T00:18:58Z",
           "updatedAt": "2024-03-20T00:18:58Z",
           "comments": []
+        },
+        {
+          "id": "PRR_kwDOHTmVzM50Wfdl",
+          "commit": {
+            "abbreviatedOid": "1cea1ba"
+          },
+          "author": "bc-pi",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2024-03-21T12:21:21Z",
+          "updatedAt": "2024-03-21T12:21:21Z",
+          "comments": [
+            {
+              "originalPosition": 302,
+              "body": "```suggestion\r\n * if Key Binding is required, then the Holder has provided an SD-JWT-KB, and\r\n```",
+              "createdAt": "2024-03-21T12:21:21Z",
+              "updatedAt": "2024-03-21T12:21:21Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOHTmVzM50WhAw",
+          "commit": {
+            "abbreviatedOid": "960c9a0"
+          },
+          "author": "bc-pi",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2024-03-21T12:24:28Z",
+          "updatedAt": "2024-03-21T12:24:28Z",
+          "comments": [
+            {
+              "originalPosition": 409,
+              "body": "```suggestion\r\nWith an SD-JWT-KB, the set of selected Disclosures is integrity-protected.\r\n```",
+              "createdAt": "2024-03-21T12:24:28Z",
+              "updatedAt": "2024-03-21T12:24:28Z"
+            }
+          ]
         }
       ]
     },
@@ -44516,6 +44592,54 @@
           "body": "",
           "createdAt": "2024-03-11T14:11:40Z",
           "updatedAt": "2024-03-11T14:11:40Z",
+          "comments": []
+        }
+      ]
+    },
+    {
+      "number": 420,
+      "id": "PR_kwDOHTmVzM5qTlin",
+      "title": "Add specificity around handling of disclosure resulting in an empty object",
+      "url": "https://github.com/oauth-wg/oauth-selective-disclosure-jwt/pull/420",
+      "state": "OPEN",
+      "author": "MichaelFraser99",
+      "authorAssociation": "CONTRIBUTOR",
+      "assignees": [],
+      "labels": [],
+      "body": "relates to issue: https://github.com/oauth-wg/oauth-selective-disclosure-jwt/issues/418",
+      "createdAt": "2024-03-21T04:43:27Z",
+      "updatedAt": "2024-03-21T05:21:58Z",
+      "baseRepository": "oauth-wg/oauth-selective-disclosure-jwt",
+      "baseRefName": "master",
+      "baseRefOid": "f4acb369884de2872acf4f89bae188f9dbecce7a",
+      "headRepository": "MichaelFraser99/oauth-selective-disclosure-jwt",
+      "headRefName": "master",
+      "headRefOid": "5c63f8aaa2811cc419a6a600543b3176ff171e37",
+      "closedAt": null,
+      "mergedAt": null,
+      "mergedBy": null,
+      "mergeCommit": null,
+      "comments": [
+        {
+          "author": "bc-pi",
+          "authorAssociation": "COLLABORATOR",
+          "body": "Thanks @MichaelFraser99. LGTM ",
+          "createdAt": "2024-03-21T05:21:56Z",
+          "updatedAt": "2024-03-21T05:21:56Z"
+        }
+      ],
+      "reviews": [
+        {
+          "id": "PRR_kwDOHTmVzM50RpAa",
+          "commit": {
+            "abbreviatedOid": "5c63f8a"
+          },
+          "author": "bc-pi",
+          "authorAssociation": "COLLABORATOR",
+          "state": "APPROVED",
+          "body": "",
+          "createdAt": "2024-03-21T05:21:32Z",
+          "updatedAt": "2024-03-21T05:21:32Z",
           "comments": []
         }
       ]
