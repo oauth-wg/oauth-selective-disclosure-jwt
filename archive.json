@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2024-03-24T00:13:16.491450+00:00",
+  "timestamp": "2024-03-26T00:11:11.239438+00:00",
   "repo": "oauth-wg/oauth-selective-disclosure-jwt",
   "labels": [
     {
@@ -10782,7 +10782,7 @@
       "labels": [],
       "body": "question from an email, \r\n\r\n>  ... rookie question on your draft for SD-JWT. What is the use case of the salt, and how does it help to hide the claim values? \r\n\r\nmy response:\r\n\r\n> I was going to point you to some text in the draft that explains it but unfortunately couldn't find such text. That's maybe something that should be fixed. Sections [10.3](https://www.ietf.org/archive/id/draft-ietf-oauth-selective-disclosure-jwt-08.html#section-10.3) - 10.5  kinda say something about it but the reason is mostly just implied. Basically the salt makes it computationally infeasible to enumerate a potential value space for a claim name/value into the hash function to try and find the matching hash value. Thereby making impossible brute force style attempts to 'reverse' a hash value by hashing all reasonable input values to try and find a match to the hash value. If that makes any sense? To put it another way (which may or may not be helpful), the salt makes it computationally infeasible to guess the preimage of the digest. \r\n\r\nThe exchange makes me think a brief mention/explanation what salt does/provides in the SD-JWT context would be a worthwhile addition. Maybe just add or modify a sentence or two in sec 10.3. And/or something in https://www.ietf.org/archive/id/draft-ietf-oauth-selective-disclosure-jwt-08.html#section-5.2.1-2.1.2.1 where the salt value in the Disclosure is introduced/described.  ",
       "createdAt": "2024-03-20T21:01:00Z",
-      "updatedAt": "2024-03-21T10:16:24Z",
+      "updatedAt": "2024-03-24T15:34:15Z",
       "closedAt": null,
       "comments": [
         {
@@ -10805,6 +10805,13 @@
           "body": "FYI, I was asked what the salt does by an IETF attendee yesterday.  I support explaining this in the draft.",
           "createdAt": "2024-03-21T00:20:47Z",
           "updatedAt": "2024-03-21T00:20:47Z"
+        },
+        {
+          "author": "bc-pi",
+          "authorAssociation": "COLLABORATOR",
+          "body": "PR #421 has some proposed text ",
+          "createdAt": "2024-03-24T15:34:13Z",
+          "updatedAt": "2024-03-24T15:34:13Z"
         }
       ]
     },
@@ -44643,6 +44650,32 @@
           "comments": []
         }
       ]
+    },
+    {
+      "number": 421,
+      "id": "PR_kwDOHTmVzM5qllw3",
+      "title": "better explain what salt does",
+      "url": "https://github.com/oauth-wg/oauth-selective-disclosure-jwt/pull/421",
+      "state": "OPEN",
+      "author": "bc-pi",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "\r\n   * Attempt to better explain how salt in the Disclosure makes guessing the preimage of the digest infeasible\r\n   * Consolidate salt entropy and length security consideration subsections",
+      "createdAt": "2024-03-24T15:33:14Z",
+      "updatedAt": "2024-03-24T15:33:15Z",
+      "baseRepository": "oauth-wg/oauth-selective-disclosure-jwt",
+      "baseRefName": "master",
+      "baseRefOid": "f4acb369884de2872acf4f89bae188f9dbecce7a",
+      "headRepository": "oauth-wg/oauth-selective-disclosure-jwt",
+      "headRefName": "why-salt",
+      "headRefOid": "f0464a004a7ad2ab284f127522a2a62a8f2374bc",
+      "closedAt": null,
+      "mergedAt": null,
+      "mergedBy": null,
+      "mergeCommit": null,
+      "comments": [],
+      "reviews": []
     }
   ]
 }
