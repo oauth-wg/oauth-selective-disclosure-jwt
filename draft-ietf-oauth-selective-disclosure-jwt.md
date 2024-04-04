@@ -365,7 +365,7 @@ Disclosures are created differently depending on whether a claim is an object pr
 For each claim that is an object property and that is to be made selectively disclosable, the Issuer MUST create a Disclosure as follows:
 
  * Create an array of three elements in this order:
-   1. A salt value. MUST be a string. See (#salt-entropy) and (#salt_minlength) for security considerations. It is RECOMMENDED to base64url-encode minimum 128 bits of cryptographically secure random data, producing a string. The salt value MUST be unique for each claim that is to be selectively disclosed. The Issuer MUST NOT reveal the salt value to any party other than the Holder.
+   1. A salt value. MUST be a string. See (#salt-entropy) for security considerations. It is RECOMMENDED to base64url-encode minimum 128 bits of cryptographically secure random data, producing a string. The salt value MUST be unique for each claim that is to be selectively disclosed. The Issuer MUST NOT reveal the salt value to any party other than the Holder.
    2. The claim name, or key, as it would be used in a regular JWT payload. It MUST be a string and MUST NOT be `_sd`, `...`, or a claim name existing in the object as a non-selectively disclosable claim.
    3. The claim value, as it would be used in a regular JWT payload. The value MAY be of any type that is allowed in JSON, including numbers, strings, booleans, arrays, and objects.
  * JSON-encode the array, producing an UTF-8 string.
@@ -714,7 +714,7 @@ an SD-JWT:
             2. Replace the array element with the value from the Disclosure.
             3. Recursively process the value using the steps described in (*) and (**).
     4. Remove all array elements for which the digest was not found in the previous step.
-    5. Remove all `_sd` keys and their contents from the Issuer-signed JWT payload.
+    5. Remove all `_sd` keys and their contents from the Issuer-signed JWT payload. If this results in an object with no properties, it should be represented as an empty object `{}`.
     6. Remove the claim `_sd_alg` from the SD-JWT payload.
 4. If any digest value is encountered more than once in the Issuer-signed JWT payload (directly or recursively via other Disclosures), the SD-JWT MUST be rejected.
 5. If any Disclosure was not referenced by digest value in the Issuer-signed JWT (directly or recursively via other Disclosures), the SD-JWT MUST be rejected.
@@ -869,20 +869,21 @@ checks the Disclosures correctly.
 
 ## Entropy of the salt {#salt-entropy}
 
-The security model that conceals the plaintext claims relies on the fact
-that salts not revealed to an attacker cannot be learned or guessed by
-the attacker, even if other salts have been revealed. It is vitally
-important to adhere to this principle. As such, each salt MUST be created
-in such a manner that it is cryptographically random, long enough, and
-has high entropy that it is not practical for the attacker to guess. A
-new salt MUST be chosen for each claim independently from other salts.
+The security model that conceals the plaintext claims relies on the high entropy
+random data of the salt as additional input to the hash function. The randomness
+ensures that the same plaintext claim value does not produce the same digest value. It also
+makes it infeasible to guess the preimage of the digest (thereby learning the
+plaintext claim value) by enumerating the potential value
+space for a claim into the hash function to search for a matching digest value.
+It is therefore vitally important that unrevealed salts cannot be learned or guessed,
+even if other salts have been revealed. As such, each salt MUST be created
+in such a manner that it is cryptographically random, sufficiently long, and
+has high enough entropy that it is infeasible to guess. A
+new salt MUST be chosen for each claim independently of other salts.
 See Randomness Requirements for Security [@RFC4086] for considerations
 on generating random values.
 
-## Minimum length of the salt {#salt_minlength}
-
 The RECOMMENDED minimum length of the randomly-generated portion of the salt is 128 bits.
-
 
 The Issuer MUST ensure that a new salt value is chosen for each claim,
 including when the same claim name occurs at different places in the
@@ -1212,6 +1213,7 @@ John Mattsson,
 Justin Richer,
 Kushal Das,
 Matthew Miller,
+Michael Fraser,
 Mike Jones,
 Mike Prorock,
 Nat Sakimura,
@@ -1744,6 +1746,8 @@ data. The original JSON data is then used by the application. See
    -09
 
    * New structure for JSON-serialized SD-JWTs/KB-JWTs to better align with JAdES.
+   * Attempt to better explain how salt in the Disclosure makes guessing the preimage of the digest infeasible
+   * Consolidate salt entropy and length security consideration subsections
 
    -08
 
