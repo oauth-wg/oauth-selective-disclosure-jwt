@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2024-04-02T00:11:31.541235+00:00",
+  "timestamp": "2024-04-04T00:12:20.225607+00:00",
   "repo": "oauth-wg/oauth-selective-disclosure-jwt",
   "labels": [
     {
@@ -10775,15 +10775,15 @@
       "id": "I_kwDOHTmVzM6DC16y",
       "title": "state what salt does",
       "url": "https://github.com/oauth-wg/oauth-selective-disclosure-jwt/issues/417",
-      "state": "OPEN",
+      "state": "CLOSED",
       "author": "bc-pi",
       "authorAssociation": "COLLABORATOR",
       "assignees": [],
       "labels": [],
       "body": "question from an email, \r\n\r\n>  ... rookie question on your draft for SD-JWT. What is the use case of the salt, and how does it help to hide the claim values? \r\n\r\nmy response:\r\n\r\n> I was going to point you to some text in the draft that explains it but unfortunately couldn't find such text. That's maybe something that should be fixed. Sections [10.3](https://www.ietf.org/archive/id/draft-ietf-oauth-selective-disclosure-jwt-08.html#section-10.3) - 10.5  kinda say something about it but the reason is mostly just implied. Basically the salt makes it computationally infeasible to enumerate a potential value space for a claim name/value into the hash function to try and find the matching hash value. Thereby making impossible brute force style attempts to 'reverse' a hash value by hashing all reasonable input values to try and find a match to the hash value. If that makes any sense? To put it another way (which may or may not be helpful), the salt makes it computationally infeasible to guess the preimage of the digest. \r\n\r\nThe exchange makes me think a brief mention/explanation what salt does/provides in the SD-JWT context would be a worthwhile addition. Maybe just add or modify a sentence or two in sec 10.3. And/or something in https://www.ietf.org/archive/id/draft-ietf-oauth-selective-disclosure-jwt-08.html#section-5.2.1-2.1.2.1 where the salt value in the Disclosure is introduced/described.  ",
       "createdAt": "2024-03-20T21:01:00Z",
-      "updatedAt": "2024-03-24T15:34:15Z",
-      "closedAt": null,
+      "updatedAt": "2024-04-02T21:25:06Z",
+      "closedAt": "2024-04-02T21:25:06Z",
       "comments": [
         {
           "author": "larryzhu2018",
@@ -10820,15 +10820,15 @@
       "id": "I_kwDOHTmVzM6DC4qT",
       "title": "Explicit clarification over correct formatting of objects with no disclosed elements",
       "url": "https://github.com/oauth-wg/oauth-selective-disclosure-jwt/issues/418",
-      "state": "OPEN",
+      "state": "CLOSED",
       "author": "MichaelFraser99",
       "authorAssociation": "CONTRIBUTOR",
       "assignees": [],
       "labels": [],
       "body": "If we take the following example of an SD-JWT:\r\n\r\n`eyJhbGciOiJSUzI1NiIsInR5cCI6ImFwcGxpY2F0aW9uL2pzb24rc2Qtand0In0.eyJfc2QiOlsienctOU1SQXdtcUJXeTFUOEVua0JvZ2lyVEpfU2NTbnZfSGlCenhOWXFUNCJdLCJjbmYiOnsiZSI6IkFRQUIiLCJrdHkiOiJSU0EiLCJuIjoidlpEc29UMW5HVjR4X1gzck9HTGUzOF8tQmpibVUtUWxlSjRIZU1Fbl9GRUZLaEhTc1ZIR1dsR28xZ2pBckR5a2d5d0VTQVg0dEhqdURMUFZiODlkNzQ2eVJIRVF3aXRIbU5sTE40c1NGQUd1MWNJSU1iUDNuM3RrSWtYQlh5U25pMXNCanV4b3lnMFU1UmJQd1lMN2J0NklqWS04OWljd2ZjTVV1N2p3aV80dFk2SUUyQXpTbm9sQi1RN21tS2o1ZXNWeEJ3RTIzTkdlamp2NmNvLWNtTFVZMEhuZFE2QXo1RldKbjlGRTA3RlFOeHQwVXNLaGZDTi05eGVnVXR1c1lDX3IyZlg2SnRsYy1UYWlwQWV5WEZ2RFVIVHVUSEdWSHNseGN5NFhPVS15WnE2OFhGaHJUQnZRTVNKV1dxRDR0MjYyXzlIR2k2QlEzVmlpbE51ZDd3In0sImZhbWlseV9uYW1lIjoiTcO8bGxlciIsImdpdmVuX25hbWUiOiJNYXgifQ.xj0X10080FANgzrdpfWrbF0DO0Y3KwiJzoO8-C-pj_DU6xjrG9kX9Nbh6rFhD1iuX_aGL-tXQwXaiGrgWLC72ws_mleRkQ6cvibl-ej9mr45iqZ2vd9rQavBh_q5v9AoKI3vu763ZEp49b_Z02acOWbIK9LlmSf3_hivHvV8mV5tpUCaSxD8JQ8tWbD5q5WhPofeAprm0_ygj4JmF0EuC_ARPmAZEK8of9kIKTgRKsLQuAPreQId8Sg7tTZaSLL4D47DZlWY0ioO2wn6QyYXIbHFnx01EKbsk_I3F0ha4P0h0UPif3KcIRh_tGkrjazejAv7mXd0jJLjF9CEGJzNYw~WyI1eWZHRjVxZnhKN2ViOXN0anBIR3dRIiwiYWRkcmVzcyIseyJfc2QiOlsiaFRiS1NZdVBaaW5qMVBja1N1Z0pfdnRhc3dFVEYxR0xPSVRpRnM1Wnl1dyIsIk0xU3FsVWNyZ1Ewc1FuRE1Vek5nVVFXVXBWM19XWEN0YzN3QWNNMUx4Y2siLCJ1OTdHb1cwRnZiVkl3dElBdWJGZEFIbTVjaG5wc0VFVm1jTzVGNUJxeG5JIl19XQ~`\r\n\r\nWhere there is a single provided disclosure that decodes to:\r\n\r\n`[\r\n   [\"5yfGF5qfxJ7eb9stjpHGwQ\",\"address\",{\"_sd\":[\"hTbKSYuPZinj1PckSugJ_vtaswETF1GLOITiFs5Zyuw\",\"M1SqlUcrgQ0sQnDMUzNgUQWUpV3_WXCtc3wAcM1Lxck\",\"u97GoW0FvbVIwtIAubFdAHm5chnpsEEVmcO5F5BqxnI\"]}]\r\n]`\r\n\r\nThe disclosure value is an address claim which has all of it's values as disclosable. In the given scenario where the presence of the address claim has been disclosed yet none of the contents disclosed, I believe it would be good to be explicit over the desired result here\r\n\r\nReading through the steps in 8.1. I think the implicit correct result would be to have the above boil down to\r\n`{\r\n  \"cnf\": {\r\n    \"e\": \"AQAB\",\r\n    \"kty\": \"RSA\",\r\n    \"n\": \"vZDsoT1nGV4x_X3rOGLe38_-BjbmU-QleJ4HeMEn_FEFKhHSsVHGWlGo1gjArDykgywESAX4tHjuDLPVb89d746yRHEQwitHmNlLN4sSFAGu1cIIMbP3n3tkIkXBXySni1sBjuxoyg0U5RbPwYL7bt6IjY-89icwfcMUu7jwi_4tY6IE2AzSnolB-Q7mmKj5esVxBwE23NGejjv6co-cmLUY0HndQ6Az5FWJn9FE07FQNxt0UsKhfCN-9xegUtusYC_r2fX6Jtlc-TaipAeyXFvDUHTuTHGVHslxcy4XOU-yZq68XFhrTBvQMSJWWqD4t262_9HGi6BQ3ViilNud7w\"\r\n  },\r\n  \"family_name\": \"M\u00fcller\",\r\n  \"given_name\": \"Max\",\r\n  \"address\": {}\r\n}`\r\n\r\nwhere `address` is an empty object. I think explicitly specifying this in the spec would be valuable\r\n\r\nPossibly something worded akin to:\r\n`In the scenario where an object claim's presence is disclosed yet the entire contents of the object has not been, the result should be an empty object`",
       "createdAt": "2024-03-20T21:08:02Z",
-      "updatedAt": "2024-03-20T22:41:31Z",
-      "closedAt": null,
+      "updatedAt": "2024-04-02T15:45:01Z",
+      "closedAt": "2024-04-02T15:45:01Z",
       "comments": [
         {
           "author": "bc-pi",
@@ -41038,7 +41038,7 @@
       "labels": [],
       "body": "This PR limits the scope of the term \"SD-JWT\" so that it refers only to an Issuer-signed JWT and a set of disclosures.  We introduce the term \"Fnord\" to refer to an SD-JWT with key binding.  As a bonus, we are able to clean up stale uses of Presentation, which mostly, but not always align with Fnord.\r\n\r\n\"[Fnord](https://en.wikipedia.org/wiki/Fnord)\" is deliberately nonsensical, of course.  We should replace this with a more intuitive word.  We could reintroduce \"Presentation\" for this, with the allowance that one might \"present\" either a Presentation or an SD-JWT.  Or we could pick another term, suggestions welcome.\r\n\r\nI have tried to be fairly minimal in the changes here.  In particular, I have not changed any of the algorithms, though I suspect they would be clearer if a bit more separate.  I have rewritten a few paragraphs, especially close to the top and in the Security Considerations.\r\n\r\nFixes #374\r\nFixes #392 ",
       "createdAt": "2023-12-05T23:02:33Z",
-      "updatedAt": "2024-03-30T20:49:07Z",
+      "updatedAt": "2024-04-02T18:06:20Z",
       "baseRepository": "oauth-wg/oauth-selective-disclosure-jwt",
       "baseRefName": "master",
       "baseRefOid": "f4acb369884de2872acf4f89bae188f9dbecce7a",
@@ -41112,6 +41112,13 @@
           "body": "Note for posterity that the meeting notes https://notes.ietf.org/notes-ietf-119-oauth# have some more of the discussion around this and related topics that happened on the Wednesday of IETF 119. Although I don't think there's anything particularity novel there that's not been expressed in this PR or the linked issue(s).  \r\n\r\n",
           "createdAt": "2024-03-21T09:11:33Z",
           "updatedAt": "2024-03-21T09:11:33Z"
+        },
+        {
+          "author": "selfissued",
+          "authorAssociation": "COLLABORATOR",
+          "body": "> @selfissued - The point of this PR is that Key Binding isn't just an optional feature -- it's a feature that causes a security failure if you forget to check that it's enabled. Just like it's a basic security principle that one API endpoint should never accept both signed and unsigned data (because of the trivial downgrade risk, see \"alg\": \"none\"), there should never be a verification process that will accept both SD-JWT and SD-JWT-KB. Thus, we should talk about them as separate things.\r\n\r\n@bifurcation, I believe you're missing my point.  To correctly accept a key-bound SD-JWT, the recipient MUST have code that:\r\n\r\n1. Verifies that a key binding is present in the SD-JWT.\r\n2. Verifies the key binding signature.\r\n\r\nOnly then can the recipient know that the SD-JWT is key bound.\r\n\r\nIntroducing a separate media type asserting that the SD-JWT is key bound *doesn't* remove the need for the recipient to verify the presence and signature of the key binding as above, if it wants a key-bound SD-JWT.  If anything, introducing a key-bound-SD-JWT media type could *increase* the probability that recipients would be lazy thinking that \"The media type says it's key-bound so that must be true.\" and not do steps 1 and 2 above - which is what actually needs to be done to securely accept a key-bound SD-JWT.\r\n\r\nIntroducing a separate media type doesn't help from a security perspective, and in practice, it may hurt.  For that reason, I am opposed to introducing a separate media type.\r\n\r\n...\r\n\r\nFor what it's worth, @ve7jtb made similar comments at the microphone during the OAuth WG meeting at IETF 119 in Brisbane.",
+          "createdAt": "2024-04-02T18:06:18Z",
+          "updatedAt": "2024-04-02T18:06:18Z"
         }
       ],
       "reviews": [
@@ -44621,24 +44628,26 @@
       "id": "PR_kwDOHTmVzM5qTlin",
       "title": "Add specificity around handling of disclosure resulting in an empty object",
       "url": "https://github.com/oauth-wg/oauth-selective-disclosure-jwt/pull/420",
-      "state": "OPEN",
+      "state": "MERGED",
       "author": "MichaelFraser99",
       "authorAssociation": "CONTRIBUTOR",
       "assignees": [],
       "labels": [],
       "body": "relates to issue: https://github.com/oauth-wg/oauth-selective-disclosure-jwt/issues/418",
       "createdAt": "2024-03-21T04:43:27Z",
-      "updatedAt": "2024-03-21T05:21:58Z",
+      "updatedAt": "2024-04-02T15:45:00Z",
       "baseRepository": "oauth-wg/oauth-selective-disclosure-jwt",
       "baseRefName": "master",
       "baseRefOid": "f4acb369884de2872acf4f89bae188f9dbecce7a",
       "headRepository": "MichaelFraser99/oauth-selective-disclosure-jwt",
       "headRefName": "master",
       "headRefOid": "5c63f8aaa2811cc419a6a600543b3176ff171e37",
-      "closedAt": null,
-      "mergedAt": null,
-      "mergedBy": null,
-      "mergeCommit": null,
+      "closedAt": "2024-04-02T15:45:00Z",
+      "mergedAt": "2024-04-02T15:45:00Z",
+      "mergedBy": "bc-pi",
+      "mergeCommit": {
+        "oid": "9308455ecf0cbf851b4ee5bde15ab0e5c0858d3e"
+      },
       "comments": [
         {
           "author": "bc-pi",
@@ -44661,6 +44670,32 @@
           "createdAt": "2024-03-21T05:21:32Z",
           "updatedAt": "2024-03-21T05:21:32Z",
           "comments": []
+        },
+        {
+          "id": "PRR_kwDOHTmVzM51qwg6",
+          "commit": {
+            "abbreviatedOid": "5c63f8a"
+          },
+          "author": "danielfett",
+          "authorAssociation": "MEMBER",
+          "state": "APPROVED",
+          "body": "",
+          "createdAt": "2024-04-02T15:08:40Z",
+          "updatedAt": "2024-04-02T15:08:40Z",
+          "comments": []
+        },
+        {
+          "id": "PRR_kwDOHTmVzM51rHNM",
+          "commit": {
+            "abbreviatedOid": "5c63f8a"
+          },
+          "author": "Sakurann",
+          "authorAssociation": "COLLABORATOR",
+          "state": "APPROVED",
+          "body": "",
+          "createdAt": "2024-04-02T15:44:47Z",
+          "updatedAt": "2024-04-02T15:44:47Z",
+          "comments": []
         }
       ]
     },
@@ -44669,26 +44704,55 @@
       "id": "PR_kwDOHTmVzM5qllw3",
       "title": "better explain what salt does",
       "url": "https://github.com/oauth-wg/oauth-selective-disclosure-jwt/pull/421",
-      "state": "OPEN",
+      "state": "MERGED",
       "author": "bc-pi",
       "authorAssociation": "COLLABORATOR",
       "assignees": [],
       "labels": [],
       "body": "\r\n   * Attempt to better explain how salt in the Disclosure makes guessing the preimage of the digest infeasible\r\n   * Consolidate salt entropy and length security consideration subsections",
       "createdAt": "2024-03-24T15:33:14Z",
-      "updatedAt": "2024-03-24T15:33:15Z",
+      "updatedAt": "2024-04-02T21:25:05Z",
       "baseRepository": "oauth-wg/oauth-selective-disclosure-jwt",
       "baseRefName": "master",
       "baseRefOid": "f4acb369884de2872acf4f89bae188f9dbecce7a",
       "headRepository": "oauth-wg/oauth-selective-disclosure-jwt",
       "headRefName": "why-salt",
       "headRefOid": "f0464a004a7ad2ab284f127522a2a62a8f2374bc",
-      "closedAt": null,
-      "mergedAt": null,
-      "mergedBy": null,
-      "mergeCommit": null,
+      "closedAt": "2024-04-02T21:25:05Z",
+      "mergedAt": "2024-04-02T21:25:05Z",
+      "mergedBy": "bc-pi",
+      "mergeCommit": {
+        "oid": "d342443cb47aa4de08335ee06ddb59a62b365d06"
+      },
       "comments": [],
-      "reviews": []
+      "reviews": [
+        {
+          "id": "PRR_kwDOHTmVzM51qubk",
+          "commit": {
+            "abbreviatedOid": "f0464a0"
+          },
+          "author": "danielfett",
+          "authorAssociation": "MEMBER",
+          "state": "APPROVED",
+          "body": "",
+          "createdAt": "2024-04-02T15:07:04Z",
+          "updatedAt": "2024-04-02T15:07:04Z",
+          "comments": []
+        },
+        {
+          "id": "PRR_kwDOHTmVzM51uO4D",
+          "commit": {
+            "abbreviatedOid": "f0464a0"
+          },
+          "author": "Sakurann",
+          "authorAssociation": "COLLABORATOR",
+          "state": "APPROVED",
+          "body": "",
+          "createdAt": "2024-04-02T21:23:00Z",
+          "updatedAt": "2024-04-02T21:23:00Z",
+          "comments": []
+        }
+      ]
     }
   ]
 }
