@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2024-04-04T00:12:20.225607+00:00",
+  "timestamp": "2024-04-07T00:13:32.334121+00:00",
   "repo": "oauth-wg/oauth-selective-disclosure-jwt",
   "labels": [
     {
@@ -10763,12 +10763,22 @@
       "author": "lukasjhan",
       "authorAssociation": "CONTRIBUTOR",
       "assignees": [],
-      "labels": [],
+      "labels": [
+        "discuss-first"
+      ],
       "body": "HI! I and @yunseorim1116 made a Test suite project for checking SD-JWT implementation.\r\nYou can check it here: https://github.com/lukasjhan/sd-jwt-test-api\r\nIt was written in TypeScript. It is in API server format and is distributed using docker.\r\n\r\nI'm curious about your opinions on this project. \r\nIf this is okay, How about write it in a standard document or put it in README?\r\n\r\nThank you",
       "createdAt": "2024-03-19T01:59:10Z",
-      "updatedAt": "2024-03-19T02:12:19Z",
+      "updatedAt": "2024-04-04T22:29:26Z",
       "closedAt": null,
-      "comments": []
+      "comments": [
+        {
+          "author": "bc-pi",
+          "authorAssociation": "COLLABORATOR",
+          "body": "Thanks @lukasjhan, it's great to see this kind of work developing. It's not the kind of thing that would be appropriate in an IETF document, however. And it doesn't really fit very well with the \"SD-JWT Implementations\" of this README but maybe a line there with a name that qualifies it as a test server rather than actual implementation. Something like:\r\n\r\n * TypeScript: [SD-JWT Testing API server](https://github.com/lukasjhan/sd-jwt-test-api)\r\n\r\nassuming @danielfett and @Sakurann are okay with that though...",
+          "createdAt": "2024-04-04T22:29:07Z",
+          "updatedAt": "2024-04-04T22:29:07Z"
+        }
+      ]
     },
     {
       "number": 417,
@@ -10849,9 +10859,9 @@
       "authorAssociation": "COLLABORATOR",
       "assignees": [],
       "labels": [],
-      "body": "Right after the IETF 119 OAuth session yesterday in a talk with @selfissued and @ve7jtb that started with discussion of PR #394, the question again came up (with some surprise on their part) as to why the `cnf` claim isn't the one and only way specified to put the holder's public key in the issuer-signed JWT. I honestly had a hard time giving a good rational for SD-JWT not being more prescriptive with it's requirements here.\r\n\r\nIt seems that using the `cnf` claim exclusively would be more straightforward and much better for interop. \r\n\r\n@bifurcation has previously made similar comments, \"it seems like there's an unnecessary level of ambiguity around how the Issuer-signed JWT binds to a holder public key.  Can we not just say `cnf`?  Why do we need more?  This point actually worries me more than [others] -- without clarity on this, there is no hope of writing stacks that interop.\"\r\n\r\nUsing the `cnf` claim exclusively could also help with some clarity in the [security considerations](https://www.ietf.org/archive/id/draft-ietf-oauth-selective-disclosure-jwt-08.html#section-10.6) where there currently has to be wording like \"[if there's] no recognized Key Binding data is present in the SD-JWT...\" and \" ... the Issuer might have added the key to the SD-JWT in a format/claim that is not recognized by the Verifier.\".\r\n\r\n",
+      "body": "Right after the IETF 119 OAuth session yesterday in a talk with @selfissued and @ve7jtb that started with discussion of PR #394, the question again came up (with some surprise on their part) as to why the `cnf` claim isn't the one and only way specified to put the holder's public key in the issuer-signed JWT. I honestly had a hard time giving a good rational for SD-JWT not being more prescriptive with it's requirements here.\r\n\r\nIt seems that using the `cnf` claim exclusively would be more straightforward and much better for interop. \r\n\r\n@bifurcation has previously made similar comments, \"it seems like there's an unnecessary level of ambiguity around how the Issuer-signed JWT binds to a holder public key.  Can we not just say `cnf`?  Why do we need more?  This point actually worries me more than [others] -- without clarity on this, there is no hope of writing stacks that interop.\"\r\n\r\nUsing the `cnf` claim exclusively could also help with some clarity in the [security considerations](https://www.ietf.org/archive/id/draft-ietf-oauth-selective-disclosure-jwt-08.html#section-10.6) where there currently has to be wording like \"[if there's] no recognized Key Binding data is present in the SD-JWT...\" and \" ... the Issuer might have added the key to the SD-JWT in a format/claim that is not recognized by the Verifier.\".\r\n\r\nNote this is related to but separate from the question of if the presence of a `cnf` claim in the issuer-signed JWT means that the verifier should have to require a KB-JWT. The `cnf` claim can be made _the way_ to do holder binding while still leaving that up to verifier policy.\r\n\r\n",
       "createdAt": "2024-03-20T21:49:13Z",
-      "updatedAt": "2024-03-21T05:51:28Z",
+      "updatedAt": "2024-04-04T22:38:58Z",
       "closedAt": null,
       "comments": [
         {
@@ -41038,13 +41048,13 @@
       "labels": [],
       "body": "This PR limits the scope of the term \"SD-JWT\" so that it refers only to an Issuer-signed JWT and a set of disclosures.  We introduce the term \"Fnord\" to refer to an SD-JWT with key binding.  As a bonus, we are able to clean up stale uses of Presentation, which mostly, but not always align with Fnord.\r\n\r\n\"[Fnord](https://en.wikipedia.org/wiki/Fnord)\" is deliberately nonsensical, of course.  We should replace this with a more intuitive word.  We could reintroduce \"Presentation\" for this, with the allowance that one might \"present\" either a Presentation or an SD-JWT.  Or we could pick another term, suggestions welcome.\r\n\r\nI have tried to be fairly minimal in the changes here.  In particular, I have not changed any of the algorithms, though I suspect they would be clearer if a bit more separate.  I have rewritten a few paragraphs, especially close to the top and in the Security Considerations.\r\n\r\nFixes #374\r\nFixes #392 ",
       "createdAt": "2023-12-05T23:02:33Z",
-      "updatedAt": "2024-04-02T18:06:20Z",
+      "updatedAt": "2024-04-05T22:25:08Z",
       "baseRepository": "oauth-wg/oauth-selective-disclosure-jwt",
       "baseRefName": "master",
-      "baseRefOid": "f4acb369884de2872acf4f89bae188f9dbecce7a",
+      "baseRefOid": "d342443cb47aa4de08335ee06ddb59a62b365d06",
       "headRepository": "bifurcation/oauth-selective-disclosure-jwt",
       "headRefName": "fnord",
-      "headRefOid": "3732e67a870dc6c31a4fd1a4132d9d70e371063f",
+      "headRefOid": "292ed55812c9487a58a5f329e2c86f78e7f03997",
       "closedAt": null,
       "mergedAt": null,
       "mergedBy": null,
@@ -41119,6 +41129,13 @@
           "body": "> @selfissued - The point of this PR is that Key Binding isn't just an optional feature -- it's a feature that causes a security failure if you forget to check that it's enabled. Just like it's a basic security principle that one API endpoint should never accept both signed and unsigned data (because of the trivial downgrade risk, see \"alg\": \"none\"), there should never be a verification process that will accept both SD-JWT and SD-JWT-KB. Thus, we should talk about them as separate things.\r\n\r\n@bifurcation, I believe you're missing my point.  To correctly accept a key-bound SD-JWT, the recipient MUST have code that:\r\n\r\n1. Verifies that a key binding is present in the SD-JWT.\r\n2. Verifies the key binding signature.\r\n\r\nOnly then can the recipient know that the SD-JWT is key bound.\r\n\r\nIntroducing a separate media type asserting that the SD-JWT is key bound *doesn't* remove the need for the recipient to verify the presence and signature of the key binding as above, if it wants a key-bound SD-JWT.  If anything, introducing a key-bound-SD-JWT media type could *increase* the probability that recipients would be lazy thinking that \"The media type says it's key-bound so that must be true.\" and not do steps 1 and 2 above - which is what actually needs to be done to securely accept a key-bound SD-JWT.\r\n\r\nIntroducing a separate media type doesn't help from a security perspective, and in practice, it may hurt.  For that reason, I am opposed to introducing a separate media type.\r\n\r\n...\r\n\r\nFor what it's worth, @ve7jtb made similar comments at the microphone during the OAuth WG meeting at IETF 119 in Brisbane.",
           "createdAt": "2024-04-02T18:06:18Z",
           "updatedAt": "2024-04-02T18:06:18Z"
+        },
+        {
+          "author": "bc-pi",
+          "authorAssociation": "COLLABORATOR",
+          "body": "@selfissued, would removing the `application/sd-jwt-kb' media type from this PR sufficiently alleviate your concern? \r\n\r\n(note, I'm hopeful you and @danielfett / @Sakurann can discuss this further in person at OSW and/or IIW soon but I'm unfortunately not going to be at either so just trying to nudge the conversation)  \r\n",
+          "createdAt": "2024-04-05T22:16:50Z",
+          "updatedAt": "2024-04-05T22:25:08Z"
         }
       ],
       "reviews": [
@@ -44478,13 +44495,13 @@
       "labels": [],
       "body": "This addresses Issue #403 and #392 \r\n\r\nUses [this](https://github.com/openwallet-foundation-labs/sd-jwt-python/pull/19) new branch in sd-jwt-python.\r\n\r\nRendered version: https://drafts.oauth.net/oauth-selective-disclosure-jwt/danielfett/new-json-serialization/draft-ietf-oauth-selective-disclosure-jwt.html",
       "createdAt": "2024-03-08T10:09:19Z",
-      "updatedAt": "2024-03-11T13:06:56Z",
+      "updatedAt": "2024-04-04T22:46:54Z",
       "baseRepository": "oauth-wg/oauth-selective-disclosure-jwt",
       "baseRefName": "master",
-      "baseRefOid": "7dd0444e630ecbdf9e65a5f6c839ec3bcc515a9e",
+      "baseRefOid": "d342443cb47aa4de08335ee06ddb59a62b365d06",
       "headRepository": "oauth-wg/oauth-selective-disclosure-jwt",
       "headRefName": "danielfett/new-json-serialization",
-      "headRefOid": "0c5136cf299b1da27fa80274e44ca7df743a7058",
+      "headRefOid": "812f334545b7a18c1392e2a10b312a6193d3875d",
       "closedAt": null,
       "mergedAt": null,
       "mergedBy": null,
