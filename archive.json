@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2024-04-07T00:13:32.334121+00:00",
+  "timestamp": "2024-04-09T00:11:59.711653+00:00",
   "repo": "oauth-wg/oauth-selective-disclosure-jwt",
   "labels": [
     {
@@ -10861,7 +10861,7 @@
       "labels": [],
       "body": "Right after the IETF 119 OAuth session yesterday in a talk with @selfissued and @ve7jtb that started with discussion of PR #394, the question again came up (with some surprise on their part) as to why the `cnf` claim isn't the one and only way specified to put the holder's public key in the issuer-signed JWT. I honestly had a hard time giving a good rational for SD-JWT not being more prescriptive with it's requirements here.\r\n\r\nIt seems that using the `cnf` claim exclusively would be more straightforward and much better for interop. \r\n\r\n@bifurcation has previously made similar comments, \"it seems like there's an unnecessary level of ambiguity around how the Issuer-signed JWT binds to a holder public key.  Can we not just say `cnf`?  Why do we need more?  This point actually worries me more than [others] -- without clarity on this, there is no hope of writing stacks that interop.\"\r\n\r\nUsing the `cnf` claim exclusively could also help with some clarity in the [security considerations](https://www.ietf.org/archive/id/draft-ietf-oauth-selective-disclosure-jwt-08.html#section-10.6) where there currently has to be wording like \"[if there's] no recognized Key Binding data is present in the SD-JWT...\" and \" ... the Issuer might have added the key to the SD-JWT in a format/claim that is not recognized by the Verifier.\".\r\n\r\nNote this is related to but separate from the question of if the presence of a `cnf` claim in the issuer-signed JWT means that the verifier should have to require a KB-JWT. The `cnf` claim can be made _the way_ to do holder binding while still leaving that up to verifier policy.\r\n\r\n",
       "createdAt": "2024-03-20T21:49:13Z",
-      "updatedAt": "2024-04-04T22:38:58Z",
+      "updatedAt": "2024-04-08T08:16:27Z",
       "closedAt": null,
       "comments": [
         {
@@ -10877,6 +10877,13 @@
           "body": "Yep, this sounds good to me. ",
           "createdAt": "2024-03-21T04:38:20Z",
           "updatedAt": "2024-03-21T04:38:20Z"
+        },
+        {
+          "author": "babisRoutis",
+          "authorAssociation": "CONTRIBUTOR",
+          "body": "> It seems that using the `cnf` claim exclusively would be more straightforward and much better for interop.\r\n\r\n:+1: \r\n",
+          "createdAt": "2024-04-08T08:16:26Z",
+          "updatedAt": "2024-04-08T08:16:26Z"
         }
       ]
     }
