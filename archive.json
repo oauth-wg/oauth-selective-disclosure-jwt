@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2024-04-18T00:11:48.086962+00:00",
+  "timestamp": "2024-04-21T00:12:47.846729+00:00",
   "repo": "oauth-wg/oauth-selective-disclosure-jwt",
   "labels": [
     {
@@ -10768,7 +10768,7 @@
       ],
       "body": "HI! I and @yunseorim1116 made a Test suite project for checking SD-JWT implementation.\r\nYou can check it here: https://github.com/lukasjhan/sd-jwt-test-api\r\nIt was written in TypeScript. It is in API server format and is distributed using docker.\r\n\r\nI'm curious about your opinions on this project. \r\nIf this is okay, How about write it in a standard document or put it in README?\r\n\r\nThank you",
       "createdAt": "2024-03-19T01:59:10Z",
-      "updatedAt": "2024-04-15T15:38:50Z",
+      "updatedAt": "2024-04-18T12:34:48Z",
       "closedAt": null,
       "comments": [
         {
@@ -10784,6 +10784,13 @@
           "body": "Go ahead with a PR as such, @lukasjhan. ",
           "createdAt": "2024-04-15T15:38:32Z",
           "updatedAt": "2024-04-15T15:38:32Z"
+        },
+        {
+          "author": "lukasjhan",
+          "authorAssociation": "CONTRIBUTOR",
+          "body": "Thank you I'll open a PR :)",
+          "createdAt": "2024-04-18T12:34:47Z",
+          "updatedAt": "2024-04-18T12:34:47Z"
         }
       ]
     },
