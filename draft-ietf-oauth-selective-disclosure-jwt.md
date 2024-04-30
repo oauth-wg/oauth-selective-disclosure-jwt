@@ -819,7 +819,7 @@ Verification of the JWS JSON serialized SD-JWT follows the same rules defined in
 (#verification), except for the following aspects:
 
  * The SD-JWT does not need to be split into component parts and the Disclosures
-   can be found in the respective member of the JSON object.
+   can be found in the `disclosures` member of the unprotected header.
  * To verify the digest in `sd_hash` in the Key Binding JWT, the Verifier MUST
    assemble the string to be hashed as described in
    (#json_serialization_unprotected_headers).
