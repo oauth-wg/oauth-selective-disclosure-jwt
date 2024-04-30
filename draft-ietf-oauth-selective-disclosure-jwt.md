@@ -815,7 +815,7 @@ Serialization:
 
 ## Verification of the JWS JSON Serialized SD-JWT
 
-Verification of the JWS JSON serialized SD-JWT follows the same rules defined in
+Verification of the JWS JSON serialized SD-JWT follows the rules defined in
 (#verification), except for the following aspects:
 
  * The SD-JWT does not need to be split into component parts and the Disclosures
