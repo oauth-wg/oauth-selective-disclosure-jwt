@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2024-04-28T00:13:29.977692+00:00",
+  "timestamp": "2024-04-30T00:11:26.373421+00:00",
   "repo": "oauth-wg/oauth-selective-disclosure-jwt",
   "labels": [
     {
@@ -41069,7 +41069,7 @@
       "labels": [],
       "body": "This PR limits the scope of the term \"SD-JWT\" so that it refers only to an Issuer-signed JWT and a set of disclosures.  We introduce the term \"Fnord\" to refer to an SD-JWT with key binding.  As a bonus, we are able to clean up stale uses of Presentation, which mostly, but not always align with Fnord.\r\n\r\n\"[Fnord](https://en.wikipedia.org/wiki/Fnord)\" is deliberately nonsensical, of course.  We should replace this with a more intuitive word.  We could reintroduce \"Presentation\" for this, with the allowance that one might \"present\" either a Presentation or an SD-JWT.  Or we could pick another term, suggestions welcome.\r\n\r\nI have tried to be fairly minimal in the changes here.  In particular, I have not changed any of the algorithms, though I suspect they would be clearer if a bit more separate.  I have rewritten a few paragraphs, especially close to the top and in the Security Considerations.\r\n\r\nFixes #374\r\nFixes #392 ",
       "createdAt": "2023-12-05T23:02:33Z",
-      "updatedAt": "2024-04-15T15:49:41Z",
+      "updatedAt": "2024-04-29T17:06:46Z",
       "baseRepository": "oauth-wg/oauth-selective-disclosure-jwt",
       "baseRefName": "master",
       "baseRefOid": "d342443cb47aa4de08335ee06ddb59a62b365d06",
@@ -41164,6 +41164,20 @@
           "body": "> Edit: I still think we should call it \"SD-JWT+KB\", which nicely captures that the KB is an \"add-on\".\r\n\r\nI would appreciate if the PR could change SD-JWT-KB to SD-JWT+KB.\r\n",
           "createdAt": "2024-04-15T15:35:02Z",
           "updatedAt": "2024-04-15T15:35:02Z"
+        },
+        {
+          "author": "bc-pi",
+          "authorAssociation": "COLLABORATOR",
+          "body": "> > Edit: I still think we should call it \"SD-JWT+KB\", which nicely captures that the KB is an \"add-on\".\r\n> \r\n> I would appreciate if the PR could change SD-JWT-KB to SD-JWT+KB.\r\n\r\nHe did ask nicely. ",
+          "createdAt": "2024-04-29T03:50:44Z",
+          "updatedAt": "2024-04-29T03:50:44Z"
+        },
+        {
+          "author": "selfissued",
+          "authorAssociation": "COLLABORATOR",
+          "body": "> @selfissued, would removing the `application/sd-jwt-kb' media type from this PR sufficiently alleviate your concern? Or is it more than that?\r\n\r\nYes, my objection is to having two media types.  Once the extra media type is removed, I should be fine with the updated description.",
+          "createdAt": "2024-04-29T17:06:45Z",
+          "updatedAt": "2024-04-29T17:06:45Z"
         }
       ],
       "reviews": [
@@ -44851,7 +44865,7 @@
       "labels": [],
       "body": "Thanks for adding the reference to the walt.id implementation for SD-JWTs",
       "createdAt": "2024-04-17T15:56:55Z",
-      "updatedAt": "2024-04-17T15:56:55Z",
+      "updatedAt": "2024-04-29T03:49:50Z",
       "baseRepository": "oauth-wg/oauth-selective-disclosure-jwt",
       "baseRefName": "master",
       "baseRefOid": "d342443cb47aa4de08335ee06ddb59a62b365d06",
@@ -44863,7 +44877,21 @@
       "mergedBy": null,
       "mergeCommit": null,
       "comments": [],
-      "reviews": []
+      "reviews": [
+        {
+          "id": "PRR_kwDOHTmVzM542Y6j",
+          "commit": {
+            "abbreviatedOid": "cae112c"
+          },
+          "author": "bc-pi",
+          "authorAssociation": "COLLABORATOR",
+          "state": "APPROVED",
+          "body": "",
+          "createdAt": "2024-04-29T03:49:50Z",
+          "updatedAt": "2024-04-29T03:49:50Z",
+          "comments": []
+        }
+      ]
     }
   ]
 }
