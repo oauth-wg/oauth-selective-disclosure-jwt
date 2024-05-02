@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2024-04-30T00:11:26.373421+00:00",
+  "timestamp": "2024-05-02T00:11:49.416142+00:00",
   "repo": "oauth-wg/oauth-selective-disclosure-jwt",
   "labels": [
     {
@@ -10289,12 +10289,22 @@
       "author": "bifurcation",
       "authorAssociation": "NONE",
       "assignees": [],
-      "labels": [],
+      "labels": [
+        "pending-close"
+      ],
       "body": "It seems like some additional diagrams might be help folks understand some more important properties of this system.  For example, the fact that the Holder can only drop disclosures (not add them; only the Issuer can do that).  I've sketched some figures below, would be happy to make a PR with some ASCII art / [aasvg art](https://github.com/martinthomson/aasvg) if other folks think they would be useful.\r\n\r\n(Note that I have used \"Type 1 Thing\" and \"Type 2 Thing\" as placeholders for \"without KB\" and \"with KB\" cf. #374)\r\n\r\n<img width=\"435\" alt=\"image\" src=\"https://github.com/oauth-wg/oauth-selective-disclosure-jwt/assets/75597/9c4d3f8f-f3c6-47b0-85b9-c3f3b75b2f0a\">\r\n\r\n<img width=\"435\" alt=\"image\" src=\"https://github.com/oauth-wg/oauth-selective-disclosure-jwt/assets/75597/713b3705-692f-4781-9c41-693953a04dfd\">\r\n\r\n<img width=\"435\" alt=\"image\" src=\"https://github.com/oauth-wg/oauth-selective-disclosure-jwt/assets/75597/a4992a59-5c03-4f55-95ec-9ed549f919a5\">\r\n\r\n<img width=\"569\" alt=\"image\" src=\"https://github.com/oauth-wg/oauth-selective-disclosure-jwt/assets/75597/f1584815-c19b-4ea6-8181-facf9b86f5f8\">\r\n\r\n<img width=\"626\" alt=\"image\" src=\"https://github.com/oauth-wg/oauth-selective-disclosure-jwt/assets/75597/0b4fbf20-35c8-41cc-bf4c-c4ff3698e8c4\">\r\n",
       "createdAt": "2023-11-27T13:32:34Z",
-      "updatedAt": "2023-11-27T13:32:34Z",
+      "updatedAt": "2024-04-30T15:59:55Z",
       "closedAt": null,
-      "comments": []
+      "comments": [
+        {
+          "author": "danielfett",
+          "authorAssociation": "MEMBER",
+          "body": "This would need to be updated to the new terminology, but to be honest, I think those figures do not help a lot in understanding the spec. It seems that they would make great material for a blog post on SD-JWT though :-)\r\n\r\nIt seems that my co-authors agree, so I'll put \"pending close\" on this.",
+          "createdAt": "2024-04-30T15:59:44Z",
+          "updatedAt": "2024-04-30T15:59:44Z"
+        }
+      ]
     },
     {
       "number": 389,
@@ -10493,14 +10503,16 @@
       "state": "OPEN",
       "author": "bifurcation",
       "authorAssociation": "NONE",
-      "assignees": [],
+      "assignees": [
+        "bc-pi"
+      ],
       "labels": [
         "editorial",
         "ready-for-PR"
       ],
       "body": "The layout of these section delineations seems off.  There's an \"Example 1\" section header, but no other numbers.  Some examples are top-level, some are subordinate.  Is this intended?\r\n\r\n<img width=\"301\" alt=\"image\" src=\"https://github.com/oauth-wg/oauth-selective-disclosure-jwt/assets/75597/601c9cb4-ce7a-48d6-a31b-85a566d5f884\">\r\n",
       "createdAt": "2023-12-04T22:33:05Z",
-      "updatedAt": "2024-02-20T17:45:26Z",
+      "updatedAt": "2024-04-30T15:53:16Z",
       "closedAt": null,
       "comments": [
         {
@@ -10521,10 +10533,12 @@
       "author": "bifurcation",
       "authorAssociation": "NONE",
       "assignees": [],
-      "labels": [],
+      "labels": [
+        "has-PR"
+      ],
       "body": "As in #383, [9. JWS JSON Serialization](https://drafts.oauth.net/oauth-selective-disclosure-jwt/draft-ietf-oauth-selective-disclosure-jwt.html#name-jws-json-serialization) invokes specification by magic:\r\n\r\n> Key Binding (if applicable) will be provided by means not specifically defined in this specification\r\n\r\nIf we are defining a format for SD-JWT, that format needs to include all of the parts of the SD-JWT.  Unless #374 gets fixed, that means the format needs an optional key binding field.\r\n\r\nBut I think that this issue is actually a symptom #374.  The document doesn't define a format for \"SD-JWT with KB\" because it is actually substantively different thing from \"SD-JWT without KB\".  Putting it in JSON just highlights the difference more clearly than `~`-delimited text.\r\n\r\nThe current syntax seems fine to me for \"SD-JWT without KB\".  For \"SD-JWT with KB\", I would think you would want something like:\r\n\r\n```\r\n{\r\n  \"sd_jwt\": { /* format currently specified, or compact */ },\r\n  \"key_binding: { /* JSON-formatted JWS of KB-JWT */ }\r\n}\r\n```\r\n\r\nHere the `sd_jwt` field MUST hash to `sd_hash`, after serialization to the `~` compact form.\r\n",
       "createdAt": "2023-12-04T22:45:00Z",
-      "updatedAt": "2024-02-20T17:59:13Z",
+      "updatedAt": "2024-04-30T15:26:16Z",
       "closedAt": null,
       "comments": [
         {
@@ -10722,11 +10736,11 @@
       "authorAssociation": "MEMBER",
       "assignees": [],
       "labels": [
-        "ready-for-PR"
+        "has-PR"
       ],
       "body": "Through discussions in the EUDI context, we found that the current JSON Serialization design is not well-suited for existing implementations. We now also better understand the original use cases that lead us to include this section into the spec in the first place and we agreed that we should update it as follows:\r\n\r\n* The disclosures should go into the unprotected header (to be defined: What happens when there are multiple signatures and therefore multiple unprotected headers with disclosures?)\r\n* There should be a way to put the key binding JWT into the unprotected header (to be defined: What happens when there are multiple signatures and therefore multiple places where a KB JWT could go?). The way the hash is built could remain unchanged, but the order of disclosures needs to be clearly defined if they can show up in multiple headers. This would also solve #392.\r\n\r\nThe new flattened format could be:\r\n```json\r\n{\r\n  \"payload\":\"eyJfc2QiOiBbIjR...Aic2hhLTI1NiJ9\",\r\n  \"protected\":\"eyJhbGciOiAiRVMyNTYiLCAidHlwIjogImV4YW1wbGUrc2Qtand0In0\",\r\n  \"signature\":\"oL5lornrs6CFBMu...4HQby6OaaLqAw\",\r\n  \"header\":{\r\n    \"disclosures\":[\r\n      \"WyI2SWo3dE0tYTVpVlBH...W1lIiwgIkRvZSJd\",\r\n      \"WyJBSngtMDk1VlBycFR...ImFkZHJlc3MiLCB7InN0cmVldF9\",\r\n      \"WyJlbHVWNU9nM2dTT...VuX25hbWUiLCAiSm9obiJd\"\r\n    ],\r\n    \"kb_jwt\":\"eyJhbGciOiAiRVMyNTYiLCAidHlwIjogI...bGUrc2Qtand0In0\"\r\n  }\r\n}\r\n```\r\n\r\nAnd the new general format could be:\r\n```json\r\n{\r\n  \"payload\":\"eyJfc2QiOiBbIjR...Aic2hhLTI1NiJ9\",\r\n  \"signatures\":[\r\n    {\r\n      \"protected\":\"eyJhbGciOiAiRVMyNTYiLCAidHlwIjogImV4YW1wbGUrc2Qtand0In0\",\r\n      \"signature\":\"oL5lornrs6CFBMu...4HQby6OaaLqAw\",\r\n      \"header\":{\r\n        \"disclosures\":[\r\n          \"WyI2SWo3dE0tYTVpVlBH...W1lIiwgIkRvZSJd\",\r\n          \"WyJBSngtMDk1VlBycFR...ImFkZHJlc3MiLCB7InN0cmVldF9\",\r\n          \"WyJlbHVWNU9nM2dTT...VuX25hbWUiLCAiSm9obiJd\"\r\n        ],\r\n        \"kb_jwt\":\"eyJhbGciOiAiRVMyNTYiLCAidHlwIjogI...bGUrc2Qtand0In0\"\r\n      }\r\n    },\r\n    {\r\n      \"protected\":\"eyJhbGciOiAiRVMyNTYiLCAidHlwIjogImV4YW1wbGUrc2Qtand0In0\",\r\n      \"signature\":\"oL5lornrs6CFBMu...4HQby6OaaLqAw\"\r\n    }\r\n  ]\r\n}\r\n```\r\n",
       "createdAt": "2024-02-20T17:58:14Z",
-      "updatedAt": "2024-03-08T10:10:40Z",
+      "updatedAt": "2024-04-30T15:26:09Z",
       "closedAt": null,
       "comments": [
         {
@@ -41069,7 +41083,7 @@
       "labels": [],
       "body": "This PR limits the scope of the term \"SD-JWT\" so that it refers only to an Issuer-signed JWT and a set of disclosures.  We introduce the term \"Fnord\" to refer to an SD-JWT with key binding.  As a bonus, we are able to clean up stale uses of Presentation, which mostly, but not always align with Fnord.\r\n\r\n\"[Fnord](https://en.wikipedia.org/wiki/Fnord)\" is deliberately nonsensical, of course.  We should replace this with a more intuitive word.  We could reintroduce \"Presentation\" for this, with the allowance that one might \"present\" either a Presentation or an SD-JWT.  Or we could pick another term, suggestions welcome.\r\n\r\nI have tried to be fairly minimal in the changes here.  In particular, I have not changed any of the algorithms, though I suspect they would be clearer if a bit more separate.  I have rewritten a few paragraphs, especially close to the top and in the Security Considerations.\r\n\r\nFixes #374\r\nFixes #392 ",
       "createdAt": "2023-12-05T23:02:33Z",
-      "updatedAt": "2024-04-29T17:06:46Z",
+      "updatedAt": "2024-04-30T15:19:56Z",
       "baseRepository": "oauth-wg/oauth-selective-disclosure-jwt",
       "baseRefName": "master",
       "baseRefOid": "d342443cb47aa4de08335ee06ddb59a62b365d06",
@@ -41178,6 +41192,13 @@
           "body": "> @selfissued, would removing the `application/sd-jwt-kb' media type from this PR sufficiently alleviate your concern? Or is it more than that?\r\n\r\nYes, my objection is to having two media types.  Once the extra media type is removed, I should be fine with the updated description.",
           "createdAt": "2024-04-29T17:06:45Z",
           "updatedAt": "2024-04-29T17:06:45Z"
+        },
+        {
+          "author": "Sakurann",
+          "authorAssociation": "COLLABORATOR",
+          "body": "I am ok with changing SD-JWT-KB to SD-JWT+KB",
+          "createdAt": "2024-04-30T15:19:55Z",
+          "updatedAt": "2024-04-30T15:19:55Z"
         }
       ],
       "reviews": [
@@ -44537,13 +44558,13 @@
       "labels": [],
       "body": "This addresses Issue #403 and #392 \r\n\r\nUses [this](https://github.com/openwallet-foundation-labs/sd-jwt-python/pull/19) new branch in sd-jwt-python.\r\n\r\nRendered version: https://drafts.oauth.net/oauth-selective-disclosure-jwt/danielfett/new-json-serialization/draft-ietf-oauth-selective-disclosure-jwt.html",
       "createdAt": "2024-03-08T10:09:19Z",
-      "updatedAt": "2024-04-04T22:46:54Z",
+      "updatedAt": "2024-04-30T15:17:19Z",
       "baseRepository": "oauth-wg/oauth-selective-disclosure-jwt",
       "baseRefName": "master",
       "baseRefOid": "d342443cb47aa4de08335ee06ddb59a62b365d06",
       "headRepository": "oauth-wg/oauth-selective-disclosure-jwt",
       "headRefName": "danielfett/new-json-serialization",
-      "headRefOid": "812f334545b7a18c1392e2a10b312a6193d3875d",
+      "headRefOid": "57f0284c1cada56a420ce206cf36d1bd18066e97",
       "closedAt": null,
       "mergedAt": null,
       "mergedBy": null,
@@ -44624,6 +44645,152 @@
               "updatedAt": "2024-03-11T13:06:56Z"
             }
           ]
+        },
+        {
+          "id": "PRR_kwDOHTmVzM55GGfH",
+          "commit": {
+            "abbreviatedOid": "812f334"
+          },
+          "author": "Sakurann",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2024-04-30T14:57:32Z",
+          "updatedAt": "2024-04-30T14:57:32Z",
+          "comments": [
+            {
+              "originalPosition": 39,
+              "body": "disclosures and paylaod need to be base64 url encoded before being concatenated with `.`, no?",
+              "createdAt": "2024-04-30T14:57:32Z",
+              "updatedAt": "2024-04-30T14:57:33Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOHTmVzM55GJow",
+          "commit": {
+            "abbreviatedOid": "812f334"
+          },
+          "author": "Sakurann",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2024-04-30T15:00:50Z",
+          "updatedAt": "2024-04-30T15:00:50Z",
+          "comments": [
+            {
+              "originalPosition": 79,
+              "body": "Disclosures can be found in the unprotected header, no? I am probably just not reading this right..",
+              "createdAt": "2024-04-30T15:00:50Z",
+              "updatedAt": "2024-04-30T15:00:50Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOHTmVzM55GVyZ",
+          "commit": {
+            "abbreviatedOid": "812f334"
+          },
+          "author": "Sakurann",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2024-04-30T15:12:06Z",
+          "updatedAt": "2024-04-30T15:12:06Z",
+          "comments": [
+            {
+              "originalPosition": 39,
+              "body": "ok, I read unprotected header instead of protected header, all good.",
+              "createdAt": "2024-04-30T15:12:06Z",
+              "updatedAt": "2024-04-30T15:12:07Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOHTmVzM55GWeC",
+          "commit": {
+            "abbreviatedOid": "812f334"
+          },
+          "author": "Sakurann",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2024-04-30T15:13:20Z",
+          "updatedAt": "2024-04-30T15:13:21Z",
+          "comments": [
+            {
+              "originalPosition": 79,
+              "body": "```suggestion\r\n   can be found in the respective member of the JSON object in the unprotected header.\r\n```\r\nsomething like this?\r\n",
+              "createdAt": "2024-04-30T15:13:21Z",
+              "updatedAt": "2024-04-30T15:13:30Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOHTmVzM55GWxi",
+          "commit": {
+            "abbreviatedOid": "812f334"
+          },
+          "author": "danielfett",
+          "authorAssociation": "MEMBER",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2024-04-30T15:13:52Z",
+          "updatedAt": "2024-04-30T15:13:52Z",
+          "comments": [
+            {
+              "originalPosition": 79,
+              "body": "```suggestion\r\n   can be found in the `disclosures` member of the unprotected header.\r\n```",
+              "createdAt": "2024-04-30T15:13:52Z",
+              "updatedAt": "2024-04-30T15:13:53Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOHTmVzM55GXHx",
+          "commit": {
+            "abbreviatedOid": "cc1f562"
+          },
+          "author": "Sakurann",
+          "authorAssociation": "COLLABORATOR",
+          "state": "APPROVED",
+          "body": "",
+          "createdAt": "2024-04-30T15:14:17Z",
+          "updatedAt": "2024-04-30T15:14:17Z",
+          "comments": []
+        },
+        {
+          "id": "PRR_kwDOHTmVzM55GXac",
+          "commit": {
+            "abbreviatedOid": "cc1f562"
+          },
+          "author": "danielfett",
+          "authorAssociation": "MEMBER",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2024-04-30T15:14:36Z",
+          "updatedAt": "2024-04-30T15:14:37Z",
+          "comments": [
+            {
+              "originalPosition": 75,
+              "body": "```suggestion\r\nVerification of the JWS JSON serialized SD-JWT follows the rules defined in\r\n```",
+              "createdAt": "2024-04-30T15:14:36Z",
+              "updatedAt": "2024-04-30T15:14:37Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOHTmVzM55GZqM",
+          "commit": {
+            "abbreviatedOid": "57f0284"
+          },
+          "author": "bc-pi",
+          "authorAssociation": "COLLABORATOR",
+          "state": "APPROVED",
+          "body": "",
+          "createdAt": "2024-04-30T15:17:19Z",
+          "updatedAt": "2024-04-30T15:17:19Z",
+          "comments": []
         }
       ]
     },
@@ -44825,7 +44992,7 @@
       "labels": [],
       "body": "Replace old Rust implementation reference (draft v2) with the latest one in OWF.",
       "createdAt": "2024-04-17T09:07:21Z",
-      "updatedAt": "2024-04-17T12:40:37Z",
+      "updatedAt": "2024-04-30T18:23:00Z",
       "baseRepository": "oauth-wg/oauth-selective-disclosure-jwt",
       "baseRefName": "master",
       "baseRefOid": "d342443cb47aa4de08335ee06ddb59a62b365d06",
@@ -44836,7 +45003,15 @@
       "mergedAt": null,
       "mergedBy": null,
       "mergeCommit": null,
-      "comments": [],
+      "comments": [
+        {
+          "author": "Sakurann",
+          "authorAssociation": "COLLABORATOR",
+          "body": "just reached out to @kushaldas to make sure he is aware of this, just to be sure.\r\n",
+          "createdAt": "2024-04-30T14:54:01Z",
+          "updatedAt": "2024-04-30T14:54:01Z"
+        }
+      ],
       "reviews": [
         {
           "id": "PRR_kwDOHTmVzM53kCRd",
@@ -44850,6 +45025,65 @@
           "createdAt": "2024-04-17T12:40:37Z",
           "updatedAt": "2024-04-17T12:40:37Z",
           "comments": []
+        },
+        {
+          "id": "PRR_kwDOHTmVzM55GBnj",
+          "commit": {
+            "abbreviatedOid": "682d9f7"
+          },
+          "author": "Sakurann",
+          "authorAssociation": "COLLABORATOR",
+          "state": "APPROVED",
+          "body": "",
+          "createdAt": "2024-04-30T14:51:57Z",
+          "updatedAt": "2024-04-30T14:51:57Z",
+          "comments": []
+        },
+        {
+          "id": "PRR_kwDOHTmVzM55GRGL",
+          "commit": {
+            "abbreviatedOid": "682d9f7"
+          },
+          "author": "Sakurann",
+          "authorAssociation": "COLLABORATOR",
+          "state": "CHANGES_REQUESTED",
+          "body": "just until there is a confirmation there is a relationship between this new URL and kushal's one\r\n",
+          "createdAt": "2024-04-30T15:06:47Z",
+          "updatedAt": "2024-04-30T15:06:47Z",
+          "comments": []
+        },
+        {
+          "id": "PRR_kwDOHTmVzM55IKB9",
+          "commit": {
+            "abbreviatedOid": "682d9f7"
+          },
+          "author": "Sakurann",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2024-04-30T18:22:17Z",
+          "updatedAt": "2024-04-30T18:22:17Z",
+          "comments": [
+            {
+              "originalPosition": 5,
+              "body": "```suggestion\r\n * Rust: [sd_jwt](https://github.com/kushaldas/sd_jwt)\r\n * Rust: [sd-jwt-rs (OWF)](https://github.com/openwallet-foundation-labs/sd-jwt-rust)\r\n```",
+              "createdAt": "2024-04-30T18:22:17Z",
+              "updatedAt": "2024-04-30T18:22:17Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOHTmVzM55IKUE",
+          "commit": {
+            "abbreviatedOid": "682d9f7"
+          },
+          "author": "Sakurann",
+          "authorAssociation": "COLLABORATOR",
+          "state": "CHANGES_REQUESTED",
+          "body": "confirmed that the current proposed change was replacing a library by another person, so please add a new line instead of replacing another repo",
+          "createdAt": "2024-04-30T18:23:00Z",
+          "updatedAt": "2024-04-30T18:23:00Z",
+          "comments": []
         }
       ]
     },
@@ -44858,24 +45092,26 @@
       "id": "PR_kwDOHTmVzM5s8ToK",
       "title": "Added walt.id implementation",
       "url": "https://github.com/oauth-wg/oauth-selective-disclosure-jwt/pull/423",
-      "state": "OPEN",
+      "state": "MERGED",
       "author": "philpotisk",
-      "authorAssociation": "NONE",
+      "authorAssociation": "CONTRIBUTOR",
       "assignees": [],
       "labels": [],
       "body": "Thanks for adding the reference to the walt.id implementation for SD-JWTs",
       "createdAt": "2024-04-17T15:56:55Z",
-      "updatedAt": "2024-04-29T03:49:50Z",
+      "updatedAt": "2024-04-30T15:07:15Z",
       "baseRepository": "oauth-wg/oauth-selective-disclosure-jwt",
       "baseRefName": "master",
       "baseRefOid": "d342443cb47aa4de08335ee06ddb59a62b365d06",
       "headRepository": "walt-id/oauth-selective-disclosure-jwt",
       "headRefName": "master",
       "headRefOid": "cae112c791cb129a689dd2dfc86d1dfd3986f7d3",
-      "closedAt": null,
-      "mergedAt": null,
-      "mergedBy": null,
-      "mergeCommit": null,
+      "closedAt": "2024-04-30T15:07:15Z",
+      "mergedAt": "2024-04-30T15:07:15Z",
+      "mergedBy": "danielfett",
+      "mergeCommit": {
+        "oid": "cabaa3a4621febb6fec1f946d19148e94621976d"
+      },
       "comments": [],
       "reviews": [
         {
@@ -44889,6 +45125,32 @@
           "body": "",
           "createdAt": "2024-04-29T03:49:50Z",
           "updatedAt": "2024-04-29T03:49:50Z",
+          "comments": []
+        },
+        {
+          "id": "PRR_kwDOHTmVzM55GBc4",
+          "commit": {
+            "abbreviatedOid": "cae112c"
+          },
+          "author": "Sakurann",
+          "authorAssociation": "COLLABORATOR",
+          "state": "APPROVED",
+          "body": "",
+          "createdAt": "2024-04-30T14:51:40Z",
+          "updatedAt": "2024-04-30T14:51:40Z",
+          "comments": []
+        },
+        {
+          "id": "PRR_kwDOHTmVzM55GReS",
+          "commit": {
+            "abbreviatedOid": "cae112c"
+          },
+          "author": "danielfett",
+          "authorAssociation": "MEMBER",
+          "state": "APPROVED",
+          "body": "",
+          "createdAt": "2024-04-30T15:07:09Z",
+          "updatedAt": "2024-04-30T15:07:09Z",
           "comments": []
         }
       ]
