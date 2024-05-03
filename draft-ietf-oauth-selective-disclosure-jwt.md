@@ -595,7 +595,7 @@ in (#hash_function_claim)).
 The Verifier MUST ensure that the key with which it validates the signature on
 the Key Binding JWT is the key specified in the SD-JWT as the Holder's public
 key.  For example, if the SD-JWT contains a `cnf` value with a `jwk` member, the
-could parse the provided JWK and use it to verify the Key Binding JWT.
+Verifier could parse the provided JWK and use it to verify the Key Binding JWT.
 
 Whether to require Key Binding is up to the Verifier's policy, based on the set
 of trust requirements such as trust frameworks it belongs to. See
