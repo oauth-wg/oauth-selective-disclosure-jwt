@@ -792,7 +792,7 @@ To this end, Verifiers MUST follow the following steps (or equivalent):
    for the use case at hand. This decision MUST NOT be based on whether
    a Key Binding JWT is provided by the Holder or not. Refer to (#key_binding_security) for
    details.
-2. If Key Binding is required and the Holder has provided an SD-JWT, the Verifier MUST reject the presentation.
+2. If Key Binding is required and the Holder has provided an SD-JWT (without Key Binding), the Verifier MUST reject the presentation.
 3. If the Holder has provided an SD-JWT+KB, parse it into an SD-JWT and a Key Binding JWT.
 4. Process the SD-JWT as defined in (#sd_jwt_verification).
 5. If Key Binding is required:
