@@ -1333,30 +1333,6 @@ To indicate that the content is an SD-JWT:
 * Provisional registration?  No
 
 <br/>
-To indicate that the content is an SD-JWT-KB:
-
-* Type name: application
-* Subtype name: sd-jwt-kb
-* Required parameters: n/a
-* Optional parameters: n/a
-* Encoding considerations: binary; application/sd-jwt-kb values are a series of base64url-encoded values separated by period ('.') or tilde ('~') characters.
-* Security considerations: See the Security Considerations section of [[ this specification ]], [@!RFC7519], and [@RFC8725].
-* Interoperability considerations: n/a
-* Published specification: [[ this specification ]]
-* Applications that use this media type: TBD
-* Fragment identifier considerations: n/a
-* Additional information:
-   * Magic number(s): n/a
-   * File extension(s): n/a
-   * Macintosh file type code(s): n/a
-* Person & email address to contact for further information: Daniel Fett, mail@danielfett.de
-* Intended usage: COMMON
-* Restrictions on usage: none
-* Author: Daniel Fett, mail@danielfett.de
-* Change Controller: IETF
-* Provisional registration?  No
-
-<br/>
 To indicate that the content is a JWS JSON serialized SD-JWT:
 
 * Type name: application
