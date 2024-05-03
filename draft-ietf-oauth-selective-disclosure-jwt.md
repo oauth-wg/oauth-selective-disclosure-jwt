@@ -164,8 +164,8 @@ Key Binding:
 
 Key Binding JWT (KB-JWT):
 :  A JWT for proving Key Binding as defined in (#kb-jwt).  A Key Binding JWT is
-   said to "be tied to" a particular SD-JWT if its payload includes a hash of the
-SD-JWT in its `sd_hash` claim.
+   said to "be tied to" a particular SD-JWT when its payload includes a hash of the
+   SD-JWT in its `sd_hash` claim.
 
 Selectively Disclosable JWT with Key Binding (SD-JWT+KB):
 : A composite structure, comprising an SD-JWT and a Key Binding JWT tied to that SD-JWT.
