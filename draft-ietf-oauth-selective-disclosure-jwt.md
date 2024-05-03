@@ -159,7 +159,7 @@ Disclosure:
 
 Key Binding:
 :  Ability of the Holder to prove legitimate possession of an SD-JWT by proving
-  control over the same private key during the issuance and presentation. To be compatible with Key Binding, an SD-JWT contains
+  control over the same private key during the issuance and presentation. When utilizing Key Binding, an SD-JWT contains
   the public key corresponding to the private key controlled by the Holder (or a reference to this public key).
 
 Key Binding JWT (KB-JWT):
