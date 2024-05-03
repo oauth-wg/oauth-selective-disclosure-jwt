@@ -966,7 +966,7 @@ decisions based on data that can be influenced by an attacker or that
 can be misinterpreted. For this reason, when deciding whether Key
 Binding is required or not, Verifiers MUST NOT take into account:
 
- * whether the Holder has provided an SD-JWT+KB or a bare SD-JWT, since otherwise a
+ * whether the Holder has provided an SD-JWT+KB or a bare SD-JWT, since otherwise an
    attacker could strip the KB-JWT from an SD-JWT+KB and present the resulting
    SD-JWT, or
  * whether Key Binding data is present in the SD-JWT or not, as the
