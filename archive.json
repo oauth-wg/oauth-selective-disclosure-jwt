@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2024-05-02T00:11:49.416142+00:00",
+  "timestamp": "2024-05-05T00:12:49.411265+00:00",
   "repo": "oauth-wg/oauth-selective-disclosure-jwt",
   "labels": [
     {
@@ -9618,7 +9618,7 @@
       ],
       "body": "Abbreviations appear in this document without first being defined, e.g., KB-JWT. \r\nIt would make it easier for the readers if the document has an abbreviation section near the top of the document. \r\nProposal: \r\nCreate a new section 2.1 Abbreviation and collect all the abbreviations.",
       "createdAt": "2023-11-07T15:30:36Z",
-      "updatedAt": "2024-03-01T21:53:45Z",
+      "updatedAt": "2024-05-03T18:38:03Z",
       "closedAt": null,
       "comments": [
         {
@@ -9634,6 +9634,13 @@
           "body": "#394 does introduce more abbreviations where the terms are defined so might obsolete the need for a new section. ",
           "createdAt": "2024-03-01T21:53:44Z",
           "updatedAt": "2024-03-01T21:53:44Z"
+        },
+        {
+          "author": "bc-pi",
+          "authorAssociation": "COLLABORATOR",
+          "body": "I'm gonna say https://github.com/oauth-wg/oauth-selective-disclosure-jwt/pull/394 will sufficiently address the suggestion here. ",
+          "createdAt": "2024-05-03T18:38:02Z",
+          "updatedAt": "2024-05-03T18:38:02Z"
         }
       ]
     },
@@ -41083,13 +41090,13 @@
       "labels": [],
       "body": "This PR limits the scope of the term \"SD-JWT\" so that it refers only to an Issuer-signed JWT and a set of disclosures.  We introduce the term \"Fnord\" to refer to an SD-JWT with key binding.  As a bonus, we are able to clean up stale uses of Presentation, which mostly, but not always align with Fnord.\r\n\r\n\"[Fnord](https://en.wikipedia.org/wiki/Fnord)\" is deliberately nonsensical, of course.  We should replace this with a more intuitive word.  We could reintroduce \"Presentation\" for this, with the allowance that one might \"present\" either a Presentation or an SD-JWT.  Or we could pick another term, suggestions welcome.\r\n\r\nI have tried to be fairly minimal in the changes here.  In particular, I have not changed any of the algorithms, though I suspect they would be clearer if a bit more separate.  I have rewritten a few paragraphs, especially close to the top and in the Security Considerations.\r\n\r\nFixes #374\r\nFixes #392 ",
       "createdAt": "2023-12-05T23:02:33Z",
-      "updatedAt": "2024-04-30T15:19:56Z",
+      "updatedAt": "2024-05-03T19:56:06Z",
       "baseRepository": "oauth-wg/oauth-selective-disclosure-jwt",
       "baseRefName": "master",
-      "baseRefOid": "d342443cb47aa4de08335ee06ddb59a62b365d06",
+      "baseRefOid": "cabaa3a4621febb6fec1f946d19148e94621976d",
       "headRepository": "bifurcation/oauth-selective-disclosure-jwt",
       "headRefName": "fnord",
-      "headRefOid": "292ed55812c9487a58a5f329e2c86f78e7f03997",
+      "headRefOid": "d492e0372ab1bd0d7ba507afce2ff4b83b9e70d0",
       "closedAt": null,
       "mergedAt": null,
       "mergedBy": null,
@@ -41199,6 +41206,27 @@
           "body": "I am ok with changing SD-JWT-KB to SD-JWT+KB",
           "createdAt": "2024-04-30T15:19:55Z",
           "updatedAt": "2024-04-30T15:19:55Z"
+        },
+        {
+          "author": "bc-pi",
+          "authorAssociation": "COLLABORATOR",
+          "body": "> > @selfissued, would removing the `application/sd-jwt-kb' media type from this PR sufficiently alleviate your concern? Or is it more than that?\r\n> \r\n> Yes, my objection is to having two media types. Once the extra media type is removed, I should be fine with the updated description.\r\n\r\nThe extra media type removed with 98383e665a17fff50654a0a096eaf5e8cfe001dc, which I'm perfectly okay with and coming around to even thinking is the right thing. But I am struck by the irony of doing this on the same day you've (I know, on behalf of the WG) [requested registration](https://mailarchive.ietf.org/arch/msg/media-types/_pmQrj8nkW25FOqIXmPa1wyzizU/) of: \r\n\r\napplication/vc+ld+json \r\napplication/vp+ld+json\r\napplication/vc+ld+json+jwt\r\napplication/vp+ld+json+jwt\r\napplication/vc+ld+json+sd-jwt\r\napplication/vp+ld+json+sd-jwt\r\napplication/vc+ld+json+cose\r\napplication/vp+ld+json+cose\r\n+ld+json+jwt\r\n+json+jwt\r\n+ld+json+sd-jwt\r\n+json+sd-jwt\r\n+ld+json+cose\r\n+json+cose\r\n\r\n",
+          "createdAt": "2024-05-03T17:24:08Z",
+          "updatedAt": "2024-05-03T17:41:18Z"
+        },
+        {
+          "author": "bc-pi",
+          "authorAssociation": "COLLABORATOR",
+          "body": "> > Edit: I still think we should call it \"SD-JWT+KB\", which nicely captures that the KB is an \"add-on\".\r\n> \r\n> I would appreciate if the PR could change SD-JWT-KB to SD-JWT+KB.\r\n\r\n92d20f848299bb2d93f99d4d392f663341e08c9d made that change ",
+          "createdAt": "2024-05-03T18:32:07Z",
+          "updatedAt": "2024-05-03T18:32:07Z"
+        },
+        {
+          "author": "bc-pi",
+          "authorAssociation": "COLLABORATOR",
+          "body": "> Not entirely sure about the SD-JWT-KB vs SD-JWT+KB part. Should the kb-jwt then also be renamed to kb+jwt (even outside the typ)?\r\n\r\nI'm gonna say no. ",
+          "createdAt": "2024-05-03T18:51:15Z",
+          "updatedAt": "2024-05-03T18:51:15Z"
         }
       ],
       "reviews": [
@@ -43047,6 +43075,192 @@
           "createdAt": "2024-03-30T20:49:07Z",
           "updatedAt": "2024-03-30T20:49:07Z",
           "comments": []
+        },
+        {
+          "id": "PRR_kwDOHTmVzM55g5Fn",
+          "commit": {
+            "abbreviatedOid": "292ed55"
+          },
+          "author": "bc-pi",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2024-05-03T17:13:35Z",
+          "updatedAt": "2024-05-03T17:13:36Z",
+          "comments": [
+            {
+              "originalPosition": 466,
+              "body": "remove the `application/sd-jwt-kb` media type per request by @selfissued and rough consensus of editors and a few others that it's not needed  \r\n```suggestion\r\n```",
+              "createdAt": "2024-05-03T17:13:35Z",
+              "updatedAt": "2024-05-03T17:13:36Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOHTmVzM55ha8t",
+          "commit": {
+            "abbreviatedOid": "92d20f8"
+          },
+          "author": "bc-pi",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2024-05-03T18:39:32Z",
+          "updatedAt": "2024-05-03T18:39:33Z",
+          "comments": [
+            {
+              "originalPosition": 71,
+              "body": "```suggestion\r\n   said to \"be tied to\" a particular SD-JWT when its payload includes a hash of the\r\n   SD-JWT in its `sd_hash` claim.\r\n```",
+              "createdAt": "2024-05-03T18:39:32Z",
+              "updatedAt": "2024-05-03T18:39:33Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOHTmVzM55hc2W",
+          "commit": {
+            "abbreviatedOid": "50a16e2"
+          },
+          "author": "bc-pi",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2024-05-03T18:43:57Z",
+          "updatedAt": "2024-05-03T18:43:57Z",
+          "comments": [
+            {
+              "originalPosition": 227,
+              "body": "```suggestion\r\nVerifier could parse the provided JWK and use it to verify the Key Binding JWT.\r\n```",
+              "createdAt": "2024-05-03T18:43:57Z",
+              "updatedAt": "2024-05-03T18:43:57Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOHTmVzM55hcIX",
+          "commit": {
+            "abbreviatedOid": "50a16e2"
+          },
+          "author": "c2bo",
+          "authorAssociation": "MEMBER",
+          "state": "APPROVED",
+          "body": "Not entirely sure about the SD-JWT-KB vs SD-JWT+KB part. Should the kb-jwt then also be renamed to kb+jwt (even outside the typ)?",
+          "createdAt": "2024-05-03T18:42:02Z",
+          "updatedAt": "2024-05-03T18:45:36Z",
+          "comments": [
+            {
+              "originalPosition": 363,
+              "body": "```suggestion\r\n * whether the Holder has provided an SD-JWT+KB or a bare SD-JWT, since otherwise an\r\n   attacker could strip the KB-JWT from an SD-JWT+KB and present the resulting\r\n```",
+              "createdAt": "2024-05-03T18:42:02Z",
+              "updatedAt": "2024-05-03T18:45:36Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOHTmVzM55hedj",
+          "commit": {
+            "abbreviatedOid": "74f36b9"
+          },
+          "author": "bc-pi",
+          "authorAssociation": "COLLABORATOR",
+          "state": "APPROVED",
+          "body": "pining for the fnords [edit: this was my comment on submitting approval]",
+          "createdAt": "2024-05-03T18:48:46Z",
+          "updatedAt": "2024-05-03T19:22:25Z",
+          "comments": []
+        },
+        {
+          "id": "PRR_kwDOHTmVzM55hucu",
+          "commit": {
+            "abbreviatedOid": "ce414e2"
+          },
+          "author": "selfissued",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2024-05-03T19:34:07Z",
+          "updatedAt": "2024-05-03T19:34:08Z",
+          "comments": [
+            {
+              "originalPosition": 65,
+              "body": "```suggestion\r\n  control over the same private key during the issuance and presentation. When utilizing Key Binding, an SD-JWT contains\r\n```",
+              "createdAt": "2024-05-03T19:34:08Z",
+              "updatedAt": "2024-05-03T19:34:08Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOHTmVzM55huyo",
+          "commit": {
+            "abbreviatedOid": "ce414e2"
+          },
+          "author": "bc-pi",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2024-05-03T19:35:14Z",
+          "updatedAt": "2024-05-03T19:35:15Z",
+          "comments": [
+            {
+              "originalPosition": 65,
+              "body": "wfm ",
+              "createdAt": "2024-05-03T19:35:15Z",
+              "updatedAt": "2024-05-03T19:35:15Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOHTmVzM55hw0l",
+          "commit": {
+            "abbreviatedOid": "ce414e2"
+          },
+          "author": "selfissued",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2024-05-03T19:41:19Z",
+          "updatedAt": "2024-05-03T19:41:20Z",
+          "comments": [
+            {
+              "originalPosition": 324,
+              "body": "```suggestion\r\n2. If Key Binding is required and the Holder has provided an SD-JWT without Key Binding, the Verifier MUST reject the presentation.\r\n```",
+              "createdAt": "2024-05-03T19:41:19Z",
+              "updatedAt": "2024-05-03T19:41:20Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOHTmVzM55hypA",
+          "commit": {
+            "abbreviatedOid": "0de80de"
+          },
+          "author": "selfissued",
+          "authorAssociation": "COLLABORATOR",
+          "state": "APPROVED",
+          "body": "Thanks for the updates.\r\n\r\nI'd appreciate it if you'd merge my other suggestion, which is a clarification.",
+          "createdAt": "2024-05-03T19:47:13Z",
+          "updatedAt": "2024-05-03T19:47:13Z",
+          "comments": []
+        },
+        {
+          "id": "PRR_kwDOHTmVzM55hzUc",
+          "commit": {
+            "abbreviatedOid": "ce414e2"
+          },
+          "author": "bc-pi",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2024-05-03T19:49:27Z",
+          "updatedAt": "2024-05-03T19:49:27Z",
+          "comments": [
+            {
+              "originalPosition": 324,
+              "body": "I think the author of the PR would say that an SD-JWT is now without Key Binding by definition and that might suggest otherwise. How about this as a compromise on clarification? \r\n```suggestion\r\n2. If Key Binding is required and the Holder has provided an SD-JWT (without Key Binding), the Verifier MUST reject the presentation.\r\n```",
+              "createdAt": "2024-05-03T19:49:27Z",
+              "updatedAt": "2024-05-03T19:49:27Z"
+            }
+          ]
         }
       ]
     },
@@ -44992,7 +45206,7 @@
       "labels": [],
       "body": "Replace old Rust implementation reference (draft v2) with the latest one in OWF.",
       "createdAt": "2024-04-17T09:07:21Z",
-      "updatedAt": "2024-04-30T18:23:00Z",
+      "updatedAt": "2024-05-03T17:09:13Z",
       "baseRepository": "oauth-wg/oauth-selective-disclosure-jwt",
       "baseRefName": "master",
       "baseRefOid": "d342443cb47aa4de08335ee06ddb59a62b365d06",
@@ -45083,6 +45297,19 @@
           "body": "confirmed that the current proposed change was replacing a library by another person, so please add a new line instead of replacing another repo",
           "createdAt": "2024-04-30T18:23:00Z",
           "updatedAt": "2024-04-30T18:23:00Z",
+          "comments": []
+        },
+        {
+          "id": "PRR_kwDOHTmVzM55g3IZ",
+          "commit": {
+            "abbreviatedOid": "682d9f7"
+          },
+          "author": "bc-pi",
+          "authorAssociation": "COLLABORATOR",
+          "state": "CHANGES_REQUESTED",
+          "body": "> confirmed that the current proposed change was replacing a library by another person, so please add a new line instead of replacing another repo\r\n\r\nplease fix and also explain the intent ",
+          "createdAt": "2024-05-03T17:09:13Z",
+          "updatedAt": "2024-05-03T17:09:13Z",
           "comments": []
         }
       ]
