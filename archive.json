@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2024-05-05T00:12:49.411265+00:00",
+  "timestamp": "2024-05-07T00:12:03.262515+00:00",
   "repo": "oauth-wg/oauth-selective-disclosure-jwt",
   "labels": [
     {
@@ -10514,12 +10514,12 @@
         "bc-pi"
       ],
       "labels": [
-        "editorial",
-        "ready-for-PR"
+        "has-PR",
+        "editorial"
       ],
       "body": "The layout of these section delineations seems off.  There's an \"Example 1\" section header, but no other numbers.  Some examples are top-level, some are subordinate.  Is this intended?\r\n\r\n<img width=\"301\" alt=\"image\" src=\"https://github.com/oauth-wg/oauth-selective-disclosure-jwt/assets/75597/601c9cb4-ce7a-48d6-a31b-85a566d5f884\">\r\n",
       "createdAt": "2023-12-04T22:33:05Z",
-      "updatedAt": "2024-04-30T15:53:16Z",
+      "updatedAt": "2024-05-06T17:49:08Z",
       "closedAt": null,
       "comments": [
         {
@@ -45381,6 +45381,32 @@
           "comments": []
         }
       ]
+    },
+    {
+      "number": 424,
+      "id": "PR_kwDOHTmVzM5uqkL1",
+      "title": "Unnumbered most of the examples for improved clarity",
+      "url": "https://github.com/oauth-wg/oauth-selective-disclosure-jwt/pull/424",
+      "state": "OPEN",
+      "author": "bc-pi",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "for issue #391 \r\n\r\nhttps://drafts.oauth.net/oauth-selective-disclosure-jwt/rework-example-section-headings-or-whatever-for-391/draft-ietf-oauth-selective-disclosure-jwt.html",
+      "createdAt": "2024-05-06T17:47:40Z",
+      "updatedAt": "2024-05-06T17:50:04Z",
+      "baseRepository": "oauth-wg/oauth-selective-disclosure-jwt",
+      "baseRefName": "master",
+      "baseRefOid": "cabaa3a4621febb6fec1f946d19148e94621976d",
+      "headRepository": "oauth-wg/oauth-selective-disclosure-jwt",
+      "headRefName": "rework-example-section-headings-or-whatever-for-391",
+      "headRefOid": "05ddc92055096780885cfbb5e5cded25a7752068",
+      "closedAt": null,
+      "mergedAt": null,
+      "mergedBy": null,
+      "mergeCommit": null,
+      "comments": [],
+      "reviews": []
     }
   ]
 }
