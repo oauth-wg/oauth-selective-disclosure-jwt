@@ -13,19 +13,19 @@
 used as the payload of a JSON Web Signature (JWS) structure.
 It encompasses various applications, including but not limited to the selective disclosure of JSON Web Token (JWT) claims. 
     " name="description">
-<meta content="xml2rfc 3.20.1" name="generator">
+<meta content="xml2rfc 3.21.0" name="generator">
 <meta content="security" name="keyword">
 <meta content="oauth2" name="keyword">
 <meta content="draft-ietf-oauth-selective-disclosure-jwt-latest" name="ietf.draft">
 <!-- Generator version information:
-  xml2rfc 3.20.1
-    Python 3.11.8
+  xml2rfc 3.21.0
+    Python 3.11.9
     ConfigArgParse 1.7
     google-i18n-address 3.1.0
     intervaltree 3.1.0
     Jinja2 3.1.2
     lxml 4.9.3
-    platformdirs 4.2.0
+    platformdirs 4.2.1
     pycountry 22.3.5
     PyYAML 6.0.1
     requests 2.31.0
@@ -1030,11 +1030,11 @@ svg :is([fill="white"], [fill^="#fff"]) {
 <thead><tr>
 <td class="left">Internet-Draft</td>
 <td class="center">SD-JWT</td>
-<td class="right">April 2024</td>
+<td class="right">May 2024</td>
 </tr></thead>
 <tfoot><tr>
 <td class="left">Fett, et al.</td>
-<td class="center">Expires 4 October 2024</td>
+<td class="center">Expires 10 November 2024</td>
 <td class="right">[Page]</td>
 </tr></tfoot>
 </table>
@@ -1047,12 +1047,12 @@ svg :is([fill="white"], [fill^="#fff"]) {
 <dd class="internet-draft">draft-ietf-oauth-selective-disclosure-jwt-latest</dd>
 <dt class="label-published">Published:</dt>
 <dd class="published">
-<time datetime="2024-04-02" class="published">2 April 2024</time>
+<time datetime="2024-05-09" class="published">9 May 2024</time>
     </dd>
 <dt class="label-intended-status">Intended Status:</dt>
 <dd class="intended-status">Standards Track</dd>
 <dt class="label-expires">Expires:</dt>
-<dd class="expires"><time datetime="2024-10-04">4 October 2024</time></dd>
+<dd class="expires"><time datetime="2024-11-10">10 November 2024</time></dd>
 <dt class="label-authors">Authors:</dt>
 <dd class="authors">
 <div class="author">
@@ -1107,7 +1107,7 @@ It encompasses various applications, including but not limited to the selective 
         time. It is inappropriate to use Internet-Drafts as reference
         material or to cite them other than as "work in progress."<a href="#section-boilerplate.1-3" class="pilcrow">¶</a></p>
 <p id="section-boilerplate.1-4">
-        This Internet-Draft will expire on 4 October 2024.<a href="#section-boilerplate.1-4" class="pilcrow">¶</a></p>
+        This Internet-Draft will expire on 10 November 2024.<a href="#section-boilerplate.1-4" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="copyright">
@@ -1218,7 +1218,7 @@ It encompasses various applications, including but not limited to the selective 
             </ul>
 </li>
           <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.6">
-            <p id="section-toc.1-1.6.1"><a href="#section-6" class="auto internal xref">6</a>.  <a href="#name-example-1-sd-jwt" class="internal xref">Example 1: SD-JWT</a></p>
+            <p id="section-toc.1-1.6.1"><a href="#section-6" class="auto internal xref">6</a>.  <a href="#name-example-sd-jwt" class="internal xref">Example SD-JWT</a></p>
 <ul class="compact toc ulBare ulEmpty">
 <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.6.2.1">
                 <p id="section-toc.1-1.6.2.1.1"><a href="#section-6.1" class="auto internal xref">6.1</a>.  <a href="#name-issuance" class="internal xref">Issuance</a></p>
@@ -1349,16 +1349,16 @@ It encompasses various applications, including but not limited to the selective 
             <p id="section-toc.1-1.15.1"><a href="#appendix-A" class="auto internal xref">Appendix A</a>.  <a href="#name-additional-examples" class="internal xref">Additional Examples</a></p>
 <ul class="compact toc ulBare ulEmpty">
 <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.15.2.1">
-                <p id="section-toc.1-1.15.2.1.1"><a href="#appendix-A.1" class="auto internal xref">A.1</a>.  <a href="#name-example-2-handling-structur" class="internal xref">Example 2: Handling Structured Claims</a></p>
+                <p id="section-toc.1-1.15.2.1.1"><a href="#appendix-A.1" class="auto internal xref">A.1</a>.  <a href="#name-simple-structured-sd-jwt" class="internal xref">Simple Structured SD-JWT</a></p>
 </li>
               <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.15.2.2">
-                <p id="section-toc.1-1.15.2.2.1"><a href="#appendix-A.2" class="auto internal xref">A.2</a>.  <a href="#name-example-3-complex-structure" class="internal xref">Example 3 - Complex Structured SD-JWT</a></p>
+                <p id="section-toc.1-1.15.2.2.1"><a href="#appendix-A.2" class="auto internal xref">A.2</a>.  <a href="#name-complex-structured-sd-jwt" class="internal xref">Complex Structured SD-JWT</a></p>
 </li>
               <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.15.2.3">
-                <p id="section-toc.1-1.15.2.3.1"><a href="#appendix-A.3" class="auto internal xref">A.3</a>.  <a href="#name-example-4a-sd-jwt-based-ver" class="internal xref">Example 4a - SD-JWT-based Verifiable Credentials (SD-JWT VC)</a></p>
+                <p id="section-toc.1-1.15.2.3.1"><a href="#appendix-A.3" class="auto internal xref">A.3</a>.  <a href="#name-sd-jwt-based-verifiable-cre" class="internal xref">SD-JWT-based Verifiable Credentials (SD-JWT VC)</a></p>
 </li>
               <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.15.2.4">
-                <p id="section-toc.1-1.15.2.4.1"><a href="#appendix-A.4" class="auto internal xref">A.4</a>.  <a href="#name-example-4b-w3c-verifiable-c" class="internal xref">Example 4b - W3C Verifiable Credentials Data Model v2.0</a></p>
+                <p id="section-toc.1-1.15.2.4.1"><a href="#appendix-A.4" class="auto internal xref">A.4</a>.  <a href="#name-w3c-verifiable-credentials-" class="internal xref">W3C Verifiable Credentials Data Model v2.0</a></p>
 </li>
               <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.15.2.5">
                 <p id="section-toc.1-1.15.2.5.1"><a href="#appendix-A.5" class="auto internal xref">A.5</a>.  <a href="#name-elliptic-curve-key-used-in-" class="internal xref">Elliptic Curve Key Used in the Examples</a></p>
@@ -2041,14 +2041,14 @@ of trust requirements such as trust frameworks it belongs to. See
 </div>
 </section>
 </div>
-<div id="example-1">
+<div id="main-example">
 <section id="section-6">
-      <h2 id="name-example-1-sd-jwt">
-<a href="#section-6" class="section-number selfRef">6. </a><a href="#name-example-1-sd-jwt" class="section-name selfRef">Example 1: SD-JWT</a>
+      <h2 id="name-example-sd-jwt">
+<a href="#section-6" class="section-number selfRef">6. </a><a href="#name-example-sd-jwt" class="section-name selfRef">Example SD-JWT</a>
       </h2>
 <p id="section-6-1">In this example, a simple SD-JWT is demonstrated. This example is split into issuance and presentation.<a href="#section-6-1" class="pilcrow">¶</a></p>
 <p id="section-6-2">Note: Throughout the examples in this document, line breaks had to be added to
-JSON strings and base64-encoded strings to adhere to the 72 character limit for
+JSON strings and base64-encoded strings to adhere to the 72-character limit for
 lines in RFCs and for readability. JSON does not allow line breaks within strings.<a href="#section-6-2" class="pilcrow">¶</a></p>
 <div id="issuance">
 <section id="section-6.1">
@@ -2272,8 +2272,8 @@ ZHJ5M2xjYndIZ2VaOGtoQXYxVTFPU2xlclAwVmtCSnJXWjAifV0sICJfc2RfYWxnIjog
 InNoYS0yNTYiLCAiY25mIjogeyJqd2siOiB7Imt0eSI6ICJFQyIsICJjcnYiOiAiUC0y
 NTYiLCAieCI6ICJUQ0FFUjE5WnZ1M09IRjRqNFc0dmZTVm9ISVAxSUxpbERsczd2Q2VH
 ZW1jIiwgInkiOiAiWnhqaVdXYlpNUUdIVldLVlE0aGJTSWlyc1ZmdWVjQ0U2dDRqVDlG
-MkhaUSJ9fX0.9vi33ud-QW4UqUXe_3gM-5exqRysmf6zwDUGs68ChQNwJUUHVfQKgBiC
-ry87WBedd44bc6lw5DEqgAgTIeyyYQ
+MkhaUSJ9fX0.U7vajjP8sLu-ekMnVywiDEMfgVRmFc5OqXLaAEryf6JtBw-96m0RiYgo
+E_82mRjZeZimg6RygBLsvbtKOKuw_g
 
 </pre><a href="#section-6.1-29" class="pilcrow">¶</a>
 </div>
@@ -2295,8 +2295,8 @@ ZHJ5M2xjYndIZ2VaOGtoQXYxVTFPU2xlclAwVmtCSnJXWjAifV0sICJfc2RfYWxnIjog
 InNoYS0yNTYiLCAiY25mIjogeyJqd2siOiB7Imt0eSI6ICJFQyIsICJjcnYiOiAiUC0y
 NTYiLCAieCI6ICJUQ0FFUjE5WnZ1M09IRjRqNFc0dmZTVm9ISVAxSUxpbERsczd2Q2VH
 ZW1jIiwgInkiOiAiWnhqaVdXYlpNUUdIVldLVlE0aGJTSWlyc1ZmdWVjQ0U2dDRqVDlG
-MkhaUSJ9fX0.9vi33ud-QW4UqUXe_3gM-5exqRysmf6zwDUGs68ChQNwJUUHVfQKgBiC
-ry87WBedd44bc6lw5DEqgAgTIeyyYQ~WyIyR0xDNDJzS1F2ZUNmR2ZyeU5STjl3IiwgI
+MkhaUSJ9fX0.U7vajjP8sLu-ekMnVywiDEMfgVRmFc5OqXLaAEryf6JtBw-96m0RiYgo
+E_82mRjZeZimg6RygBLsvbtKOKuw_g~WyIyR0xDNDJzS1F2ZUNmR2ZyeU5STjl3IiwgI
 mdpdmVuX25hbWUiLCAiSm9obiJd~WyJlbHVWNU9nM2dTTklJOEVZbnN4QV9BIiwgImZh
 bWlseV9uYW1lIiwgIkRvZSJd~WyI2SWo3dE0tYTVpVlBHYm9TNXRtdlZBIiwgImVtYWl
 sIiwgImpvaG5kb2VAZXhhbXBsZS5jb20iXQ~WyJlSThaV205UW5LUHBOUGVOZW5IZGhR
@@ -2340,18 +2340,18 @@ ZHJ5M2xjYndIZ2VaOGtoQXYxVTFPU2xlclAwVmtCSnJXWjAifV0sICJfc2RfYWxnIjog
 InNoYS0yNTYiLCAiY25mIjogeyJqd2siOiB7Imt0eSI6ICJFQyIsICJjcnYiOiAiUC0y
 NTYiLCAieCI6ICJUQ0FFUjE5WnZ1M09IRjRqNFc0dmZTVm9ISVAxSUxpbERsczd2Q2VH
 ZW1jIiwgInkiOiAiWnhqaVdXYlpNUUdIVldLVlE0aGJTSWlyc1ZmdWVjQ0U2dDRqVDlG
-MkhaUSJ9fX0.9vi33ud-QW4UqUXe_3gM-5exqRysmf6zwDUGs68ChQNwJUUHVfQKgBiC
-ry87WBedd44bc6lw5DEqgAgTIeyyYQ~WyJlbHVWNU9nM2dTTklJOEVZbnN4QV9BIiwgI
+MkhaUSJ9fX0.U7vajjP8sLu-ekMnVywiDEMfgVRmFc5OqXLaAEryf6JtBw-96m0RiYgo
+E_82mRjZeZimg6RygBLsvbtKOKuw_g~WyJlbHVWNU9nM2dTTklJOEVZbnN4QV9BIiwgI
 mZhbWlseV9uYW1lIiwgIkRvZSJd~WyJBSngtMDk1VlBycFR0TjRRTU9xUk9BIiwgImFk
 ZHJlc3MiLCB7InN0cmVldF9hZGRyZXNzIjogIjEyMyBNYWluIFN0IiwgImxvY2FsaXR5
 IjogIkFueXRvd24iLCAicmVnaW9uIjogIkFueXN0YXRlIiwgImNvdW50cnkiOiAiVVMi
 fV0~WyIyR0xDNDJzS1F2ZUNmR2ZyeU5STjl3IiwgImdpdmVuX25hbWUiLCAiSm9obiJd
 ~WyJsa2x4RjVqTVlsR1RQVW92TU5JdkNBIiwgIlVTIl0~eyJhbGciOiAiRVMyNTYiLCA
 idHlwIjogImtiK2p3dCJ9.eyJub25jZSI6ICIxMjM0NTY3ODkwIiwgImF1ZCI6ICJodH
-RwczovL3ZlcmlmaWVyLmV4YW1wbGUub3JnIiwgImlhdCI6IDE3MTIwOTMxMjgsICJzZF
-9oYXNoIjogInI1eENvSXoyV2JmdUUzbUxjbVNxbkdQRndFU3FEUkVkYXc5QmhzNjlPSk
-EifQ.hwYDPPsEnc_Mt_P3gZSFhRUajsBgEfdb8SyxDo8oaujtiHlfBLx-ry1D_bMj7X8
-9yBW2jGnMks1RTEssqaGiCg
+RwczovL3ZlcmlmaWVyLmV4YW1wbGUub3JnIiwgImlhdCI6IDE3MTUyNTU5NDMsICJzZF
+9oYXNoIjogIk9TeXVmNXFzRktQZnJGcjNaa3pMSGJsOE9KTFNRZllFN0FMVWpKd0JBSU
+EifQ.Qa4A1l20VqJts2Dwixz0UsvuMsdR9bdpKMLBm9jBxgCJ5VfHnE5a0yUrZ1KJMqU
+1gvaoZJrcpK41oUTE7AdZdQ
 
 </pre><a href="#section-6.2-2" class="pilcrow">¶</a>
 </div>
@@ -2360,8 +2360,8 @@ EifQ.hwYDPPsEnc_Mt_P3gZSFhRUajsBgEfdb8SyxDo8oaujtiHlfBLx-ry1D_bMj7X8
 <pre>{
   "nonce": "1234567890",
   "aud": "https://verifier.example.org",
-  "iat": 1712093128,
-  "sd_hash": "r5xCoIz2WbfuE3mLcmSqnGPFwESqDREdaw9Bhs69OJA"
+  "iat": 1715255943,
+  "sd_hash": "OSyuf5qsFKPfrFr3ZkzLHbl8OJLSQfYE7ALUjJwBAIA"
 }
 
 </pre><a href="#section-6.2-4" class="pilcrow">¶</a>
@@ -2819,7 +2819,7 @@ specification.<a href="#section-9-3" class="pilcrow">¶</a></p>
 <p id="section-9-4">Verification of the JWS JSON serialized SD-JWT follows the same rules defined in <a href="#verification" class="auto internal xref">Section 4.4</a>,
 except that the SD-JWT does not need to be split into component parts and the Disclosures
 can be found in the respective member of the JSON object (or elsewhere).<a href="#section-9-4" class="pilcrow">¶</a></p>
-<p id="section-9-5">Using a payload similar to that from <a href="#example-1">Example 1</a>, the following is a non-normative example of
+<p id="section-9-5">Using a payload similar to that from the example in <a href="#main-example" class="auto internal xref">Section 6</a>, the following is a non-normative example of
 a JWS JSON serialized SD-JWT from an Issuer with all the respective Disclosures.<a href="#section-9-5" class="pilcrow">¶</a></p>
 <div class="lang-json sourcecode" id="section-9-6">
 <pre>{
@@ -2835,8 +2835,8 @@ a JWS JSON serialized SD-JWT from an Issuer with all the respective Disclosures.
     Aic2hhLTI1NiJ9",
   "protected":
     "eyJhbGciOiAiRVMyNTYiLCAidHlwIjogImV4YW1wbGUrc2Qtand0In0",
-  "signature": "2x9Y6ehSsJtyfuqJQ70JiEntu61MK2Tfh94-oKhIIje96eprKG1r
-    P3XSz5kaTfAhSL-iNITKF-AlC8zbh54Csg",
+  "signature": "9q_otYbMa7-cSGpF40hlC6tRU7kIYHcU5YyKgdRI_FSzUW_fdzZ-
+    1iRimLRkcEt70Ly_ql2aYKs1PdxmFXiyRw",
   "disclosures": [
     "WyIyR0xDNDJzS1F2ZUNmR2ZyeU5STjl3IiwgInN1YiIsICJqb2huX2RvZV80MiJ
       d",
@@ -2874,8 +2874,8 @@ has selected to disclose <code>given_name</code>, <code>family_name</code>, and 
     Aic2hhLTI1NiJ9",
   "protected":
     "eyJhbGciOiAiRVMyNTYiLCAidHlwIjogImV4YW1wbGUrc2Qtand0In0",
-  "signature": "2x9Y6ehSsJtyfuqJQ70JiEntu61MK2Tfh94-oKhIIje96eprKG1r
-    P3XSz5kaTfAhSL-iNITKF-AlC8zbh54Csg",
+  "signature": "9q_otYbMa7-cSGpF40hlC6tRU7kIYHcU5YyKgdRI_FSzUW_fdzZ-
+    1iRimLRkcEt70Ly_ql2aYKs1PdxmFXiyRw",
   "disclosures": [
     "WyI2SWo3dE0tYTVpVlBHYm9TNXRtdlZBIiwgImZhbWlseV9uYW1lIiwgIkRvZSJ
       d",
@@ -2958,7 +2958,7 @@ on generating random values.<a href="#section-10.3-1" class="pilcrow">¶</a></p>
 <p id="section-10.3-2">The RECOMMENDED minimum length of the randomly-generated portion of the salt is 128 bits.<a href="#section-10.3-2" class="pilcrow">¶</a></p>
 <p id="section-10.3-3">The Issuer MUST ensure that a new salt value is chosen for each claim,
 including when the same claim name occurs at different places in the
-structure of the SD-JWT. This can be seen in Example 3 in the Appendix,
+structure of the SD-JWT. This can be seen in the example in <a href="#example-complex-structured-sd-jwt" class="auto internal xref">Appendix A.2</a>,
 where multiple claims with the name <code>type</code> appear, but each of them has
 a different salt.<a href="#section-10.3-3" class="pilcrow">¶</a></p>
 </section>
@@ -3728,10 +3728,10 @@ nor the selection of selectively disclosable claims is normative.<a href="#appen
 <p id="appendix-A-2">Line breaks have been added for readability.<a href="#appendix-A-2" class="pilcrow">¶</a></p>
 <div id="example-simple_structured">
 <section id="appendix-A.1">
-        <h3 id="name-example-2-handling-structur">
-<a href="#appendix-A.1" class="section-number selfRef">A.1. </a><a href="#name-example-2-handling-structur" class="section-name selfRef">Example 2: Handling Structured Claims</a>
+        <h3 id="name-simple-structured-sd-jwt">
+<a href="#appendix-A.1" class="section-number selfRef">A.1. </a><a href="#name-simple-structured-sd-jwt" class="section-name selfRef">Simple Structured SD-JWT</a>
         </h3>
-<p id="appendix-A.1-1">In this example, in contrast to <a href="#example-1">Example 1</a>, the Issuer decided to create a structured object for the <code>address</code> claim, allowing to separately disclose individual members of the claim.<a href="#appendix-A.1-1" class="pilcrow">¶</a></p>
+<p id="appendix-A.1-1">In this example, in contrast to <a href="#main-example" class="auto internal xref">Section 6</a>, the Issuer decided to create a structured object for the <code>address</code> claim, allowing to separately disclose individual members of the claim.<a href="#appendix-A.1-1" class="pilcrow">¶</a></p>
 <p id="appendix-A.1-2">The Issuer is using the following input claim set:<a href="#appendix-A.1-2" class="pilcrow">¶</a></p>
 <div class="lang-json sourcecode" id="appendix-A.1-3">
 <pre>{
@@ -3953,8 +3953,8 @@ WUpISVo4VnUtZjlDQ3lWdWIyVWZnRWs4anZ2WGV6d0sxcF9KbmVlWFEiLCAiZ2xUM2hy
 U1U3ZlNXZ3dGNVVEWm1Xd0JUdzMyZ25VbGRJaGk4aEdWQ2FWNCIsICJydkpkNmlxNlQ1
 ZWptc0JNb0d3dU5YaDlxQUFGQVRBY2k0MG9pZEVlVnNBIiwgInVOSG9XWWhYc1poVkpD
 TkUyRHF5LXpxdDd0NjlnSkt5NVFhRnY3R3JNWDQiXX0sICJfc2RfYWxnIjogInNoYS0y
-NTYifQ.avzOOrcLLP8IDbBbMt1PWCBrOZLLntT6A3KqOIsb94XsaLocJSat7gZ8kIMCW
-nU2ODtpWQHD0PuRbaih0wAfvQ~WyJHMDJOU3JRZmpGWFE3SW8wOXN5YWpBIiwgInJlZ2
+NTYifQ.m304MEHnZTIYAfQQ_lGz7US7zC-mnSy8E-dEG5awP5h4E3Xin7SK62PX96fjH
+MW7pM85LwE2a33Ne8AwN75bmw~WyJHMDJOU3JRZmpGWFE3SW8wOXN5YWpBIiwgInJlZ2
 lvbiIsICJcdTZlMmZcdTUzM2EiXQ~WyJsa2x4RjVqTVlsR1RQVW92TU5JdkNBIiwgImN
 vdW50cnkiLCAiSlAiXQ~
 
@@ -3964,8 +3964,8 @@ vdW50cnkiLCAiSlAiXQ~
 </div>
 <div id="example-complex-structured-sd-jwt">
 <section id="appendix-A.2">
-        <h3 id="name-example-3-complex-structure">
-<a href="#appendix-A.2" class="section-number selfRef">A.2. </a><a href="#name-example-3-complex-structure" class="section-name selfRef">Example 3 - Complex Structured SD-JWT</a>
+        <h3 id="name-complex-structured-sd-jwt">
+<a href="#appendix-A.2" class="section-number selfRef">A.2. </a><a href="#name-complex-structured-sd-jwt" class="section-name selfRef">Complex Structured SD-JWT</a>
         </h3>
 <p id="appendix-A.2-1">In this example, an SD-JWT with a complex object is represented. The data
 structures defined in OIDC4IDA <span>[<a href="#OIDC.IDA" class="cite xref">OIDC.IDA</a>]</span> are used.<a href="#appendix-A.2-1" class="pilcrow">¶</a></p>
@@ -4292,8 +4292,8 @@ ZFJtc01vIiwgIldOQS1VTks3Rl96aHNBYjlzeVdPNklJUTF1SGxUbU9VOHI4Q3ZKMGNJ
 TWsiLCAiV3hoX3NWM2lSSDliZ3JUQkppLWFZSE5DTHQtdmpoWDFzZC1pZ09mXzlsayIs
 ICJfTy13SmlIM2VuU0I0Uk9IbnRUb1FUOEptTHR6LW1oTzJmMWM4OVhvZXJRIiwgImh2
 RFhod21HY0pRc0JDQTJPdGp1TEFjd0FNcERzYVUwbmtvdmNLT3FXTkUiXX19LCAiX3Nk
-X2FsZyI6ICJzaGEtMjU2In0.32GkpxDsrTJx7vrxSpK5P7NQMo5lwIdLDqvWEmRsfDFS
-_4Ej8e8gQSBm7VE6XBliI_oIHrru-0R3QVjZt-vUVQ~WyIyR0xDNDJzS1F2ZUNmR2Zye
+X2FsZyI6ICJzaGEtMjU2In0.Cz6fymw049sKcC6il8xVsky0pFpgD1XI8eoa14h_B_pj
+m6A-Rb5dmSO21GI5XFRh8_s4UkK8RNk-cKF9gXpcFg~WyIyR0xDNDJzS1F2ZUNmR2Zye
 U5STjl3IiwgInRpbWUiLCAiMjAxMi0wNC0yM1QxODoyNVoiXQ~WyJQYzMzSk0yTGNoY1
 VfbEhnZ3ZfdWZRIiwgeyJfc2QiOiBbIjl3cGpWUFd1RDdQSzBuc1FETDhCMDZsbWRnVj
 NMVnliaEh5ZFFwVE55TEkiLCAiRzVFbmhPQU9vVTlYXzZRTU52ekZYanBFQV9SYy1BRX
@@ -4341,10 +4341,10 @@ iAiREUiLCAic3RyZWV0X2FkZHJlc3MiOiAiV2VpZGVuc3RyYVx1MDBkZmUgMjIifV0~
 </div>
 </section>
 </div>
-<div id="example-4a-sd-jwt-based-verifiable-credentials-sd-jwt-vc">
+<div id="sd-jwt-based-verifiable-credentials-sd-jwt-vc">
 <section id="appendix-A.3">
-        <h3 id="name-example-4a-sd-jwt-based-ver">
-<a href="#appendix-A.3" class="section-number selfRef">A.3. </a><a href="#name-example-4a-sd-jwt-based-ver" class="section-name selfRef">Example 4a - SD-JWT-based Verifiable Credentials (SD-JWT VC)</a>
+        <h3 id="name-sd-jwt-based-verifiable-cre">
+<a href="#appendix-A.3" class="section-number selfRef">A.3. </a><a href="#name-sd-jwt-based-verifiable-cre" class="section-name selfRef">SD-JWT-based Verifiable Credentials (SD-JWT VC)</a>
         </h3>
 <p id="appendix-A.3-1">This example shows how the artifacts defined in this specification could be
 used in the context of SD-JWT-based Verifiable
@@ -4413,8 +4413,8 @@ oeTJyMDE4dnJzSmpvLVZqZDZnNnl0N0Fhb25Lb25uaXVKOXplbDNqbyIsICJxcDdaX0t
 6ICJzaGEtMjU2IiwgImNuZiI6IHsiandrIjogeyJrdHkiOiAiRUMiLCAiY3J2IjogIlA
 tMjU2IiwgIngiOiAiVENBRVIxOVp2dTNPSEY0ajRXNHZmU1ZvSElQMUlMaWxEbHM3dkN
 lR2VtYyIsICJ5IjogIlp4amlXV2JaTVFHSFZXS1ZRNGhiU0lpcnNWZnVlY0NFNnQ0alQ
-5RjJIWlEifX19.bForJ9xHPFnHLZ1BzDKcPMmF6hxLyS_r6ppwWvVLdwtrP9v0J8ZWyG
-cRnSLlZHl9h4YmLw4yDsOwv0X79gbvEg~WyIyR0xDNDJzS1F2ZUNmR2ZyeU5STjl3Iiw
+5RjJIWlEifX19.yZlSQKsUNg6vGj30w5KsjLY6bAD5bOqGf212vleIY6sFcAeAZXqiNU
+TcCyfN6dGE88gyhoJrabjqwBdXkCJRyQ~WyIyR0xDNDJzS1F2ZUNmR2ZyeU5STjl3Iiw
 gImdpdmVuX25hbWUiLCAiRXJpa2EiXQ~WyJlbHVWNU9nM2dTTklJOEVZbnN4QV9BIiwg
 ImZhbWlseV9uYW1lIiwgIk11c3Rlcm1hbm4iXQ~WyI2SWo3dE0tYTVpVlBHYm9TNXRtd
 lZBIiwgImJpcnRoZGF0ZSIsICIxOTYzLTA4LTEyIl0~WyJlSThaV205UW5LUHBOUGVOZ
@@ -4769,14 +4769,14 @@ oeTJyMDE4dnJzSmpvLVZqZDZnNnl0N0Fhb25Lb25uaXVKOXplbDNqbyIsICJxcDdaX0t
 6ICJzaGEtMjU2IiwgImNuZiI6IHsiandrIjogeyJrdHkiOiAiRUMiLCAiY3J2IjogIlA
 tMjU2IiwgIngiOiAiVENBRVIxOVp2dTNPSEY0ajRXNHZmU1ZvSElQMUlMaWxEbHM3dkN
 lR2VtYyIsICJ5IjogIlp4amlXV2JaTVFHSFZXS1ZRNGhiU0lpcnNWZnVlY0NFNnQ0alQ
-5RjJIWlEifX19.bForJ9xHPFnHLZ1BzDKcPMmF6hxLyS_r6ppwWvVLdwtrP9v0J8ZWyG
-cRnSLlZHl9h4YmLw4yDsOwv0X79gbvEg~WyJuUHVvUW5rUkZxM0JJZUFtN0FuWEZBIiw
+5RjJIWlEifX19.yZlSQKsUNg6vGj30w5KsjLY6bAD5bOqGf212vleIY6sFcAeAZXqiNU
+TcCyfN6dGE88gyhoJrabjqwBdXkCJRyQ~WyJuUHVvUW5rUkZxM0JJZUFtN0FuWEZBIiw
 gIm5hdGlvbmFsaXRpZXMiLCBbIkRFIl1d~WyJNMEpiNTd0NDF1YnJrU3V5ckRUM3hBIi
 wgIjE4IiwgdHJ1ZV0~eyJhbGciOiAiRVMyNTYiLCAidHlwIjogImtiK2p3dCJ9.eyJub
 25jZSI6ICIxMjM0NTY3ODkwIiwgImF1ZCI6ICJodHRwczovL3ZlcmlmaWVyLmV4YW1wb
-GUub3JnIiwgImlhdCI6IDE3MTIwOTMxMjksICJzZF9oYXNoIjogIlVMOUhsUmN2TW94V
-jJESnd0dlYxUXRmU1NUVnJodzhoOU5TbnlOVVFTamcifQ.TZ47vrPjYI95yom4R5EDCc
-GThCTmRztxh3KF2IteZ60emPFgInP5uYhQNZ6hDoRhn2nNe0n247bLuvQ33pPlzA
+GUub3JnIiwgImlhdCI6IDE3MTUyNTU5NDMsICJzZF9oYXNoIjogIkowdjlacWg1N25sL
+XVEaVIwS3hwR3FaUzJoYmc2RzVLOTMtOVFmMUZXTlUifQ.Uxo1-3UvYM_0HksnS6XJzt
+odz0jrNXPREmUaoHpey4dKSmFxPSaCHuNao3ErMUay475QAZGRqRzLzNiqDZtIUg
 
 </pre><a href="#appendix-A.3-53" class="pilcrow">¶</a>
 </div>
@@ -4785,8 +4785,8 @@ GThCTmRztxh3KF2IteZ60emPFgInP5uYhQNZ6hDoRhn2nNe0n247bLuvQ33pPlzA
 <pre>{
   "nonce": "1234567890",
   "aud": "https://verifier.example.org",
-  "iat": 1712093129,
-  "sd_hash": "UL9HlRcvMoxV2DJwtvV1QtfSSTVrhw8h9NSnyNUQSjg"
+  "iat": 1715255943,
+  "sd_hash": "J0v9Zqh57nl-uDiR0KxpGqZS2hbg6G5K93-9Qf1FWNU"
 }
 
 </pre><a href="#appendix-A.3-55" class="pilcrow">¶</a>
@@ -4818,10 +4818,10 @@ GThCTmRztxh3KF2IteZ60emPFgInP5uYhQNZ6hDoRhn2nNe0n247bLuvQ33pPlzA
 </div>
 </section>
 </div>
-<div id="example-4b-w3c-verifiable-credentials-data-model-v2-0">
+<div id="w3c-verifiable-credentials-data-model-v2-0">
 <section id="appendix-A.4">
-        <h3 id="name-example-4b-w3c-verifiable-c">
-<a href="#appendix-A.4" class="section-number selfRef">A.4. </a><a href="#name-example-4b-w3c-verifiable-c" class="section-name selfRef">Example 4b - W3C Verifiable Credentials Data Model v2.0</a>
+        <h3 id="name-w3c-verifiable-credentials-">
+<a href="#appendix-A.4" class="section-number selfRef">A.4. </a><a href="#name-w3c-verifiable-credentials-" class="section-name selfRef">W3C Verifiable Credentials Data Model v2.0</a>
         </h3>
 <p id="appendix-A.4-1">This non-normative example illustrates how the artifacts defined in this specification
 could be used to express a W3C Verifiable Credentials Data Model v2.0 <span>[<a href="#VC_DATA_v2.0" class="cite xref">VC_DATA_v2.0</a>]</span> payload.<a href="#appendix-A.4-1" class="pilcrow">¶</a></p>
@@ -4899,8 +4899,8 @@ VmFjY2luZVJlY2lwaWVudCJ9LCAidHlwZSI6ICJWYWNjaW5hdGlvbkV2ZW50In0sICJf
 c2RfYWxnIjogInNoYS0yNTYiLCAiY25mIjogeyJqd2siOiB7Imt0eSI6ICJFQyIsICJj
 cnYiOiAiUC0yNTYiLCAieCI6ICJUQ0FFUjE5WnZ1M09IRjRqNFc0dmZTVm9ISVAxSUxp
 bERsczd2Q2VHZW1jIiwgInkiOiAiWnhqaVdXYlpNUUdIVldLVlE0aGJTSWlyc1ZmdWVj
-Q0U2dDRqVDlGMkhaUSJ9fX0.aeI9DQh5bM9HLqsO3DHcAmCeQFXVycPMEGbbK0PjHFG0
-G6gwUrtNQJzWxM69jfy48jx5NGqh_ds9Hf37Ds3skw~WyIyR0xDNDJzS1F2ZUNmR2Zye
+Q0U2dDRqVDlGMkhaUSJ9fX0.c0CwqsRY-q0ZTY9VvSDTMCUzHwDaOJsYsQwERDqD_Sho
+j2aUbhFQ5HeaY9v_iV5glfsZh24CwsaJh25XTHMaGg~WyIyR0xDNDJzS1F2ZUNmR2Zye
 U5STjl3IiwgImF0Y0NvZGUiLCAiSjA3QlgwMyJd~WyJlbHVWNU9nM2dTTklJOEVZbnN4
 QV9BIiwgIm1lZGljaW5hbFByb2R1Y3ROYW1lIiwgIkNPVklELTE5IFZhY2NpbmUgTW9k
 ZXJuYSJd~WyI2SWo3dE0tYTVpVlBHYm9TNXRtdlZBIiwgIm1hcmtldGluZ0F1dGhvcml
@@ -5182,18 +5182,18 @@ VmFjY2luZVJlY2lwaWVudCJ9LCAidHlwZSI6ICJWYWNjaW5hdGlvbkV2ZW50In0sICJf
 c2RfYWxnIjogInNoYS0yNTYiLCAiY25mIjogeyJqd2siOiB7Imt0eSI6ICJFQyIsICJj
 cnYiOiAiUC0yNTYiLCAieCI6ICJUQ0FFUjE5WnZ1M09IRjRqNFc0dmZTVm9ISVAxSUxp
 bERsczd2Q2VHZW1jIiwgInkiOiAiWnhqaVdXYlpNUUdIVldLVlE0aGJTSWlyc1ZmdWVj
-Q0U2dDRqVDlGMkhaUSJ9fX0.aeI9DQh5bM9HLqsO3DHcAmCeQFXVycPMEGbbK0PjHFG0
-G6gwUrtNQJzWxM69jfy48jx5NGqh_ds9Hf37Ds3skw~WyJQYzMzSk0yTGNoY1VfbEhnZ
+Q0U2dDRqVDlGMkhaUSJ9fX0.c0CwqsRY-q0ZTY9VvSDTMCUzHwDaOJsYsQwERDqD_Sho
+j2aUbhFQ5HeaY9v_iV5glfsZh24CwsaJh25XTHMaGg~WyJQYzMzSk0yTGNoY1VfbEhnZ
 3ZfdWZRIiwgIm9yZGVyIiwgIjMvMyJd~WyJBSngtMDk1VlBycFR0TjRRTU9xUk9BIiwg
 ImRhdGVPZlZhY2NpbmF0aW9uIiwgIjIwMjEtMDYtMjNUMTM6NDA6MTJaIl0~WyIyR0xD
 NDJzS1F2ZUNmR2ZyeU5STjl3IiwgImF0Y0NvZGUiLCAiSjA3QlgwMyJd~WyJlbHVWNU9
 nM2dTTklJOEVZbnN4QV9BIiwgIm1lZGljaW5hbFByb2R1Y3ROYW1lIiwgIkNPVklELTE
 5IFZhY2NpbmUgTW9kZXJuYSJd~eyJhbGciOiAiRVMyNTYiLCAidHlwIjogImtiK2p3dC
 J9.eyJub25jZSI6ICIxMjM0NTY3ODkwIiwgImF1ZCI6ICJodHRwczovL3ZlcmlmaWVyL
-mV4YW1wbGUub3JnIiwgImlhdCI6IDE3MTIwOTMxMjgsICJzZF9oYXNoIjogIko5V2RzQ
-UFDUXFZeWlVT3YtMmkyZXgzTmNQTEw4WHV5V3lPUmhEQjF2YjQifQ.IliXaZDLz8wu-1
-NP3cexfRsHZIuovyz3DlEqdtcKZ8sgu8LDnxtpKLMqV31wY4BQoV5dqZYMyJKMHv6HX4
-y4DQ
+mV4YW1wbGUub3JnIiwgImlhdCI6IDE3MTUyNTU5NDMsICJzZF9oYXNoIjogIlFucTR0Y
+VRFZ0wwZGhiQXNUUGdNWDFxcjRHZDZMNHN4NkFSbV9ySW1xbWMifQ.mL_PYUN4FMv3zS
+STdlYuAffTB3WtrnwCxH-sGRT_cXQBjo9CZU6U1EyfLq8slD2ltIOS30Fmo_zlTtMHJ0
+WKEA
 
 </pre><a href="#appendix-A.4-39" class="pilcrow">¶</a>
 </div>
@@ -5374,6 +5374,8 @@ data. The original JSON data is then used by the application. See
 <li class="compact" id="appendix-C-3.1">Attempt to better explain how salt in the Disclosure makes guessing the preimage of the digest infeasible<a href="#appendix-C-3.1" class="pilcrow">¶</a>
 </li>
         <li class="compact" id="appendix-C-3.2">Consolidate salt entropy and length security consideration subsections<a href="#appendix-C-3.2" class="pilcrow">¶</a>
+</li>
+        <li class="compact" id="appendix-C-3.3">Unnumbered most of the examples for improved clarity<a href="#appendix-C-3.3" class="pilcrow">¶</a>
 </li>
       </ul>
 <p id="appendix-C-4">-08<a href="#appendix-C-4" class="pilcrow">¶</a></p>
