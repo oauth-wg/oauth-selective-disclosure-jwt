@@ -569,12 +569,12 @@ of trust requirements such as trust frameworks it belongs to. See
 (#key_binding_security) for security considerations.
 
 
-# Example 1: SD-JWT {#example-1}
+# Example SD-JWT {#main-example}
 
 In this example, a simple SD-JWT is demonstrated. This example is split into issuance and presentation.
 
 Note: Throughout the examples in this document, line breaks had to be added to
-JSON strings and base64-encoded strings to adhere to the 72 character limit for
+JSON strings and base64-encoded strings to adhere to the 72-character limit for
 lines in RFCs and for readability. JSON does not allow line breaks within strings.
 
 ## Issuance
@@ -778,6 +778,7 @@ unprotected header parameters are defined:
    Disclosure as described in (#creating_disclosures).
  * `kb_jwt`: A Key Binding JWT as described in (#kb-jwt).
 
+
 If a Key Binding JWT is present, the digest in the `sd_hash` claim MUST be taken
 over a string built as described in (#integrity-protection-of-the-presentation).
 The "Issuer-signed JWT" part is built by concatenating the protected header, the
@@ -887,7 +888,7 @@ The RECOMMENDED minimum length of the randomly-generated portion of the salt is 
 
 The Issuer MUST ensure that a new salt value is chosen for each claim,
 including when the same claim name occurs at different places in the
-structure of the SD-JWT. This can be seen in Example 3 in the Appendix,
+structure of the SD-JWT. This can be seen in the example in (#example-complex-structured-sd-jwt),
 where multiple claims with the name `type` appear, but each of them has
 a different salt.
 
@@ -1495,9 +1496,9 @@ nor the selection of selectively disclosable claims is normative.
 
 Line breaks have been added for readability.
 
-## Example 2: Handling Structured Claims {#example-simple_structured}
+## Simple Structured SD-JWT {#example-simple_structured}
 
-In this example, in contrast to [Example 1](#example-1), the Issuer decided to create a structured object for the `address` claim, allowing to separately disclose individual members of the claim.
+In this example, in contrast to (#main-example), the Issuer decided to create a structured object for the `address` claim, allowing to separately disclose individual members of the claim.
 
 The Issuer is using the following input claim set:
 
@@ -1522,7 +1523,7 @@ and `country` of the `address` property and without a Key Binding JWT could look
 
 <{{examples/simple_structured/sd_jwt_presentation.txt}}
 
-## Example 3 - Complex Structured SD-JWT {#example-complex-structured-sd-jwt}
+## Complex Structured SD-JWT {#example-complex-structured-sd-jwt}
 
 In this example, an SD-JWT with a complex object is represented. The data
 structures defined in OIDC4IDA [@OIDC.IDA] are used.
@@ -1548,7 +1549,7 @@ After the validation, the Verifier will have the following data for further proc
 
 <{{examples/complex_ekyc/verified_contents.json}}
 
-## Example 4a - SD-JWT-based Verifiable Credentials (SD-JWT VC)
+## SD-JWT-based Verifiable Credentials (SD-JWT VC)
 
 This example shows how the artifacts defined in this specification could be
 used in the context of SD-JWT-based Verifiable
@@ -1587,7 +1588,7 @@ After the validation, the Verifier will have the following data for further proc
 
 <{{examples/arf-pid/verified_contents.json}}
 
-## Example 4b - W3C Verifiable Credentials Data Model v2.0
+## W3C Verifiable Credentials Data Model v2.0
 
 This non-normative example illustrates how the artifacts defined in this specification
 could be used to express a W3C Verifiable Credentials Data Model v2.0 [@VC_DATA_v2.0] payload.
@@ -1748,6 +1749,7 @@ data. The original JSON data is then used by the application. See
    * New structure for JSON-serialized SD-JWTs/KB-JWTs to better align with JAdES.
    * Attempt to better explain how salt in the Disclosure makes guessing the preimage of the digest infeasible
    * Consolidate salt entropy and length security consideration subsections
+   * Unnumbered most of the examples for improved clarity
 
    -08
 
