@@ -45,6 +45,7 @@ The artifacts generated for the examples (e.g., serialized SD-JWTs, Disclosures,
  * Kotlin: [eudi-lib-jvm-sdjwt (EU Digital Identity Wallet)](https://github.com/eu-digital-identity-wallet/eudi-lib-jvm-sdjwt-kt)
  * Kotlin Multiplatform (JVM/JS) [waltid-sdjwt](https://github.com/walt-id/waltid-identity/tree/main/waltid-sdjwt)
  * Swift: [eudi-lib-sdjwt-swift (EU Digital Identity Wallet)](https://github.com/eu-digital-identity-wallet/eudi-lib-sdjwt-swift)
+ * Rust: [sd_jwt](https://github.com/kushaldas/sd_jwt)
  * Rust: [sd-jwt-rs (OWF)](https://github.com/openwallet-foundation-labs/sd-jwt-rust)
  * TypeScript: [sd-jwt-js](https://github.com/openwallet-foundation-labs/sd-jwt-js)
  * TypeScript: [sd-jwt](https://github.com/christianpaquin/sd-jwt)
