@@ -47,6 +47,7 @@ The artifacts generated for the examples (e.g., serialized SD-JWTs, Disclosures,
  * Swift: [eudi-lib-sdjwt-swift (EU Digital Identity Wallet)](https://github.com/eu-digital-identity-wallet/eudi-lib-sdjwt-swift)
  * Rust: [sd_jwt](https://github.com/kushaldas/sd_jwt)
  * TypeScript: [sd-jwt-js](https://github.com/openwallet-foundation-labs/sd-jwt-js)
+ * TypeScript: [SD-JWT Testing API server](https://github.com/lukasjhan/sd-jwt-test-api)
  * TypeScript: [sd-jwt](https://github.com/christianpaquin/sd-jwt)
  * TypeScript: [sd-jwt-ts](https://github.com/chike0905/sd-jwt-ts)
  * TypeScript: [jwt-sd](https://github.com/blu3beri/jwt-sd)
