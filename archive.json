@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2024-05-16T00:12:10.734153+00:00",
+  "timestamp": "2024-05-19T00:13:16.222106+00:00",
   "repo": "oauth-wg/oauth-selective-disclosure-jwt",
   "labels": [
     {
@@ -10796,18 +10796,17 @@
       "id": "I_kwDOHTmVzM6Cw3Gv",
       "title": "Add Test suite for SD-JWT",
       "url": "https://github.com/oauth-wg/oauth-selective-disclosure-jwt/issues/416",
-      "state": "OPEN",
+      "state": "CLOSED",
       "author": "lukasjhan",
       "authorAssociation": "CONTRIBUTOR",
       "assignees": [],
       "labels": [
-        "ready-for-PR",
-        "pending-close"
+        "has-PR"
       ],
       "body": "HI! I and @yunseorim1116 made a Test suite project for checking SD-JWT implementation.\r\nYou can check it here: https://github.com/lukasjhan/sd-jwt-test-api\r\nIt was written in TypeScript. It is in API server format and is distributed using docker.\r\n\r\nI'm curious about your opinions on this project. \r\nIf this is okay, How about write it in a standard document or put it in README?\r\n\r\nThank you",
       "createdAt": "2024-03-19T01:59:10Z",
-      "updatedAt": "2024-05-15T16:16:52Z",
-      "closedAt": null,
+      "updatedAt": "2024-05-16T19:25:20Z",
+      "closedAt": "2024-05-16T19:25:19Z",
       "comments": [
         {
           "author": "bc-pi",
@@ -10836,6 +10835,13 @@
           "body": "> Thank you I'll open a PR :)\r\n\r\n@lukasjhan can you do this please? ",
           "createdAt": "2024-05-15T15:49:14Z",
           "updatedAt": "2024-05-15T15:49:14Z"
+        },
+        {
+          "author": "lukasjhan",
+          "authorAssociation": "CONTRIBUTOR",
+          "body": "@bc-pi sorry for late response :) I created a PR",
+          "createdAt": "2024-05-16T09:00:03Z",
+          "updatedAt": "2024-05-16T09:00:03Z"
         }
       ]
     },
@@ -45246,13 +45252,13 @@
       "labels": [],
       "body": "Replace old Rust implementation reference (draft v2) with the latest one in OWF.",
       "createdAt": "2024-04-17T09:07:21Z",
-      "updatedAt": "2024-05-15T15:48:56Z",
+      "updatedAt": "2024-05-16T14:53:16Z",
       "baseRepository": "oauth-wg/oauth-selective-disclosure-jwt",
       "baseRefName": "master",
-      "baseRefOid": "d342443cb47aa4de08335ee06ddb59a62b365d06",
+      "baseRefOid": "aa212faf5f2f9b053b0f4a3483e839aadd7792c9",
       "headRepository": "jovfer/oauth-selective-disclosure-jwt",
       "headRefName": "patch-1",
-      "headRefOid": "682d9f701b086dec5618cbd2399cca0062c85de9",
+      "headRefOid": "1993531c4674eb71862c5748bfad19aca0be27f7",
       "closedAt": null,
       "mergedAt": null,
       "mergedBy": null,
@@ -45271,6 +45277,13 @@
           "body": "@jovfer Can you please address the comments/proposed changes above?",
           "createdAt": "2024-05-15T15:48:55Z",
           "updatedAt": "2024-05-15T15:48:55Z"
+        },
+        {
+          "author": "jovfer",
+          "authorAssociation": "NONE",
+          "body": "Updated. I'm unsure if it's worth keeping the link to the outdated implementation, but it's probably out of scope for this PR.",
+          "createdAt": "2024-05-16T14:53:15Z",
+          "updatedAt": "2024-05-16T14:53:15Z"
         }
       ],
       "reviews": [
@@ -45480,6 +45493,48 @@
           "body": "like it",
           "createdAt": "2024-05-09T10:30:51Z",
           "updatedAt": "2024-05-09T10:30:51Z",
+          "comments": []
+        }
+      ]
+    },
+    {
+      "number": 425,
+      "id": "PR_kwDOHTmVzM5voit3",
+      "title": "doc: add test api server",
+      "url": "https://github.com/oauth-wg/oauth-selective-disclosure-jwt/pull/425",
+      "state": "MERGED",
+      "author": "lukasjhan",
+      "authorAssociation": "CONTRIBUTOR",
+      "assignees": [],
+      "labels": [],
+      "body": "Hi I added my SD JWT testing API server in README.\r\nIt closes #416 ",
+      "createdAt": "2024-05-16T08:59:27Z",
+      "updatedAt": "2024-05-16T19:25:19Z",
+      "baseRepository": "oauth-wg/oauth-selective-disclosure-jwt",
+      "baseRefName": "master",
+      "baseRefOid": "aa212faf5f2f9b053b0f4a3483e839aadd7792c9",
+      "headRepository": "lukasjhan/oauth-selective-disclosure-jwt",
+      "headRefName": "doc/test-api-server",
+      "headRefOid": "4953f175619229f2c7fe836b736329d601222948",
+      "closedAt": "2024-05-16T19:25:19Z",
+      "mergedAt": "2024-05-16T19:25:19Z",
+      "mergedBy": "bc-pi",
+      "mergeCommit": {
+        "oid": "980fdc7546a3cd4e11a30f215d3403cf45aafaa9"
+      },
+      "comments": [],
+      "reviews": [
+        {
+          "id": "PRR_kwDOHTmVzM561gCS",
+          "commit": {
+            "abbreviatedOid": "4953f17"
+          },
+          "author": "bc-pi",
+          "authorAssociation": "COLLABORATOR",
+          "state": "APPROVED",
+          "body": "",
+          "createdAt": "2024-05-16T13:51:40Z",
+          "updatedAt": "2024-05-16T13:51:40Z",
           "comments": []
         }
       ]
