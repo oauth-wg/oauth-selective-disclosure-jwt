@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2024-05-21T00:12:22.636430+00:00",
+  "timestamp": "2024-05-23T00:11:55.229362+00:00",
   "repo": "oauth-wg/oauth-selective-disclosure-jwt",
   "labels": [
     {
@@ -10958,6 +10958,38 @@
           "updatedAt": "2024-05-15T15:54:41Z"
         }
       ]
+    },
+    {
+      "number": 426,
+      "id": "I_kwDOHTmVzM6JmYnC",
+      "title": "Adapt JWS JSON Serialization wording to new terms SD-JWT/SD-JWT+KB",
+      "url": "https://github.com/oauth-wg/oauth-selective-disclosure-jwt/issues/426",
+      "state": "OPEN",
+      "author": "danielfett",
+      "authorAssociation": "MEMBER",
+      "assignees": [],
+      "labels": [],
+      "body": "PR #394 does not touch the JWS JSON Serialization section, where we will need to make some minor changes to adapt the usage of the terms to the one established in the PR.",
+      "createdAt": "2024-05-21T15:14:07Z",
+      "updatedAt": "2024-05-21T15:14:08Z",
+      "closedAt": null,
+      "comments": []
+    },
+    {
+      "number": 428,
+      "id": "I_kwDOHTmVzM6JvM93",
+      "title": "fix up permutations figure/example",
+      "url": "https://github.com/oauth-wg/oauth-selective-disclosure-jwt/issues/428",
+      "state": "OPEN",
+      "author": "bc-pi",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "> FWIW that whole thing is currently enclosed in a figure (see https://www.ietf.org/archive/id/draft-ietf-oauth-selective-disclosure-jwt-08.html#section-5-11) and in the interest of moving along this PR from last year, maybe that change could be addressed in a separate PR or issue?\r\n\r\n_Originally posted by @bc-pi in https://github.com/oauth-wg/oauth-selective-disclosure-jwt/pull/394#discussion_r1608758034_\r\n            ",
+      "createdAt": "2024-05-22T15:33:33Z",
+      "updatedAt": "2024-05-22T15:33:33Z",
+      "closedAt": null,
+      "comments": []
     }
   ],
   "pulls": [
@@ -41127,7 +41159,7 @@
       "labels": [],
       "body": "This PR limits the scope of the term \"SD-JWT\" so that it refers only to an Issuer-signed JWT and a set of disclosures.  We introduce the term \"Fnord\" to refer to an SD-JWT with key binding.  As a bonus, we are able to clean up stale uses of Presentation, which mostly, but not always align with Fnord.\r\n\r\n\"[Fnord](https://en.wikipedia.org/wiki/Fnord)\" is deliberately nonsensical, of course.  We should replace this with a more intuitive word.  We could reintroduce \"Presentation\" for this, with the allowance that one might \"present\" either a Presentation or an SD-JWT.  Or we could pick another term, suggestions welcome.\r\n\r\nI have tried to be fairly minimal in the changes here.  In particular, I have not changed any of the algorithms, though I suspect they would be clearer if a bit more separate.  I have rewritten a few paragraphs, especially close to the top and in the Security Considerations.\r\n\r\nFixes #374\r\nFixes #392 ",
       "createdAt": "2023-12-05T23:02:33Z",
-      "updatedAt": "2024-05-15T15:53:00Z",
+      "updatedAt": "2024-05-22T15:34:38Z",
       "baseRepository": "oauth-wg/oauth-selective-disclosure-jwt",
       "baseRefName": "master",
       "baseRefOid": "aa212faf5f2f9b053b0f4a3483e839aadd7792c9",
@@ -43303,6 +43335,148 @@
               "body": "I think the author of the PR would say that an SD-JWT is now without Key Binding by definition and that might suggest otherwise. How about this as a compromise on clarification? \r\n```suggestion\r\n2. If Key Binding is required and the Holder has provided an SD-JWT (without Key Binding), the Verifier MUST reject the presentation.\r\n```",
               "createdAt": "2024-05-03T19:49:27Z",
               "updatedAt": "2024-05-03T19:49:27Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOHTmVzM57UDiv",
+          "commit": {
+            "abbreviatedOid": "0e7a10a"
+          },
+          "author": "danielfett",
+          "authorAssociation": "MEMBER",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2024-05-21T14:45:40Z",
+          "updatedAt": "2024-05-21T14:45:41Z",
+          "comments": [
+            {
+              "originalPosition": 31,
+              "body": "I'm not sure I'm quite happy with the wording here. We say \"... is a composite structure (...) that consists of the following:\". I'd then expect to see a list of exactly the things making up the SD-JWT, but I find a list of various formats and alternative formats we define in this spec. What about this?\r\n\r\n```suggestion\r\n1. SD-JWT is a composite structure enabling selective disclosure of its contents. The definition in this document comprises the following:\r\n```\r\n\r\nSame applies below for SD-JWT+KB",
+              "createdAt": "2024-05-21T14:45:40Z",
+              "updatedAt": "2024-05-21T14:45:41Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOHTmVzM57ULnH",
+          "commit": {
+            "abbreviatedOid": "0e7a10a"
+          },
+          "author": "danielfett",
+          "authorAssociation": "MEMBER",
+          "state": "COMMENTED",
+          "body": "I left some editorial suggestions.\r\n\r\nI'll note that we need to make a few changes to the section on JWS JSON Serialization as well, but I filed a separate issue for that: https://github.com/oauth-wg/oauth-selective-disclosure-jwt/issues/426",
+          "createdAt": "2024-05-21T14:58:30Z",
+          "updatedAt": "2024-05-21T15:14:43Z",
+          "comments": [
+            {
+              "originalPosition": 65,
+              "body": "```suggestion\r\n  control over a private key during the presentation. When utilizing Key Binding, an SD-JWT contains\r\n```\r\nThe 'during issuance' part depends on the issuance protocol.",
+              "createdAt": "2024-05-21T14:58:30Z",
+              "updatedAt": "2024-05-21T15:14:43Z"
+            },
+            {
+              "originalPosition": 100,
+              "body": "```suggestion\r\nWhen a Verifier requires Key Binding, the Holder presents an SD-JWT+KB, consisting of an SD-JWT as well as a Key Binding JWT tied to that SD-JWT.\r\n```",
+              "createdAt": "2024-05-21T15:01:05Z",
+              "updatedAt": "2024-05-21T15:14:43Z"
+            },
+            {
+              "originalPosition": 117,
+              "body": "```suggestion\r\n * verifies the signature on the SD-JWT (or the the SD-JWT inside the SD-JWT+KB) using the Issuer's public key,\r\n * verifies the signature on the KB-JWT using the public key included (or referenced) in the SD-JWT, if the Verifier's policy requires Key Binding, and\r\n```",
+              "createdAt": "2024-05-21T15:02:46Z",
+              "updatedAt": "2024-05-21T15:14:43Z"
+            },
+            {
+              "originalPosition": 180,
+              "body": "The text for these examples should be outside the ```-part. (Can't add a suggestion here, needs to be fixed in the PR.)",
+              "createdAt": "2024-05-21T15:05:01Z",
+              "updatedAt": "2024-05-21T15:14:43Z"
+            },
+            {
+              "originalPosition": 279,
+              "body": "```suggestion\r\nreceives an SD-JWT+KB, it SHOULD be rejected.\r\n```\r\n...to make clear that it's not the issuer that should be rejected.",
+              "createdAt": "2024-05-21T15:08:37Z",
+              "updatedAt": "2024-05-21T15:14:43Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOHTmVzM57VyQi",
+          "commit": {
+            "abbreviatedOid": "0e7a10a"
+          },
+          "author": "bc-pi",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "comments on comments (am I doing this right?) ",
+          "createdAt": "2024-05-21T18:18:19Z",
+          "updatedAt": "2024-05-21T18:25:35Z",
+          "comments": [
+            {
+              "originalPosition": 31,
+              "body": "I think I agree with @danielfett here. ",
+              "createdAt": "2024-05-21T18:18:19Z",
+              "updatedAt": "2024-05-21T18:25:35Z"
+            },
+            {
+              "originalPosition": 65,
+              "body": "That might well be true but note that (I'm pretty sure anyway) you wrote that \"control over the same private key during the issuance and presentation\" text in the first place in an earlier version of this here draft. ",
+              "createdAt": "2024-05-21T18:21:28Z",
+              "updatedAt": "2024-05-21T18:25:35Z"
+            },
+            {
+              "originalPosition": 100,
+              "body": "wfm ",
+              "createdAt": "2024-05-21T18:21:53Z",
+              "updatedAt": "2024-05-21T18:25:35Z"
+            },
+            {
+              "originalPosition": 180,
+              "body": "FWIW that whole thing is currently enclosed in a figure (see https://www.ietf.org/archive/id/draft-ietf-oauth-selective-disclosure-jwt-08.html#section-5-11) and in the interest of moving along this PR from last year, maybe that change could be addressed in a separate PR or issue? ",
+              "createdAt": "2024-05-21T18:24:36Z",
+              "updatedAt": "2024-05-21T18:25:35Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOHTmVzM57aADi",
+          "commit": {
+            "abbreviatedOid": "0e7a10a"
+          },
+          "author": "danielfett",
+          "authorAssociation": "MEMBER",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2024-05-22T07:52:58Z",
+          "updatedAt": "2024-05-22T07:52:58Z",
+          "comments": [
+            {
+              "originalPosition": 65,
+              "body": "Noted, but it would be good to change that anyway.",
+              "createdAt": "2024-05-22T07:52:58Z",
+              "updatedAt": "2024-05-22T07:52:58Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOHTmVzM57esCr",
+          "commit": {
+            "abbreviatedOid": "0e7a10a"
+          },
+          "author": "bc-pi",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2024-05-22T15:34:38Z",
+          "updatedAt": "2024-05-22T15:34:38Z",
+          "comments": [
+            {
+              "originalPosition": 180,
+              "body": "created issue #428 so will \"resolve\" this conversation here ",
+              "createdAt": "2024-05-22T15:34:38Z",
+              "updatedAt": "2024-05-22T15:34:38Z"
             }
           ]
         }
@@ -45538,6 +45712,32 @@
           "comments": []
         }
       ]
+    },
+    {
+      "number": 427,
+      "id": "PR_kwDOHTmVzM5wGTdH",
+      "title": "Update terminology in JWS JSON Serialization",
+      "url": "https://github.com/oauth-wg/oauth-selective-disclosure-jwt/pull/427",
+      "state": "OPEN",
+      "author": "danielfett",
+      "authorAssociation": "MEMBER",
+      "assignees": [],
+      "labels": [],
+      "body": "To be merged after #394 ",
+      "createdAt": "2024-05-21T15:32:02Z",
+      "updatedAt": "2024-05-21T15:32:02Z",
+      "baseRepository": "oauth-wg/oauth-selective-disclosure-jwt",
+      "baseRefName": "master",
+      "baseRefOid": "980fdc7546a3cd4e11a30f215d3403cf45aafaa9",
+      "headRepository": "oauth-wg/oauth-selective-disclosure-jwt",
+      "headRefName": "danielfett/jws-json-terminology",
+      "headRefOid": "b687e8b0ac7b022a3b498d62fafaa914a5ca02e6",
+      "closedAt": null,
+      "mergedAt": null,
+      "mergedBy": null,
+      "mergeCommit": null,
+      "comments": [],
+      "reviews": []
     }
   ]
 }
