@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2024-05-23T00:11:55.229362+00:00",
+  "timestamp": "2024-05-26T00:13:25.965565+00:00",
   "repo": "oauth-wg/oauth-selective-disclosure-jwt",
   "labels": [
     {
@@ -10988,6 +10988,22 @@
       "body": "> FWIW that whole thing is currently enclosed in a figure (see https://www.ietf.org/archive/id/draft-ietf-oauth-selective-disclosure-jwt-08.html#section-5-11) and in the interest of moving along this PR from last year, maybe that change could be addressed in a separate PR or issue?\r\n\r\n_Originally posted by @bc-pi in https://github.com/oauth-wg/oauth-selective-disclosure-jwt/pull/394#discussion_r1608758034_\r\n            ",
       "createdAt": "2024-05-22T15:33:33Z",
       "updatedAt": "2024-05-22T15:33:33Z",
+      "closedAt": null,
+      "comments": []
+    },
+    {
+      "number": 429,
+      "id": "I_kwDOHTmVzM6J6rp9",
+      "title": "more affliations, more problems",
+      "url": "https://github.com/oauth-wg/oauth-selective-disclosure-jwt/issues/429",
+      "state": "OPEN",
+      "author": "bc-pi",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "This is a reminder to remind @Sakurann that she should probably update her affiliation and email in the draft itself. At least email to one that won't bounce. And add the new email address to her datatracker account too.",
+      "createdAt": "2024-05-23T21:18:40Z",
+      "updatedAt": "2024-05-23T21:18:40Z",
       "closedAt": null,
       "comments": []
     }
