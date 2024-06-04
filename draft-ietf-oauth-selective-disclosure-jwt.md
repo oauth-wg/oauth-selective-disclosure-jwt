@@ -26,9 +26,9 @@ organization="Authlete"
 initials="K."
 surname="Yasuda"
 fullname="Kristina Yasuda"
-organization="Microsoft"
+organization="Keio University"
     [author.address]
-    email = "Kristina.Yasuda@microsoft.com"
+    email = "kristina@sfc.keio.ac.jp"
 
 [[author]]
 initials="B."
@@ -1412,7 +1412,7 @@ the media type is encoded as an SD-JWT.
       <organization>Transmute</organization>
     </author>
     <author fullname="Michael B. Jones">
-      <organization>Microsoft</organization>
+      <organization>Invited Expert</organization>
     </author>
     <author fullname="Gabe Cohen">
       <organization>Block</organization>
