@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2024-06-02T00:13:32.793173+00:00",
+  "timestamp": "2024-06-04T00:12:18.470613+00:00",
   "repo": "oauth-wg/oauth-selective-disclosure-jwt",
   "labels": [
     {
@@ -6449,7 +6449,7 @@
       "closedAt": "2023-04-11T16:09:07Z",
       "comments": [
         {
-          "author": "kenkenpan",
+          "author": "redsstriker",
           "authorAssociation": "NONE",
           "body": "I am not sure about SD-JWT specification, however ICAO Doc9303 SOD and ISO mdoc both use map structure to identify the original data of hash values. ",
           "createdAt": "2023-03-30T11:52:09Z",
@@ -10996,15 +10996,15 @@
       "id": "I_kwDOHTmVzM6J6rp9",
       "title": "more affliations, more problems",
       "url": "https://github.com/oauth-wg/oauth-selective-disclosure-jwt/issues/429",
-      "state": "OPEN",
+      "state": "CLOSED",
       "author": "bc-pi",
       "authorAssociation": "COLLABORATOR",
       "assignees": [],
       "labels": [],
       "body": "This is a reminder to remind @Sakurann that she should probably update her affiliation and email in the draft itself. At least email to one that won't bounce. And add the new email address to her datatracker account too.",
       "createdAt": "2024-05-23T21:18:40Z",
-      "updatedAt": "2024-05-23T21:18:40Z",
-      "closedAt": null,
+      "updatedAt": "2024-06-03T09:15:51Z",
+      "closedAt": "2024-06-03T09:15:51Z",
       "comments": []
     }
   ],
@@ -45760,24 +45760,26 @@
       "id": "PR_kwDOHTmVzM5wmH9R",
       "title": "affiliation change",
       "url": "https://github.com/oauth-wg/oauth-selective-disclosure-jwt/pull/430",
-      "state": "OPEN",
+      "state": "MERGED",
       "author": "Sakurann",
       "authorAssociation": "COLLABORATOR",
       "assignees": [],
       "labels": [],
       "body": "changing to Keio University for myself, and Mike's affiliation in vcdm 2.0\r\n",
       "createdAt": "2024-05-26T17:36:35Z",
-      "updatedAt": "2024-05-26T17:39:21Z",
+      "updatedAt": "2024-06-03T09:15:50Z",
       "baseRepository": "oauth-wg/oauth-selective-disclosure-jwt",
       "baseRefName": "master",
       "baseRefOid": "980fdc7546a3cd4e11a30f215d3403cf45aafaa9",
       "headRepository": "oauth-wg/oauth-selective-disclosure-jwt",
       "headRefName": "change-affiliation",
       "headRefOid": "5f2c2b29ea289f962e5761eef0e15772c1ef43d1",
-      "closedAt": null,
-      "mergedAt": null,
-      "mergedBy": null,
-      "mergeCommit": null,
+      "closedAt": "2024-06-03T09:15:50Z",
+      "mergedAt": "2024-06-03T09:15:50Z",
+      "mergedBy": "danielfett",
+      "mergeCommit": {
+        "oid": "64890c3324b61749d4bb7c981f16218a15e2c8e8"
+      },
       "comments": [],
       "reviews": [
         {
@@ -45791,6 +45793,32 @@
           "body": "",
           "createdAt": "2024-05-26T17:39:21Z",
           "updatedAt": "2024-05-26T17:39:21Z",
+          "comments": []
+        },
+        {
+          "id": "PRR_kwDOHTmVzM58tVMf",
+          "commit": {
+            "abbreviatedOid": "5f2c2b2"
+          },
+          "author": "bc-pi",
+          "authorAssociation": "COLLABORATOR",
+          "state": "APPROVED",
+          "body": "",
+          "createdAt": "2024-06-02T09:54:54Z",
+          "updatedAt": "2024-06-02T09:54:54Z",
+          "comments": []
+        },
+        {
+          "id": "PRR_kwDOHTmVzM58xN7G",
+          "commit": {
+            "abbreviatedOid": "5f2c2b2"
+          },
+          "author": "danielfett",
+          "authorAssociation": "MEMBER",
+          "state": "APPROVED",
+          "body": "",
+          "createdAt": "2024-06-03T09:15:36Z",
+          "updatedAt": "2024-06-03T09:15:36Z",
           "comments": []
         }
       ]
