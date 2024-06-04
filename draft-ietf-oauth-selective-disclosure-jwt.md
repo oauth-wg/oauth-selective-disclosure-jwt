@@ -556,6 +556,79 @@ To ensure readability and replicability, the examples in this specification do
 not contain decoy digests unless explicitly stated. For an example
 with decoy digests, see (#example-simple_structured).
 
+### Recursive Disclosures {#recursive_disclosures}
+
+The algorithms above are compatible with "recursive disclosures", in which one
+selectively disclosed field reveals the existence of more selectively
+disclosable fields.  For example, consider the following JSON structure:
+
+```json
+{
+    "family_name", "Möbius",
+    "nationalities": ["DE", "FR", "UK"] 
+}
+```
+
+The issuer may wish to allow the holder to reveal no nationalities at all, but
+require that if any nationalities are disclosed, then "DE" must be disclosed.
+This can be accomplished by first making the "FR" and "UK" entries within
+the array selectively disclosable, and then the whole "nationalities" field.
+
+``` ascii-art
+{
+    "family_name", "Möbius",
+    "nationalities": [
+        "DE", 
+        { "...": "Yr1KUNYXI6WzJKhP4Hwyu9Q1ejubVCcJRG1C9FiWr+c" },
+        { "...": "mcU-e_A2tUM4jbm0BNrOTeCgrGUzImXepLonaMnFCvE" }
+    ] 
+}
+
+Disclosures:
+Yr1KUNY... = ["f_ZD3150Og1VUlqREPe_mg","FR"]
+mcU-e_A... = ["YIKG6qOkXXNzMQtsX_H-lw","UK"]
+```
+
+``` ascii-art
+{
+    "family_name", "Möbius",
+    "_sd": [ "wjj8P4DvQ9cNWoDtqkOPYKfV7OCbuxlzkGTdUEGblVw" ]
+}
+
+Disclosures:
+Yr1KUNY... = ["f+ZD3150Og1VUlqREPe+mg", "FR"]
+mcU-e_A... = ["YIKG6qOkXXNzMQtsX_H-lw", "UK"]
+wjj8P4D... = [
+    "4bPeSUK9aY_PlF4gcXnlGg", 
+    "nationalities", 
+    [
+        "DE",
+        { "...": "62bd4a50d61723a5b324a84fe07c32bbd4357a3b9b542709446d42f45896afe7" },
+        { "...": "99c53e7bf036b543388db9b404dace4de0a0ac65332265dea4ba2768c9c50af1" }
+    ]
+]
+```
+
+["4bPeSUK9aY_PlF4gcXnlGg","nationalities",["DE",{"...":"62bd4a50d61723a5b324a84fe07c32bbd4357a3b9b542709446d42f45896afe7"},{"...":"99c53e7bf036b543388db9b404dace4de0a0ac65332265dea4ba2768c9c50af1"}]]
+
+
+With this set of disclosures, the holder could include the disclosure with hash
+`wjj8P4D...` to disclose only the "DE" nationality, or include both `wjj8P4D...`
+and `Yr1KUNY...` to disclose both the "DE" and "FR" nationalities, but hide the
+"UK" nationality.
+
+Note that making recursive redactions introduces dependencies between the
+disclosure objects in an SD-JWT.  The `Yr1KUNY...` disclosure cannot be used
+without the `wjj8P4D...` disclosure; since a Verifier would not have a matching
+hash that would tell it where the content of the `Yr1KUNY...` disclosure should
+be inserted.  If a disclosure object is included in an SD-JWT, then the SD-JWT
+MUST include any other disclosure objects necessary to process the first
+disclosure object.  In other words, any disclosure object in an SD-JWT must
+"connect" to the claims in the issuer-signed JWT, possibly via an intermediate
+disclosure object.  In the above example, it would be illegal to include the
+`Yr1KUNY...` or `mcU-e_A...` disclosure object without also including the
+`wjj8P4D...` disclosure object.
+
 ## Key Binding JWT {#kb-jwt}
 
 This section defines the Key Binding JWT, which encodes a
@@ -770,10 +843,13 @@ receives an SD-JWT+KB from the Issuer, it SHOULD be rejected.
 For presentation to a Verifier, the Holder MUST perform the following (or equivalent) steps:
 
  1. Decide which Disclosures to release to the Verifier, obtaining proper End-User consent if necessary.
- 2. Assemble the SD-JWT, including the Issuer-signed JWT and the selected Disclosures (see (#data_formats) for the format).
- 3. If Key Binding is not required:
+ 2. Verify that each selected Disclosure satisfies one of the two following conditions:
+    1. The hash of the Disclosure is contained in the Issuer-signed JWT claims
+    2. The hash of the Disclosure is contained in the claim value of another selected Disclosure
+ 3. Assemble the SD-JWT, including the Issuer-signed JWT and the selected Disclosures (see (#data_formats) for the format).
+ 4. If Key Binding is not required:
     1. Send the SD-JWT to the Verifier.
- 4. If Key Binding is required:
+ 5. If Key Binding is required:
     1. Create a Key Binding JWT tied to the SD-JWT.
     2. Assemble the SD-JWT+KB by concatenating the SD-JWT and the Key Binding JWT.
     3. Send the SD-JWT+KB to the Verifier.
