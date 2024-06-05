@@ -118,7 +118,7 @@ wherever possible.
 
 This specification defines two primary data formats:
 
-1. SD-JWT is a composite structure issued by the Issuer that consists of the following:
+1. SD-JWT is a composite structure enabling selective disclosure of its contents. The definition in this document comprises the following:
   - A format for enabling selective disclosure in nested JSON data structures,
     supporting selectively disclosable object properties (name-value pairs) and array elements
   - A format for encoding the selectively disclosable data items
@@ -127,7 +127,7 @@ This specification defines two primary data formats:
   - An alternate format extending the JWS JSON Serialization, also allowing for
     transport of the Issuer-signed JSON data structure and disclosure data
 
-2. SD-JWT+KB is a composite structure that is presented to the verifier that consists of the following:
+2. SD-JWT+KB is a composite structure enabling cryptographic key binding when presented to the Verifier. The definition in this document comprises the following:
   - A facility for associating an SD-JWT to a key pair
   - A format for a Key Binding JWT (KB-JWT) that proves possession of the private key of
     the associated key pair
@@ -159,7 +159,7 @@ Disclosure:
 
 Key Binding:
 :  Ability of the Holder to prove legitimate possession of an SD-JWT by proving
-  control over the same private key during the issuance and presentation. When utilizing Key Binding, an SD-JWT contains
+  control over a private key during the presentation. When utilizing Key Binding, an SD-JWT contains
   the public key corresponding to the private key controlled by the Holder (or a reference to this public key).
 
 Key Binding JWT (KB-JWT):
