@@ -776,7 +776,7 @@ unprotected header parameters are defined:
 
  * `disclosures`: An array of strings where each element is an individual
    Disclosure as described in (#creating_disclosures).
- * `kb_jwt`: Only in case of an SD-JWT+KB, the Key Binding JWT as described in (#kb-jwt).
+ * `kb_jwt`: Present only in SD-JWT+KB, the Key Binding JWT as described in (#kb-jwt).
 
 
 In an SD-JWT+KB, `kb_jwt` MUST be present when using the JWS JSON Serialization,
