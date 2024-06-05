@@ -104,7 +104,7 @@ values not disclosed in the Disclosures.
 
 This document also defines a format for SD-JWTs with Key Binding (SD-JWT+KB).
 By optionally sending an SD-JWT+KB to a
-Verifier, the Holder can prove to the verifier that they hold the private key
+Verifier, the Holder can prove to the Verifier that they hold the private key
 associated to the SD-JWT (e.g., using the `cnf` claim [@?RFC7800]). The strength of the binding is conditional upon the trust
 in the protection of the private key of the key pair an SD-JWT is bound to.
 
@@ -236,8 +236,7 @@ Key Binding is an optional feature. When Key Binding is required by the use-case
 
 Note: How the public key is included in SD-JWT is out of scope of this document. It can be passed by value or by reference.
 
-When a Verifier requires Key Binding, the Holder presents an SD-JWT+KB, which includes the
-relevant SD-JWT.  The SD-JWT+KB encodes the SD-JWT as well as a Key Binding JWT.
+When a Verifier requires Key Binding, the Holder presents an SD-JWT+KB, consisting of an SD-JWT as well as a Key Binding JWT tied to that SD-JWT.
 The Key Binding JWT encodes a signature by the Holder's private key over
 
 * a hash of the SD-JWT,
@@ -251,8 +250,8 @@ Details of the format of Key Binding JWTs are described in (#kb-jwt).
 At a high level, the Verifier
 
  * receives either an SD-JWT or an SD-JWT+KB from the Holder,
- * verifies the signature on the SD-JWT (or the the SD-JWT inside the SD-JWT+KB) using the Issuer's public key, and
- * verifies the signature on the KB-JWT using the public key included (or referenced) in the SD-JWT, if the Verifier's policy requires Key Binding.
+ * verifies the signature on the SD-JWT (or the the SD-JWT inside the SD-JWT+KB) using the Issuer's public key,
+ * verifies the signature on the KB-JWT using the public key included (or referenced) in the SD-JWT, if the Verifier's policy requires Key Binding, and
  * calculates the digests over the Holder-Selected Disclosures and verifies that each digest is contained in the SD-JWT.
 
 The detailed algorithm is described in (#verifier_verification).
@@ -765,7 +764,7 @@ It is up to the Holder how to maintain the mapping between the Disclosures and t
 ## Processing by the Holder  {#holder_verification}
 
 The Issuer MUST provide the Holder an SD-JWT, not an SD-JWT+KB.  If the Holder
-receives an SD-JWT+KB from the Issuer, it SHOULD be rejected.
+receives an SD-JWT+KB, it SHOULD be rejected.
 
 For presentation to a Verifier, the Holder MUST perform the following (or equivalent) steps:
 
