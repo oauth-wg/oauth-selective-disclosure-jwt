@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2024-06-09T00:14:20.393024+00:00",
+  "timestamp": "2024-06-11T00:12:25.792803+00:00",
   "repo": "oauth-wg/oauth-selective-disclosure-jwt",
   "labels": [
     {
@@ -10599,7 +10599,7 @@
       "labels": [],
       "body": "It seems like it could be helpful to implementors, allowing them to quickly validate whether what they have is syntactically an SD-JWT or an SD-JWT with key binding.  Something like:\r\n\r\n```\r\nbase64url ::= ALPHA / DIGIT / \"-\" / \"_\"\r\nJWT ::= base64url \".\" base64url \".\" base64url\r\nSD-JWT ::= JWT \"~\" [base64url \"~\"]*\r\nFnord ::= SD-JWT JWT\r\n```",
       "createdAt": "2023-12-05T22:57:48Z",
-      "updatedAt": "2024-05-15T15:51:00Z",
+      "updatedAt": "2024-06-10T22:28:12Z",
       "closedAt": null,
       "comments": [
         {
@@ -10643,6 +10643,13 @@
           "body": "need to wait after #394 is resolved to do a PR.",
           "createdAt": "2024-02-27T17:40:25Z",
           "updatedAt": "2024-02-27T17:40:25Z"
+        },
+        {
+          "author": "bc-pi",
+          "authorAssociation": "COLLABORATOR",
+          "body": "maybe add a KB-JWT line to be even more better? a la:\r\n\r\n```\r\nALPHA = %x41-5A / %x61-7A ; A-Z / a-z\r\nDIGIT = %x30-39 ; 0-9\r\nbase64url = 1*(ALPHA / DIGIT / \"-\" / \"_\")\r\nJWT = base64url \".\" base64url \".\" base64url\r\nDISCLOSURE = base64url\r\nSD-JWT = JWT \"~\" *[DISCLOSURE \"~\"]\r\nKB-JWT = JWT\r\nSD-JWT-KB = SD-JWT KB-JWT\r\n```",
+          "createdAt": "2024-06-10T22:28:11Z",
+          "updatedAt": "2024-06-10T22:28:11Z"
         }
       ]
     },
@@ -46056,7 +46063,7 @@
       "labels": [],
       "body": "Fixes #372 \r\n\r\nThere are three algorithms to consider when it comes to recursive disclosures:\r\n\r\n1. How the issuer generates the recursive disclosures\r\n2. How the holder selects disclosures to reveal in the context of recursion\r\n3. How the verifier unwinds recursive disclosures\r\n\r\n(3) is adequately covered in the verification algorithm.  The other two are currently uncovered.   This PR clarifies (1) and (2).  \r\n\r\nAlgorithm (1) doesn't really need formal definition for interoperability; an issuer can follow any process that ends up with an SD-JWT that will verify.  However, it's useful to (1) provide an illustration, (2) provider a reminder that you have to go from most-specific redaction to least, from the leaves of the AST toward the issuer-signed claims, and (3) provide a clear requirement that an SD-JWT must contain any intermediate recursive disclosures.  This PR adds a section that does these things.\r\n\r\nFor algorithm (2), I simply added a step to the holder processing that verifies that the disclosure selection process got all the required disclosures (including the intermediate ones).  We could also be more prescriptive, providing a concrete algorithm that adds the required intermediate disclosures.",
       "createdAt": "2024-06-04T22:24:32Z",
-      "updatedAt": "2024-06-04T22:25:35Z",
+      "updatedAt": "2024-06-10T07:10:45Z",
       "baseRepository": "oauth-wg/oauth-selective-disclosure-jwt",
       "baseRefName": "master",
       "baseRefOid": "e0234b77ad74edc8ac2d9aa56fcc768d73b658f8",
@@ -46076,7 +46083,74 @@
           "updatedAt": "2024-06-04T22:25:34Z"
         }
       ],
-      "reviews": []
+      "reviews": [
+        {
+          "id": "PRR_kwDOHTmVzM59jKXj",
+          "commit": {
+            "abbreviatedOid": "d9d53ae"
+          },
+          "author": "bc-pi",
+          "authorAssociation": "COLLABORATOR",
+          "state": "CHANGES_REQUESTED",
+          "body": "needs some TLC ",
+          "createdAt": "2024-06-09T21:20:24Z",
+          "updatedAt": "2024-06-09T21:22:37Z",
+          "comments": [
+            {
+              "originalPosition": 242,
+              "body": "what's going on here with the hex encoding (above and below) and the unformatted example outside the triple ticks (below)? Which is sort of a rhetorical question. Please fix. ",
+              "createdAt": "2024-06-09T21:20:24Z",
+              "updatedAt": "2024-06-09T21:22:37Z"
+            },
+            {
+              "originalPosition": 205,
+              "body": "weird example but okay ",
+              "createdAt": "2024-06-09T21:20:28Z",
+              "updatedAt": "2024-06-09T21:22:37Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOHTmVzM59jKmg",
+          "commit": {
+            "abbreviatedOid": "d9d53ae"
+          },
+          "author": "bc-pi",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2024-06-09T21:27:42Z",
+          "updatedAt": "2024-06-09T21:27:43Z",
+          "comments": [
+            {
+              "originalPosition": 242,
+              "body": "see also https://twitter.com/__b_c/status/434083504381378560 ",
+              "createdAt": "2024-06-09T21:27:42Z",
+              "updatedAt": "2024-06-09T21:27:43Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOHTmVzM59k4ES",
+          "commit": {
+            "abbreviatedOid": "d9d53ae"
+          },
+          "author": "danielfett",
+          "authorAssociation": "MEMBER",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2024-06-10T07:10:45Z",
+          "updatedAt": "2024-06-10T07:10:45Z",
+          "comments": [
+            {
+              "originalPosition": 242,
+              "body": "It would be great if we could have a generated example here to avoid any inconsistencies.",
+              "createdAt": "2024-06-10T07:10:45Z",
+              "updatedAt": "2024-06-10T07:10:45Z"
+            }
+          ]
+        }
+      ]
     }
   ]
 }
