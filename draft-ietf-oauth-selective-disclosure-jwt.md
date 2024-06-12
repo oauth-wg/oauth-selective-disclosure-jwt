@@ -331,6 +331,21 @@ An SD-JWT+KB with Disclosures:
 <Issuer-signed JWT>~<Disclosure 1>~<Disclosure N>~<KB-JWT>
 ```
 
+As an alternative illustration of the SD-JWT format, for those who celebrate, ABNF [@?RFC5234] for the
+SD-JWT, SD-JWT+KB, and various constituent parts is provided here:
+```abnf
+ALPHA = %x41-5A / %x61-7A ; A-Z / a-z
+DIGIT = %x30-39 ; 0-9
+BASE64URL = 1*(ALPHA / DIGIT / "-" / "_")
+JWT = BASE64URL "." BASE64URL "." BASE64URL
+DISCLOSURE = BASE64URL
+SD-JWT = JWT "~" *[DISCLOSURE "~"]
+KB-JWT = JWT
+SD-JWT-KB = SD-JWT KB-JWT
+```
+
+
+
 ## Issuer-signed JWT {#iss-signed-jwt}
 
 An SD-JWT has a JWT component that MUST be signed using the Issuer's private
