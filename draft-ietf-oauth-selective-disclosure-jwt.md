@@ -26,9 +26,9 @@ organization="Authlete"
 initials="K."
 surname="Yasuda"
 fullname="Kristina Yasuda"
-organization="Microsoft"
+organization="Keio University"
     [author.address]
-    email = "Kristina.Yasuda@microsoft.com"
+    email = "kristina@sfc.keio.ac.jp"
 
 [[author]]
 initials="B."
@@ -104,7 +104,7 @@ values not disclosed in the Disclosures.
 
 This document also defines a format for SD-JWTs with Key Binding (SD-JWT+KB).
 By optionally sending an SD-JWT+KB to a
-Verifier, the Holder can prove to the verifier that they hold the private key
+Verifier, the Holder can prove to the Verifier that they hold the private key
 associated to the SD-JWT (e.g., using the `cnf` claim [@?RFC7800]). The strength of the binding is conditional upon the trust
 in the protection of the private key of the key pair an SD-JWT is bound to.
 
@@ -118,7 +118,7 @@ wherever possible.
 
 This specification defines two primary data formats:
 
-1. SD-JWT is a composite structure issued by the Issuer that consists of the following:
+1. SD-JWT is a composite structure enabling selective disclosure of its contents. The definition in this document comprises the following:
   - A format for enabling selective disclosure in nested JSON data structures,
     supporting selectively disclosable object properties (name-value pairs) and array elements
   - A format for encoding the selectively disclosable data items
@@ -127,7 +127,7 @@ This specification defines two primary data formats:
   - An alternate format extending the JWS JSON Serialization, also allowing for
     transport of the Issuer-signed JSON data structure and disclosure data
 
-2. SD-JWT+KB is a composite structure that is presented to the verifier that consists of the following:
+2. SD-JWT+KB is a composite structure enabling cryptographic key binding when presented to the Verifier. The definition in this document comprises the following:
   - A facility for associating an SD-JWT to a key pair
   - A format for a Key Binding JWT (KB-JWT) that proves possession of the private key of
     the associated key pair
@@ -159,7 +159,7 @@ Disclosure:
 
 Key Binding:
 :  Ability of the Holder to prove legitimate possession of an SD-JWT by proving
-  control over the same private key during the issuance and presentation. When utilizing Key Binding, an SD-JWT contains
+  control over a private key during the presentation. When utilizing Key Binding, an SD-JWT contains
   the public key corresponding to the private key controlled by the Holder (or a reference to this public key).
 
 Key Binding JWT (KB-JWT):
@@ -236,8 +236,7 @@ Key Binding is an optional feature. When Key Binding is required by the use-case
 
 Note: How the public key is included in SD-JWT is out of scope of this document. It can be passed by value or by reference.
 
-When a Verifier requires Key Binding, the Holder presents an SD-JWT+KB, which includes the
-relevant SD-JWT.  The SD-JWT+KB encodes the SD-JWT as well as a Key Binding JWT.
+When a Verifier requires Key Binding, the Holder presents an SD-JWT+KB, consisting of an SD-JWT as well as a Key Binding JWT tied to that SD-JWT.
 The Key Binding JWT encodes a signature by the Holder's private key over
 
 * a hash of the SD-JWT,
@@ -251,8 +250,8 @@ Details of the format of Key Binding JWTs are described in (#kb-jwt).
 At a high level, the Verifier
 
  * receives either an SD-JWT or an SD-JWT+KB from the Holder,
- * verifies the signature on the SD-JWT (or the the SD-JWT inside the SD-JWT+KB) using the Issuer's public key, and
- * verifies the signature on the KB-JWT using the public key included (or referenced) in the SD-JWT, if the Verifier's policy requires Key Binding.
+ * verifies the signature on the SD-JWT (or the the SD-JWT inside the SD-JWT+KB) using the Issuer's public key,
+ * verifies the signature on the KB-JWT using the public key included (or referenced) in the SD-JWT, if the Verifier's policy requires Key Binding, and
  * calculates the digests over the Holder-Selected Disclosures and verifies that each digest is contained in the SD-JWT.
 
 The detailed algorithm is described in (#verifier_verification).
@@ -838,7 +837,7 @@ It is up to the Holder how to maintain the mapping between the Disclosures and t
 ## Processing by the Holder  {#holder_verification}
 
 The Issuer MUST provide the Holder an SD-JWT, not an SD-JWT+KB.  If the Holder
-receives an SD-JWT+KB from the Issuer, it SHOULD be rejected.
+receives an SD-JWT+KB, it SHOULD be rejected.
 
 For presentation to a Verifier, the Holder MUST perform the following (or equivalent) steps:
 
@@ -1543,7 +1542,7 @@ the media type is encoded as an SD-JWT.
       <organization>Transmute</organization>
     </author>
     <author fullname="Michael B. Jones">
-      <organization>Microsoft</organization>
+      <organization>Invited Expert</organization>
     </author>
     <author fullname="Gabe Cohen">
       <organization>Block</organization>
