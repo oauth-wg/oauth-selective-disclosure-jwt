@@ -1817,6 +1817,7 @@ data. The original JSON data is then used by the application. See
    -09
 
    * Distinguished SD-JWT from SD-JWT+KB
+   * Provide ABNF for the SD-JWT, SD-JWT+KB, and various constituent parts
    * New structure for JSON-serialized SD-JWTs/KB-JWTs to better align with JAdES.
    * Attempt to better explain how salt in the Disclosure makes guessing the preimage of the digest infeasible
    * Consolidate salt entropy and length security consideration subsections
