@@ -307,20 +307,27 @@ to the Verifier, the Holder MUST NOT send Disclosures or reveal the salt values 
 other way. A Holder MUST NOT send a Disclosure that was not included in the issued
 SD-JWT or send a Disclosure more than once.
 
-To further illustrate the SD-JWT format, the following example shows a few different
+To further illustrate the SD-JWT format, the following examples show a few different
 SD-JWT permutations, both with and without various constituent parts.
 
-```
+
 An SD-JWT without Disclosures and without a KB-JWT:
+```
 <Issuer-signed JWT>~
+```
 
 An SD-JWT with Disclosures and without a KB-JWT:
+```
 <Issuer-signed JWT>~<Disclosure 1>~<Disclosure N>~
+```
 
 An SD-JWT+KB without Disclosures:
+```
 <Issuer-signed JWT>~<KB-JWT>
+```
 
 An SD-JWT+KB with Disclosures:
+```
 <Issuer-signed JWT>~<Disclosure 1>~<Disclosure N>~<KB-JWT>
 ```
 
