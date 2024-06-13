@@ -810,27 +810,31 @@ Otherwise, the processed SD-JWT payload can be passed to the application to be u
 
 # JWS JSON Serialization {#json_serialization}
 
-This section describes an alternative format for SD-JWT using the JWS JSON
+This section describes an alternative format for SD-JWTs and SD-JWT+KBs using the JWS JSON
 Serialization from [@!RFC7515]. Supporting this format is OPTIONAL.
 
 ## New Unprotected Header Parameters {#json_serialization_unprotected_headers}
 
-For both the General and Flattened JSON Serialization, the SD-JWT is represented
+For both the General and Flattened JSON Serialization, the SD-JWT or SD-JWT+KB is represented
 as a JSON object according to Section 7.2 of [@!RFC7515]. The following new
 unprotected header parameters are defined:
 
  * `disclosures`: An array of strings where each element is an individual
    Disclosure as described in (#creating_disclosures).
- * `kb_jwt`: A Key Binding JWT as described in (#kb-jwt).
+ * `kb_jwt`: Present only in an SD-JWT+KB, the Key Binding JWT as described in (#kb-jwt).
 
 
-If a Key Binding JWT is present, the digest in the `sd_hash` claim MUST be taken
-over a string built as described in (#integrity-protection-of-the-presentation).
-The "Issuer-signed JWT" part is built by concatenating the protected header, the
-payload, and the signature of the JWS JSON serialized SD-JWT using a `.`
-character as a separator, and using the Disclosures from the `disclosures`
-member of the unprotected header. In case of multiple signatures, only the first
-one is used for the Disclosures and Key Binding JWT.
+In an SD-JWT+KB, `kb_jwt` MUST be present when using the JWS JSON Serialization,
+and the digest in the `sd_hash` claim MUST be taken over the SD-JWT as described
+in (#integrity-protection-of-the-presentation). This means that even when using
+the JWS JSON Serialization, the representation as a regular SD-JWT MUST be
+created temporarily to calculate the digest. In detail, the SD-JWT part is built
+by concatenating the protected header, the payload, and the signature of the JWS
+JSON serialized SD-JWT using a `.` character as a separator, and using the
+Disclosures from the `disclosures` member of the unprotected header.
+
+Unprotected headers other than `disclosures` are not covered by the digest, and
+therefore, as usual, are not protected against tampering.
 
 ## Flattened JSON Serialization
 
@@ -842,7 +846,7 @@ issued using the Flattened JSON Serialization:
 
 <{{examples/json_serialization_flattened/sd_jwt_issuance.json}}
 
-The following is a presentation including a Key Binding JWT and two Disclosures:
+The following is an SD-JWT+KB with two Disclosures:
 
 <{{examples/json_serialization_flattened/sd_jwt_presentation.json}}
 
@@ -864,9 +868,9 @@ Serialization:
 Verification of the JWS JSON serialized SD-JWT follows the rules defined in
 (#verification), except for the following aspects:
 
- * The SD-JWT does not need to be split into component parts and the Disclosures
+ * The SD-JWT or SD-JWT+KB does not need to be split into component parts and the Disclosures
    can be found in the `disclosures` member of the unprotected header.
- * To verify the digest in `sd_hash` in the Key Binding JWT, the Verifier MUST
+ * To verify the digest in `sd_hash` in the Key Binding JWT of an SD-JWT+KB, the Verifier MUST
    assemble the string to be hashed as described in
    (#json_serialization_unprotected_headers).
 
