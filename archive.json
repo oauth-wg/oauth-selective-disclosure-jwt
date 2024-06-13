@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2024-06-11T00:12:25.792803+00:00",
+  "timestamp": "2024-06-13T00:12:44.199161+00:00",
   "repo": "oauth-wg/oauth-selective-disclosure-jwt",
   "labels": [
     {
@@ -9106,7 +9106,7 @@
       "id": "I_kwDOHTmVzM50qXWF",
       "title": "\"Presentation\" is capitalised as if it's a defined term, but I can't find a definition",
       "url": "https://github.com/oauth-wg/oauth-selective-disclosure-jwt/issues/356",
-      "state": "OPEN",
+      "state": "CLOSED",
       "author": "jogu",
       "authorAssociation": "NONE",
       "assignees": [],
@@ -9116,8 +9116,8 @@
       ],
       "body": "There are various sentences like:\r\n\r\n> When Key Binding is not enforced, any entity in possession of an SD-JWT Presentation can forward the contents to third parties\r\n\r\nwhere presentation has a capital P as if it's a defined term. Probably it should have an actual definition (I can't find one) but if not it should probably be lower cased?",
       "createdAt": "2023-10-23T14:06:47Z",
-      "updatedAt": "2024-03-04T03:07:43Z",
-      "closedAt": null,
+      "updatedAt": "2024-06-12T12:14:31Z",
+      "closedAt": "2024-06-12T12:14:31Z",
       "comments": [
         {
           "author": "Sakurann",
@@ -9128,7 +9128,7 @@
         },
         {
           "author": "bifurcation",
-          "authorAssociation": "NONE",
+          "authorAssociation": "CONTRIBUTOR",
           "body": "I don't think just removing the capitalization helps.  It's still an undefined term.  In the spirit of #374, it seems like we actually want two concepts here, (1) handing someone an Issuer JWT + disclosures, where they can verify its integrity, drop disclosures and/or hand it to someone else, and (2) handing someone an Issuer JWT + disclosures + KB JWT, where the only thing they can do is verify it.",
           "createdAt": "2023-11-22T16:59:44Z",
           "updatedAt": "2023-11-22T16:59:44Z"
@@ -9146,6 +9146,13 @@
           "body": "(I think you meant 394, @bc-pi..?)",
           "createdAt": "2024-03-04T02:54:49Z",
           "updatedAt": "2024-03-04T02:54:49Z"
+        },
+        {
+          "author": "bc-pi",
+          "authorAssociation": "COLLABORATOR",
+          "body": "I believe the merging of https://github.com/oauth-wg/oauth-selective-disclosure-jwt/pull/394 clears this one up ",
+          "createdAt": "2024-06-12T12:14:31Z",
+          "updatedAt": "2024-06-12T12:14:31Z"
         }
       ]
     },
@@ -9194,7 +9201,7 @@
         },
         {
           "author": "bifurcation",
-          "authorAssociation": "NONE",
+          "authorAssociation": "CONTRIBUTOR",
           "body": "I agree that pointer-based approaches are unnecessary complexity.\r\n\r\nBut the fact that the same object can have two different syntaxes is a pain to implement.  It would be nice if a disclosure could always be a `[salt, key, value]` array, and just have the `key` be equal to JSON `null` for array disclosures.\r\n\r\nBasically, the current structure requires loose parsing with post-hoc validation, whereas with a uniform structure you could be more declarative.  For example, in Rust with `serde_json`, you could just define a disclosure to be `struct Disclosure(String, Option<String>, Value)`, so that the parser would do the work of validation.",
           "createdAt": "2023-11-13T14:48:57Z",
           "updatedAt": "2023-11-13T14:50:39Z"
@@ -9608,7 +9615,7 @@
       "id": "I_kwDOHTmVzM52HVk-",
       "title": "Add 2.1 Abbreviations",
       "url": "https://github.com/oauth-wg/oauth-selective-disclosure-jwt/issues/370",
-      "state": "OPEN",
+      "state": "CLOSED",
       "author": "sakimura",
       "authorAssociation": "CONTRIBUTOR",
       "assignees": [],
@@ -9618,8 +9625,8 @@
       ],
       "body": "Abbreviations appear in this document without first being defined, e.g., KB-JWT. \r\nIt would make it easier for the readers if the document has an abbreviation section near the top of the document. \r\nProposal: \r\nCreate a new section 2.1 Abbreviation and collect all the abbreviations.",
       "createdAt": "2023-11-07T15:30:36Z",
-      "updatedAt": "2024-05-03T18:38:03Z",
-      "closedAt": null,
+      "updatedAt": "2024-06-12T08:35:36Z",
+      "closedAt": "2024-06-12T08:35:36Z",
       "comments": [
         {
           "author": "Sakurann",
@@ -9651,7 +9658,7 @@
       "url": "https://github.com/oauth-wg/oauth-selective-disclosure-jwt/issues/371",
       "state": "CLOSED",
       "author": "bifurcation",
-      "authorAssociation": "NONE",
+      "authorAssociation": "CONTRIBUTOR",
       "assignees": [
         "bc-pi"
       ],
@@ -9672,7 +9679,7 @@
         },
         {
           "author": "bifurcation",
-          "authorAssociation": "NONE",
+          "authorAssociation": "CONTRIBUTOR",
           "body": "I think the same argument also applies to `_sd_alg`.  It's just a normal JWT claim, so it can be deconflicted using the usual registry process.",
           "createdAt": "2023-11-13T14:28:36Z",
           "updatedAt": "2023-11-13T14:28:36Z"
@@ -9686,7 +9693,7 @@
         },
         {
           "author": "bifurcation",
-          "authorAssociation": "NONE",
+          "authorAssociation": "CONTRIBUTOR",
           "body": "To me the difference between `_sd` and `_sd_alg` seems to be that `_sd_alg` is at the top level of the JWT claims, where we're used to dealing with [registered claims](https://www.iana.org/assignments/jwt/jwt.xhtml).  But `_sd` can be down in the guts of the claims, which the JWT signer might have less control over.  So I would go for `_sd`, but `sd_hash` and `sd_alg`.",
           "createdAt": "2023-11-13T21:21:17Z",
           "updatedAt": "2023-11-13T21:21:17Z"
@@ -9714,7 +9721,7 @@
         },
         {
           "author": "bifurcation",
-          "authorAssociation": "NONE",
+          "authorAssociation": "CONTRIBUTOR",
           "body": "@selfissued What is the difference between \"normal claims\" and \"meta-claims\" here?  And why did OpenID Connect go that way?",
           "createdAt": "2023-12-04T18:07:26Z",
           "updatedAt": "2023-12-04T18:07:26Z"
@@ -9728,7 +9735,7 @@
         },
         {
           "author": "bifurcation",
-          "authorAssociation": "NONE",
+          "authorAssociation": "CONTRIBUTOR",
           "body": "Thanks, that distinction makes sense.  Applying that to SD-JWT, it seems directly applicable to `_sd`, and `_sd_alg` sort of fits as well, since it tells you how to read the road-signs (to continue @selfissued's metaphor).  I'm OK with these keeping `_`.\r\n\r\nBut `_sd_hash` is not a road-sign, it's the main event.  If you ignore `_sd` or `_sd_alg`, you miss out on some claims, but nothing fundamental breaks.  If you ignore `_sd_hash`, you're not enforcing the key security properties of the system.  So I think the original issue here is still valid.  ",
           "createdAt": "2023-12-04T19:06:01Z",
           "updatedAt": "2023-12-04T19:06:01Z"
@@ -9749,19 +9756,21 @@
       "url": "https://github.com/oauth-wg/oauth-selective-disclosure-jwt/issues/372",
       "state": "OPEN",
       "author": "bifurcation",
-      "authorAssociation": "NONE",
+      "authorAssociation": "CONTRIBUTOR",
       "assignees": [
         "bifurcation"
       ],
-      "labels": [],
+      "labels": [
+        "has-PR"
+      ],
       "body": "Recursive redaction makes it much more complex to validate and handle SD-JWT objects.\r\n\r\nIt requires that disclosure be processed in a particular order, and since this order is known only to the redactor, the disclosures in the SD-JWT must be listed in a specific order to communicate the order.\r\n\r\nIt complicates the matching of disclosure objects to redacted fields, which you need to do in order to validate that the disclosures match the Issuer JWT, or to offer an API of the form \"delete the disclosure for `/address/street_address`\".  Without recursion, you are matching the list of disclosures against the claims in the Issuer JWT.  With recursion, you are matching the list of disclosures against the issuer JWT _and all other disclosures_.\r\n\r\nIt complicates selective disclosure.  Now, if I opt not to disclose a field, I may have rendered some disclosure further down the line meaningless.  So instead of just deleting one disclosure, I also have to search through the disclosed value for further SD hashes, and delete the corresponding disclosures.\r\n\r\nIn principle, we could add specification text that would address these issues.  But it would be a significant amount of text for what seems like a fairly niche feature.  Seems better just to delete the feature and keep things simple. ",
       "createdAt": "2023-11-13T13:48:09Z",
-      "updatedAt": "2024-05-15T15:45:06Z",
+      "updatedAt": "2024-06-12T11:49:21Z",
       "closedAt": null,
       "comments": [
         {
           "author": "bifurcation",
-          "authorAssociation": "NONE",
+          "authorAssociation": "CONTRIBUTOR",
           "body": "This is also not a difficult property to enforce: Simply invalidate any disclosure object that discloses a JSON object containing an SD hash (`_sd` or `...`).",
           "createdAt": "2023-11-13T13:58:22Z",
           "updatedAt": "2023-11-13T13:58:22Z"
@@ -9775,7 +9784,7 @@
         },
         {
           "author": "bifurcation",
-          "authorAssociation": "NONE",
+          "authorAssociation": "CONTRIBUTOR",
           "body": "> > It requires that disclosure be processed in a particular order, and since this order is known only to the redactor, the disclosures in the SD-JWT must be listed in a specific order to communicate the order.\r\n>\r\n> I don't understand this point. The algorithm defined in the spec right now does not care for the order of disclosures (and it works with recursive disclosures).\r\n\r\nI looked again at the algorithm in the document, and I agree that it works as specified.  But now I have a different complaint -- that the algorithm is overly complex because of the need for recursive redaction :)  What I had in mind was an even simpler algorithm, where the verifier takes each disclosure, identifies its location in the JSON object, and fills in the corresponding value.  No need for recursion or recursive searches for hashes.\r\n\r\nIn other words, without recursive redaction, you could replace steps 2 and 3 with something like the following:\r\n\r\n1. For each disclosure object in the SD-JWT:\r\n    1. Compute the hash of the disclosure object using `sd_alg`\r\n    2. Identify where in the object this hash appears, as an `...` entry in an array element or as a value in an `_sd` hash list.\r\n    3. Restore the redacted value from the disclosure object\r\n        * If in an array, replace the `{ \"...\": ... }` with the value\r\n        * If in an object, add a field with the name and value in the disclosure and remove from `_sd`\r\n",
           "createdAt": "2023-11-13T14:27:55Z",
           "updatedAt": "2023-11-13T14:27:55Z"
@@ -9789,7 +9798,7 @@
         },
         {
           "author": "bifurcation",
-          "authorAssociation": "NONE",
+          "authorAssociation": "CONTRIBUTOR",
           "body": "Sorry, in case it was unclear, by \"for each disclosure object\", I meant the `~`-separated pieces ([in code](https://github.com/bifurcation/rust-jwt/pull/1/files#diff-4feaccf60ef5e7cab574f2f827a8361bd688b4a1606e69e9297b8b0a00be8412R562)).  You seem to be thinking of iterating through the digests in the JSON object.\r\n\r\nThis seems like a more natural algorithm to me, since you can only disclose what's in the disclosures.  And it seems like you need a simpler API -- you only need to be able to look up where a specific SD hash is, as opposed to enumerating all the hashes in the JSON tree.\r\n",
           "createdAt": "2023-11-13T16:23:47Z",
           "updatedAt": "2023-11-13T16:23:47Z"
@@ -9803,14 +9812,14 @@
         },
         {
           "author": "bifurcation",
-          "authorAssociation": "NONE",
+          "authorAssociation": "CONTRIBUTOR",
           "body": "I think the thing that worries me most here is the [algorithm for the Holder to choose which items to disclose](https://www.ietf.org/archive/id/draft-ietf-oauth-selective-disclosure-jwt-06.html#name-processing-by-the-holder).  As with the validation algorithm discussed in #373, redaction makes it much harder to tell which disclosures go with which claims, and which disclosures can be dropped without invalidating the SD-JWT.\r\n\r\nWithout redaction, each disclosure stands alone, and you can tell what it represents by finding its hash in the Issuer JWT.  With redaction, you have to work your way through all of the other disclosures, and make sure you end up back in the Issuer JWT.\r\n\r\nYou say this is not a lot of extra complexity, but it's not even obvious to me how to write an algorithm for the above whose correctness I would have strong confidence in.  Hand it to the median programmer, and you're going to get bugs -- invalid JWTs/presentations or inadvertent disclosures.\r\n",
           "createdAt": "2023-11-13T20:11:56Z",
           "updatedAt": "2023-11-13T20:11:56Z"
         },
         {
           "author": "bifurcation",
-          "authorAssociation": "NONE",
+          "authorAssociation": "CONTRIBUTOR",
           "body": "Basically, the choice here is:\r\n\r\n1. Eliminate recursive redaction, get simple, clear algorithms\r\n2. Keep recursive redaction, make every algorithm recursive\r\n\r\nIt's not impossible, I just question whether it's worth the work.",
           "createdAt": "2023-11-13T20:13:47Z",
           "updatedAt": "2023-11-13T20:13:47Z"
@@ -9831,7 +9840,7 @@
         },
         {
           "author": "bifurcation",
-          "authorAssociation": "NONE",
+          "authorAssociation": "CONTRIBUTOR",
           "body": "Updated title to reflect decision.  I can do a review and propose some clarifications.",
           "createdAt": "2023-11-27T17:08:55Z",
           "updatedAt": "2023-11-27T17:08:55Z"
@@ -9852,7 +9861,7 @@
       "url": "https://github.com/oauth-wg/oauth-selective-disclosure-jwt/issues/373",
       "state": "CLOSED",
       "author": "bifurcation",
-      "authorAssociation": "NONE",
+      "authorAssociation": "CONTRIBUTOR",
       "assignees": [
         "bc-pi"
       ],
@@ -9873,7 +9882,7 @@
         },
         {
           "author": "bifurcation",
-          "authorAssociation": "NONE",
+          "authorAssociation": "CONTRIBUTOR",
           "body": "Ah, thanks, I had missed that.  Even given that though:\r\n\r\n* I would not call this property \"correct\".  The only other place that property appears is in 11.2, so maybe it can just be dropped, and we can just say directly \"All disclosures correspond to a hash value that appears in the Issuer JWT\"\r\n\r\n* Given recursive disclosure, though, even that's not really sufficient.  A recursively disclosed claim does not in fact appear in the Issuer JWT -- you basically need to verify that it hash-chains into the Issuer JWT via a series of disclosures \ud83d\ude31 \r\n\r\nIf we're going to eliminate recursive disclosure, I think the current text probably suffices (modulo \"correct\").  But if we're going to keep it, we need to elaborate the algorithm.  Maybe it can be folded into the existing recursive algorithm as a termination condition.  If you're adding the hashes inside disclosed values as you restore them, then if you get to the point where none of the claim hashes are in the set of disclosure hashes, then if the set of disclosure hashes is non-empty, the object is invalid.",
           "createdAt": "2023-11-13T20:03:19Z",
           "updatedAt": "2023-11-13T20:03:19Z"
@@ -9887,7 +9896,7 @@
         },
         {
           "author": "bifurcation",
-          "authorAssociation": "NONE",
+          "authorAssociation": "CONTRIBUTOR",
           "body": "Agreed, if we can update the algorithm to reject if any hashes are left over, then that would fix this issue.",
           "createdAt": "2023-11-13T22:08:33Z",
           "updatedAt": "2023-11-13T22:08:33Z"
@@ -9906,21 +9915,21 @@
       "id": "I_kwDOHTmVzM52qDgf",
       "title": "Separate token and presentation formats",
       "url": "https://github.com/oauth-wg/oauth-selective-disclosure-jwt/issues/374",
-      "state": "OPEN",
+      "state": "CLOSED",
       "author": "bifurcation",
-      "authorAssociation": "NONE",
+      "authorAssociation": "CONTRIBUTOR",
       "assignees": [],
       "labels": [
         "has-PR"
       ],
       "body": "This document actually defines two object formats, with distinct formats and validation processes:\r\n\r\n1. An object that is sent from Issuer to Holder, containing the Issuer JWT and zero or more disclosures\r\n    * Format: `IssuerJWT~disclosure~...~disclosure~`\r\n    * Validation: Validate the Issuer JWT, validate that all disclosures are present in the Issuer JWT claims\r\n2. An object that is sent from Holder to Verifier, containing the Issuer JWT, zero or more disclosures, and a Key Binding JWT\r\n    * Format: `Type1Object+KBJWT = IssuerJWT~disclosure~...~disclosure~KBJWT`\r\n    * Validation: Validate the KB JWT and `cnf`, then validate the type-(1) object\r\n\r\nRight now, the document refers to only one format, SD-JWT, which may or may not have a KB-JWT.  The document should name these two things differently and make the different processes clear.  In my notes, I have called these a \"token\" and a \"presentation\", respectively, but I don't have strong feelings about terminology.",
       "createdAt": "2023-11-13T14:08:32Z",
-      "updatedAt": "2024-02-20T16:55:32Z",
-      "closedAt": null,
+      "updatedAt": "2024-06-12T08:35:35Z",
+      "closedAt": "2024-06-12T08:35:35Z",
       "comments": [
         {
           "author": "bifurcation",
-          "authorAssociation": "NONE",
+          "authorAssociation": "CONTRIBUTOR",
           "body": "To be clear, I don't think we need actual technical changes here (aside from maybe moving a `~` character cf. #375).  I'm more concerned that both of these things are called \"SD-JWT\" right now, so when you have, for example, an API that expects an SD-JWT, that API has to deal with whether it's getting a key binding or not.  The reason for proposing separate names and processes here is to make it clear that implementors should handle them differently, and avoid \"cross-contamination\", in particular someone thinking they got a non-replayable thing when they did not.\r\n\r\n(This is an exact parallel to `\"alg\": \"none\"` in JWS, where the same syntax could encode very different security properties.  The fact that JWS allowed that cross-contamination has led to a significant number of security bugs.)\r\n\r\nSo my proposal here would basically be to change some terminology and rearrange some text:\r\n\r\n* Make separate terms for two data distinct formats: \r\n    * \"IssuerJWT + disclosures\" \r\n    * \"IssuerJWT + disclosures + KB-JWT\"\r\n    * **These can be syntactically as close as they are now, but they need separate names and definitions, not a single optional field, that optionality is like the optionality of the signature in `JWS(alg=none)`**\r\n* For \"IssuerJWT + disclosures\", the available algorithms are:\r\n    * Validate: Validate Issuer JWT, validate that disclosures all appear (transitively) in Issuer JWT\r\n    * \"Forget\": Remove a disclosure and all of its transitively dependent disclosures\r\n    * \"Reveal\": Apply the disclosures to obtain the maximally unredacted claims (may be coalesced with Validate)\r\n    * \"Sign\": Create an \"IssuerJWT + disclosures + KB-JWT\" using the key referenced in `cnf`\r\n* For \"IssuerJWT + disclosures + KB-JWT\", the available algorithms are\r\n    * Validate: Validate KB JWT, then validate the \"IssuerJWT + disclosures\"\r\n    * \"Reveal\": implicitly from the IssuerJWT + disclosures (maybe coalesced)\r\n\r\nI admit that I have not done the work to see how the current text would map to this structure.  If people are on board in principle, I could work up a PR that would make a more concrete proposal.\r\n",
           "createdAt": "2023-11-13T22:22:32Z",
           "updatedAt": "2023-11-13T22:22:32Z"
@@ -9955,7 +9964,7 @@
         },
         {
           "author": "bifurcation",
-          "authorAssociation": "NONE",
+          "authorAssociation": "CONTRIBUTOR",
           "body": "@danielfett The specific text that is freaking me out here is:\r\n\r\n> Determine if Key Binding is to be checked according to the Verifier's policy for the use case at hand. This decision MUST NOT be based on whether a Key Binding JWT is provided by the Holder or not. Refer to [Section 11.6](https://www.ietf.org/archive/id/draft-ietf-oauth-selective-disclosure-jwt-06.html#key_binding_security) for details.\r\n\r\nThis invites people to write code that is insecure unless the operator writes a policy that corrects for the deficiencies of the code.  As @selfissued points out, when things are structured that way, people will fail to write those policies in a safe way, and you get security defects.\r\n\r\nTo frame it in terms of API design:\r\n\r\n```\r\n# What the document has now\r\ndef verify_sd_jwt(sd_jwt, require_kb)\r\n\r\n# What the document ought to have\r\ndef verify_sd_jwt(sd_jwt) # KB MUST NOT be present\r\ndef verify_sd_jwt_with_key_binding(sd_jwt) # KB MUST be present and valid\r\n```\r\n\r\nThe point being that the `require_kb` flag has significant security implications (much like a putative \"accept `alg:none` flag), so we shouldn't express things in those terms.  You would never write a data import method that is like `import_data(data, signed)`, because the first time someone calls it with `signed=false` in the wrong context, you have a security incident.  Instead, you would write a separate `import_data_raw_danger_danger_danger(data)` method, and be very careful about where you use it.  If an application doesn't care about key binding, it should explicitly transform the SD-JWT to strip it.\r\n\r\nNet of all that ranting, though, all I'm saying here is that we should split the current verification algorithm in two, where one algorithm covers validation of the base SD-JWT properties (issuer JWT valid, all disclosures accounted for), and the other first validates the key binding, then calls the first algorithm.",
           "createdAt": "2023-11-22T15:57:41Z",
           "updatedAt": "2023-11-22T15:57:41Z"
@@ -9969,14 +9978,14 @@
         },
         {
           "author": "bifurcation",
-          "authorAssociation": "NONE",
+          "authorAssociation": "CONTRIBUTOR",
           "body": "Yeah, I think I can live with that.  It still makes me a little queasy to have the Verifier accepting documents with two different sets of security properties, but I'll take an antacid :)  We might want to split the Holder->Verifier arrow in [Figure 1](https://www.ietf.org/archive/id/draft-ietf-oauth-selective-disclosure-jwt-06.html#figure-1) into two arrows, one for each type of object.\r\n\r\nI would also still prefer we had separate terms for \"SD-JWT without KB-JWT\" and \"SD-JWT with KB-JWT\", since these have distinct formats and algorithms.",
           "createdAt": "2023-11-22T21:40:44Z",
           "updatedAt": "2023-11-22T21:40:44Z"
         },
         {
           "author": "bifurcation",
-          "authorAssociation": "NONE",
+          "authorAssociation": "CONTRIBUTOR",
           "body": "Thinking on this more, in light of #356, I'm feeling increasingly confident that Token and Presentation are good terms for \"SD-JWT-without-KB\" and \"SD-JWT-with-KB\", respectively.  Or perhaps to be more streamlined, \"SD-JWT\" for \"without KB\" and \"[SD-JWT] Presentation\" for \"with KB\".\r\n\r\nToken / SD-JWT makes sense for \"without-KB\" because it has basically the same dynamics as a JWT.  It's something the Issuer hands to the Holder, and the Holder passes on to other people.  And importantly, it shares with JWT the property of replayability.  The only difference here is that the Holder can drop some disclosures.\r\n\r\nPresentation makes sense for \"with-KB\" because the Holder needs to take an additional operation, making a new thing using the Token and the `cnf`-bound private key.\r\n\r\nYou can still call the Holder--Verifier interaction \"presentation\", you just say that the Holder presents either a Presentation or a bare Token.  The slightly awkwardness of the latter construction is productive, because it tacitly implies that you really ought to be using a Presentation to get the full security properties.\r\n\r\n```\r\n                   +------------+\r\n                   |            |\r\n                   |   Issuer   |\r\n                   |            |\r\n                   +------------+\r\n                         |\r\n                    Issues SD-JWT\r\n              including all Disclosures\r\n                         |\r\n                         v\r\n                   +------------+\r\n                   |            |\r\n                   |   Holder   |\r\n                   |            |\r\n                   +------------+\r\n                       |    |\r\n   Presents Token with |    | Presents Presentation\r\n  selected disclosures | or | with selected disclosures\r\n                       |    |\r\n                       v    v\r\n                   +-------------+\r\n                   |             |+\r\n                   |  Verifiers  ||+\r\n                   |             |||\r\n                   +-------------+||\r\n                    +-------------+|\r\n                     +-------------+\r\n```",
           "createdAt": "2023-11-27T14:14:52Z",
           "updatedAt": "2023-11-27T14:14:52Z"
@@ -9997,7 +10006,7 @@
         },
         {
           "author": "bifurcation",
-          "authorAssociation": "NONE",
+          "authorAssociation": "CONTRIBUTOR",
           "body": "> > split the current verification algorithm in two, where one algorithm covers validation of the base SD-JWT properties (issuer JWT valid, all disclosures accounted for), and the other first validates the key binding, then calls the first algorithm.\r\n> \r\n> In the common/typical/expected case the key needed to verify the key binding JWT is in the `cnf` of the Issuer-signed JWT so that order of validation steps doesn't work very well.\r\n\r\nSorry for the ambiguity, I was including \"check that the bound public key matches `cnf`\" within \"validate the key binding\".",
           "createdAt": "2023-11-28T19:28:30Z",
           "updatedAt": "2023-11-28T20:53:25Z"
@@ -10018,7 +10027,7 @@
       "url": "https://github.com/oauth-wg/oauth-selective-disclosure-jwt/issues/375",
       "state": "CLOSED",
       "author": "bifurcation",
-      "authorAssociation": "NONE",
+      "authorAssociation": "CONTRIBUTOR",
       "assignees": [],
       "labels": [],
       "body": "An SD-JWT with zero disclosures and no key binding is the same as a JWT -- you can't undo any of the selective disclosures, so you have to take the claims as they are.  But with the current document, the two cases are syntactically different: SD-JWT(0) has a `~` character at the end, and a plain JWT doesn't.\r\n\r\nThis mismatch is unfortunate for a couple of reasons.  It means that if you're taking one of these objects between SD-aware and non-SD-aware contexts, you have to have a mapping layer that adds and removes the `~`.  And it makes it impossible to use the key binding feature as-is with a plain JWT, because the key binding feature assumes that the thing being bound ends with the `~` separator.\r\n\r\nI would suggest refactoring as follows:\r\n\r\n1. Define the format of the \"SD-JWT without key binding\" thing to be simply `IssuerJWT~disclosure~...~disclosure` (no final `~`)\r\n2. Define the format of an [SD-]JWT with key binding to be `JWT~KBJWT` (with the intermediate `~`, which is absent today)\r\n\r\nThis aligns well with the distinction proposed in #374.\r\n\r\n\r\n",
@@ -10056,7 +10065,7 @@
         },
         {
           "author": "bifurcation",
-          "authorAssociation": "NONE",
+          "authorAssociation": "CONTRIBUTOR",
           "body": "@Sakurann I'm a little puzzled that you think the extra `~` is better for developer experience.  An SD-JWT without disclosures is literally just a JWT where some of the claims have nonsense values.\r\n\r\nBut I guess you could argue that that's a reason that an SD-JWT(0) should still not be processed by a vanilla JWT library -- because an SD-JWT will recognize the SD claim values as nonsense, as opposed to trying to interpret them. \r\n\r\nUnder that theory, I'm OK with closing this.",
           "createdAt": "2024-02-08T20:21:04Z",
           "updatedAt": "2024-02-08T20:21:04Z"
@@ -10207,7 +10216,7 @@
       "url": "https://github.com/oauth-wg/oauth-selective-disclosure-jwt/issues/383",
       "state": "CLOSED",
       "author": "bifurcation",
-      "authorAssociation": "NONE",
+      "authorAssociation": "CONTRIBUTOR",
       "assignees": [
         "bc-pi"
       ],
@@ -10228,7 +10237,7 @@
         },
         {
           "author": "bifurcation",
-          "authorAssociation": "NONE",
+          "authorAssociation": "CONTRIBUTOR",
           "body": "On the one hand, KB is important.  On the other hand, KB is optional.  \ud83e\udd14 \r\n\r\nWhat other discussion do you have in mind?  I'm not finding it on a quick search through the document.\r\n\r\n\r\n",
           "createdAt": "2023-11-28T19:33:26Z",
           "updatedAt": "2023-11-28T19:33:26Z"
@@ -10242,7 +10251,7 @@
         },
         {
           "author": "bifurcation",
-          "authorAssociation": "NONE",
+          "authorAssociation": "CONTRIBUTOR",
           "body": "Yeah, we should delete that and Section 10 as well.  They don't actually define anything, and they are harmful because they encourage divergent, non-interoperable implementations.  If there are use cases that KB-JWT doesn't cover and needs to, we should accommodate them.  If we don't need to accommodate them, we shouldn't.",
           "createdAt": "2023-12-04T22:53:44Z",
           "updatedAt": "2023-12-04T22:53:44Z"
@@ -10277,7 +10286,7 @@
       "url": "https://github.com/oauth-wg/oauth-selective-disclosure-jwt/issues/384",
       "state": "CLOSED",
       "author": "bifurcation",
-      "authorAssociation": "NONE",
+      "authorAssociation": "CONTRIBUTOR",
       "assignees": [],
       "labels": [],
       "body": "The document uses \"Presentation\" several times, capitalized as if it is an defined term.  AFAICT it is never actually defined. ",
@@ -10301,7 +10310,7 @@
       "url": "https://github.com/oauth-wg/oauth-selective-disclosure-jwt/issues/385",
       "state": "CLOSED",
       "author": "bifurcation",
-      "authorAssociation": "NONE",
+      "authorAssociation": "CONTRIBUTOR",
       "assignees": [],
       "labels": [
         "pending-close"
@@ -10516,7 +10525,7 @@
       "url": "https://github.com/oauth-wg/oauth-selective-disclosure-jwt/issues/391",
       "state": "CLOSED",
       "author": "bifurcation",
-      "authorAssociation": "NONE",
+      "authorAssociation": "CONTRIBUTOR",
       "assignees": [
         "bc-pi"
       ],
@@ -10545,7 +10554,7 @@
       "url": "https://github.com/oauth-wg/oauth-selective-disclosure-jwt/issues/392",
       "state": "CLOSED",
       "author": "bifurcation",
-      "authorAssociation": "NONE",
+      "authorAssociation": "CONTRIBUTOR",
       "assignees": [],
       "labels": [
         "has-PR"
@@ -10564,7 +10573,7 @@
         },
         {
           "author": "bifurcation",
-          "authorAssociation": "NONE",
+          "authorAssociation": "CONTRIBUTOR",
           "body": "That just further emphasizes that we need to address #374  and separate \"SD-JWT without KB\" and \"SD-JWT with KB\", since the JSON serialization folks want to use the former and not the latter.  If we have that separation, this section can just have a JSON format for \"SD-JWT without KB\" and there's no mismatch.",
           "createdAt": "2023-12-05T15:56:23Z",
           "updatedAt": "2023-12-05T15:56:23Z"
@@ -10592,14 +10601,16 @@
       "url": "https://github.com/oauth-wg/oauth-selective-disclosure-jwt/issues/393",
       "state": "OPEN",
       "author": "bifurcation",
-      "authorAssociation": "NONE",
+      "authorAssociation": "CONTRIBUTOR",
       "assignees": [
         "bc-pi"
       ],
-      "labels": [],
+      "labels": [
+        "has-PR"
+      ],
       "body": "It seems like it could be helpful to implementors, allowing them to quickly validate whether what they have is syntactically an SD-JWT or an SD-JWT with key binding.  Something like:\r\n\r\n```\r\nbase64url ::= ALPHA / DIGIT / \"-\" / \"_\"\r\nJWT ::= base64url \".\" base64url \".\" base64url\r\nSD-JWT ::= JWT \"~\" [base64url \"~\"]*\r\nFnord ::= SD-JWT JWT\r\n```",
       "createdAt": "2023-12-05T22:57:48Z",
-      "updatedAt": "2024-06-10T22:28:12Z",
+      "updatedAt": "2024-06-12T11:48:49Z",
       "closedAt": null,
       "comments": [
         {
@@ -10625,7 +10636,7 @@
         },
         {
           "author": "bifurcation",
-          "authorAssociation": "NONE",
+          "authorAssociation": "CONTRIBUTOR",
           "body": "Looks good to me, and appears valid according to the [IETF ABNF parser](https://author-tools.ietf.org/abnf).",
           "createdAt": "2024-02-14T14:12:53Z",
           "updatedAt": "2024-02-14T14:12:53Z"
@@ -10933,11 +10944,11 @@
         "bc-pi"
       ],
       "labels": [
-        "ready-for-PR"
+        "has-PR"
       ],
       "body": "Right after the IETF 119 OAuth session yesterday in a talk with @selfissued and @ve7jtb that started with discussion of PR #394, the question again came up (with some surprise on their part) as to why the `cnf` claim isn't the one and only way specified to put the holder's public key in the issuer-signed JWT. I honestly had a hard time giving a good rational for SD-JWT not being more prescriptive with it's requirements here.\r\n\r\nIt seems that using the `cnf` claim exclusively would be more straightforward and much better for interop. \r\n\r\n@bifurcation has previously made similar comments, \"it seems like there's an unnecessary level of ambiguity around how the Issuer-signed JWT binds to a holder public key.  Can we not just say `cnf`?  Why do we need more?  This point actually worries me more than [others] -- without clarity on this, there is no hope of writing stacks that interop.\"\r\n\r\nUsing the `cnf` claim exclusively could also help with some clarity in the [security considerations](https://www.ietf.org/archive/id/draft-ietf-oauth-selective-disclosure-jwt-08.html#section-10.6) where there currently has to be wording like \"[if there's] no recognized Key Binding data is present in the SD-JWT...\" and \" ... the Issuer might have added the key to the SD-JWT in a format/claim that is not recognized by the Verifier.\".\r\n\r\nNote this is related to but separate from the question of if the presence of a `cnf` claim in the issuer-signed JWT means that the verifier should have to require a KB-JWT. The `cnf` claim can be made _the way_ to do holder binding while still leaving that up to verifier policy.\r\n\r\n",
       "createdAt": "2024-03-20T21:49:13Z",
-      "updatedAt": "2024-06-04T15:23:24Z",
+      "updatedAt": "2024-06-12T16:00:18Z",
       "closedAt": null,
       "comments": [
         {
@@ -10949,7 +10960,7 @@
         },
         {
           "author": "bifurcation",
-          "authorAssociation": "NONE",
+          "authorAssociation": "CONTRIBUTOR",
           "body": "Yep, this sounds good to me. ",
           "createdAt": "2024-03-21T04:38:20Z",
           "updatedAt": "2024-03-21T04:38:20Z"
@@ -10974,6 +10985,13 @@
           "body": "I'd be fine with having `cnf` as the only defined mechanism but leaving the door open for `cnfs` or similar.",
           "createdAt": "2024-06-04T15:23:23Z",
           "updatedAt": "2024-06-04T15:23:23Z"
+        },
+        {
+          "author": "bc-pi",
+          "authorAssociation": "COLLABORATOR",
+          "body": "PR https://github.com/oauth-wg/oauth-selective-disclosure-jwt/pull/435 aims to make cnf the one true way to bind to a holder public key while leaving room (same as RFC7800) for other as yet to be defined ways to deal with more than one key \r\n ",
+          "createdAt": "2024-06-12T15:59:49Z",
+          "updatedAt": "2024-06-12T15:59:49Z"
         }
       ]
     },
@@ -11015,11 +11033,12 @@
         "bc-pi"
       ],
       "labels": [
+        "has-PR",
         "editorial"
       ],
       "body": "> FWIW that whole thing is currently enclosed in a figure (see https://www.ietf.org/archive/id/draft-ietf-oauth-selective-disclosure-jwt-08.html#section-5-11) and in the interest of moving along this PR from last year, maybe that change could be addressed in a separate PR or issue?\r\n\r\n_Originally posted by @bc-pi in https://github.com/oauth-wg/oauth-selective-disclosure-jwt/pull/394#discussion_r1608758034_\r\n            ",
       "createdAt": "2024-05-22T15:33:33Z",
-      "updatedAt": "2024-06-04T15:15:50Z",
+      "updatedAt": "2024-06-12T11:29:55Z",
       "closedAt": null,
       "comments": []
     },
@@ -40983,7 +41002,7 @@
             "abbreviatedOid": "93ec8b2"
           },
           "author": "bifurcation",
-          "authorAssociation": "NONE",
+          "authorAssociation": "CONTRIBUTOR",
           "state": "APPROVED",
           "body": "",
           "createdAt": "2023-12-04T22:29:43Z",
@@ -41200,24 +41219,26 @@
       "id": "PR_kwDOHTmVzM5hPKYA",
       "title": "Distinguish SD-JWT from SD-JWT+KB",
       "url": "https://github.com/oauth-wg/oauth-selective-disclosure-jwt/pull/394",
-      "state": "OPEN",
+      "state": "MERGED",
       "author": "bifurcation",
-      "authorAssociation": "NONE",
+      "authorAssociation": "CONTRIBUTOR",
       "assignees": [],
       "labels": [],
       "body": "This PR limits the scope of the term \"SD-JWT\" so that it refers only to an Issuer-signed JWT and a set of disclosures.  We introduce the term \"Fnord\" to refer to an SD-JWT with key binding.  As a bonus, we are able to clean up stale uses of Presentation, which mostly, but not always align with Fnord.\r\n\r\n\"[Fnord](https://en.wikipedia.org/wiki/Fnord)\" is deliberately nonsensical, of course.  We should replace this with a more intuitive word.  We could reintroduce \"Presentation\" for this, with the allowance that one might \"present\" either a Presentation or an SD-JWT.  Or we could pick another term, suggestions welcome.\r\n\r\nI have tried to be fairly minimal in the changes here.  In particular, I have not changed any of the algorithms, though I suspect they would be clearer if a bit more separate.  I have rewritten a few paragraphs, especially close to the top and in the Security Considerations.\r\n\r\nFixes #374\r\nFixes #392 ",
       "createdAt": "2023-12-05T23:02:33Z",
-      "updatedAt": "2024-06-05T10:39:48Z",
+      "updatedAt": "2024-06-12T13:17:44Z",
       "baseRepository": "oauth-wg/oauth-selective-disclosure-jwt",
       "baseRefName": "master",
       "baseRefOid": "aa212faf5f2f9b053b0f4a3483e839aadd7792c9",
       "headRepository": "bifurcation/oauth-selective-disclosure-jwt",
       "headRefName": "fnord",
       "headRefOid": "deaabdd5133a1a222eda31663937652ea81a5d93",
-      "closedAt": null,
-      "mergedAt": null,
-      "mergedBy": null,
-      "mergeCommit": null,
+      "closedAt": "2024-06-12T08:35:34Z",
+      "mergedAt": "2024-06-12T08:35:34Z",
+      "mergedBy": "Sakurann",
+      "mergeCommit": {
+        "oid": "9641acbb09e5561dcaf537b5a825186dec4b1129"
+      },
       "comments": [
         {
           "author": "OR13",
@@ -41242,7 +41263,7 @@
         },
         {
           "author": "bifurcation",
-          "authorAssociation": "NONE",
+          "authorAssociation": "CONTRIBUTOR",
           "body": "@Sakurann - Changed to `SD-JWT-KB`, since the `SD-JWT/KB` looked weird to me (division seemed like the wrong metaphor) and `SD-JWT~KB` seemed a little too cute.  Also merged `master` while I was at it.",
           "createdAt": "2024-02-08T20:22:46Z",
           "updatedAt": "2024-02-08T20:22:46Z"
@@ -41270,7 +41291,7 @@
         },
         {
           "author": "bifurcation",
-          "authorAssociation": "NONE",
+          "authorAssociation": "CONTRIBUTOR",
           "body": "@selfissued - The point of this PR is that Key Binding isn't just an optional feature -- it's a feature that causes a security failure if you forget to check that it's enabled.  Just like it's a basic security principle that one API endpoint should never accept both signed and unsigned data (because of the trivial downgrade risk, see `\"alg\": \"none\"`), there should never be a verification process that will accept both SD-JWT and SD-JWT-KB.  Thus, we should talk about them as separate things.",
           "createdAt": "2024-03-21T07:20:52Z",
           "updatedAt": "2024-03-21T07:21:29Z"
@@ -41351,6 +41372,20 @@
           "body": "@bifurcation and @danielfett and @Sakurann to hopefully do a re-review soon(ish) and get this one merged soon(ish) ",
           "createdAt": "2024-05-15T15:52:58Z",
           "updatedAt": "2024-05-15T15:52:58Z"
+        },
+        {
+          "author": "Sakurann",
+          "authorAssociation": "COLLABORATOR",
+          "body": "Thank you, Richard \"fnord\" Barnes",
+          "createdAt": "2024-06-12T08:35:19Z",
+          "updatedAt": "2024-06-12T08:35:19Z"
+        },
+        {
+          "author": "bc-pi",
+          "authorAssociation": "COLLABORATOR",
+          "body": "> Thank you, Richard \"fnord\" Barnes\r\n\r\nIt's the little things that keep me going ",
+          "createdAt": "2024-06-12T13:17:42Z",
+          "updatedAt": "2024-06-12T13:17:42Z"
         }
       ],
       "reviews": [
@@ -41433,7 +41468,7 @@
             "abbreviatedOid": "d150ec2"
           },
           "author": "bifurcation",
-          "authorAssociation": "NONE",
+          "authorAssociation": "CONTRIBUTOR",
           "state": "COMMENTED",
           "body": "",
           "createdAt": "2023-12-06T14:46:38Z",
@@ -41453,7 +41488,7 @@
             "abbreviatedOid": "d150ec2"
           },
           "author": "bifurcation",
-          "authorAssociation": "NONE",
+          "authorAssociation": "CONTRIBUTOR",
           "state": "COMMENTED",
           "body": "",
           "createdAt": "2023-12-06T14:48:59Z",
@@ -42195,7 +42230,7 @@
             "abbreviatedOid": "2f918e9"
           },
           "author": "bifurcation",
-          "authorAssociation": "NONE",
+          "authorAssociation": "CONTRIBUTOR",
           "state": "COMMENTED",
           "body": "",
           "createdAt": "2024-02-29T05:12:08Z",
@@ -42233,7 +42268,7 @@
             "abbreviatedOid": "fef3db5"
           },
           "author": "bifurcation",
-          "authorAssociation": "NONE",
+          "authorAssociation": "CONTRIBUTOR",
           "state": "COMMENTED",
           "body": "",
           "createdAt": "2024-02-29T05:21:48Z",
@@ -42253,7 +42288,7 @@
             "abbreviatedOid": "b94409d"
           },
           "author": "bifurcation",
-          "authorAssociation": "NONE",
+          "authorAssociation": "CONTRIBUTOR",
           "state": "COMMENTED",
           "body": "OK, I just pushed a commit that I think addresses all the comments here.",
           "createdAt": "2024-02-29T15:41:15Z",
@@ -43000,7 +43035,7 @@
             "abbreviatedOid": "950bdd3"
           },
           "author": "bifurcation",
-          "authorAssociation": "NONE",
+          "authorAssociation": "CONTRIBUTOR",
           "state": "COMMENTED",
           "body": "",
           "createdAt": "2024-03-14T04:35:26Z",
@@ -43020,7 +43055,7 @@
             "abbreviatedOid": "950bdd3"
           },
           "author": "bifurcation",
-          "authorAssociation": "NONE",
+          "authorAssociation": "CONTRIBUTOR",
           "state": "COMMENTED",
           "body": "",
           "createdAt": "2024-03-14T04:39:41Z",
@@ -43060,7 +43095,7 @@
             "abbreviatedOid": "707d3d0"
           },
           "author": "bifurcation",
-          "authorAssociation": "NONE",
+          "authorAssociation": "CONTRIBUTOR",
           "state": "COMMENTED",
           "body": "",
           "createdAt": "2024-03-17T06:11:44Z",
@@ -43080,7 +43115,7 @@
             "abbreviatedOid": "1188d83"
           },
           "author": "bifurcation",
-          "authorAssociation": "NONE",
+          "authorAssociation": "CONTRIBUTOR",
           "state": "COMMENTED",
           "body": "",
           "createdAt": "2024-03-17T06:14:10Z",
@@ -43667,6 +43702,19 @@
               "updatedAt": "2024-06-05T10:39:48Z"
             }
           ]
+        },
+        {
+          "id": "PRR_kwDOHTmVzM5957IU",
+          "commit": {
+            "abbreviatedOid": "deaabdd"
+          },
+          "author": "Sakurann",
+          "authorAssociation": "COLLABORATOR",
+          "state": "APPROVED",
+          "body": "",
+          "createdAt": "2024-06-12T08:35:09Z",
+          "updatedAt": "2024-06-12T08:35:09Z",
+          "comments": []
         }
       ]
     },
@@ -45948,13 +45996,13 @@
       "labels": [],
       "body": "To be merged after #394 \r\n\r\nFixes #426",
       "createdAt": "2024-05-21T15:32:02Z",
-      "updatedAt": "2024-06-05T07:54:21Z",
+      "updatedAt": "2024-06-12T19:28:49Z",
       "baseRepository": "oauth-wg/oauth-selective-disclosure-jwt",
       "baseRefName": "master",
-      "baseRefOid": "e0234b77ad74edc8ac2d9aa56fcc768d73b658f8",
+      "baseRefOid": "9641acbb09e5561dcaf537b5a825186dec4b1129",
       "headRepository": "oauth-wg/oauth-selective-disclosure-jwt",
       "headRefName": "danielfett/jws-json-terminology",
-      "headRefOid": "a3357d3ab5dbc39b2892af4e5fa40dd3007da038",
+      "headRefOid": "881245bb65cd7ec509fc3ed649c3969581326cd4",
       "closedAt": null,
       "mergedAt": null,
       "mergedBy": null,
@@ -45980,6 +46028,52 @@
               "updatedAt": "2024-06-04T15:13:41Z"
             }
           ]
+        },
+        {
+          "id": "PRR_kwDOHTmVzM59-YAk",
+          "commit": {
+            "abbreviatedOid": "aa62388"
+          },
+          "author": "bc-pi",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2024-06-12T16:08:39Z",
+          "updatedAt": "2024-06-12T16:08:39Z",
+          "comments": [
+            {
+              "originalPosition": 18,
+              "body": "I think you need/want an indefinite article* here. \r\n```suggestion\r\n * `kb_jwt`: Present only in an SD-JWT+KB, the Key Binding JWT as described in (#kb-jwt).\r\n```\r\n* yes I had to look that up ",
+              "createdAt": "2024-06-12T16:08:39Z",
+              "updatedAt": "2024-06-12T16:08:39Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOHTmVzM59-btz",
+          "commit": {
+            "abbreviatedOid": "aa62388"
+          },
+          "author": "bc-pi",
+          "authorAssociation": "COLLABORATOR",
+          "state": "APPROVED",
+          "body": "",
+          "createdAt": "2024-06-12T16:15:42Z",
+          "updatedAt": "2024-06-12T16:15:42Z",
+          "comments": []
+        },
+        {
+          "id": "PRR_kwDOHTmVzM5-AS0I",
+          "commit": {
+            "abbreviatedOid": "881245b"
+          },
+          "author": "Sakurann",
+          "authorAssociation": "COLLABORATOR",
+          "state": "APPROVED",
+          "body": "",
+          "createdAt": "2024-06-12T19:28:49Z",
+          "updatedAt": "2024-06-12T19:28:49Z",
+          "comments": []
         }
       ]
     },
@@ -46058,18 +46152,18 @@
       "url": "https://github.com/oauth-wg/oauth-selective-disclosure-jwt/pull/431",
       "state": "OPEN",
       "author": "bifurcation",
-      "authorAssociation": "NONE",
+      "authorAssociation": "CONTRIBUTOR",
       "assignees": [],
       "labels": [],
       "body": "Fixes #372 \r\n\r\nThere are three algorithms to consider when it comes to recursive disclosures:\r\n\r\n1. How the issuer generates the recursive disclosures\r\n2. How the holder selects disclosures to reveal in the context of recursion\r\n3. How the verifier unwinds recursive disclosures\r\n\r\n(3) is adequately covered in the verification algorithm.  The other two are currently uncovered.   This PR clarifies (1) and (2).  \r\n\r\nAlgorithm (1) doesn't really need formal definition for interoperability; an issuer can follow any process that ends up with an SD-JWT that will verify.  However, it's useful to (1) provide an illustration, (2) provider a reminder that you have to go from most-specific redaction to least, from the leaves of the AST toward the issuer-signed claims, and (3) provide a clear requirement that an SD-JWT must contain any intermediate recursive disclosures.  This PR adds a section that does these things.\r\n\r\nFor algorithm (2), I simply added a step to the holder processing that verifies that the disclosure selection process got all the required disclosures (including the intermediate ones).  We could also be more prescriptive, providing a concrete algorithm that adds the required intermediate disclosures.",
       "createdAt": "2024-06-04T22:24:32Z",
-      "updatedAt": "2024-06-10T07:10:45Z",
+      "updatedAt": "2024-06-12T19:27:17Z",
       "baseRepository": "oauth-wg/oauth-selective-disclosure-jwt",
       "baseRefName": "master",
-      "baseRefOid": "e0234b77ad74edc8ac2d9aa56fcc768d73b658f8",
+      "baseRefOid": "9641acbb09e5561dcaf537b5a825186dec4b1129",
       "headRepository": "bifurcation/oauth-selective-disclosure-jwt",
       "headRefName": "recurse",
-      "headRefOid": "d9d53ae4e56af97219fe3304dcb2469ea181c94d",
+      "headRefOid": "abfda2f029d5b6c16d06a1d4ff88c69e4b562dfc",
       "closedAt": null,
       "mergedAt": null,
       "mergedBy": null,
@@ -46077,10 +46171,31 @@
       "comments": [
         {
           "author": "bifurcation",
-          "authorAssociation": "NONE",
+          "authorAssociation": "CONTRIBUTOR",
           "body": "This is based on #394, which has accreted quite the pile of commits.  Until that is merged and this PR is rebased, it's probably best to look at the last commit, which is the only new commit in this branch.",
           "createdAt": "2024-06-04T22:25:34Z",
           "updatedAt": "2024-06-04T22:25:34Z"
+        },
+        {
+          "author": "danielfett",
+          "authorAssociation": "MEMBER",
+          "body": "Please rebase/merge main and resolve conflicts.",
+          "createdAt": "2024-06-12T12:19:48Z",
+          "updatedAt": "2024-06-12T12:19:48Z"
+        },
+        {
+          "author": "bc-pi",
+          "authorAssociation": "COLLABORATOR",
+          "body": "> Please rebase/merge main and resolve conflicts.\r\n\r\njust what the doctor ordered ",
+          "createdAt": "2024-06-12T13:15:25Z",
+          "updatedAt": "2024-06-12T13:15:25Z"
+        },
+        {
+          "author": "Sakurann",
+          "authorAssociation": "COLLABORATOR",
+          "body": "> Please rebase/merge main and resolve conflicts.\r\n>\r\n> > just what the doctor ordered\r\n\r\ndone",
+          "createdAt": "2024-06-12T19:21:16Z",
+          "updatedAt": "2024-06-12T19:21:16Z"
         }
       ],
       "reviews": [
@@ -46147,6 +46262,311 @@
               "body": "It would be great if we could have a generated example here to avoid any inconsistencies.",
               "createdAt": "2024-06-10T07:10:45Z",
               "updatedAt": "2024-06-10T07:10:45Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOHTmVzM598Z3q",
+          "commit": {
+            "abbreviatedOid": "d9d53ae"
+          },
+          "author": "bc-pi",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2024-06-12T13:13:47Z",
+          "updatedAt": "2024-06-12T13:13:47Z",
+          "comments": [
+            {
+              "originalPosition": 205,
+              "body": "Actually, after thinking about it for a bit, I no longer believe this is okay. People put a lot of weight (often too much) into examples and I don't want this compelled disclosure of German nationality to be misconstrued as a real use case. Can't what you want to describe here still be accomplished by having all the nationalities array elements be selectively disclosable and pointing out that in order to disclose any/all of them that the nationalities Disclosure itself need also be included?",
+              "createdAt": "2024-06-12T13:13:47Z",
+              "updatedAt": "2024-06-12T13:13:47Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOHTmVzM5-AB2q",
+          "commit": {
+            "abbreviatedOid": "d9d53ae"
+          },
+          "author": "Sakurann",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2024-06-12T19:05:14Z",
+          "updatedAt": "2024-06-12T19:05:14Z",
+          "comments": [
+            {
+              "originalPosition": 242,
+              "body": "> see also https://twitter.com/__b_c/status/434083504381378560\r\n\r\nhow many puppies have died since 2014...",
+              "createdAt": "2024-06-12T19:05:14Z",
+              "updatedAt": "2024-06-12T19:05:14Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOHTmVzM5-AO9M",
+          "commit": {
+            "abbreviatedOid": "abfda2f"
+          },
+          "author": "Sakurann",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2024-06-12T19:23:27Z",
+          "updatedAt": "2024-06-12T19:23:27Z",
+          "comments": [
+            {
+              "originalPosition": 18,
+              "body": "```suggestion\r\nWhen the Holder has multiple nationalities, the issuer may wish to allow the holder to reveal\r\neach of those nationalities individually.\r\n```",
+              "createdAt": "2024-06-12T19:23:27Z",
+              "updatedAt": "2024-06-12T19:23:27Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOHTmVzM5-AQyg",
+          "commit": {
+            "abbreviatedOid": "abfda2f"
+          },
+          "author": "Sakurann",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2024-06-12T19:25:58Z",
+          "updatedAt": "2024-06-12T19:25:58Z",
+          "comments": [
+            {
+              "originalPosition": 242,
+              "body": "this ascii-art is different from how disclosures are illustrated in the rest of the spec, should we follow those?:\r\n\r\n```\r\nClaim sub:\r\n\r\nSHA-256 Hash: X6ZAYOII2vPN40V7xExZwVwz7yRmLNcVwt5DL8RLv4g\r\nDisclosure:\r\nWyIyR0xDNDJzS1F2ZUNmR2ZyeU5STjl3IiwgInN1YiIsICI2YzVjMGE0OS1i\r\nNTg5LTQzMWQtYmFlNy0yMTkxMjJhOWVjMmMiXQ\r\nContents: [\"2GLC42sKQveCfGfryNRN9w\", \"sub\",\r\n\"6c5c0a49-b589-431d-bae7-219122a9ec2c\"]\r\n```",
+              "createdAt": "2024-06-12T19:25:58Z",
+              "updatedAt": "2024-06-12T19:25:58Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOHTmVzM5-ARsl",
+          "commit": {
+            "abbreviatedOid": "abfda2f"
+          },
+          "author": "Sakurann",
+          "authorAssociation": "COLLABORATOR",
+          "state": "APPROVED",
+          "body": "conditional to the examples being fixed and my suggestion for the example being accepted",
+          "createdAt": "2024-06-12T19:27:17Z",
+          "updatedAt": "2024-06-12T19:27:17Z",
+          "comments": []
+        }
+      ]
+    },
+    {
+      "number": 432,
+      "id": "PR_kwDOHTmVzM5yOX8X",
+      "title": "fix up permutations of the figures/examples in SD-JWT Data Formats",
+      "url": "https://github.com/oauth-wg/oauth-selective-disclosure-jwt/pull/432",
+      "state": "OPEN",
+      "author": "bc-pi",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "resolves #428 ",
+      "createdAt": "2024-06-12T11:29:35Z",
+      "updatedAt": "2024-06-12T19:03:44Z",
+      "baseRepository": "oauth-wg/oauth-selective-disclosure-jwt",
+      "baseRefName": "master",
+      "baseRefOid": "9641acbb09e5561dcaf537b5a825186dec4b1129",
+      "headRepository": "oauth-wg/oauth-selective-disclosure-jwt",
+      "headRefName": "bc-permutations",
+      "headRefOid": "1eae6707b363cd8cb11ddda86bbce7eda964d563",
+      "closedAt": null,
+      "mergedAt": null,
+      "mergedBy": null,
+      "mergeCommit": null,
+      "comments": [],
+      "reviews": [
+        {
+          "id": "PRR_kwDOHTmVzM5974-O",
+          "commit": {
+            "abbreviatedOid": "1eae670"
+          },
+          "author": "danielfett",
+          "authorAssociation": "MEMBER",
+          "state": "APPROVED",
+          "body": "",
+          "createdAt": "2024-06-12T12:19:16Z",
+          "updatedAt": "2024-06-12T12:19:16Z",
+          "comments": []
+        },
+        {
+          "id": "PRR_kwDOHTmVzM5-AAxo",
+          "commit": {
+            "abbreviatedOid": "1eae670"
+          },
+          "author": "Sakurann",
+          "authorAssociation": "COLLABORATOR",
+          "state": "APPROVED",
+          "body": "",
+          "createdAt": "2024-06-12T19:03:44Z",
+          "updatedAt": "2024-06-12T19:03:44Z",
+          "comments": []
+        }
+      ]
+    },
+    {
+      "number": 433,
+      "id": "PR_kwDOHTmVzM5yOeBI",
+      "title": "add some ABNF for those who celebrate",
+      "url": "https://github.com/oauth-wg/oauth-selective-disclosure-jwt/pull/433",
+      "state": "CLOSED",
+      "author": "bc-pi",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "thereby fixing #393 ",
+      "createdAt": "2024-06-12T11:44:39Z",
+      "updatedAt": "2024-06-12T11:45:52Z",
+      "baseRepository": "oauth-wg/oauth-selective-disclosure-jwt",
+      "baseRefName": "master",
+      "baseRefOid": "9641acbb09e5561dcaf537b5a825186dec4b1129",
+      "headRepository": "oauth-wg/oauth-selective-disclosure-jwt",
+      "headRefName": "now-with-abnf",
+      "headRefOid": "b19f06e505e6759f5c0dfa5151ffc1787dca7a30",
+      "closedAt": "2024-06-12T11:45:52Z",
+      "mergedAt": null,
+      "mergedBy": null,
+      "mergeCommit": null,
+      "comments": [],
+      "reviews": []
+    },
+    {
+      "number": 434,
+      "id": "PR_kwDOHTmVzM5yOfgr",
+      "title": "add ABNF for those who celebrate",
+      "url": "https://github.com/oauth-wg/oauth-selective-disclosure-jwt/pull/434",
+      "state": "OPEN",
+      "author": "bc-pi",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "would fix #393",
+      "createdAt": "2024-06-12T11:48:22Z",
+      "updatedAt": "2024-06-12T18:57:38Z",
+      "baseRepository": "oauth-wg/oauth-selective-disclosure-jwt",
+      "baseRefName": "master",
+      "baseRefOid": "9641acbb09e5561dcaf537b5a825186dec4b1129",
+      "headRepository": "oauth-wg/oauth-selective-disclosure-jwt",
+      "headRefName": "now-with-abnf-redux",
+      "headRefOid": "4864d6bc28a07aafa6b1fb782a2cc855e732e72d",
+      "closedAt": null,
+      "mergedAt": null,
+      "mergedBy": null,
+      "mergeCommit": null,
+      "comments": [],
+      "reviews": [
+        {
+          "id": "PRR_kwDOHTmVzM597670",
+          "commit": {
+            "abbreviatedOid": "4864d6b"
+          },
+          "author": "danielfett",
+          "authorAssociation": "MEMBER",
+          "state": "APPROVED",
+          "body": "Not my religion, but happy to celebrate anyway.",
+          "createdAt": "2024-06-12T12:23:06Z",
+          "updatedAt": "2024-06-12T12:23:06Z",
+          "comments": []
+        },
+        {
+          "id": "PRR_kwDOHTmVzM59_8TV",
+          "commit": {
+            "abbreviatedOid": "4864d6b"
+          },
+          "author": "Sakurann",
+          "authorAssociation": "COLLABORATOR",
+          "state": "APPROVED",
+          "body": "",
+          "createdAt": "2024-06-12T18:57:38Z",
+          "updatedAt": "2024-06-12T18:57:38Z",
+          "comments": []
+        }
+      ]
+    },
+    {
+      "number": 435,
+      "id": "PR_kwDOHTmVzM5yQbw1",
+      "title": "exclusively use the cnf claim for enabling Key Binding",
+      "url": "https://github.com/oauth-wg/oauth-selective-disclosure-jwt/pull/435",
+      "state": "OPEN",
+      "author": "bc-pi",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "More definitive language around the exclusive use of the cnf claim for enabling Key Binding\r\n\r\nmight just fix #419 ",
+      "createdAt": "2024-06-12T15:57:18Z",
+      "updatedAt": "2024-06-12T19:27:12Z",
+      "baseRepository": "oauth-wg/oauth-selective-disclosure-jwt",
+      "baseRefName": "master",
+      "baseRefOid": "9641acbb09e5561dcaf537b5a825186dec4b1129",
+      "headRepository": "oauth-wg/oauth-selective-disclosure-jwt",
+      "headRefName": "there-can-be-only-one",
+      "headRefOid": "f1b1cf5c00a36a88c12014696eb767285acd7342",
+      "closedAt": null,
+      "mergedAt": null,
+      "mergedBy": null,
+      "mergeCommit": null,
+      "comments": [],
+      "reviews": [
+        {
+          "id": "PRR_kwDOHTmVzM5-AAAa",
+          "commit": {
+            "abbreviatedOid": "f1b1cf5"
+          },
+          "author": "Sakurann",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2024-06-12T19:02:41Z",
+          "updatedAt": "2024-06-12T19:02:41Z",
+          "comments": [
+            {
+              "originalPosition": 4,
+              "body": "i didn't know @? is valid",
+              "createdAt": "2024-06-12T19:02:41Z",
+              "updatedAt": "2024-06-12T19:02:42Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOHTmVzM5-AAeG",
+          "commit": {
+            "abbreviatedOid": "f1b1cf5"
+          },
+          "author": "Sakurann",
+          "authorAssociation": "COLLABORATOR",
+          "state": "APPROVED",
+          "body": "",
+          "createdAt": "2024-06-12T19:03:19Z",
+          "updatedAt": "2024-06-12T19:03:19Z",
+          "comments": []
+        },
+        {
+          "id": "PRR_kwDOHTmVzM5-ARoU",
+          "commit": {
+            "abbreviatedOid": "f1b1cf5"
+          },
+          "author": "bc-pi",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2024-06-12T19:27:11Z",
+          "updatedAt": "2024-06-12T19:27:12Z",
+          "comments": [
+            {
+              "originalPosition": 4,
+              "body": "informational `@?` vs normative `@!` afaik ",
+              "createdAt": "2024-06-12T19:27:12Z",
+              "updatedAt": "2024-06-12T19:27:59Z"
             }
           ]
         }
