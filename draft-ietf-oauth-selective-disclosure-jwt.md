@@ -584,7 +584,7 @@ disclosable fields.  For example, consider the following JSON structure:
 ```json
 {
     "family_name", "Möbius",
-    "nationalities": ["DE", "FR", "UK"] 
+    "nationalities": ["DE", "FR", "UK"]
 }
 ```
 
@@ -597,10 +597,10 @@ the array selectively disclosable, and then the whole "nationalities" field.
 {
     "family_name", "Möbius",
     "nationalities": [
-        "DE", 
+        "DE",
         { "...": "Yr1KUNYXI6WzJKhP4Hwyu9Q1ejubVCcJRG1C9FiWr+c" },
         { "...": "mcU-e_A2tUM4jbm0BNrOTeCgrGUzImXepLonaMnFCvE" }
-    ] 
+    ]
 }
 
 Disclosures:
@@ -618,8 +618,8 @@ Disclosures:
 Yr1KUNY... = ["f+ZD3150Og1VUlqREPe+mg", "FR"]
 mcU-e_A... = ["YIKG6qOkXXNzMQtsX_H-lw", "UK"]
 wjj8P4D... = [
-    "4bPeSUK9aY_PlF4gcXnlGg", 
-    "nationalities", 
+    "4bPeSUK9aY_PlF4gcXnlGg",
+    "nationalities",
     [
         "DE",
         { "...": "62bd4a50d61723a5b324a84fe07c32bbd4357a3b9b542709446d42f45896afe7" },
