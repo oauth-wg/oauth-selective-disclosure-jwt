@@ -996,16 +996,10 @@ credential, the type and contents of other credentials expected to be
 presented at the same time, etc.
 
 It is important that a Verifier does not make its security policy
-decisions based on data that can be influenced by an attacker or that
-can be misinterpreted. For this reason, when deciding whether Key
-Binding is required or not, Verifiers MUST NOT take into account:
-
- * whether the Holder has provided an SD-JWT+KB or a bare SD-JWT, since otherwise an
-   attacker could strip the KB-JWT from an SD-JWT+KB and present the resulting
-   SD-JWT, or
- * whether Key Binding data is present in the SD-JWT or not, as the
-   Issuer might have added the key to the SD-JWT in a format/claim that
-   is not recognized by the Verifier.
+decisions based on data that can be influenced by an attacker. For this reason, when deciding whether Key
+Binding is required or not, Verifiers MUST NOT take into account
+whether the Holder has provided an SD-JWT+KB or a bare SD-JWT, since otherwise an
+attacker could strip the KB-JWT from an SD-JWT+KB and present the resulting SD-JWT.
 
 If a Verifier determines that Key Binding is required for a
 particular use case and the Holder presents either a bare SD-JWT or an SD-JWT+KB with
