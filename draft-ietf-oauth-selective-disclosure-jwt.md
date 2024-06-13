@@ -324,6 +324,19 @@ An SD-JWT+KB with Disclosures:
 <Issuer-signed JWT>~<Disclosure 1>~<Disclosure N>~<KB-JWT>
 ```
 
+As an alternative illustration of the SD-JWT format, for those who celebrate, ABNF [@?RFC5234] for the
+SD-JWT, SD-JWT+KB, and various constituent parts is provided here:
+```abnf
+ALPHA = %x41-5A / %x61-7A ; A-Z / a-z
+DIGIT = %x30-39 ; 0-9
+BASE64URL = 1*(ALPHA / DIGIT / "-" / "_")
+JWT = BASE64URL "." BASE64URL "." BASE64URL
+DISCLOSURE = BASE64URL
+SD-JWT = JWT "~" *[DISCLOSURE "~"]
+KB-JWT = JWT
+SD-JWT-KB = SD-JWT KB-JWT
+```
+
 ## Issuer-signed JWT {#iss-signed-jwt}
 
 An SD-JWT has a JWT component that MUST be signed using the Issuer's private
@@ -1808,6 +1821,7 @@ data. The original JSON data is then used by the application. See
    -09
 
    * Distinguished SD-JWT from SD-JWT+KB
+   * Provide ABNF for the SD-JWT, SD-JWT+KB, and various constituent parts
    * New structure for JSON-serialized SD-JWTs/KB-JWTs to better align with JAdES.
    * Attempt to better explain how salt in the Disclosure makes guessing the preimage of the digest infeasible
    * Consolidate salt entropy and length security consideration subsections
