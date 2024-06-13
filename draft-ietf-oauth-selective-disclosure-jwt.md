@@ -1001,6 +1001,8 @@ Binding is required or not, Verifiers MUST NOT take into account
 whether the Holder has provided an SD-JWT+KB or a bare SD-JWT, since otherwise an
 attacker could strip the KB-JWT from an SD-JWT+KB and present the resulting SD-JWT.
 
+Furthermore, Verifiers should be aware that Key Binding information may have been added to an SD-JWT in a format that they do not recognize and therefore may not be able to tell whether the SD-JWT supports Key Binding or not.
+
 If a Verifier determines that Key Binding is required for a
 particular use case and the Holder presents either a bare SD-JWT or an SD-JWT+KB with
 an invalid Key Binding JWT, then the Verifier will reject the presentation
