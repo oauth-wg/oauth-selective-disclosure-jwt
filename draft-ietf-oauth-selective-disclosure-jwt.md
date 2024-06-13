@@ -105,7 +105,7 @@ values not disclosed in the Disclosures.
 This document also defines a format for SD-JWTs with Key Binding (SD-JWT+KB).
 By optionally sending an SD-JWT+KB to a
 Verifier, the Holder can prove to the Verifier that they hold the private key
-associated to the SD-JWT (e.g., using the `cnf` claim [@?RFC7800]). The strength of the binding is conditional upon the trust
+associated to the SD-JWT (i.e., using the `cnf` claim [@!RFC7800]). The strength of the binding is conditional upon the trust
 in the protection of the private key of the key pair an SD-JWT is bound to.
 
 SD-JWT can be used with any JSON-based representation of claims, including JSON-LD.
@@ -390,16 +390,21 @@ minimum length of the salt, and choice of a hash algorithm.
 ### Key Binding {#key_binding}
 
 If the Issuer wants to enable Key Binding, it includes a public key
-associated with the Holder, or a reference thereto.
-The `jwk` member of the `cnf` claim as defined in Section 3.2 of [@!RFC7800] is
-suggested for doing so, however, other means can be used.
+associated with the Holder, or a reference thereto, using the `cnf` claim as defined in [@!RFC7800].
+The `jwk` confirmation method, as defined in Section 3.2 of [@!RFC7800], is
+suggested for doing so, however, other confirmation methods can be used.
+
+Note that, as was stated in [@!RFC7800],
+if an application needs to represent multiple proof-of-possession
+keys in the same SD-JWT, one way to achieve this is to use other
+claim names, in addition to `cnf`, to hold the additional proof-of-possession key information.
 
 It is out of the scope of this document to describe how the Holder key pair is
 established. For example, the Holder MAY create a key pair and provide a public key to the Issuer,
 the Issuer MAY create the key pair for the Holder, or
 Holder and Issuer MAY use pre-established key material.
 
-Note: The examples throughout this document use the `cnf` claim to include
+Note: The examples throughout this document use the `cnf` claim with the `jwk` member to include
 the raw public key by value in SD-JWT.
 
 ## Disclosures {#creating_disclosures}
@@ -1015,16 +1020,12 @@ credential, the type and contents of other credentials expected to be
 presented at the same time, etc.
 
 It is important that a Verifier does not make its security policy
-decisions based on data that can be influenced by an attacker or that
-can be misinterpreted. For this reason, when deciding whether Key
-Binding is required or not, Verifiers MUST NOT take into account:
+decisions based on data that can be influenced by an attacker. For this reason, when deciding whether Key
+Binding is required or not, Verifiers MUST NOT take into account
+whether the Holder has provided an SD-JWT+KB or a bare SD-JWT, since otherwise an
+attacker could strip the KB-JWT from an SD-JWT+KB and present the resulting SD-JWT.
 
- * whether the Holder has provided an SD-JWT+KB or a bare SD-JWT, since otherwise an
-   attacker could strip the KB-JWT from an SD-JWT+KB and present the resulting
-   SD-JWT, or
- * whether Key Binding data is present in the SD-JWT or not, as the
-   Issuer might have added the key to the SD-JWT in a format/claim that
-   is not recognized by the Verifier.
+Furthermore, Verifiers should be aware that Key Binding information may have been added to an SD-JWT in a format that they do not recognize and therefore may not be able to tell whether the SD-JWT supports Key Binding or not.
 
 If a Verifier determines that Key Binding is required for a
 particular use case and the Holder presents either a bare SD-JWT or an SD-JWT+KB with
@@ -1833,6 +1834,7 @@ data. The original JSON data is then used by the application. See
    * Attempt to better explain how salt in the Disclosure makes guessing the preimage of the digest infeasible
    * Consolidate salt entropy and length security consideration subsections
    * Unnumbered most of the examples for improved clarity
+   * More definitive language around the exclusive use of the `cnf` claim for enabling Key Binding
 
    -08
 
