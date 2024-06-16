@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2024-06-13T00:12:44.199161+00:00",
+  "timestamp": "2024-06-16T00:13:39.864339+00:00",
   "repo": "oauth-wg/oauth-selective-disclosure-jwt",
   "labels": [
     {
@@ -10599,7 +10599,7 @@
       "id": "I_kwDOHTmVzM541cfH",
       "title": "Provide ABNF",
       "url": "https://github.com/oauth-wg/oauth-selective-disclosure-jwt/issues/393",
-      "state": "OPEN",
+      "state": "CLOSED",
       "author": "bifurcation",
       "authorAssociation": "CONTRIBUTOR",
       "assignees": [
@@ -10610,8 +10610,8 @@
       ],
       "body": "It seems like it could be helpful to implementors, allowing them to quickly validate whether what they have is syntactically an SD-JWT or an SD-JWT with key binding.  Something like:\r\n\r\n```\r\nbase64url ::= ALPHA / DIGIT / \"-\" / \"_\"\r\nJWT ::= base64url \".\" base64url \".\" base64url\r\nSD-JWT ::= JWT \"~\" [base64url \"~\"]*\r\nFnord ::= SD-JWT JWT\r\n```",
       "createdAt": "2023-12-05T22:57:48Z",
-      "updatedAt": "2024-06-12T11:48:49Z",
-      "closedAt": null,
+      "updatedAt": "2024-06-13T07:03:36Z",
+      "closedAt": "2024-06-13T07:03:36Z",
       "comments": [
         {
           "author": "bc-pi",
@@ -10937,7 +10937,7 @@
       "id": "I_kwDOHTmVzM6DDHrv",
       "title": "why isn't cnf the only way to bind to a holder public key?",
       "url": "https://github.com/oauth-wg/oauth-selective-disclosure-jwt/issues/419",
-      "state": "OPEN",
+      "state": "CLOSED",
       "author": "bc-pi",
       "authorAssociation": "COLLABORATOR",
       "assignees": [
@@ -10948,8 +10948,8 @@
       ],
       "body": "Right after the IETF 119 OAuth session yesterday in a talk with @selfissued and @ve7jtb that started with discussion of PR #394, the question again came up (with some surprise on their part) as to why the `cnf` claim isn't the one and only way specified to put the holder's public key in the issuer-signed JWT. I honestly had a hard time giving a good rational for SD-JWT not being more prescriptive with it's requirements here.\r\n\r\nIt seems that using the `cnf` claim exclusively would be more straightforward and much better for interop. \r\n\r\n@bifurcation has previously made similar comments, \"it seems like there's an unnecessary level of ambiguity around how the Issuer-signed JWT binds to a holder public key.  Can we not just say `cnf`?  Why do we need more?  This point actually worries me more than [others] -- without clarity on this, there is no hope of writing stacks that interop.\"\r\n\r\nUsing the `cnf` claim exclusively could also help with some clarity in the [security considerations](https://www.ietf.org/archive/id/draft-ietf-oauth-selective-disclosure-jwt-08.html#section-10.6) where there currently has to be wording like \"[if there's] no recognized Key Binding data is present in the SD-JWT...\" and \" ... the Issuer might have added the key to the SD-JWT in a format/claim that is not recognized by the Verifier.\".\r\n\r\nNote this is related to but separate from the question of if the presence of a `cnf` claim in the issuer-signed JWT means that the verifier should have to require a KB-JWT. The `cnf` claim can be made _the way_ to do holder binding while still leaving that up to verifier policy.\r\n\r\n",
       "createdAt": "2024-03-20T21:49:13Z",
-      "updatedAt": "2024-06-12T16:00:18Z",
-      "closedAt": null,
+      "updatedAt": "2024-06-13T16:34:14Z",
+      "closedAt": "2024-06-13T16:34:14Z",
       "comments": [
         {
           "author": "selfissued",
@@ -11000,7 +11000,7 @@
       "id": "I_kwDOHTmVzM6JmYnC",
       "title": "Adapt JWS JSON Serialization wording to new terms SD-JWT/SD-JWT+KB",
       "url": "https://github.com/oauth-wg/oauth-selective-disclosure-jwt/issues/426",
-      "state": "OPEN",
+      "state": "CLOSED",
       "author": "danielfett",
       "authorAssociation": "MEMBER",
       "assignees": [],
@@ -11009,8 +11009,8 @@
       ],
       "body": "PR #394 does not touch the JWS JSON Serialization section, where we will need to make some minor changes to adapt the usage of the terms to the one established in the PR.",
       "createdAt": "2024-05-21T15:14:07Z",
-      "updatedAt": "2024-06-04T15:15:57Z",
-      "closedAt": null,
+      "updatedAt": "2024-06-13T07:02:42Z",
+      "closedAt": "2024-06-13T07:02:42Z",
       "comments": [
         {
           "author": "danielfett",
@@ -11026,7 +11026,7 @@
       "id": "I_kwDOHTmVzM6JvM93",
       "title": "fix up permutations figure/example",
       "url": "https://github.com/oauth-wg/oauth-selective-disclosure-jwt/issues/428",
-      "state": "OPEN",
+      "state": "CLOSED",
       "author": "bc-pi",
       "authorAssociation": "COLLABORATOR",
       "assignees": [
@@ -11038,8 +11038,8 @@
       ],
       "body": "> FWIW that whole thing is currently enclosed in a figure (see https://www.ietf.org/archive/id/draft-ietf-oauth-selective-disclosure-jwt-08.html#section-5-11) and in the interest of moving along this PR from last year, maybe that change could be addressed in a separate PR or issue?\r\n\r\n_Originally posted by @bc-pi in https://github.com/oauth-wg/oauth-selective-disclosure-jwt/pull/394#discussion_r1608758034_\r\n            ",
       "createdAt": "2024-05-22T15:33:33Z",
-      "updatedAt": "2024-06-12T11:29:55Z",
-      "closedAt": null,
+      "updatedAt": "2024-06-13T07:04:01Z",
+      "closedAt": "2024-06-13T07:04:01Z",
       "comments": []
     },
     {
@@ -45989,24 +45989,26 @@
       "id": "PR_kwDOHTmVzM5wGTdH",
       "title": "Update terminology in JWS JSON Serialization",
       "url": "https://github.com/oauth-wg/oauth-selective-disclosure-jwt/pull/427",
-      "state": "OPEN",
+      "state": "MERGED",
       "author": "danielfett",
       "authorAssociation": "MEMBER",
       "assignees": [],
       "labels": [],
       "body": "To be merged after #394 \r\n\r\nFixes #426",
       "createdAt": "2024-05-21T15:32:02Z",
-      "updatedAt": "2024-06-12T19:28:49Z",
+      "updatedAt": "2024-06-13T07:02:41Z",
       "baseRepository": "oauth-wg/oauth-selective-disclosure-jwt",
       "baseRefName": "master",
       "baseRefOid": "9641acbb09e5561dcaf537b5a825186dec4b1129",
       "headRepository": "oauth-wg/oauth-selective-disclosure-jwt",
       "headRefName": "danielfett/jws-json-terminology",
       "headRefOid": "881245bb65cd7ec509fc3ed649c3969581326cd4",
-      "closedAt": null,
-      "mergedAt": null,
-      "mergedBy": null,
-      "mergeCommit": null,
+      "closedAt": "2024-06-13T07:02:41Z",
+      "mergedAt": "2024-06-13T07:02:41Z",
+      "mergedBy": "danielfett",
+      "mergeCommit": {
+        "oid": "1e4ae96e68a3295b7bc9ed8e751cb0237bffd062"
+      },
       "comments": [],
       "reviews": [
         {
@@ -46157,13 +46159,13 @@
       "labels": [],
       "body": "Fixes #372 \r\n\r\nThere are three algorithms to consider when it comes to recursive disclosures:\r\n\r\n1. How the issuer generates the recursive disclosures\r\n2. How the holder selects disclosures to reveal in the context of recursion\r\n3. How the verifier unwinds recursive disclosures\r\n\r\n(3) is adequately covered in the verification algorithm.  The other two are currently uncovered.   This PR clarifies (1) and (2).  \r\n\r\nAlgorithm (1) doesn't really need formal definition for interoperability; an issuer can follow any process that ends up with an SD-JWT that will verify.  However, it's useful to (1) provide an illustration, (2) provider a reminder that you have to go from most-specific redaction to least, from the leaves of the AST toward the issuer-signed claims, and (3) provide a clear requirement that an SD-JWT must contain any intermediate recursive disclosures.  This PR adds a section that does these things.\r\n\r\nFor algorithm (2), I simply added a step to the holder processing that verifies that the disclosure selection process got all the required disclosures (including the intermediate ones).  We could also be more prescriptive, providing a concrete algorithm that adds the required intermediate disclosures.",
       "createdAt": "2024-06-04T22:24:32Z",
-      "updatedAt": "2024-06-12T19:27:17Z",
+      "updatedAt": "2024-06-13T16:40:20Z",
       "baseRepository": "oauth-wg/oauth-selective-disclosure-jwt",
       "baseRefName": "master",
-      "baseRefOid": "9641acbb09e5561dcaf537b5a825186dec4b1129",
+      "baseRefOid": "e61cc927aaa95e0e51382d648c47b670a3afecc6",
       "headRepository": "bifurcation/oauth-selective-disclosure-jwt",
       "headRefName": "recurse",
-      "headRefOid": "abfda2f029d5b6c16d06a1d4ff88c69e4b562dfc",
+      "headRefOid": "11a38c1e68afa6720e4122b7166144da7c7872ff",
       "closedAt": null,
       "mergedAt": null,
       "mergedBy": null,
@@ -46348,15 +46350,139 @@
         {
           "id": "PRR_kwDOHTmVzM5-ARsl",
           "commit": {
-            "abbreviatedOid": "abfda2f"
+            "abbreviatedOid": "ac34fa5"
           },
           "author": "Sakurann",
           "authorAssociation": "COLLABORATOR",
           "state": "APPROVED",
           "body": "conditional to the examples being fixed and my suggestion for the example being accepted",
           "createdAt": "2024-06-12T19:27:17Z",
-          "updatedAt": "2024-06-12T19:27:17Z",
+          "updatedAt": "2024-06-13T07:04:43Z",
           "comments": []
+        },
+        {
+          "id": "PRR_kwDOHTmVzM5-DsfR",
+          "commit": {
+            "abbreviatedOid": "ac34fa5"
+          },
+          "author": "danielfett",
+          "authorAssociation": "MEMBER",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2024-06-13T07:06:52Z",
+          "updatedAt": "2024-06-13T07:06:52Z",
+          "comments": [
+            {
+              "originalPosition": 57,
+              "body": "This should be in backticks",
+              "createdAt": "2024-06-13T07:06:52Z",
+              "updatedAt": "2024-06-13T07:06:52Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOHTmVzM5-DtOG",
+          "commit": {
+            "abbreviatedOid": "ac34fa5"
+          },
+          "author": "danielfett",
+          "authorAssociation": "MEMBER",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2024-06-13T07:08:29Z",
+          "updatedAt": "2024-06-13T07:10:38Z",
+          "comments": [
+            {
+              "originalPosition": 13,
+              "body": "Whitespace!\r\n```suggestion\r\n    \"nationalities\": [\"DE\", \"FR\", \"UK\"]\r\n```",
+              "createdAt": "2024-06-13T07:08:29Z",
+              "updatedAt": "2024-06-13T07:10:38Z"
+            },
+            {
+              "originalPosition": 26,
+              "body": "Whitespace\r\n```suggestion\r\n        \"DE\",\r\n```",
+              "createdAt": "2024-06-13T07:08:45Z",
+              "updatedAt": "2024-06-13T07:10:38Z"
+            },
+            {
+              "originalPosition": 29,
+              "body": "Whitespace...\r\n```suggestion\r\n    ]\r\n```",
+              "createdAt": "2024-06-13T07:09:08Z",
+              "updatedAt": "2024-06-13T07:10:38Z"
+            },
+            {
+              "originalPosition": 47,
+              "body": "Whitespace.\r\n```suggestion\r\n    \"4bPeSUK9aY_PlF4gcXnlGg\",\r\n```",
+              "createdAt": "2024-06-13T07:09:52Z",
+              "updatedAt": "2024-06-13T07:10:39Z"
+            },
+            {
+              "originalPosition": 48,
+              "body": "White space .\r\n```suggestion\r\n    \"nationalities\",\r\n```",
+              "createdAt": "2024-06-13T07:10:22Z",
+              "updatedAt": "2024-06-13T07:10:39Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOHTmVzM5-Dv8g",
+          "commit": {
+            "abbreviatedOid": "6dbdf73"
+          },
+          "author": "danielfett",
+          "authorAssociation": "MEMBER",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2024-06-13T07:14:07Z",
+          "updatedAt": "2024-06-13T07:15:15Z",
+          "comments": [
+            {
+              "originalPosition": 18,
+              "body": "The example below should be adapted accordingly.",
+              "createdAt": "2024-06-13T07:14:07Z",
+              "updatedAt": "2024-06-13T07:15:15Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOHTmVzM5-G8O2",
+          "commit": {
+            "abbreviatedOid": "6dbdf73"
+          },
+          "author": "bc-pi",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2024-06-13T13:08:11Z",
+          "updatedAt": "2024-06-13T13:08:11Z",
+          "comments": [
+            {
+              "originalPosition": 57,
+              "body": "or maybe just removed  ... ",
+              "createdAt": "2024-06-13T13:08:11Z",
+              "updatedAt": "2024-06-13T13:08:11Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOHTmVzM5-JEjw",
+          "commit": {
+            "abbreviatedOid": "11a38c1"
+          },
+          "author": "Sakurann",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2024-06-13T16:40:19Z",
+          "updatedAt": "2024-06-13T16:40:20Z",
+          "comments": [
+            {
+              "originalPosition": 242,
+              "body": "@bifurcation did you want to use sd-jwt library that we use to generate other examples https://github.com/openwallet-foundation-labs/sd-jwt-python\r\nor just copy paste from other examples in the spec?",
+              "createdAt": "2024-06-13T16:40:20Z",
+              "updatedAt": "2024-06-13T16:40:28Z"
+            }
+          ]
         }
       ]
     },
@@ -46365,24 +46491,26 @@
       "id": "PR_kwDOHTmVzM5yOX8X",
       "title": "fix up permutations of the figures/examples in SD-JWT Data Formats",
       "url": "https://github.com/oauth-wg/oauth-selective-disclosure-jwt/pull/432",
-      "state": "OPEN",
+      "state": "MERGED",
       "author": "bc-pi",
       "authorAssociation": "COLLABORATOR",
       "assignees": [],
       "labels": [],
       "body": "resolves #428 ",
       "createdAt": "2024-06-12T11:29:35Z",
-      "updatedAt": "2024-06-12T19:03:44Z",
+      "updatedAt": "2024-06-13T07:04:00Z",
       "baseRepository": "oauth-wg/oauth-selective-disclosure-jwt",
       "baseRefName": "master",
       "baseRefOid": "9641acbb09e5561dcaf537b5a825186dec4b1129",
       "headRepository": "oauth-wg/oauth-selective-disclosure-jwt",
       "headRefName": "bc-permutations",
       "headRefOid": "1eae6707b363cd8cb11ddda86bbce7eda964d563",
-      "closedAt": null,
-      "mergedAt": null,
-      "mergedBy": null,
-      "mergeCommit": null,
+      "closedAt": "2024-06-13T07:04:00Z",
+      "mergedAt": "2024-06-13T07:04:00Z",
+      "mergedBy": "danielfett",
+      "mergeCommit": {
+        "oid": "f423136c991e513cf3ef8bdc03d5f1ca325a3f4a"
+      },
       "comments": [],
       "reviews": [
         {
@@ -46444,24 +46572,26 @@
       "id": "PR_kwDOHTmVzM5yOfgr",
       "title": "add ABNF for those who celebrate",
       "url": "https://github.com/oauth-wg/oauth-selective-disclosure-jwt/pull/434",
-      "state": "OPEN",
+      "state": "MERGED",
       "author": "bc-pi",
       "authorAssociation": "COLLABORATOR",
       "assignees": [],
       "labels": [],
       "body": "would fix #393",
       "createdAt": "2024-06-12T11:48:22Z",
-      "updatedAt": "2024-06-12T18:57:38Z",
+      "updatedAt": "2024-06-13T07:03:35Z",
       "baseRepository": "oauth-wg/oauth-selective-disclosure-jwt",
       "baseRefName": "master",
       "baseRefOid": "9641acbb09e5561dcaf537b5a825186dec4b1129",
       "headRepository": "oauth-wg/oauth-selective-disclosure-jwt",
       "headRefName": "now-with-abnf-redux",
       "headRefOid": "4864d6bc28a07aafa6b1fb782a2cc855e732e72d",
-      "closedAt": null,
-      "mergedAt": null,
-      "mergedBy": null,
-      "mergeCommit": null,
+      "closedAt": "2024-06-13T07:03:35Z",
+      "mergedAt": "2024-06-13T07:03:35Z",
+      "mergedBy": "danielfett",
+      "mergeCommit": {
+        "oid": "4eaac04e1f396a662d41a31c33d1086923c0fae9"
+      },
       "comments": [],
       "reviews": [
         {
@@ -46497,25 +46627,35 @@
       "id": "PR_kwDOHTmVzM5yQbw1",
       "title": "exclusively use the cnf claim for enabling Key Binding",
       "url": "https://github.com/oauth-wg/oauth-selective-disclosure-jwt/pull/435",
-      "state": "OPEN",
+      "state": "MERGED",
       "author": "bc-pi",
       "authorAssociation": "COLLABORATOR",
       "assignees": [],
       "labels": [],
       "body": "More definitive language around the exclusive use of the cnf claim for enabling Key Binding\r\n\r\nmight just fix #419 ",
       "createdAt": "2024-06-12T15:57:18Z",
-      "updatedAt": "2024-06-12T19:27:12Z",
+      "updatedAt": "2024-06-13T16:34:13Z",
       "baseRepository": "oauth-wg/oauth-selective-disclosure-jwt",
       "baseRefName": "master",
       "baseRefOid": "9641acbb09e5561dcaf537b5a825186dec4b1129",
       "headRepository": "oauth-wg/oauth-selective-disclosure-jwt",
       "headRefName": "there-can-be-only-one",
-      "headRefOid": "f1b1cf5c00a36a88c12014696eb767285acd7342",
-      "closedAt": null,
-      "mergedAt": null,
-      "mergedBy": null,
-      "mergeCommit": null,
-      "comments": [],
+      "headRefOid": "f782779c63e066aa1b0ff17a4f6168e71a426e89",
+      "closedAt": "2024-06-13T16:34:13Z",
+      "mergedAt": "2024-06-13T16:34:13Z",
+      "mergedBy": "bc-pi",
+      "mergeCommit": {
+        "oid": "e61cc927aaa95e0e51382d648c47b670a3afecc6"
+      },
+      "comments": [
+        {
+          "author": "bc-pi",
+          "authorAssociation": "COLLABORATOR",
+          "body": "Need to look at text in one or more of the sec considerations too... todo ",
+          "createdAt": "2024-06-13T14:07:49Z",
+          "updatedAt": "2024-06-13T14:07:49Z"
+        }
+      ],
       "reviews": [
         {
           "id": "PRR_kwDOHTmVzM5-AAAa",
@@ -46567,6 +46707,59 @@
               "body": "informational `@?` vs normative `@!` afaik ",
               "createdAt": "2024-06-12T19:27:12Z",
               "updatedAt": "2024-06-12T19:27:59Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOHTmVzM5-Duy4",
+          "commit": {
+            "abbreviatedOid": "f1b1cf5"
+          },
+          "author": "danielfett",
+          "authorAssociation": "MEMBER",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2024-06-13T07:11:46Z",
+          "updatedAt": "2024-06-13T07:11:46Z",
+          "comments": [
+            {
+              "originalPosition": 4,
+              "body": "`@?` equals `@` AFAIK",
+              "createdAt": "2024-06-13T07:11:46Z",
+              "updatedAt": "2024-06-13T07:11:46Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOHTmVzM5-DvFf",
+          "commit": {
+            "abbreviatedOid": "f1b1cf5"
+          },
+          "author": "danielfett",
+          "authorAssociation": "MEMBER",
+          "state": "APPROVED",
+          "body": "",
+          "createdAt": "2024-06-13T07:12:23Z",
+          "updatedAt": "2024-06-13T07:12:23Z",
+          "comments": []
+        },
+        {
+          "id": "PRR_kwDOHTmVzM5-JAzc",
+          "commit": {
+            "abbreviatedOid": "75152d7"
+          },
+          "author": "danielfett",
+          "authorAssociation": "MEMBER",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2024-06-13T16:32:40Z",
+          "updatedAt": "2024-06-13T16:32:41Z",
+          "comments": [
+            {
+              "originalPosition": 52,
+              "body": "```suggestion\r\ndecisions based on data that can be influenced by an attacker. For this reason, when deciding whether Key\r\nBinding is required or not, Verifiers MUST NOT take into account\r\nwhether the Holder has provided an SD-JWT+KB or a bare SD-JWT, since otherwise an\r\nattacker could strip the KB-JWT from an SD-JWT+KB and present the resulting SD-JWT.\r\n\r\nFurthermore, Verifiers should be aware that Key Binding information may have been added to an SD-JWT in a format that they do not recognize and therefore may not be able to tell whether the SD-JWT supports Key Binding or not.\r\n```",
+              "createdAt": "2024-06-13T16:32:40Z",
+              "updatedAt": "2024-06-13T16:32:41Z"
             }
           ]
         }
