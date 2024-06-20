@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2024-06-18T00:12:46.920224+00:00",
+  "timestamp": "2024-06-20T00:12:21.519641+00:00",
   "repo": "oauth-wg/oauth-selective-disclosure-jwt",
   "labels": [
     {
@@ -11056,6 +11056,22 @@
       "createdAt": "2024-05-23T21:18:40Z",
       "updatedAt": "2024-06-03T09:15:51Z",
       "closedAt": "2024-06-03T09:15:51Z",
+      "comments": []
+    },
+    {
+      "number": 439,
+      "id": "I_kwDOHTmVzM6M23dT",
+      "title": "burn the burning of private keys  ",
+      "url": "https://github.com/oauth-wg/oauth-selective-disclosure-jwt/issues/439",
+      "state": "OPEN",
+      "author": "bc-pi",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "As far as I know, the idea of burning private keys to facilitate repudiation or reduced data value didn't resonate with any of the audiences for whom it was intended.\r\n\r\nI think the document would be better off without the paragraph copied below from https://www.ietf.org/archive/id/draft-ietf-oauth-selective-disclosure-jwt-09.html#section-11.1-7 \r\n\r\nAnd we might avoid some potentially difficult/confusing/painful/etc conversations in various latter stage IETF process steps. \r\n\r\n> If reliable and secure key rotation and revocation is ensured according to [Section 10.8](https://www.ietf.org/archive/id/draft-ietf-oauth-selective-disclosure-jwt-09.html#issuer_signature_key_distribution), Issuers may opt to publish expired or revoked private signing keys (after a grace period that ensures that the keys are not cached any longer at any Verifier). This reduces the value of any leaked credentials as the signatures on them can no longer be trusted to originate from the Issuer.",
+      "createdAt": "2024-06-19T22:14:18Z",
+      "updatedAt": "2024-06-19T22:14:18Z",
+      "closedAt": null,
       "comments": []
     }
   ],
@@ -46806,6 +46822,58 @@
           "comments": []
         }
       ]
+    },
+    {
+      "number": 437,
+      "id": "PR_kwDOHTmVzM5y4Mqw",
+      "title": "Just u s of a",
+      "url": "https://github.com/oauth-wg/oauth-selective-disclosure-jwt/pull/437",
+      "state": "CLOSED",
+      "author": "bc-pi",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "",
+      "createdAt": "2024-06-18T21:46:04Z",
+      "updatedAt": "2024-06-18T21:46:07Z",
+      "baseRepository": "oauth-wg/oauth-selective-disclosure-jwt",
+      "baseRefName": "master",
+      "baseRefOid": "f1e69d69a1190817f328e51686b861053b0a0f86",
+      "headRepository": "oauth-wg/oauth-selective-disclosure-jwt",
+      "headRefName": "just-u-s-of-a",
+      "headRefOid": "d1b7ea4fc5cecc166e16bb15d2adcb6ae0c5d5c3",
+      "closedAt": "2024-06-18T21:46:07Z",
+      "mergedAt": null,
+      "mergedBy": null,
+      "mergeCommit": null,
+      "comments": [],
+      "reviews": []
+    },
+    {
+      "number": 438,
+      "id": "PR_kwDOHTmVzM5y4N9U",
+      "title": "example doesn't disclose nationalities rather just one of its elements",
+      "url": "https://github.com/oauth-wg/oauth-selective-disclosure-jwt/pull/438",
+      "state": "OPEN",
+      "author": "bc-pi",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "",
+      "createdAt": "2024-06-18T21:48:55Z",
+      "updatedAt": "2024-06-18T21:48:56Z",
+      "baseRepository": "oauth-wg/oauth-selective-disclosure-jwt",
+      "baseRefName": "master",
+      "baseRefOid": "f1e69d69a1190817f328e51686b861053b0a0f86",
+      "headRepository": "oauth-wg/oauth-selective-disclosure-jwt",
+      "headRefName": "just-u-s",
+      "headRefOid": "96e140565fcadad5064ca71895748ca291349155",
+      "closedAt": null,
+      "mergedAt": null,
+      "mergedBy": null,
+      "mergeCommit": null,
+      "comments": [],
+      "reviews": []
     }
   ]
 }
