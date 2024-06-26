@@ -588,7 +588,7 @@ disclosable fields.  For example, consider the following JSON structure:
 
 ```json
 {
-    "family_name", "Möbius",
+    "family_name": "Möbius",
     "nationalities": ["DE", "FR", "UK"]
 }
 ```
