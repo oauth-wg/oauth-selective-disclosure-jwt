@@ -602,33 +602,33 @@ the array selectively disclosable, and then the whole "nationalities" field.
 {
     "family_name": "Möbius",
     "nationalities": [
-        "DE",
-        { "...": "Yr1KUNYXI6WzJKhP4Hwyu9Q1ejubVCcJRG1C9FiWr+c" },
-        { "...": "mcU-e_A2tUM4jbm0BNrOTeCgrGUzImXepLonaMnFCvE" }
+        { "...": "PmnlrRjhLcwf8zTDdK15HVGwHtPYjddvD362WjBLwro" }
+        { "...": "r823HFN6Ba_lpSANYtXqqCBAH-TsQlIzfOK0lRAFLCM" },
+        { "...": "nP5GYjwhFm6ESlAeC4NCaIliW4tz0hTrUeoJB3lb5TA" }
     ]
 }
 
-Disclosures:
-Yr1KUNY... = ["f_ZD3150Og1VUlqREPe_mg","FR"]
-mcU-e_A... = ["YIKG6qOkXXNzMQtsX_H-lw","UK"]
+Content of Disclosures:
+PmnlrRj... = ["16_mAd0GiwaZokU26_0i0h","DE"]
+r823HFN... = ["fn9fN0rD-fFs2n303ZI-0c","FR"]
+nP5GYjw... = ["YIKesqOkXXNzMQtsX_-_lw","UK"]
 ```
 
 ``` ascii-art
 {
     "family_name": "Möbius",
-    "_sd": [ "wjj8P4DvQ9cNWoDtqkOPYKfV7OCbuxlzkGTdUEGblVw" ]
+    "_sd": [ "5G1srw3RG5W4pVTwSsYxeOWosRBbzd18ZoWKkC-hBL4" ]
 }
 
-Disclosures:
-Yr1KUNY... = ["f+ZD3150Og1VUlqREPe+mg", "FR"]
-mcU-e_A... = ["YIKG6qOkXXNzMQtsX_H-lw", "UK"]
-wjj8P4D... = [
-    "4bPeSUK9aY_PlF4gcXnlGg",
-    "nationalities",
+Content of Disclosures:
+PmnlrRj... = ["16_mAd0GiwaZokU26_0i0h","DE"]
+r823HFN... = ["fn9fN0rD-fFs2n303ZI-0c","FR"]
+nP5GYjw... = ["YIKesqOkXXNzMQtsX_-_lw","UK"]
+5G1srw3... = ["4drfeTtSUK3aY_-PF12gcX","nationalities",
     [
-        "DE",
-        { "...": "Yr1KUNYXI6WzJKhP4Hwyu9Q1ejubVCcJRG1C9FiWr+c" },
-        { "...": "mcU-e_A2tUM4jbm0BNrOTeCgrGUzImXepLonaMnFCvE" }
+        { "...": "PmnlrRjhLcwf8zTDdK15HVGwHtPYjddvD362WjBLwro" },
+        { "...": "r823HFN6Ba_lpSANYtXqqCBAH-TsQlIzfOK0lRAFLCM" },
+        { "...": "nP5GYjwhFm6ESlAeC4NCaIliW4tz0hTrUeoJB3lb5TA" }
     ]
 ]
 ```
