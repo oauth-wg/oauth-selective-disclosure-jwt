@@ -615,7 +615,7 @@ mcU-e_A... = ["YIKG6qOkXXNzMQtsX_H-lw","UK"]
 
 ``` ascii-art
 {
-    "family_name", "Möbius",
+    "family_name": "Möbius",
     "_sd": [ "wjj8P4DvQ9cNWoDtqkOPYKfV7OCbuxlzkGTdUEGblVw" ]
 }
 
