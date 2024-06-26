@@ -600,7 +600,7 @@ the array selectively disclosable, and then the whole "nationalities" field.
 
 ``` ascii-art
 {
-    "family_name", "Möbius",
+    "family_name": "Möbius",
     "nationalities": [
         "DE",
         { "...": "Yr1KUNYXI6WzJKhP4Hwyu9Q1ejubVCcJRG1C9FiWr+c" },
