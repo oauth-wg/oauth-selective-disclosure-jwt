@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2024-06-25T00:12:11.102222+00:00",
+  "timestamp": "2024-06-27T00:12:41.834789+00:00",
   "repo": "oauth-wg/oauth-selective-disclosure-jwt",
   "labels": [
     {
@@ -46185,13 +46185,13 @@
       "labels": [],
       "body": "Fixes #372 \r\n\r\nThere are three algorithms to consider when it comes to recursive disclosures:\r\n\r\n1. How the issuer generates the recursive disclosures\r\n2. How the holder selects disclosures to reveal in the context of recursion\r\n3. How the verifier unwinds recursive disclosures\r\n\r\n(3) is adequately covered in the verification algorithm.  The other two are currently uncovered.   This PR clarifies (1) and (2).  \r\n\r\nAlgorithm (1) doesn't really need formal definition for interoperability; an issuer can follow any process that ends up with an SD-JWT that will verify.  However, it's useful to (1) provide an illustration, (2) provider a reminder that you have to go from most-specific redaction to least, from the leaves of the AST toward the issuer-signed claims, and (3) provide a clear requirement that an SD-JWT must contain any intermediate recursive disclosures.  This PR adds a section that does these things.\r\n\r\nFor algorithm (2), I simply added a step to the holder processing that verifies that the disclosure selection process got all the required disclosures (including the intermediate ones).  We could also be more prescriptive, providing a concrete algorithm that adds the required intermediate disclosures.",
       "createdAt": "2024-06-04T22:24:32Z",
-      "updatedAt": "2024-06-13T16:40:20Z",
+      "updatedAt": "2024-06-26T23:05:22Z",
       "baseRepository": "oauth-wg/oauth-selective-disclosure-jwt",
       "baseRefName": "master",
       "baseRefOid": "e61cc927aaa95e0e51382d648c47b670a3afecc6",
       "headRepository": "bifurcation/oauth-selective-disclosure-jwt",
       "headRefName": "recurse",
-      "headRefOid": "11a38c1e68afa6720e4122b7166144da7c7872ff",
+      "headRefOid": "02d2fb07001057bbbe9532248478f5d31de80718",
       "closedAt": null,
       "mergedAt": null,
       "mergedBy": null,
@@ -46507,6 +46507,166 @@
               "body": "@bifurcation did you want to use sd-jwt library that we use to generate other examples https://github.com/openwallet-foundation-labs/sd-jwt-python\r\nor just copy paste from other examples in the spec?",
               "createdAt": "2024-06-13T16:40:20Z",
               "updatedAt": "2024-06-13T16:40:28Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOHTmVzM5_uejt",
+          "commit": {
+            "abbreviatedOid": "11a38c1"
+          },
+          "author": "bc-pi",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2024-06-26T20:25:15Z",
+          "updatedAt": "2024-06-26T20:25:15Z",
+          "comments": [
+            {
+              "originalPosition": 57,
+              "body": "just remove\r\n```suggestion\r\n```",
+              "createdAt": "2024-06-26T20:25:15Z",
+              "updatedAt": "2024-06-26T20:25:15Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOHTmVzM5_uf4z",
+          "commit": {
+            "abbreviatedOid": "012353b"
+          },
+          "author": "bc-pi",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2024-06-26T20:28:31Z",
+          "updatedAt": "2024-06-26T20:28:31Z",
+          "comments": [
+            {
+              "originalPosition": 24,
+              "body": "who am I to say what makes JSON valid?\r\n```suggestion\r\n    \"family_name\": \"M\u00f6bius\",\r\n```",
+              "createdAt": "2024-06-26T20:28:31Z",
+              "updatedAt": "2024-06-26T20:28:31Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOHTmVzM5_ugbt",
+          "commit": {
+            "abbreviatedOid": "c666d54"
+          },
+          "author": "bc-pi",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2024-06-26T20:29:55Z",
+          "updatedAt": "2024-06-26T20:29:55Z",
+          "comments": [
+            {
+              "originalPosition": 12,
+              "body": "um... \r\n```suggestion\r\n    \"family_name\": \"M\u00f6bius\",\r\n```",
+              "createdAt": "2024-06-26T20:29:55Z",
+              "updatedAt": "2024-06-26T20:29:55Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOHTmVzM5_uqY0",
+          "commit": {
+            "abbreviatedOid": "21f3ae8"
+          },
+          "author": "bc-pi",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2024-06-26T20:46:12Z",
+          "updatedAt": "2024-06-26T20:46:12Z",
+          "comments": [
+            {
+              "originalPosition": 242,
+              "body": "tried to save a few cute puppies 21f3ae8e67913798fcb2186ba342efabc5770d01 ",
+              "createdAt": "2024-06-26T20:46:12Z",
+              "updatedAt": "2024-06-26T20:46:12Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOHTmVzM5_urGs",
+          "commit": {
+            "abbreviatedOid": "21f3ae8"
+          },
+          "author": "bc-pi",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2024-06-26T20:47:56Z",
+          "updatedAt": "2024-06-26T20:47:57Z",
+          "comments": [
+            {
+              "originalPosition": 39,
+              "body": "weird that invalid JSON is still invalid when copy-pasted  \r\n```suggestion\r\n    \"family_name\": \"M\u00f6bius\",\r\n```",
+              "createdAt": "2024-06-26T20:47:57Z",
+              "updatedAt": "2024-06-26T20:47:57Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOHTmVzM5_vBiJ",
+          "commit": {
+            "abbreviatedOid": "d520301"
+          },
+          "author": "bc-pi",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2024-06-26T21:49:46Z",
+          "updatedAt": "2024-06-26T21:49:46Z",
+          "comments": [
+            {
+              "originalPosition": 27,
+              "body": "I can't seem to reproduce these hash values, which makes me a wee bit nervous. But the full Disclosures aren't shown so it's a bit of a stretch anyway. But I'm going to plow ahead and hope I'm not doing something wrong thereby assuming @bifurcation made some mistake or just made the values up.  Blasphemous, I know, but I gotta move forward. ",
+              "createdAt": "2024-06-26T21:49:46Z",
+              "updatedAt": "2024-06-26T21:49:47Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOHTmVzM5_vDNn",
+          "commit": {
+            "abbreviatedOid": "d520301"
+          },
+          "author": "bc-pi",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2024-06-26T21:54:38Z",
+          "updatedAt": "2024-06-26T21:54:38Z",
+          "comments": [
+            {
+              "originalPosition": 27,
+              "body": "wait... \"+\" isn't in the base64url alphabet! WTF? ",
+              "createdAt": "2024-06-26T21:54:38Z",
+              "updatedAt": "2024-06-26T21:54:38Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOHTmVzM5_vIH3",
+          "commit": {
+            "abbreviatedOid": "d520301"
+          },
+          "author": "bc-pi",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2024-06-26T22:14:49Z",
+          "updatedAt": "2024-06-26T22:14:49Z",
+          "comments": [
+            {
+              "originalPosition": 27,
+              "body": "Reversing hashes is hard! \r\n\r\nBut \"+\" was the clue I needed and extraneous padding on the not shown Disclosures was the key. Now @bifurcation owes me something in Vancouver. Beer is customary item but I'm 14 years sober so he might get away with something cheaper. ",
+              "createdAt": "2024-06-26T22:14:49Z",
+              "updatedAt": "2024-06-26T22:14:49Z"
             }
           ]
         }
