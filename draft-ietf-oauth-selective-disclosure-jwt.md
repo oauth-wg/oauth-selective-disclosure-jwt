@@ -593,9 +593,10 @@ disclosable fields.  For example, consider the following JSON structure:
 }
 ```
 
-When the Holder has multiple nationalities, the issuer may wish to allow the holder to reveal
-each of those nationalities individually.
-This can be accomplished by first making the entries within the "nationalities"
+When the Holder has multiple nationalities, the issuer may wish to conceal
+presence of any statement regarding nationalities while also allowing the
+holder to reveal each of those nationalities individually.
+This can be accomplished by first making the entries within the `nationalities`
 array selectively disclosable, and then the whole "nationalities" field.
 
 ``` ascii-art
@@ -636,21 +637,23 @@ nP5GYjw... = ["YIKesqOkXXNzMQtsX_-_lw","UK"]
 
 
 With this set of disclosures, the holder could include the disclosure with hash
-`wjj8P4D...` to disclose only the "DE" nationality, or include both `wjj8P4D...`
-and `Yr1KUNY...` to disclose both the "DE" and "FR" nationalities, but hide the
-"UK" nationality.
+`PmnlrRj...` to disclose only the "DE" nationality, or include both `PmnlrRj...`
+and `r823HFN...` to disclose both the "DE" and "FR" nationalities, but hide the
+"UK" nationality. In either case, the holder would also need to include the
+disclosure with hash `5G1srw3...` to disclose the `nationalities` field that
+contains the respective elements.
 
 Note that making recursive redactions introduces dependencies between the
-disclosure objects in an SD-JWT.  The `Yr1KUNY...` disclosure cannot be used
-without the `wjj8P4D...` disclosure; since a Verifier would not have a matching
-hash that would tell it where the content of the `Yr1KUNY...` disclosure should
+disclosure objects in an SD-JWT.  The `r823HFN...` disclosure cannot be used
+without the `5G1srw3...` disclosure; since a Verifier would not have a matching
+hash that would tell it where the content of the `r823HFN...` disclosure should
 be inserted.  If a disclosure object is included in an SD-JWT, then the SD-JWT
 MUST include any other disclosure objects necessary to process the first
 disclosure object.  In other words, any disclosure object in an SD-JWT must
 "connect" to the claims in the issuer-signed JWT, possibly via an intermediate
-disclosure object.  In the above example, it would be illegal to include the
-`Yr1KUNY...` or `mcU-e_A...` disclosure object without also including the
-`wjj8P4D...` disclosure object.
+disclosure object.  In the above example, it would be illegal to include any one
+of the `PmnlrRj...`, `r823HFN...`, `nP5GYjw..` disclosure objects without also
+including the `5G1srw3...` disclosure object.
 
 ## Key Binding JWT {#kb-jwt}
 
