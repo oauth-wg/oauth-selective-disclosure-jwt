@@ -5,10 +5,10 @@
 Web Authorization Protocol                                       D. Fett
 Internet-Draft                                                  Authlete
 Intended status: Standards Track                               K. Yasuda
-Expires: 27 November 2024                                Keio University
+Expires: 29 December 2024                                Keio University
                                                              B. Campbell
                                                            Ping Identity
-                                                             26 May 2024
+                                                            27 June 2024
 
 
                  Selective Disclosure for JWTs (SD-JWT)
@@ -48,7 +48,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 27 November 2024.
+   This Internet-Draft will expire on 29 December 2024.
 
 Copyright Notice
 
@@ -76,7 +76,7 @@ Table of Contents
      4.2.  Disclosing to a Verifier
      4.3.  Optional Key Binding
      4.4.  Verification
-   5.  SD-JWT Data Formats
+   5.  SD-JWT and SD-JWT+KB Data Formats
      5.1.  Issuer-signed JWT
        5.1.1.  Hash Function Claim
        5.1.2.  Key Binding
@@ -87,7 +87,7 @@ Table of Contents
        5.2.4.  Embedding Disclosure Digests in SD-JWTs
        5.2.5.  Decoy Digests
      5.3.  Key Binding JWT
-       5.3.1.  Integrity Protection of the Presentation
+       5.3.1.  Binding to an SD-JWT
        5.3.2.  Validating the Key Binding JWT
    6.  Example SD-JWT
      6.1.  Issuance
@@ -115,7 +115,7 @@ Table of Contents
      10.7.  Selectively-Disclosable Validity Claims
      10.8.  Issuer Signature Key Distribution and Rotation
      10.9.  Forwarding Credentials
-     10.10. Integrity of Presentation
+     10.10. Integrity of SD-JWTs and SD-JWT+KBs
      10.11. Explicit Typing
    11. Privacy Considerations
      11.1.  Storage of Signed User Data
@@ -204,12 +204,12 @@ Table of Contents
    were part of the original Issuer-signed JWT.  The Verifier will not,
    however, learn any claim values not disclosed in the Disclosures.
 
-   This document also specifies an optional mechanism for Key Binding,
-   which is the concept of binding an SD-JWT to a Holder's public key
-   and requiring that the Holder prove possession of the corresponding
-   private key when presenting the SD-JWT.  The strength of the binding
-   is conditional upon the trust in the protection of the private key of
-   the key pair an SD-JWT is bound to.
+   This document also defines a format for SD-JWTs with Key Binding (SD-
+   JWT+KB).  By optionally sending an SD-JWT+KB to a Verifier, the
+   Holder can prove to the Verifier that they hold the private key
+   associated to the SD-JWT (i.e., using the cnf claim [RFC7800]).  The
+   strength of the binding is conditional upon the trust in the
+   protection of the private key of the key pair an SD-JWT is bound to.
 
    SD-JWT can be used with any JSON-based representation of claims,
    including JSON-LD.
@@ -220,24 +220,32 @@ Table of Contents
 
 1.1.  Feature Summary
 
-   *  This specification defines
-      -  a format for the payload of an Issuer-signed JWT containing
-         selectively disclosable claims that include object properties
-         (name-value pairs), array elements, and nested data structures
-         built from these,
-      -  a format for data associated with the JWT that enables
-         selectively disclosing those claims,
-      -  facilities for binding the JWT to a key and associated data to
-         prove possession thereof, and
-      -  a format, extending the JWS Compact Serialization, for the
-         combined transport of the JWT and associated data that is
-         suitable for both issuance and presentation.
-   *  An alternate format utilizing the JWS JSON Serialization is also
-      specified.
-   *  This specification enables combining selectively disclosable
-      claims with clear-text claims that are always disclosed.
-   *  For selectively disclosable claims that are object properties,
-      both the key and value are always blinded.
+   This specification defines two primary data formats:
+
+   1.  SD-JWT is a composite structure enabling selective disclosure of
+       its contents.  The definition in this document comprises the
+       following:
+
+       *  A format for enabling selective disclosure in nested JSON data
+          structures, supporting selectively disclosable object
+          properties (name-value pairs) and array elements
+       *  A format for encoding the selectively disclosable data items
+       *  A format extending the JWS Compact Serialization, allowing for
+          the combined transport of the Issuer-signed JSON data
+          structure and the disclosable data items
+       *  An alternate format extending the JWS JSON Serialization, also
+          allowing for transport of the Issuer-signed JSON data
+          structure and disclosure data
+
+   2.  SD-JWT+KB is a composite structure enabling cryptographic key
+       binding when presented to the Verifier.  The definition in this
+       document comprises the following:
+
+       *  A facility for associating an SD-JWT to a key pair
+       *  A format for a Key Binding JWT (KB-JWT) that proves possession
+          of the private key of the associated key pair
+       *  A format extending the SD-JWT format for the combined
+          transport of the SD-JWT and the KB-JWT
 
 1.2.  Conventions and Terminology
 
@@ -255,10 +263,10 @@ Table of Contents
    Selective disclosure:  Process of a Holder disclosing to a Verifier a
       subset of claims contained in a claim set issued by an Issuer.
    Selectively Disclosable JWT (SD-JWT):  A composite structure,
-      consisting of an Issuer-signed JWT (JWS, [RFC7515]), Disclosures,
-      and optionally a Key Binding JWT that supports selective
-      disclosure as defined in this document.  It can contain both
-      regular claims and digests of selectively-disclosable claims.
+      consisting of an Issuer-signed JWT (JWS, [RFC7515]) and zero or
+      more Disclosures, which supports selective disclosure as defined
+      in this document.  It can contain both regular claims and digests
+      of selectively-disclosable claims.
    Disclosure:  A JSON array containing a combination of a salt, a
       cleartext claim name (present when the claim is a name-value pair
       and absent when the claim is an array element), and a cleartext
@@ -266,12 +274,17 @@ Table of Contents
       digest for the respective claim.  The term Disclosure refers to
       the whole base64url-encoded string.
    Key Binding:  Ability of the Holder to prove legitimate possession of
-      an SD-JWT by proving control over the same private key during the
-      issuance and presentation.  An SD-JWT with Key Binding contains a
-      public key, or a reference to a public key, that matches to the
-      private key controlled by the Holder.
-   Key Binding JWT:  A JWT for proving Key Binding as defined in
-      Section 5.3.
+      an SD-JWT by proving control over a private key during the
+      presentation.  When utilizing Key Binding, an SD-JWT contains the
+      public key corresponding to the private key controlled by the
+      Holder (or a reference to this public key).
+   Key Binding JWT (KB-JWT):  A JWT for proving Key Binding as defined
+      in Section 5.3.  A Key Binding JWT is said to "be tied to" a
+      particular SD-JWT when its payload includes a hash of the SD-JWT
+      in its sd_hash claim.
+   Selectively Disclosable JWT with Key Binding (SD-JWT+KB):  A
+      composite structure, comprising an SD-JWT and a Key Binding JWT
+      tied to that SD-JWT.
    Issuer:  An entity that creates SD-JWTs.
    Holder:  An entity that received SD-JWTs from the Issuer and has
       control over them.
@@ -296,7 +309,7 @@ Table of Contents
               |            |
               +------------+
                     |
-              Presents SD-JWT
+            Presents SD-JWT+KB
        including selected Disclosures
                     |
                     v
@@ -353,35 +366,45 @@ Table of Contents
    Note: How the public key is included in SD-JWT is out of scope of
    this document.  It can be passed by value or by reference.
 
-   For presenting an SD-JWT to a Verifier that enforces Key Binding, the
-   Holder creates a signed document, the Key Binding JWT as defined in
-   Section 5.3, using its private key.  This document contains a nonce
-   to ensure the freshness of the signature, an audience value to
-   indicate the intended audience for the document, and a hash that
-   ensures the integrity of the data sent from the Holder to the
-   Verifier.  Details of the format of Key Binding JWTs are described in
+   When a Verifier requires Key Binding, the Holder presents an SD-
+   JWT+KB, consisting of an SD-JWT as well as a Key Binding JWT tied to
+   that SD-JWT.  The Key Binding JWT encodes a signature by the Holder's
+   private key over
+
+   *  a hash of the SD-JWT,
+   *  a nonce to ensure the freshness of the signature, and
+   *  an audience value to indicate the intended audience for the
+      document.
+
+   Details of the format of Key Binding JWTs are described in
    Section 5.3.
 
 4.4.  Verification
 
    At a high level, the Verifier
 
-   *  receives the SD-JWT from the Holder and verifies its signature
-      using the Issuer's public key,
-   *  verifies the Key Binding JWT, if Key Binding is required by the
-      Verifier's policy, using the public key included in the SD-JWT,
+   *  receives either an SD-JWT or an SD-JWT+KB from the Holder,
+   *  verifies the signature on the SD-JWT (or the the SD-JWT inside the
+      SD-JWT+KB) using the Issuer's public key,
+   *  verifies the signature on the KB-JWT using the public key included
+      (or referenced) in the SD-JWT, if the Verifier's policy requires
+      Key Binding, and
    *  calculates the digests over the Holder-Selected Disclosures and
       verifies that each digest is contained in the SD-JWT.
 
    The detailed algorithm is described in Section 8.3.
 
-5.  SD-JWT Data Formats
+5.  SD-JWT and SD-JWT+KB Data Formats
 
-   An SD-JWT is composed of the following:
+   An SD-JWT is composed of
 
-   *  an Issuer-signed JWT,
-   *  zero or more Disclosures, and
-   *  optionally a Key Binding JWT.
+   *  an Issuer-signed JWT, and
+   *  zero or more Disclosures.
+
+   An SD-JWT+KB is composed of
+
+   *  an SD-JWT, and
+   *  a Key Binding JWT.
 
    The Issuer-signed JWT, Disclosures, and Key Binding JWT are explained
    in Section 5.1, Section 5.2, and Section 5.3 respectively.
@@ -389,13 +412,24 @@ Table of Contents
    The serialized format for the SD-JWT is the concatenation of each
    part delineated with a single tilde ('~') character as follows:
 
-<Issuer-signed JWT>~<Disclosure 1>~<Disclosure 2>~...~<Disclosure N>~<optional KB-JWT>
+   <Issuer-signed JWT>~<Disclosure 1>~<Disclosure 2>~...~<Disclosure N>~
 
    The order of the concatenated parts MUST be the Issuer-signed JWT, a
    tilde character, zero or more Disclosures each followed by a tilde
    character, and lastly the optional Key Binding JWT.  In the case that
    there is no Key Binding JWT, the last element MUST be an empty string
    and the last separating tilde character MUST NOT be omitted.
+
+   The serialized format for an SD-JWT+KB extends the SD-JWT format by
+   concatenating a Key Binding JWT.
+
+<Issuer-signed JWT>~<Disclosure 1>~<Disclosure 2>~...~<Disclosure N>~<KB-JWT>
+
+   The two formats can be distinguished by the final ~ character that is
+   present on an SD-JWT.  A Verifier that expects an SD-JWT MUST verify
+   that the final tilde-separated component is empty.  A Verifier that
+   expects an SD-JWT+KB MUST verify that its final tilde-separated
+   component is a valid KB-JWT.
 
    The Disclosures are linked to the Issuer-signed JWT through the
    digest values included therein.
@@ -413,21 +447,38 @@ Table of Contents
    MUST NOT send a Disclosure that was not included in the issued SD-JWT
    or send a Disclosure more than once.
 
-   To further illustrate the SD-JWT format, the following example shows
+   To further illustrate the SD-JWT format, the following examples show
    a few different SD-JWT permutations, both with and without various
    constituent parts.
 
-   An SD-JWT without Disclosures and without a KB-JWT:
+   An SD-JWT without Disclosures:
+
    <Issuer-signed JWT>~
 
-   An SD-JWT without Disclosures and with a KB-JWT:
-   <Issuer-signed JWT>~<KB-JWT>
+   An SD-JWT with Disclosures:
 
-   An SD-JWT with Disclosures and without a KB-JWT:
    <Issuer-signed JWT>~<Disclosure 1>~<Disclosure N>~
 
-   An SD-JWT with Disclosures and with a KB-JWT:
+   An SD-JWT+KB without Disclosures:
+
+   <Issuer-signed JWT>~<KB-JWT>
+
+   An SD-JWT+KB with Disclosures:
+
    <Issuer-signed JWT>~<Disclosure 1>~<Disclosure N>~<KB-JWT>
+
+   As an alternative illustration of the SD-JWT format, for those who
+   celebrate, ABNF [RFC5234] for the SD-JWT, SD-JWT+KB, and various
+   constituent parts is provided here:
+
+   ALPHA = %x41-5A / %x61-7A ; A-Z / a-z
+   DIGIT = %x30-39 ; 0-9
+   BASE64URL = 1*(ALPHA / DIGIT / "-" / "_")
+   JWT = BASE64URL "." BASE64URL "." BASE64URL
+   DISCLOSURE = BASE64URL
+   SD-JWT = JWT "~" *[DISCLOSURE "~"]
+   KB-JWT = JWT
+   SD-JWT-KB = SD-JWT KB-JWT
 
 5.1.  Issuer-signed JWT
 
@@ -493,9 +544,15 @@ Table of Contents
 5.1.2.  Key Binding
 
    If the Issuer wants to enable Key Binding, it includes a public key
-   associated with the Holder, or a reference thereto.  The jwk member
-   of the cnf claim as defined in Section 3.2 of [RFC7800] is suggested
-   for doing so, however, other means can be used.
+   associated with the Holder, or a reference thereto, using the cnf
+   claim as defined in [RFC7800].  The jwk confirmation method, as
+   defined in Section 3.2 of [RFC7800], is suggested for doing so,
+   however, other confirmation methods can be used.
+
+   Note that, as was stated in [RFC7800], if an application needs to
+   represent multiple proof-of-possession keys in the same SD-JWT, one
+   way to achieve this is to use other claim names, in addition to cnf,
+   to hold the additional proof-of-possession key information.
 
    It is out of the scope of this document to describe how the Holder
    key pair is established.  For example, the Holder MAY create a key
@@ -503,8 +560,8 @@ Table of Contents
    the key pair for the Holder, or Holder and Issuer MAY use pre-
    established key material.
 
-   Note: The examples throughout this document use the cnf claim to
-   include the raw public key by value in SD-JWT.
+   Note: The examples throughout this document use the cnf claim with
+   the jwk member to include the raw public key by value in SD-JWT.
 
 5.2.  Disclosures
 
@@ -722,11 +779,11 @@ Table of Contents
 
 5.3.  Key Binding JWT
 
-   This section defines the contents of the optional Key Binding JWT,
-   which the Holder MAY include in the SD-JWT to prove the Key Binding
-   to the Verifier.
+   This section defines the Key Binding JWT, which encodes a signature
+   over an SD-JWT by the Holder's private key.
 
-   The JWT MUST contain the following elements:
+   The Key Binding JWT MUST be a JWT according to [RFC7519] and its
+   payload MUST contain the following elements:
 
    *  in the JOSE header,
       -  typ: REQUIRED.  MUST be kb+jwt, which explicitly types the Key
@@ -745,17 +802,17 @@ Table of Contents
          value type of this claim MUST be a string.  How this value is
          obtained is up to the protocol used and out of scope of this
          specification.
-      -  sd_hash: REQUIRED.  The base64url-encoded hash digest over the
+      -  sd_hash: REQUIRED.  The base64url-encoded hash value over the
          Issuer-signed JWT and the selected Disclosures as defined
          below.
 
-5.3.1.  Integrity Protection of the Presentation
+5.3.1.  Binding to an SD-JWT
 
-   The hash digest in sd_hash ensures the integrity of the Presentation.
-   It MUST be taken over the US-ASCII bytes preceding the KB-JWT in the
-   Presentation, i.e., the Issuer-signed JWT, a tilde character, and
-   zero or more Disclosures selected for presentation to the Verifier,
-   each followed by a tilde character:
+   The hash value in the sd_hash claim binds the KB-JWT to the specific
+   SD-JWT.  The sd_hash value MUST be taken over the US-ASCII bytes of
+   the encoded SD-JWT, i.e., the Issuer-signed JWT, a tilde character,
+   and zero or more Disclosures selected for presentation to the
+   Verifier, each followed by a tilde character:
 
    <Issuer-signed JWT>~<Disclosure 1>~<Disclosure 2>~...~<Disclosure N>~
 
@@ -767,11 +824,11 @@ Table of Contents
 
 5.3.2.  Validating the Key Binding JWT
 
-   To validate the signature on the Key Binding JWT, the Verifier MUST
-   use the key material in the SD-JWT.  If it is not clear from the SD-
-   JWT, the Key Binding JWT MUST specify which key material the Verifier
-   needs to use to validate the Key Binding JWT signature using JOSE
-   header parameters such as kid and x5c.
+   The Verifier MUST ensure that the key with which it validates the
+   signature on the Key Binding JWT is the key specified in the SD-JWT
+   as the Holder's public key.  For example, if the SD-JWT contains a
+   cnf value with a jwk member, the Verifier could parse the provided
+   JWK and use it to verify the Key Binding JWT.
 
    Whether to require Key Binding is up to the Verifier's policy, based
    on the set of trust requirements such as trust frameworks it belongs
@@ -964,8 +1021,8 @@ Table of Contents
    InNoYS0yNTYiLCAiY25mIjogeyJqd2siOiB7Imt0eSI6ICJFQyIsICJjcnYiOiAiUC0y
    NTYiLCAieCI6ICJUQ0FFUjE5WnZ1M09IRjRqNFc0dmZTVm9ISVAxSUxpbERsczd2Q2VH
    ZW1jIiwgInkiOiAiWnhqaVdXYlpNUUdIVldLVlE0aGJTSWlyc1ZmdWVjQ0U2dDRqVDlG
-   MkhaUSJ9fX0.dk_Sx1I9fZmBGlxY8F_GRfb_dtP5lxqGneBrrTRRUXgXjhcIjMbOiMVn
-   cl67VPuINXKknc8H6BjYXl1jJIbTEQ
+   MkhaUSJ9fX0.ldS18dRiJRhlgGAPtlp05L_tLu8euYSxlulZ0ZABiS_I4YihhWKd3ffI
+   m_j51A6rLyv9jVjSd3LP99QxJcIz-Q
 
    The issued SD-JWT might look as follows:
 
@@ -985,8 +1042,8 @@ Table of Contents
    InNoYS0yNTYiLCAiY25mIjogeyJqd2siOiB7Imt0eSI6ICJFQyIsICJjcnYiOiAiUC0y
    NTYiLCAieCI6ICJUQ0FFUjE5WnZ1M09IRjRqNFc0dmZTVm9ISVAxSUxpbERsczd2Q2VH
    ZW1jIiwgInkiOiAiWnhqaVdXYlpNUUdIVldLVlE0aGJTSWlyc1ZmdWVjQ0U2dDRqVDlG
-   MkhaUSJ9fX0.dk_Sx1I9fZmBGlxY8F_GRfb_dtP5lxqGneBrrTRRUXgXjhcIjMbOiMVn
-   cl67VPuINXKknc8H6BjYXl1jJIbTEQ~WyIyR0xDNDJzS1F2ZUNmR2ZyeU5STjl3IiwgI
+   MkhaUSJ9fX0.ldS18dRiJRhlgGAPtlp05L_tLu8euYSxlulZ0ZABiS_I4YihhWKd3ffI
+   m_j51A6rLyv9jVjSd3LP99QxJcIz-Q~WyIyR0xDNDJzS1F2ZUNmR2ZyeU5STjl3IiwgI
    mdpdmVuX25hbWUiLCAiSm9obiJd~WyJlbHVWNU9nM2dTTklJOEVZbnN4QV9BIiwgImZh
    bWlseV9uYW1lIiwgIkRvZSJd~WyI2SWo3dE0tYTVpVlBHYm9TNXRtdlZBIiwgImVtYWl
    sIiwgImpvaG5kb2VAZXhhbXBsZS5jb20iXQ~WyJlSThaV205UW5LUHBOUGVOZW5IZGhR
@@ -1001,12 +1058,12 @@ Table of Contents
 
 6.2.  Presentation
 
-   The following non-normative example shows an associated SD-JWT
-   Presentation as it would be sent from the Holder to the Verifier.
-   Note that it consists of six ~-separated parts, with the Issuer-
-   signed JWT as shown above in the beginning, four Disclosures (for the
-   claims given_name, family_name, address, and nationalities) in the
-   middle, and the Key Binding JWT as the last element.
+   The following non-normative example shows an SD-JWT+KB as it would be
+   sent from the Holder to the Verifier.  Note that it consists of six
+   tilde-separated parts, with the Issuer-signed JWT as shown above in
+   the beginning, four Disclosures (for the claims given_name,
+   family_name, address, and one of the nationalities) in the middle,
+   and the Key Binding JWT as the last element.
 
    eyJhbGciOiAiRVMyNTYiLCAidHlwIjogImV4YW1wbGUrc2Qtand0In0.eyJfc2QiOiBb
    IkNyUWU3UzVrcUJBSHQtbk1ZWGdjNmJkdDJTSDVhVFkxc1VfTS1QZ2tqUEkiLCAiSnpZ
@@ -1024,18 +1081,18 @@ Table of Contents
    InNoYS0yNTYiLCAiY25mIjogeyJqd2siOiB7Imt0eSI6ICJFQyIsICJjcnYiOiAiUC0y
    NTYiLCAieCI6ICJUQ0FFUjE5WnZ1M09IRjRqNFc0dmZTVm9ISVAxSUxpbERsczd2Q2VH
    ZW1jIiwgInkiOiAiWnhqaVdXYlpNUUdIVldLVlE0aGJTSWlyc1ZmdWVjQ0U2dDRqVDlG
-   MkhaUSJ9fX0.dk_Sx1I9fZmBGlxY8F_GRfb_dtP5lxqGneBrrTRRUXgXjhcIjMbOiMVn
-   cl67VPuINXKknc8H6BjYXl1jJIbTEQ~WyJlbHVWNU9nM2dTTklJOEVZbnN4QV9BIiwgI
+   MkhaUSJ9fX0.ldS18dRiJRhlgGAPtlp05L_tLu8euYSxlulZ0ZABiS_I4YihhWKd3ffI
+   m_j51A6rLyv9jVjSd3LP99QxJcIz-Q~WyJlbHVWNU9nM2dTTklJOEVZbnN4QV9BIiwgI
    mZhbWlseV9uYW1lIiwgIkRvZSJd~WyJBSngtMDk1VlBycFR0TjRRTU9xUk9BIiwgImFk
    ZHJlc3MiLCB7InN0cmVldF9hZGRyZXNzIjogIjEyMyBNYWluIFN0IiwgImxvY2FsaXR5
    IjogIkFueXRvd24iLCAicmVnaW9uIjogIkFueXN0YXRlIiwgImNvdW50cnkiOiAiVVMi
    fV0~WyIyR0xDNDJzS1F2ZUNmR2ZyeU5STjl3IiwgImdpdmVuX25hbWUiLCAiSm9obiJd
    ~WyJsa2x4RjVqTVlsR1RQVW92TU5JdkNBIiwgIlVTIl0~eyJhbGciOiAiRVMyNTYiLCA
    idHlwIjogImtiK2p3dCJ9.eyJub25jZSI6ICIxMjM0NTY3ODkwIiwgImF1ZCI6ICJodH
-   RwczovL3ZlcmlmaWVyLmV4YW1wbGUub3JnIiwgImlhdCI6IDE3MTY3NDQ5NjcsICJzZF
-   9oYXNoIjogIjVVREw0bGVkcDBIXzNqN2pnUldUX1FONHpyeGdkSzBZYjZDaldjeEYtVX
-   cifQ.aE6TB_wFOT4vBKfVbp-TRU2IdNk1Sq04al4mu0Dgos5VuO7Bn5aBv0tpnhLz47f
-   9856WXcmneYIrV8GsmMYYhw
+   RwczovL3ZlcmlmaWVyLmV4YW1wbGUub3JnIiwgImlhdCI6IDE3MTk1MjYzNTgsICJzZF
+   9oYXNoIjogIk94enlKYndVTUhRUFNpRlJXRlRObUpLam80TktPWF9WdXltVWV3RjNwTH
+   cifQ.mYF9zMHI3RxfWB0Ru1NsSxyFE0oTbr95mIbzH1iWlXX7FiD2tnQytzubh8unk5I
+   TZY1exSpq4FK4DAjSx_MNbA
 
    The following Key Binding JWT payload was created and signed for this
    presentation by the Holder:
@@ -1043,9 +1100,13 @@ Table of Contents
    {
      "nonce": "1234567890",
      "aud": "https://verifier.example.org",
-     "iat": 1716744967,
-     "sd_hash": "5UDL4ledp0H_3j7jgRWT_QN4zrxgdK0Yb6CjWcxF-Uw"
+     "iat": 1719526358,
+     "sd_hash": "OxzyJbwUMHQPSiFRWFTNmJKjo4NKOX_VuymUewF3pLw"
    }
+
+   If the Verifier did not require Key Binding, then the Holder could
+   have presented the SD-JWT with selected Disclosures directly, instead
+   of encapsulating it in an SD-JWT+KB.
 
 7.  Considerations on Nested Data in SD-JWTs
 
@@ -1270,7 +1331,8 @@ Table of Contents
 
 8.1.  Verification of the SD-JWT
 
-   Upon receiving an SD-JWT, a Holder or a Verifier needs to ensure that
+   Upon receiving an SD-JWT, either directly or as a component of an SD-
+   JWT+KB, a Holder or a Verifier needs to ensure that:
 
    *  the Issuer-signed JWT is valid, i.e., it is signed by the Issuer
       and the signature is valid, and
@@ -1281,8 +1343,8 @@ Table of Contents
    The Holder or the Verifier MUST perform the following (or equivalent)
    steps when receiving an SD-JWT:
 
-   1.  Separate the SD-JWT into the Issuer-signed JWT, the Disclosures
-       (if any), and the Key Binding JWT (if present).
+   1.  Separate the SD-JWT into the Issuer-signed JWT and the
+       Disclosures (if any).
    2.  Validate the Issuer-signed JWT:
        1.  Ensure that a signing algorithm was used that was deemed
            secure for the application.  Refer to [RFC8725], Sections 3.1
@@ -1355,27 +1417,33 @@ Table of Contents
 
 8.2.  Processing by the Holder
 
-   If a Key Binding JWT is received by a Holder, the SD-JWT SHOULD be
-   rejected.
+   The Issuer MUST provide the Holder an SD-JWT, not an SD-JWT+KB.  If
+   the Holder receives an SD-JWT+KB, it SHOULD be rejected.
 
    For presentation to a Verifier, the Holder MUST perform the following
    (or equivalent) steps:
 
    1.  Decide which Disclosures to release to the Verifier, obtaining
        proper End-User consent if necessary.
-   2.  Assemble the SD-JWT for presentation, including the Issuer-signed
-       JWT and the selected Disclosures (see Section 5 for the format).
-   3.  If Key Binding is required, create a Key Binding JWT
-       (Section 5.3) and add it to the SD-JWT for presentation.
-   4.  Send the SD-JWT for presentation to the Verifier.
+   2.  Assemble the SD-JWT, including the Issuer-signed JWT and the
+       selected Disclosures (see Section 5 for the format).
+   3.  If Key Binding is not required:
+       1.  Send the SD-JWT to the Verifier.
+   4.  If Key Binding is required:
+       1.  Create a Key Binding JWT tied to the SD-JWT.
+       2.  Assemble the SD-JWT+KB by concatenating the SD-JWT and the
+           Key Binding JWT.
+       3.  Send the SD-JWT+KB to the Verifier.
 
 8.3.  Verification by the Verifier
 
-   Upon receiving a Presentation, in addition to the checks outlined in
+   Upon receiving a presentation from a Holder, in the form of either an
+   SD-JWT or an SD-JWT+KB, in addition to the checks outlined in
    Section 8.1, Verifiers need to ensure that
 
-   *  if Key Binding is required, the Key Binding JWT is signed by the
-      Holder and valid.
+   *  if Key Binding is required, then the Holder has provided an SD-
+      JWT+KB, and
+   *  the Key Binding JWT is signed by the Holder and valid.
 
    To this end, Verifiers MUST follow the following steps (or
    equivalent):
@@ -1384,33 +1452,35 @@ Table of Contents
        Verifier's policy for the use case at hand.  This decision MUST
        NOT be based on whether a Key Binding JWT is provided by the
        Holder or not.  Refer to Section 10.5 for details.
-   2.  Process the SD-JWT as defined in Section 8.1.
-   3.  If Key Binding is required:
-       1.  If a Key Binding JWT is not provided, the Verifier MUST
-           reject the Presentation.
-       2.  Determine the public key for the Holder from the SD-JWT (see
+   2.  If Key Binding is required and the Holder has provided an SD-JWT
+       (without Key Binding), the Verifier MUST reject the presentation.
+   3.  If the Holder has provided an SD-JWT+KB, parse it into an SD-JWT
+       and a Key Binding JWT.
+   4.  Process the SD-JWT as defined in Section 8.1.
+   5.  If Key Binding is required:
+       1.  Determine the public key for the Holder from the SD-JWT (see
            Section 5.1.2).
-       3.  Ensure that a signing algorithm was used that was deemed
+       2.  Ensure that a signing algorithm was used that was deemed
            secure for the application.  Refer to [RFC8725], Sections 3.1
            and 3.2 for details.  The none algorithm MUST NOT be
            accepted.
-       4.  Validate the signature over the Key Binding JWT per
+       3.  Validate the signature over the Key Binding JWT per
            Section 5.2 of [RFC7515].
-       5.  Check that the typ of the Key Binding JWT is kb+jwt (see
+       4.  Check that the typ of the Key Binding JWT is kb+jwt (see
            Section 5.3).
-       6.  Check that the creation time of the Key Binding JWT, as
+       5.  Check that the creation time of the Key Binding JWT, as
            determined by the iat claim, is within an acceptable window.
-       7.  Determine that the Key Binding JWT is bound to the current
+       6.  Determine that the Key Binding JWT is bound to the current
            transaction and was created for this Verifier (replay
            protection) by validating nonce and aud claims.
-       8.  Calculate the digest over the Issuer-signed JWT and
+       7.  Calculate the digest over the Issuer-signed JWT and
            Disclosures as defined in Section 5.3.1 and verify that it
            matches the value of the sd_hash claim in the Key Binding
            JWT.
-       9.  Check that the Key Binding JWT is a valid JWT in all other
+       8.  Check that the Key Binding JWT is a valid JWT in all other
            respects, per [RFC7519] and [RFC8725].
 
-   If any step fails, the Presentation is not valid and processing MUST
+   If any step fails, the presentation is not valid and processing MUST
    be aborted.
 
    Otherwise, the processed SD-JWT payload can be passed to the
@@ -1418,28 +1488,34 @@ Table of Contents
 
 9.  JWS JSON Serialization
 
-   This section describes an alternative format for SD-JWT using the JWS
-   JSON Serialization from [RFC7515].  Supporting this format is
-   OPTIONAL.
+   This section describes an alternative format for SD-JWTs and SD-
+   JWT+KBs using the JWS JSON Serialization from [RFC7515].  Supporting
+   this format is OPTIONAL.
 
 9.1.  New Unprotected Header Parameters
 
-   For both the General and Flattened JSON Serialization, the SD-JWT is
-   represented as a JSON object according to Section 7.2 of [RFC7515].
-   The following new unprotected header parameters are defined:
+   For both the General and Flattened JSON Serialization, the SD-JWT or
+   SD-JWT+KB is represented as a JSON object according to Section 7.2 of
+   [RFC7515].  The following new unprotected header parameters are
+   defined:
 
    *  disclosures: An array of strings where each element is an
       individual Disclosure as described in Section 5.2.
-   *  kb_jwt: A Key Binding JWT as described in Section 5.3.
+   *  kb_jwt: Present only in an SD-JWT+KB, the Key Binding JWT as
+      described in Section 5.3.
 
-   If a Key Binding JWT is present, the digest in the sd_hash claim MUST
-   be taken over a string built as described in Section 5.3.1.  The
-   "Issuer-signed JWT" part is built by concatenating the protected
-   header, the payload, and the signature of the JWS JSON serialized SD-
-   JWT using a . character as a separator, and using the Disclosures
-   from the disclosures member of the unprotected header.  In case of
-   multiple signatures, only the first one is used for the Disclosures
-   and Key Binding JWT.
+   In an SD-JWT+KB, kb_jwt MUST be present when using the JWS JSON
+   Serialization, and the digest in the sd_hash claim MUST be taken over
+   the SD-JWT as described in Section 5.3.1.  This means that even when
+   using the JWS JSON Serialization, the representation as a regular SD-
+   JWT MUST be created temporarily to calculate the digest.  In detail,
+   the SD-JWT part is built by concatenating the protected header, the
+   payload, and the signature of the JWS JSON serialized SD-JWT using a
+   . character as a separator, and using the Disclosures from the
+   disclosures member of the unprotected header.
+
+   Unprotected headers other than disclosures are not covered by the
+   digest, and therefore, as usual, are not protected against tampering.
 
 9.2.  Flattened JSON Serialization
 
@@ -1474,12 +1550,11 @@ Table of Contents
        Z1ZWNDRTZ0NGpUOUYySFpRIn19fQ",
      "protected":
        "eyJhbGciOiAiRVMyNTYiLCAidHlwIjogImV4YW1wbGUrc2Qtand0In0",
-     "signature": "EOWn0JENWU579-keMOlfHiA0hgQxNLS1NL75DI8mEuR9qsyJXFhs
-       R207UWWb16o3frn5D1g23wlByc-w4-jsLg"
+     "signature": "JfKZ2-pjtyF6IaTTCH23yD3U6w407AZXHDCeCv9ijfgrsf0eqSbQ
+       4STdvwCSW5NeSDhkwbnjIts0P94reTPENQ"
    }
 
-   The following is a presentation including a Key Binding JWT and two
-   Disclosures:
+   The following is an SD-JWT+KB with two Disclosures:
 
    {
      "header": {
@@ -1491,10 +1566,10 @@ Table of Contents
        ],
        "kb_jwt": "eyJhbGciOiAiRVMyNTYiLCAidHlwIjogImtiK2p3dCJ9.eyJub25j
          ZSI6ICIxMjM0NTY3ODkwIiwgImF1ZCI6ICJodHRwczovL3ZlcmlmaWVyLmV4YW
-         1wbGUub3JnIiwgImlhdCI6IDE3MTY3NDQ5NjcsICJzZF9oYXNoIjogInBwXzFV
-         VWZ3Y25rM3BqcnJkSUhrbFBQMklpc1NwWDY0ODZUSHBmdjNLd0UifQ.vs2Fa7W
-         n4KqNQkB2bzrr1c6OGfQjz3rZ6cdFQ0IKyiuLZaIxPnE4VPqCn4udi7J8Qw3bx
-         JxJioIUNmrFhTFxSQ"
+         1wbGUub3JnIiwgImlhdCI6IDE3MTk1MjYzNTgsICJzZF9oYXNoIjogImV2OUxo
+         LUQtZDY5WTN2U0JYajZGYno5U0lkbHJRZHViWmVWSHFWdUI4SE0ifQ.6fe0Fh0
+         Cb7PVaBo2PDyjqgbSO3sIcxD45O5tc7weLexe4qZMb3_z856HRd0w9xdV7ztjW
+         LF7oEHUYVa5eQz6BQ"
      },
      "payload": "eyJfc2QiOiBbIjRIQm42YUlZM1d0dUdHV1R4LXFVajZjZGs2V0JwWn
        lnbHRkRmF2UGE3TFkiLCAiOHNtMVFDZjAyMXBObkhBQ0k1c1A0bTRLWmd5Tk9PQV
@@ -1508,8 +1583,8 @@ Table of Contents
        Z1ZWNDRTZ0NGpUOUYySFpRIn19fQ",
      "protected":
        "eyJhbGciOiAiRVMyNTYiLCAidHlwIjogImV4YW1wbGUrc2Qtand0In0",
-     "signature": "EOWn0JENWU579-keMOlfHiA0hgQxNLS1NL75DI8mEuR9qsyJXFhs
-       R207UWWb16o3frn5D1g23wlByc-w4-jsLg"
+     "signature": "JfKZ2-pjtyF6IaTTCH23yD3U6w407AZXHDCeCv9ijfgrsf0eqSbQ
+       4STdvwCSW5NeSDhkwbnjIts0P94reTPENQ"
    }
 
 9.3.  General JSON Serialization
@@ -1546,15 +1621,15 @@ Table of Contents
            "kid": "issuer-key-1",
            "kb_jwt": "eyJhbGciOiAiRVMyNTYiLCAidHlwIjogImtiK2p3dCJ9.eyJu
              b25jZSI6ICIxMjM0NTY3ODkwIiwgImF1ZCI6ICJodHRwczovL3ZlcmlmaW
-             VyLmV4YW1wbGUub3JnIiwgImlhdCI6IDE3MTY3NDQ5NjcsICJzZF9oYXNo
-             IjogIk4zZlNHVE1VNnhuTTdNR1B3NDg4b3dLN0pobHZfbjhhNFZOZ3FRSW
-             ZISFUifQ.gBALBCc0H4uDm0Y3XZU8Od3RBcKqMHOfuRpxrtxEIj4nHg_rn
-             JB13ZlDlASARngEcDTLXBMLh-3efZYldaXpLg"
+             VyLmV4YW1wbGUub3JnIiwgImlhdCI6IDE3MTk1MjYzNTgsICJzZF9oYXNo
+             IjogIlYtbDk5YXFYSHgwNDU5dEJBYnFyZ1ZGY3B2Uk1sMWFVR3hVSUFJYk
+             IxM1UifQ.fVLUb5DxwF8LsePsXFcDkxOV9WfKFi29yXrNHB4pv6RXUnfx1
+             0AWW2bCUtgkXK8Zl7y8ZAzFxVzaScxu-d_LFg"
          },
          "protected":
            "eyJhbGciOiAiRVMyNTYiLCAidHlwIjogImV4YW1wbGUrc2Qtand0In0",
-         "signature": "ke_vxkS70o9oghRmfUra0VNSFe3O2M9pFtysARLCwYZQ2Qm7
-           x5LhC_HzP9QBtwn89Jz6BPFHduaHo-Ls69f-HQ"
+         "signature": "V_rM7T9iAhMReyQbJxEqyi81HjtTNH7YJL9Fj7KMxGU8ohKG
+           HD-v69QQPXm_Ipu84dcm1RpTfRZKkYZU6DtdCA"
        },
        {
          "header": {
@@ -1562,8 +1637,8 @@ Table of Contents
          },
          "protected":
            "eyJhbGciOiAiRVMyNTYiLCAidHlwIjogImV4YW1wbGUrc2Qtand0In0",
-         "signature": "dIr_zWts97cgdIFUPym0fA9AJqMqIa-tK6oamNhiqH5ir5vq
-           0VsC_0AS3ZBslc3CdccDvSq1QtX8w445jszqIQ"
+         "signature": "2QbJosvun7oibGZCkG9myQiwE0E2NXQJZwv4cO8gCe6vslUN
+           kWxbWStIGgUJ5e78wBWWpaTsmzrpKPIGby6r3Q"
        }
      ]
    }
@@ -1573,12 +1648,12 @@ Table of Contents
    Verification of the JWS JSON serialized SD-JWT follows the rules
    defined in Section 4.4, except for the following aspects:
 
-   *  The SD-JWT does not need to be split into component parts and the
-      Disclosures can be found in the disclosures member of the
-      unprotected header.
-   *  To verify the digest in sd_hash in the Key Binding JWT, the
-      Verifier MUST assemble the string to be hashed as described in
-      Section 9.1.
+   *  The SD-JWT or SD-JWT+KB does not need to be split into component
+      parts and the Disclosures can be found in the disclosures member
+      of the unprotected header.
+   *  To verify the digest in sd_hash in the Key Binding JWT of an SD-
+      JWT+KB, the Verifier MUST assemble the string to be hashed as
+      described in Section 9.1.
 
 10.  Security Considerations
 
@@ -1701,11 +1776,11 @@ Table of Contents
 10.5.  Key Binding
 
    Key Binding aims to ensure that the presenter of an SD-JWT credential
-   is actually the legitimate Holder of the credential.  An SD-JWT with
-   Key Binding contains a public key, or a reference to a public key,
-   that corresponds to a private key possessed by the Holder.  The
-   Verifier requires that the Holder prove possession of that private
-   key when presenting the SD-JWT credential.
+   is actually the legitimate Holder of the credential.  An SD-JWT
+   compatible with Key Binding contains a public key, or a reference to
+   a public key, that corresponds to a private key possessed by the
+   Holder.  The Verifier requires that the Holder prove possession of
+   that private key when presenting the SD-JWT credential.
 
    Without Key Binding, a Verifier only gets the proof that the
    credential was issued by a particular Issuer, but the credential
@@ -1726,22 +1801,22 @@ Table of Contents
    presented at the same time, etc.
 
    It is important that a Verifier does not make its security policy
-   decisions based on data that can be influenced by an attacker or that
-   can be misinterpreted.  For this reason, when deciding whether Key
-   Binding is required or not, Verifiers MUST NOT take into account
+   decisions based on data that can be influenced by an attacker.  For
+   this reason, when deciding whether Key Binding is required or not,
+   Verifiers MUST NOT take into account whether the Holder has provided
+   an SD-JWT+KB or a bare SD-JWT, since otherwise an attacker could
+   strip the KB-JWT from an SD-JWT+KB and present the resulting SD-JWT.
 
-   *  whether a Key Binding JWT is present or not, as an attacker can
-      remove the Key Binding JWT from any Presentation and present it to
-      the Verifier, or
-   *  whether Key Binding data is present in the SD-JWT or not, as the
-      Issuer might have added the key to the SD-JWT in a format/claim
-      that is not recognized by the Verifier.
+   Furthermore, Verifiers should be aware that Key Binding information
+   may have been added to an SD-JWT in a format that they do not
+   recognize and therefore may not be able to tell whether the SD-JWT
+   supports Key Binding or not.
 
-   If a Verifier has decided that Key Binding is required for a
-   particular use case and the Key Binding is not present, does not
-   fulfill the requirements (e.g., on the signing algorithm), or no
-   recognized Key Binding data is present in the SD-JWT, the Verifier
-   will reject the presentation, as described in Section 8.3.
+   If a Verifier determines that Key Binding is required for a
+   particular use case and the Holder presents either a bare SD-JWT or
+   an SD-JWT+KB with an invalid Key Binding JWT, then the Verifier will
+   reject the presentation when following the verification steps
+   described in Section 8.3.
 
 10.6.  Blinding Claim Names
 
@@ -1798,10 +1873,11 @@ Table of Contents
 
 10.9.  Forwarding Credentials
 
-   When Key Binding is not enforced, any entity in possession of an SD-
-   JWT Presentation can forward the contents to third parties.  When
-   doing so, that entity may remove Disclosures such that the receiver
-   learns only a subset of the claims contained in the original SD-JWT.
+   Any entity in possession of an SD-JWT (including an SD-JWT extracted
+   from an SD-JWT+KB) can forward it to any third party that does not
+   enforce Key Binding.  When doing so, that entity may remove
+   Disclosures such that the receiver learns only a subset of the claims
+   contained in the original SD-JWT.
 
    For example, a device manufacturer might produce an SD-JWT containing
    information about upstream and downstream supply chain contributors.
@@ -1813,13 +1889,23 @@ Table of Contents
    In some scenarios this behavior could be desirable, but if it is not,
    Issuers need to support and Verifiers need to enforce Key Binding.
 
-10.10.  Integrity of Presentation
+10.10.  Integrity of SD-JWTs and SD-JWT+KBs
 
-   In a Presentation, the Issuer-signed JWT is integrity-protected by
-   the Issuer's signature, and the Disclosures are integrity-protected
-   by the digests included in the Issuer-signed JWT.  If used, the KB-
-   JWT, besides proving Key Binding, protects the integrity of the set
-   of Disclosures the Holder disclosed.
+   With an SD-JWT, the Issuer-signed JWT is integrity-protected by the
+   Issuer's signature, and the values of the Disclosures are integrity-
+   protected by the digests included therein.  The specific set of
+   Disclosures, however, is not integrity-protected - the SD-JWT can be
+   modified by adding or removing Disclosures and still be valid.
+
+   With an SD-JWT+KB, the set of selected Disclosures is integrity-
+   protected.  The signature in the Key Binding JWT covers a specific
+   SD-JWT, with a specific Issuer-signed JWT and a specific set of
+   Disclosures.  Thus, the signature on the Key Binding JWT, in addition
+   to proving Key Binding, also assures the authenticity and integrity
+   of the set of Disclosures the Holder disclosed.  The set of
+   Disclosures in an SD-JWT+KB is the set that the Holder intended to
+   send; no intermediate party has added, removed, or modified the list
+   of Disclosures.
 
 10.11.  Explicit Typing
 
@@ -2025,14 +2111,14 @@ Table of Contents
    We would like to thank Alen Horvat, Anders Rundgren, Arjan Geluk,
    Christian Bormann, Christian Paquin, David Bakker, David Waite,
    Fabian Hauck, Filip Skokan, Giuseppe De Marco, Jacob Ward, Jeffrey
-   Yasskin, John Mattsson, Justin Richer, Kushal Das, Matthew Miller,
-   Michael Fraser, Mike Jones, Mike Prorock, Nat Sakimura, Neil Madden,
-   Oliver Terbu, Orie Steele, Paul Bastian, Peter Altmann, Pieter
-   Kasselman, Richard Barnes, Rohan Mahy, Ryosuke Abe, Sami Rosendahl,
-   Shawn Butterfield, Simon Schulz, Tobias Looker, Takahiko Kawasaki,
-   Torsten Lodderstedt, Vittorio Bertocci, and Yaron Sheffer for their
-   contributions (some of which substantial) to this draft and to the
-   initial set of implementations.
+   Yasskin, John Mattsson, Joseph Heenan, Justin Richer, Kushal Das,
+   Matthew Miller, Michael Fraser, Mike Jones, Mike Prorock, Nat
+   Sakimura, Neil Madden, Oliver Terbu, Orie Steele, Paul Bastian, Peter
+   Altmann, Pieter Kasselman, Richard "fnord" Barnes, Rohan Mahy,
+   Ryosuke Abe, Sami Rosendahl, Shawn Butterfield, Simon Schulz, Tobias
+   Looker, Takahiko Kawasaki, Torsten Lodderstedt, Vittorio Bertocci,
+   and Yaron Sheffer for their contributions (some of which substantial)
+   to this draft and to the initial set of implementations.
 
    The work on this draft was started at OAuth Security Workshop 2022 in
    Trondheim, Norway.
@@ -2071,8 +2157,8 @@ Table of Contents
 
 
    *  Claim Name: sd_hash
-   *  Claim Description: Digest of the Issuer-signed JWT and Disclosures
-      in a Presentation
+   *  Claim Description: Digest of the SD-JWT to which the KB-JWT is
+      tied
    *  Change Controller: IETF
    *  Specification Document(s): [[ Section 5.3 of this specification ]]
 
@@ -2081,6 +2167,9 @@ Table of Contents
    This section requests registration of the following media types
    [RFC2046] in the "Media Types" registry [IANA.MediaTypes] in the
    manner described in [RFC6838].
+
+   Note: For the media type value used in the typ header in the Issuer-
+   signed JWT itself, see Section 10.11.
 
    To indicate that the content is an SD-JWT:
 
@@ -2283,6 +2372,11 @@ Table of Contents
               DOI 10.17487/RFC4086, June 2005,
               <https://www.rfc-editor.org/info/rfc4086>.
 
+   [RFC5234]  Crocker, D., Ed. and P. Overell, "Augmented BNF for Syntax
+              Specifications: ABNF", STD 68, RFC 5234,
+              DOI 10.17487/RFC5234, January 2008,
+              <https://www.rfc-editor.org/info/rfc5234>.
+
    [RFC6838]  Freed, N., Klensin, J., and T. Hansen, "Media Type
               Specifications and Registration Procedures", BCP 13,
               RFC 6838, DOI 10.17487/RFC6838, January 2013,
@@ -2473,8 +2567,7 @@ A.1.  Simple Structured SD-JWT
    *  Y34zmIo0QLLOtdMpXGwjBgLvr17yEhhYT0FGofR-aIE
 
    The following is how a presentation of the SD-JWT that discloses only
-   region and country of the address property and without a Key Binding
-   JWT could look like:
+   region and country of the address property could look like:
 
    eyJhbGciOiAiRVMyNTYiLCAidHlwIjogImV4YW1wbGUrc2Qtand0In0.eyJfc2QiOiBb
    IkM5aW5wNllvUmFFWFI0Mjd6WUpQN1FyazFXSF84YmR3T0FfWVVyVW5HUVUiLCAiS3Vl
@@ -2494,8 +2587,8 @@ A.1.  Simple Structured SD-JWT
    U1U3ZlNXZ3dGNVVEWm1Xd0JUdzMyZ25VbGRJaGk4aEdWQ2FWNCIsICJydkpkNmlxNlQ1
    ZWptc0JNb0d3dU5YaDlxQUFGQVRBY2k0MG9pZEVlVnNBIiwgInVOSG9XWWhYc1poVkpD
    TkUyRHF5LXpxdDd0NjlnSkt5NVFhRnY3R3JNWDQiXX0sICJfc2RfYWxnIjogInNoYS0y
-   NTYifQ.ZfZSZYHFjmXaL7kcUHsQR1trbnJCuULgDRpPwvi6DxW5xSYVIrdUCBn1A42yc
-   59WF3gxxGV2AJ5p9NI1ZgY15w~WyJHMDJOU3JRZmpGWFE3SW8wOXN5YWpBIiwgInJlZ2
+   NTYifQ.MCU2bAC6RRKcRkY_WuOcfzn3pl_AIe5z9_N6V35RwOa8QzeIbrQwLiwBmriYj
+   -QQEretyr0v1RCv1OdKzu7syQ~WyJHMDJOU3JRZmpGWFE3SW8wOXN5YWpBIiwgInJlZ2
    lvbiIsICJcdTZlMmZcdTUzM2EiXQ~WyJsa2x4RjVqTVlsR1RQVW92TU5JdkNBIiwgImN
    vdW50cnkiLCAiSlAiXQ~
 
@@ -2743,8 +2836,7 @@ A.2.  Complex Structured SD-JWT
       Njc4OSJd
    *  Contents: ["kx5kF17V-x0JmwUx9vgvtw", "msisdn", "49123456789"]
 
-   The following is how a presentation of the SD-JWT without a Key
-   Binding JWT could look like:
+   The following is how a presentation of the SD-JWT could look like:
 
    eyJhbGciOiAiRVMyNTYiLCAidHlwIjogImV4YW1wbGUrc2Qtand0In0.eyJfc2QiOiBb
    Ii1hU3puSWQ5bVdNOG9jdVFvbENsbHN4VmdncTEtdkhXNE90bmhVdFZtV3ciLCAiSUti
@@ -2762,8 +2854,8 @@ A.2.  Complex Structured SD-JWT
    TWsiLCAiV3hoX3NWM2lSSDliZ3JUQkppLWFZSE5DTHQtdmpoWDFzZC1pZ09mXzlsayIs
    ICJfTy13SmlIM2VuU0I0Uk9IbnRUb1FUOEptTHR6LW1oTzJmMWM4OVhvZXJRIiwgImh2
    RFhod21HY0pRc0JDQTJPdGp1TEFjd0FNcERzYVUwbmtvdmNLT3FXTkUiXX19LCAiX3Nk
-   X2FsZyI6ICJzaGEtMjU2In0.kAQ4d1eMg2vzWTUbV1zSvQLfn-d214-6YhxJk_ZkfpsA
-   _qwqSK_jvjg-Q2uFtoyhtWkfZzKVfyYmCPghmwmhAg~WyIyR0xDNDJzS1F2ZUNmR2Zye
+   X2FsZyI6ICJzaGEtMjU2In0.FiQxPLD7BTq7rkI7Oh0M7J2Qbxul2wR6huxpuajwEWks
+   H6L6zQwzI7hdlRHoNRUPpxrPji7AHeMHVCAWwobCFQ~WyIyR0xDNDJzS1F2ZUNmR2Zye
    U5STjl3IiwgInRpbWUiLCAiMjAxMi0wNC0yM1QxODoyNVoiXQ~WyJQYzMzSk0yTGNoY1
    VfbEhnZ3ZfdWZRIiwgeyJfc2QiOiBbIjl3cGpWUFd1RDdQSzBuc1FETDhCMDZsbWRnVj
    NMVnliaEh5ZFFwVE55TEkiLCAiRzVFbmhPQU9vVTlYXzZRTU52ekZYanBFQV9SYy1BRX
@@ -2875,8 +2967,8 @@ A.3.  SD-JWT-based Verifiable Credentials (SD-JWT VC)
    6ICJzaGEtMjU2IiwgImNuZiI6IHsiandrIjogeyJrdHkiOiAiRUMiLCAiY3J2IjogIlA
    tMjU2IiwgIngiOiAiVENBRVIxOVp2dTNPSEY0ajRXNHZmU1ZvSElQMUlMaWxEbHM3dkN
    lR2VtYyIsICJ5IjogIlp4amlXV2JaTVFHSFZXS1ZRNGhiU0lpcnNWZnVlY0NFNnQ0alQ
-   5RjJIWlEifX19.s6wGVTQeuS-rqotXdNxpFTKMMwu3KLD22_9O6MiJ-BTNvdvWJENErz
-   csFHgOMYZ3xGByYg-097RiPpxbY_SsBw~WyIyR0xDNDJzS1F2ZUNmR2ZyeU5STjl3Iiw
+   5RjJIWlEifX19.FDCihXlIp7BQC3dcTW6azbnMZV5OCB9-1TKhUVtMH8Zrq_Li41LVYI
+   RzBLNWBXeDFGbnycICGGuFd_MrKHCvRw~WyIyR0xDNDJzS1F2ZUNmR2ZyeU5STjl3Iiw
    gImdpdmVuX25hbWUiLCAiRXJpa2EiXQ~WyJlbHVWNU9nM2dTTklJOEVZbnN4QV9BIiwg
    ImZhbWlseV9uYW1lIiwgIk11c3Rlcm1hbm4iXQ~WyI2SWo3dE0tYTVpVlBHYm9TNXRtd
    lZBIiwgImJpcnRoZGF0ZSIsICIxOTYzLTA4LTEyIl0~WyJlSThaV205UW5LUHBOUGVOZ
@@ -3121,9 +3213,8 @@ A.3.  SD-JWT-based Verifiable Credentials (SD-JWT VC)
       WyJlSzVvNXBIZmd1cFBwbHRqMXFoQUp3IiwgIjY1IiwgZmFsc2Vd
    *  Contents: ["eK5o5pHfgupPpltj1qhAJw", "65", false]
 
-   The following is how a presentation of the SD-JWT with a Key Binding
-   JWT that discloses only nationality and the fact that the person is
-   over 18 years old could look like:
+   The following is how an SD-JWT+KB that discloses only nationality and
+   the fact that the person is over 18 years old could look like:
 
    eyJhbGciOiAiRVMyNTYiLCAidHlwIjogInZjK3NkLWp3dCJ9.eyJfc2QiOiBbIjBIWm1
    uU0lQejMzN2tTV2U3QzM0bC0tODhnekppLWVCSjJWel9ISndBVGciLCAiOVpicGxDN1R
@@ -3147,22 +3238,22 @@ A.3.  SD-JWT-based Verifiable Credentials (SD-JWT VC)
    6ICJzaGEtMjU2IiwgImNuZiI6IHsiandrIjogeyJrdHkiOiAiRUMiLCAiY3J2IjogIlA
    tMjU2IiwgIngiOiAiVENBRVIxOVp2dTNPSEY0ajRXNHZmU1ZvSElQMUlMaWxEbHM3dkN
    lR2VtYyIsICJ5IjogIlp4amlXV2JaTVFHSFZXS1ZRNGhiU0lpcnNWZnVlY0NFNnQ0alQ
-   5RjJIWlEifX19.s6wGVTQeuS-rqotXdNxpFTKMMwu3KLD22_9O6MiJ-BTNvdvWJENErz
-   csFHgOMYZ3xGByYg-097RiPpxbY_SsBw~WyJuUHVvUW5rUkZxM0JJZUFtN0FuWEZBIiw
+   5RjJIWlEifX19.FDCihXlIp7BQC3dcTW6azbnMZV5OCB9-1TKhUVtMH8Zrq_Li41LVYI
+   RzBLNWBXeDFGbnycICGGuFd_MrKHCvRw~WyJuUHVvUW5rUkZxM0JJZUFtN0FuWEZBIiw
    gIm5hdGlvbmFsaXRpZXMiLCBbIkRFIl1d~WyJNMEpiNTd0NDF1YnJrU3V5ckRUM3hBIi
    wgIjE4IiwgdHJ1ZV0~eyJhbGciOiAiRVMyNTYiLCAidHlwIjogImtiK2p3dCJ9.eyJub
    25jZSI6ICIxMjM0NTY3ODkwIiwgImF1ZCI6ICJodHRwczovL3ZlcmlmaWVyLmV4YW1wb
-   GUub3JnIiwgImlhdCI6IDE3MTY3NDQ5NjcsICJzZF9oYXNoIjogIkZYZ0Z4c2plSUgxc
-   zBoZ0hjODlWWnhpYlJPa2xYdDV5MU9DSlhDa0haMVkifQ.w5p5TUXj5r0CoObcXx9mL1
-   sUptPT25nkjIkFUrIkJUhkJ7W6YLNVwrHlMGqf0b-_5cu3unbH-5cc0opzw_s7eg
+   GUub3JnIiwgImlhdCI6IDE3MTk1MjYzNTgsICJzZF9oYXNoIjogIk5GeTM0RWZHRlFtO
+   WZIeWhuckp1aXU0alFkM2ExWnQwVWptb0NXTHQ1eVEifQ.WP_VbYLMmcZ6w3wOAi-F3C
+   mXxWs4nF1quLyk-DpWAR4jZ4B73rcScdguC5WpPllu7wgcg4UghSw944yCXWY_Fw
 
    The following is the payload of a corresponding Key Binding JWT:
 
    {
      "nonce": "1234567890",
      "aud": "https://verifier.example.org",
-     "iat": 1716744967,
-     "sd_hash": "FXgFxsjeIH1s0hgHc89VZxibROklXt5y1OCJXCkHZ1Y"
+     "iat": 1719526358,
+     "sd_hash": "NFy34EfGFQm9fHyhnrJuiu4jQd3a1Zt0UjmoCWLt5yQ"
    }
 
    After the validation, the Verifier will have the following data for
@@ -3268,8 +3359,8 @@ A.4.  W3C Verifiable Credentials Data Model v2.0
    c2RfYWxnIjogInNoYS0yNTYiLCAiY25mIjogeyJqd2siOiB7Imt0eSI6ICJFQyIsICJj
    cnYiOiAiUC0yNTYiLCAieCI6ICJUQ0FFUjE5WnZ1M09IRjRqNFc0dmZTVm9ISVAxSUxp
    bERsczd2Q2VHZW1jIiwgInkiOiAiWnhqaVdXYlpNUUdIVldLVlE0aGJTSWlyc1ZmdWVj
-   Q0U2dDRqVDlGMkhaUSJ9fX0.98KCYWFr1NRL3ekrTV4aAheCagalKuBhPht5apkICucC
-   V7BbD36GGDgiZiolCs2RbsocefNBydrjjTIR7qZdjg~WyIyR0xDNDJzS1F2ZUNmR2Zye
+   Q0U2dDRqVDlGMkhaUSJ9fX0.FwwqYRuO1a5US6Szt39ITnTVk18uqK25vmSHjZeSXDEy
+   BxkU3yifjE_AYulwWFO5W-qQjz3vDgOLimzahYs2Iw~WyIyR0xDNDJzS1F2ZUNmR2Zye
    U5STjl3IiwgImF0Y0NvZGUiLCAiSjA3QlgwMyJd~WyJlbHVWNU9nM2dTTklJOEVZbnN4
    QV9BIiwgIm1lZGljaW5hbFByb2R1Y3ROYW1lIiwgIkNPVklELTE5IFZhY2NpbmUgTW9k
    ZXJuYSJd~WyI2SWo3dE0tYTVpVlBHYm9TNXRtdlZBIiwgIm1hcmtldGluZ0F1dGhvcml
@@ -3466,10 +3557,9 @@ A.4.  W3C Verifiable Credentials Data Model v2.0
    *  Contents: ["HbQ4X8srVW3QDxnIJdqyOA", "healthProfessional",
       "883110000015376"]
 
-   The following is how a presentation of the SD-JWT with Key Binding
-   JWT that discloses only type, medicinalProductName, atcCode of the
-   vaccine, type of the recipient, type, order and dateOfVaccination
-   could look like:
+   The following is how an SD-JWT+KB that discloses only type,
+   medicinalProductName, atcCode of the vaccine, type of the recipient,
+   type, order and dateOfVaccination could look like:
 
    eyJhbGciOiAiRVMyNTYiLCAidHlwIjogImV4YW1wbGUrc2Qtand0In0.eyJAY29udGV4
    dCI6IFsiaHR0cHM6Ly93d3cudzMub3JnLzIwMTgvY3JlZGVudGlhbHMvdjEiLCAiaHR0
@@ -3498,18 +3588,18 @@ A.4.  W3C Verifiable Credentials Data Model v2.0
    c2RfYWxnIjogInNoYS0yNTYiLCAiY25mIjogeyJqd2siOiB7Imt0eSI6ICJFQyIsICJj
    cnYiOiAiUC0yNTYiLCAieCI6ICJUQ0FFUjE5WnZ1M09IRjRqNFc0dmZTVm9ISVAxSUxp
    bERsczd2Q2VHZW1jIiwgInkiOiAiWnhqaVdXYlpNUUdIVldLVlE0aGJTSWlyc1ZmdWVj
-   Q0U2dDRqVDlGMkhaUSJ9fX0.98KCYWFr1NRL3ekrTV4aAheCagalKuBhPht5apkICucC
-   V7BbD36GGDgiZiolCs2RbsocefNBydrjjTIR7qZdjg~WyJQYzMzSk0yTGNoY1VfbEhnZ
+   Q0U2dDRqVDlGMkhaUSJ9fX0.FwwqYRuO1a5US6Szt39ITnTVk18uqK25vmSHjZeSXDEy
+   BxkU3yifjE_AYulwWFO5W-qQjz3vDgOLimzahYs2Iw~WyJQYzMzSk0yTGNoY1VfbEhnZ
    3ZfdWZRIiwgIm9yZGVyIiwgIjMvMyJd~WyJBSngtMDk1VlBycFR0TjRRTU9xUk9BIiwg
    ImRhdGVPZlZhY2NpbmF0aW9uIiwgIjIwMjEtMDYtMjNUMTM6NDA6MTJaIl0~WyIyR0xD
    NDJzS1F2ZUNmR2ZyeU5STjl3IiwgImF0Y0NvZGUiLCAiSjA3QlgwMyJd~WyJlbHVWNU9
    nM2dTTklJOEVZbnN4QV9BIiwgIm1lZGljaW5hbFByb2R1Y3ROYW1lIiwgIkNPVklELTE
    5IFZhY2NpbmUgTW9kZXJuYSJd~eyJhbGciOiAiRVMyNTYiLCAidHlwIjogImtiK2p3dC
    J9.eyJub25jZSI6ICIxMjM0NTY3ODkwIiwgImF1ZCI6ICJodHRwczovL3ZlcmlmaWVyL
-   mV4YW1wbGUub3JnIiwgImlhdCI6IDE3MTY3NDQ5NjcsICJzZF9oYXNoIjogIjJITDFac
-   Vc0WHZlM1V0NTNPdGZXZlpYRnNnUGY4QU9BYkcyLWpGRkVReTQifQ.wp7BEawWAUN6WF
-   8jJD_75O34wJDXMoqfkcjXJRScd-elXsKRUF9IQCdRauATwSQtweZZYwJK5i3tJEK-_Q
-   ePTA
+   mV4YW1wbGUub3JnIiwgImlhdCI6IDE3MTk1MjYzNTgsICJzZF9oYXNoIjogIjB5d0N3U
+   FBteGo2V3cwVE5GbnRDWTdLQVVfVlExNm54RXF0NWtWQ001TVEifQ.Q9CNWSFS1H9Fki
+   pdThKAKuKAJ0zuEjDjNKdxIXMWrGMjS02pTE2SSwOpgemrNiwV5F0oBIDa_3JvM17p_K
+   GSkw
 
    After the validation, the Verifier will have the following data for
    further processing:
@@ -3683,8 +3773,15 @@ Appendix C.  Document History
 
    [[ To be removed from the final specification ]]
 
+   -10
+
+   * Editorial updates/fixes
+
    -09
 
+   *  Distinguished SD-JWT from SD-JWT+KB
+   *  Provide ABNF for the SD-JWT, SD-JWT+KB, and various constituent
+      parts
    *  New structure for JSON-serialized SD-JWTs/KB-JWTs to better align
       with JAdES.
    *  Attempt to better explain how salt in the Disclosure makes
@@ -3692,6 +3789,8 @@ Appendix C.  Document History
    *  Consolidate salt entropy and length security consideration
       subsections
    *  Unnumbered most of the examples for improved clarity
+   *  More definitive language around the exclusive use of the cnf claim
+      for enabling Key Binding
 
    -08
 
