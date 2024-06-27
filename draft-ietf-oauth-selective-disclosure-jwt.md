@@ -1905,6 +1905,10 @@ data. The original JSON data is then used by the application. See
 
    [[ To be removed from the final specification ]]
 
+   -10
+
+   * Add a section clarifying recursive disclosures and their interdependencies
+
    -09
 
    * Distinguished SD-JWT from SD-JWT+KB
