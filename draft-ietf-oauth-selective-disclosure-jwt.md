@@ -745,7 +745,7 @@ The issued SD-JWT might look as follows:
 The following non-normative example shows an SD-JWT+KB as
 it would be sent from the Holder to the Verifier. Note that it consists of six
 tilde-separated parts, with the Issuer-signed JWT as shown above in the beginning,
-four Disclosures (for the claims `given_name`, `family_name`, `address`, and
+four Disclosures (for the claims `given_name`, `family_name`, `address`, and one of the
 `nationalities`) in the middle, and the Key Binding JWT as the last element.
 
 <{{examples/simple/sd_jwt_presentation.txt}}
@@ -1369,6 +1369,7 @@ Giuseppe De Marco,
 Jacob Ward,
 Jeffrey Yasskin,
 John Mattsson,
+Joseph Heenan,
 Justin Richer,
 Kushal Das,
 Matthew Miller,
