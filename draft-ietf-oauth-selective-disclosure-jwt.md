@@ -595,8 +595,8 @@ disclosable fields.  For example, consider the following JSON structure:
 
 When the Holder has multiple nationalities, the issuer may wish to allow the holder to reveal
 each of those nationalities individually.
-This can be accomplished by first making the "FR" and "UK" entries within
-the array selectively disclosable, and then the whole "nationalities" field.
+This can be accomplished by first making the entries within the "nationalities"
+array selectively disclosable, and then the whole "nationalities" field.
 
 ``` ascii-art
 {
