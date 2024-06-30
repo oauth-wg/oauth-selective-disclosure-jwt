@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2024-06-27T00:12:41.834789+00:00",
+  "timestamp": "2024-06-30T00:13:53.050587+00:00",
   "repo": "oauth-wg/oauth-selective-disclosure-jwt",
   "labels": [
     {
@@ -11081,6 +11081,39 @@
           "body": "I'm told that my statement that it \"didn't resonate with any of the audiences for whom it was intended\" might be premature. ",
           "createdAt": "2024-06-20T18:43:18Z",
           "updatedAt": "2024-06-20T18:43:18Z"
+        }
+      ]
+    },
+    {
+      "number": 440,
+      "id": "I_kwDOHTmVzM6Nvi8A",
+      "title": "Mentions of KB-JWT that could be removed",
+      "url": "https://github.com/oauth-wg/oauth-selective-disclosure-jwt/issues/440",
+      "state": "OPEN",
+      "author": "srosenda",
+      "authorAssociation": "NONE",
+      "assignees": [],
+      "labels": [
+        "has-PR"
+      ],
+      "body": "The distinguishing of SD-JWT from SD-JWT+KB is a good clarifying change in -09. Some extra mentions of KB-JWT still remain that could probably removed:\r\n\r\nIn [5. ](https://www.ietf.org/archive/id/draft-ietf-oauth-selective-disclosure-jwt-09.html#section-5)[SD-JWT and SD-JWT+KB Data Formats](https://www.ietf.org/archive/id/draft-ietf-oauth-selective-disclosure-jwt-09.html#name-sd-jwt-and-sd-jwtkb-data-fo):\r\n\r\n>An SD-JWT without Disclosures and without a KB-JWT\r\n\r\nand\r\n\r\n>An SD-JWT with Disclosures and without a KB-JWT\r\n\r\nThe \"and without a KB-JWT\" could be removed as there are separate examples for SD-JWT+KB and SD-JWT is now defined not to include KB-JWT.",
+      "createdAt": "2024-06-27T12:40:39Z",
+      "updatedAt": "2024-06-28T19:57:17Z",
+      "closedAt": null,
+      "comments": [
+        {
+          "author": "bc-pi",
+          "authorAssociation": "COLLABORATOR",
+          "body": "Thanks @srosenda, PR #441 does exactly what you've suggested. ",
+          "createdAt": "2024-06-27T22:14:57Z",
+          "updatedAt": "2024-06-28T19:57:17Z"
+        },
+        {
+          "author": "srosenda",
+          "authorAssociation": "NONE",
+          "body": "\ud83d\udc4d approved the PR (#441) too.",
+          "createdAt": "2024-06-28T07:31:07Z",
+          "updatedAt": "2024-06-28T07:31:07Z"
         }
       ]
     }
@@ -46185,13 +46218,13 @@
       "labels": [],
       "body": "Fixes #372 \r\n\r\nThere are three algorithms to consider when it comes to recursive disclosures:\r\n\r\n1. How the issuer generates the recursive disclosures\r\n2. How the holder selects disclosures to reveal in the context of recursion\r\n3. How the verifier unwinds recursive disclosures\r\n\r\n(3) is adequately covered in the verification algorithm.  The other two are currently uncovered.   This PR clarifies (1) and (2).  \r\n\r\nAlgorithm (1) doesn't really need formal definition for interoperability; an issuer can follow any process that ends up with an SD-JWT that will verify.  However, it's useful to (1) provide an illustration, (2) provider a reminder that you have to go from most-specific redaction to least, from the leaves of the AST toward the issuer-signed claims, and (3) provide a clear requirement that an SD-JWT must contain any intermediate recursive disclosures.  This PR adds a section that does these things.\r\n\r\nFor algorithm (2), I simply added a step to the holder processing that verifies that the disclosure selection process got all the required disclosures (including the intermediate ones).  We could also be more prescriptive, providing a concrete algorithm that adds the required intermediate disclosures.",
       "createdAt": "2024-06-04T22:24:32Z",
-      "updatedAt": "2024-06-26T23:05:22Z",
+      "updatedAt": "2024-06-27T21:12:44Z",
       "baseRepository": "oauth-wg/oauth-selective-disclosure-jwt",
       "baseRefName": "master",
-      "baseRefOid": "e61cc927aaa95e0e51382d648c47b670a3afecc6",
+      "baseRefOid": "2f0801e9e1a2d6c7fa697ff9b0cf9281dd322e7e",
       "headRepository": "bifurcation/oauth-selective-disclosure-jwt",
       "headRefName": "recurse",
-      "headRefOid": "02d2fb07001057bbbe9532248478f5d31de80718",
+      "headRefOid": "ccdd7026133f8d2c381a429752c52aa5cb11c250",
       "closedAt": null,
       "mergedAt": null,
       "mergedBy": null,
@@ -46224,6 +46257,13 @@
           "body": "> Please rebase/merge main and resolve conflicts.\r\n>\r\n> > just what the doctor ordered\r\n\r\ndone",
           "createdAt": "2024-06-12T19:21:16Z",
           "updatedAt": "2024-06-12T19:21:16Z"
+        },
+        {
+          "author": "bc-pi",
+          "authorAssociation": "COLLABORATOR",
+          "body": "putting this here for posterity \r\n```\r\n        String[] disclosuresContent = new String[]\r\n        {\r\n                \"[\\\"16_mAd0GiwaZokU26_0i0h\\\",\\\"DE\\\"]\",\r\n                \"[\\\"fn9fN0rD-fFs2n303ZI-0c\\\",\\\"FR\\\"]\",\r\n                \"[\\\"YIKesqOkXXNzMQtsX_-_lw\\\",\\\"UK\\\"]\",\r\n                \"[\\\"4drfeTtSUK3aY_-PF12gcX\\\",\\\"nationalities\\\",\\n\" +\r\n                \"    [\\n\" +\r\n                \"        { \\\"...\\\": \\\"PmnlrRjhLcwf8zTDdK15HVGwHtPYjddvD362WjBLwro\\\" },\\n\" +\r\n                \"        { \\\"...\\\": \\\"r823HFN6Ba_lpSANYtXqqCBAH-TsQlIzfOK0lRAFLCM\\\" },\\n\" +\r\n                \"        { \\\"...\\\": \\\"nP5GYjwhFm6ESlAeC4NCaIliW4tz0hTrUeoJB3lb5TA\\\" }\\n\" +\r\n                \"    ]\\n\" +\r\n                \"]\"\r\n        };\r\n\r\n        for (String disclosureContent : disclosuresContent)\r\n        {\r\n            String disclosure = Base64Url.encodeUtf8ByteRepresentation(disclosureContent);\r\n            MessageDigest messageDigest = HashUtil.getMessageDigest(HashUtil.SHA_256);\r\n            byte[] digestBytes = messageDigest.digest(disclosure.getBytes(StandardCharsets.UTF_8));\r\n            System.out.println(\" content    \" + disclosureContent);\r\n            System.out.println(\" disclosure \" + disclosure);\r\n            System.out.println(\" digest     \" + Base64Url.encode(digestBytes));\r\n            System.out.println();\r\n        }\r\n```",
+          "createdAt": "2024-06-27T21:12:43Z",
+          "updatedAt": "2024-06-27T21:12:43Z"
         }
       ],
       "reviews": [
@@ -46624,9 +46664,9 @@
           "comments": [
             {
               "originalPosition": 27,
-              "body": "I can't seem to reproduce these hash values, which makes me a wee bit nervous. But the full Disclosures aren't shown so it's a bit of a stretch anyway. But I'm going to plow ahead and hope I'm not doing something wrong thereby assuming @bifurcation made some mistake or just made the values up.  Blasphemous, I know, but I gotta move forward. ",
+              "body": "I can't seem to reproduce these hash values, which makes me a wee bit nervous. But the full Disclosures aren't shown so it's a bit of a stretch anyway to assume they are real. But I'm going to plow ahead and hope I'm not doing something wrong thereby assuming @bifurcation made some mistake or just made the values up.  Blasphemous, I know, but I gotta move forward. ",
               "createdAt": "2024-06-26T21:49:46Z",
-              "updatedAt": "2024-06-26T21:49:47Z"
+              "updatedAt": "2024-06-27T17:46:31Z"
             }
           ]
         },
@@ -46669,6 +46709,99 @@
               "updatedAt": "2024-06-26T22:14:49Z"
             }
           ]
+        },
+        {
+          "id": "PRR_kwDOHTmVzM5_4g2C",
+          "commit": {
+            "abbreviatedOid": "d520301"
+          },
+          "author": "bifurcation",
+          "authorAssociation": "CONTRIBUTOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2024-06-27T14:13:50Z",
+          "updatedAt": "2024-06-27T14:13:50Z",
+          "comments": [
+            {
+              "originalPosition": 27,
+              "body": "Happy to supply whatever compensatory item makes sense!  Thanks for picking this up, I was planning to handle it on a flight last Friday, but then it didn't have in-flight wifi.\r\n\r\nAny errors here are totally on me.  I was creating the hashes manually, typing / copy / pasting into `python3` REPL, and translating the results back manually to the URL safe alphabet.",
+              "createdAt": "2024-06-27T14:13:50Z",
+              "updatedAt": "2024-06-27T14:13:50Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOHTmVzM5_4iNz",
+          "commit": {
+            "abbreviatedOid": "02d2fb0"
+          },
+          "author": "bifurcation",
+          "authorAssociation": "CONTRIBUTOR",
+          "state": "COMMENTED",
+          "body": "One minor tweak, otherwise this looks good to me.",
+          "createdAt": "2024-06-27T14:15:02Z",
+          "updatedAt": "2024-06-27T14:16:49Z",
+          "comments": [
+            {
+              "originalPosition": 20,
+              "body": "```suggestion\r\nThis can be accomplished by first making the entries within the \"nationalities\"\r\narray selectively disclosable, and then the whole \"nationalities\" field.\r\n```",
+              "createdAt": "2024-06-27T14:15:02Z",
+              "updatedAt": "2024-06-27T14:16:49Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOHTmVzM5_6Kzd",
+          "commit": {
+            "abbreviatedOid": "02d2fb0"
+          },
+          "author": "bc-pi",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2024-06-27T16:48:08Z",
+          "updatedAt": "2024-06-27T16:48:08Z",
+          "comments": [
+            {
+              "originalPosition": 20,
+              "body": "as kinda noted in 02d2fb07001057bbbe9532248478f5d31de80718 the text still needs to be adjusted and aligned to what the examples have but this is directionally correct. ",
+              "createdAt": "2024-06-27T16:48:08Z",
+              "updatedAt": "2024-06-27T16:48:08Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOHTmVzM5_8Fxh",
+          "commit": {
+            "abbreviatedOid": "d520301"
+          },
+          "author": "bc-pi",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2024-06-27T20:27:26Z",
+          "updatedAt": "2024-06-27T20:27:27Z",
+          "comments": [
+            {
+              "originalPosition": 27,
+              "body": "> Happy to supply whatever compensatory item makes sense! \r\n\r\nWe will need to make something happen in YVR. \r\n\r\n>Thanks for picking this up, I was planning to handle it on a flight last Friday, but then it didn't have in-flight wifi.\r\n\r\nI figured something came up. Meanwhile I'm trying to get something out before I-D cutoff and have limited co-author availability due to vacation etc. \r\n\r\n> Any errors here are totally on me. I was creating the hashes manually, typing / copy / pasting into `python3` REPL, and translating the results back manually to the URL safe alphabet.\r\n\r\nIt's hard to imagine how any mistakes made it into that pipeline. But there were a few... \r\n\r\n\r\n\r\n",
+              "createdAt": "2024-06-27T20:27:26Z",
+              "updatedAt": "2024-06-27T20:27:27Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOHTmVzM5_8G2x",
+          "commit": {
+            "abbreviatedOid": "ccdd702"
+          },
+          "author": "bc-pi",
+          "authorAssociation": "COLLABORATOR",
+          "state": "APPROVED",
+          "body": "",
+          "createdAt": "2024-06-27T20:29:47Z",
+          "updatedAt": "2024-06-27T20:29:47Z",
+          "comments": []
         }
       ]
     },
@@ -47057,6 +47190,46 @@
           "body": "",
           "createdAt": "2024-06-20T16:32:51Z",
           "updatedAt": "2024-06-20T16:32:51Z",
+          "comments": []
+        }
+      ]
+    },
+    {
+      "number": 441,
+      "id": "PR_kwDOHTmVzM5z06XD",
+      "title": "Remove two extraneous occurrences of \"and without a KB-JWT\"",
+      "url": "https://github.com/oauth-wg/oauth-selective-disclosure-jwt/pull/441",
+      "state": "OPEN",
+      "author": "bc-pi",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "to fix #440\r\n",
+      "createdAt": "2024-06-27T22:13:43Z",
+      "updatedAt": "2024-06-28T07:30:34Z",
+      "baseRepository": "oauth-wg/oauth-selective-disclosure-jwt",
+      "baseRefName": "master",
+      "baseRefOid": "2f0801e9e1a2d6c7fa697ff9b0cf9281dd322e7e",
+      "headRepository": "oauth-wg/oauth-selective-disclosure-jwt",
+      "headRefName": "fnord-remnants",
+      "headRefOid": "e96628efb66525b15c36aa456ea7510ef82040c0",
+      "closedAt": null,
+      "mergedAt": null,
+      "mergedBy": null,
+      "mergeCommit": null,
+      "comments": [],
+      "reviews": [
+        {
+          "id": "PRR_kwDOHTmVzM5__KO4",
+          "commit": {
+            "abbreviatedOid": "e96628e"
+          },
+          "author": "srosenda",
+          "authorAssociation": "NONE",
+          "state": "APPROVED",
+          "body": "\ud83d\udc4d looks good",
+          "createdAt": "2024-06-28T07:30:34Z",
+          "updatedAt": "2024-06-28T07:30:34Z",
           "comments": []
         }
       ]
