@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2024-06-30T00:13:53.050587+00:00",
+  "timestamp": "2024-07-02T00:12:35.223095+00:00",
   "repo": "oauth-wg/oauth-selective-disclosure-jwt",
   "labels": [
     {
@@ -11114,6 +11114,75 @@
           "body": "\ud83d\udc4d approved the PR (#441) too.",
           "createdAt": "2024-06-28T07:31:07Z",
           "updatedAt": "2024-06-28T07:31:07Z"
+        }
+      ]
+    },
+    {
+      "number": 442,
+      "id": "I_kwDOHTmVzM6OIwnY",
+      "title": "Give \" a name",
+      "url": "https://github.com/oauth-wg/oauth-selective-disclosure-jwt/issues/442",
+      "state": "CLOSED",
+      "author": "awoie",
+      "authorAssociation": "NONE",
+      "assignees": [],
+      "labels": [],
+      "body": "",
+      "createdAt": "2024-07-01T20:18:00Z",
+      "updatedAt": "2024-07-01T20:34:15Z",
+      "closedAt": "2024-07-01T20:27:29Z",
+      "comments": [
+        {
+          "author": "bc-pi",
+          "authorAssociation": "COLLABORATOR",
+          "body": "By `Give \" a name` here what @awoie means is that it'd be useful to have a name to refer to what we call the \"processed SD-JWT payload\" that's \"passed to the application\" [here](https://www.ietf.org/archive/id/draft-ietf-oauth-selective-disclosure-jwt-09.html#section-8.3-6) and is really the JSON after verification and processing and replacing `_sd` and `...` occurrences with the real values. ",
+          "createdAt": "2024-07-01T20:31:02Z",
+          "updatedAt": "2024-07-01T20:31:02Z"
+        },
+        {
+          "author": "awoie",
+          "authorAssociation": "NONE",
+          "body": "I created a issue here https://github.com/oauth-wg/oauth-selective-disclosure-jwt/issues/443. I don't know what happened with this issue. My apologies.",
+          "createdAt": "2024-07-01T20:32:22Z",
+          "updatedAt": "2024-07-01T20:32:22Z"
+        },
+        {
+          "author": "bc-pi",
+          "authorAssociation": "COLLABORATOR",
+          "body": "> I created a issue here #443. I don't know what happened with this issue. My apologies.\r\n\r\nno apologies needed ",
+          "createdAt": "2024-07-01T20:34:14Z",
+          "updatedAt": "2024-07-01T20:34:14Z"
+        }
+      ]
+    },
+    {
+      "number": 443,
+      "id": "I_kwDOHTmVzM6OIzr_",
+      "title": "Give \"JSON document of the SD-JWT processing and verification algorithm\" a name",
+      "url": "https://github.com/oauth-wg/oauth-selective-disclosure-jwt/issues/443",
+      "state": "OPEN",
+      "author": "awoie",
+      "authorAssociation": "NONE",
+      "assignees": [],
+      "labels": [],
+      "body": "We had the discussion in SD-JWT VC how to refer to the dehydrated (or maybe hydrated) result (Issuer-signed JWT payload) of the [processing and verification algorithm](https://www.ietf.org/archive/id/draft-ietf-oauth-selective-disclosure-jwt-09.html#name-verification-and-processing). It would help if we could give it a name to allow us to be more precise in other specs that are building on top of SD-JWT.\r\n\r\nThe discussion occurred when adding the Schema for SD-JWT VCs that uses that result of the SD-JWT processing section to match the JSON schema against:\r\nhttps://github.com/oauth-wg/oauth-sd-jwt-vc/pull/231/files#diff-e750c0958ca10e395b4d3b77bb5aafccc668b4a1a50675dda79a8d90b39a2468R714-R715\r\n\r\nWe also have another issue that asks for an example of the result as well which would benefit from giving it a defined name:\r\nhttps://github.com/oauth-wg/oauth-sd-jwt-vc/issues/194\r\n\r\n",
+      "createdAt": "2024-07-01T20:26:16Z",
+      "updatedAt": "2024-07-01T20:33:50Z",
+      "closedAt": null,
+      "comments": [
+        {
+          "author": "awoie",
+          "authorAssociation": "NONE",
+          "body": "Perhaps you can also confirm that this result in fact contains things like `iss`, `cnf`, `exp` etc., and would only remove `_sd`, `_sd_alg`, `...`.",
+          "createdAt": "2024-07-01T20:30:26Z",
+          "updatedAt": "2024-07-01T20:30:26Z"
+        },
+        {
+          "author": "bc-pi",
+          "authorAssociation": "COLLABORATOR",
+          "body": "I was typing the following over in #442 when it closed out from under me in favor of this issue. \r\n\r\n> By Give \" a name here what @awoie means is that it'd be useful to have a name to refer to what we call the \"processed SD-JWT payload\" that's \"passed to the application\" [here](https://www.ietf.org/archive/id/draft-ietf-oauth-selective-disclosure-jwt-09.html#section-8.3-6) and is really the JSON after verification and processing and replacing _sd and ... occurrences with the real values.",
+          "createdAt": "2024-07-01T20:33:49Z",
+          "updatedAt": "2024-07-01T20:33:49Z"
         }
       ]
     }
