@@ -618,6 +618,8 @@ r823HFN... = ["fn9fN0rD-fFs2n303ZI-0c","FR"]
 nP5GYjw... = ["YIKesqOkXXNzMQtsX_-_lw","UK"]
 ```
 
+Followed by making the whole "nationalities" array selectively disclosable:
+
 ``` ascii-art
 {
     "family_name": "Möbius",
