@@ -600,6 +600,8 @@ This can be accomplished by first making the entries within the "nationalities"
 array selectively disclosable, and then making the whole "nationalities" field
 selectively disclosable.
 
+The following shows each of the entries within the "nationalities" array being made selectively disclosable:
+
 ``` ascii-art
 {
     "family_name": "Möbius",
