@@ -311,12 +311,12 @@ To further illustrate the SD-JWT format, the following examples show a few diffe
 SD-JWT permutations, both with and without various constituent parts.
 
 
-An SD-JWT without Disclosures and without a KB-JWT:
+An SD-JWT without Disclosures:
 ```
 <Issuer-signed JWT>~
 ```
 
-An SD-JWT with Disclosures and without a KB-JWT:
+An SD-JWT with Disclosures:
 ```
 <Issuer-signed JWT>~<Disclosure 1>~<Disclosure N>~
 ```
@@ -1909,6 +1909,7 @@ data. The original JSON data is then used by the application. See
    -10
 
    * Add a section clarifying recursive disclosures and their interdependencies
+   * Editorial updates/fixes
 
    -09
 
