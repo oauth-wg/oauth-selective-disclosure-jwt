@@ -5,10 +5,10 @@
 Web Authorization Protocol                                       D. Fett
 Internet-Draft                                                  Authlete
 Intended status: Standards Track                               K. Yasuda
-Expires: 22 December 2024                                Keio University
+Expires: 3 January 2025                                  Keio University
                                                              B. Campbell
                                                            Ping Identity
-                                                            20 June 2024
+                                                             2 July 2024
 
 
                  Selective Disclosure for JWTs (SD-JWT)
@@ -48,7 +48,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 22 December 2024.
+   This Internet-Draft will expire on 3 January 2025.
 
 Copyright Notice
 
@@ -451,11 +451,11 @@ Table of Contents
    a few different SD-JWT permutations, both with and without various
    constituent parts.
 
-   An SD-JWT without Disclosures and without a KB-JWT:
+   An SD-JWT without Disclosures:
 
    <Issuer-signed JWT>~
 
-   An SD-JWT with Disclosures and without a KB-JWT:
+   An SD-JWT with Disclosures:
 
    <Issuer-signed JWT>~<Disclosure 1>~<Disclosure N>~
 
@@ -1021,8 +1021,8 @@ Table of Contents
    InNoYS0yNTYiLCAiY25mIjogeyJqd2siOiB7Imt0eSI6ICJFQyIsICJjcnYiOiAiUC0y
    NTYiLCAieCI6ICJUQ0FFUjE5WnZ1M09IRjRqNFc0dmZTVm9ISVAxSUxpbERsczd2Q2VH
    ZW1jIiwgInkiOiAiWnhqaVdXYlpNUUdIVldLVlE0aGJTSWlyc1ZmdWVjQ0U2dDRqVDlG
-   MkhaUSJ9fX0.IfphwF5Wuer-2U5iBRzKKjq5skwJv66yi5QsEErzMTzBjdPca6ywS6qN
-   H_XppP7QQzCNvU2-WdE27jefLULIcQ
+   MkhaUSJ9fX0.h8jGMJquanZQ2R9T2zrtBUc_CYnb7k0omjhwHVjBPuLepbaKb1nCoh43
+   sBonB0l5PCR9THH318AXm1gwxsiX4Q
 
    The issued SD-JWT might look as follows:
 
@@ -1042,8 +1042,8 @@ Table of Contents
    InNoYS0yNTYiLCAiY25mIjogeyJqd2siOiB7Imt0eSI6ICJFQyIsICJjcnYiOiAiUC0y
    NTYiLCAieCI6ICJUQ0FFUjE5WnZ1M09IRjRqNFc0dmZTVm9ISVAxSUxpbERsczd2Q2VH
    ZW1jIiwgInkiOiAiWnhqaVdXYlpNUUdIVldLVlE0aGJTSWlyc1ZmdWVjQ0U2dDRqVDlG
-   MkhaUSJ9fX0.IfphwF5Wuer-2U5iBRzKKjq5skwJv66yi5QsEErzMTzBjdPca6ywS6qN
-   H_XppP7QQzCNvU2-WdE27jefLULIcQ~WyIyR0xDNDJzS1F2ZUNmR2ZyeU5STjl3IiwgI
+   MkhaUSJ9fX0.h8jGMJquanZQ2R9T2zrtBUc_CYnb7k0omjhwHVjBPuLepbaKb1nCoh43
+   sBonB0l5PCR9THH318AXm1gwxsiX4Q~WyIyR0xDNDJzS1F2ZUNmR2ZyeU5STjl3IiwgI
    mdpdmVuX25hbWUiLCAiSm9obiJd~WyJlbHVWNU9nM2dTTklJOEVZbnN4QV9BIiwgImZh
    bWlseV9uYW1lIiwgIkRvZSJd~WyI2SWo3dE0tYTVpVlBHYm9TNXRtdlZBIiwgImVtYWl
    sIiwgImpvaG5kb2VAZXhhbXBsZS5jb20iXQ~WyJlSThaV205UW5LUHBOUGVOZW5IZGhR
@@ -1081,18 +1081,18 @@ Table of Contents
    InNoYS0yNTYiLCAiY25mIjogeyJqd2siOiB7Imt0eSI6ICJFQyIsICJjcnYiOiAiUC0y
    NTYiLCAieCI6ICJUQ0FFUjE5WnZ1M09IRjRqNFc0dmZTVm9ISVAxSUxpbERsczd2Q2VH
    ZW1jIiwgInkiOiAiWnhqaVdXYlpNUUdIVldLVlE0aGJTSWlyc1ZmdWVjQ0U2dDRqVDlG
-   MkhaUSJ9fX0.IfphwF5Wuer-2U5iBRzKKjq5skwJv66yi5QsEErzMTzBjdPca6ywS6qN
-   H_XppP7QQzCNvU2-WdE27jefLULIcQ~WyJlbHVWNU9nM2dTTklJOEVZbnN4QV9BIiwgI
+   MkhaUSJ9fX0.h8jGMJquanZQ2R9T2zrtBUc_CYnb7k0omjhwHVjBPuLepbaKb1nCoh43
+   sBonB0l5PCR9THH318AXm1gwxsiX4Q~WyJlbHVWNU9nM2dTTklJOEVZbnN4QV9BIiwgI
    mZhbWlseV9uYW1lIiwgIkRvZSJd~WyJBSngtMDk1VlBycFR0TjRRTU9xUk9BIiwgImFk
    ZHJlc3MiLCB7InN0cmVldF9hZGRyZXNzIjogIjEyMyBNYWluIFN0IiwgImxvY2FsaXR5
    IjogIkFueXRvd24iLCAicmVnaW9uIjogIkFueXN0YXRlIiwgImNvdW50cnkiOiAiVVMi
    fV0~WyIyR0xDNDJzS1F2ZUNmR2ZyeU5STjl3IiwgImdpdmVuX25hbWUiLCAiSm9obiJd
    ~WyJsa2x4RjVqTVlsR1RQVW92TU5JdkNBIiwgIlVTIl0~eyJhbGciOiAiRVMyNTYiLCA
    idHlwIjogImtiK2p3dCJ9.eyJub25jZSI6ICIxMjM0NTY3ODkwIiwgImF1ZCI6ICJodH
-   RwczovL3ZlcmlmaWVyLmV4YW1wbGUub3JnIiwgImlhdCI6IDE3MTg5MDEyNzMsICJzZF
-   9oYXNoIjogInRtSU1sQnJ6RGtxdTFzejFQdTFHdHZPVWg4a0dCUFNaSHdVeUJ4bG1Wek
-   kifQ.-OMMI3kwyxsN74JXntjMEZ7z7QFNarE-36X2cucodWE1N6-FpxvaBp6qFuUTFAo
-   3s530LvgrII1nFi1Cmf2IZA
+   RwczovL3ZlcmlmaWVyLmV4YW1wbGUub3JnIiwgImlhdCI6IDE3MTk5MzQ4NzEsICJzZF
+   9oYXNoIjogInZNeHAxWXJoQ1h3bTBEUm5DM0VnYmhLTm9aeEpRZUFaWFZYQ1Zvc0daQ2
+   MifQ.G6T7ryw99Y-16zsOyYr7ThhkoIHgAVQnUOJKPGlOvXOapapIgrdtxg_r_gKuarV
+   Neb0MXzsmznv-wzvyAiIFUg
 
    The following Key Binding JWT payload was created and signed for this
    presentation by the Holder:
@@ -1100,8 +1100,8 @@ Table of Contents
    {
      "nonce": "1234567890",
      "aud": "https://verifier.example.org",
-     "iat": 1718901273,
-     "sd_hash": "tmIMlBrzDkqu1sz1Pu1GtvOUh8kGBPSZHwUyBxlmVzI"
+     "iat": 1719934871,
+     "sd_hash": "vMxp1YrhCXwm0DRnC3EgbhKNoZxJQeAZXVXCVosGZCc"
    }
 
    If the Verifier did not require Key Binding, then the Holder could
@@ -1550,8 +1550,8 @@ Table of Contents
        Z1ZWNDRTZ0NGpUOUYySFpRIn19fQ",
      "protected":
        "eyJhbGciOiAiRVMyNTYiLCAidHlwIjogImV4YW1wbGUrc2Qtand0In0",
-     "signature": "iSNvDCJRIkN38kiUjtw3Ju91XJSF10dXK0HK58yk0O4UetbJCFcj
-       J1p5KFStf_EeN524d9LOmGTyBQWHhQUnZw"
+     "signature": "7HOUiFAMKZbn8jkHkyJrZREjlG5q3hOTnXOJUGWoHBmU87MyLxEf
+       -ZVdDA9cncaEYIMt6czXcXbB-tq5HX1Yyw"
    }
 
    The following is an SD-JWT+KB with two Disclosures:
@@ -1566,10 +1566,10 @@ Table of Contents
        ],
        "kb_jwt": "eyJhbGciOiAiRVMyNTYiLCAidHlwIjogImtiK2p3dCJ9.eyJub25j
          ZSI6ICIxMjM0NTY3ODkwIiwgImF1ZCI6ICJodHRwczovL3ZlcmlmaWVyLmV4YW
-         1wbGUub3JnIiwgImlhdCI6IDE3MTg5MDEyNzMsICJzZF9oYXNoIjogInBsWEtT
-         TzNrRFVmTWRDcU9ibVRWcEt2SnpjUkFuMWxOUEVlSk91LU1aeG8ifQ.HJYU7Vi
-         W9cnPDq46YYV0aGIgFEG0qbGpeYfrvSD-_fehQKyhvovcxmplHp437EQKg6975
-         wPptNAS7tY12uPXZQ"
+         1wbGUub3JnIiwgImlhdCI6IDE3MTk5MzQ4NzEsICJzZF9oYXNoIjogImNDYUo3
+         ZWRVb2V6eHFZYXpzRl95MExfNjgyV0tnQ2V1VnhTbUhkVmR1RkkifQ.QvJfsYg
+         jj2CyRWWHXaeH5k4hy_0icH67RRj-SQFgLzGp9y-tDKZFtRQyZlGz-LLbCgSLE
+         ayrLtWtItkyKYmTBw"
      },
      "payload": "eyJfc2QiOiBbIjRIQm42YUlZM1d0dUdHV1R4LXFVajZjZGs2V0JwWn
        lnbHRkRmF2UGE3TFkiLCAiOHNtMVFDZjAyMXBObkhBQ0k1c1A0bTRLWmd5Tk9PQV
@@ -1583,8 +1583,8 @@ Table of Contents
        Z1ZWNDRTZ0NGpUOUYySFpRIn19fQ",
      "protected":
        "eyJhbGciOiAiRVMyNTYiLCAidHlwIjogImV4YW1wbGUrc2Qtand0In0",
-     "signature": "iSNvDCJRIkN38kiUjtw3Ju91XJSF10dXK0HK58yk0O4UetbJCFcj
-       J1p5KFStf_EeN524d9LOmGTyBQWHhQUnZw"
+     "signature": "7HOUiFAMKZbn8jkHkyJrZREjlG5q3hOTnXOJUGWoHBmU87MyLxEf
+       -ZVdDA9cncaEYIMt6czXcXbB-tq5HX1Yyw"
    }
 
 9.3.  General JSON Serialization
@@ -1621,15 +1621,15 @@ Table of Contents
            "kid": "issuer-key-1",
            "kb_jwt": "eyJhbGciOiAiRVMyNTYiLCAidHlwIjogImtiK2p3dCJ9.eyJu
              b25jZSI6ICIxMjM0NTY3ODkwIiwgImF1ZCI6ICJodHRwczovL3ZlcmlmaW
-             VyLmV4YW1wbGUub3JnIiwgImlhdCI6IDE3MTg5MDEyNzMsICJzZF9oYXNo
-             IjogImZRX3BaOTlMdk95cGNGUjMxekdfME9kcDRERDJZbnlSbWNYWFRLbU
-             hzN1UifQ.QGFDo5qcNiS4ahwfbBGgPnc36Pqaf-cHHBumaEoguWZLab5ZZ
-             wSUjPljMkbJrTy-3Cy9e02hwox41AZkvyf4dw"
+             VyLmV4YW1wbGUub3JnIiwgImlhdCI6IDE3MTk5MzQ4NzEsICJzZF9oYXNo
+             IjogInQwRkxjMGU0emtUaGo0S0t6Qnp2YkhLRS1zT05rVjk0Y2NwV2lqSU
+             NjTGMifQ.5v9oBl5GIci4VLgu9IT_qLDimcpkcsLmBgN_jE2hwU-2tsl3z
+             oBGmR_qlCFJnnIku2T7K7SL7kxF-y8gv1yDUw"
          },
          "protected":
            "eyJhbGciOiAiRVMyNTYiLCAidHlwIjogImV4YW1wbGUrc2Qtand0In0",
-         "signature": "2yDHCWYtYW80ld1mct6AlQyvAtKuVLgBTO826UMlFtR2dwkE
-           qp1xEwbTXvPM3NwtmPfP8dASMv-5s_McEl_YPg"
+         "signature": "_dGmmrspZlp32oK9-K2_UbKLLxy3rr0xfDblHpAATYmdDHWR
+           zFa7w4OK_vQN89_cZZwV_It3AQssMWN43svhiA"
        },
        {
          "header": {
@@ -1637,8 +1637,8 @@ Table of Contents
          },
          "protected":
            "eyJhbGciOiAiRVMyNTYiLCAidHlwIjogImV4YW1wbGUrc2Qtand0In0",
-         "signature": "94Xz7rbNFWhVOA5JJck5EoAcdxUubiKH8cfT1zN75A7VrVks
-           XNEOh5CewIUDRJ-nshlYRcqVXgVl_M3G_LUK2w"
+         "signature": "iL8ABtigXqlPzKkSeWLi6C3TQhus2J2GTNFs1Q6EzOECekoB
+           61xbva0zq54VRM1gnH_Oz9qkTAuZXyNe9M4_qA"
        }
      ]
    }
@@ -2587,8 +2587,8 @@ A.1.  Simple Structured SD-JWT
    U1U3ZlNXZ3dGNVVEWm1Xd0JUdzMyZ25VbGRJaGk4aEdWQ2FWNCIsICJydkpkNmlxNlQ1
    ZWptc0JNb0d3dU5YaDlxQUFGQVRBY2k0MG9pZEVlVnNBIiwgInVOSG9XWWhYc1poVkpD
    TkUyRHF5LXpxdDd0NjlnSkt5NVFhRnY3R3JNWDQiXX0sICJfc2RfYWxnIjogInNoYS0y
-   NTYifQ.avuBSqLVbdmNmZ00Co_asM27uQ2tF4OGFqw2Gf6cH_TNt7vExbnkcfciqzEsK
-   aFuOu5Xc41W_WwAeO9f_qJ1ug~WyJHMDJOU3JRZmpGWFE3SW8wOXN5YWpBIiwgInJlZ2
+   NTYifQ.9vgVBAL0mpM8t2Oh_xFMzGYZI0le316M07JLoozWdf798ooRiGRh38OvFgF3l
+   3HElxSH0DkphZSdJJd_lL_KxA~WyJHMDJOU3JRZmpGWFE3SW8wOXN5YWpBIiwgInJlZ2
    lvbiIsICJcdTZlMmZcdTUzM2EiXQ~WyJsa2x4RjVqTVlsR1RQVW92TU5JdkNBIiwgImN
    vdW50cnkiLCAiSlAiXQ~
 
@@ -2854,8 +2854,8 @@ A.2.  Complex Structured SD-JWT
    TWsiLCAiV3hoX3NWM2lSSDliZ3JUQkppLWFZSE5DTHQtdmpoWDFzZC1pZ09mXzlsayIs
    ICJfTy13SmlIM2VuU0I0Uk9IbnRUb1FUOEptTHR6LW1oTzJmMWM4OVhvZXJRIiwgImh2
    RFhod21HY0pRc0JDQTJPdGp1TEFjd0FNcERzYVUwbmtvdmNLT3FXTkUiXX19LCAiX3Nk
-   X2FsZyI6ICJzaGEtMjU2In0.ov-7QKRFEClW-n6B6B5cRftHlmg66MNMrCULIz5pmCiR
-   N7TJkoh8OpsXOI86iI6qWH0EuCN9SZ60K1qieRacLg~WyIyR0xDNDJzS1F2ZUNmR2Zye
+   X2FsZyI6ICJzaGEtMjU2In0.Be09JnIsYN8pz01FP3zq07mscYC90tbjj3Tap45lhVh3
+   ziSjFB95w-UIs46YvEv1OSfKbdw9FxWe9blws_uKwQ~WyIyR0xDNDJzS1F2ZUNmR2Zye
    U5STjl3IiwgInRpbWUiLCAiMjAxMi0wNC0yM1QxODoyNVoiXQ~WyJQYzMzSk0yTGNoY1
    VfbEhnZ3ZfdWZRIiwgeyJfc2QiOiBbIjl3cGpWUFd1RDdQSzBuc1FETDhCMDZsbWRnVj
    NMVnliaEh5ZFFwVE55TEkiLCAiRzVFbmhPQU9vVTlYXzZRTU52ekZYanBFQV9SYy1BRX
@@ -2967,8 +2967,8 @@ A.3.  SD-JWT-based Verifiable Credentials (SD-JWT VC)
    6ICJzaGEtMjU2IiwgImNuZiI6IHsiandrIjogeyJrdHkiOiAiRUMiLCAiY3J2IjogIlA
    tMjU2IiwgIngiOiAiVENBRVIxOVp2dTNPSEY0ajRXNHZmU1ZvSElQMUlMaWxEbHM3dkN
    lR2VtYyIsICJ5IjogIlp4amlXV2JaTVFHSFZXS1ZRNGhiU0lpcnNWZnVlY0NFNnQ0alQ
-   5RjJIWlEifX19.wij-MWDsjCJCROVnTTkNwkRRMTErS8O12DwTown1T4HBGLPk6Q-SIV
-   sQKaV99mbWvXvPWuEkCpdK4rzR3t_kTQ~WyIyR0xDNDJzS1F2ZUNmR2ZyeU5STjl3Iiw
+   5RjJIWlEifX19.XlaQWcEUhN9AVgUrHfmUqkUC3xXMwhN_MDV3_nreh6CQmzx10kqqcf
+   SV44Zwf-b0Ewz22KotisybU1mRn5Oo9Q~WyIyR0xDNDJzS1F2ZUNmR2ZyeU5STjl3Iiw
    gImdpdmVuX25hbWUiLCAiRXJpa2EiXQ~WyJlbHVWNU9nM2dTTklJOEVZbnN4QV9BIiwg
    ImZhbWlseV9uYW1lIiwgIk11c3Rlcm1hbm4iXQ~WyI2SWo3dE0tYTVpVlBHYm9TNXRtd
    lZBIiwgImJpcnRoZGF0ZSIsICIxOTYzLTA4LTEyIl0~WyJlSThaV205UW5LUHBOUGVOZ
@@ -3238,22 +3238,22 @@ A.3.  SD-JWT-based Verifiable Credentials (SD-JWT VC)
    6ICJzaGEtMjU2IiwgImNuZiI6IHsiandrIjogeyJrdHkiOiAiRUMiLCAiY3J2IjogIlA
    tMjU2IiwgIngiOiAiVENBRVIxOVp2dTNPSEY0ajRXNHZmU1ZvSElQMUlMaWxEbHM3dkN
    lR2VtYyIsICJ5IjogIlp4amlXV2JaTVFHSFZXS1ZRNGhiU0lpcnNWZnVlY0NFNnQ0alQ
-   5RjJIWlEifX19.wij-MWDsjCJCROVnTTkNwkRRMTErS8O12DwTown1T4HBGLPk6Q-SIV
-   sQKaV99mbWvXvPWuEkCpdK4rzR3t_kTQ~WyJuUHVvUW5rUkZxM0JJZUFtN0FuWEZBIiw
+   5RjJIWlEifX19.XlaQWcEUhN9AVgUrHfmUqkUC3xXMwhN_MDV3_nreh6CQmzx10kqqcf
+   SV44Zwf-b0Ewz22KotisybU1mRn5Oo9Q~WyJuUHVvUW5rUkZxM0JJZUFtN0FuWEZBIiw
    gIm5hdGlvbmFsaXRpZXMiLCBbIkRFIl1d~WyJNMEpiNTd0NDF1YnJrU3V5ckRUM3hBIi
    wgIjE4IiwgdHJ1ZV0~eyJhbGciOiAiRVMyNTYiLCAidHlwIjogImtiK2p3dCJ9.eyJub
    25jZSI6ICIxMjM0NTY3ODkwIiwgImF1ZCI6ICJodHRwczovL3ZlcmlmaWVyLmV4YW1wb
-   GUub3JnIiwgImlhdCI6IDE3MTg5MDEyNzMsICJzZF9oYXNoIjogIkJ2Vk4wRlZDaHFUX
-   2xVdnhjeXBGXzdjbzFNUWo3MGRob2FCRHkzVnlVb3cifQ.1MaJ91L-oOjVq52fJOFbjx
-   UXKtTfRhyBRG-dZXT_7iwEMKKXaVx9gfygMhkrI2Or3Bh5-6VakBXvDaX87RjrZg
+   GUub3JnIiwgImlhdCI6IDE3MTk5MzQ4NzEsICJzZF9oYXNoIjogIkgxUUpNSEZ5OXQxY
+   ktrWjlNR3hYeW1ubXBHck9pSl9iRXRFVDVIOE03VTAifQ.PSRlch3NlOQ3BykCIvJ6Og
+   XELX0zMES48712wELXoU7oxfMe5l6yg24DkXnsHyqOTOs4KjAd5oDlDKfxiBvrgg
 
    The following is the payload of a corresponding Key Binding JWT:
 
    {
      "nonce": "1234567890",
      "aud": "https://verifier.example.org",
-     "iat": 1718901273,
-     "sd_hash": "BvVN0FVChqT_lUvxcypF_7co1MQj70dhoaBDy3VyUow"
+     "iat": 1719934871,
+     "sd_hash": "H1QJMHFy9t1bKkZ9MGxXymnmpGrOiJ_bEtET5H8M7U0"
    }
 
    After the validation, the Verifier will have the following data for
@@ -3359,8 +3359,8 @@ A.4.  W3C Verifiable Credentials Data Model v2.0
    c2RfYWxnIjogInNoYS0yNTYiLCAiY25mIjogeyJqd2siOiB7Imt0eSI6ICJFQyIsICJj
    cnYiOiAiUC0yNTYiLCAieCI6ICJUQ0FFUjE5WnZ1M09IRjRqNFc0dmZTVm9ISVAxSUxp
    bERsczd2Q2VHZW1jIiwgInkiOiAiWnhqaVdXYlpNUUdIVldLVlE0aGJTSWlyc1ZmdWVj
-   Q0U2dDRqVDlGMkhaUSJ9fX0._eTCitqo60t-e99WCvcbpxEdn12ZvAgKvNY20z0c1ReU
-   5xVGvrY7YS2ce3t8rK1cbdO9luAZxkhjPjObMk3png~WyIyR0xDNDJzS1F2ZUNmR2Zye
+   Q0U2dDRqVDlGMkhaUSJ9fX0.C39rznqVwgTn_lgbY9BE7I6Uu2z3CeII6TzqwTCAANsQ
+   TPg3Em23ALyzs_kJH8lHF8fYc_dN_nfuEDgWcPHbuQ~WyIyR0xDNDJzS1F2ZUNmR2Zye
    U5STjl3IiwgImF0Y0NvZGUiLCAiSjA3QlgwMyJd~WyJlbHVWNU9nM2dTTklJOEVZbnN4
    QV9BIiwgIm1lZGljaW5hbFByb2R1Y3ROYW1lIiwgIkNPVklELTE5IFZhY2NpbmUgTW9k
    ZXJuYSJd~WyI2SWo3dE0tYTVpVlBHYm9TNXRtdlZBIiwgIm1hcmtldGluZ0F1dGhvcml
@@ -3588,18 +3588,18 @@ A.4.  W3C Verifiable Credentials Data Model v2.0
    c2RfYWxnIjogInNoYS0yNTYiLCAiY25mIjogeyJqd2siOiB7Imt0eSI6ICJFQyIsICJj
    cnYiOiAiUC0yNTYiLCAieCI6ICJUQ0FFUjE5WnZ1M09IRjRqNFc0dmZTVm9ISVAxSUxp
    bERsczd2Q2VHZW1jIiwgInkiOiAiWnhqaVdXYlpNUUdIVldLVlE0aGJTSWlyc1ZmdWVj
-   Q0U2dDRqVDlGMkhaUSJ9fX0._eTCitqo60t-e99WCvcbpxEdn12ZvAgKvNY20z0c1ReU
-   5xVGvrY7YS2ce3t8rK1cbdO9luAZxkhjPjObMk3png~WyJQYzMzSk0yTGNoY1VfbEhnZ
+   Q0U2dDRqVDlGMkhaUSJ9fX0.C39rznqVwgTn_lgbY9BE7I6Uu2z3CeII6TzqwTCAANsQ
+   TPg3Em23ALyzs_kJH8lHF8fYc_dN_nfuEDgWcPHbuQ~WyJQYzMzSk0yTGNoY1VfbEhnZ
    3ZfdWZRIiwgIm9yZGVyIiwgIjMvMyJd~WyJBSngtMDk1VlBycFR0TjRRTU9xUk9BIiwg
    ImRhdGVPZlZhY2NpbmF0aW9uIiwgIjIwMjEtMDYtMjNUMTM6NDA6MTJaIl0~WyIyR0xD
    NDJzS1F2ZUNmR2ZyeU5STjl3IiwgImF0Y0NvZGUiLCAiSjA3QlgwMyJd~WyJlbHVWNU9
    nM2dTTklJOEVZbnN4QV9BIiwgIm1lZGljaW5hbFByb2R1Y3ROYW1lIiwgIkNPVklELTE
    5IFZhY2NpbmUgTW9kZXJuYSJd~eyJhbGciOiAiRVMyNTYiLCAidHlwIjogImtiK2p3dC
    J9.eyJub25jZSI6ICIxMjM0NTY3ODkwIiwgImF1ZCI6ICJodHRwczovL3ZlcmlmaWVyL
-   mV4YW1wbGUub3JnIiwgImlhdCI6IDE3MTg5MDEyNzMsICJzZF9oYXNoIjogIkphYk0tZ
-   lJ6U2E5a3V0NTFIREwzeVpLVVlxWVNTV1J6czJ2N3FYdTI4MnMifQ.wHC-piyP6DVkrg
-   cELmsyJusLCd_SBSMOmIvox13-xk6Rz4pa_s3iYri6iN7P446p9V6l5z_6wpTSdQRGpI
-   K94g
+   mV4YW1wbGUub3JnIiwgImlhdCI6IDE3MTk5MzQ4NzEsICJzZF9oYXNoIjogIm52aGpwe
+   mlQTl85NEthbUIzN1RzTmYtbzh0VEhDaXl3QmdfRURqX2RQTXcifQ.I40hd32YDHMPam
+   wJKyioXDUdqLPdDdc6tbE2pILsUMWMGr5iPfFs9VpyaVfE7b8kfHyFYRLyabvzYAzQL2
+   4Jfw
 
    After the validation, the Verifier will have the following data for
    further processing:
@@ -3772,6 +3772,10 @@ Appendix B.  Disclosure Format Considerations
 Appendix C.  Document History
 
    [[ To be removed from the final specification ]]
+
+   -10
+
+   * Editorial updates/fixes
 
    -09
 
