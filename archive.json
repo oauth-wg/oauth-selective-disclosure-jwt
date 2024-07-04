@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2024-07-02T00:12:35.223095+00:00",
+  "timestamp": "2024-07-04T00:12:28.004662+00:00",
   "repo": "oauth-wg/oauth-selective-disclosure-jwt",
   "labels": [
     {
@@ -11089,7 +11089,7 @@
       "id": "I_kwDOHTmVzM6Nvi8A",
       "title": "Mentions of KB-JWT that could be removed",
       "url": "https://github.com/oauth-wg/oauth-selective-disclosure-jwt/issues/440",
-      "state": "OPEN",
+      "state": "CLOSED",
       "author": "srosenda",
       "authorAssociation": "NONE",
       "assignees": [],
@@ -11098,8 +11098,8 @@
       ],
       "body": "The distinguishing of SD-JWT from SD-JWT+KB is a good clarifying change in -09. Some extra mentions of KB-JWT still remain that could probably removed:\r\n\r\nIn [5. ](https://www.ietf.org/archive/id/draft-ietf-oauth-selective-disclosure-jwt-09.html#section-5)[SD-JWT and SD-JWT+KB Data Formats](https://www.ietf.org/archive/id/draft-ietf-oauth-selective-disclosure-jwt-09.html#name-sd-jwt-and-sd-jwtkb-data-fo):\r\n\r\n>An SD-JWT without Disclosures and without a KB-JWT\r\n\r\nand\r\n\r\n>An SD-JWT with Disclosures and without a KB-JWT\r\n\r\nThe \"and without a KB-JWT\" could be removed as there are separate examples for SD-JWT+KB and SD-JWT is now defined not to include KB-JWT.",
       "createdAt": "2024-06-27T12:40:39Z",
-      "updatedAt": "2024-06-28T19:57:17Z",
-      "closedAt": null,
+      "updatedAt": "2024-07-02T15:40:43Z",
+      "closedAt": "2024-07-02T15:40:42Z",
       "comments": [
         {
           "author": "bc-pi",
@@ -46287,13 +46287,13 @@
       "labels": [],
       "body": "Fixes #372 \r\n\r\nThere are three algorithms to consider when it comes to recursive disclosures:\r\n\r\n1. How the issuer generates the recursive disclosures\r\n2. How the holder selects disclosures to reveal in the context of recursion\r\n3. How the verifier unwinds recursive disclosures\r\n\r\n(3) is adequately covered in the verification algorithm.  The other two are currently uncovered.   This PR clarifies (1) and (2).  \r\n\r\nAlgorithm (1) doesn't really need formal definition for interoperability; an issuer can follow any process that ends up with an SD-JWT that will verify.  However, it's useful to (1) provide an illustration, (2) provider a reminder that you have to go from most-specific redaction to least, from the leaves of the AST toward the issuer-signed claims, and (3) provide a clear requirement that an SD-JWT must contain any intermediate recursive disclosures.  This PR adds a section that does these things.\r\n\r\nFor algorithm (2), I simply added a step to the holder processing that verifies that the disclosure selection process got all the required disclosures (including the intermediate ones).  We could also be more prescriptive, providing a concrete algorithm that adds the required intermediate disclosures.",
       "createdAt": "2024-06-04T22:24:32Z",
-      "updatedAt": "2024-06-27T21:12:44Z",
+      "updatedAt": "2024-07-02T20:30:16Z",
       "baseRepository": "oauth-wg/oauth-selective-disclosure-jwt",
       "baseRefName": "master",
-      "baseRefOid": "2f0801e9e1a2d6c7fa697ff9b0cf9281dd322e7e",
+      "baseRefOid": "d039a75d1f763bb16784a6092de3edcff3b7a71e",
       "headRepository": "bifurcation/oauth-selective-disclosure-jwt",
       "headRefName": "recurse",
-      "headRefOid": "ccdd7026133f8d2c381a429752c52aa5cb11c250",
+      "headRefOid": "732162fa3a403bb9129a882c613e015aa0557c56",
       "closedAt": null,
       "mergedAt": null,
       "mergedBy": null,
@@ -46871,6 +46871,166 @@
           "createdAt": "2024-06-27T20:29:47Z",
           "updatedAt": "2024-06-27T20:29:47Z",
           "comments": []
+        },
+        {
+          "id": "PRR_kwDOHTmVzM6AYi1r",
+          "commit": {
+            "abbreviatedOid": "ccdd702"
+          },
+          "author": "Sakurann",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2024-07-02T13:53:27Z",
+          "updatedAt": "2024-07-02T13:53:27Z",
+          "comments": [
+            {
+              "originalPosition": 39,
+              "body": "don't we need a bit more explanation before this example..?",
+              "createdAt": "2024-07-02T13:53:27Z",
+              "updatedAt": "2024-07-02T13:53:27Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOHTmVzM6AYjtT",
+          "commit": {
+            "abbreviatedOid": "ccdd702"
+          },
+          "author": "Sakurann",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2024-07-02T13:54:46Z",
+          "updatedAt": "2024-07-02T13:54:46Z",
+          "comments": [
+            {
+              "originalPosition": 21,
+              "body": "I hope this is not considered extra, this feels nicer for non-native speakers..\r\n\r\n```suggestion\r\nThis can be accomplished by first making the entries within the `nationalities`\r\narray selectively disclosable, and then making the whole \"nationalities\" field\r\nselectively disclosable.\r\n```",
+              "createdAt": "2024-07-02T13:54:46Z",
+              "updatedAt": "2024-07-02T13:54:46Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOHTmVzM6AZypZ",
+          "commit": {
+            "abbreviatedOid": "ccdd702"
+          },
+          "author": "bc-pi",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2024-07-02T15:49:47Z",
+          "updatedAt": "2024-07-02T15:49:47Z",
+          "comments": [
+            {
+              "originalPosition": 21,
+              "body": "> I hope this is not considered extra, this feels nicer for non-native speakers..\r\n\r\nsure and just noticed this so also let's be more consistent with ticks vs quotes \r\n\r\n```suggestion\r\nThis can be accomplished by first making the entries within the \"nationalities\"\r\narray selectively disclosable, and then making the whole \"nationalities\" field\r\nselectively disclosable.\r\n```",
+              "createdAt": "2024-07-02T15:49:47Z",
+              "updatedAt": "2024-07-02T15:49:47Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOHTmVzM6AZ2F9",
+          "commit": {
+            "abbreviatedOid": "af961a4"
+          },
+          "author": "bc-pi",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2024-07-02T15:56:27Z",
+          "updatedAt": "2024-07-02T15:56:28Z",
+          "comments": [
+            {
+              "originalPosition": 39,
+              "body": "probably, yeah ",
+              "createdAt": "2024-07-02T15:56:27Z",
+              "updatedAt": "2024-07-02T15:56:28Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOHTmVzM6AZ6GI",
+          "commit": {
+            "abbreviatedOid": "af961a4"
+          },
+          "author": "bc-pi",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2024-07-02T16:03:34Z",
+          "updatedAt": "2024-07-02T16:03:35Z",
+          "comments": [
+            {
+              "originalPosition": 23,
+              "body": "```suggestion\r\n\r\nThe following shows each of the entries within the \"nationalities\" array being made selectively disclosable:\r\n\r\n```",
+              "createdAt": "2024-07-02T16:03:34Z",
+              "updatedAt": "2024-07-02T16:03:35Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOHTmVzM6AZ6gP",
+          "commit": {
+            "abbreviatedOid": "af961a4"
+          },
+          "author": "bc-pi",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2024-07-02T16:04:23Z",
+          "updatedAt": "2024-07-02T16:04:24Z",
+          "comments": [
+            {
+              "originalPosition": 39,
+              "body": "```suggestion\r\n\r\nFollowed by making the whole \"nationalities\" array selectively disclosable:\r\n\r\n```",
+              "createdAt": "2024-07-02T16:04:24Z",
+              "updatedAt": "2024-07-02T16:08:43Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOHTmVzM6AZ7Lc",
+          "commit": {
+            "abbreviatedOid": "af961a4"
+          },
+          "author": "bc-pi",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2024-07-02T16:05:46Z",
+          "updatedAt": "2024-07-02T16:05:46Z",
+          "comments": [
+            {
+              "originalPosition": 39,
+              "body": "https://github.com/oauth-wg/oauth-selective-disclosure-jwt/pull/431/files#r1662801181 and https://github.com/oauth-wg/oauth-selective-disclosure-jwt/pull/431/files#r1662802244 ?",
+              "createdAt": "2024-07-02T16:05:46Z",
+              "updatedAt": "2024-07-02T16:05:46Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOHTmVzM6Ab_Ho",
+          "commit": {
+            "abbreviatedOid": "732162f"
+          },
+          "author": "bc-pi",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2024-07-02T20:30:16Z",
+          "updatedAt": "2024-07-02T20:30:16Z",
+          "comments": [
+            {
+              "originalPosition": 39,
+              "body": "now committed to this request to be committed to the main branch ad0d13711adc080f5cc0f8cabd6b836c27ec291a and 732162fa3a403bb9129a882c613e015aa0557c56 ",
+              "createdAt": "2024-07-02T20:30:16Z",
+              "updatedAt": "2024-07-02T20:30:16Z"
+            }
+          ]
         }
       ]
     },
@@ -47268,25 +47428,42 @@
       "id": "PR_kwDOHTmVzM5z06XD",
       "title": "Remove two extraneous occurrences of \"and without a KB-JWT\"",
       "url": "https://github.com/oauth-wg/oauth-selective-disclosure-jwt/pull/441",
-      "state": "OPEN",
+      "state": "MERGED",
       "author": "bc-pi",
       "authorAssociation": "COLLABORATOR",
       "assignees": [],
       "labels": [],
       "body": "to fix #440\r\n",
       "createdAt": "2024-06-27T22:13:43Z",
-      "updatedAt": "2024-06-28T07:30:34Z",
+      "updatedAt": "2024-07-02T15:40:42Z",
       "baseRepository": "oauth-wg/oauth-selective-disclosure-jwt",
       "baseRefName": "master",
       "baseRefOid": "2f0801e9e1a2d6c7fa697ff9b0cf9281dd322e7e",
       "headRepository": "oauth-wg/oauth-selective-disclosure-jwt",
       "headRefName": "fnord-remnants",
       "headRefOid": "e96628efb66525b15c36aa456ea7510ef82040c0",
-      "closedAt": null,
-      "mergedAt": null,
-      "mergedBy": null,
-      "mergeCommit": null,
-      "comments": [],
+      "closedAt": "2024-07-02T15:40:42Z",
+      "mergedAt": "2024-07-02T15:40:42Z",
+      "mergedBy": "bc-pi",
+      "mergeCommit": {
+        "oid": "d039a75d1f763bb16784a6092de3edcff3b7a71e"
+      },
+      "comments": [
+        {
+          "author": "srosenda",
+          "authorAssociation": "NONE",
+          "body": "> I am not sure these are actually extraneous, but ok\r\n\r\nI was not completely sure either and that's why I posted only the issue and no PR first. I still think that in chapter 5. the extra mentions are confusing as the text and the ABNF are separating the SD-JWT and SD-JWT+KB formats.\r\n\r\nIn contrast, similar explicit mention [here](https://www.ietf.org/archive/id/draft-ietf-oauth-selective-disclosure-jwt-09.html#section-8.3-4.2) in the verification section is clarifying to me.",
+          "createdAt": "2024-07-02T14:09:28Z",
+          "updatedAt": "2024-07-02T14:09:28Z"
+        },
+        {
+          "author": "bc-pi",
+          "authorAssociation": "COLLABORATOR",
+          "body": "I wasn't sure when first looking at it and actually thing it's okay either way but have come to think it's more okay this way. ",
+          "createdAt": "2024-07-02T15:40:28Z",
+          "updatedAt": "2024-07-02T15:40:28Z"
+        }
+      ],
       "reviews": [
         {
           "id": "PRR_kwDOHTmVzM5__KO4",
@@ -47299,6 +47476,19 @@
           "body": "\ud83d\udc4d looks good",
           "createdAt": "2024-06-28T07:30:34Z",
           "updatedAt": "2024-06-28T07:30:34Z",
+          "comments": []
+        },
+        {
+          "id": "PRR_kwDOHTmVzM6AYh22",
+          "commit": {
+            "abbreviatedOid": "e96628e"
+          },
+          "author": "Sakurann",
+          "authorAssociation": "COLLABORATOR",
+          "state": "APPROVED",
+          "body": "I am not sure these are actually extraneous, but ok",
+          "createdAt": "2024-07-02T13:51:57Z",
+          "updatedAt": "2024-07-02T13:51:57Z",
           "comments": []
         }
       ]
