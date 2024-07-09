@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2024-07-07T00:14:10.042056+00:00",
+  "timestamp": "2024-07-09T00:12:42.410982+00:00",
   "repo": "oauth-wg/oauth-selective-disclosure-jwt",
   "labels": [
     {
@@ -9754,7 +9754,7 @@
       "id": "I_kwDOHTmVzM52p6c6",
       "title": "Clarify algorithms to accommodate recursive redaction",
       "url": "https://github.com/oauth-wg/oauth-selective-disclosure-jwt/issues/372",
-      "state": "OPEN",
+      "state": "CLOSED",
       "author": "bifurcation",
       "authorAssociation": "CONTRIBUTOR",
       "assignees": [
@@ -9765,8 +9765,8 @@
       ],
       "body": "Recursive redaction makes it much more complex to validate and handle SD-JWT objects.\r\n\r\nIt requires that disclosure be processed in a particular order, and since this order is known only to the redactor, the disclosures in the SD-JWT must be listed in a specific order to communicate the order.\r\n\r\nIt complicates the matching of disclosure objects to redacted fields, which you need to do in order to validate that the disclosures match the Issuer JWT, or to offer an API of the form \"delete the disclosure for `/address/street_address`\".  Without recursion, you are matching the list of disclosures against the claims in the Issuer JWT.  With recursion, you are matching the list of disclosures against the issuer JWT _and all other disclosures_.\r\n\r\nIt complicates selective disclosure.  Now, if I opt not to disclose a field, I may have rendered some disclosure further down the line meaningless.  So instead of just deleting one disclosure, I also have to search through the disclosed value for further SD hashes, and delete the corresponding disclosures.\r\n\r\nIn principle, we could add specification text that would address these issues.  But it would be a significant amount of text for what seems like a fairly niche feature.  Seems better just to delete the feature and keep things simple. ",
       "createdAt": "2023-11-13T13:48:09Z",
-      "updatedAt": "2024-06-12T11:49:21Z",
-      "closedAt": null,
+      "updatedAt": "2024-07-08T10:45:30Z",
+      "closedAt": "2024-07-08T10:45:29Z",
       "comments": [
         {
           "author": "bifurcation",
@@ -46280,24 +46280,26 @@
       "id": "PR_kwDOHTmVzM5xekVM",
       "title": "Clarify algorithms for recursive disclosures",
       "url": "https://github.com/oauth-wg/oauth-selective-disclosure-jwt/pull/431",
-      "state": "OPEN",
+      "state": "MERGED",
       "author": "bifurcation",
       "authorAssociation": "CONTRIBUTOR",
       "assignees": [],
       "labels": [],
       "body": "Fixes #372 \r\n\r\nThere are three algorithms to consider when it comes to recursive disclosures:\r\n\r\n1. How the issuer generates the recursive disclosures\r\n2. How the holder selects disclosures to reveal in the context of recursion\r\n3. How the verifier unwinds recursive disclosures\r\n\r\n(3) is adequately covered in the verification algorithm.  The other two are currently uncovered.   This PR clarifies (1) and (2).  \r\n\r\nAlgorithm (1) doesn't really need formal definition for interoperability; an issuer can follow any process that ends up with an SD-JWT that will verify.  However, it's useful to (1) provide an illustration, (2) provider a reminder that you have to go from most-specific redaction to least, from the leaves of the AST toward the issuer-signed claims, and (3) provide a clear requirement that an SD-JWT must contain any intermediate recursive disclosures.  This PR adds a section that does these things.\r\n\r\nFor algorithm (2), I simply added a step to the holder processing that verifies that the disclosure selection process got all the required disclosures (including the intermediate ones).  We could also be more prescriptive, providing a concrete algorithm that adds the required intermediate disclosures.",
       "createdAt": "2024-06-04T22:24:32Z",
-      "updatedAt": "2024-07-02T20:30:16Z",
+      "updatedAt": "2024-07-08T10:45:29Z",
       "baseRepository": "oauth-wg/oauth-selective-disclosure-jwt",
       "baseRefName": "master",
       "baseRefOid": "d039a75d1f763bb16784a6092de3edcff3b7a71e",
       "headRepository": "bifurcation/oauth-selective-disclosure-jwt",
       "headRefName": "recurse",
       "headRefOid": "732162fa3a403bb9129a882c613e015aa0557c56",
-      "closedAt": null,
-      "mergedAt": null,
-      "mergedBy": null,
-      "mergeCommit": null,
+      "closedAt": "2024-07-08T10:45:29Z",
+      "mergedAt": "2024-07-08T10:45:29Z",
+      "mergedBy": "bc-pi",
+      "mergeCommit": {
+        "oid": "b430ada11b73b93c009143a2e6527a8bbfb6bb6b"
+      },
       "comments": [
         {
           "author": "bifurcation",
