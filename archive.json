@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2024-07-14T00:14:38.956947+00:00",
+  "timestamp": "2024-07-16T00:13:11.473748+00:00",
   "repo": "oauth-wg/oauth-selective-disclosure-jwt",
   "labels": [
     {
@@ -11167,7 +11167,7 @@
       "labels": [],
       "body": "We had the discussion in SD-JWT VC how to refer to the dehydrated (or maybe hydrated) result (Issuer-signed JWT payload) of the [processing and verification algorithm](https://www.ietf.org/archive/id/draft-ietf-oauth-selective-disclosure-jwt-09.html#name-verification-and-processing). It would help if we could give it a name to allow us to be more precise in other specs that are building on top of SD-JWT.\r\n\r\nThe discussion occurred when adding the Schema for SD-JWT VCs that uses that result of the SD-JWT processing section to match the JSON schema against:\r\nhttps://github.com/oauth-wg/oauth-sd-jwt-vc/pull/231/files#diff-e750c0958ca10e395b4d3b77bb5aafccc668b4a1a50675dda79a8d90b39a2468R714-R715\r\n\r\nWe also have another issue that asks for an example of the result as well which would benefit from giving it a defined name:\r\nhttps://github.com/oauth-wg/oauth-sd-jwt-vc/issues/194\r\n\r\n",
       "createdAt": "2024-07-01T20:26:16Z",
-      "updatedAt": "2024-07-01T20:33:50Z",
+      "updatedAt": "2024-07-15T15:46:31Z",
       "closedAt": null,
       "comments": [
         {
@@ -11183,6 +11183,34 @@
           "body": "I was typing the following over in #442 when it closed out from under me in favor of this issue. \r\n\r\n> By Give \" a name here what @awoie means is that it'd be useful to have a name to refer to what we call the \"processed SD-JWT payload\" that's \"passed to the application\" [here](https://www.ietf.org/archive/id/draft-ietf-oauth-selective-disclosure-jwt-09.html#section-8.3-6) and is really the JSON after verification and processing and replacing _sd and ... occurrences with the real values.",
           "createdAt": "2024-07-01T20:33:49Z",
           "updatedAt": "2024-07-01T20:33:49Z"
+        },
+        {
+          "author": "Sakurann",
+          "authorAssociation": "COLLABORATOR",
+          "body": "why `the processed SD-JWT payload` is not good enough?\r\n\r\n(in any case, would really like to avoid using hydrated/dehydrated since that term is kind of confusing and i used for something related but different in ISO I think)",
+          "createdAt": "2024-07-15T15:35:45Z",
+          "updatedAt": "2024-07-15T15:35:45Z"
+        },
+        {
+          "author": "awoie",
+          "authorAssociation": "NONE",
+          "body": "> why `the processed SD-JWT payload` is not good enough?\r\n> \r\n> (in any case, would really like to avoid using hydrated/dehydrated since that term is kind of confusing and i used for something related but different in ISO I think)\r\n\r\nI don't think that helps when referencing from another spec such as SD-JWT VC. The text you are referring to is from 8.3 Verification by the Verifier which is not general enough.\r\n\r\nI'd suggest to add one sentence to https://www.ietf.org/archive/id/draft-ietf-oauth-selective-disclosure-jwt-09.html#section-8.1, e.g., \r\n\r\n\"7. Let xzy be the processed result of the asdf algorithm ...\" \r\n\r\n... and make xzy a defined term, so it can be referenced. I don't think we can use `processed SD-JWT payload` from SD-JWT VC since it is not really defined in SD-JWT. If you don't define it in SD-JWT, we will define it in SD-JWT VC which I prefer not to.",
+          "createdAt": "2024-07-15T15:43:35Z",
+          "updatedAt": "2024-07-15T15:44:13Z"
+        },
+        {
+          "author": "awoie",
+          "authorAssociation": "NONE",
+          "body": "> > why `the processed SD-JWT payload` is not good enough?\r\n> > (in any case, would really like to avoid using hydrated/dehydrated since that term is kind of confusing and i used for something related but different in ISO I think)\r\n> \r\n> I don't think that helps when referencing from another spec such as SD-JWT VC. The text you are referring to is from 8.3 Verification by the Verifier which is not general enough.\r\n> \r\n> I'd suggest to add one sentence to https://www.ietf.org/archive/id/draft-ietf-oauth-selective-disclosure-jwt-09.html#section-8.1, e.g.,\r\n> \r\n> \"7. Let xzy be the processed result of the asdf algorithm ...\"\r\n> \r\n> ... and make xzy a defined term, so it can be referenced. I don't think we can use `processed SD-JWT payload` from SD-JWT VC since it is not really defined in SD-JWT. If you don't define it in SD-JWT, we will define it in SD-JWT VC which I prefer not to.\r\n\r\nBtw. if you call it processed payload, that is fine by me but it should be added to 8.1.",
+          "createdAt": "2024-07-15T15:45:17Z",
+          "updatedAt": "2024-07-15T15:45:17Z"
+        },
+        {
+          "author": "bc-pi",
+          "authorAssociation": "COLLABORATOR",
+          "body": "> (in any case, would really like to avoid using hydrated/dehydrated since that term is kind of confusing and i used for something related but different in ISO I think)\r\n\r\n+ 1000000000% ! ",
+          "createdAt": "2024-07-15T15:46:30Z",
+          "updatedAt": "2024-07-15T15:46:30Z"
         }
       ]
     }
