@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2024-07-21T00:14:27.786842+00:00",
+  "timestamp": "2024-07-23T00:13:18.026205+00:00",
   "repo": "oauth-wg/oauth-selective-disclosure-jwt",
   "labels": [
     {
@@ -11213,6 +11213,22 @@
           "updatedAt": "2024-07-15T15:46:30Z"
         }
       ]
+    },
+    {
+      "number": 444,
+      "id": "I_kwDOHTmVzM6Qca5P",
+      "title": "(maybe) clarify example(s) ",
+      "url": "https://github.com/oauth-wg/oauth-selective-disclosure-jwt/issues/444",
+      "state": "OPEN",
+      "author": "bc-pi",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "some of https://github.com/oauth-wg/oauth-sd-jwt-vc/issues/246 likely applies here too ",
+      "createdAt": "2024-07-22T17:16:30Z",
+      "updatedAt": "2024-07-22T17:16:31Z",
+      "closedAt": null,
+      "comments": []
     }
   ],
   "pulls": [
