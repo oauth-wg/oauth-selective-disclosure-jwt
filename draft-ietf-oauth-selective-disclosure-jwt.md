@@ -250,7 +250,7 @@ Details of the format of Key Binding JWTs are described in (#kb-jwt).
 At a high level, the Verifier
 
  * receives either an SD-JWT or an SD-JWT+KB from the Holder,
- * verifies the signature on the SD-JWT (or the the SD-JWT inside the SD-JWT+KB) using the Issuer's public key,
+ * verifies the signature on the SD-JWT (or the SD-JWT inside the SD-JWT+KB) using the Issuer's public key,
  * verifies the signature on the KB-JWT using the public key included (or referenced) in the SD-JWT, if the Verifier's policy requires Key Binding, and
  * calculates the digests over the Holder-Selected Disclosures and verifies that each digest is contained in the SD-JWT.
 
