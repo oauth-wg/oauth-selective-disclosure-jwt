@@ -265,7 +265,7 @@ An SD-JWT is composed of
 
 An SD-JWT+KB is composed of
 
-* an SD-JWT, and
+* an SD-JWT (i.e., an Issuer-signed JWT and zero or more Disclosures), and
 * a Key Binding JWT.
 
 The Issuer-signed JWT, Disclosures, and Key Binding JWT are explained in
