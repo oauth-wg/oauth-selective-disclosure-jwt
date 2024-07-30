@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2024-07-28T00:14:43.969340+00:00",
+  "timestamp": "2024-07-30T00:13:25.864573+00:00",
   "repo": "oauth-wg/oauth-selective-disclosure-jwt",
   "labels": [
     {
@@ -47535,6 +47535,59 @@
           "body": "I am not sure these are actually extraneous, but ok",
           "createdAt": "2024-07-02T13:51:57Z",
           "updatedAt": "2024-07-02T13:51:57Z",
+          "comments": []
+        }
+      ]
+    },
+    {
+      "number": 445,
+      "id": "PR_kwDOHTmVzM52zXOx",
+      "title": "Removed duplicate \"the\"",
+      "url": "https://github.com/oauth-wg/oauth-selective-disclosure-jwt/pull/445",
+      "state": "OPEN",
+      "author": "dalebowie",
+      "authorAssociation": "NONE",
+      "assignees": [],
+      "labels": [],
+      "body": "",
+      "createdAt": "2024-07-29T22:00:15Z",
+      "updatedAt": "2024-07-30T00:11:38Z",
+      "baseRepository": "oauth-wg/oauth-selective-disclosure-jwt",
+      "baseRefName": "master",
+      "baseRefOid": "b430ada11b73b93c009143a2e6527a8bbfb6bb6b",
+      "headRepository": "dalebowie/oauth-selective-disclosure-jwt",
+      "headRefName": "the-the",
+      "headRefOid": "5d01e928c84e5be1485f512523c394e568cf8181",
+      "closedAt": null,
+      "mergedAt": null,
+      "mergedBy": null,
+      "mergeCommit": null,
+      "comments": [],
+      "reviews": [
+        {
+          "id": "PRR_kwDOHTmVzM6Df6Ec",
+          "commit": {
+            "abbreviatedOid": "5d01e92"
+          },
+          "author": "bc-pi",
+          "authorAssociation": "COLLABORATOR",
+          "state": "APPROVED",
+          "body": "thanks @dalebowie ! ",
+          "createdAt": "2024-07-29T22:06:29Z",
+          "updatedAt": "2024-07-29T22:06:29Z",
+          "comments": []
+        },
+        {
+          "id": "PRR_kwDOHTmVzM6DghL4",
+          "commit": {
+            "abbreviatedOid": "5d01e92"
+          },
+          "author": "selfissued",
+          "authorAssociation": "COLLABORATOR",
+          "state": "APPROVED",
+          "body": "",
+          "createdAt": "2024-07-30T00:11:38Z",
+          "updatedAt": "2024-07-30T00:11:38Z",
           "comments": []
         }
       ]
