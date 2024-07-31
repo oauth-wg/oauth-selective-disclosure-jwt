@@ -1335,7 +1335,7 @@ Where such callbacks are necessary, they MUST be executed in a manner that
 preserves privacy and does not disclose details about the credential to the Issuer. It is
 important to note that the timing of such requests could potentially serve as a side-channel.
 
-Verifier/Verifier unlinkablility and presentation unlinkablility can be achieved using batch issuance: A batch
+Verifier/Verifier unlinkability and presentation unlinkability can be achieved using batch issuance: A batch
 of credentials based on the same claims is issued to the Holder instead of just
 a single credential. The Holder can then use a different credential for each
 Verifier or even for each session with a Verifier. New key binding keys and
