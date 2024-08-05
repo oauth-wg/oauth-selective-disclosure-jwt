@@ -1317,28 +1317,12 @@ The following types of unlinkability are considered here:
    a certain Verifier, even if the Verifier colludes with the Issuer or becomes
    compromised and leaks stored credentials from presentations.
 
-In all cases, unlinkability is limited to cases where the disclosed claims do
-not contain information that directly or indirectly identifies the user. For
-example, when a taxpayer identification number is contained in the disclosed claims, the Issuer and
-Verifier can easily link the user's transactions. However, when the user only
-discloses a birthdate to one Verifier and a postal code to another Verifier, the two Verifiers should not be able to determine that they were interacting with the same user.
+SD-JWT MUST NOT be used when Issuer/Verifier unlinkability is required. This
+includes age verification on the Web. When users reveal their ages they do not
+expect to also create a record that can be used by the Issuer to identify them.
 
-Issuer/Verifier unlinkability with a colluding or compromised Verifier cannot be
-achieved in salted-hash based selective disclosure approaches, such as SD-JWT, as the
-issued credential with the Issuer's signature is directly presented to the Verifier, who can forward it to
-the Issuer.
-
-Contrary to that, Issuer/Verifier unlinkability with an honest Verifier can generally be achieved.
-However, a callback from the Verifier to the Issuer, such as a revocation check, could potentially
-disclose information about the credential's usage to the Issuer.
-Where such callbacks are necessary, they MUST be executed in a manner that
-preserves privacy and does not disclose details about the credential to the Issuer. It is
-important to note that the timing of such requests could potentially serve as a side-channel.
-
-Verifier/Verifier unlinkability and presentation unlinkability can be achieved using batch issuance: A batch
-of credentials based on the same claims is issued to the Holder instead of just
-a single credential. The Holder can then use a different credential for each
-Verifier or even for each session with a Verifier. New key binding keys and
+SD-JWT Holders MUST use every credential exactly once if Verifier/Verifier unlinkability
+is required. Issuers MUST provide batches of credentials.  New key binding keys and
 salts MUST be used for each credential in the batch to ensure that the Verifiers
 cannot link the credentials using these values. Likewise, claims carrying time
 information, like `iat`, `exp`, and `nbf`, MUST either be randomized within a
