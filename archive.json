@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2024-08-04T00:14:21.701169+00:00",
+  "timestamp": "2024-08-06T00:13:08.418917+00:00",
   "repo": "oauth-wg/oauth-selective-disclosure-jwt",
   "labels": [
     {
@@ -11072,7 +11072,7 @@
       ],
       "body": "As far as I know, the idea of burning private keys to facilitate repudiation or reduced data value didn't resonate with any of the audiences for whom it was intended.\r\n\r\nI think the document would be better off without the paragraph copied below from https://www.ietf.org/archive/id/draft-ietf-oauth-selective-disclosure-jwt-09.html#section-11.1-7 \r\n\r\nAnd we might avoid some potentially difficult/confusing/painful/etc conversations in various latter stage IETF process steps. \r\n\r\n> If reliable and secure key rotation and revocation is ensured according to [Section 10.8](https://www.ietf.org/archive/id/draft-ietf-oauth-selective-disclosure-jwt-09.html#issuer_signature_key_distribution), Issuers may opt to publish expired or revoked private signing keys (after a grace period that ensures that the keys are not cached any longer at any Verifier). This reduces the value of any leaked credentials as the signatures on them can no longer be trusted to originate from the Issuer.",
       "createdAt": "2024-06-19T22:14:18Z",
-      "updatedAt": "2024-06-20T18:43:20Z",
+      "updatedAt": "2024-08-05T18:11:47Z",
       "closedAt": null,
       "comments": [
         {
@@ -11081,6 +11081,20 @@
           "body": "I'm told that my statement that it \"didn't resonate with any of the audiences for whom it was intended\" might be premature. ",
           "createdAt": "2024-06-20T18:43:18Z",
           "updatedAt": "2024-06-20T18:43:18Z"
+        },
+        {
+          "author": "selfissued",
+          "authorAssociation": "COLLABORATOR",
+          "body": "I agree with deleting the text about publishing private keys.  Yes, it's a technique that could be used with SD-JWTs but it's in no way specific to SD-JWTs.  It could be used with normal JWTs, CWTs, SAML tokens, X.509 certs, etc.  It doesn't add to the specification to describe this here.",
+          "createdAt": "2024-08-04T04:04:28Z",
+          "updatedAt": "2024-08-04T04:04:28Z"
+        },
+        {
+          "author": "bc-pi",
+          "authorAssociation": "COLLABORATOR",
+          "body": "leaving this open with no action for the time being because, as Dr. @danielfett says, \"it's complicated\". ",
+          "createdAt": "2024-08-05T18:11:45Z",
+          "updatedAt": "2024-08-05T18:11:45Z"
         }
       ]
     },
@@ -11167,7 +11181,7 @@
       "labels": [],
       "body": "We had the discussion in SD-JWT VC how to refer to the dehydrated (or maybe hydrated) result (Issuer-signed JWT payload) of the [processing and verification algorithm](https://www.ietf.org/archive/id/draft-ietf-oauth-selective-disclosure-jwt-09.html#name-verification-and-processing). It would help if we could give it a name to allow us to be more precise in other specs that are building on top of SD-JWT.\r\n\r\nThe discussion occurred when adding the Schema for SD-JWT VCs that uses that result of the SD-JWT processing section to match the JSON schema against:\r\nhttps://github.com/oauth-wg/oauth-sd-jwt-vc/pull/231/files#diff-e750c0958ca10e395b4d3b77bb5aafccc668b4a1a50675dda79a8d90b39a2468R714-R715\r\n\r\nWe also have another issue that asks for an example of the result as well which would benefit from giving it a defined name:\r\nhttps://github.com/oauth-wg/oauth-sd-jwt-vc/issues/194\r\n\r\n",
       "createdAt": "2024-07-01T20:26:16Z",
-      "updatedAt": "2024-07-15T15:46:31Z",
+      "updatedAt": "2024-08-04T11:27:35Z",
       "closedAt": null,
       "comments": [
         {
@@ -11208,9 +11222,16 @@
         {
           "author": "bc-pi",
           "authorAssociation": "COLLABORATOR",
-          "body": "> (in any case, would really like to avoid using hydrated/dehydrated since that term is kind of confusing and i used for something related but different in ISO I think)\r\n\r\n+ 1000000000% ! ",
+          "body": "> (in any case, would really like to avoid using hydrated/dehydrated since that term is kind of confusing and i used for something related but different in ISO I think)\r\n\r\n\\+ 1000000000% ! ",
           "createdAt": "2024-07-15T15:46:30Z",
-          "updatedAt": "2024-07-15T15:46:30Z"
+          "updatedAt": "2024-08-04T11:27:35Z"
+        },
+        {
+          "author": "selfissued",
+          "authorAssociation": "COLLABORATOR",
+          "body": "Defining terms is good.  Dehydrated/hydrated would be bad. ;-)",
+          "createdAt": "2024-08-04T04:11:03Z",
+          "updatedAt": "2024-08-04T04:11:03Z"
         }
       ]
     },
@@ -47551,7 +47572,7 @@
       "labels": [],
       "body": "",
       "createdAt": "2024-07-29T22:00:15Z",
-      "updatedAt": "2024-07-30T00:25:03Z",
+      "updatedAt": "2024-08-04T19:36:36Z",
       "baseRepository": "oauth-wg/oauth-selective-disclosure-jwt",
       "baseRefName": "master",
       "baseRefOid": "b430ada11b73b93c009143a2e6527a8bbfb6bb6b",
@@ -47599,24 +47620,26 @@
       "id": "PR_kwDOHTmVzM521bqA",
       "title": "Clarification on composition of SD-JWT+KB",
       "url": "https://github.com/oauth-wg/oauth-selective-disclosure-jwt/pull/446",
-      "state": "OPEN",
+      "state": "MERGED",
       "author": "danielfett",
       "authorAssociation": "MEMBER",
       "assignees": [],
       "labels": [],
       "body": "... as proposed by Paul. It is easy to read the current wording in a wrong way.",
       "createdAt": "2024-07-30T06:59:36Z",
-      "updatedAt": "2024-07-30T19:13:55Z",
+      "updatedAt": "2024-08-05T15:47:12Z",
       "baseRepository": "oauth-wg/oauth-selective-disclosure-jwt",
       "baseRefName": "master",
       "baseRefOid": "5b2bbc61bde1d7f415cbc8b5984b6abfcaa631a5",
       "headRepository": "oauth-wg/oauth-selective-disclosure-jwt",
       "headRefName": "danielfett/clarification-sd-jwt",
       "headRefOid": "632de4c5759034e8867c95926dc2be353283a606",
-      "closedAt": null,
-      "mergedAt": null,
-      "mergedBy": null,
-      "mergeCommit": null,
+      "closedAt": "2024-08-05T15:47:11Z",
+      "mergedAt": "2024-08-05T15:47:11Z",
+      "mergedBy": "bc-pi",
+      "mergeCommit": {
+        "oid": "7d1297af43ad095583fd1a565ede4523469cba39"
+      },
       "comments": [],
       "reviews": [
         {
@@ -47706,7 +47729,7 @@
       "labels": [],
       "body": "",
       "createdAt": "2024-07-31T00:48:13Z",
-      "updatedAt": "2024-07-31T12:22:11Z",
+      "updatedAt": "2024-08-04T19:36:28Z",
       "baseRepository": "oauth-wg/oauth-selective-disclosure-jwt",
       "baseRefName": "master",
       "baseRefOid": "5b2bbc61bde1d7f415cbc8b5984b6abfcaa631a5",
@@ -47719,7 +47742,15 @@
       "mergeCommit": {
         "oid": "841a4f43ec08b6a9623ac05b598df9846f69dbf3"
       },
-      "comments": [],
+      "comments": [
+        {
+          "author": "bc-pi",
+          "authorAssociation": "COLLABORATOR",
+          "body": "BTW @dalebowie, please do a quick PR adding yourself to the Acknowledgements section, if you;'d like.",
+          "createdAt": "2024-08-04T12:51:18Z",
+          "updatedAt": "2024-08-04T12:51:18Z"
+        }
+      ],
       "reviews": [
         {
           "id": "PRR_kwDOHTmVzM6DqeVd",
@@ -47782,6 +47813,74 @@
           ]
         }
       ]
+    },
+    {
+      "number": 449,
+      "id": "PR_kwDOHTmVzM53YM0Y",
+      "title": "Add myself to acknowledgements as suggested",
+      "url": "https://github.com/oauth-wg/oauth-selective-disclosure-jwt/pull/449",
+      "state": "MERGED",
+      "author": "dalebowie",
+      "authorAssociation": "CONTRIBUTOR",
+      "assignees": [],
+      "labels": [],
+      "body": "[As suggested here](https://github.com/oauth-wg/oauth-selective-disclosure-jwt/pull/447#issuecomment-2267532672).",
+      "createdAt": "2024-08-04T19:35:40Z",
+      "updatedAt": "2024-08-04T21:53:45Z",
+      "baseRepository": "oauth-wg/oauth-selective-disclosure-jwt",
+      "baseRefName": "master",
+      "baseRefOid": "841a4f43ec08b6a9623ac05b598df9846f69dbf3",
+      "headRepository": "dalebowie/oauth-selective-disclosure-jwt",
+      "headRefName": "acknowledgements",
+      "headRefOid": "c7980d0c93c5382b4f86598ceaf92474eaafebb2",
+      "closedAt": "2024-08-04T21:53:45Z",
+      "mergedAt": "2024-08-04T21:53:45Z",
+      "mergedBy": "bc-pi",
+      "mergeCommit": {
+        "oid": "e44dd04fe8daeaf268764200cbc7ae9a53f64668"
+      },
+      "comments": [],
+      "reviews": [
+        {
+          "id": "PRR_kwDOHTmVzM6EMSZL",
+          "commit": {
+            "abbreviatedOid": "c7980d0"
+          },
+          "author": "bc-pi",
+          "authorAssociation": "COLLABORATOR",
+          "state": "APPROVED",
+          "body": "",
+          "createdAt": "2024-08-04T20:52:40Z",
+          "updatedAt": "2024-08-04T20:52:40Z",
+          "comments": []
+        }
+      ]
+    },
+    {
+      "number": 450,
+      "id": "PR_kwDOHTmVzM53gJzO",
+      "title": "Add Martin to acknowledgments",
+      "url": "https://github.com/oauth-wg/oauth-selective-disclosure-jwt/pull/450",
+      "state": "OPEN",
+      "author": "bc-pi",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "Acknowledge Martin Thomson for his contribution: https://github.com/oauth-wg/oauth-selective-disclosure-jwt/pull/394/files/d150ec24a8a369af4976c2739d8b97ac5650e603#r1416409939",
+      "createdAt": "2024-08-05T22:35:39Z",
+      "updatedAt": "2024-08-05T22:40:48Z",
+      "baseRepository": "oauth-wg/oauth-selective-disclosure-jwt",
+      "baseRefName": "master",
+      "baseRefOid": "7d1297af43ad095583fd1a565ede4523469cba39",
+      "headRepository": "oauth-wg/oauth-selective-disclosure-jwt",
+      "headRefName": "thx-mt",
+      "headRefOid": "7bb42dcf05d7196ffe79917f9b4aa491be8119b2",
+      "closedAt": null,
+      "mergedAt": null,
+      "mergedBy": null,
+      "mergeCommit": null,
+      "comments": [],
+      "reviews": []
     }
   ]
 }
