@@ -1334,7 +1334,7 @@ For example, a governmental Issuer might have the authority to mandate that a Ve
 about the credentials presented to it. Legal requirements could further enforce this, explicitly undermining
 Issuer/Verifier unlinkability. Similarly, a large service provider issuing credentials might implicitly pressure
 Verifiers into collusion by incentivizing participation in their larger ecosystem.
-Deployments of SD-JWT must be aware of these potential power dynamics,
+Deployers of SD-JWT must be aware of these potential power dynamics,
 mitigate them as much as possible, and/or make the risks transparent to the End-User.
 
 Contrary to that, Issuer/Verifier unlinkability with an honest Verifier can generally be achieved.
