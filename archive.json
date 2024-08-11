@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2024-08-08T00:13:06.240206+00:00",
+  "timestamp": "2024-08-11T00:14:41.780400+00:00",
   "repo": "oauth-wg/oauth-selective-disclosure-jwt",
   "labels": [
     {
@@ -47881,6 +47881,86 @@
       "mergeCommit": null,
       "comments": [],
       "reviews": []
+    },
+    {
+      "number": 451,
+      "id": "PR_kwDOHTmVzM53_eNY",
+      "title": "attempt to better frame the risks and difficulties around Issuer/Verifier unlinkability",
+      "url": "https://github.com/oauth-wg/oauth-selective-disclosure-jwt/pull/451",
+      "state": "OPEN",
+      "author": "bc-pi",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "Add a paragraph attempting to better frame the risks and difficulties around Issuer/Verifier unlinkability (i.e., a government issuer or huge service provider compelling collusion). \r\n\r\nThis is an attempt to add some reasonable text in consideration of the conversation in this thread https://mailarchive.ietf.org/arch/msg/oauth/fDYIWVE50nhW6F8IO_jeUafKABo/ \r\n\r\nthe new paragraph shows up in the middle of this section https://drafts.oauth.net/oauth-selective-disclosure-jwt/more-unlinkability-considerations/draft-ietf-oauth-selective-disclosure-jwt.html#name-unlinkability \r\n\r\nand of course a (not so) little note in the history https://drafts.oauth.net/oauth-selective-disclosure-jwt/more-unlinkability-considerations/draft-ietf-oauth-selective-disclosure-jwt.html#appendix-C-2\r\n\r\n",
+      "createdAt": "2024-08-09T22:33:38Z",
+      "updatedAt": "2024-08-10T11:49:44Z",
+      "baseRepository": "oauth-wg/oauth-selective-disclosure-jwt",
+      "baseRefName": "master",
+      "baseRefOid": "7d1297af43ad095583fd1a565ede4523469cba39",
+      "headRepository": "oauth-wg/oauth-selective-disclosure-jwt",
+      "headRefName": "more-unlinkability-considerations",
+      "headRefOid": "f6c10a99337e2ac785aae6f33ea10a67fdc328d9",
+      "closedAt": null,
+      "mergedAt": null,
+      "mergedBy": null,
+      "mergeCommit": null,
+      "comments": [],
+      "reviews": [
+        {
+          "id": "PRR_kwDOHTmVzM6FAI_P",
+          "commit": {
+            "abbreviatedOid": "2436fe5"
+          },
+          "author": "danielfett",
+          "authorAssociation": "MEMBER",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2024-08-10T09:07:18Z",
+          "updatedAt": "2024-08-10T09:07:18Z",
+          "comments": [
+            {
+              "originalPosition": 11,
+              "body": "Not sure if deployments can be aware, so maybe...\r\n```suggestion\r\nDeployers of SD-JWT must be aware of these potential power dynamics,\r\nmitigate them as much as possible, and/or make the risks transparent to the End-User.\r\n```\r\n(We could say \"users\", but that might be misleading.)",
+              "createdAt": "2024-08-10T09:07:18Z",
+              "updatedAt": "2024-08-10T09:07:18Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOHTmVzM6FAJBE",
+          "commit": {
+            "abbreviatedOid": "2436fe5"
+          },
+          "author": "danielfett",
+          "authorAssociation": "MEMBER",
+          "state": "APPROVED",
+          "body": "Thanks for preparing this, looks good to me! ",
+          "createdAt": "2024-08-10T09:08:33Z",
+          "updatedAt": "2024-08-10T09:08:33Z",
+          "comments": []
+        },
+        {
+          "id": "PRR_kwDOHTmVzM6FANcK",
+          "commit": {
+            "abbreviatedOid": "2436fe5"
+          },
+          "author": "bc-pi",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2024-08-10T11:48:45Z",
+          "updatedAt": "2024-08-10T11:48:45Z",
+          "comments": [
+            {
+              "originalPosition": 11,
+              "body": "I struggled with what word to use there. Wanting to capture like all the decision making and even implementing folks involved in a rollout/deployment of SD-JWT. \"Deployments\" was the best I could come up with as a general overarching term.  But you are right - deployments don't have the capacity for awareness. And \"users\" felt too much like end-users. I'm not seeing the *right* word exactly but your suggestion of \"deployers\" seems like an improvement over what I had at least. ",
+              "createdAt": "2024-08-10T11:48:45Z",
+              "updatedAt": "2024-08-10T11:48:45Z"
+            }
+          ]
+        }
+      ]
     }
   ]
 }
