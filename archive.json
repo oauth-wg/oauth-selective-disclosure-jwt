@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2024-08-11T00:14:41.780400+00:00",
+  "timestamp": "2024-08-13T00:13:55.663789+00:00",
   "repo": "oauth-wg/oauth-selective-disclosure-jwt",
   "labels": [
     {
@@ -47772,25 +47772,33 @@
       "id": "PR_kwDOHTmVzM53BZq-",
       "title": "Strengthen privacy considerations",
       "url": "https://github.com/oauth-wg/oauth-selective-disclosure-jwt/pull/448",
-      "state": "OPEN",
+      "state": "CLOSED",
       "author": "wbl",
       "authorAssociation": "NONE",
       "assignees": [],
       "labels": [],
       "body": "",
       "createdAt": "2024-07-31T17:30:57Z",
-      "updatedAt": "2024-08-01T10:17:08Z",
+      "updatedAt": "2024-08-12T19:57:42Z",
       "baseRepository": "oauth-wg/oauth-selective-disclosure-jwt",
       "baseRefName": "master",
       "baseRefOid": "841a4f43ec08b6a9623ac05b598df9846f69dbf3",
       "headRepository": "wbl/oauth-selective-disclosure-jwt",
       "headRefName": "patch-1",
       "headRefOid": "870a1729fb319d2a47e01b7ffee0cce6a664f568",
-      "closedAt": null,
+      "closedAt": "2024-08-12T19:57:42Z",
       "mergedAt": null,
       "mergedBy": null,
       "mergeCommit": null,
-      "comments": [],
+      "comments": [
+        {
+          "author": "bc-pi",
+          "authorAssociation": "COLLABORATOR",
+          "body": "an alternative starting point is offered in #451 ",
+          "createdAt": "2024-08-12T19:57:13Z",
+          "updatedAt": "2024-08-12T19:57:13Z"
+        }
+      ],
       "reviews": [
         {
           "id": "PRR_kwDOHTmVzM6D3Xuw",
@@ -47868,19 +47876,48 @@
       "labels": [],
       "body": "Acknowledge Martin Thomson for his contribution: https://github.com/oauth-wg/oauth-selective-disclosure-jwt/pull/394/files/d150ec24a8a369af4976c2739d8b97ac5650e603#r1416409939",
       "createdAt": "2024-08-05T22:35:39Z",
-      "updatedAt": "2024-08-05T22:40:48Z",
+      "updatedAt": "2024-08-12T18:49:13Z",
       "baseRepository": "oauth-wg/oauth-selective-disclosure-jwt",
       "baseRefName": "master",
       "baseRefOid": "7d1297af43ad095583fd1a565ede4523469cba39",
       "headRepository": "oauth-wg/oauth-selective-disclosure-jwt",
       "headRefName": "thx-mt",
-      "headRefOid": "7bb42dcf05d7196ffe79917f9b4aa491be8119b2",
+      "headRefOid": "d9c5daf9d71257ddb6d5c1e93e25be319256ddbe",
       "closedAt": null,
       "mergedAt": null,
       "mergedBy": null,
       "mergeCommit": null,
-      "comments": [],
-      "reviews": []
+      "comments": [
+        {
+          "author": "bc-pi",
+          "authorAssociation": "COLLABORATOR",
+          "body": "Open for one week. No approvals. No objections. One minor editorial change applied. Will continue to wait. ",
+          "createdAt": "2024-08-12T18:49:13Z",
+          "updatedAt": "2024-08-12T18:49:13Z"
+        }
+      ],
+      "reviews": [
+        {
+          "id": "PRR_kwDOHTmVzM6FJKvG",
+          "commit": {
+            "abbreviatedOid": "7bb42dc"
+          },
+          "author": "bc-pi",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2024-08-12T18:38:04Z",
+          "updatedAt": "2024-08-12T18:38:05Z",
+          "comments": [
+            {
+              "originalPosition": 4,
+              "body": "```suggestion\r\nSpecial appreciation is extended to Martin Thomson, who wielded his considerable intellect and influence to change a single occurrence of the word \"to\" to \"with\" in the midst of a significant proposal that would be integrated into this document six months later.\r\n```",
+              "createdAt": "2024-08-12T18:38:04Z",
+              "updatedAt": "2024-08-12T18:38:22Z"
+            }
+          ]
+        }
+      ]
     },
     {
       "number": 451,
@@ -47959,6 +47996,126 @@
               "updatedAt": "2024-08-10T11:48:45Z"
             }
           ]
+        }
+      ]
+    },
+    {
+      "number": 452,
+      "id": "PR_kwDOHTmVzM54KJUL",
+      "title": "tightening the exposition",
+      "url": "https://github.com/oauth-wg/oauth-selective-disclosure-jwt/pull/452",
+      "state": "OPEN",
+      "author": "Sakurann",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "reflecting MikeJ's feedback",
+      "createdAt": "2024-08-12T21:44:32Z",
+      "updatedAt": "2024-08-12T22:39:15Z",
+      "baseRepository": "oauth-wg/oauth-selective-disclosure-jwt",
+      "baseRefName": "master",
+      "baseRefOid": "7d1297af43ad095583fd1a565ede4523469cba39",
+      "headRepository": "oauth-wg/oauth-selective-disclosure-jwt",
+      "headRefName": "mike-jones-feedback",
+      "headRefOid": "88e7724d187a6408121b2b68d8f6af4825dbb430",
+      "closedAt": null,
+      "mergedAt": null,
+      "mergedBy": null,
+      "mergeCommit": null,
+      "comments": [],
+      "reviews": [
+        {
+          "id": "PRR_kwDOHTmVzM6FKahl",
+          "commit": {
+            "abbreviatedOid": "88e7724"
+          },
+          "author": "bc-pi",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2024-08-12T22:07:40Z",
+          "updatedAt": "2024-08-12T22:07:40Z",
+          "comments": [
+            {
+              "originalPosition": 51,
+              "body": "I would ask that Mike's feedback not overwrite the phrasing that seemed more natural to Martin Thomson https://github.com/oauth-wg/oauth-selective-disclosure-jwt/pull/394/files/d150ec24a8a369af4976c2739d8b97ac5650e603#r1416409939 and I hope to properly thank him for his contribution with #450  \r\n\r\n```suggestion\r\nassociated to the SD-JWT (i.e., using the `cnf` claim [@!RFC7800]). The strength of the binding is conditional upon the trust\r\n```",
+              "createdAt": "2024-08-12T22:07:40Z",
+              "updatedAt": "2024-08-12T22:08:52Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOHTmVzM6FKbvZ",
+          "commit": {
+            "abbreviatedOid": "88e7724"
+          },
+          "author": "bc-pi",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2024-08-12T22:12:12Z",
+          "updatedAt": "2024-08-12T22:12:13Z",
+          "comments": [
+            {
+              "originalPosition": 60,
+              "body": "```suggestion\r\n1. SD-JWT is a composite structure enabling selective disclosure of its contents. It comprises the following:\r\n```",
+              "createdAt": "2024-08-12T22:12:12Z",
+              "updatedAt": "2024-08-12T22:12:13Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOHTmVzM6FKb0Z",
+          "commit": {
+            "abbreviatedOid": "88e7724"
+          },
+          "author": "bc-pi",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2024-08-12T22:12:32Z",
+          "updatedAt": "2024-08-12T22:12:32Z",
+          "comments": [
+            {
+              "originalPosition": 72,
+              "body": "```suggestion\r\n2. SD-JWT+KB is a composite structure enabling cryptographic key binding when presented to the Verifier. It comprises the following:\r\n```",
+              "createdAt": "2024-08-12T22:12:32Z",
+              "updatedAt": "2024-08-12T22:12:32Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOHTmVzM6FKcdB",
+          "commit": {
+            "abbreviatedOid": "88e7724"
+          },
+          "author": "bc-pi",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2024-08-12T22:15:12Z",
+          "updatedAt": "2024-08-12T22:15:12Z",
+          "comments": [
+            {
+              "originalPosition": 215,
+              "body": "```suggestion\r\nThe payload is then signed by the Issuer to create the following JWT:\r\n```",
+              "createdAt": "2024-08-12T22:15:12Z",
+              "updatedAt": "2024-08-12T22:15:13Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOHTmVzM6FKdle",
+          "commit": {
+            "abbreviatedOid": "88e7724"
+          },
+          "author": "bc-pi",
+          "authorAssociation": "COLLABORATOR",
+          "state": "CHANGES_REQUESTED",
+          "body": "Thank you for putting this PR together! I made a few minor suggestions but otherwise it looks tight. ",
+          "createdAt": "2024-08-12T22:20:00Z",
+          "updatedAt": "2024-08-12T22:39:15Z",
+          "comments": []
         }
       ]
     }
