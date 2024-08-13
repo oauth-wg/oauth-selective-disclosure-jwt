@@ -1402,6 +1402,8 @@ Vittorio Bertocci, and
 Yaron Sheffer
 for their contributions (some of which substantial) to this draft and to the initial set of implementations.
 
+Special appreciation is extended to Martin Thomson, who wielded his considerable intellect and influence to change a single occurrence of the word "to" to "with" in the midst of a significant proposal that would be integrated into this document six months later.
+
 The work on this draft was started at OAuth Security Workshop 2022 in Trondheim, Norway.
 
 
