@@ -105,7 +105,7 @@ values not disclosed in the Disclosures.
 This document also defines a format for SD-JWTs with Key Binding (SD-JWT+KB).
 By optionally sending an SD-JWT+KB to a
 Verifier, the Holder can prove to the Verifier that they hold the private key
-associated with the SD-JWT (i.e., using the `cnf` claim [@!RFC7800]). The strength of the binding is conditional upon the trust
+associated to the SD-JWT (i.e., using the `cnf` claim [@!RFC7800]). The strength of the binding is conditional upon the trust
 in the protection of the private key of the key pair an SD-JWT is bound to.
 
 SD-JWT can be used with any JSON-based representation of claims, including JSON-LD.
@@ -118,7 +118,7 @@ wherever possible.
 
 This specification defines two primary data formats:
 
-1. SD-JWT is a composite structure enabling selective disclosure of its contents. It comprises of the following:
+1. SD-JWT is a composite structure enabling selective disclosure of its contents. It comprises the following:
   - A format for enabling selective disclosure in nested JSON data structures,
     supporting selectively disclosable object properties (name/value pairs) and array elements
   - A format for encoding the selectively disclosable data items
@@ -127,7 +127,7 @@ This specification defines two primary data formats:
   - An alternate format extending the JWS JSON Serialization, also allowing for
     transport of the Issuer-signed JSON data structure and disclosure data
 
-2. SD-JWT+KB is a composite structure enabling cryptographic key binding when presented to the Verifier. It comprises of the following:
+2. SD-JWT+KB is a composite structure enabling cryptographic key binding when presented to the Verifier. It comprises the following:
   - A facility for associating an SD-JWT with a key pair
   - A format for a Key Binding JWT (KB-JWT) that proves possession of the private key of
     the associated key pair
@@ -737,7 +737,7 @@ The following Disclosures are created by the Issuer:
 
 {{examples/simple/disclosures.md}}
 
-The payload is then signed by the Issuer to create a following JWT:
+The payload is then signed by the Issuer to create the following JWT:
 
 <{{examples/simple/sd_jwt_jws_part.txt}}
 
@@ -1007,7 +1007,7 @@ has not been tampered with since the issuance. The Issuer-signed JWT MUST be rej
 
 The security of the Issuer-signed JWT depends on the security of the signature algorithm.
 Any of the JWS asymmetric digital signature algorithms registered in [@IANA.JWS.Algorithms]
-that meet the security requirements described in the last paragraph of Section 5.2 of [RFC7515]
+that meet the security requirements described in the last paragraph of Section 5.2 of [@RFC7515]
 can be used, including post-quantum algorithms, when they are ready.
 
 ## Manipulation of Disclosures {#sec-disclosures}
