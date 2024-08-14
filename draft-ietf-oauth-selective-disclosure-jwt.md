@@ -1927,6 +1927,7 @@ data. The original JSON data is then used by the application. See
 
    * Add a paragraph attempting to better frame the risks and difficulties around Issuer/Verifier
       unlinkability (i.e., a government issuer or huge service provider compelling collusion)
+   * Tightened the exposition
 
    -10
 
