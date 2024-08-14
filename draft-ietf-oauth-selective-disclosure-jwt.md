@@ -108,7 +108,7 @@ Verifier, the Holder can prove to the Verifier that they hold the private key
 associated to the SD-JWT (i.e., using the `cnf` claim [@!RFC7800]). The strength of the binding is conditional upon the trust
 in the protection of the private key of the key pair an SD-JWT is bound to.
 
-SD-JWT can be used with any JSON-based representation of claims, including JSON-LD.
+SD-JWT can be used with any JSON-based representation of claims.
 
 This specification aims to be easy to implement and to leverage
 established and widely used data formats and cryptographic algorithms
