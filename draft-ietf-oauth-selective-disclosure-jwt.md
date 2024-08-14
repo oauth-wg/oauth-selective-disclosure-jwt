@@ -1329,6 +1329,15 @@ achieved in salted-hash based selective disclosure approaches, such as SD-JWT, a
 issued credential with the Issuer's signature is directly presented to the Verifier, who can forward it to
 the Issuer.
 
+In considering Issuer/Verifier unlinkability, it is important to note the potential for an asymmetric power dynamic
+between Issuers and Verifiers. This dynamic can compel an otherwise honest Verifier into collusion.
+For example, a governmental Issuer might have the authority to mandate that a Verifier report back information
+about the credentials presented to it. Legal requirements could further enforce this, explicitly undermining
+Issuer/Verifier unlinkability. Similarly, a large service provider issuing credentials might implicitly pressure
+Verifiers into collusion by incentivizing participation in their larger ecosystem.
+Deployers of SD-JWT must be aware of these potential power dynamics,
+mitigate them as much as possible, and/or make the risks transparent to the End-User.
+
 Contrary to that, Issuer/Verifier unlinkability with an honest Verifier can generally be achieved.
 However, a callback from the Verifier to the Issuer, such as a revocation check, could potentially
 disclose information about the credential's usage to the Issuer.
@@ -1913,6 +1922,11 @@ data. The original JSON data is then used by the application. See
 # Document History
 
    [[ To be removed from the final specification ]]
+
+   -11
+
+   * Add a paragraph attempting to better frame the risks and difficulties around Issuer/Verifier
+      unlinkability (i.e., a government issuer or huge service provider compelling collusion)
 
    -10
 
