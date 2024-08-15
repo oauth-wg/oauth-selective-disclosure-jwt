@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2024-08-13T00:13:55.663789+00:00",
+  "timestamp": "2024-08-15T00:13:13.074026+00:00",
   "repo": "oauth-wg/oauth-selective-disclosure-jwt",
   "labels": [
     {
@@ -41419,7 +41419,7 @@
       "labels": [],
       "body": "This PR limits the scope of the term \"SD-JWT\" so that it refers only to an Issuer-signed JWT and a set of disclosures.  We introduce the term \"Fnord\" to refer to an SD-JWT with key binding.  As a bonus, we are able to clean up stale uses of Presentation, which mostly, but not always align with Fnord.\r\n\r\n\"[Fnord](https://en.wikipedia.org/wiki/Fnord)\" is deliberately nonsensical, of course.  We should replace this with a more intuitive word.  We could reintroduce \"Presentation\" for this, with the allowance that one might \"present\" either a Presentation or an SD-JWT.  Or we could pick another term, suggestions welcome.\r\n\r\nI have tried to be fairly minimal in the changes here.  In particular, I have not changed any of the algorithms, though I suspect they would be clearer if a bit more separate.  I have rewritten a few paragraphs, especially close to the top and in the Security Considerations.\r\n\r\nFixes #374\r\nFixes #392 ",
       "createdAt": "2023-12-05T23:02:33Z",
-      "updatedAt": "2024-06-12T13:17:44Z",
+      "updatedAt": "2024-08-13T22:06:26Z",
       "baseRepository": "oauth-wg/oauth-selective-disclosure-jwt",
       "baseRefName": "master",
       "baseRefOid": "aa212faf5f2f9b053b0f4a3483e839aadd7792c9",
@@ -43908,6 +43908,26 @@
           "createdAt": "2024-06-12T08:35:09Z",
           "updatedAt": "2024-06-12T08:35:09Z",
           "comments": []
+        },
+        {
+          "id": "PRR_kwDOHTmVzM6FUQjt",
+          "commit": {
+            "abbreviatedOid": "d150ec2"
+          },
+          "author": "bc-pi",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2024-08-13T22:06:26Z",
+          "updatedAt": "2024-08-13T22:06:26Z",
+          "comments": [
+            {
+              "originalPosition": 13,
+              "body": "closing the loop on this one with PR #450",
+              "createdAt": "2024-08-13T22:06:26Z",
+              "updatedAt": "2024-08-13T22:06:26Z"
+            }
+          ]
         }
       ]
     },
@@ -47869,24 +47889,26 @@
       "id": "PR_kwDOHTmVzM53gJzO",
       "title": "Add Martin to acknowledgments",
       "url": "https://github.com/oauth-wg/oauth-selective-disclosure-jwt/pull/450",
-      "state": "OPEN",
+      "state": "MERGED",
       "author": "bc-pi",
       "authorAssociation": "COLLABORATOR",
       "assignees": [],
       "labels": [],
       "body": "Acknowledge Martin Thomson for his contribution: https://github.com/oauth-wg/oauth-selective-disclosure-jwt/pull/394/files/d150ec24a8a369af4976c2739d8b97ac5650e603#r1416409939",
       "createdAt": "2024-08-05T22:35:39Z",
-      "updatedAt": "2024-08-12T18:49:13Z",
+      "updatedAt": "2024-08-13T16:15:40Z",
       "baseRepository": "oauth-wg/oauth-selective-disclosure-jwt",
       "baseRefName": "master",
       "baseRefOid": "7d1297af43ad095583fd1a565ede4523469cba39",
       "headRepository": "oauth-wg/oauth-selective-disclosure-jwt",
       "headRefName": "thx-mt",
       "headRefOid": "d9c5daf9d71257ddb6d5c1e93e25be319256ddbe",
-      "closedAt": null,
-      "mergedAt": null,
-      "mergedBy": null,
-      "mergeCommit": null,
+      "closedAt": "2024-08-13T16:15:40Z",
+      "mergedAt": "2024-08-13T16:15:40Z",
+      "mergedBy": "danielfett",
+      "mergeCommit": {
+        "oid": "53ccaed12f1e2fa1d5661c41b277052377a829da"
+      },
       "comments": [
         {
           "author": "bc-pi",
@@ -47916,6 +47938,32 @@
               "updatedAt": "2024-08-12T18:38:22Z"
             }
           ]
+        },
+        {
+          "id": "PRR_kwDOHTmVzM6FRrta",
+          "commit": {
+            "abbreviatedOid": "d9c5daf"
+          },
+          "author": "Sakurann",
+          "authorAssociation": "COLLABORATOR",
+          "state": "APPROVED",
+          "body": "If this is this acceptable, I love it",
+          "createdAt": "2024-08-13T16:13:39Z",
+          "updatedAt": "2024-08-13T16:13:39Z",
+          "comments": []
+        },
+        {
+          "id": "PRR_kwDOHTmVzM6FRsxd",
+          "commit": {
+            "abbreviatedOid": "d9c5daf"
+          },
+          "author": "danielfett",
+          "authorAssociation": "MEMBER",
+          "state": "APPROVED",
+          "body": "",
+          "createdAt": "2024-08-13T16:15:31Z",
+          "updatedAt": "2024-08-13T16:15:31Z",
+          "comments": []
         }
       ]
     },
@@ -47924,25 +47972,42 @@
       "id": "PR_kwDOHTmVzM53_eNY",
       "title": "attempt to better frame the risks and difficulties around Issuer/Verifier unlinkability",
       "url": "https://github.com/oauth-wg/oauth-selective-disclosure-jwt/pull/451",
-      "state": "OPEN",
+      "state": "MERGED",
       "author": "bc-pi",
       "authorAssociation": "COLLABORATOR",
       "assignees": [],
       "labels": [],
       "body": "Add a paragraph attempting to better frame the risks and difficulties around Issuer/Verifier unlinkability (i.e., a government issuer or huge service provider compelling collusion). \r\n\r\nThis is an attempt to add some reasonable text in consideration of the conversation in this thread https://mailarchive.ietf.org/arch/msg/oauth/fDYIWVE50nhW6F8IO_jeUafKABo/ \r\n\r\nthe new paragraph shows up in the middle of this section https://drafts.oauth.net/oauth-selective-disclosure-jwt/more-unlinkability-considerations/draft-ietf-oauth-selective-disclosure-jwt.html#name-unlinkability \r\n\r\nand of course a (not so) little note in the history https://drafts.oauth.net/oauth-selective-disclosure-jwt/more-unlinkability-considerations/draft-ietf-oauth-selective-disclosure-jwt.html#appendix-C-2\r\n\r\n",
       "createdAt": "2024-08-09T22:33:38Z",
-      "updatedAt": "2024-08-10T11:49:44Z",
+      "updatedAt": "2024-08-14T19:53:48Z",
       "baseRepository": "oauth-wg/oauth-selective-disclosure-jwt",
       "baseRefName": "master",
-      "baseRefOid": "7d1297af43ad095583fd1a565ede4523469cba39",
+      "baseRefOid": "46b874287faf428b87d10d639bfae5e35ade831f",
       "headRepository": "oauth-wg/oauth-selective-disclosure-jwt",
       "headRefName": "more-unlinkability-considerations",
-      "headRefOid": "f6c10a99337e2ac785aae6f33ea10a67fdc328d9",
-      "closedAt": null,
-      "mergedAt": null,
-      "mergedBy": null,
-      "mergeCommit": null,
-      "comments": [],
+      "headRefOid": "878fa3cc1bb9a2d2e4aa6232c9d95bda56c8fc99",
+      "closedAt": "2024-08-14T19:53:48Z",
+      "mergedAt": "2024-08-14T19:53:48Z",
+      "mergedBy": "bc-pi",
+      "mergeCommit": {
+        "oid": "1145a07ec89be8f280588404591d7ac9c54e04e6"
+      },
+      "comments": [
+        {
+          "author": "Sakurann",
+          "authorAssociation": "COLLABORATOR",
+          "body": "I think this PR addresses the conversation on the list accurately.",
+          "createdAt": "2024-08-13T16:21:14Z",
+          "updatedAt": "2024-08-13T16:21:14Z"
+        },
+        {
+          "author": "bc-pi",
+          "authorAssociation": "COLLABORATOR",
+          "body": "PR has been open long enough for a single paragraph addition to the privacy considerations ",
+          "createdAt": "2024-08-14T19:53:44Z",
+          "updatedAt": "2024-08-14T19:53:44Z"
+        }
+      ],
       "reviews": [
         {
           "id": "PRR_kwDOHTmVzM6FAI_P",
@@ -47996,6 +48061,19 @@
               "updatedAt": "2024-08-10T11:48:45Z"
             }
           ]
+        },
+        {
+          "id": "PRR_kwDOHTmVzM6FRuPt",
+          "commit": {
+            "abbreviatedOid": "878fa3c"
+          },
+          "author": "Sakurann",
+          "authorAssociation": "COLLABORATOR",
+          "state": "APPROVED",
+          "body": "",
+          "createdAt": "2024-08-13T16:18:01Z",
+          "updatedAt": "2024-08-14T17:48:28Z",
+          "comments": []
         }
       ]
     },
@@ -48004,25 +48082,49 @@
       "id": "PR_kwDOHTmVzM54KJUL",
       "title": "tightening the exposition",
       "url": "https://github.com/oauth-wg/oauth-selective-disclosure-jwt/pull/452",
-      "state": "OPEN",
+      "state": "MERGED",
       "author": "Sakurann",
       "authorAssociation": "COLLABORATOR",
       "assignees": [],
       "labels": [],
       "body": "reflecting MikeJ's feedback",
       "createdAt": "2024-08-12T21:44:32Z",
-      "updatedAt": "2024-08-12T22:39:15Z",
+      "updatedAt": "2024-08-14T13:06:48Z",
       "baseRepository": "oauth-wg/oauth-selective-disclosure-jwt",
       "baseRefName": "master",
-      "baseRefOid": "7d1297af43ad095583fd1a565ede4523469cba39",
+      "baseRefOid": "53ccaed12f1e2fa1d5661c41b277052377a829da",
       "headRepository": "oauth-wg/oauth-selective-disclosure-jwt",
       "headRefName": "mike-jones-feedback",
-      "headRefOid": "88e7724d187a6408121b2b68d8f6af4825dbb430",
-      "closedAt": null,
-      "mergedAt": null,
-      "mergedBy": null,
-      "mergeCommit": null,
-      "comments": [],
+      "headRefOid": "9d649c9e5754d6c67ab577876a4bfb12d1238e01",
+      "closedAt": "2024-08-14T13:06:48Z",
+      "mergedAt": "2024-08-14T13:06:48Z",
+      "mergedBy": "Sakurann",
+      "mergeCommit": {
+        "oid": "46b874287faf428b87d10d639bfae5e35ade831f"
+      },
+      "comments": [
+        {
+          "author": "bc-pi",
+          "authorAssociation": "COLLABORATOR",
+          "body": "> reflecting MikeJ's feedback\r\n\r\nto be clear, the feedback was from Michael B. Jones ",
+          "createdAt": "2024-08-13T15:20:57Z",
+          "updatedAt": "2024-08-13T15:20:57Z"
+        },
+        {
+          "author": "bc-pi",
+          "authorAssociation": "COLLABORATOR",
+          "body": "> Approved with one suggestions.\r\n\r\nhow many suggestion**s**? \r\n\r\n",
+          "createdAt": "2024-08-13T21:03:19Z",
+          "updatedAt": "2024-08-13T21:03:19Z"
+        },
+        {
+          "author": "Sakurann",
+          "authorAssociation": "COLLABORATOR",
+          "body": "> Those that I believe have not yet been addressed are listed below. I assume they will be addressed in subsequent PRs and/or discussed on list.\r\n\r\nthe remaining ones are not addressed for certain reasons - there are misunderstandings, editors believe the current way is better for certain reasons, etc. I will be responding to the ML with the explanations.\r\n\r\nalso, by my count, only 12-13 are not addressed, not 23.",
+          "createdAt": "2024-08-13T21:04:20Z",
+          "updatedAt": "2024-08-13T21:08:26Z"
+        }
+      ],
       "reviews": [
         {
           "id": "PRR_kwDOHTmVzM6FKahl",
@@ -48116,8 +48218,153 @@
           "createdAt": "2024-08-12T22:20:00Z",
           "updatedAt": "2024-08-12T22:39:15Z",
           "comments": []
+        },
+        {
+          "id": "PRR_kwDOHTmVzM6FRvxj",
+          "commit": {
+            "abbreviatedOid": "88e7724"
+          },
+          "author": "danielfett",
+          "authorAssociation": "MEMBER",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2024-08-13T16:21:01Z",
+          "updatedAt": "2024-08-13T16:21:01Z",
+          "comments": [
+            {
+              "originalPosition": 51,
+              "body": "Jeez, such an impactful change hidden away in this unconspicious PR... thanks, Brian, for catching that.",
+              "createdAt": "2024-08-13T16:21:01Z",
+              "updatedAt": "2024-08-13T16:21:01Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOHTmVzM6FRxQ3",
+          "commit": {
+            "abbreviatedOid": "88e7724"
+          },
+          "author": "danielfett",
+          "authorAssociation": "MEMBER",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2024-08-13T16:23:35Z",
+          "updatedAt": "2024-08-13T16:23:35Z",
+          "comments": [
+            {
+              "originalPosition": 280,
+              "body": "```suggestion\r\nthat meet the security requirements described in the last paragraph of Section 5.2 of [@RFC7515]\r\n```",
+              "createdAt": "2024-08-13T16:23:35Z",
+              "updatedAt": "2024-08-13T16:23:35Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOHTmVzM6FRx6M",
+          "commit": {
+            "abbreviatedOid": "88e7724"
+          },
+          "author": "danielfett",
+          "authorAssociation": "MEMBER",
+          "state": "APPROVED",
+          "body": "Approved with one suggestions.",
+          "createdAt": "2024-08-13T16:24:54Z",
+          "updatedAt": "2024-08-13T16:24:54Z",
+          "comments": []
+        },
+        {
+          "id": "PRR_kwDOHTmVzM6FRych",
+          "commit": {
+            "abbreviatedOid": "88e7724"
+          },
+          "author": "Sakurann",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2024-08-13T16:26:04Z",
+          "updatedAt": "2024-08-13T16:26:04Z",
+          "comments": [
+            {
+              "originalPosition": 51,
+              "body": "I am very sorry I did not catch that. you are absolutely right, reverting this.",
+              "createdAt": "2024-08-13T16:26:04Z",
+              "updatedAt": "2024-08-13T16:26:04Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOHTmVzM6FSFmB",
+          "commit": {
+            "abbreviatedOid": "e980c23"
+          },
+          "author": "bc-pi",
+          "authorAssociation": "COLLABORATOR",
+          "state": "APPROVED",
+          "body": "looks good now, thanks for further tightening the exposition ",
+          "createdAt": "2024-08-13T17:02:41Z",
+          "updatedAt": "2024-08-13T17:02:41Z",
+          "comments": []
+        },
+        {
+          "id": "PRR_kwDOHTmVzM6FSkjr",
+          "commit": {
+            "abbreviatedOid": "e980c23"
+          },
+          "author": "selfissued",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2024-08-13T18:06:36Z",
+          "updatedAt": "2024-08-13T18:06:37Z",
+          "comments": [
+            {
+              "originalPosition": 263,
+              "body": "```suggestion\r\nthe JWS JSON Serialization, the representation as a regular SD-JWT using the Compact Serialization MUST be\r\ncreated temporarily to calculate the digest. In detail, the SD-JWT using the Compact Serialization part is built\r\n```",
+              "createdAt": "2024-08-13T18:06:37Z",
+              "updatedAt": "2024-08-13T18:06:37Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOHTmVzM6FTR6I",
+          "commit": {
+            "abbreviatedOid": "e980c23"
+          },
+          "author": "selfissued",
+          "authorAssociation": "COLLABORATOR",
+          "state": "APPROVED",
+          "body": "All these changes look good.  Thanks for doing them.  By my count, this addresses 36 of my 59 review comments at https://mailarchive.ietf.org/arch/msg/oauth/5V6nVIfYw3BxsayLg1iY-YRUxdc/ - leaving 23.  Those that I believe have not yet been addressed are listed below.  I assume they will be addressed in subsequent PRs and/or discussed on list. \r\n\r\nI'm approving because I'm fine with this existing set being merged in now.  (Although a few of the remaining ones are also purely editorial, so could also be added. here.)\r\n\r\nSection 1. [Introduction](https://www.ietf.org/archive/id/draft-ietf-oauth-selective-disclosure-jwt-10.html#name-introduction):  The usage of \u201cHolder\u201d in \u201cused a number of times by the user (the \"Holder\" of the JWT)\u201d inconsistent with its usage in the definitions, which defines \u201cHolder\u201d as being \u201can entity\u201d.  The usage here in the introduction makes the holder into a person rather than an entity.  Please adjust the language here to not confuse the user who utilizes the holder with the holder itself.\r\nSection 1. [Introduction](https://www.ietf.org/archive/id/draft-ietf-oauth-selective-disclosure-jwt-10.html#name-introduction):  In \u201c\"Claims\" here refers to both object properties (name-value pairs) as well as array elements.\u201d change \u201carray elements\u201d to \u201celements in arrays that are the values of name/value pairs\u201d (or something like that).  Without saying what the array elements are, readers will be confused about what\u2019s being referred to.  I\u2019d apply this clarification in 4.1. [SD-JWT and Disclosures](https://www.ietf.org/archive/id/draft-ietf-oauth-selective-disclosure-jwt-10.html#name-sd-jwt-and-disclosures) and other applicable locations as well.\r\nSection 1. [Introduction](https://www.ietf.org/archive/id/draft-ietf-oauth-selective-disclosure-jwt-10.html#name-introduction):  In \u201cthey hold the private key associated to the SD-JWT\u201d, change \u201cassociated to\u201d to \u201cassociated with\u201d.\r\nSection 1. [Introduction](https://www.ietf.org/archive/id/draft-ietf-oauth-selective-disclosure-jwt-10.html#name-introduction):  During IESG and/or RFC Editor review, we\u2019re likely going to be asked to add a reference for JSON-LD at \u201cSD-JWT can be used with any JSON-based representation of claims, including JSON-LD.\u201d  If we don\u2019t want that, I\u2019d delete \u201c, including JSON-LD\u201d now.\r\nSection 1.1. [Feature Summary](https://www.ietf.org/archive/id/draft-ietf-oauth-selective-disclosure-jwt-10.html#name-feature-summary):  In \u201cA format for enabling selective disclosure in nested JSON data structures, supporting selectively disclosable object properties (name-value pairs) and array elements\u201d, consider expanding \u201carray elements\u201d in the same manner as the preceding comment to make the meaning more evident.\r\nSection 1.2. [Conventions and Terminology](https://www.ietf.org/archive/id/draft-ietf-oauth-selective-disclosure-jwt-10.html#name-conventions-and-terminology):  I suggest moving the \u201cbase64url\u201d definition to the Terms and Definitions section and use a parallel structure to that at https://www.rfc-editor.org/rfc/rfc7519.html#section-2.  Specifically, say \u201cThe \u201cbase64url\u201d term denotes the URL-safe base64 encoding without padding defined in Section 2 of [RFC7515].\u201d  Then introduce the rest of the definitions with the phrase \u201cThese terms are defined by this specification:\u201d as is done in RFC 7519.  The current presentation is fairly jarring.\r\nSection 5.2.2. [Disclosures for Array Elements](https://www.ietf.org/archive/id/draft-ietf-oauth-selective-disclosure-jwt-10.html#name-disclosures-for-array-eleme):  Some readers and implementers will be confused at this point because the array disclosure doesn\u2019t indicate what Claim Name the disclosed array element corresponds to.  Please say here how the Claim Name information is communicated.  At the very least, add a forward reference saying that the way the array element disclosure is associated with the Claim Name is described in 5.2.4.2. [Array Elements](https://www.ietf.org/archive/id/draft-ietf-oauth-selective-disclosure-jwt-10.html#name-array-elements).\r\nSection 5.2.4.2. [Array Elements](https://www.ietf.org/archive/id/draft-ietf-oauth-selective-disclosure-jwt-10.html#name-array-elements):  I suggest adding an example also enabling disclosing a second array element, so that the syntax will be clear to readers.  In other words, show what \u201cunless a matching Disclosure for the second element is received\u201d would look like.  Or add a forward reference showing a place that it\u2019s done.\r\nSection 5.2.6. [Recursive Disclosures](https://www.ietf.org/archive/id/draft-ietf-oauth-selective-disclosure-jwt-10.html#name-recursive-disclosures):  Change \u201cconceal presence\u201d to \u201cconceal the presence\u201d.\r\nSection 5.3. [Key Binding JWT](https://www.ietf.org/archive/id/draft-ietf-oauth-selective-disclosure-jwt-10.html#name-key-binding-jwt):  Change \u201cMUST NOT be none.\u201d to \u201cIt MUST NOT be \"none\".\u201d.\r\nSection 5.3.2. [Validating the Key Binding JWT](https://www.ietf.org/archive/id/draft-ietf-oauth-selective-disclosure-jwt-10.html#name-validating-the-key-binding-):  In \u201cif the SD-JWT contains a cnf value with a jwk member, the Verifier could parse the provided JWK and use it to verify the Key Binding JWT.\u201d, change \u201ccould\u201d to \u201cMUST\u201d.  Make this normative to increase interoperability!\r\nSection 6.1. [Issuance](https://www.ietf.org/archive/id/draft-ietf-oauth-selective-disclosure-jwt-10.html#name-issuance):  There are many places from here on where the label \u201cSHA-256 Hash\u201d is used, for instance \u201cSHA-256 Hash: jsu9yVulwQQlhFlM_3JlzMaSFzglhQG0DpfayQwLUK4\u201d.  Change all of these to \u201cBase64url-Encoded SHA-256 Hash\u201d for correctness.\r\nSection 6.1. [Issuance](https://www.ietf.org/archive/id/draft-ietf-oauth-selective-disclosure-jwt-10.html#name-issuance):  Change \u201cThe following Key Binding JWT payload was created and signed for this presentation by the Holder:\u201d to \u201cThe following Key Binding JWT Claims Set was created and signed for this presentation by the Holder:\u201d, again, to use the standard JWT claims terminology.\r\nSection 8.1. [Verification of the SD-JWT](https://www.ietf.org/archive/id/draft-ietf-oauth-selective-disclosure-jwt-10.html#name-verification-of-the-sd-jwt):  Delete \u201cnbf\u201d from \u201cclaims such as nbf, iat, and exp\u201d and everywhere else in the spec, other than in 10.7. [Selectively-Disclosable Validity Claims](https://www.ietf.org/archive/id/draft-ietf-oauth-selective-disclosure-jwt-10.html#name-selectively-disclosable-val), where both \u201ciat\u201d and \u201cnbf\u201d should be listed, as described in my comment there.  \u201ciat\u201d (Issued At) is a standard validity claim in JWT tokens (for instance, ID Tokens), whereas \u201cnbf\u201d (Not Before) is rarely used, since it is only useful when future-dating tokens, which is rare.\r\nSection 10.1. [Mandatory Signing of the Issuer-signed JWT](https://www.ietf.org/archive/id/draft-ietf-oauth-selective-disclosure-jwt-10.html#name-mandatory-signing-of-the-is):  \u2026  Also, the post-quantum language seems superfluous and non-actionable, so I\u2019d delete it.\r\nSection 10.7. [Selectively-Disclosable Validity Claims](https://www.ietf.org/archive/id/draft-ietf-oauth-selective-disclosure-jwt-10.html#name-selectively-disclosable-val):  Add \u201ciat (Issued At) to the validity claims list before \u201cnbf\u201d, and change \u201cnbf (Not Before)\u201d to \u201cnbf (Not Before) (if present)\u201d.  \u201ciat\u201d (Issued At) is a standard validity claim in JWT tokens (for instance, ID Tokens), whereas \u201cnbf\u201d (Not Before) is rarely used, since it is only useful when future-dating tokens, which is rare.  Change all uses of \u201cnbf\u201d to \u201ciat\u201d elsewhere in the spec.\r\nSection 11.1. [Storage of Signed User Data](https://www.ietf.org/archive/id/draft-ietf-oauth-selective-disclosure-jwt-10.html#name-storage-of-signed-user-data):  Change \u201cOpenID Connect\u201d to \u201cOpenID Connect [OpenID.Core]\u201d.\r\nSection 12. [Acknowledgements](https://www.ietf.org/archive/id/draft-ietf-oauth-selective-disclosure-jwt-10.html#name-acknowledgements):  Consider sorting the acknowledgements alphabetically by last name, which is the usual convention.\r\nSection 14.2. [Informative References](https://www.ietf.org/archive/id/draft-ietf-oauth-selective-disclosure-jwt-10.html#name-informative-references):  Update the reference \u201c[I-D.ietf-oauth-sd-jwt-vc]\u201d to https://datatracker.ietf.org/doc/html/draft-ietf-oauth-sd-jwt-vc-04.\r\nSection A.1. [Simple Structured SD-JWT](https://www.ietf.org/archive/id/draft-ietf-oauth-selective-disclosure-jwt-10.html#name-simple-structured-sd-jwt): Change \u201callowing to separately disclose individual members of the claim\u201d to \u201callowing separate disclosure of individual members of the claim\u201d.\r\nSection A.5. [Elliptic Curve Key Used in the Examples](https://www.ietf.org/archive/id/draft-ietf-oauth-selective-disclosure-jwt-10.html#name-elliptic-curve-key-used-in-): Change \u201cThe public key used to validate a Key Binding JWT can be found in the examples as the content of the cnf claim.\u201d to \u201cThe public key used to validate a Key Binding JWT can be found in the examples as the value of the jwk member of the cnf claim.\u201d\r\nSection Appendix B. [Disclosure Format Considerations](https://www.ietf.org/archive/id/draft-ietf-oauth-selective-disclosure-jwt-10.html#name-disclosure-format-considera): At the end of the paragraph introduced by \u201c1. Canonicalization\u201d, consider adding the sentence \u201cCanonicalization schemes have a long history of creating interoperability problems in practice.\u201d\r\nEverywhere:  Consider changing the name \u201c\u2026\u201d to something more indicative of its function, such as \u201c_sd_element\u201d or \u201c_sd_item\u201d.  Or alternatively, at least provide rationale for why that non-obvious name was chosen.",
+          "createdAt": "2024-08-13T19:42:41Z",
+          "updatedAt": "2024-08-13T19:42:41Z",
+          "comments": []
         }
       ]
+    },
+    {
+      "number": 453,
+      "id": "PR_kwDOHTmVzM54Zyhz",
+      "title": "a new PR to add PR #452 in document history",
+      "url": "https://github.com/oauth-wg/oauth-selective-disclosure-jwt/pull/453",
+      "state": "OPEN",
+      "author": "bc-pi",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "a new PR to add PR #452 in document history",
+      "createdAt": "2024-08-14T20:01:28Z",
+      "updatedAt": "2024-08-14T20:15:12Z",
+      "baseRepository": "oauth-wg/oauth-selective-disclosure-jwt",
+      "baseRefName": "master",
+      "baseRefOid": "1145a07ec89be8f280588404591d7ac9c54e04e6",
+      "headRepository": "oauth-wg/oauth-selective-disclosure-jwt",
+      "headRefName": "that-pesky-document-history",
+      "headRefOid": "b93f4c9d7a7bcee36999be95271c473edc7c1fe0",
+      "closedAt": null,
+      "mergedAt": null,
+      "mergedBy": null,
+      "mergeCommit": null,
+      "comments": [],
+      "reviews": []
     }
   ]
 }
