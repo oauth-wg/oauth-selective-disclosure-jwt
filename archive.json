@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2024-08-18T00:14:24.440692+00:00",
+  "timestamp": "2024-08-20T00:13:18.875325+00:00",
   "repo": "oauth-wg/oauth-selective-disclosure-jwt",
   "labels": [
     {
@@ -48345,24 +48345,26 @@
       "id": "PR_kwDOHTmVzM54Zyhz",
       "title": "a new PR to add PR #452 in document history",
       "url": "https://github.com/oauth-wg/oauth-selective-disclosure-jwt/pull/453",
-      "state": "OPEN",
+      "state": "MERGED",
       "author": "bc-pi",
       "authorAssociation": "COLLABORATOR",
       "assignees": [],
       "labels": [],
       "body": "a new PR to add PR #452 in document history",
       "createdAt": "2024-08-14T20:01:28Z",
-      "updatedAt": "2024-08-15T15:17:55Z",
+      "updatedAt": "2024-08-19T15:58:23Z",
       "baseRepository": "oauth-wg/oauth-selective-disclosure-jwt",
       "baseRefName": "master",
       "baseRefOid": "1145a07ec89be8f280588404591d7ac9c54e04e6",
       "headRepository": "oauth-wg/oauth-selective-disclosure-jwt",
       "headRefName": "that-pesky-document-history",
       "headRefOid": "b93f4c9d7a7bcee36999be95271c473edc7c1fe0",
-      "closedAt": null,
-      "mergedAt": null,
-      "mergedBy": null,
-      "mergeCommit": null,
+      "closedAt": "2024-08-19T15:58:22Z",
+      "mergedAt": "2024-08-19T15:58:22Z",
+      "mergedBy": "bc-pi",
+      "mergeCommit": {
+        "oid": "4f4886237a19314d2fdcba1234cc1a4b258a85ef"
+      },
       "comments": [],
       "reviews": [
         {
