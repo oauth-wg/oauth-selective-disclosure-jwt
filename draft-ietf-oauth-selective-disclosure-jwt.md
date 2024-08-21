@@ -1220,7 +1220,7 @@ The privacy principles of [@ISO.29100] should be adhered to.
 Wherever End-User data is stored, it represents a potential
 target for an attacker. This target can be of particularly
 high value when the data is signed by a trusted authority like an
-official national identity service. For example, in OpenID Connect,
+official national identity service. For example, in OpenID Connect [@?OpenID.Core],
 signed ID Tokens can be stored by Relying Parties. In the case of
 SD-JWT, Holders have to store SD-JWTs,
 and Issuers and Verifiers may decide to do so as well.
