@@ -542,7 +542,7 @@ position as the original claim value in the array. For each digest, an object
 of the form `{"...": "<digest>"}` is added to the array. The key MUST always be the
 string `...` (three dots). The value MUST be the digest of the Disclosure created as
 described in (#hashing_disclosures). There MUST NOT be any other keys in the
-object.
+object. Note that the string `...` was chosen because the ellipsis character, typically entered as three period characters, is commonly used in places where content is omitted from the present context.
 
 For example, using the digest of the array element Disclosure created above,
 the Issuer could create the following SD-JWT payload to make the second element
