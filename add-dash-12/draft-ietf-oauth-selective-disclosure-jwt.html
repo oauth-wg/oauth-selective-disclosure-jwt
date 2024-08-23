@@ -1546,7 +1546,7 @@ SD-JWT in its <code>sd_hash</code> claim.<a href="#section-2-1.10" class="pilcro
 </dd>
         <dd class="break"></dd>
 <dt id="section-2-1.15">Holder:</dt>
-        <dd style="margin-left: 1.5em" id="section-2-1.16">An entity that received SD-JWTs from the Issuer and has control over them.<a href="#section-2-1.16" class="pilcrow">¶</a>
+        <dd style="margin-left: 1.5em" id="section-2-1.16">An entity that received SD-JWTs from the Issuer and has control over them. In the context of this document, the term may refer to the actual user, the supporting hardware and software in their possession, or both.<a href="#section-2-1.16" class="pilcrow">¶</a>
 </dd>
         <dd class="break"></dd>
 <dt id="section-2-1.17">Verifier:</dt>
@@ -2004,7 +2004,7 @@ position as the original claim value in the array. For each digest, an object
 of the form <code>{"...": "&lt;digest&gt;"}</code> is added to the array. The key MUST always be the
 string <code>...</code> (three dots). The value MUST be the digest of the Disclosure created as
 described in <a href="#hashing_disclosures" class="auto internal xref">Section 5.2.3</a>. There MUST NOT be any other keys in the
-object.<a href="#section-5.2.4.2-1" class="pilcrow">¶</a></p>
+object. Note that the string <code>...</code> was chosen because the ellipsis character, typically entered as three period characters, is commonly used in places where content is omitted from the present context.<a href="#section-5.2.4.2-1" class="pilcrow">¶</a></p>
 <p id="section-5.2.4.2-2">For example, using the digest of the array element Disclosure created above,
 the Issuer could create the following SD-JWT payload to make the second element
 of the <code>nationalities</code> array selectively disclosable:<a href="#section-5.2.4.2-2" class="pilcrow">¶</a></p>
@@ -2143,7 +2143,7 @@ signature over an SD-JWT by the Holder's private key.<a href="#section-5.3-1" cl
                 <code>typ</code>: REQUIRED. MUST be <code>kb+jwt</code>, which explicitly types the Key Binding JWT as recommended in Section 3.11 of <span>[<a href="#RFC8725" class="cite xref">RFC8725</a>]</span>.<a href="#section-5.3-3.1.2.1" class="pilcrow">¶</a>
 </li>
               <li class="compact" id="section-5.3-3.1.2.2">
-                <code>alg</code>: REQUIRED. A digital signature algorithm identifier such as per IANA "JSON Web Signature and Encryption Algorithms" registry. MUST NOT be <code>none</code>.<a href="#section-5.3-3.1.2.2" class="pilcrow">¶</a>
+                <code>alg</code>: REQUIRED. A digital signature algorithm identifier such as per IANA "JSON Web Signature and Encryption Algorithms" registry. It MUST NOT be <code>none</code>.<a href="#section-5.3-3.1.2.2" class="pilcrow">¶</a>
 </li>
             </ul>
 </li>
@@ -2435,8 +2435,8 @@ ZHJ5M2xjYndIZ2VaOGtoQXYxVTFPU2xlclAwVmtCSnJXWjAifV0sICJfc2RfYWxnIjog
 InNoYS0yNTYiLCAiY25mIjogeyJqd2siOiB7Imt0eSI6ICJFQyIsICJjcnYiOiAiUC0y
 NTYiLCAieCI6ICJUQ0FFUjE5WnZ1M09IRjRqNFc0dmZTVm9ISVAxSUxpbERsczd2Q2VH
 ZW1jIiwgInkiOiAiWnhqaVdXYlpNUUdIVldLVlE0aGJTSWlyc1ZmdWVjQ0U2dDRqVDlG
-MkhaUSJ9fX0.yd-lh0gPNx2ABD7_MG5PR6UD1C4glKj0WlPtJfdXV49pNLVJuASJdNes
-q4mGcaURYXgjpiBip3q1DB7seS1oBA
+MkhaUSJ9fX0.UeI5j4ZrPzFIfopZj2vZOhfnR00MehmmOC1anZCao_8BmHuyWpWwz5d7
+sQ1lt6KjVfRz37cOsANFs89fef2LWw
 
 </pre><a href="#section-6.1-29" class="pilcrow">¶</a>
 </div>
@@ -2458,8 +2458,8 @@ ZHJ5M2xjYndIZ2VaOGtoQXYxVTFPU2xlclAwVmtCSnJXWjAifV0sICJfc2RfYWxnIjog
 InNoYS0yNTYiLCAiY25mIjogeyJqd2siOiB7Imt0eSI6ICJFQyIsICJjcnYiOiAiUC0y
 NTYiLCAieCI6ICJUQ0FFUjE5WnZ1M09IRjRqNFc0dmZTVm9ISVAxSUxpbERsczd2Q2VH
 ZW1jIiwgInkiOiAiWnhqaVdXYlpNUUdIVldLVlE0aGJTSWlyc1ZmdWVjQ0U2dDRqVDlG
-MkhaUSJ9fX0.yd-lh0gPNx2ABD7_MG5PR6UD1C4glKj0WlPtJfdXV49pNLVJuASJdNes
-q4mGcaURYXgjpiBip3q1DB7seS1oBA~WyIyR0xDNDJzS1F2ZUNmR2ZyeU5STjl3IiwgI
+MkhaUSJ9fX0.UeI5j4ZrPzFIfopZj2vZOhfnR00MehmmOC1anZCao_8BmHuyWpWwz5d7
+sQ1lt6KjVfRz37cOsANFs89fef2LWw~WyIyR0xDNDJzS1F2ZUNmR2ZyeU5STjl3IiwgI
 mdpdmVuX25hbWUiLCAiSm9obiJd~WyJlbHVWNU9nM2dTTklJOEVZbnN4QV9BIiwgImZh
 bWlseV9uYW1lIiwgIkRvZSJd~WyI2SWo3dE0tYTVpVlBHYm9TNXRtdlZBIiwgImVtYWl
 sIiwgImpvaG5kb2VAZXhhbXBsZS5jb20iXQ~WyJlSThaV205UW5LUHBOUGVOZW5IZGhR
@@ -2503,18 +2503,18 @@ ZHJ5M2xjYndIZ2VaOGtoQXYxVTFPU2xlclAwVmtCSnJXWjAifV0sICJfc2RfYWxnIjog
 InNoYS0yNTYiLCAiY25mIjogeyJqd2siOiB7Imt0eSI6ICJFQyIsICJjcnYiOiAiUC0y
 NTYiLCAieCI6ICJUQ0FFUjE5WnZ1M09IRjRqNFc0dmZTVm9ISVAxSUxpbERsczd2Q2VH
 ZW1jIiwgInkiOiAiWnhqaVdXYlpNUUdIVldLVlE0aGJTSWlyc1ZmdWVjQ0U2dDRqVDlG
-MkhaUSJ9fX0.yd-lh0gPNx2ABD7_MG5PR6UD1C4glKj0WlPtJfdXV49pNLVJuASJdNes
-q4mGcaURYXgjpiBip3q1DB7seS1oBA~WyJlbHVWNU9nM2dTTklJOEVZbnN4QV9BIiwgI
+MkhaUSJ9fX0.UeI5j4ZrPzFIfopZj2vZOhfnR00MehmmOC1anZCao_8BmHuyWpWwz5d7
+sQ1lt6KjVfRz37cOsANFs89fef2LWw~WyJlbHVWNU9nM2dTTklJOEVZbnN4QV9BIiwgI
 mZhbWlseV9uYW1lIiwgIkRvZSJd~WyJBSngtMDk1VlBycFR0TjRRTU9xUk9BIiwgImFk
 ZHJlc3MiLCB7InN0cmVldF9hZGRyZXNzIjogIjEyMyBNYWluIFN0IiwgImxvY2FsaXR5
 IjogIkFueXRvd24iLCAicmVnaW9uIjogIkFueXN0YXRlIiwgImNvdW50cnkiOiAiVVMi
 fV0~WyIyR0xDNDJzS1F2ZUNmR2ZyeU5STjl3IiwgImdpdmVuX25hbWUiLCAiSm9obiJd
 ~WyJsa2x4RjVqTVlsR1RQVW92TU5JdkNBIiwgIlVTIl0~eyJhbGciOiAiRVMyNTYiLCA
 idHlwIjogImtiK2p3dCJ9.eyJub25jZSI6ICIxMjM0NTY3ODkwIiwgImF1ZCI6ICJodH
-RwczovL3ZlcmlmaWVyLmV4YW1wbGUub3JnIiwgImlhdCI6IDE3MjQ0NDE3NzEsICJzZF
-9oYXNoIjogInBLVFd2T2FIdi1VQ28zR1pRTktlUHUtNE1YNEpTNU9Vc0FfRDJCWnM0Sk
-EifQ.7Oe7L_-mmI43c_RAfafoQP8f40ZqX23EpzztwWLIBhfUEBEy_3VHG9BGEg326G8
-EHlaADpCJNOZXvOdd_ofEnQ
+RwczovL3ZlcmlmaWVyLmV4YW1wbGUub3JnIiwgImlhdCI6IDE3MjQ0NDE4MjIsICJzZF
+9oYXNoIjogImZlclhGRWdKLUNmQnBLNUtRSFJZQU9zanA3OHplaTg0UVB3Z3pmYnVmVX
+MifQ.45P3bbG4ZSw4EupAoy8TWLCoVIlPZovQ_kyf_Vq0xNSvb-2xRj0o13946ZmEyc0
+wOgFZ0t_e_oM8ajCVDDGmFA
 
 </pre><a href="#section-6.2-2" class="pilcrow">¶</a>
 </div>
@@ -2523,8 +2523,8 @@ EHlaADpCJNOZXvOdd_ofEnQ
 <pre>{
   "nonce": "1234567890",
   "aud": "https://verifier.example.org",
-  "iat": 1724441771,
-  "sd_hash": "pKTWvOaHv-UCo3GZQNKePu-4MX4JS5OUsA_D2BZs4JA"
+  "iat": 1724441822,
+  "sd_hash": "ferXFEgJ-CfBpK5KQHRYAOsjp78zei84QPwgzfbufUs"
 }
 
 </pre><a href="#section-6.2-4" class="pilcrow">¶</a>
@@ -3066,8 +3066,8 @@ issued using the Flattened JSON Serialization:<a href="#section-9.2-2" class="pi
     Z1ZWNDRTZ0NGpUOUYySFpRIn19fQ",
   "protected":
     "eyJhbGciOiAiRVMyNTYiLCAidHlwIjogImV4YW1wbGUrc2Qtand0In0",
-  "signature": "Qn2RLvUW2-jqZLNe5AUoVcNDkXWJjEKJKJnHqtIgrM4VmQZT2Sq8
-    hFOb963f3k0za4dyMsCBSQhmxfEjReUxZA"
+  "signature": "_0XSaaL_QNaKyoSnvNd0Xoiwk2PU2NBlBXAEtqhXCxv8lGGkw5a6
+    wH83Q5p7ETldJsfZGcEocoRTq_ZIOaZwIA"
 }
 
 </pre><a href="#section-9.2-3" class="pilcrow">¶</a>
@@ -3084,10 +3084,10 @@ issued using the Flattened JSON Serialization:<a href="#section-9.2-2" class="pi
     ],
     "kb_jwt": "eyJhbGciOiAiRVMyNTYiLCAidHlwIjogImtiK2p3dCJ9.eyJub25j
       ZSI6ICIxMjM0NTY3ODkwIiwgImF1ZCI6ICJodHRwczovL3ZlcmlmaWVyLmV4YW
-      1wbGUub3JnIiwgImlhdCI6IDE3MjQ0NDE3NzEsICJzZF9oYXNoIjogIlJmcXYw
-      TDN1TktxM1BZWXdVbjh5YVVUSTdHTEVKM0dPUjVtV3B0MFl6RGsifQ.yEhAzMF
-      C7scqBOLCqcTg4IqlH9U6JIlAb2hLDJcN4ZY_xxqnBFN0jHE_9S0MspCEBLSrI
-      fe3O3d1bZeODl4ttw"
+      1wbGUub3JnIiwgImlhdCI6IDE3MjQ0NDE4MjIsICJzZF9oYXNoIjogImx1ZllG
+      aWVtQzZKRUpCNXR3WWFEdUlBMjd4WFZldDhfaUVpampZcXhmdUUifQ.YS4x5HM
+      gd2MUC-M4OL79W9jnrgxKG8WeVR-Cv6GbCsPL5KtuVjKgG-EIQgGSzjhXiiT7M
+      9U4-HVM1m8V05lnPg"
   },
   "payload": "eyJfc2QiOiBbIjRIQm42YUlZM1d0dUdHV1R4LXFVajZjZGs2V0JwWn
     lnbHRkRmF2UGE3TFkiLCAiOHNtMVFDZjAyMXBObkhBQ0k1c1A0bTRLWmd5Tk9PQV
@@ -3101,8 +3101,8 @@ issued using the Flattened JSON Serialization:<a href="#section-9.2-2" class="pi
     Z1ZWNDRTZ0NGpUOUYySFpRIn19fQ",
   "protected":
     "eyJhbGciOiAiRVMyNTYiLCAidHlwIjogImV4YW1wbGUrc2Qtand0In0",
-  "signature": "Qn2RLvUW2-jqZLNe5AUoVcNDkXWJjEKJKJnHqtIgrM4VmQZT2Sq8
-    hFOb963f3k0za4dyMsCBSQhmxfEjReUxZA"
+  "signature": "_0XSaaL_QNaKyoSnvNd0Xoiwk2PU2NBlBXAEtqhXCxv8lGGkw5a6
+    wH83Q5p7ETldJsfZGcEocoRTq_ZIOaZwIA"
 }
 
 </pre><a href="#section-9.2-5" class="pilcrow">¶</a>
@@ -3145,15 +3145,15 @@ Serialization:<a href="#section-9.3-2" class="pilcrow">¶</a></p>
         "kid": "issuer-key-1",
         "kb_jwt": "eyJhbGciOiAiRVMyNTYiLCAidHlwIjogImtiK2p3dCJ9.eyJu
           b25jZSI6ICIxMjM0NTY3ODkwIiwgImF1ZCI6ICJodHRwczovL3ZlcmlmaW
-          VyLmV4YW1wbGUub3JnIiwgImlhdCI6IDE3MjQ0NDE3NzEsICJzZF9oYXNo
-          IjogIm9yUFZGQmRSVUFvbWRZRHB6cmRlckVUOG9NZnYxaXBNVnJEZXhaN2
-          ZGOUUifQ.s7Cm7robbcHSc6IZoLSu5cwcGElmBFplBV-GmvCc7O4GhbkIS
-          Jog9VyLYiNldLnmqnLhp223iZ9_tHGxTOSLyA"
+          VyLmV4YW1wbGUub3JnIiwgImlhdCI6IDE3MjQ0NDE4MjIsICJzZF9oYXNo
+          IjogIjd2cHljaTBsbW5SVmE1amFiYnlLZktLNnEyNHQtT3lrMHBwNWFLVk
+          1IYkkifQ.vsyPBNDTHjz4kSaefValu7jFQpeRK03v9j-_6ReC9In6Fkkjk
+          FN2Zf3yVfkeo4P4dkiRh-cFLnZFIu_0unumRw"
       },
       "protected":
         "eyJhbGciOiAiRVMyNTYiLCAidHlwIjogImV4YW1wbGUrc2Qtand0In0",
-      "signature": "MQ0q1nmjb5S9-nq7GZN8VuVkJZHSxjziA7J5LuWF1ogQRD6F
-        u6o0WI01eaUnOLRVwHASceshv1WOs-b7ydAY8A"
+      "signature": "YizpEmiYILO_TcYgiwPZtmk6m7-2bYssRK6aSEPYEZLU1vRL
+        P4mDdVOpaOdizxE4hunpwqKNif1ULCFTXqBpCw"
     },
     {
       "header": {
@@ -3161,8 +3161,8 @@ Serialization:<a href="#section-9.3-2" class="pilcrow">¶</a></p>
       },
       "protected":
         "eyJhbGciOiAiRVMyNTYiLCAidHlwIjogImV4YW1wbGUrc2Qtand0In0",
-      "signature": "XeartVqKPjL8QSRHMm6p9IDCL4AZhzHXol4hQVQdVtNMa6EN
-        GZpEeLdm7lF-58Zd_VePNF2UqNKNIjB92PHtAw"
+      "signature": "d7chV3CHpMJmNZfxeiQbr-QEN5-WOPlx_aucc3AB-NXzqB9s
+        guF77KB5UARvtkMBgL4qRXFR-bs3CGAI_h-Rsw"
     }
   ]
 }
@@ -3468,7 +3468,7 @@ The definition of <code>typ</code> in Section 4.1.9 of <span>[<a href="#RFC7515"
 <p id="section-11.1-1">Wherever End-User data is stored, it represents a potential
 target for an attacker. This target can be of particularly
 high value when the data is signed by a trusted authority like an
-official national identity service. For example, in OpenID Connect,
+official national identity service. For example, in OpenID Connect <span>[<a href="#OpenID.Core" class="cite xref">OpenID.Core</a>]</span>,
 signed ID Tokens can be stored by Relying Parties. In the case of
 SD-JWT, Holders have to store SD-JWTs,
 and Issuers and Verifiers may decide to do so as well.<a href="#section-11.1-1" class="pilcrow">¶</a></p>
@@ -4000,6 +4000,10 @@ the media type is encoded as an SD-JWT.<a href="#section-13.3-1" class="pilcrow"
         <dd>
 <span class="refAuthor">Lodderstedt, T.</span>, <span class="refAuthor">Fett, D.</span>, <span class="refAuthor">Haine, M.</span>, <span class="refAuthor">Pulido, A.</span>, <span class="refAuthor">Lehmann, K.</span>, and <span class="refAuthor">K. Koiwai</span>, <span class="refTitle">"OpenID Connect for Identity Assurance 1.0"</span>, <time datetime="2024-07-24" class="refDate">24 July 2024</time>, <span>&lt;<a href="https://openid.net/specs/openid-connect-4-identity-assurance-1_0.html">https://openid.net/specs/openid-connect-4-identity-assurance-1_0.html</a>&gt;</span>. </dd>
 <dd class="break"></dd>
+<dt id="OpenID.Core">[OpenID.Core]</dt>
+        <dd>
+<span class="refAuthor">Sakimura, N.</span>, <span class="refAuthor">Bradley, J.</span>, <span class="refAuthor">Jones, M.</span>, <span class="refAuthor">de Medeiros, B.</span>, and <span class="refAuthor">C. Mortimore</span>, <span class="refTitle">"OpenID Connect Core 1.0 incorporating errata set 2"</span>, <time datetime="2023-12-15" class="refDate">15 December 2023</time>, <span>&lt;<a href="https://openid.net/specs/openid-connect-core-1_0.html">https://openid.net/specs/openid-connect-core-1_0.html</a>&gt;</span>. </dd>
+<dd class="break"></dd>
 <dt id="RFC2046">[RFC2046]</dt>
         <dd>
 <span class="refAuthor">Freed, N.</span> and <span class="refAuthor">N. Borenstein</span>, <span class="refTitle">"Multipurpose Internet Mail Extensions (MIME) Part Two: Media Types"</span>, <span class="seriesInfo">RFC 2046</span>, <span class="seriesInfo">DOI 10.17487/RFC2046</span>, <time datetime="1996-11" class="refDate">November 1996</time>, <span>&lt;<a href="https://www.rfc-editor.org/info/rfc2046">https://www.rfc-editor.org/info/rfc2046</a>&gt;</span>. </dd>
@@ -4271,8 +4275,8 @@ WUpISVo4VnUtZjlDQ3lWdWIyVWZnRWs4anZ2WGV6d0sxcF9KbmVlWFEiLCAiZ2xUM2hy
 U1U3ZlNXZ3dGNVVEWm1Xd0JUdzMyZ25VbGRJaGk4aEdWQ2FWNCIsICJydkpkNmlxNlQ1
 ZWptc0JNb0d3dU5YaDlxQUFGQVRBY2k0MG9pZEVlVnNBIiwgInVOSG9XWWhYc1poVkpD
 TkUyRHF5LXpxdDd0NjlnSkt5NVFhRnY3R3JNWDQiXX0sICJfc2RfYWxnIjogInNoYS0y
-NTYifQ.3-mMFIJbPpbLbABOsM1QjLL0HhZlCYL1x_lmSUE6FiVDQDZ9t9ocuv9gmMRT_
-kSLh3HBP6M3zIUBRGxVdqYBAQ~WyJHMDJOU3JRZmpGWFE3SW8wOXN5YWpBIiwgInJlZ2
+NTYifQ.XCN0d4EQpWq6O54iktVlXvYHYUevsZdvoFpGK4IFSevMrYdWSZRKarIV9Ossu
+fg4XS-CgVuWZ-XYkDaqPDUlAQ~WyJHMDJOU3JRZmpGWFE3SW8wOXN5YWpBIiwgInJlZ2
 lvbiIsICJcdTZlMmZcdTUzM2EiXQ~WyJsa2x4RjVqTVlsR1RQVW92TU5JdkNBIiwgImN
 vdW50cnkiLCAiSlAiXQ~
 
@@ -4609,8 +4613,8 @@ ZFJtc01vIiwgIldOQS1VTks3Rl96aHNBYjlzeVdPNklJUTF1SGxUbU9VOHI4Q3ZKMGNJ
 TWsiLCAiV3hoX3NWM2lSSDliZ3JUQkppLWFZSE5DTHQtdmpoWDFzZC1pZ09mXzlsayIs
 ICJfTy13SmlIM2VuU0I0Uk9IbnRUb1FUOEptTHR6LW1oTzJmMWM4OVhvZXJRIiwgImh2
 RFhod21HY0pRc0JDQTJPdGp1TEFjd0FNcERzYVUwbmtvdmNLT3FXTkUiXX19LCAiX3Nk
-X2FsZyI6ICJzaGEtMjU2In0.8o9_gckCH2GvG02WSZQArI0cm2tf-04QI5HQHCZfFTUv
-Hk5framex-UD_USq6MR7X-EGN5A12kZyLEW22bRFiQ~WyIyR0xDNDJzS1F2ZUNmR2Zye
+X2FsZyI6ICJzaGEtMjU2In0.LdOZqrAk4X0ITGMGST5vFptSLOJZZMc7MYPhXaWug99O
+2Owsp_PWlcmQErhIYIXiTtoJX6j-5TgWUk3H_DNP0g~WyIyR0xDNDJzS1F2ZUNmR2Zye
 U5STjl3IiwgInRpbWUiLCAiMjAxMi0wNC0yM1QxODoyNVoiXQ~WyJQYzMzSk0yTGNoY1
 VfbEhnZ3ZfdWZRIiwgeyJfc2QiOiBbIjl3cGpWUFd1RDdQSzBuc1FETDhCMDZsbWRnVj
 NMVnliaEh5ZFFwVE55TEkiLCAiRzVFbmhPQU9vVTlYXzZRTU52ekZYanBFQV9SYy1BRX
@@ -4730,8 +4734,8 @@ oeTJyMDE4dnJzSmpvLVZqZDZnNnl0N0Fhb25Lb25uaXVKOXplbDNqbyIsICJxcDdaX0t
 6ICJzaGEtMjU2IiwgImNuZiI6IHsiandrIjogeyJrdHkiOiAiRUMiLCAiY3J2IjogIlA
 tMjU2IiwgIngiOiAiVENBRVIxOVp2dTNPSEY0ajRXNHZmU1ZvSElQMUlMaWxEbHM3dkN
 lR2VtYyIsICJ5IjogIlp4amlXV2JaTVFHSFZXS1ZRNGhiU0lpcnNWZnVlY0NFNnQ0alQ
-5RjJIWlEifX19.L96NsoqtiwREROG2b2FLV3CUVSPyGgaDMifDXzcRzhC1gR9f0z1b3g
-g115AJacbbU95T-KK_Qq_clkSZXpCO5Q~WyIyR0xDNDJzS1F2ZUNmR2ZyeU5STjl3Iiw
+5RjJIWlEifX19.NVjmtYouYYnm5CO9udETQmEczqGYzpeJx2QmJFzVOYWS3vZoO-Fxcy
+9FrHduSFrIgws8_ojCj7TDkJt58s7vxA~WyIyR0xDNDJzS1F2ZUNmR2ZyeU5STjl3Iiw
 gImdpdmVuX25hbWUiLCAiRXJpa2EiXQ~WyJlbHVWNU9nM2dTTklJOEVZbnN4QV9BIiwg
 ImZhbWlseV9uYW1lIiwgIk11c3Rlcm1hbm4iXQ~WyI2SWo3dE0tYTVpVlBHYm9TNXRtd
 lZBIiwgImJpcnRoZGF0ZSIsICIxOTYzLTA4LTEyIl0~WyJlSThaV205UW5LUHBOUGVOZ
@@ -5086,14 +5090,14 @@ oeTJyMDE4dnJzSmpvLVZqZDZnNnl0N0Fhb25Lb25uaXVKOXplbDNqbyIsICJxcDdaX0t
 6ICJzaGEtMjU2IiwgImNuZiI6IHsiandrIjogeyJrdHkiOiAiRUMiLCAiY3J2IjogIlA
 tMjU2IiwgIngiOiAiVENBRVIxOVp2dTNPSEY0ajRXNHZmU1ZvSElQMUlMaWxEbHM3dkN
 lR2VtYyIsICJ5IjogIlp4amlXV2JaTVFHSFZXS1ZRNGhiU0lpcnNWZnVlY0NFNnQ0alQ
-5RjJIWlEifX19.L96NsoqtiwREROG2b2FLV3CUVSPyGgaDMifDXzcRzhC1gR9f0z1b3g
-g115AJacbbU95T-KK_Qq_clkSZXpCO5Q~WyJuUHVvUW5rUkZxM0JJZUFtN0FuWEZBIiw
+5RjJIWlEifX19.NVjmtYouYYnm5CO9udETQmEczqGYzpeJx2QmJFzVOYWS3vZoO-Fxcy
+9FrHduSFrIgws8_ojCj7TDkJt58s7vxA~WyJuUHVvUW5rUkZxM0JJZUFtN0FuWEZBIiw
 gIm5hdGlvbmFsaXRpZXMiLCBbIkRFIl1d~WyJNMEpiNTd0NDF1YnJrU3V5ckRUM3hBIi
 wgIjE4IiwgdHJ1ZV0~eyJhbGciOiAiRVMyNTYiLCAidHlwIjogImtiK2p3dCJ9.eyJub
 25jZSI6ICIxMjM0NTY3ODkwIiwgImF1ZCI6ICJodHRwczovL3ZlcmlmaWVyLmV4YW1wb
-GUub3JnIiwgImlhdCI6IDE3MjQ0NDE3NzEsICJzZF9oYXNoIjogIjU4c2ozMFRmRkpla
-ERqU3hFMkdxWFo1aW1yT0pMRHlaR19TZk9GNXpaNkEifQ.Gmjn43Cmqpt0YdgZMHpuQv
-DJptVHMTUWFnvv8OEB1-KT-iLOOBIBIKdiRv-ZaC87s_sjTTnvWU0YP5fTSJiYVg
+GUub3JnIiwgImlhdCI6IDE3MjQ0NDE4MjIsICJzZF9oYXNoIjogImhfNjlHUmJQZE5oU
+HJ2dFl5cjBRWUNkYWpKNFhwc0FaR1BjVWt5V3p6N0UifQ.snJUBitlMFjBXptIC47ak7
+lcUyyO2-Jo2KkLFWb1Y8M9kQzBNNrOwdlCwTkmMQXBnwTClH2zON5XdoStFbgx4g
 
 </pre><a href="#appendix-A.3-53" class="pilcrow">¶</a>
 </div>
@@ -5102,8 +5106,8 @@ DJptVHMTUWFnvv8OEB1-KT-iLOOBIBIKdiRv-ZaC87s_sjTTnvWU0YP5fTSJiYVg
 <pre>{
   "nonce": "1234567890",
   "aud": "https://verifier.example.org",
-  "iat": 1724441771,
-  "sd_hash": "58sj30TfFJehDjSxE2GqXZ5imrOJLDyZG_SfOF5zZ6A"
+  "iat": 1724441822,
+  "sd_hash": "h_69GRbPdNhPrvtYyr0QYCdajJ4XpsAZGPcUkyWzz7E"
 }
 
 </pre><a href="#appendix-A.3-55" class="pilcrow">¶</a>
@@ -5216,8 +5220,8 @@ VmFjY2luZVJlY2lwaWVudCJ9LCAidHlwZSI6ICJWYWNjaW5hdGlvbkV2ZW50In0sICJf
 c2RfYWxnIjogInNoYS0yNTYiLCAiY25mIjogeyJqd2siOiB7Imt0eSI6ICJFQyIsICJj
 cnYiOiAiUC0yNTYiLCAieCI6ICJUQ0FFUjE5WnZ1M09IRjRqNFc0dmZTVm9ISVAxSUxp
 bERsczd2Q2VHZW1jIiwgInkiOiAiWnhqaVdXYlpNUUdIVldLVlE0aGJTSWlyc1ZmdWVj
-Q0U2dDRqVDlGMkhaUSJ9fX0.NelTUhXmtaw1Ep2E2VoJ18zdBRSB5Jof9_6aXopTkjF0
-ZHc6n9Ekp5N4nrdMf1CQlKsyjlTrPL8zD6EBdvDIhw~WyIyR0xDNDJzS1F2ZUNmR2Zye
+Q0U2dDRqVDlGMkhaUSJ9fX0.QrMmGxC35PZ7ro5Bba35KXab2YViZWuhHzthILVtxhII
+ktxgJ7wGxDX5P9YPu2zmK8otNyDnVukLVDVMrRFNXA~WyIyR0xDNDJzS1F2ZUNmR2Zye
 U5STjl3IiwgImF0Y0NvZGUiLCAiSjA3QlgwMyJd~WyJlbHVWNU9nM2dTTklJOEVZbnN4
 QV9BIiwgIm1lZGljaW5hbFByb2R1Y3ROYW1lIiwgIkNPVklELTE5IFZhY2NpbmUgTW9k
 ZXJuYSJd~WyI2SWo3dE0tYTVpVlBHYm9TNXRtdlZBIiwgIm1hcmtldGluZ0F1dGhvcml
@@ -5499,18 +5503,18 @@ VmFjY2luZVJlY2lwaWVudCJ9LCAidHlwZSI6ICJWYWNjaW5hdGlvbkV2ZW50In0sICJf
 c2RfYWxnIjogInNoYS0yNTYiLCAiY25mIjogeyJqd2siOiB7Imt0eSI6ICJFQyIsICJj
 cnYiOiAiUC0yNTYiLCAieCI6ICJUQ0FFUjE5WnZ1M09IRjRqNFc0dmZTVm9ISVAxSUxp
 bERsczd2Q2VHZW1jIiwgInkiOiAiWnhqaVdXYlpNUUdIVldLVlE0aGJTSWlyc1ZmdWVj
-Q0U2dDRqVDlGMkhaUSJ9fX0.NelTUhXmtaw1Ep2E2VoJ18zdBRSB5Jof9_6aXopTkjF0
-ZHc6n9Ekp5N4nrdMf1CQlKsyjlTrPL8zD6EBdvDIhw~WyJQYzMzSk0yTGNoY1VfbEhnZ
+Q0U2dDRqVDlGMkhaUSJ9fX0.QrMmGxC35PZ7ro5Bba35KXab2YViZWuhHzthILVtxhII
+ktxgJ7wGxDX5P9YPu2zmK8otNyDnVukLVDVMrRFNXA~WyJQYzMzSk0yTGNoY1VfbEhnZ
 3ZfdWZRIiwgIm9yZGVyIiwgIjMvMyJd~WyJBSngtMDk1VlBycFR0TjRRTU9xUk9BIiwg
 ImRhdGVPZlZhY2NpbmF0aW9uIiwgIjIwMjEtMDYtMjNUMTM6NDA6MTJaIl0~WyIyR0xD
 NDJzS1F2ZUNmR2ZyeU5STjl3IiwgImF0Y0NvZGUiLCAiSjA3QlgwMyJd~WyJlbHVWNU9
 nM2dTTklJOEVZbnN4QV9BIiwgIm1lZGljaW5hbFByb2R1Y3ROYW1lIiwgIkNPVklELTE
 5IFZhY2NpbmUgTW9kZXJuYSJd~eyJhbGciOiAiRVMyNTYiLCAidHlwIjogImtiK2p3dC
 J9.eyJub25jZSI6ICIxMjM0NTY3ODkwIiwgImF1ZCI6ICJodHRwczovL3ZlcmlmaWVyL
-mV4YW1wbGUub3JnIiwgImlhdCI6IDE3MjQ0NDE3NzEsICJzZF9oYXNoIjogInBTU2dIM
-0o4TVF2SHZuM3ZpVXpmZmI4NmtxR3AzR2VwLVJqVHBwQnVUZTQifQ.I9m7QJvPEmh-Ev
-zGFFzzNavSnKTyltr0B06RQLoabWa13Wk7CULIWU-3W3eTZnkAU2wW7IJOdy3-GBiOcB
-bk6w
+mV4YW1wbGUub3JnIiwgImlhdCI6IDE3MjQ0NDE4MjIsICJzZF9oYXNoIjogIjJrUVpNS
+E9BLTFiQUpwT3lfblZSUExSUDNEekpDcGZOODFvbmFvOVo0U2sifQ.7zmDDcqEg0PaGE
+Jexz0V7-zjP34bAvVBR6ZLYafzcWQVa6-dhw0qrlB0GX5vkXA0JGp_Lsu11oRsAdnFjY
+0ziA
 
 </pre><a href="#appendix-A.4-39" class="pilcrow">¶</a>
 </div>
