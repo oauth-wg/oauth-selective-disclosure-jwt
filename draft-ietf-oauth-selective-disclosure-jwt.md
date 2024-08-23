@@ -1923,6 +1923,10 @@ data. The original JSON data is then used by the application. See
 
    [[ To be removed from the final specification ]]
 
+   -12
+
+    * Editorial and reference fixes
+
    -11
 
    * Add a paragraph attempting to better frame the risks and difficulties around Issuer/Verifier
