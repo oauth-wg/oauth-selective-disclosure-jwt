@@ -174,7 +174,7 @@ Issuer:
 :  An entity that creates SD-JWTs.
 
 Holder:
-:  An entity that received SD-JWTs from the Issuer and has control over them.
+:  An entity that received SD-JWTs from the Issuer and has control over them. In the context of this document, the term may refer to the actual user, the supporting hardware and software in their possession, or both.
 
 Verifier:
 :  An entity that requests, checks, and extracts the claims from an SD-JWT with its respective Disclosures.
@@ -542,7 +542,7 @@ position as the original claim value in the array. For each digest, an object
 of the form `{"...": "<digest>"}` is added to the array. The key MUST always be the
 string `...` (three dots). The value MUST be the digest of the Disclosure created as
 described in (#hashing_disclosures). There MUST NOT be any other keys in the
-object.
+object. Note that the string `...` was chosen because the ellipsis character, typically entered as three period characters, is commonly used in places where content is omitted from the present context.
 
 For example, using the digest of the array element Disclosure created above,
 the Issuer could create the following SD-JWT payload to make the second element
@@ -669,7 +669,7 @@ The Key Binding JWT MUST be a JWT according to [@!RFC7519] and its payload MUST 
 
 * in the JOSE header,
     * `typ`: REQUIRED. MUST be `kb+jwt`, which explicitly types the Key Binding JWT as recommended in Section 3.11 of [@!RFC8725].
-    * `alg`: REQUIRED. A digital signature algorithm identifier such as per IANA "JSON Web Signature and Encryption Algorithms" registry. MUST NOT be `none`.
+    * `alg`: REQUIRED. A digital signature algorithm identifier such as per IANA "JSON Web Signature and Encryption Algorithms" registry. It MUST NOT be `none`.
 * in the JWT payload,
     * `iat`: REQUIRED. The value of this claim MUST be the time at which the Key Binding JWT was issued using the syntax defined in [@!RFC7519].
     * `aud`: REQUIRED. The intended receiver of the Key Binding JWT. How the value is represented is up to the protocol used and out of scope of this specification.
@@ -1220,7 +1220,7 @@ The privacy principles of [@ISO.29100] should be adhered to.
 Wherever End-User data is stored, it represents a potential
 target for an attacker. This target can be of particularly
 high value when the data is signed by a trusted authority like an
-official national identity service. For example, in OpenID Connect,
+official national identity service. For example, in OpenID Connect [@?OpenID.Core],
 signed ID Tokens can be stored by Relying Parties. In the case of
 SD-JWT, Holders have to store SD-JWTs,
 and Issuers and Verifiers may decide to do so as well.
