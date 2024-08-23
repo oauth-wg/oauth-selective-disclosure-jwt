@@ -1926,7 +1926,7 @@ data. The original JSON data is then used by the application. See
    -12
 
    * Editorial and reference fixes
-   * Introduced the phrase processed SD-JWT payload in the end of the (#sd_jwt_verification) on Verifying the SD-JWT
+   * Introduced the phrase processed SD-JWT payload in the end of (#sd_jwt_verification) on Verifying the SD-JWT
 
    -11
 
