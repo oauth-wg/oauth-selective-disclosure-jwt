@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2024-08-22T00:13:20.652794+00:00",
+  "timestamp": "2024-08-25T00:14:45.960208+00:00",
   "repo": "oauth-wg/oauth-selective-disclosure-jwt",
   "labels": [
     {
@@ -11178,10 +11178,12 @@
       "author": "awoie",
       "authorAssociation": "NONE",
       "assignees": [],
-      "labels": [],
+      "labels": [
+        "has-PR"
+      ],
       "body": "We had the discussion in SD-JWT VC how to refer to the dehydrated (or maybe hydrated) result (Issuer-signed JWT payload) of the [processing and verification algorithm](https://www.ietf.org/archive/id/draft-ietf-oauth-selective-disclosure-jwt-09.html#name-verification-and-processing). It would help if we could give it a name to allow us to be more precise in other specs that are building on top of SD-JWT.\r\n\r\nThe discussion occurred when adding the Schema for SD-JWT VCs that uses that result of the SD-JWT processing section to match the JSON schema against:\r\nhttps://github.com/oauth-wg/oauth-sd-jwt-vc/pull/231/files#diff-e750c0958ca10e395b4d3b77bb5aafccc668b4a1a50675dda79a8d90b39a2468R714-R715\r\n\r\nWe also have another issue that asks for an example of the result as well which would benefit from giving it a defined name:\r\nhttps://github.com/oauth-wg/oauth-sd-jwt-vc/issues/194\r\n\r\n",
       "createdAt": "2024-07-01T20:26:16Z",
-      "updatedAt": "2024-08-04T11:27:35Z",
+      "updatedAt": "2024-08-23T20:53:23Z",
       "closedAt": null,
       "comments": [
         {
@@ -11232,6 +11234,13 @@
           "body": "Defining terms is good.  Dehydrated/hydrated would be bad. ;-)",
           "createdAt": "2024-08-04T04:11:03Z",
           "updatedAt": "2024-08-04T04:11:03Z"
+        },
+        {
+          "author": "bc-pi",
+          "authorAssociation": "COLLABORATOR",
+          "body": "PR https://github.com/oauth-wg/oauth-selective-disclosure-jwt/pull/456 has a small addition to sec 8.1 for this ",
+          "createdAt": "2024-08-23T20:50:05Z",
+          "updatedAt": "2024-08-23T20:50:05Z"
         }
       ]
     },
@@ -11247,9 +11256,24 @@
       "labels": [],
       "body": "some of https://github.com/oauth-wg/oauth-sd-jwt-vc/issues/246 likely applies here too ",
       "createdAt": "2024-07-22T17:16:30Z",
-      "updatedAt": "2024-07-22T17:16:31Z",
+      "updatedAt": "2024-08-23T21:09:24Z",
       "closedAt": null,
-      "comments": []
+      "comments": [
+        {
+          "author": "bc-pi",
+          "authorAssociation": "COLLABORATOR",
+          "body": "Notes on section 6:\r\n\r\nhttps://drafts.oauth.net/oauth-selective-disclosure-jwt/processed-sd-jwt-payload/draft-ietf-oauth-selective-disclosure-jwt.html#section-6.1-1 say more about the input JWT Claims Set\r\n\r\nhttps://drafts.oauth.net/oauth-selective-disclosure-jwt/processed-sd-jwt-payload/draft-ietf-oauth-selective-disclosure-jwt.html#name-presentation show the processed SD-JWT payload somewhere in this section \r\n\r\n",
+          "createdAt": "2024-08-23T21:04:44Z",
+          "updatedAt": "2024-08-23T21:04:44Z"
+        },
+        {
+          "author": "bc-pi",
+          "authorAssociation": "COLLABORATOR",
+          "body": "notes on appendix: \r\n\r\nhttps://drafts.oauth.net/oauth-selective-disclosure-jwt/processed-sd-jwt-payload/draft-ietf-oauth-selective-disclosure-jwt.html#appendix-A.1-2 say more about the input JWT Claims Set\r\n\r\nhttps://drafts.oauth.net/oauth-selective-disclosure-jwt/processed-sd-jwt-payload/draft-ietf-oauth-selective-disclosure-jwt.html#appendix-A.1-31 show the processed SD-JWT payload somewhere after\r\n\r\nhttps://drafts.oauth.net/oauth-selective-disclosure-jwt/processed-sd-jwt-payload/draft-ietf-oauth-selective-disclosure-jwt.html#appendix-A.2-2  say more about the input JWT Claims Set\r\n\r\nhttps://drafts.oauth.net/oauth-selective-disclosure-jwt/processed-sd-jwt-payload/draft-ietf-oauth-selective-disclosure-jwt.html#appendix-A.2-41 use the processed SD-JWT payload name\r\n\r\nhttps://drafts.oauth.net/oauth-selective-disclosure-jwt/processed-sd-jwt-payload/draft-ietf-oauth-selective-disclosure-jwt.html#appendix-A.3-3 say more about the input JWT Claims Set\r\n\r\nhttps://drafts.oauth.net/oauth-selective-disclosure-jwt/processed-sd-jwt-payload/draft-ietf-oauth-selective-disclosure-jwt.html#appendix-A.3-56 names\r\n\r\nhttps://drafts.oauth.net/oauth-selective-disclosure-jwt/processed-sd-jwt-payload/draft-ietf-oauth-selective-disclosure-jwt.html#appendix-A.4-3 input\r\n\r\nhttps://drafts.oauth.net/oauth-selective-disclosure-jwt/processed-sd-jwt-payload/draft-ietf-oauth-selective-disclosure-jwt.html#appendix-A.4-40 name",
+          "createdAt": "2024-08-23T21:09:23Z",
+          "updatedAt": "2024-08-23T21:09:23Z"
+        }
+      ]
     }
   ],
   "pulls": [
@@ -48392,6 +48416,184 @@
           "createdAt": "2024-08-15T15:17:55Z",
           "updatedAt": "2024-08-15T15:17:55Z",
           "comments": []
+        }
+      ]
+    },
+    {
+      "number": 454,
+      "id": "PR_kwDOHTmVzM55I7Ha",
+      "title": "additional updates from Mike's review",
+      "url": "https://github.com/oauth-wg/oauth-selective-disclosure-jwt/pull/454",
+      "state": "MERGED",
+      "author": "bc-pi",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "see https://mailarchive.ietf.org/arch/msg/oauth/cPD_LWWEPedQR3SiU17Juamtwt8/ and https://mailarchive.ietf.org/arch/msg/oauth/ulgKG6F-_RU6S2TaocZpbqEFgzs/ ",
+      "createdAt": "2024-08-22T15:07:59Z",
+      "updatedAt": "2024-08-23T19:43:41Z",
+      "baseRepository": "oauth-wg/oauth-selective-disclosure-jwt",
+      "baseRefName": "master",
+      "baseRefOid": "4f4886237a19314d2fdcba1234cc1a4b258a85ef",
+      "headRepository": "oauth-wg/oauth-selective-disclosure-jwt",
+      "headRefName": "mikes-review-part-deux",
+      "headRefOid": "901ef086790d70492b7ebfbaee18a99653261842",
+      "closedAt": "2024-08-23T19:01:05Z",
+      "mergedAt": "2024-08-23T19:01:05Z",
+      "mergedBy": "bc-pi",
+      "mergeCommit": {
+        "oid": "3fb53f24e759678995ee1eaa50a5ad45e3fe62d7"
+      },
+      "comments": [
+        {
+          "author": "bc-pi",
+          "authorAssociation": "COLLABORATOR",
+          "body": "oh wow... I apparently didn't confirm the merge so this is still pending. I really thought it was done and published -11. Sigh. Sorry. Will look at doing a -12 soonish. ",
+          "createdAt": "2024-08-23T19:00:48Z",
+          "updatedAt": "2024-08-23T19:00:48Z"
+        },
+        {
+          "author": "bc-pi",
+          "authorAssociation": "COLLABORATOR",
+          "body": "see #455 ",
+          "createdAt": "2024-08-23T19:43:40Z",
+          "updatedAt": "2024-08-23T19:43:40Z"
+        }
+      ],
+      "reviews": [
+        {
+          "id": "PRR_kwDOHTmVzM6GafCT",
+          "commit": {
+            "abbreviatedOid": "65fca6b"
+          },
+          "author": "danielfett",
+          "authorAssociation": "MEMBER",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2024-08-22T16:14:44Z",
+          "updatedAt": "2024-08-22T16:14:44Z",
+          "comments": [
+            {
+              "originalPosition": 5,
+              "body": "```suggestion\r\n:  An entity that received SD-JWTs from the Issuer and has control over them. In the context of this document, the term may refer to the actual user, the supporting hardware and software in their possession, or both.\r\n```",
+              "createdAt": "2024-08-22T16:14:44Z",
+              "updatedAt": "2024-08-22T16:14:44Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOHTmVzM6GafXF",
+          "commit": {
+            "abbreviatedOid": "65fca6b"
+          },
+          "author": "danielfett",
+          "authorAssociation": "MEMBER",
+          "state": "APPROVED",
+          "body": "",
+          "createdAt": "2024-08-22T16:15:15Z",
+          "updatedAt": "2024-08-22T16:15:15Z",
+          "comments": []
+        },
+        {
+          "id": "PRR_kwDOHTmVzM6GafdF",
+          "commit": {
+            "abbreviatedOid": "65fca6b"
+          },
+          "author": "Sakurann",
+          "authorAssociation": "COLLABORATOR",
+          "state": "APPROVED",
+          "body": "",
+          "createdAt": "2024-08-22T16:15:22Z",
+          "updatedAt": "2024-08-22T16:15:22Z",
+          "comments": []
+        },
+        {
+          "id": "PRR_kwDOHTmVzM6GaxZd",
+          "commit": {
+            "abbreviatedOid": "901ef08"
+          },
+          "author": "selfissued",
+          "authorAssociation": "COLLABORATOR",
+          "state": "APPROVED",
+          "body": "Thanks for these additional updates.",
+          "createdAt": "2024-08-22T16:49:42Z",
+          "updatedAt": "2024-08-22T16:49:42Z",
+          "comments": []
+        }
+      ]
+    },
+    {
+      "number": 455,
+      "id": "PR_kwDOHTmVzM55R993",
+      "title": "Add editorial and reference fixes to -12 history",
+      "url": "https://github.com/oauth-wg/oauth-selective-disclosure-jwt/pull/455",
+      "state": "MERGED",
+      "author": "bc-pi",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "due to my mistake on #454 not being in -11 ",
+      "createdAt": "2024-08-23T19:36:23Z",
+      "updatedAt": "2024-08-23T19:43:56Z",
+      "baseRepository": "oauth-wg/oauth-selective-disclosure-jwt",
+      "baseRefName": "master",
+      "baseRefOid": "3fb53f24e759678995ee1eaa50a5ad45e3fe62d7",
+      "headRepository": "oauth-wg/oauth-selective-disclosure-jwt",
+      "headRefName": "add-dash-12",
+      "headRefOid": "598fc210f900aa305c0562a4ebef6bb21d0a81a0",
+      "closedAt": "2024-08-23T19:43:56Z",
+      "mergedAt": "2024-08-23T19:43:56Z",
+      "mergedBy": "bc-pi",
+      "mergeCommit": {
+        "oid": "0834b91b8743d5cbb9b8b477b7873fb905b9d6b1"
+      },
+      "comments": [],
+      "reviews": []
+    },
+    {
+      "number": 456,
+      "id": "PR_kwDOHTmVzM55STbI",
+      "title": "Introduced the phrase processed SD-JWT payload in Section 8.1 on Verifying the SD-JWT",
+      "url": "https://github.com/oauth-wg/oauth-selective-disclosure-jwt/pull/456",
+      "state": "OPEN",
+      "author": "bc-pi",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "Introduced the phrase `processed SD-JWT payload` in the end of the Section 8.1 on Verifying the SD-JWT\r\n\r\nfor #443",
+      "createdAt": "2024-08-23T20:49:10Z",
+      "updatedAt": "2024-08-23T20:51:30Z",
+      "baseRepository": "oauth-wg/oauth-selective-disclosure-jwt",
+      "baseRefName": "master",
+      "baseRefOid": "0834b91b8743d5cbb9b8b477b7873fb905b9d6b1",
+      "headRepository": "oauth-wg/oauth-selective-disclosure-jwt",
+      "headRefName": "processed-sd-jwt-payload",
+      "headRefOid": "a02e4e40190251dcf3fdfdd2ba3c9b672c540863",
+      "closedAt": null,
+      "mergedAt": null,
+      "mergedBy": null,
+      "mergeCommit": null,
+      "comments": [],
+      "reviews": [
+        {
+          "id": "PRR_kwDOHTmVzM6Gl6VJ",
+          "commit": {
+            "abbreviatedOid": "ba23ad9"
+          },
+          "author": "bc-pi",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2024-08-23T20:51:15Z",
+          "updatedAt": "2024-08-23T20:51:15Z",
+          "comments": [
+            {
+              "originalPosition": 15,
+              "body": "```suggestion\r\n   * Introduced the phrase processed SD-JWT payload in the end of (#sd_jwt_verification) on Verifying the SD-JWT\r\n```",
+              "createdAt": "2024-08-23T20:51:15Z",
+              "updatedAt": "2024-08-23T20:51:15Z"
+            }
+          ]
         }
       ]
     }
