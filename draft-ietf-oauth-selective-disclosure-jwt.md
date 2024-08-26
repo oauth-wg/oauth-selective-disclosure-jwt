@@ -1784,7 +1784,7 @@ could be used to express a W3C Verifiable Credentials Data Model v2.0 [@VC_DATA_
 Key Binding is applied
 using the Holder's public key passed in a `cnf` claim in the SD-JWT.
 
-The Issuer is using the following input JWT Claims Set:
+The following is the input JWT Claims Set:
 
 <{{examples/jsonld/user_claims.json}}
 
@@ -1796,15 +1796,15 @@ The following payload is used for the SD-JWT:
 
 <{{examples/jsonld/sd_jwt_payload.json}}
 
-The following Disclosures are created by the Issuer:
+The digests in the SD-JWT payload reference the following Disclosures:
 
 {{examples/jsonld/disclosures.md}}
 
-The following is an example of an SD-JWT+KB that discloses only `type`, `medicinalProductName`, `atcCode` of the vaccine, `type` of the `recipient`, `type`, `order` and `dateOfVaccination`:
+This is an example of an SD-JWT+KB that discloses only `type`, `medicinalProductName`, `atcCode` of the vaccine, `type` of the `recipient`, `type`, `order` and `dateOfVaccination`:
 
 <{{examples/jsonld/sd_jwt_presentation.txt}}
 
-After the validation, the Verifier will have the following data for further processing:
+After the validation, the Verifier will have the following processed SD-JWT payload available for further handling:
 
 <{{examples/jsonld/verified_contents.json}}
 
