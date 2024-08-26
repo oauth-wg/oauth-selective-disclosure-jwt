@@ -1933,7 +1933,8 @@ data. The original JSON data is then used by the application. See
 
    -12
 
-    * Editorial and reference fixes
+   * Clarify, add context, or otherwise improve the examples
+   * Editorial and reference fixes
 
    -11
 
