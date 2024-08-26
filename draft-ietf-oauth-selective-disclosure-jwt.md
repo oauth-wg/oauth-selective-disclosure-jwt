@@ -1717,7 +1717,7 @@ After validation, the Verifier will have the following processed SD-JWT payload 
 In this example, an SD-JWT with a complex object is represented. The data
 structures defined in OpenID Connect for Identity Assurance [@OIDC.IDA] are used.
 
-The Issuer is using the following input JWT Claims Set:
+The Issuer is using the following user data as the input JWT Claims Set:
 
 <{{examples/complex_ekyc/user_claims.json}}
 
@@ -1733,7 +1733,7 @@ The following is a presentation of the SD-JWT:
 
 <{{examples/complex_ekyc/sd_jwt_presentation.txt}}
 
-After the validation, the Verifier will have the following data for further processing:
+The Verifier will have this processed SD-JWT payload available after validation:
 
 <{{examples/complex_ekyc/verified_contents.json}}
 
