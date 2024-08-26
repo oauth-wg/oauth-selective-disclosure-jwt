@@ -1925,7 +1925,7 @@ data. The original JSON data is then used by the application. See
 
    -12
 
-    * Editorial and reference fixes
+   * Editorial and reference fixes
 
    -11
 
