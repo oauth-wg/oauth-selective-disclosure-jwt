@@ -716,16 +716,16 @@ lines in RFCs and for readability. JSON does not allow line breaks within string
 
 ## Issuance
 
-The Issuer is using the following input JWT Claims Set:
+The following data about the user comprises the input JWT Claims Set used by the Issuer:
 
 <{{examples/simple/user_claims.json}}
 
-The Issuer in this case made the following decisions:
+In this example, the following decisions were made by the Issuer in constructing the SD-JWT:
 
 * The `nationalities` array is always visible, but its contents are selectively disclosable.
-* The `sub` element and essential verification data (`iss`, `iat`, `cnf`, etc.) are always visible.
+* The `sub` element as well as essential verification data (`iss`, `exp`, `cnf`, etc.) are always visible.
 * All other End-User claims are selectively disclosable.
-* For `address`, the Issuer is using a flat structure, i.e., all of the claims
+* For `address`, the Issuer is using a flat structure, i.e., all the claims
   in the `address` claim can only be disclosed in full. Other options are
   discussed in (#nested_data).
 
@@ -733,15 +733,15 @@ The following payload is used for the SD-JWT:
 
 <{{examples/simple/sd_jwt_payload.json}}
 
-The following Disclosures are created by the Issuer:
+The respective Disclosures are created by the Issuer:
 
 {{examples/simple/disclosures.md}}
 
-The payload is then signed by the Issuer to create the following JWT:
+The payload is then signed by the Issuer to create the following Issuer-signed JWT:
 
 <{{examples/simple/sd_jwt_jws_part.txt}}
 
-The following is the issued SD-JWT:
+Adding the Disclosures produces the SD-JWT:
 
 <{{examples/simple/sd_jwt_issuance.txt}}
 
@@ -762,6 +762,10 @@ The following Key Binding JWT payload was created and signed for this presentati
 If the Verifier did not require Key Binding, then the Holder could have
 presented the SD-JWT with selected Disclosures directly, instead of encapsulating it in
 an SD-JWT+KB.
+
+After validation, the Verifier will have the following processed SD-JWT payload available for further handling:
+
+<{{examples/simple/verified_contents.json}}
 
 # Considerations on Nested Data in SD-JWTs {#nested_data}
 
