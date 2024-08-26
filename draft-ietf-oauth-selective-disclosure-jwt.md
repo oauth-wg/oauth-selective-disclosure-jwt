@@ -1748,7 +1748,7 @@ a German citizen.
 Key Binding is applied
 using the Holder's public key passed in a `cnf` claim in the SD-JWT.
 
-The Issuer is using the following input JWT Claims Set:
+The following citizen data is the input JWT Claims Set:
 
 <{{examples/arf-pid/user_claims.json}}
 
@@ -1760,7 +1760,7 @@ The following payload is used for the SD-JWT:
 
 <{{examples/arf-pid/sd_jwt_payload.json}}
 
-The following Disclosures are created by the Issuer:
+The digests in the SD-JWT payload reference the following Disclosures:
 
 {{examples/arf-pid/disclosures.md}}
 
@@ -1768,11 +1768,11 @@ The following is an example of an SD-JWT+KB that discloses only nationality and 
 
 <{{examples/arf-pid/sd_jwt_presentation.txt}}
 
-The following is the payload of a corresponding Key Binding JWT:
+This is the payload of the corresponding Key Binding JWT:
 
 <{{examples/arf-pid/kb_jwt_payload.json}}
 
-After the validation, the Verifier will have the following data for further processing:
+After validation, the Verifier will have the following processed SD-JWT payload available for further handling:
 
 <{{examples/arf-pid/verified_contents.json}}
 
