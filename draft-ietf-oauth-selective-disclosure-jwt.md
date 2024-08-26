@@ -792,7 +792,7 @@ The Issuer can decide to treat the `address` claim as a block that can either be
 
 <{{examples/address_only_flat/sd_jwt_payload.json}}
 
-The Issuer would create the following Disclosure:
+The Issuer would create the following Disclosure referenced by the one hash in the SD-JWT:
 
 {{examples/address_only_flat/disclosures.md}}
 
@@ -1695,7 +1695,7 @@ The following payload is used for the SD-JWT:
 
 <{{examples/simple_structured/sd_jwt_payload.json}}
 
-The following Disclosures are created:
+The digests in the SD-JWT payload reference the following Disclosures:
 
 {{examples/simple_structured/disclosures.md}}
 
@@ -1725,7 +1725,7 @@ The following payload is used for the SD-JWT:
 
 <{{examples/complex_ekyc/sd_jwt_payload.json}}
 
-The following Disclosures are created by the Issuer:
+The digests in the SD-JWT payload reference the following Disclosures:
 
 {{examples/complex_ekyc/disclosures.md}}
 
