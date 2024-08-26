@@ -1760,7 +1760,7 @@ The following payload is used for the SD-JWT:
 
 <{{examples/arf-pid/sd_jwt_payload.json}}
 
-The digests in the SD-JWT payload reference the following Disclosures:
+The digests in the SD-JWT payload references the following Disclosures:
 
 {{examples/arf-pid/disclosures.md}}
 
