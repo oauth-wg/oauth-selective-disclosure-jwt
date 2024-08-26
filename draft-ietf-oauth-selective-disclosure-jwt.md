@@ -1685,7 +1685,7 @@ Line breaks have been added for readability.
 
 In this example, in contrast to (#main-example), the Issuer decided to create a structured object for the `address` claim, allowing to separately disclose individual members of the claim.
 
-The Issuer is using the following input JWT Claims Set:
+The following data about the user comprises the input JWT Claims Set used by the Issuer:
 
 <{{examples/simple_structured/user_claims.json}}
 
@@ -1707,6 +1707,10 @@ The following is a presentation of the SD-JWT that discloses only `region`
 and `country` of the `address` property:
 
 <{{examples/simple_structured/sd_jwt_presentation.txt}}
+
+After validation, the Verifier will have the following processed SD-JWT payload available for further handling:
+
+<{{examples/simple_structured/verified_contents.json}}
 
 ## Complex Structured SD-JWT {#example-complex-structured-sd-jwt}
 
