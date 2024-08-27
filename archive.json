@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2024-08-25T00:14:45.960208+00:00",
+  "timestamp": "2024-08-27T00:13:38.242992+00:00",
   "repo": "oauth-wg/oauth-selective-disclosure-jwt",
   "labels": [
     {
@@ -77,6 +77,11 @@
       "name": "pending-close",
       "description": "",
       "color": "6C5669"
+    },
+    {
+      "name": "on-hold",
+      "description": "",
+      "color": "e99695"
     }
   ],
   "issues": [
@@ -11068,11 +11073,12 @@
       "authorAssociation": "COLLABORATOR",
       "assignees": [],
       "labels": [
-        "discuss-first"
+        "discuss-first",
+        "on-hold"
       ],
       "body": "As far as I know, the idea of burning private keys to facilitate repudiation or reduced data value didn't resonate with any of the audiences for whom it was intended.\r\n\r\nI think the document would be better off without the paragraph copied below from https://www.ietf.org/archive/id/draft-ietf-oauth-selective-disclosure-jwt-09.html#section-11.1-7 \r\n\r\nAnd we might avoid some potentially difficult/confusing/painful/etc conversations in various latter stage IETF process steps. \r\n\r\n> If reliable and secure key rotation and revocation is ensured according to [Section 10.8](https://www.ietf.org/archive/id/draft-ietf-oauth-selective-disclosure-jwt-09.html#issuer_signature_key_distribution), Issuers may opt to publish expired or revoked private signing keys (after a grace period that ensures that the keys are not cached any longer at any Verifier). This reduces the value of any leaked credentials as the signatures on them can no longer be trusted to originate from the Issuer.",
       "createdAt": "2024-06-19T22:14:18Z",
-      "updatedAt": "2024-08-05T18:11:47Z",
+      "updatedAt": "2024-08-26T18:49:39Z",
       "closedAt": null,
       "comments": [
         {
@@ -11253,10 +11259,12 @@
       "author": "bc-pi",
       "authorAssociation": "COLLABORATOR",
       "assignees": [],
-      "labels": [],
+      "labels": [
+        "has-PR"
+      ],
       "body": "some of https://github.com/oauth-wg/oauth-sd-jwt-vc/issues/246 likely applies here too ",
       "createdAt": "2024-07-22T17:16:30Z",
-      "updatedAt": "2024-08-23T21:09:24Z",
+      "updatedAt": "2024-08-26T18:49:47Z",
       "closedAt": null,
       "comments": [
         {
@@ -48553,7 +48561,7 @@
     {
       "number": 456,
       "id": "PR_kwDOHTmVzM55STbI",
-      "title": "Introduced the phrase processed SD-JWT payload in Section 8.1 on Verifying the SD-JWT",
+      "title": "Introduced/used the phrase processed SD-JWT payload in Section 8.1 on Verifying the SD-JWT",
       "url": "https://github.com/oauth-wg/oauth-selective-disclosure-jwt/pull/456",
       "state": "OPEN",
       "author": "bc-pi",
@@ -48562,13 +48570,13 @@
       "labels": [],
       "body": "Introduced the phrase `processed SD-JWT payload` in the end of the Section 8.1 on Verifying the SD-JWT\r\n\r\nfor #443",
       "createdAt": "2024-08-23T20:49:10Z",
-      "updatedAt": "2024-08-23T20:51:30Z",
+      "updatedAt": "2024-08-26T19:40:50Z",
       "baseRepository": "oauth-wg/oauth-selective-disclosure-jwt",
       "baseRefName": "master",
-      "baseRefOid": "0834b91b8743d5cbb9b8b477b7873fb905b9d6b1",
+      "baseRefOid": "75ea4174b381418e1cd0cd4e728fe818a9752321",
       "headRepository": "oauth-wg/oauth-selective-disclosure-jwt",
       "headRefName": "processed-sd-jwt-payload",
-      "headRefOid": "a02e4e40190251dcf3fdfdd2ba3c9b672c540863",
+      "headRefOid": "d116f81c83385b33324a6b40a21732c11f244ec0",
       "closedAt": null,
       "mergedAt": null,
       "mergedBy": null,
@@ -48594,8 +48602,143 @@
               "updatedAt": "2024-08-23T20:51:15Z"
             }
           ]
+        },
+        {
+          "id": "PRR_kwDOHTmVzM6GyaMy",
+          "commit": {
+            "abbreviatedOid": "a02e4e4"
+          },
+          "author": "bc-pi",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2024-08-26T18:40:17Z",
+          "updatedAt": "2024-08-26T18:40:17Z",
+          "comments": [
+            {
+              "originalPosition": 5,
+              "body": "with #457 the term will used a bit more ...\r\n\r\n```suggestion\r\nIf any step fails, the SD-JWT is not valid, and processing MUST be aborted. Otherwise, the JSON document resulting from the preceding processing and verification steps, herein referred to as the processed SD-JWT payload, can be made available to the application to be used for its intended purpose.\r\n```",
+              "createdAt": "2024-08-26T18:40:17Z",
+              "updatedAt": "2024-08-26T18:40:17Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOHTmVzM6Gy3AZ",
+          "commit": {
+            "abbreviatedOid": "8320eda"
+          },
+          "author": "bc-pi",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2024-08-26T19:40:41Z",
+          "updatedAt": "2024-08-26T19:40:42Z",
+          "comments": [
+            {
+              "originalPosition": 13,
+              "body": "```suggestion\r\n   * Better introduce the phrase processed SD-JWT payload in the end of (#sd_jwt_verification) on Verifying the SD-JWT\r\n```",
+              "createdAt": "2024-08-26T19:40:41Z",
+              "updatedAt": "2024-08-26T19:40:42Z"
+            }
+          ]
         }
       ]
+    },
+    {
+      "number": 457,
+      "id": "PR_kwDOHTmVzM55eY3W",
+      "title": "clarify, add context, or otherwise improve examples",
+      "url": "https://github.com/oauth-wg/oauth-selective-disclosure-jwt/pull/457",
+      "state": "OPEN",
+      "author": "bc-pi",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "for https://github.com/oauth-wg/oauth-selective-disclosure-jwt/issues/444 which is really based on https://github.com/oauth-wg/oauth-sd-jwt-vc/issues/246 ",
+      "createdAt": "2024-08-26T18:33:19Z",
+      "updatedAt": "2024-08-26T20:38:07Z",
+      "baseRepository": "oauth-wg/oauth-selective-disclosure-jwt",
+      "baseRefName": "master",
+      "baseRefOid": "75ea4174b381418e1cd0cd4e728fe818a9752321",
+      "headRepository": "oauth-wg/oauth-selective-disclosure-jwt",
+      "headRefName": "clarify-examples-more",
+      "headRefOid": "550e198557bc0de3c5536e36600ceb85351eb6b1",
+      "closedAt": null,
+      "mergedAt": null,
+      "mergedBy": null,
+      "mergeCommit": null,
+      "comments": [],
+      "reviews": [
+        {
+          "id": "PRR_kwDOHTmVzM6GzSAX",
+          "commit": {
+            "abbreviatedOid": "e79a1af"
+          },
+          "author": "bc-pi",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2024-08-26T20:37:17Z",
+          "updatedAt": "2024-08-26T20:37:18Z",
+          "comments": [
+            {
+              "originalPosition": 128,
+              "body": "```suggestion\r\nThe digests in the SD-JWT payload references the following Disclosures:\r\n```",
+              "createdAt": "2024-08-26T20:37:17Z",
+              "updatedAt": "2024-08-26T20:37:18Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOHTmVzM6GzSiB",
+          "commit": {
+            "abbreviatedOid": "a636c65"
+          },
+          "author": "bc-pi",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2024-08-26T20:37:59Z",
+          "updatedAt": "2024-08-26T20:37:59Z",
+          "comments": [
+            {
+              "originalPosition": 128,
+              "body": "```suggestion\r\nThe digests in the SD-JWT payload reference the following Disclosures:\r\n```",
+              "createdAt": "2024-08-26T20:37:59Z",
+              "updatedAt": "2024-08-26T20:37:59Z"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "number": 458,
+      "id": "PR_kwDOHTmVzM55emhH",
+      "title": "Moved considerations around unlinkability to the top of the Privacy Considerations section",
+      "url": "https://github.com/oauth-wg/oauth-selective-disclosure-jwt/pull/458",
+      "state": "OPEN",
+      "author": "bc-pi",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [
+        "editorial"
+      ],
+      "body": "Despite or maybe in light of some recentish discussion on the mailing list, the topic seems like it deserves more prominent placement.",
+      "createdAt": "2024-08-26T19:09:26Z",
+      "updatedAt": "2024-08-26T19:25:25Z",
+      "baseRepository": "oauth-wg/oauth-selective-disclosure-jwt",
+      "baseRefName": "master",
+      "baseRefOid": "75ea4174b381418e1cd0cd4e728fe818a9752321",
+      "headRepository": "oauth-wg/oauth-selective-disclosure-jwt",
+      "headRefName": "unlinkability-first",
+      "headRefOid": "7776df0d55971af1bc125cc969556d08f388569c",
+      "closedAt": null,
+      "mergedAt": null,
+      "mergedBy": null,
+      "mergeCommit": null,
+      "comments": [],
+      "reviews": []
     }
   ]
 }
