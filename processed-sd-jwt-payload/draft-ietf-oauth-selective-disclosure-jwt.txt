@@ -5,10 +5,10 @@
 Web Authorization Protocol                                       D. Fett
 Internet-Draft                                                  Authlete
 Intended status: Standards Track                               K. Yasuda
-Expires: 27 February 2025                                Keio University
+Expires: 1 March 2025                                    Keio University
                                                              B. Campbell
                                                            Ping Identity
-                                                          26 August 2024
+                                                          28 August 2024
 
 
                  Selective Disclosure for JWTs (SD-JWT)
@@ -48,7 +48,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 27 February 2025.
+   This Internet-Draft will expire on 1 March 2025.
 
 Copyright Notice
 
@@ -119,10 +119,10 @@ Table of Contents
      10.10. Integrity of SD-JWTs and SD-JWT+KBs
      10.11. Explicit Typing
    11. Privacy Considerations
-     11.1.  Storage of Signed User Data
-     11.2.  Confidentiality during Transport
-     11.3.  Decoy Digests
-     11.4.  Unlinkability
+     11.1.  Unlinkability
+     11.2.  Storage of Signed User Data
+     11.3.  Confidentiality during Transport
+     11.4.  Decoy Digests
      11.5.  Issuer Identifier
    12. Acknowledgements
    13. IANA Considerations
@@ -254,7 +254,7 @@ Table of Contents
    14 [RFC2119] [RFC8174] when, and only when, they appear in all
    capitals, as shown here.
 
-   *base64url* denotes the URL-safe base64 encoding without padding
+   *Base64url* denotes the URL-safe base64 encoding without padding
    defined in Section 2 of [RFC7515].
 
 2.  Terms and Definitions
@@ -778,7 +778,7 @@ Table of Contents
 
    For decoy digests, no Disclosure is sent to the Holder, i.e., the
    Holder will see digests that do not correspond to any Disclosure.
-   See Section 11.3 for additional privacy considerations.
+   See Section 11.4 for additional privacy considerations.
 
    To ensure readability and replicability, the examples in this
    specification do not contain decoy digests unless explicitly stated.
@@ -931,7 +931,8 @@ Table of Contents
 
 6.1.  Issuance
 
-   The Issuer is using the following input JWT Claims Set:
+   The following data about the user comprises the input JWT Claims Set
+   used by the Issuer:
 
    {
      "sub": "user_42",
@@ -954,16 +955,17 @@ Table of Contents
      ]
    }
 
-   The Issuer in this case made the following decisions:
+   In this example, the following decisions were made by the Issuer in
+   constructing the SD-JWT:
 
    *  The nationalities array is always visible, but its contents are
       selectively disclosable.
-   *  The sub element and essential verification data (iss, iat, cnf,
-      etc.) are always visible.
+   *  The sub element as well as essential verification data (iss, exp,
+      cnf, etc.) are always visible.
    *  All other End-User claims are selectively disclosable.
-   *  For address, the Issuer is using a flat structure, i.e., all of
-      the claims in the address claim can only be disclosed in full.
-      Other options are discussed in Section 7.
+   *  For address, the Issuer is using a flat structure, i.e., all the
+      claims in the address claim can only be disclosed in full.  Other
+      options are discussed in Section 7.
 
    The following payload is used for the SD-JWT:
 
@@ -1001,7 +1003,7 @@ Table of Contents
      }
    }
 
-   The following Disclosures are created by the Issuer:
+   The respective Disclosures are created by the Issuer:
 
    *Claim given_name*:
 
@@ -1087,7 +1089,8 @@ Table of Contents
       WyJuUHVvUW5rUkZxM0JJZUFtN0FuWEZBIiwgIkRFIl0
    *  Contents: ["nPuoQnkRFq3BIeAm7AnXFA", "DE"]
 
-   The payload is then signed by the Issuer to create the following JWT:
+   The payload is then signed by the Issuer to create the following
+   Issuer-signed JWT:
 
    eyJhbGciOiAiRVMyNTYiLCAidHlwIjogImV4YW1wbGUrc2Qtand0In0.eyJfc2QiOiBb
    IkNyUWU3UzVrcUJBSHQtbk1ZWGdjNmJkdDJTSDVhVFkxc1VfTS1QZ2tqUEkiLCAiSnpZ
@@ -1105,10 +1108,10 @@ Table of Contents
    InNoYS0yNTYiLCAiY25mIjogeyJqd2siOiB7Imt0eSI6ICJFQyIsICJjcnYiOiAiUC0y
    NTYiLCAieCI6ICJUQ0FFUjE5WnZ1M09IRjRqNFc0dmZTVm9ISVAxSUxpbERsczd2Q2VH
    ZW1jIiwgInkiOiAiWnhqaVdXYlpNUUdIVldLVlE0aGJTSWlyc1ZmdWVjQ0U2dDRqVDlG
-   MkhaUSJ9fX0.7d15G_cqlryo2mgeYzD62N-X62rAXg7CDRnhYnABvBvwPidg5G_ORDiQ
-   PZFVFW7J9HRabU6o5VJNubS4ekxcMA
+   MkhaUSJ9fX0.YAN7Im8n5eD3GGzQ1I0vIFlLYWpKUFMHQwfJAL3La94MdU47tS4JnWkU
+   s3OknKvOx102KTf0Dd68pi6flMWgWA
 
-   The following is the issued SD-JWT:
+   Adding the Disclosures produces the SD-JWT:
 
    eyJhbGciOiAiRVMyNTYiLCAidHlwIjogImV4YW1wbGUrc2Qtand0In0.eyJfc2QiOiBb
    IkNyUWU3UzVrcUJBSHQtbk1ZWGdjNmJkdDJTSDVhVFkxc1VfTS1QZ2tqUEkiLCAiSnpZ
@@ -1126,8 +1129,8 @@ Table of Contents
    InNoYS0yNTYiLCAiY25mIjogeyJqd2siOiB7Imt0eSI6ICJFQyIsICJjcnYiOiAiUC0y
    NTYiLCAieCI6ICJUQ0FFUjE5WnZ1M09IRjRqNFc0dmZTVm9ISVAxSUxpbERsczd2Q2VH
    ZW1jIiwgInkiOiAiWnhqaVdXYlpNUUdIVldLVlE0aGJTSWlyc1ZmdWVjQ0U2dDRqVDlG
-   MkhaUSJ9fX0.7d15G_cqlryo2mgeYzD62N-X62rAXg7CDRnhYnABvBvwPidg5G_ORDiQ
-   PZFVFW7J9HRabU6o5VJNubS4ekxcMA~WyIyR0xDNDJzS1F2ZUNmR2ZyeU5STjl3IiwgI
+   MkhaUSJ9fX0.YAN7Im8n5eD3GGzQ1I0vIFlLYWpKUFMHQwfJAL3La94MdU47tS4JnWkU
+   s3OknKvOx102KTf0Dd68pi6flMWgWA~WyIyR0xDNDJzS1F2ZUNmR2ZyeU5STjl3IiwgI
    mdpdmVuX25hbWUiLCAiSm9obiJd~WyJlbHVWNU9nM2dTTklJOEVZbnN4QV9BIiwgImZh
    bWlseV9uYW1lIiwgIkRvZSJd~WyI2SWo3dE0tYTVpVlBHYm9TNXRtdlZBIiwgImVtYWl
    sIiwgImpvaG5kb2VAZXhhbXBsZS5jb20iXQ~WyJlSThaV205UW5LUHBOUGVOZW5IZGhR
@@ -1165,18 +1168,18 @@ Table of Contents
    InNoYS0yNTYiLCAiY25mIjogeyJqd2siOiB7Imt0eSI6ICJFQyIsICJjcnYiOiAiUC0y
    NTYiLCAieCI6ICJUQ0FFUjE5WnZ1M09IRjRqNFc0dmZTVm9ISVAxSUxpbERsczd2Q2VH
    ZW1jIiwgInkiOiAiWnhqaVdXYlpNUUdIVldLVlE0aGJTSWlyc1ZmdWVjQ0U2dDRqVDlG
-   MkhaUSJ9fX0.7d15G_cqlryo2mgeYzD62N-X62rAXg7CDRnhYnABvBvwPidg5G_ORDiQ
-   PZFVFW7J9HRabU6o5VJNubS4ekxcMA~WyJlbHVWNU9nM2dTTklJOEVZbnN4QV9BIiwgI
+   MkhaUSJ9fX0.YAN7Im8n5eD3GGzQ1I0vIFlLYWpKUFMHQwfJAL3La94MdU47tS4JnWkU
+   s3OknKvOx102KTf0Dd68pi6flMWgWA~WyJlbHVWNU9nM2dTTklJOEVZbnN4QV9BIiwgI
    mZhbWlseV9uYW1lIiwgIkRvZSJd~WyJBSngtMDk1VlBycFR0TjRRTU9xUk9BIiwgImFk
    ZHJlc3MiLCB7InN0cmVldF9hZGRyZXNzIjogIjEyMyBNYWluIFN0IiwgImxvY2FsaXR5
    IjogIkFueXRvd24iLCAicmVnaW9uIjogIkFueXN0YXRlIiwgImNvdW50cnkiOiAiVVMi
    fV0~WyIyR0xDNDJzS1F2ZUNmR2ZyeU5STjl3IiwgImdpdmVuX25hbWUiLCAiSm9obiJd
    ~WyJsa2x4RjVqTVlsR1RQVW92TU5JdkNBIiwgIlVTIl0~eyJhbGciOiAiRVMyNTYiLCA
    idHlwIjogImtiK2p3dCJ9.eyJub25jZSI6ICIxMjM0NTY3ODkwIiwgImF1ZCI6ICJodH
-   RwczovL3ZlcmlmaWVyLmV4YW1wbGUub3JnIiwgImlhdCI6IDE3MjQ3MDEyNzUsICJzZF
-   9oYXNoIjogIlgwNS1MSmtZM0dsMXA3bVN6NVRpcFF4ZmxFRndNV2Yzd1BiaVNFeDcxaX
-   cifQ.SSSJlZA2FV0upc1N5H3iMYwJxEGwjGChZtGIGktV39e9RWkDilgjt72QmRleuq3
-   6s8ITuO6ZGmXy8BeSlIs9AA
+   RwczovL3ZlcmlmaWVyLmV4YW1wbGUub3JnIiwgImlhdCI6IDE3MjQ4NzczMzUsICJzZF
+   9oYXNoIjogIlJ0SU5XbmZ4SFJJWHdJblB6cWVmZXl6UmlmenJSU3AwQUtZT3ZVYmtscF
+   kifQ.JnAkrCOOdbm-Z0ymqW6phyKRFUFTWtDUf2vjbdlZ6wTR1NaMffcc21uaLnI4pd0
+   sH5OuwxCsTB40BiG3H5n9zg
 
    The following Key Binding JWT payload was created and signed for this
    presentation by the Holder:
@@ -1184,13 +1187,42 @@ Table of Contents
    {
      "nonce": "1234567890",
      "aud": "https://verifier.example.org",
-     "iat": 1724701275,
-     "sd_hash": "X05-LJkY3Gl1p7mSz5TipQxflEFwMWf3wPbiSEx71iw"
+     "iat": 1724877335,
+     "sd_hash": "RtINWnfxHRIXwInPzqefeyzRifzrRSp0AKYOvUbklpY"
    }
 
    If the Verifier did not require Key Binding, then the Holder could
    have presented the SD-JWT with selected Disclosures directly, instead
    of encapsulating it in an SD-JWT+KB.
+
+   After validation, the Verifier will have the following processed SD-
+   JWT payload available for further handling:
+
+   {
+     "iss": "https://issuer.example.com",
+     "iat": 1683000000,
+     "exp": 1883000000,
+     "sub": "user_42",
+     "nationalities": [
+       "US"
+     ],
+     "cnf": {
+       "jwk": {
+         "kty": "EC",
+         "crv": "P-256",
+         "x": "TCAER19Zvu3OHF4j4W4vfSVoHIP1ILilDls7vCeGemc",
+         "y": "ZxjiWWbZMQGHVWKVQ4hbSIirsVfuecCE6t4jT9F2HZQ"
+       }
+     },
+     "family_name": "Doe",
+     "address": {
+       "street_address": "123 Main St",
+       "locality": "Anytown",
+       "region": "Anystate",
+       "country": "US"
+     },
+     "given_name": "John"
+   }
 
 7.  Considerations on Nested Data in SD-JWTs
 
@@ -1251,7 +1283,8 @@ Table of Contents
      "_sd_alg": "sha-256"
    }
 
-   The Issuer would create the following Disclosure:
+   The Issuer would create the following Disclosure referenced by the
+   one hash in the SD-JWT:
 
    *Claim address*:
 
@@ -1644,8 +1677,8 @@ Table of Contents
        Z1ZWNDRTZ0NGpUOUYySFpRIn19fQ",
      "protected":
        "eyJhbGciOiAiRVMyNTYiLCAidHlwIjogImV4YW1wbGUrc2Qtand0In0",
-     "signature": "G1zJ6jCsAbcupp-rCHjB9PIpZEBv0_lD9ET6wfUG1MqXI44tSSKE
-       XJ37bZI32ymIMBX_cftH3M_sUfeXOYQCyg"
+     "signature": "1s4mHSV1TgRQ6DKh6SY7zqnXHFbxP3lCgwPG5ZNV5MxN7vpaEBnD
+       2CunW-Aehj4kJwXVPVvLoVcrX1FW34W2ww"
    }
 
    The following is an SD-JWT+KB with two Disclosures:
@@ -1660,10 +1693,10 @@ Table of Contents
        ],
        "kb_jwt": "eyJhbGciOiAiRVMyNTYiLCAidHlwIjogImtiK2p3dCJ9.eyJub25j
          ZSI6ICIxMjM0NTY3ODkwIiwgImF1ZCI6ICJodHRwczovL3ZlcmlmaWVyLmV4YW
-         1wbGUub3JnIiwgImlhdCI6IDE3MjQ3MDEyNzUsICJzZF9oYXNoIjogInc0RTZW
-         b3F5VXRCYVh0NENhbkFuRi1xLWFMSE5HSkhodG1XaU5XdXQxU00ifQ.lnGIc9I
-         kypQelLRKgjcKcCfvNcj8k1YXMrLCkzBzbq5LoqWPoUOP9rc9whInNF-1zWYNv
-         mTIdA4khzhX_DB1xQ"
+         1wbGUub3JnIiwgImlhdCI6IDE3MjQ4NzczMzUsICJzZF9oYXNoIjogIkFtX1RG
+         VjBjUGJmMjZ2X2toT3dyYl9GeWJyalZVbldvQ1cySmFqVHhTQjgifQ.qseq0ko
+         SFDRjO2_y3pr0aOIXCyTKDhwkfkB2BQ_WUzLiFqSDRZNe4gg2epzSjR2vnJUJZ
+         7_iA0QQbOW7wdgd6A"
      },
      "payload": "eyJfc2QiOiBbIjRIQm42YUlZM1d0dUdHV1R4LXFVajZjZGs2V0JwWn
        lnbHRkRmF2UGE3TFkiLCAiOHNtMVFDZjAyMXBObkhBQ0k1c1A0bTRLWmd5Tk9PQV
@@ -1677,8 +1710,8 @@ Table of Contents
        Z1ZWNDRTZ0NGpUOUYySFpRIn19fQ",
      "protected":
        "eyJhbGciOiAiRVMyNTYiLCAidHlwIjogImV4YW1wbGUrc2Qtand0In0",
-     "signature": "G1zJ6jCsAbcupp-rCHjB9PIpZEBv0_lD9ET6wfUG1MqXI44tSSKE
-       XJ37bZI32ymIMBX_cftH3M_sUfeXOYQCyg"
+     "signature": "1s4mHSV1TgRQ6DKh6SY7zqnXHFbxP3lCgwPG5ZNV5MxN7vpaEBnD
+       2CunW-Aehj4kJwXVPVvLoVcrX1FW34W2ww"
    }
 
 9.3.  General JSON Serialization
@@ -1715,15 +1748,15 @@ Table of Contents
            "kid": "issuer-key-1",
            "kb_jwt": "eyJhbGciOiAiRVMyNTYiLCAidHlwIjogImtiK2p3dCJ9.eyJu
              b25jZSI6ICIxMjM0NTY3ODkwIiwgImF1ZCI6ICJodHRwczovL3ZlcmlmaW
-             VyLmV4YW1wbGUub3JnIiwgImlhdCI6IDE3MjQ3MDEyNzUsICJzZF9oYXNo
-             IjogIlhTa0dHYk9pZk5BdkZlT2RaNFltUWVhR1JqVTlnVThsMFBfRmNGNn
-             RZSG8ifQ.9v-czK9JqyszRdXaMhtQC1Nwkf_jlLD3XdS8Y2P-P4y89VWJY
-             3ycN7j_14FAYkbeKT_NNX5sMYY0-deXLcD9-Q"
+             VyLmV4YW1wbGUub3JnIiwgImlhdCI6IDE3MjQ4NzczMzUsICJzZF9oYXNo
+             IjogIlZoWnIxb0w0REV0UGFpOGFXUUc4MDdGUDRYdHVuRFdwMHdmRU53bi
+             12YXMifQ.Rt6LrLCxYPuGEHJFdp7VvCVMLb5n5NvA8WU9yDwjq0Mh9jz78
+             rjdJQDjUTE-46DtlRk6rTo2sR3A_snJY42ScA"
          },
          "protected":
            "eyJhbGciOiAiRVMyNTYiLCAidHlwIjogImV4YW1wbGUrc2Qtand0In0",
-         "signature": "PZjUu1jttMxBaMbk06UWAh0xR70bEDjFOeB8G1ac580utKYM
-           UJBKnPDrNwFtvQfcflFlkv0k-prTZ6bTLND8YA"
+         "signature": "UO81pdBCVsobTOsNZcRGU9MzlG8N-DpdCnBZYPZMIBSp5KWD
+           uXcPpT9avIYoKyFu_C8E6fDdhVCkkeGyh3F6fg"
        },
        {
          "header": {
@@ -1731,8 +1764,8 @@ Table of Contents
          },
          "protected":
            "eyJhbGciOiAiRVMyNTYiLCAidHlwIjogImV4YW1wbGUrc2Qtand0In0",
-         "signature": "eN-mDh576YpMsS4kk-kfgC4xAvyGRhKnQP47Tmwk94r8RAOm
-           OYpLLeFvZ9P0WXJGT890M7UgBOqIllNWEimTFw"
+         "signature": "f8NSgn49gUCsbLojfq73pChu_ooEXy1nP3aTx9mAHEsTVPjH
+           bvv60Q0BqW9bE7UAiFUsxdKvsTsOq8XVBuzn-w"
        }
      ]
    }
@@ -2023,93 +2056,7 @@ Table of Contents
 
    The privacy principles of [ISO.29100] should be adhered to.
 
-11.1.  Storage of Signed User Data
-
-   Wherever End-User data is stored, it represents a potential target
-   for an attacker.  This target can be of particularly high value when
-   the data is signed by a trusted authority like an official national
-   identity service.  For example, in OpenID Connect [OpenID.Core],
-   signed ID Tokens can be stored by Relying Parties.  In the case of
-   SD-JWT, Holders have to store SD-JWTs, and Issuers and Verifiers may
-   decide to do so as well.
-
-   Not surprisingly, a leak of such data risks revealing private data of
-   End-Users to third parties.  Signed End-User data, the authenticity
-   of which can be easily verified by third parties, further exacerbates
-   the risk.  As discussed in Section 10.5, leaked SD-JWTs may also
-   allow attackers to impersonate Holders unless Key Binding is enforced
-   and the attacker does not have access to the Holder's cryptographic
-   keys.  Altogether, leaked SD-JWT credentials may have a high monetary
-   value on black markets.
-
-   Due to these risks, systems implementing SD-JWT SHOULD be designed to
-   minimize the amount of data that is stored.  All involved parties
-   SHOULD store SD-JWTs containing privacy-sensitive data only for as
-   long as needed, including in log files.
-
-   After Issuance, Issuers SHOULD NOT store the Issuer-signed JWT or the
-   respective Disclosures if they contain privacy-sensitive data.
-
-   Holders SHOULD store SD-JWTs only in encrypted form, and, wherever
-   possible, use hardware-backed encryption in particular for the
-   private Key Binding key.  Decentralized storage of data, e.g., on
-   End-User devices, SHOULD be preferred for End-User credentials over
-   centralized storage.  Expired SD-JWTs SHOULD be deleted as soon as
-   possible.
-
-   After Verification, Verifiers SHOULD NOT store the Issuer-signed JWT
-   or the respective Disclosures if they contain privacy-sensitive data.
-   It may be sufficient to store the result of the verification and any
-   End-User data that is needed for the application.
-
-   If reliable and secure key rotation and revocation is ensured
-   according to Section 10.8, Issuers may opt to publish expired or
-   revoked private signing keys (after a grace period that ensures that
-   the keys are not cached any longer at any Verifier).  This reduces
-   the value of any leaked credentials as the signatures on them can no
-   longer be trusted to originate from the Issuer.
-
-11.2.  Confidentiality during Transport
-
-   If the SD-JWT is transmitted over an insecure channel during issuance
-   or presentation, an adversary may be able to intercept and read the
-   End-User's personal data or correlate the information with previous
-   uses of the same SD-JWT.
-
-   Usually, transport protocols for issuance and presentation of
-   credentials are designed to protect the confidentiality of the
-   transmitted data, for example, by requiring the use of TLS.
-
-   This specification therefore considers the confidentiality of the
-   data to be provided by the transport protocol and does not specify
-   any encryption mechanism.
-
-   Implementers MUST ensure that the transport protocol provides
-   confidentiality if the privacy of End-User data or correlation
-   attacks by passive observers are a concern.
-
-   To encrypt the SD-JWT when transmitted over an insecure channel,
-   implementers MAY use JSON Web Encryption (JWE) [RFC7516] by nesting
-   the SD-JWT as the plaintext payload of a JWE.  Especially, when an
-   SD-JWT is transmitted via a URL and information may be stored/cached
-   in the browser or end up in web server logs, the SD-JWT SHOULD be
-   encrypted using JWE.
-
-11.3.  Decoy Digests
-
-   The use of decoy digests is RECOMMENDED when the number of claims (or
-   the existence of particular claims) can be a side-channel disclosing
-   information about otherwise undisclosed claims.  In particular, if a
-   claim in an SD-JWT is present only if a certain condition is met
-   (e.g., a membership number is only contained if the End-User is a
-   member of a group), the Issuer SHOULD add decoy digests when the
-   condition is not met.
-
-   Decoy digests increase the size of the SD-JWT.  The number of decoy
-   digests (or whether to use them at all) is a trade-off between the
-   size of the SD-JWT and the privacy of the End-User's data.
-
-11.4.  Unlinkability
+11.1.  Unlinkability
 
    Unlinkability is a property whereby adversaries are prevented from
    correlating credential presentations of the same user beyond the
@@ -2192,6 +2139,92 @@ Table of Contents
    appropriate (e.g., randomize iat within the last 24 hours and
    calculate exp accordingly) or rounded (e.g., rounded down to the
    beginning of the day).
+
+11.2.  Storage of Signed User Data
+
+   Wherever End-User data is stored, it represents a potential target
+   for an attacker.  This target can be of particularly high value when
+   the data is signed by a trusted authority like an official national
+   identity service.  For example, in OpenID Connect [OpenID.Core],
+   signed ID Tokens can be stored by Relying Parties.  In the case of
+   SD-JWT, Holders have to store SD-JWTs, and Issuers and Verifiers may
+   decide to do so as well.
+
+   Not surprisingly, a leak of such data risks revealing private data of
+   End-Users to third parties.  Signed End-User data, the authenticity
+   of which can be easily verified by third parties, further exacerbates
+   the risk.  As discussed in Section 10.5, leaked SD-JWTs may also
+   allow attackers to impersonate Holders unless Key Binding is enforced
+   and the attacker does not have access to the Holder's cryptographic
+   keys.  Altogether, leaked SD-JWT credentials may have a high monetary
+   value on black markets.
+
+   Due to these risks, systems implementing SD-JWT SHOULD be designed to
+   minimize the amount of data that is stored.  All involved parties
+   SHOULD store SD-JWTs containing privacy-sensitive data only for as
+   long as needed, including in log files.
+
+   After Issuance, Issuers SHOULD NOT store the Issuer-signed JWT or the
+   respective Disclosures if they contain privacy-sensitive data.
+
+   Holders SHOULD store SD-JWTs only in encrypted form, and, wherever
+   possible, use hardware-backed encryption in particular for the
+   private Key Binding key.  Decentralized storage of data, e.g., on
+   End-User devices, SHOULD be preferred for End-User credentials over
+   centralized storage.  Expired SD-JWTs SHOULD be deleted as soon as
+   possible.
+
+   After Verification, Verifiers SHOULD NOT store the Issuer-signed JWT
+   or the respective Disclosures if they contain privacy-sensitive data.
+   It may be sufficient to store the result of the verification and any
+   End-User data that is needed for the application.
+
+   If reliable and secure key rotation and revocation is ensured
+   according to Section 10.8, Issuers may opt to publish expired or
+   revoked private signing keys (after a grace period that ensures that
+   the keys are not cached any longer at any Verifier).  This reduces
+   the value of any leaked credentials as the signatures on them can no
+   longer be trusted to originate from the Issuer.
+
+11.3.  Confidentiality during Transport
+
+   If the SD-JWT is transmitted over an insecure channel during issuance
+   or presentation, an adversary may be able to intercept and read the
+   End-User's personal data or correlate the information with previous
+   uses of the same SD-JWT.
+
+   Usually, transport protocols for issuance and presentation of
+   credentials are designed to protect the confidentiality of the
+   transmitted data, for example, by requiring the use of TLS.
+
+   This specification therefore considers the confidentiality of the
+   data to be provided by the transport protocol and does not specify
+   any encryption mechanism.
+
+   Implementers MUST ensure that the transport protocol provides
+   confidentiality if the privacy of End-User data or correlation
+   attacks by passive observers are a concern.
+
+   To encrypt the SD-JWT when transmitted over an insecure channel,
+   implementers MAY use JSON Web Encryption (JWE) [RFC7516] by nesting
+   the SD-JWT as the plaintext payload of a JWE.  Especially, when an
+   SD-JWT is transmitted via a URL and information may be stored/cached
+   in the browser or end up in web server logs, the SD-JWT SHOULD be
+   encrypted using JWE.
+
+11.4.  Decoy Digests
+
+   The use of decoy digests is RECOMMENDED when the number of claims (or
+   the existence of particular claims) can be a side-channel disclosing
+   information about otherwise undisclosed claims.  In particular, if a
+   claim in an SD-JWT is present only if a certain condition is met
+   (e.g., a membership number is only contained if the End-User is a
+   member of a group), the Issuer SHOULD add decoy digests when the
+   condition is not met.
+
+   Decoy digests increase the size of the SD-JWT.  The number of decoy
+   digests (or whether to use them at all) is a trade-off between the
+   size of the SD-JWT and the privacy of the End-User's data.
 
 11.5.  Issuer Identifier
 
@@ -2537,7 +2570,8 @@ A.1.  Simple Structured SD-JWT
    create a structured object for the address claim, allowing to
    separately disclose individual members of the claim.
 
-   The Issuer is using the following input JWT Claims Set:
+   The following data about the user comprises the input JWT Claims Set
+   used by the Issuer:
 
    {
      "sub": "6c5c0a49-b589-431d-bae7-219122a9ec2c",
@@ -2588,7 +2622,8 @@ A.1.  Simple Structured SD-JWT
      "_sd_alg": "sha-256"
    }
 
-   The following Disclosures are created:
+   The digests in the SD-JWT payload reference the following
+   Disclosures:
 
    *Claim sub*:
 
@@ -2708,10 +2743,23 @@ A.1.  Simple Structured SD-JWT
    U1U3ZlNXZ3dGNVVEWm1Xd0JUdzMyZ25VbGRJaGk4aEdWQ2FWNCIsICJydkpkNmlxNlQ1
    ZWptc0JNb0d3dU5YaDlxQUFGQVRBY2k0MG9pZEVlVnNBIiwgInVOSG9XWWhYc1poVkpD
    TkUyRHF5LXpxdDd0NjlnSkt5NVFhRnY3R3JNWDQiXX0sICJfc2RfYWxnIjogInNoYS0y
-   NTYifQ.6-GyK49XhgQ70bhaczvHQ99T50cXOBrqSvBonFrZ_AL87zeKEtosfB8APeAPb
-   sVDN2IyqGSDXPkdbo20AYnV5g~WyJHMDJOU3JRZmpGWFE3SW8wOXN5YWpBIiwgInJlZ2
+   NTYifQ.KBX4XacyLscMVUsgrj9Tr_Fe-WVUgMECmW68ZJdPmXj_YjjbaiyQmKbNhXdlQ
+   7lZpo9U4ZLsjFMjMXJh3sBEZg~WyJHMDJOU3JRZmpGWFE3SW8wOXN5YWpBIiwgInJlZ2
    lvbiIsICJcdTZlMmZcdTUzM2EiXQ~WyJsa2x4RjVqTVlsR1RQVW92TU5JdkNBIiwgImN
    vdW50cnkiLCAiSlAiXQ~
+
+   After validation, the Verifier will have the following processed SD-
+   JWT payload available for further handling:
+
+   {
+     "iss": "https://issuer.example.com",
+     "iat": 1683000000,
+     "exp": 1883000000,
+     "address": {
+       "region": "港区",
+       "country": "JP"
+     }
+   }
 
 A.2.  Complex Structured SD-JWT
 
@@ -2719,7 +2767,8 @@ A.2.  Complex Structured SD-JWT
    data structures defined in OpenID Connect for Identity Assurance
    [OIDC.IDA] are used.
 
-   The Issuer is using the following input JWT Claims Set:
+   The Issuer is using the following user data as the input JWT Claims
+   Set:
 
    {
      "verified_claims": {
@@ -2807,7 +2856,8 @@ A.2.  Complex Structured SD-JWT
      "_sd_alg": "sha-256"
    }
 
-   The following Disclosures are created by the Issuer:
+   The digests in the SD-JWT payload reference the following
+   Disclosures:
 
    *Claim time*:
 
@@ -2976,8 +3026,8 @@ A.2.  Complex Structured SD-JWT
    TWsiLCAiV3hoX3NWM2lSSDliZ3JUQkppLWFZSE5DTHQtdmpoWDFzZC1pZ09mXzlsayIs
    ICJfTy13SmlIM2VuU0I0Uk9IbnRUb1FUOEptTHR6LW1oTzJmMWM4OVhvZXJRIiwgImh2
    RFhod21HY0pRc0JDQTJPdGp1TEFjd0FNcERzYVUwbmtvdmNLT3FXTkUiXX19LCAiX3Nk
-   X2FsZyI6ICJzaGEtMjU2In0.HPjoz6WfbDiBuLMi_-j4jwSRwbhpKXqDdUHtve1-2crM
-   Mzc6htgWW9cA2CljXEZy1TF1h8ecNuT9rcKSltQKaw~WyIyR0xDNDJzS1F2ZUNmR2Zye
+   X2FsZyI6ICJzaGEtMjU2In0.mJvT3XkAjkE65Cwby6eVQNgcaoAvn3JwywvRhaK3gtCN
+   W0xRc11GgRb458xsEdlis7YDddZzS7Uli4Q275uOcw~WyIyR0xDNDJzS1F2ZUNmR2Zye
    U5STjl3IiwgInRpbWUiLCAiMjAxMi0wNC0yM1QxODoyNVoiXQ~WyJQYzMzSk0yTGNoY1
    VfbEhnZ3ZfdWZRIiwgeyJfc2QiOiBbIjl3cGpWUFd1RDdQSzBuc1FETDhCMDZsbWRnVj
    NMVnliaEh5ZFFwVE55TEkiLCAiRzVFbmhPQU9vVTlYXzZRTU52ekZYanBFQV9SYy1BRX
@@ -2990,8 +3040,8 @@ A.2.  Complex Structured SD-JWT
    XR5IjogIk1heHN0YWR0IiwgInBvc3RhbF9jb2RlIjogIjEyMzQ0IiwgImNvdW50cnkiO
    iAiREUiLCAic3RyZWV0X2FkZHJlc3MiOiAiV2VpZGVuc3RyYVx1MDBkZmUgMjIifV0~
 
-   After the validation, the Verifier will have the following data for
-   further processing:
+   The Verifier will have this processed SD-JWT payload available after
+   validation:
 
    {
      "iss": "https://issuer.example.com",
@@ -3031,7 +3081,7 @@ A.3.  SD-JWT-based Verifiable Credentials (SD-JWT VC)
    Key Binding is applied using the Holder's public key passed in a cnf
    claim in the SD-JWT.
 
-   The Issuer is using the following input JWT Claims Set:
+   The following citizen data is the input JWT Claims Set:
 
    {
      "vct": "https://bmi.bund.example/credential/pid/1.0",
@@ -3089,8 +3139,8 @@ A.3.  SD-JWT-based Verifiable Credentials (SD-JWT VC)
    6ICJzaGEtMjU2IiwgImNuZiI6IHsiandrIjogeyJrdHkiOiAiRUMiLCAiY3J2IjogIlA
    tMjU2IiwgIngiOiAiVENBRVIxOVp2dTNPSEY0ajRXNHZmU1ZvSElQMUlMaWxEbHM3dkN
    lR2VtYyIsICJ5IjogIlp4amlXV2JaTVFHSFZXS1ZRNGhiU0lpcnNWZnVlY0NFNnQ0alQ
-   5RjJIWlEifX19.JTm4_OGQFdHP8nl77QK9TcsO0GfrkExUEC628WcKOLySwzCubg0k5x
-   clmJ6gpIy9iVxBkWH9HOfI6yfUgLE6Hw~WyIyR0xDNDJzS1F2ZUNmR2ZyeU5STjl3Iiw
+   5RjJIWlEifX19.-JgCDUdE4Pzc7aURzKc6KMd37W3W4J5pxYAzz666sOvocIWDEyAKO2
+   KaZKbQWYGKXTI2bb48S9XXLlsFbkzPOQ~WyIyR0xDNDJzS1F2ZUNmR2ZyeU5STjl3Iiw
    gImdpdmVuX25hbWUiLCAiRXJpa2EiXQ~WyJlbHVWNU9nM2dTTklJOEVZbnN4QV9BIiwg
    ImZhbWlseV9uYW1lIiwgIk11c3Rlcm1hbm4iXQ~WyI2SWo3dE0tYTVpVlBHYm9TNXRtd
    lZBIiwgImJpcnRoZGF0ZSIsICIxOTYzLTA4LTEyIl0~WyJlSThaV205UW5LUHBOUGVOZ
@@ -3157,7 +3207,8 @@ A.3.  SD-JWT-based Verifiable Credentials (SD-JWT VC)
      }
    }
 
-   The following Disclosures are created by the Issuer:
+   The digests in the SD-JWT payload reference the following
+   Disclosures:
 
    *Claim given_name*:
 
@@ -3360,26 +3411,26 @@ A.3.  SD-JWT-based Verifiable Credentials (SD-JWT VC)
    6ICJzaGEtMjU2IiwgImNuZiI6IHsiandrIjogeyJrdHkiOiAiRUMiLCAiY3J2IjogIlA
    tMjU2IiwgIngiOiAiVENBRVIxOVp2dTNPSEY0ajRXNHZmU1ZvSElQMUlMaWxEbHM3dkN
    lR2VtYyIsICJ5IjogIlp4amlXV2JaTVFHSFZXS1ZRNGhiU0lpcnNWZnVlY0NFNnQ0alQ
-   5RjJIWlEifX19.JTm4_OGQFdHP8nl77QK9TcsO0GfrkExUEC628WcKOLySwzCubg0k5x
-   clmJ6gpIy9iVxBkWH9HOfI6yfUgLE6Hw~WyJuUHVvUW5rUkZxM0JJZUFtN0FuWEZBIiw
+   5RjJIWlEifX19.-JgCDUdE4Pzc7aURzKc6KMd37W3W4J5pxYAzz666sOvocIWDEyAKO2
+   KaZKbQWYGKXTI2bb48S9XXLlsFbkzPOQ~WyJuUHVvUW5rUkZxM0JJZUFtN0FuWEZBIiw
    gIm5hdGlvbmFsaXRpZXMiLCBbIkRFIl1d~WyJNMEpiNTd0NDF1YnJrU3V5ckRUM3hBIi
    wgIjE4IiwgdHJ1ZV0~eyJhbGciOiAiRVMyNTYiLCAidHlwIjogImtiK2p3dCJ9.eyJub
    25jZSI6ICIxMjM0NTY3ODkwIiwgImF1ZCI6ICJodHRwczovL3ZlcmlmaWVyLmV4YW1wb
-   GUub3JnIiwgImlhdCI6IDE3MjQ3MDEyNzUsICJzZF9oYXNoIjogIkxnU1JPdHRYT1JmR
-   25CYUlJSHN4aThVSXhaN0stcmxBWUMtRUtjSDhWREEifQ.yQK7yrmAu_x4oNevRa_6SJ
-   XE1x6C5gk7Pm3hf6x2lpnexkMtO6VVlPqEO-iTY2KOQFXo0sYP4Jeyn-gg3nQ-wA
+   GUub3JnIiwgImlhdCI6IDE3MjQ4NzczMzUsICJzZF9oYXNoIjogInBfY29TcDZmS0Q2W
+   URSUU14UzZPanNMTmZab0pNUUU1VkU3MWZDY1FIVjQifQ.5C7DizYMzC_CouR0KOX_tr
+   1LCRufh93lFu61UkS6B5ikZ6qpwWJtCcoNUAhObgEWyMGNo9yc5iPtNwS-3zA_aA
 
-   The following is the payload of a corresponding Key Binding JWT:
+   This is the payload of the corresponding Key Binding JWT:
 
    {
      "nonce": "1234567890",
      "aud": "https://verifier.example.org",
-     "iat": 1724701275,
-     "sd_hash": "LgSROttXORfGnBaIIHsxi8UIxZ7K-rlAYC-EKcH8VDA"
+     "iat": 1724877335,
+     "sd_hash": "p_coSp6fKD6YDRQMxS6OjsLNfZoJMQE5VE71fCcQHV4"
    }
 
-   After the validation, the Verifier will have the following data for
-   further processing:
+   After validation, the Verifier will have the following processed SD-
+   JWT payload available for further handling:
 
    {
      "iss": "https://issuer.example.com",
@@ -3411,7 +3462,7 @@ A.4.  W3C Verifiable Credentials Data Model v2.0
    Key Binding is applied using the Holder's public key passed in a cnf
    claim in the SD-JWT.
 
-   The Issuer is using the following input JWT Claims Set:
+   The following is the input JWT Claims Set:
 
    {
      "@context": [
@@ -3481,8 +3532,8 @@ A.4.  W3C Verifiable Credentials Data Model v2.0
    c2RfYWxnIjogInNoYS0yNTYiLCAiY25mIjogeyJqd2siOiB7Imt0eSI6ICJFQyIsICJj
    cnYiOiAiUC0yNTYiLCAieCI6ICJUQ0FFUjE5WnZ1M09IRjRqNFc0dmZTVm9ISVAxSUxp
    bERsczd2Q2VHZW1jIiwgInkiOiAiWnhqaVdXYlpNUUdIVldLVlE0aGJTSWlyc1ZmdWVj
-   Q0U2dDRqVDlGMkhaUSJ9fX0.eewa7eLSnNNNxDU8L1HVty2dqKuLb1y53x3E3BGQLmrd
-   LbKa7ialp7tl66CRxPbwmzUjzutgnL223clb4hBxlQ~WyIyR0xDNDJzS1F2ZUNmR2Zye
+   Q0U2dDRqVDlGMkhaUSJ9fX0.l7KVzdDr3PCWw92CCcwminTa1QZ30S149I4x3rdsTDtP
+   rwqWY_iecrCi1zgMj7M6RW84X5VS0N71bOF11BWP8g~WyIyR0xDNDJzS1F2ZUNmR2Zye
    U5STjl3IiwgImF0Y0NvZGUiLCAiSjA3QlgwMyJd~WyJlbHVWNU9nM2dTTklJOEVZbnN4
    QV9BIiwgIm1lZGljaW5hbFByb2R1Y3ROYW1lIiwgIkNPVklELTE5IFZhY2NpbmUgTW9k
    ZXJuYSJd~WyI2SWo3dE0tYTVpVlBHYm9TNXRtdlZBIiwgIm1hcmtldGluZ0F1dGhvcml
@@ -3557,7 +3608,8 @@ A.4.  W3C Verifiable Credentials Data Model v2.0
      }
    }
 
-   The following Disclosures are created by the Issuer:
+   The digests in the SD-JWT payload reference the following
+   Disclosures:
 
    *Claim atcCode*:
 
@@ -3679,7 +3731,7 @@ A.4.  W3C Verifiable Credentials Data Model v2.0
    *  Contents: ["HbQ4X8srVW3QDxnIJdqyOA", "healthProfessional",
       "883110000015376"]
 
-   The following is an example of an SD-JWT+KB that discloses only type,
+   This is an example of an SD-JWT+KB that discloses only type,
    medicinalProductName, atcCode of the vaccine, type of the recipient,
    type, order and dateOfVaccination:
 
@@ -3710,21 +3762,21 @@ A.4.  W3C Verifiable Credentials Data Model v2.0
    c2RfYWxnIjogInNoYS0yNTYiLCAiY25mIjogeyJqd2siOiB7Imt0eSI6ICJFQyIsICJj
    cnYiOiAiUC0yNTYiLCAieCI6ICJUQ0FFUjE5WnZ1M09IRjRqNFc0dmZTVm9ISVAxSUxp
    bERsczd2Q2VHZW1jIiwgInkiOiAiWnhqaVdXYlpNUUdIVldLVlE0aGJTSWlyc1ZmdWVj
-   Q0U2dDRqVDlGMkhaUSJ9fX0.eewa7eLSnNNNxDU8L1HVty2dqKuLb1y53x3E3BGQLmrd
-   LbKa7ialp7tl66CRxPbwmzUjzutgnL223clb4hBxlQ~WyJQYzMzSk0yTGNoY1VfbEhnZ
+   Q0U2dDRqVDlGMkhaUSJ9fX0.l7KVzdDr3PCWw92CCcwminTa1QZ30S149I4x3rdsTDtP
+   rwqWY_iecrCi1zgMj7M6RW84X5VS0N71bOF11BWP8g~WyJQYzMzSk0yTGNoY1VfbEhnZ
    3ZfdWZRIiwgIm9yZGVyIiwgIjMvMyJd~WyJBSngtMDk1VlBycFR0TjRRTU9xUk9BIiwg
    ImRhdGVPZlZhY2NpbmF0aW9uIiwgIjIwMjEtMDYtMjNUMTM6NDA6MTJaIl0~WyIyR0xD
    NDJzS1F2ZUNmR2ZyeU5STjl3IiwgImF0Y0NvZGUiLCAiSjA3QlgwMyJd~WyJlbHVWNU9
    nM2dTTklJOEVZbnN4QV9BIiwgIm1lZGljaW5hbFByb2R1Y3ROYW1lIiwgIkNPVklELTE
    5IFZhY2NpbmUgTW9kZXJuYSJd~eyJhbGciOiAiRVMyNTYiLCAidHlwIjogImtiK2p3dC
    J9.eyJub25jZSI6ICIxMjM0NTY3ODkwIiwgImF1ZCI6ICJodHRwczovL3ZlcmlmaWVyL
-   mV4YW1wbGUub3JnIiwgImlhdCI6IDE3MjQ3MDEyNzUsICJzZF9oYXNoIjogInJWVm5ob
-   G9mNWtJaDdOS2J4alJIeUNrdkc1THFuRkp1a1lXdVRDbmpiekkifQ.HV9lK-UqjV27xv
-   nyiNpb2ioOQOAdl_oC5It7TqJDN1BF0PXkJDSSEdcvoiOM55s4jjuibk56HbWea4mfwA
-   _3Aw
+   mV4YW1wbGUub3JnIiwgImlhdCI6IDE3MjQ4NzczMzUsICJzZF9oYXNoIjogImFYR3l6W
+   EotNzBfQ24wTFNTU3ZQQ01mNlY2VjNZYVNqcmNGWjlIMXhkcmMifQ._uzJ2L2VfrpalQ
+   OKpBM6TIMPH0vXfhCmKg8y7gZ-GWQQHMApFtZUW-QPvCrdt_5jWsrAEt5EqY4gLw6U2h
+   l8Xg
 
-   After the validation, the Verifier will have the following data for
-   further processing:
+   After the validation, the Verifier will have the following processed
+   SD-JWT payload available for further handling:
 
    {
      "@context": [
@@ -3898,9 +3950,12 @@ Appendix C.  Document History
 
    -12
 
+   *  Clarify, add context, or otherwise improve the examples
    *  Editorial and reference fixes
    *  Better introduce the phrase processed SD-JWT payload in the end of
       Section 8.1 on Verifying the SD-JWT
+   *  Moved considerations around unlinkability to the top of the
+      Privacy Considerations section
 
    -11
 
