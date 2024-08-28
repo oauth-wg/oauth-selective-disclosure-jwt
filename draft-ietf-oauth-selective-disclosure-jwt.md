@@ -1215,6 +1215,74 @@ The definition of `typ` in Section 4.1.9 of [@!RFC7515] recommends that the "app
 
 The privacy principles of [@ISO.29100] should be adhered to.
 
+## Unlinkability
+
+Unlinkability is a property whereby adversaries are prevented from correlating
+credential presentations of the same user beyond the user's consent.
+Without unlinkability, an adversary might be able to learn more about the user than the user
+intended to disclose, for example:
+
+* Cooperating Verifiers might want to track users across services to build
+  advertising profiles.
+* Issuers might want to track where users present their credentials to enable
+  surveillance.
+* After a data breach at multiple Verifiers, publicly available information
+  might allow linking identifiable information presented to Verifier A with
+  originally anonymous information presented to Verifier B, therefore revealing
+  the identities of users of Verifier B.
+
+The following types of unlinkability are considered here:
+
+* Presentation Unlinkability: A Verifier should not be able to link two
+  presentations of the same credential.
+* Verifier/Verifier Unlinkability: Two colluding Verifiers should not be able to
+  learn that they have received presentations of the same credential.
+* Issuer/Verifier Unlinkability (Honest Verifier): An Issuer of a credential
+  should not be able to know that a user presented the credential to a certain
+  Verifier that is not behaving maliciously.
+* Issuer/Verifier Unlinkability (Colluding/Compromised Verifier): An Issuer of a
+  credential should not be able to tell that a user presented the credential to
+  a certain Verifier, even if the Verifier colludes with the Issuer or becomes
+  compromised and leaks stored credentials from presentations.
+
+In all cases, unlinkability is limited to cases where the disclosed claims do
+not contain information that directly or indirectly identifies the user. For
+example, when a taxpayer identification number is contained in the disclosed claims, the Issuer and
+Verifier can easily link the user's transactions. However, when the user only
+discloses a birthdate to one Verifier and a postal code to another Verifier, the two Verifiers should not be able to determine that they were interacting with the same user.
+
+Issuer/Verifier unlinkability with a colluding or compromised Verifier cannot be
+achieved in salted-hash based selective disclosure approaches, such as SD-JWT, as the
+issued credential with the Issuer's signature is directly presented to the Verifier, who can forward it to
+the Issuer.
+
+In considering Issuer/Verifier unlinkability, it is important to note the potential for an asymmetric power dynamic
+between Issuers and Verifiers. This dynamic can compel an otherwise honest Verifier into collusion.
+For example, a governmental Issuer might have the authority to mandate that a Verifier report back information
+about the credentials presented to it. Legal requirements could further enforce this, explicitly undermining
+Issuer/Verifier unlinkability. Similarly, a large service provider issuing credentials might implicitly pressure
+Verifiers into collusion by incentivizing participation in their larger ecosystem.
+Deployers of SD-JWT must be aware of these potential power dynamics,
+mitigate them as much as possible, and/or make the risks transparent to the End-User.
+
+Contrary to that, Issuer/Verifier unlinkability with an honest Verifier can generally be achieved.
+However, a callback from the Verifier to the Issuer, such as a revocation check, could potentially
+disclose information about the credential's usage to the Issuer.
+Where such callbacks are necessary, they MUST be executed in a manner that
+preserves privacy and does not disclose details about the credential to the Issuer. It is
+important to note that the timing of such requests could potentially serve as a side-channel.
+
+Verifier/Verifier unlinkability and presentation unlinkability can be achieved using batch issuance: A batch
+of credentials based on the same claims is issued to the Holder instead of just
+a single credential. The Holder can then use a different credential for each
+Verifier or even for each session with a Verifier. New key binding keys and
+salts MUST be used for each credential in the batch to ensure that the Verifiers
+cannot link the credentials using these values. Likewise, claims carrying time
+information, like `iat`, `exp`, and `nbf`, MUST either be randomized within a
+time period considered appropriate (e.g., randomize `iat` within the last 24
+hours and calculate `exp` accordingly) or rounded (e.g., rounded down to the
+beginning of the day).
+
 ## Storage of Signed User Data
 
 Wherever End-User data is stored, it represents a potential
@@ -1287,74 +1355,6 @@ Especially, when an SD-JWT is transmitted via a URL and information may be store
 The use of decoy digests is RECOMMENDED when the number of claims (or the existence of particular claims) can be a side-channel disclosing information about otherwise undisclosed claims. In particular, if a claim in an SD-JWT is present only if a certain condition is met (e.g., a membership number is only contained if the End-User is a member of a group), the Issuer SHOULD add decoy digests when the condition is not met.
 
 Decoy digests increase the size of the SD-JWT. The number of decoy digests (or whether to use them at all) is a trade-off between the size of the SD-JWT and the privacy of the End-User's data.
-
-## Unlinkability
-
-Unlinkability is a property whereby adversaries are prevented from correlating
-credential presentations of the same user beyond the user's consent.
-Without unlinkability, an adversary might be able to learn more about the user than the user
-intended to disclose, for example:
-
- * Cooperating Verifiers might want to track users across services to build
-   advertising profiles.
- * Issuers might want to track where users present their credentials to enable
-   surveillance.
- * After a data breach at multiple Verifiers, publicly available information
-   might allow linking identifiable information presented to Verifier A with
-   originally anonymous information presented to Verifier B, therefore revealing
-   the identities of users of Verifier B.
-
-The following types of unlinkability are considered here:
-
- * Presentation Unlinkability: A Verifier should not be able to link two
-   presentations of the same credential.
- * Verifier/Verifier Unlinkability: Two colluding Verifiers should not be able to
-   learn that they have received presentations of the same credential.
- * Issuer/Verifier Unlinkability (Honest Verifier): An Issuer of a credential
-   should not be able to know that a user presented the credential to a certain
-   Verifier that is not behaving maliciously.
- * Issuer/Verifier Unlinkability (Colluding/Compromised Verifier): An Issuer of a
-   credential should not be able to tell that a user presented the credential to
-   a certain Verifier, even if the Verifier colludes with the Issuer or becomes
-   compromised and leaks stored credentials from presentations.
-
-In all cases, unlinkability is limited to cases where the disclosed claims do
-not contain information that directly or indirectly identifies the user. For
-example, when a taxpayer identification number is contained in the disclosed claims, the Issuer and
-Verifier can easily link the user's transactions. However, when the user only
-discloses a birthdate to one Verifier and a postal code to another Verifier, the two Verifiers should not be able to determine that they were interacting with the same user.
-
-Issuer/Verifier unlinkability with a colluding or compromised Verifier cannot be
-achieved in salted-hash based selective disclosure approaches, such as SD-JWT, as the
-issued credential with the Issuer's signature is directly presented to the Verifier, who can forward it to
-the Issuer.
-
-In considering Issuer/Verifier unlinkability, it is important to note the potential for an asymmetric power dynamic
-between Issuers and Verifiers. This dynamic can compel an otherwise honest Verifier into collusion.
-For example, a governmental Issuer might have the authority to mandate that a Verifier report back information
-about the credentials presented to it. Legal requirements could further enforce this, explicitly undermining
-Issuer/Verifier unlinkability. Similarly, a large service provider issuing credentials might implicitly pressure
-Verifiers into collusion by incentivizing participation in their larger ecosystem.
-Deployers of SD-JWT must be aware of these potential power dynamics,
-mitigate them as much as possible, and/or make the risks transparent to the End-User.
-
-Contrary to that, Issuer/Verifier unlinkability with an honest Verifier can generally be achieved.
-However, a callback from the Verifier to the Issuer, such as a revocation check, could potentially
-disclose information about the credential's usage to the Issuer.
-Where such callbacks are necessary, they MUST be executed in a manner that
-preserves privacy and does not disclose details about the credential to the Issuer. It is
-important to note that the timing of such requests could potentially serve as a side-channel.
-
-Verifier/Verifier unlinkability and presentation unlinkability can be achieved using batch issuance: A batch
-of credentials based on the same claims is issued to the Holder instead of just
-a single credential. The Holder can then use a different credential for each
-Verifier or even for each session with a Verifier. New key binding keys and
-salts MUST be used for each credential in the batch to ensure that the Verifiers
-cannot link the credentials using these values. Likewise, claims carrying time
-information, like `iat`, `exp`, and `nbf`, MUST either be randomized within a
-time period considered appropriate (e.g., randomize `iat` within the last 24
-hours and calculate `exp` accordingly) or rounded (e.g., rounded down to the
-beginning of the day).
 
 ## Issuer Identifier
 
@@ -1926,6 +1926,7 @@ data. The original JSON data is then used by the application. See
    -12
 
    * Editorial and reference fixes
+   * Moved considerations around unlinkability to the top of the Privacy Considerations section
 
    -11
 
