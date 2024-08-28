@@ -142,7 +142,7 @@ NOT", "SHOULD", "SHOULD NOT", "RECOMMENDED", "NOT RECOMMENDED",
 described in BCP 14 [@!RFC2119] [@!RFC8174] when, and only when, they
 appear in all capitals, as shown here.
 
-**base64url** denotes the URL-safe base64 encoding without padding defined in
+**Base64url** denotes the URL-safe base64 encoding without padding defined in
 Section 2 of [@!RFC7515].
 
 # Terms and Definitions
@@ -716,16 +716,16 @@ lines in RFCs and for readability. JSON does not allow line breaks within string
 
 ## Issuance
 
-The Issuer is using the following input JWT Claims Set:
+The following data about the user comprises the input JWT Claims Set used by the Issuer:
 
 <{{examples/simple/user_claims.json}}
 
-The Issuer in this case made the following decisions:
+In this example, the following decisions were made by the Issuer in constructing the SD-JWT:
 
 * The `nationalities` array is always visible, but its contents are selectively disclosable.
-* The `sub` element and essential verification data (`iss`, `iat`, `cnf`, etc.) are always visible.
+* The `sub` element as well as essential verification data (`iss`, `exp`, `cnf`, etc.) are always visible.
 * All other End-User claims are selectively disclosable.
-* For `address`, the Issuer is using a flat structure, i.e., all of the claims
+* For `address`, the Issuer is using a flat structure, i.e., all the claims
   in the `address` claim can only be disclosed in full. Other options are
   discussed in (#nested_data).
 
@@ -733,15 +733,15 @@ The following payload is used for the SD-JWT:
 
 <{{examples/simple/sd_jwt_payload.json}}
 
-The following Disclosures are created by the Issuer:
+The respective Disclosures are created by the Issuer:
 
 {{examples/simple/disclosures.md}}
 
-The payload is then signed by the Issuer to create the following JWT:
+The payload is then signed by the Issuer to create the following Issuer-signed JWT:
 
 <{{examples/simple/sd_jwt_jws_part.txt}}
 
-The following is the issued SD-JWT:
+Adding the Disclosures produces the SD-JWT:
 
 <{{examples/simple/sd_jwt_issuance.txt}}
 
@@ -762,6 +762,10 @@ The following Key Binding JWT payload was created and signed for this presentati
 If the Verifier did not require Key Binding, then the Holder could have
 presented the SD-JWT with selected Disclosures directly, instead of encapsulating it in
 an SD-JWT+KB.
+
+After validation, the Verifier will have the following processed SD-JWT payload available for further handling:
+
+<{{examples/simple/verified_contents.json}}
 
 # Considerations on Nested Data in SD-JWTs {#nested_data}
 
@@ -788,7 +792,7 @@ The Issuer can decide to treat the `address` claim as a block that can either be
 
 <{{examples/address_only_flat/sd_jwt_payload.json}}
 
-The Issuer would create the following Disclosure:
+The Issuer would create the following Disclosure referenced by the one hash in the SD-JWT:
 
 {{examples/address_only_flat/disclosures.md}}
 
@@ -1215,6 +1219,74 @@ The definition of `typ` in Section 4.1.9 of [@!RFC7515] recommends that the "app
 
 The privacy principles of [@ISO.29100] should be adhered to.
 
+## Unlinkability
+
+Unlinkability is a property whereby adversaries are prevented from correlating
+credential presentations of the same user beyond the user's consent.
+Without unlinkability, an adversary might be able to learn more about the user than the user
+intended to disclose, for example:
+
+* Cooperating Verifiers might want to track users across services to build
+  advertising profiles.
+* Issuers might want to track where users present their credentials to enable
+  surveillance.
+* After a data breach at multiple Verifiers, publicly available information
+  might allow linking identifiable information presented to Verifier A with
+  originally anonymous information presented to Verifier B, therefore revealing
+  the identities of users of Verifier B.
+
+The following types of unlinkability are considered here:
+
+* Presentation Unlinkability: A Verifier should not be able to link two
+  presentations of the same credential.
+* Verifier/Verifier Unlinkability: Two colluding Verifiers should not be able to
+  learn that they have received presentations of the same credential.
+* Issuer/Verifier Unlinkability (Honest Verifier): An Issuer of a credential
+  should not be able to know that a user presented the credential to a certain
+  Verifier that is not behaving maliciously.
+* Issuer/Verifier Unlinkability (Colluding/Compromised Verifier): An Issuer of a
+  credential should not be able to tell that a user presented the credential to
+  a certain Verifier, even if the Verifier colludes with the Issuer or becomes
+  compromised and leaks stored credentials from presentations.
+
+In all cases, unlinkability is limited to cases where the disclosed claims do
+not contain information that directly or indirectly identifies the user. For
+example, when a taxpayer identification number is contained in the disclosed claims, the Issuer and
+Verifier can easily link the user's transactions. However, when the user only
+discloses a birthdate to one Verifier and a postal code to another Verifier, the two Verifiers should not be able to determine that they were interacting with the same user.
+
+Issuer/Verifier unlinkability with a colluding or compromised Verifier cannot be
+achieved in salted-hash based selective disclosure approaches, such as SD-JWT, as the
+issued credential with the Issuer's signature is directly presented to the Verifier, who can forward it to
+the Issuer.
+
+In considering Issuer/Verifier unlinkability, it is important to note the potential for an asymmetric power dynamic
+between Issuers and Verifiers. This dynamic can compel an otherwise honest Verifier into collusion.
+For example, a governmental Issuer might have the authority to mandate that a Verifier report back information
+about the credentials presented to it. Legal requirements could further enforce this, explicitly undermining
+Issuer/Verifier unlinkability. Similarly, a large service provider issuing credentials might implicitly pressure
+Verifiers into collusion by incentivizing participation in their larger ecosystem.
+Deployers of SD-JWT must be aware of these potential power dynamics,
+mitigate them as much as possible, and/or make the risks transparent to the End-User.
+
+Contrary to that, Issuer/Verifier unlinkability with an honest Verifier can generally be achieved.
+However, a callback from the Verifier to the Issuer, such as a revocation check, could potentially
+disclose information about the credential's usage to the Issuer.
+Where such callbacks are necessary, they MUST be executed in a manner that
+preserves privacy and does not disclose details about the credential to the Issuer. It is
+important to note that the timing of such requests could potentially serve as a side-channel.
+
+Verifier/Verifier unlinkability and presentation unlinkability can be achieved using batch issuance: A batch
+of credentials based on the same claims is issued to the Holder instead of just
+a single credential. The Holder can then use a different credential for each
+Verifier or even for each session with a Verifier. New key binding keys and
+salts MUST be used for each credential in the batch to ensure that the Verifiers
+cannot link the credentials using these values. Likewise, claims carrying time
+information, like `iat`, `exp`, and `nbf`, MUST either be randomized within a
+time period considered appropriate (e.g., randomize `iat` within the last 24
+hours and calculate `exp` accordingly) or rounded (e.g., rounded down to the
+beginning of the day).
+
 ## Storage of Signed User Data
 
 Wherever End-User data is stored, it represents a potential
@@ -1287,74 +1359,6 @@ Especially, when an SD-JWT is transmitted via a URL and information may be store
 The use of decoy digests is RECOMMENDED when the number of claims (or the existence of particular claims) can be a side-channel disclosing information about otherwise undisclosed claims. In particular, if a claim in an SD-JWT is present only if a certain condition is met (e.g., a membership number is only contained if the End-User is a member of a group), the Issuer SHOULD add decoy digests when the condition is not met.
 
 Decoy digests increase the size of the SD-JWT. The number of decoy digests (or whether to use them at all) is a trade-off between the size of the SD-JWT and the privacy of the End-User's data.
-
-## Unlinkability
-
-Unlinkability is a property whereby adversaries are prevented from correlating
-credential presentations of the same user beyond the user's consent.
-Without unlinkability, an adversary might be able to learn more about the user than the user
-intended to disclose, for example:
-
- * Cooperating Verifiers might want to track users across services to build
-   advertising profiles.
- * Issuers might want to track where users present their credentials to enable
-   surveillance.
- * After a data breach at multiple Verifiers, publicly available information
-   might allow linking identifiable information presented to Verifier A with
-   originally anonymous information presented to Verifier B, therefore revealing
-   the identities of users of Verifier B.
-
-The following types of unlinkability are considered here:
-
- * Presentation Unlinkability: A Verifier should not be able to link two
-   presentations of the same credential.
- * Verifier/Verifier Unlinkability: Two colluding Verifiers should not be able to
-   learn that they have received presentations of the same credential.
- * Issuer/Verifier Unlinkability (Honest Verifier): An Issuer of a credential
-   should not be able to know that a user presented the credential to a certain
-   Verifier that is not behaving maliciously.
- * Issuer/Verifier Unlinkability (Colluding/Compromised Verifier): An Issuer of a
-   credential should not be able to tell that a user presented the credential to
-   a certain Verifier, even if the Verifier colludes with the Issuer or becomes
-   compromised and leaks stored credentials from presentations.
-
-In all cases, unlinkability is limited to cases where the disclosed claims do
-not contain information that directly or indirectly identifies the user. For
-example, when a taxpayer identification number is contained in the disclosed claims, the Issuer and
-Verifier can easily link the user's transactions. However, when the user only
-discloses a birthdate to one Verifier and a postal code to another Verifier, the two Verifiers should not be able to determine that they were interacting with the same user.
-
-Issuer/Verifier unlinkability with a colluding or compromised Verifier cannot be
-achieved in salted-hash based selective disclosure approaches, such as SD-JWT, as the
-issued credential with the Issuer's signature is directly presented to the Verifier, who can forward it to
-the Issuer.
-
-In considering Issuer/Verifier unlinkability, it is important to note the potential for an asymmetric power dynamic
-between Issuers and Verifiers. This dynamic can compel an otherwise honest Verifier into collusion.
-For example, a governmental Issuer might have the authority to mandate that a Verifier report back information
-about the credentials presented to it. Legal requirements could further enforce this, explicitly undermining
-Issuer/Verifier unlinkability. Similarly, a large service provider issuing credentials might implicitly pressure
-Verifiers into collusion by incentivizing participation in their larger ecosystem.
-Deployers of SD-JWT must be aware of these potential power dynamics,
-mitigate them as much as possible, and/or make the risks transparent to the End-User.
-
-Contrary to that, Issuer/Verifier unlinkability with an honest Verifier can generally be achieved.
-However, a callback from the Verifier to the Issuer, such as a revocation check, could potentially
-disclose information about the credential's usage to the Issuer.
-Where such callbacks are necessary, they MUST be executed in a manner that
-preserves privacy and does not disclose details about the credential to the Issuer. It is
-important to note that the timing of such requests could potentially serve as a side-channel.
-
-Verifier/Verifier unlinkability and presentation unlinkability can be achieved using batch issuance: A batch
-of credentials based on the same claims is issued to the Holder instead of just
-a single credential. The Holder can then use a different credential for each
-Verifier or even for each session with a Verifier. New key binding keys and
-salts MUST be used for each credential in the batch to ensure that the Verifiers
-cannot link the credentials using these values. Likewise, claims carrying time
-information, like `iat`, `exp`, and `nbf`, MUST either be randomized within a
-time period considered appropriate (e.g., randomize `iat` within the last 24
-hours and calculate `exp` accordingly) or rounded (e.g., rounded down to the
-beginning of the day).
 
 ## Issuer Identifier
 
@@ -1681,7 +1685,7 @@ Line breaks have been added for readability.
 
 In this example, in contrast to (#main-example), the Issuer decided to create a structured object for the `address` claim, allowing to separately disclose individual members of the claim.
 
-The Issuer is using the following input JWT Claims Set:
+The following data about the user comprises the input JWT Claims Set used by the Issuer:
 
 <{{examples/simple_structured/user_claims.json}}
 
@@ -1691,7 +1695,7 @@ The following payload is used for the SD-JWT:
 
 <{{examples/simple_structured/sd_jwt_payload.json}}
 
-The following Disclosures are created:
+The digests in the SD-JWT payload reference the following Disclosures:
 
 {{examples/simple_structured/disclosures.md}}
 
@@ -1704,12 +1708,16 @@ and `country` of the `address` property:
 
 <{{examples/simple_structured/sd_jwt_presentation.txt}}
 
+After validation, the Verifier will have the following processed SD-JWT payload available for further handling:
+
+<{{examples/simple_structured/verified_contents.json}}
+
 ## Complex Structured SD-JWT {#example-complex-structured-sd-jwt}
 
 In this example, an SD-JWT with a complex object is represented. The data
 structures defined in OpenID Connect for Identity Assurance [@OIDC.IDA] are used.
 
-The Issuer is using the following input JWT Claims Set:
+The Issuer is using the following user data as the input JWT Claims Set:
 
 <{{examples/complex_ekyc/user_claims.json}}
 
@@ -1717,7 +1725,7 @@ The following payload is used for the SD-JWT:
 
 <{{examples/complex_ekyc/sd_jwt_payload.json}}
 
-The following Disclosures are created by the Issuer:
+The digests in the SD-JWT payload reference the following Disclosures:
 
 {{examples/complex_ekyc/disclosures.md}}
 
@@ -1725,7 +1733,7 @@ The following is a presentation of the SD-JWT:
 
 <{{examples/complex_ekyc/sd_jwt_presentation.txt}}
 
-After the validation, the Verifier will have the following data for further processing:
+The Verifier will have this processed SD-JWT payload available after validation:
 
 <{{examples/complex_ekyc/verified_contents.json}}
 
@@ -1740,7 +1748,7 @@ a German citizen.
 Key Binding is applied
 using the Holder's public key passed in a `cnf` claim in the SD-JWT.
 
-The Issuer is using the following input JWT Claims Set:
+The following citizen data is the input JWT Claims Set:
 
 <{{examples/arf-pid/user_claims.json}}
 
@@ -1752,7 +1760,7 @@ The following payload is used for the SD-JWT:
 
 <{{examples/arf-pid/sd_jwt_payload.json}}
 
-The following Disclosures are created by the Issuer:
+The digests in the SD-JWT payload reference the following Disclosures:
 
 {{examples/arf-pid/disclosures.md}}
 
@@ -1760,11 +1768,11 @@ The following is an example of an SD-JWT+KB that discloses only nationality and 
 
 <{{examples/arf-pid/sd_jwt_presentation.txt}}
 
-The following is the payload of a corresponding Key Binding JWT:
+This is the payload of the corresponding Key Binding JWT:
 
 <{{examples/arf-pid/kb_jwt_payload.json}}
 
-After the validation, the Verifier will have the following data for further processing:
+After validation, the Verifier will have the following processed SD-JWT payload available for further handling:
 
 <{{examples/arf-pid/verified_contents.json}}
 
@@ -1776,7 +1784,7 @@ could be used to express a W3C Verifiable Credentials Data Model v2.0 [@VC_DATA_
 Key Binding is applied
 using the Holder's public key passed in a `cnf` claim in the SD-JWT.
 
-The Issuer is using the following input JWT Claims Set:
+The following is the input JWT Claims Set:
 
 <{{examples/jsonld/user_claims.json}}
 
@@ -1788,15 +1796,15 @@ The following payload is used for the SD-JWT:
 
 <{{examples/jsonld/sd_jwt_payload.json}}
 
-The following Disclosures are created by the Issuer:
+The digests in the SD-JWT payload reference the following Disclosures:
 
 {{examples/jsonld/disclosures.md}}
 
-The following is an example of an SD-JWT+KB that discloses only `type`, `medicinalProductName`, `atcCode` of the vaccine, `type` of the `recipient`, `type`, `order` and `dateOfVaccination`:
+This is an example of an SD-JWT+KB that discloses only `type`, `medicinalProductName`, `atcCode` of the vaccine, `type` of the `recipient`, `type`, `order` and `dateOfVaccination`:
 
 <{{examples/jsonld/sd_jwt_presentation.txt}}
 
-After the validation, the Verifier will have the following data for further processing:
+After the validation, the Verifier will have the following processed SD-JWT payload available for further handling:
 
 <{{examples/jsonld/verified_contents.json}}
 
@@ -1925,8 +1933,10 @@ data. The original JSON data is then used by the application. See
 
    -12
 
+   * Clarify, add context, or otherwise improve the examples
    * Editorial and reference fixes
    * Better introduce the phrase processed SD-JWT payload in the end of (#sd_jwt_verification) on Verifying the SD-JWT
+   * Moved considerations around unlinkability to the top of the Privacy Considerations section
 
    -11
 
