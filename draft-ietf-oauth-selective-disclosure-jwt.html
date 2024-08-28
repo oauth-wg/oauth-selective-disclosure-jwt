@@ -2218,7 +2218,7 @@ lines in RFCs and for readability. JSON does not allow line breaks within string
         <h3 id="name-issuance">
 <a href="#section-6.1" class="section-number selfRef">6.1. </a><a href="#name-issuance" class="section-name selfRef">Issuance</a>
         </h3>
-<p id="section-6.1-1">The Issuer is using the following input JWT Claims Set:<a href="#section-6.1-1" class="pilcrow">¶</a></p>
+<p id="section-6.1-1">The following data about the user comprises the input JWT Claims Set used by the Issuer:<a href="#section-6.1-1" class="pilcrow">¶</a></p>
 <div class="lang-json sourcecode" id="section-6.1-2">
 <pre>{
   "sub": "user_42",
@@ -2243,15 +2243,15 @@ lines in RFCs and for readability. JSON does not allow line breaks within string
 
 </pre><a href="#section-6.1-2" class="pilcrow">¶</a>
 </div>
-<p id="section-6.1-3">The Issuer in this case made the following decisions:<a href="#section-6.1-3" class="pilcrow">¶</a></p>
+<p id="section-6.1-3">In this example, the following decisions were made by the Issuer in constructing the SD-JWT:<a href="#section-6.1-3" class="pilcrow">¶</a></p>
 <ul class="compact">
 <li class="compact" id="section-6.1-4.1">The <code>nationalities</code> array is always visible, but its contents are selectively disclosable.<a href="#section-6.1-4.1" class="pilcrow">¶</a>
 </li>
-          <li class="compact" id="section-6.1-4.2">The <code>sub</code> element and essential verification data (<code>iss</code>, <code>iat</code>, <code>cnf</code>, etc.) are always visible.<a href="#section-6.1-4.2" class="pilcrow">¶</a>
+          <li class="compact" id="section-6.1-4.2">The <code>sub</code> element as well as essential verification data (<code>iss</code>, <code>exp</code>, <code>cnf</code>, etc.) are always visible.<a href="#section-6.1-4.2" class="pilcrow">¶</a>
 </li>
           <li class="compact" id="section-6.1-4.3">All other End-User claims are selectively disclosable.<a href="#section-6.1-4.3" class="pilcrow">¶</a>
 </li>
-          <li class="compact" id="section-6.1-4.4">For <code>address</code>, the Issuer is using a flat structure, i.e., all of the claims
+          <li class="compact" id="section-6.1-4.4">For <code>address</code>, the Issuer is using a flat structure, i.e., all the claims
 in the <code>address</code> claim can only be disclosed in full. Other options are
 discussed in <a href="#nested_data" class="auto internal xref">Section 7</a>.<a href="#section-6.1-4.4" class="pilcrow">¶</a>
 </li>
@@ -2294,7 +2294,7 @@ discussed in <a href="#nested_data" class="auto internal xref">Section 7</a>.<a 
 
 </pre><a href="#section-6.1-6" class="pilcrow">¶</a>
 </div>
-<p id="section-6.1-7">The following Disclosures are created by the Issuer:<a href="#section-6.1-7" class="pilcrow">¶</a></p>
+<p id="section-6.1-7">The respective Disclosures are created by the Issuer:<a href="#section-6.1-7" class="pilcrow">¶</a></p>
 <p id="section-6.1-8"><strong>Claim <code>given_name</code></strong>:<a href="#section-6.1-8" class="pilcrow">¶</a></p>
 <ul class="compact">
 <li class="compact" id="section-6.1-9.1">SHA-256 Hash: <code>jsu9yVulwQQlhFlM_3JlzMaSFzglhQG0DpfayQwLUK4</code><a href="#section-6.1-9.1" class="pilcrow">¶</a>
@@ -2417,7 +2417,7 @@ discussed in <a href="#nested_data" class="auto internal xref">Section 7</a>.<a 
 <code>["nPuoQnkRFq3BIeAm7AnXFA", "DE"]</code><a href="#section-6.1-27.3" class="pilcrow">¶</a>
 </li>
         </ul>
-<p id="section-6.1-28">The payload is then signed by the Issuer to create the following JWT:<a href="#section-6.1-28" class="pilcrow">¶</a></p>
+<p id="section-6.1-28">The payload is then signed by the Issuer to create the following Issuer-signed JWT:<a href="#section-6.1-28" class="pilcrow">¶</a></p>
 <div class="lang-txt sourcecode" id="section-6.1-29">
 <pre>eyJhbGciOiAiRVMyNTYiLCAidHlwIjogImV4YW1wbGUrc2Qtand0In0.eyJfc2QiOiBb
 IkNyUWU3UzVrcUJBSHQtbk1ZWGdjNmJkdDJTSDVhVFkxc1VfTS1QZ2tqUEkiLCAiSnpZ
@@ -2435,12 +2435,12 @@ ZHJ5M2xjYndIZ2VaOGtoQXYxVTFPU2xlclAwVmtCSnJXWjAifV0sICJfc2RfYWxnIjog
 InNoYS0yNTYiLCAiY25mIjogeyJqd2siOiB7Imt0eSI6ICJFQyIsICJjcnYiOiAiUC0y
 NTYiLCAieCI6ICJUQ0FFUjE5WnZ1M09IRjRqNFc0dmZTVm9ISVAxSUxpbERsczd2Q2VH
 ZW1jIiwgInkiOiAiWnhqaVdXYlpNUUdIVldLVlE0aGJTSWlyc1ZmdWVjQ0U2dDRqVDlG
-MkhaUSJ9fX0.DnZslLJw4-F0j1nWxYiuIYmqX8xk0HStS-rkhNU_r0KB2xAdES9ITBCB
-SwxKFVyXZeGf_0wEu2JKx4O6L9O4Qg
+MkhaUSJ9fX0.4OvRozNPgT01CbCptn53zOT2iz0eaNcl8eRIosK5bxA-O2DDW0Ry_ZF1
+A9LyTHiFhWmLzWfyVSoMlheQeSSlMg
 
 </pre><a href="#section-6.1-29" class="pilcrow">¶</a>
 </div>
-<p id="section-6.1-30">The following is the issued SD-JWT:<a href="#section-6.1-30" class="pilcrow">¶</a></p>
+<p id="section-6.1-30">Adding the Disclosures produces the SD-JWT:<a href="#section-6.1-30" class="pilcrow">¶</a></p>
 <div class="lang-txt sourcecode" id="section-6.1-31">
 <pre>eyJhbGciOiAiRVMyNTYiLCAidHlwIjogImV4YW1wbGUrc2Qtand0In0.eyJfc2QiOiBb
 IkNyUWU3UzVrcUJBSHQtbk1ZWGdjNmJkdDJTSDVhVFkxc1VfTS1QZ2tqUEkiLCAiSnpZ
@@ -2458,8 +2458,8 @@ ZHJ5M2xjYndIZ2VaOGtoQXYxVTFPU2xlclAwVmtCSnJXWjAifV0sICJfc2RfYWxnIjog
 InNoYS0yNTYiLCAiY25mIjogeyJqd2siOiB7Imt0eSI6ICJFQyIsICJjcnYiOiAiUC0y
 NTYiLCAieCI6ICJUQ0FFUjE5WnZ1M09IRjRqNFc0dmZTVm9ISVAxSUxpbERsczd2Q2VH
 ZW1jIiwgInkiOiAiWnhqaVdXYlpNUUdIVldLVlE0aGJTSWlyc1ZmdWVjQ0U2dDRqVDlG
-MkhaUSJ9fX0.DnZslLJw4-F0j1nWxYiuIYmqX8xk0HStS-rkhNU_r0KB2xAdES9ITBCB
-SwxKFVyXZeGf_0wEu2JKx4O6L9O4Qg~WyIyR0xDNDJzS1F2ZUNmR2ZyeU5STjl3IiwgI
+MkhaUSJ9fX0.4OvRozNPgT01CbCptn53zOT2iz0eaNcl8eRIosK5bxA-O2DDW0Ry_ZF1
+A9LyTHiFhWmLzWfyVSoMlheQeSSlMg~WyIyR0xDNDJzS1F2ZUNmR2ZyeU5STjl3IiwgI
 mdpdmVuX25hbWUiLCAiSm9obiJd~WyJlbHVWNU9nM2dTTklJOEVZbnN4QV9BIiwgImZh
 bWlseV9uYW1lIiwgIkRvZSJd~WyI2SWo3dE0tYTVpVlBHYm9TNXRtdlZBIiwgImVtYWl
 sIiwgImpvaG5kb2VAZXhhbXBsZS5jb20iXQ~WyJlSThaV205UW5LUHBOUGVOZW5IZGhR
@@ -2503,18 +2503,18 @@ ZHJ5M2xjYndIZ2VaOGtoQXYxVTFPU2xlclAwVmtCSnJXWjAifV0sICJfc2RfYWxnIjog
 InNoYS0yNTYiLCAiY25mIjogeyJqd2siOiB7Imt0eSI6ICJFQyIsICJjcnYiOiAiUC0y
 NTYiLCAieCI6ICJUQ0FFUjE5WnZ1M09IRjRqNFc0dmZTVm9ISVAxSUxpbERsczd2Q2VH
 ZW1jIiwgInkiOiAiWnhqaVdXYlpNUUdIVldLVlE0aGJTSWlyc1ZmdWVjQ0U2dDRqVDlG
-MkhaUSJ9fX0.DnZslLJw4-F0j1nWxYiuIYmqX8xk0HStS-rkhNU_r0KB2xAdES9ITBCB
-SwxKFVyXZeGf_0wEu2JKx4O6L9O4Qg~WyJlbHVWNU9nM2dTTklJOEVZbnN4QV9BIiwgI
+MkhaUSJ9fX0.4OvRozNPgT01CbCptn53zOT2iz0eaNcl8eRIosK5bxA-O2DDW0Ry_ZF1
+A9LyTHiFhWmLzWfyVSoMlheQeSSlMg~WyJlbHVWNU9nM2dTTklJOEVZbnN4QV9BIiwgI
 mZhbWlseV9uYW1lIiwgIkRvZSJd~WyJBSngtMDk1VlBycFR0TjRRTU9xUk9BIiwgImFk
 ZHJlc3MiLCB7InN0cmVldF9hZGRyZXNzIjogIjEyMyBNYWluIFN0IiwgImxvY2FsaXR5
 IjogIkFueXRvd24iLCAicmVnaW9uIjogIkFueXN0YXRlIiwgImNvdW50cnkiOiAiVVMi
 fV0~WyIyR0xDNDJzS1F2ZUNmR2ZyeU5STjl3IiwgImdpdmVuX25hbWUiLCAiSm9obiJd
 ~WyJsa2x4RjVqTVlsR1RQVW92TU5JdkNBIiwgIlVTIl0~eyJhbGciOiAiRVMyNTYiLCA
 idHlwIjogImtiK2p3dCJ9.eyJub25jZSI6ICIxMjM0NTY3ODkwIiwgImF1ZCI6ICJodH
-RwczovL3ZlcmlmaWVyLmV4YW1wbGUub3JnIiwgImlhdCI6IDE3MjQ4NzYxMTgsICJzZF
-9oYXNoIjogImZnNTB5bDlPZjU1ZnBNYUhGbUlXcjNiTGI5MEZrdjMzRlZTWk5ydUtySE
-EifQ.zUBFkYLg3F8-_hc5kPdFftiS1cMxxD2bzIFOD74-_kN_5U9FoKnR8Hn1pz2gcqi
-QlEbzg4OdewYgva8IkJz-Dw
+RwczovL3ZlcmlmaWVyLmV4YW1wbGUub3JnIiwgImlhdCI6IDE3MjQ4NzY0MjQsICJzZF
+9oYXNoIjogIkt4Ri04aFlWdUQ2NFFEeXdaRjJMbEh1Tm43SzZaTW1YMGwxU3Z4U2VwZk
+EifQ.EWna1ZJwwlQeQy4mwlusxqq1OtVtH78sFY0ZBTJJBb6A2DGqZG6v1gkveaBifwP
+ziyOq-FnKpqPjbl3nT5dN2A
 
 </pre><a href="#section-6.2-2" class="pilcrow">¶</a>
 </div>
@@ -2523,8 +2523,8 @@ QlEbzg4OdewYgva8IkJz-Dw
 <pre>{
   "nonce": "1234567890",
   "aud": "https://verifier.example.org",
-  "iat": 1724876118,
-  "sd_hash": "fg50yl9Of55fpMaHFmIWr3bLb90Fkv33FVSZNruKrHA"
+  "iat": 1724876424,
+  "sd_hash": "KxF-8hYVuD64QDywZF2LlHuNn7K6ZMmX0l1SvxSepfA"
 }
 
 </pre><a href="#section-6.2-4" class="pilcrow">¶</a>
@@ -2532,6 +2532,36 @@ QlEbzg4OdewYgva8IkJz-Dw
 <p id="section-6.2-5">If the Verifier did not require Key Binding, then the Holder could have
 presented the SD-JWT with selected Disclosures directly, instead of encapsulating it in
 an SD-JWT+KB.<a href="#section-6.2-5" class="pilcrow">¶</a></p>
+<p id="section-6.2-6">After validation, the Verifier will have the following processed SD-JWT payload available for further handling:<a href="#section-6.2-6" class="pilcrow">¶</a></p>
+<div class="lang-json sourcecode" id="section-6.2-7">
+<pre>{
+  "iss": "https://issuer.example.com",
+  "iat": 1683000000,
+  "exp": 1883000000,
+  "sub": "user_42",
+  "nationalities": [
+    "US"
+  ],
+  "cnf": {
+    "jwk": {
+      "kty": "EC",
+      "crv": "P-256",
+      "x": "TCAER19Zvu3OHF4j4W4vfSVoHIP1ILilDls7vCeGemc",
+      "y": "ZxjiWWbZMQGHVWKVQ4hbSIirsVfuecCE6t4jT9F2HZQ"
+    }
+  },
+  "family_name": "Doe",
+  "address": {
+    "street_address": "123 Main St",
+    "locality": "Anytown",
+    "region": "Anystate",
+    "country": "US"
+  },
+  "given_name": "John"
+}
+
+</pre><a href="#section-6.2-7" class="pilcrow">¶</a>
+</div>
 </section>
 </div>
 </section>
@@ -2584,7 +2614,7 @@ how <code>address</code> can be represented in an SD-JWT.<a href="#section-7-6" 
 
 </pre><a href="#section-7.1-2" class="pilcrow">¶</a>
 </div>
-<p id="section-7.1-3">The Issuer would create the following Disclosure:<a href="#section-7.1-3" class="pilcrow">¶</a></p>
+<p id="section-7.1-3">The Issuer would create the following Disclosure referenced by the one hash in the SD-JWT:<a href="#section-7.1-3" class="pilcrow">¶</a></p>
 <p id="section-7.1-4"><strong>Claim <code>address</code></strong>:<a href="#section-7.1-4" class="pilcrow">¶</a></p>
 <ul class="compact">
 <li class="compact" id="section-7.1-5.1">SHA-256 Hash: <code>fOBUSQvo46yQO-wRwXBcGqvnbKIueISEL961_Sjd4do</code><a href="#section-7.1-5.1" class="pilcrow">¶</a>
@@ -3066,8 +3096,8 @@ issued using the Flattened JSON Serialization:<a href="#section-9.2-2" class="pi
     Z1ZWNDRTZ0NGpUOUYySFpRIn19fQ",
   "protected":
     "eyJhbGciOiAiRVMyNTYiLCAidHlwIjogImV4YW1wbGUrc2Qtand0In0",
-  "signature": "UZC2_uo3PUfEnvohBx-dnDf11oRy7jjHldCXINLX6Jn49HC72jtY
-    OWmUH3b1wWVRSfulxx5NgnRbycP-3IWuNw"
+  "signature": "LWqNNF64mn2ty-bgc9KRQ2HKHn4zUJPndjCeUv5d0qEgjUILrpea
+    NvWl47M7jLQsbjGv8wbzEDN04McADmX5Dg"
 }
 
 </pre><a href="#section-9.2-3" class="pilcrow">¶</a>
@@ -3084,10 +3114,10 @@ issued using the Flattened JSON Serialization:<a href="#section-9.2-2" class="pi
     ],
     "kb_jwt": "eyJhbGciOiAiRVMyNTYiLCAidHlwIjogImtiK2p3dCJ9.eyJub25j
       ZSI6ICIxMjM0NTY3ODkwIiwgImF1ZCI6ICJodHRwczovL3ZlcmlmaWVyLmV4YW
-      1wbGUub3JnIiwgImlhdCI6IDE3MjQ4NzYxMTgsICJzZF9oYXNoIjogInV0YkYy
-      OGplT0g4Zkl1SndrNEhWQ0RBc0RTREE4LVZXeUJCS2tQNTRmV1kifQ.aIuZoir
-      Rlo3gaaPkEmgLmJRCFP99cg1P9_9tkxC4w-m5jQVnJtUw7aNCmjdlOJogYRYWt
-      WLjlwSOWFqMkkhv8g"
+      1wbGUub3JnIiwgImlhdCI6IDE3MjQ4NzY0MjQsICJzZF9oYXNoIjogIlh0eGdQ
+      eHlhUUJaTXhKbUxkSmo3V3BubTRHRXltLWdsOE1XMTJVSDBWWE0ifQ.9znC758
+      YXwrVqBj-GMrp4cNUJVHqbbK-pgYUJoJEVaERkUsxxx9LaTceQeqvCcgGLtJ2A
+      l7nnEE8knAHsNoehw"
   },
   "payload": "eyJfc2QiOiBbIjRIQm42YUlZM1d0dUdHV1R4LXFVajZjZGs2V0JwWn
     lnbHRkRmF2UGE3TFkiLCAiOHNtMVFDZjAyMXBObkhBQ0k1c1A0bTRLWmd5Tk9PQV
@@ -3101,8 +3131,8 @@ issued using the Flattened JSON Serialization:<a href="#section-9.2-2" class="pi
     Z1ZWNDRTZ0NGpUOUYySFpRIn19fQ",
   "protected":
     "eyJhbGciOiAiRVMyNTYiLCAidHlwIjogImV4YW1wbGUrc2Qtand0In0",
-  "signature": "UZC2_uo3PUfEnvohBx-dnDf11oRy7jjHldCXINLX6Jn49HC72jtY
-    OWmUH3b1wWVRSfulxx5NgnRbycP-3IWuNw"
+  "signature": "LWqNNF64mn2ty-bgc9KRQ2HKHn4zUJPndjCeUv5d0qEgjUILrpea
+    NvWl47M7jLQsbjGv8wbzEDN04McADmX5Dg"
 }
 
 </pre><a href="#section-9.2-5" class="pilcrow">¶</a>
@@ -3145,15 +3175,15 @@ Serialization:<a href="#section-9.3-2" class="pilcrow">¶</a></p>
         "kid": "issuer-key-1",
         "kb_jwt": "eyJhbGciOiAiRVMyNTYiLCAidHlwIjogImtiK2p3dCJ9.eyJu
           b25jZSI6ICIxMjM0NTY3ODkwIiwgImF1ZCI6ICJodHRwczovL3ZlcmlmaW
-          VyLmV4YW1wbGUub3JnIiwgImlhdCI6IDE3MjQ4NzYxMTgsICJzZF9oYXNo
-          IjogIm5NMGxwX0xJVllCME1Rd1hUYUY3QWFZdzhDNXhlRXBtNlNVSmw5Vn
-          ljM3cifQ.YBBODE1EQSV4i_EOdiytK50RuaY4NBAzGIYvvGWr4lcUxN6Mw
-          j9_XjsZnb7BhJ9BWITCHw6wD7mnFNSR__C-PQ"
+          VyLmV4YW1wbGUub3JnIiwgImlhdCI6IDE3MjQ4NzY0MjQsICJzZF9oYXNo
+          IjogIm9CTnB5TUlKVEN4RWJsRVM3dlc2dloxM0k3aU9aNDNNaUJxZEsyYU
+          hITkEifQ.I7oyjkgPCVKgzXZVx5f1Lrr7qQGPgQnmaNEBAUL9wz2U7zlhH
+          WscrAvInj4APv2TDXn9UqCIuCuv9IaBXpLQrA"
       },
       "protected":
         "eyJhbGciOiAiRVMyNTYiLCAidHlwIjogImV4YW1wbGUrc2Qtand0In0",
-      "signature": "1cmQowEgSLb27_0GbWcNBzsW3Fbz9nkELWwC_QLi7Isn2_2t
-        4tYcJpc8LCgBtV4losRfIxQq3kwnmZj4-heCgw"
+      "signature": "6ZpbkSwHfEXuNmPScvZRbR0Hz3udDBH8lUs-3vQ83mfvjSgo
+        RVyv70l6NlWzrKpiTNhsLsRAoUbRAqA2Urfg_Q"
     },
     {
       "header": {
@@ -3161,8 +3191,8 @@ Serialization:<a href="#section-9.3-2" class="pilcrow">¶</a></p>
       },
       "protected":
         "eyJhbGciOiAiRVMyNTYiLCAidHlwIjogImV4YW1wbGUrc2Qtand0In0",
-      "signature": "vVbHp9sFMrGL6pdr-SDxfXNCGCxbsR3u1eGHnFcVCcHgqwnJ
-        xt2hdp-LntR4OoWcQCwmkEVxYkyNg0xMvB9OLQ"
+      "signature": "hGQ55GaKt4uAaomLdcIQsKfgQBvYbngG6iZsf-nE3m4w5Px_
+        6xmNMmkSCgD3HSvDZ8FTKh4fER-uGboC52Coeg"
     }
   ]
 }
@@ -4054,7 +4084,7 @@ nor the selection of selectively disclosable claims is normative.<a href="#appen
 <a href="#appendix-A.1" class="section-number selfRef">A.1. </a><a href="#name-simple-structured-sd-jwt" class="section-name selfRef">Simple Structured SD-JWT</a>
         </h3>
 <p id="appendix-A.1-1">In this example, in contrast to <a href="#main-example" class="auto internal xref">Section 6</a>, the Issuer decided to create a structured object for the <code>address</code> claim, allowing to separately disclose individual members of the claim.<a href="#appendix-A.1-1" class="pilcrow">¶</a></p>
-<p id="appendix-A.1-2">The Issuer is using the following input JWT Claims Set:<a href="#appendix-A.1-2" class="pilcrow">¶</a></p>
+<p id="appendix-A.1-2">The following data about the user comprises the input JWT Claims Set used by the Issuer:<a href="#appendix-A.1-2" class="pilcrow">¶</a></p>
 <div class="lang-json sourcecode" id="appendix-A.1-3">
 <pre>{
   "sub": "6c5c0a49-b589-431d-bae7-219122a9ec2c",
@@ -4107,7 +4137,7 @@ nor the selection of selectively disclosable claims is normative.<a href="#appen
 
 </pre><a href="#appendix-A.1-6" class="pilcrow">¶</a>
 </div>
-<p id="appendix-A.1-7">The following Disclosures are created:<a href="#appendix-A.1-7" class="pilcrow">¶</a></p>
+<p id="appendix-A.1-7">The digests in the SD-JWT payload reference the following Disclosures:<a href="#appendix-A.1-7" class="pilcrow">¶</a></p>
 <p id="appendix-A.1-8"><strong>Claim <code>sub</code></strong>:<a href="#appendix-A.1-8" class="pilcrow">¶</a></p>
 <ul class="compact">
 <li class="compact" id="appendix-A.1-9.1">SHA-256 Hash: <code>X6ZAYOII2vPN40V7xExZwVwz7yRmLNcVwt5DL8RLv4g</code><a href="#appendix-A.1-9.1" class="pilcrow">¶</a>
@@ -4275,12 +4305,26 @@ WUpISVo4VnUtZjlDQ3lWdWIyVWZnRWs4anZ2WGV6d0sxcF9KbmVlWFEiLCAiZ2xUM2hy
 U1U3ZlNXZ3dGNVVEWm1Xd0JUdzMyZ25VbGRJaGk4aEdWQ2FWNCIsICJydkpkNmlxNlQ1
 ZWptc0JNb0d3dU5YaDlxQUFGQVRBY2k0MG9pZEVlVnNBIiwgInVOSG9XWWhYc1poVkpD
 TkUyRHF5LXpxdDd0NjlnSkt5NVFhRnY3R3JNWDQiXX0sICJfc2RfYWxnIjogInNoYS0y
-NTYifQ.OsUAnOR7nrR0JbsAgWqyj4z8QwTHL1tCFniabbaahHew7jWzADiqAUh4PDB5D
-M8ipW3iBe7lRcicFbmtyTJgGw~WyJHMDJOU3JRZmpGWFE3SW8wOXN5YWpBIiwgInJlZ2
+NTYifQ.37p6SybLfoE7jdqlJQKCRXF6JDvOn2SU49caCvfD2yuI5t9iTRVVCtqEXN4Rt
+jVenO1RFS33kKLlPdG54coVWg~WyJHMDJOU3JRZmpGWFE3SW8wOXN5YWpBIiwgInJlZ2
 lvbiIsICJcdTZlMmZcdTUzM2EiXQ~WyJsa2x4RjVqTVlsR1RQVW92TU5JdkNBIiwgImN
 vdW50cnkiLCAiSlAiXQ~
 
 </pre><a href="#appendix-A.1-31" class="pilcrow">¶</a>
+</div>
+<p id="appendix-A.1-32">After validation, the Verifier will have the following processed SD-JWT payload available for further handling:<a href="#appendix-A.1-32" class="pilcrow">¶</a></p>
+<div class="lang-json sourcecode" id="appendix-A.1-33">
+<pre>{
+  "iss": "https://issuer.example.com",
+  "iat": 1683000000,
+  "exp": 1883000000,
+  "address": {
+    "region": "港区",
+    "country": "JP"
+  }
+}
+
+</pre><a href="#appendix-A.1-33" class="pilcrow">¶</a>
 </div>
 </section>
 </div>
@@ -4291,7 +4335,7 @@ vdW50cnkiLCAiSlAiXQ~
         </h3>
 <p id="appendix-A.2-1">In this example, an SD-JWT with a complex object is represented. The data
 structures defined in OpenID Connect for Identity Assurance <span>[<a href="#OIDC.IDA" class="cite xref">OIDC.IDA</a>]</span> are used.<a href="#appendix-A.2-1" class="pilcrow">¶</a></p>
-<p id="appendix-A.2-2">The Issuer is using the following input JWT Claims Set:<a href="#appendix-A.2-2" class="pilcrow">¶</a></p>
+<p id="appendix-A.2-2">The Issuer is using the following user data as the input JWT Claims Set:<a href="#appendix-A.2-2" class="pilcrow">¶</a></p>
 <div class="lang-json sourcecode" id="appendix-A.2-3">
 <pre>{
   "verified_claims": {
@@ -4383,7 +4427,7 @@ structures defined in OpenID Connect for Identity Assurance <span>[<a href="#OID
 
 </pre><a href="#appendix-A.2-5" class="pilcrow">¶</a>
 </div>
-<p id="appendix-A.2-6">The following Disclosures are created by the Issuer:<a href="#appendix-A.2-6" class="pilcrow">¶</a></p>
+<p id="appendix-A.2-6">The digests in the SD-JWT payload reference the following Disclosures:<a href="#appendix-A.2-6" class="pilcrow">¶</a></p>
 <p id="appendix-A.2-7"><strong>Claim <code>time</code></strong>:<a href="#appendix-A.2-7" class="pilcrow">¶</a></p>
 <ul class="compact">
 <li class="compact" id="appendix-A.2-8.1">SHA-256 Hash: <code>vTwe3raHIFYgFA3xaUD2aMxFz5oDo8iBu05qKlOg9Lw</code><a href="#appendix-A.2-8.1" class="pilcrow">¶</a>
@@ -4613,8 +4657,8 @@ ZFJtc01vIiwgIldOQS1VTks3Rl96aHNBYjlzeVdPNklJUTF1SGxUbU9VOHI4Q3ZKMGNJ
 TWsiLCAiV3hoX3NWM2lSSDliZ3JUQkppLWFZSE5DTHQtdmpoWDFzZC1pZ09mXzlsayIs
 ICJfTy13SmlIM2VuU0I0Uk9IbnRUb1FUOEptTHR6LW1oTzJmMWM4OVhvZXJRIiwgImh2
 RFhod21HY0pRc0JDQTJPdGp1TEFjd0FNcERzYVUwbmtvdmNLT3FXTkUiXX19LCAiX3Nk
-X2FsZyI6ICJzaGEtMjU2In0.ZKPoS8rmL5q1pXxQEvG87c7oleL_at8ITlXNwEkOXoQD
-H0b5njrnrWtYbQgibYTAYOLRfmBZBJjgpLRaYnCPVA~WyIyR0xDNDJzS1F2ZUNmR2Zye
+X2FsZyI6ICJzaGEtMjU2In0.AyUcO5tk_t54tdf4TglvJm3qXyRJ3P6m8TEaNFvbVN4z
+4MEGfW8McVI0Hl0wKz68Y4QzrNPLnXYDSQhXlrF3Dw~WyIyR0xDNDJzS1F2ZUNmR2Zye
 U5STjl3IiwgInRpbWUiLCAiMjAxMi0wNC0yM1QxODoyNVoiXQ~WyJQYzMzSk0yTGNoY1
 VfbEhnZ3ZfdWZRIiwgeyJfc2QiOiBbIjl3cGpWUFd1RDdQSzBuc1FETDhCMDZsbWRnVj
 NMVnliaEh5ZFFwVE55TEkiLCAiRzVFbmhPQU9vVTlYXzZRTU52ekZYanBFQV9SYy1BRX
@@ -4629,7 +4673,7 @@ iAiREUiLCAic3RyZWV0X2FkZHJlc3MiOiAiV2VpZGVuc3RyYVx1MDBkZmUgMjIifV0~
 
 </pre><a href="#appendix-A.2-40" class="pilcrow">¶</a>
 </div>
-<p id="appendix-A.2-41">After the validation, the Verifier will have the following data for further processing:<a href="#appendix-A.2-41" class="pilcrow">¶</a></p>
+<p id="appendix-A.2-41">The Verifier will have this processed SD-JWT payload available after validation:<a href="#appendix-A.2-41" class="pilcrow">¶</a></p>
 <div class="lang-json sourcecode" id="appendix-A.2-42">
 <pre>{
   "iss": "https://issuer.example.com",
@@ -4674,7 +4718,7 @@ a Person Identification Data (PID) <span>[<a href="#EUDIW.ARF" class="cite xref"
 a German citizen.<a href="#appendix-A.3-1" class="pilcrow">¶</a></p>
 <p id="appendix-A.3-2">Key Binding is applied
 using the Holder's public key passed in a <code>cnf</code> claim in the SD-JWT.<a href="#appendix-A.3-2" class="pilcrow">¶</a></p>
-<p id="appendix-A.3-3">The Issuer is using the following input JWT Claims Set:<a href="#appendix-A.3-3" class="pilcrow">¶</a></p>
+<p id="appendix-A.3-3">The following citizen data is the input JWT Claims Set:<a href="#appendix-A.3-3" class="pilcrow">¶</a></p>
 <div class="lang-json sourcecode" id="appendix-A.3-4">
 <pre>{
   "vct": "https://bmi.bund.example/credential/pid/1.0",
@@ -4734,8 +4778,8 @@ oeTJyMDE4dnJzSmpvLVZqZDZnNnl0N0Fhb25Lb25uaXVKOXplbDNqbyIsICJxcDdaX0t
 6ICJzaGEtMjU2IiwgImNuZiI6IHsiandrIjogeyJrdHkiOiAiRUMiLCAiY3J2IjogIlA
 tMjU2IiwgIngiOiAiVENBRVIxOVp2dTNPSEY0ajRXNHZmU1ZvSElQMUlMaWxEbHM3dkN
 lR2VtYyIsICJ5IjogIlp4amlXV2JaTVFHSFZXS1ZRNGhiU0lpcnNWZnVlY0NFNnQ0alQ
-5RjJIWlEifX19.PrBZflXnxET-zjd1OcuKbCnmBf7Db-kRxqPYCRo-7mWMlbWprcqIrp
-13zwwVjZYuoVCAfoI-1LybuTd8x5FVDg~WyIyR0xDNDJzS1F2ZUNmR2ZyeU5STjl3Iiw
+5RjJIWlEifX19.RiWVaCT2FRovffhPNQ03VMJfFBjFQ3kdBai1FS7XblgqLHlNssK48T
+4VZHxPgg7El57cJu87GtUmpEIt1hpLDw~WyIyR0xDNDJzS1F2ZUNmR2ZyeU5STjl3Iiw
 gImdpdmVuX25hbWUiLCAiRXJpa2EiXQ~WyJlbHVWNU9nM2dTTklJOEVZbnN4QV9BIiwg
 ImZhbWlseV9uYW1lIiwgIk11c3Rlcm1hbm4iXQ~WyI2SWo3dE0tYTVpVlBHYm9TNXRtd
 lZBIiwgImJpcnRoZGF0ZSIsICIxOTYzLTA4LTEyIl0~WyJlSThaV205UW5LUHBOUGVOZ
@@ -4806,7 +4850,7 @@ iwgdHJ1ZV0~WyJlSzVvNXBIZmd1cFBwbHRqMXFoQUp3IiwgIjY1IiwgZmFsc2Vd~
 
 </pre><a href="#appendix-A.3-8" class="pilcrow">¶</a>
 </div>
-<p id="appendix-A.3-9">The following Disclosures are created by the Issuer:<a href="#appendix-A.3-9" class="pilcrow">¶</a></p>
+<p id="appendix-A.3-9">The digests in the SD-JWT payload reference the following Disclosures:<a href="#appendix-A.3-9" class="pilcrow">¶</a></p>
 <p id="appendix-A.3-10"><strong>Claim <code>given_name</code></strong>:<a href="#appendix-A.3-10" class="pilcrow">¶</a></p>
 <ul class="compact">
 <li class="compact" id="appendix-A.3-11.1">SHA-256 Hash: <code>0HZmnSIPz337kSWe7C34l--88gzJi-eBJ2Vz_HJwATg</code><a href="#appendix-A.3-11.1" class="pilcrow">¶</a>
@@ -5090,29 +5134,29 @@ oeTJyMDE4dnJzSmpvLVZqZDZnNnl0N0Fhb25Lb25uaXVKOXplbDNqbyIsICJxcDdaX0t
 6ICJzaGEtMjU2IiwgImNuZiI6IHsiandrIjogeyJrdHkiOiAiRUMiLCAiY3J2IjogIlA
 tMjU2IiwgIngiOiAiVENBRVIxOVp2dTNPSEY0ajRXNHZmU1ZvSElQMUlMaWxEbHM3dkN
 lR2VtYyIsICJ5IjogIlp4amlXV2JaTVFHSFZXS1ZRNGhiU0lpcnNWZnVlY0NFNnQ0alQ
-5RjJIWlEifX19.PrBZflXnxET-zjd1OcuKbCnmBf7Db-kRxqPYCRo-7mWMlbWprcqIrp
-13zwwVjZYuoVCAfoI-1LybuTd8x5FVDg~WyJuUHVvUW5rUkZxM0JJZUFtN0FuWEZBIiw
+5RjJIWlEifX19.RiWVaCT2FRovffhPNQ03VMJfFBjFQ3kdBai1FS7XblgqLHlNssK48T
+4VZHxPgg7El57cJu87GtUmpEIt1hpLDw~WyJuUHVvUW5rUkZxM0JJZUFtN0FuWEZBIiw
 gIm5hdGlvbmFsaXRpZXMiLCBbIkRFIl1d~WyJNMEpiNTd0NDF1YnJrU3V5ckRUM3hBIi
 wgIjE4IiwgdHJ1ZV0~eyJhbGciOiAiRVMyNTYiLCAidHlwIjogImtiK2p3dCJ9.eyJub
 25jZSI6ICIxMjM0NTY3ODkwIiwgImF1ZCI6ICJodHRwczovL3ZlcmlmaWVyLmV4YW1wb
-GUub3JnIiwgImlhdCI6IDE3MjQ4NzYxMTgsICJzZF9oYXNoIjogIlFvWDR1QUVvbDRWa
-V9XWTVQS3cxN2FwVExfMnJKclVTR3U2RVdGWktuNWMifQ.QGxNKnzWCgqzs5JuMFA5mI
-6YL_wk-I8nsFLZiP2eo1li47k9Vv9RL0kDUj7zOvh1y0tNwXBPaUpAf60iDX2KEA
+GUub3JnIiwgImlhdCI6IDE3MjQ4NzY0MjQsICJzZF9oYXNoIjogImVDdFRlX05JV3ZJN
+3d0Mm9RcU1IYzhoMDVnbFJQRFZOVjk2WklzUk1XSTgifQ.H4iTAztJ3IzkLBrn3ctbhJ
+CveVZPWr0fFJrF7hoFt9bTNEYiOMiinsCw8xc5MrLHDu75YQaTgXtftrQevbhXEw
 
 </pre><a href="#appendix-A.3-53" class="pilcrow">¶</a>
 </div>
-<p id="appendix-A.3-54">The following is the payload of a corresponding Key Binding JWT:<a href="#appendix-A.3-54" class="pilcrow">¶</a></p>
+<p id="appendix-A.3-54">This is the payload of the corresponding Key Binding JWT:<a href="#appendix-A.3-54" class="pilcrow">¶</a></p>
 <div class="lang-json sourcecode" id="appendix-A.3-55">
 <pre>{
   "nonce": "1234567890",
   "aud": "https://verifier.example.org",
-  "iat": 1724876118,
-  "sd_hash": "QoX4uAEol4Vi_WY5PKw17apTL_2rJrUSGu6EWFZKn5c"
+  "iat": 1724876424,
+  "sd_hash": "eCtTe_NIWvI7wt2oQqMHc8h05glRPDVNV96ZIsRMWI8"
 }
 
 </pre><a href="#appendix-A.3-55" class="pilcrow">¶</a>
 </div>
-<p id="appendix-A.3-56">After the validation, the Verifier will have the following data for further processing:<a href="#appendix-A.3-56" class="pilcrow">¶</a></p>
+<p id="appendix-A.3-56">After validation, the Verifier will have the following processed SD-JWT payload available for further handling:<a href="#appendix-A.3-56" class="pilcrow">¶</a></p>
 <div class="lang-json sourcecode" id="appendix-A.3-57">
 <pre>{
   "iss": "https://issuer.example.com",
@@ -5148,7 +5192,7 @@ V9XWTVQS3cxN2FwVExfMnJKclVTR3U2RVdGWktuNWMifQ.QGxNKnzWCgqzs5JuMFA5mI
 could be used to express a W3C Verifiable Credentials Data Model v2.0 <span>[<a href="#VC_DATA_v2.0" class="cite xref">VC_DATA_v2.0</a>]</span> payload.<a href="#appendix-A.4-1" class="pilcrow">¶</a></p>
 <p id="appendix-A.4-2">Key Binding is applied
 using the Holder's public key passed in a <code>cnf</code> claim in the SD-JWT.<a href="#appendix-A.4-2" class="pilcrow">¶</a></p>
-<p id="appendix-A.4-3">The Issuer is using the following input JWT Claims Set:<a href="#appendix-A.4-3" class="pilcrow">¶</a></p>
+<p id="appendix-A.4-3">The following is the input JWT Claims Set:<a href="#appendix-A.4-3" class="pilcrow">¶</a></p>
 <div class="lang-json sourcecode" id="appendix-A.4-4">
 <pre>{
   "@context": [
@@ -5220,8 +5264,8 @@ VmFjY2luZVJlY2lwaWVudCJ9LCAidHlwZSI6ICJWYWNjaW5hdGlvbkV2ZW50In0sICJf
 c2RfYWxnIjogInNoYS0yNTYiLCAiY25mIjogeyJqd2siOiB7Imt0eSI6ICJFQyIsICJj
 cnYiOiAiUC0yNTYiLCAieCI6ICJUQ0FFUjE5WnZ1M09IRjRqNFc0dmZTVm9ISVAxSUxp
 bERsczd2Q2VHZW1jIiwgInkiOiAiWnhqaVdXYlpNUUdIVldLVlE0aGJTSWlyc1ZmdWVj
-Q0U2dDRqVDlGMkhaUSJ9fX0.8Hk1txlzh0IQCE0Xzaz2BwV0Dh1zu8_27iefggvNBtEt
-M0lnOM9YS2n6jrxRcSJ3WzORyslQL0jYRm1sWp0kew~WyIyR0xDNDJzS1F2ZUNmR2Zye
+Q0U2dDRqVDlGMkhaUSJ9fX0.K5qK005fQwb-khBLbuk07mbdXRhrKer4AnGf8Fyd3iYH
+pigmWBgNC3Uqy7anMlpUTjmNPgE9_sCiIYPkzDPQPA~WyIyR0xDNDJzS1F2ZUNmR2Zye
 U5STjl3IiwgImF0Y0NvZGUiLCAiSjA3QlgwMyJd~WyJlbHVWNU9nM2dTTklJOEVZbnN4
 QV9BIiwgIm1lZGljaW5hbFByb2R1Y3ROYW1lIiwgIkNPVklELTE5IFZhY2NpbmUgTW9k
 ZXJuYSJd~WyI2SWo3dE0tYTVpVlBHYm9TNXRtdlZBIiwgIm1hcmtldGluZ0F1dGhvcml
@@ -5300,7 +5344,7 @@ ICI4ODMxMTAwMDAwMTUzNzYiXQ~
 
 </pre><a href="#appendix-A.4-8" class="pilcrow">¶</a>
 </div>
-<p id="appendix-A.4-9">The following Disclosures are created by the Issuer:<a href="#appendix-A.4-9" class="pilcrow">¶</a></p>
+<p id="appendix-A.4-9">The digests in the SD-JWT payload reference the following Disclosures:<a href="#appendix-A.4-9" class="pilcrow">¶</a></p>
 <p id="appendix-A.4-10"><strong>Claim <code>atcCode</code></strong>:<a href="#appendix-A.4-10" class="pilcrow">¶</a></p>
 <ul class="compact">
 <li class="compact" id="appendix-A.4-11.1">SHA-256 Hash: <code>1cF5hLwkhMNIaqfWJrXI7NMWedL-9f6Y2PA52yPjSZI</code><a href="#appendix-A.4-11.1" class="pilcrow">¶</a>
@@ -5474,7 +5518,7 @@ ICI4ODMxMTAwMDAwMTUzNzYiXQ~
             <code>"883110000015376"]</code><a href="#appendix-A.4-37.3" class="pilcrow">¶</a>
 </li>
         </ul>
-<p id="appendix-A.4-38">The following is an example of an SD-JWT+KB that discloses only <code>type</code>, <code>medicinalProductName</code>, <code>atcCode</code> of the vaccine, <code>type</code> of the <code>recipient</code>, <code>type</code>, <code>order</code> and <code>dateOfVaccination</code>:<a href="#appendix-A.4-38" class="pilcrow">¶</a></p>
+<p id="appendix-A.4-38">This is an example of an SD-JWT+KB that discloses only <code>type</code>, <code>medicinalProductName</code>, <code>atcCode</code> of the vaccine, <code>type</code> of the <code>recipient</code>, <code>type</code>, <code>order</code> and <code>dateOfVaccination</code>:<a href="#appendix-A.4-38" class="pilcrow">¶</a></p>
 <div class="lang-txt sourcecode" id="appendix-A.4-39">
 <pre>eyJhbGciOiAiRVMyNTYiLCAidHlwIjogImV4YW1wbGUrc2Qtand0In0.eyJAY29udGV4
 dCI6IFsiaHR0cHM6Ly93d3cudzMub3JnLzIwMTgvY3JlZGVudGlhbHMvdjEiLCAiaHR0
@@ -5503,22 +5547,22 @@ VmFjY2luZVJlY2lwaWVudCJ9LCAidHlwZSI6ICJWYWNjaW5hdGlvbkV2ZW50In0sICJf
 c2RfYWxnIjogInNoYS0yNTYiLCAiY25mIjogeyJqd2siOiB7Imt0eSI6ICJFQyIsICJj
 cnYiOiAiUC0yNTYiLCAieCI6ICJUQ0FFUjE5WnZ1M09IRjRqNFc0dmZTVm9ISVAxSUxp
 bERsczd2Q2VHZW1jIiwgInkiOiAiWnhqaVdXYlpNUUdIVldLVlE0aGJTSWlyc1ZmdWVj
-Q0U2dDRqVDlGMkhaUSJ9fX0.8Hk1txlzh0IQCE0Xzaz2BwV0Dh1zu8_27iefggvNBtEt
-M0lnOM9YS2n6jrxRcSJ3WzORyslQL0jYRm1sWp0kew~WyJQYzMzSk0yTGNoY1VfbEhnZ
+Q0U2dDRqVDlGMkhaUSJ9fX0.K5qK005fQwb-khBLbuk07mbdXRhrKer4AnGf8Fyd3iYH
+pigmWBgNC3Uqy7anMlpUTjmNPgE9_sCiIYPkzDPQPA~WyJQYzMzSk0yTGNoY1VfbEhnZ
 3ZfdWZRIiwgIm9yZGVyIiwgIjMvMyJd~WyJBSngtMDk1VlBycFR0TjRRTU9xUk9BIiwg
 ImRhdGVPZlZhY2NpbmF0aW9uIiwgIjIwMjEtMDYtMjNUMTM6NDA6MTJaIl0~WyIyR0xD
 NDJzS1F2ZUNmR2ZyeU5STjl3IiwgImF0Y0NvZGUiLCAiSjA3QlgwMyJd~WyJlbHVWNU9
 nM2dTTklJOEVZbnN4QV9BIiwgIm1lZGljaW5hbFByb2R1Y3ROYW1lIiwgIkNPVklELTE
 5IFZhY2NpbmUgTW9kZXJuYSJd~eyJhbGciOiAiRVMyNTYiLCAidHlwIjogImtiK2p3dC
 J9.eyJub25jZSI6ICIxMjM0NTY3ODkwIiwgImF1ZCI6ICJodHRwczovL3ZlcmlmaWVyL
-mV4YW1wbGUub3JnIiwgImlhdCI6IDE3MjQ4NzYxMTgsICJzZF9oYXNoIjogImZMSWVPd
-WlOaTYwaXZwckxTbnZlYVo3M3ZWVHZvcGE4a0dlSmZkUi1NbUUifQ.CEFf4x2Et0XLaA
-GQJbw8ai1vQsLup8Mr5oGmY4FQUgkBdFL1prbxSnkcneSgU0n4qDGva2PdogKGuIdfP8
-quFg
+mV4YW1wbGUub3JnIiwgImlhdCI6IDE3MjQ4NzY0MjQsICJzZF9oYXNoIjogIlZ4QVltN
+0pZNDdpOEVoVmdscnBvdE1GOHowb3pfQmxRVjJyVUhRQVFhM0kifQ.aXIOqoZi0m98cj
+4aIh9CCuJGGTyYY_q3C1jF_mvXWXrWQ7VR7YkjBEmRFC3UkIBVpbt7_n5qQCGcw2b_C7
+GVwQ
 
 </pre><a href="#appendix-A.4-39" class="pilcrow">¶</a>
 </div>
-<p id="appendix-A.4-40">After the validation, the Verifier will have the following data for further processing:<a href="#appendix-A.4-40" class="pilcrow">¶</a></p>
+<p id="appendix-A.4-40">After the validation, the Verifier will have the following processed SD-JWT payload available for further handling:<a href="#appendix-A.4-40" class="pilcrow">¶</a></p>
 <div class="lang-json sourcecode" id="appendix-A.4-41">
 <pre>{
   "@context": [
@@ -5691,9 +5735,11 @@ data. The original JSON data is then used by the application. See
 <p id="appendix-C-1">[[ To be removed from the final specification ]]<a href="#appendix-C-1" class="pilcrow">¶</a></p>
 <p id="appendix-C-2">-12<a href="#appendix-C-2" class="pilcrow">¶</a></p>
 <ul class="compact">
-<li class="compact" id="appendix-C-3.1">Editorial and reference fixes<a href="#appendix-C-3.1" class="pilcrow">¶</a>
+<li class="compact" id="appendix-C-3.1">Clarify, add context, or otherwise improve the examples<a href="#appendix-C-3.1" class="pilcrow">¶</a>
 </li>
-        <li class="compact" id="appendix-C-3.2">Moved considerations around unlinkability to the top of the Privacy Considerations section<a href="#appendix-C-3.2" class="pilcrow">¶</a>
+        <li class="compact" id="appendix-C-3.2">Editorial and reference fixes<a href="#appendix-C-3.2" class="pilcrow">¶</a>
+</li>
+        <li class="compact" id="appendix-C-3.3">Moved considerations around unlinkability to the top of the Privacy Considerations section<a href="#appendix-C-3.3" class="pilcrow">¶</a>
 </li>
       </ul>
 <p id="appendix-C-4">-11<a href="#appendix-C-4" class="pilcrow">¶</a></p>
