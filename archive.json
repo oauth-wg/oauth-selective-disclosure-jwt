@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2024-08-27T00:13:38.242992+00:00",
+  "timestamp": "2024-08-29T00:13:37.932822+00:00",
   "repo": "oauth-wg/oauth-selective-disclosure-jwt",
   "labels": [
     {
@@ -11255,7 +11255,7 @@
       "id": "I_kwDOHTmVzM6Qca5P",
       "title": "(maybe) clarify example(s) ",
       "url": "https://github.com/oauth-wg/oauth-selective-disclosure-jwt/issues/444",
-      "state": "OPEN",
+      "state": "CLOSED",
       "author": "bc-pi",
       "authorAssociation": "COLLABORATOR",
       "assignees": [],
@@ -11264,8 +11264,8 @@
       ],
       "body": "some of https://github.com/oauth-wg/oauth-sd-jwt-vc/issues/246 likely applies here too ",
       "createdAt": "2024-07-22T17:16:30Z",
-      "updatedAt": "2024-08-26T18:49:47Z",
-      "closedAt": null,
+      "updatedAt": "2024-08-28T20:19:52Z",
+      "closedAt": "2024-08-28T20:19:52Z",
       "comments": [
         {
           "author": "bc-pi",
@@ -48570,18 +48570,26 @@
       "labels": [],
       "body": "Introduced the phrase `processed SD-JWT payload` in the end of the Section 8.1 on Verifying the SD-JWT\r\n\r\nfor #443",
       "createdAt": "2024-08-23T20:49:10Z",
-      "updatedAt": "2024-08-26T19:40:50Z",
+      "updatedAt": "2024-08-28T20:35:13Z",
       "baseRepository": "oauth-wg/oauth-selective-disclosure-jwt",
       "baseRefName": "master",
-      "baseRefOid": "75ea4174b381418e1cd0cd4e728fe818a9752321",
+      "baseRefOid": "2cdefe63c4d16f91495a1fb155ec91d7f6070304",
       "headRepository": "oauth-wg/oauth-selective-disclosure-jwt",
       "headRefName": "processed-sd-jwt-payload",
-      "headRefOid": "d116f81c83385b33324a6b40a21732c11f244ec0",
+      "headRefOid": "f405f43918a78cab1d13fd3d0d7219a5d759c862",
       "closedAt": null,
       "mergedAt": null,
       "mergedBy": null,
       "mergeCommit": null,
-      "comments": [],
+      "comments": [
+        {
+          "author": "bc-pi",
+          "authorAssociation": "COLLABORATOR",
+          "body": "> Is it really sufficient to mention this new term \"processed sd-jwt payload\" only **once**?\r\n\r\nFair question. But I did add this one mention of the term in the location that @awoie requested it in https://github.com/oauth-wg/oauth-selective-disclosure-jwt/issues/443. And it was already used in the text at the end of [8.3](https://datatracker.ietf.org/doc/html/draft-ietf-oauth-selective-disclosure-jwt#section-8.3-6). And the just merged https://github.com/oauth-wg/oauth-selective-disclosure-jwt/pull/457 sprinkled in a few casual uses of it too. So I think it's sufficient enough. ",
+          "createdAt": "2024-08-28T20:34:46Z",
+          "updatedAt": "2024-08-28T20:34:46Z"
+        }
+      ],
       "reviews": [
         {
           "id": "PRR_kwDOHTmVzM6Gl6VJ",
@@ -48642,6 +48650,32 @@
               "updatedAt": "2024-08-26T19:40:42Z"
             }
           ]
+        },
+        {
+          "id": "PRR_kwDOHTmVzM6HG55X",
+          "commit": {
+            "abbreviatedOid": "d116f81"
+          },
+          "author": "danielfett",
+          "authorAssociation": "MEMBER",
+          "state": "APPROVED",
+          "body": "",
+          "createdAt": "2024-08-28T16:16:08Z",
+          "updatedAt": "2024-08-28T16:16:08Z",
+          "comments": []
+        },
+        {
+          "id": "PRR_kwDOHTmVzM6HIqmi",
+          "commit": {
+            "abbreviatedOid": "d116f81"
+          },
+          "author": "Sakurann",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "Is it really sufficient to mention this new term \"processed sd-jwt payload\" only **once**?",
+          "createdAt": "2024-08-28T20:21:55Z",
+          "updatedAt": "2024-08-28T20:21:55Z",
+          "comments": []
         }
       ]
     },
@@ -48650,24 +48684,26 @@
       "id": "PR_kwDOHTmVzM55eY3W",
       "title": "clarify, add context, or otherwise improve examples",
       "url": "https://github.com/oauth-wg/oauth-selective-disclosure-jwt/pull/457",
-      "state": "OPEN",
+      "state": "MERGED",
       "author": "bc-pi",
       "authorAssociation": "COLLABORATOR",
       "assignees": [],
       "labels": [],
-      "body": "for https://github.com/oauth-wg/oauth-selective-disclosure-jwt/issues/444 which is really based on https://github.com/oauth-wg/oauth-sd-jwt-vc/issues/246 ",
+      "body": "resolves https://github.com/oauth-wg/oauth-selective-disclosure-jwt/issues/444 which is really based on https://github.com/oauth-wg/oauth-sd-jwt-vc/issues/246 ",
       "createdAt": "2024-08-26T18:33:19Z",
-      "updatedAt": "2024-08-26T20:38:07Z",
+      "updatedAt": "2024-08-28T20:19:51Z",
       "baseRepository": "oauth-wg/oauth-selective-disclosure-jwt",
       "baseRefName": "master",
       "baseRefOid": "75ea4174b381418e1cd0cd4e728fe818a9752321",
       "headRepository": "oauth-wg/oauth-selective-disclosure-jwt",
       "headRefName": "clarify-examples-more",
       "headRefOid": "550e198557bc0de3c5536e36600ceb85351eb6b1",
-      "closedAt": null,
-      "mergedAt": null,
-      "mergedBy": null,
-      "mergeCommit": null,
+      "closedAt": "2024-08-28T20:19:51Z",
+      "mergedAt": "2024-08-28T20:19:51Z",
+      "mergedBy": "Sakurann",
+      "mergeCommit": {
+        "oid": "2cdefe63c4d16f91495a1fb155ec91d7f6070304"
+      },
       "comments": [],
       "reviews": [
         {
@@ -48709,6 +48745,32 @@
               "updatedAt": "2024-08-26T20:37:59Z"
             }
           ]
+        },
+        {
+          "id": "PRR_kwDOHTmVzM6HG6s0",
+          "commit": {
+            "abbreviatedOid": "550e198"
+          },
+          "author": "danielfett",
+          "authorAssociation": "MEMBER",
+          "state": "APPROVED",
+          "body": "",
+          "createdAt": "2024-08-28T16:17:46Z",
+          "updatedAt": "2024-08-28T16:17:46Z",
+          "comments": []
+        },
+        {
+          "id": "PRR_kwDOHTmVzM6HIpil",
+          "commit": {
+            "abbreviatedOid": "550e198"
+          },
+          "author": "Sakurann",
+          "authorAssociation": "COLLABORATOR",
+          "state": "APPROVED",
+          "body": "",
+          "createdAt": "2024-08-28T20:19:22Z",
+          "updatedAt": "2024-08-28T20:19:22Z",
+          "comments": []
         }
       ]
     },
@@ -48717,7 +48779,7 @@
       "id": "PR_kwDOHTmVzM55emhH",
       "title": "Moved considerations around unlinkability to the top of the Privacy Considerations section",
       "url": "https://github.com/oauth-wg/oauth-selective-disclosure-jwt/pull/458",
-      "state": "OPEN",
+      "state": "MERGED",
       "author": "bc-pi",
       "authorAssociation": "COLLABORATOR",
       "assignees": [],
@@ -48726,19 +48788,103 @@
       ],
       "body": "Despite or maybe in light of some recentish discussion on the mailing list, the topic seems like it deserves more prominent placement.",
       "createdAt": "2024-08-26T19:09:26Z",
-      "updatedAt": "2024-08-26T19:25:25Z",
+      "updatedAt": "2024-08-28T20:14:49Z",
       "baseRepository": "oauth-wg/oauth-selective-disclosure-jwt",
       "baseRefName": "master",
       "baseRefOid": "75ea4174b381418e1cd0cd4e728fe818a9752321",
       "headRepository": "oauth-wg/oauth-selective-disclosure-jwt",
       "headRefName": "unlinkability-first",
       "headRefOid": "7776df0d55971af1bc125cc969556d08f388569c",
-      "closedAt": null,
-      "mergedAt": null,
-      "mergedBy": null,
-      "mergeCommit": null,
+      "closedAt": "2024-08-28T20:14:49Z",
+      "mergedAt": "2024-08-28T20:14:49Z",
+      "mergedBy": "Sakurann",
+      "mergeCommit": {
+        "oid": "4496a73000ad27484b4366877eb1a91570f5f023"
+      },
       "comments": [],
-      "reviews": []
+      "reviews": [
+        {
+          "id": "PRR_kwDOHTmVzM6HG7AK",
+          "commit": {
+            "abbreviatedOid": "7776df0"
+          },
+          "author": "danielfett",
+          "authorAssociation": "MEMBER",
+          "state": "APPROVED",
+          "body": "",
+          "createdAt": "2024-08-28T16:18:21Z",
+          "updatedAt": "2024-08-28T16:18:21Z",
+          "comments": []
+        },
+        {
+          "id": "PRR_kwDOHTmVzM6HInX_",
+          "commit": {
+            "abbreviatedOid": "7776df0"
+          },
+          "author": "Sakurann",
+          "authorAssociation": "COLLABORATOR",
+          "state": "APPROVED",
+          "body": "",
+          "createdAt": "2024-08-28T20:14:37Z",
+          "updatedAt": "2024-08-28T20:14:37Z",
+          "comments": []
+        }
+      ]
+    },
+    {
+      "number": 459,
+      "id": "PR_kwDOHTmVzM55jWWG",
+      "title": "Using a capital letter \"B\" to start the sentence",
+      "url": "https://github.com/oauth-wg/oauth-selective-disclosure-jwt/pull/459",
+      "state": "MERGED",
+      "author": "bc-pi",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "Using a capital letter to start the sentence will hopefully make the current presentation less jarring without rearranging anything",
+      "createdAt": "2024-08-27T10:40:32Z",
+      "updatedAt": "2024-08-28T20:14:20Z",
+      "baseRepository": "oauth-wg/oauth-selective-disclosure-jwt",
+      "baseRefName": "master",
+      "baseRefOid": "75ea4174b381418e1cd0cd4e728fe818a9752321",
+      "headRepository": "oauth-wg/oauth-selective-disclosure-jwt",
+      "headRefName": "b-up-to-B",
+      "headRefOid": "3c74aaa9148039d3eb52c2924bd1864b2cfcfe9f",
+      "closedAt": "2024-08-28T20:14:20Z",
+      "mergedAt": "2024-08-28T20:14:20Z",
+      "mergedBy": "Sakurann",
+      "mergeCommit": {
+        "oid": "e30e83ae924fe5384066fd2bf3e5ad894412713e"
+      },
+      "comments": [],
+      "reviews": [
+        {
+          "id": "PRR_kwDOHTmVzM6HG7ml",
+          "commit": {
+            "abbreviatedOid": "3c74aaa"
+          },
+          "author": "danielfett",
+          "authorAssociation": "MEMBER",
+          "state": "APPROVED",
+          "body": "",
+          "createdAt": "2024-08-28T16:19:32Z",
+          "updatedAt": "2024-08-28T16:19:32Z",
+          "comments": []
+        },
+        {
+          "id": "PRR_kwDOHTmVzM6HInKJ",
+          "commit": {
+            "abbreviatedOid": "3c74aaa"
+          },
+          "author": "Sakurann",
+          "authorAssociation": "COLLABORATOR",
+          "state": "APPROVED",
+          "body": "",
+          "createdAt": "2024-08-28T20:14:08Z",
+          "updatedAt": "2024-08-28T20:14:08Z",
+          "comments": []
+        }
+      ]
     }
   ]
 }
