@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2024-08-29T00:13:37.932822+00:00",
+  "timestamp": "2024-09-01T00:16:47.132296+00:00",
   "repo": "oauth-wg/oauth-selective-disclosure-jwt",
   "labels": [
     {
@@ -11071,14 +11071,15 @@
       "state": "OPEN",
       "author": "bc-pi",
       "authorAssociation": "COLLABORATOR",
-      "assignees": [],
+      "assignees": [
+        "bc-pi"
+      ],
       "labels": [
-        "discuss-first",
-        "on-hold"
+        "has-PR"
       ],
       "body": "As far as I know, the idea of burning private keys to facilitate repudiation or reduced data value didn't resonate with any of the audiences for whom it was intended.\r\n\r\nI think the document would be better off without the paragraph copied below from https://www.ietf.org/archive/id/draft-ietf-oauth-selective-disclosure-jwt-09.html#section-11.1-7 \r\n\r\nAnd we might avoid some potentially difficult/confusing/painful/etc conversations in various latter stage IETF process steps. \r\n\r\n> If reliable and secure key rotation and revocation is ensured according to [Section 10.8](https://www.ietf.org/archive/id/draft-ietf-oauth-selective-disclosure-jwt-09.html#issuer_signature_key_distribution), Issuers may opt to publish expired or revoked private signing keys (after a grace period that ensures that the keys are not cached any longer at any Verifier). This reduces the value of any leaked credentials as the signatures on them can no longer be trusted to originate from the Issuer.",
       "createdAt": "2024-06-19T22:14:18Z",
-      "updatedAt": "2024-08-26T18:49:39Z",
+      "updatedAt": "2024-08-29T16:58:24Z",
       "closedAt": null,
       "comments": [
         {
@@ -11101,6 +11102,13 @@
           "body": "leaving this open with no action for the time being because, as Dr. @danielfett says, \"it's complicated\". ",
           "createdAt": "2024-08-05T18:11:45Z",
           "updatedAt": "2024-08-05T18:11:45Z"
+        },
+        {
+          "author": "Sakurann",
+          "authorAssociation": "COLLABORATOR",
+          "body": "agreed to remove. ",
+          "createdAt": "2024-08-29T16:14:01Z",
+          "updatedAt": "2024-08-29T16:14:01Z"
         }
       ]
     },
@@ -11180,7 +11188,7 @@
       "id": "I_kwDOHTmVzM6OIzr_",
       "title": "Give \"JSON document of the SD-JWT processing and verification algorithm\" a name",
       "url": "https://github.com/oauth-wg/oauth-selective-disclosure-jwt/issues/443",
-      "state": "OPEN",
+      "state": "CLOSED",
       "author": "awoie",
       "authorAssociation": "NONE",
       "assignees": [],
@@ -11189,8 +11197,8 @@
       ],
       "body": "We had the discussion in SD-JWT VC how to refer to the dehydrated (or maybe hydrated) result (Issuer-signed JWT payload) of the [processing and verification algorithm](https://www.ietf.org/archive/id/draft-ietf-oauth-selective-disclosure-jwt-09.html#name-verification-and-processing). It would help if we could give it a name to allow us to be more precise in other specs that are building on top of SD-JWT.\r\n\r\nThe discussion occurred when adding the Schema for SD-JWT VCs that uses that result of the SD-JWT processing section to match the JSON schema against:\r\nhttps://github.com/oauth-wg/oauth-sd-jwt-vc/pull/231/files#diff-e750c0958ca10e395b4d3b77bb5aafccc668b4a1a50675dda79a8d90b39a2468R714-R715\r\n\r\nWe also have another issue that asks for an example of the result as well which would benefit from giving it a defined name:\r\nhttps://github.com/oauth-wg/oauth-sd-jwt-vc/issues/194\r\n\r\n",
       "createdAt": "2024-07-01T20:26:16Z",
-      "updatedAt": "2024-08-23T20:53:23Z",
-      "closedAt": null,
+      "updatedAt": "2024-08-29T16:09:30Z",
+      "closedAt": "2024-08-29T16:09:30Z",
       "comments": [
         {
           "author": "awoie",
@@ -48563,31 +48571,33 @@
       "id": "PR_kwDOHTmVzM55STbI",
       "title": "Introduced/used the phrase processed SD-JWT payload in Section 8.1 on Verifying the SD-JWT",
       "url": "https://github.com/oauth-wg/oauth-selective-disclosure-jwt/pull/456",
-      "state": "OPEN",
+      "state": "MERGED",
       "author": "bc-pi",
       "authorAssociation": "COLLABORATOR",
       "assignees": [],
       "labels": [],
       "body": "Introduced the phrase `processed SD-JWT payload` in the end of the Section 8.1 on Verifying the SD-JWT\r\n\r\nfor #443",
       "createdAt": "2024-08-23T20:49:10Z",
-      "updatedAt": "2024-08-28T20:35:13Z",
+      "updatedAt": "2024-08-29T16:09:29Z",
       "baseRepository": "oauth-wg/oauth-selective-disclosure-jwt",
       "baseRefName": "master",
       "baseRefOid": "2cdefe63c4d16f91495a1fb155ec91d7f6070304",
       "headRepository": "oauth-wg/oauth-selective-disclosure-jwt",
       "headRefName": "processed-sd-jwt-payload",
       "headRefOid": "f405f43918a78cab1d13fd3d0d7219a5d759c862",
-      "closedAt": null,
-      "mergedAt": null,
-      "mergedBy": null,
-      "mergeCommit": null,
+      "closedAt": "2024-08-29T16:09:29Z",
+      "mergedAt": "2024-08-29T16:09:29Z",
+      "mergedBy": "Sakurann",
+      "mergeCommit": {
+        "oid": "81b1a3ed212b54a732cc6236ad6bd3fb8c128b49"
+      },
       "comments": [
         {
           "author": "bc-pi",
           "authorAssociation": "COLLABORATOR",
-          "body": "> Is it really sufficient to mention this new term \"processed sd-jwt payload\" only **once**?\r\n\r\nFair question. But I did add this one mention of the term in the location that @awoie requested it in https://github.com/oauth-wg/oauth-selective-disclosure-jwt/issues/443. And it was already used in the text at the end of [8.3](https://datatracker.ietf.org/doc/html/draft-ietf-oauth-selective-disclosure-jwt#section-8.3-6). And the just merged https://github.com/oauth-wg/oauth-selective-disclosure-jwt/pull/457 sprinkled in a few casual uses of it too. So I think it's sufficient enough. ",
+          "body": "> Is it really sufficient to mention this new term \"processed sd-jwt payload\" only **once**?\r\n\r\nFair question. But I did add this one mention of the term in the location that @awoie requested it in https://github.com/oauth-wg/oauth-selective-disclosure-jwt/issues/443. And it was already used in the text at the end of [8.3](https://datatracker.ietf.org/doc/html/draft-ietf-oauth-selective-disclosure-jwt#section-8.3-6). And the just merged https://github.com/oauth-wg/oauth-selective-disclosure-jwt/pull/457 sprinkled in a few casual uses of it too. So I think it's sufficient enough. \r\n\r\nAlso we have a fair number of kinda similar terms/phrases that are used in the doc but not formally introduced in the the terminology section. Which I think is fine. But putting this one there might be somewhat inconsistent and beg the question about other similar terms/phrases being there too. ",
           "createdAt": "2024-08-28T20:34:46Z",
-          "updatedAt": "2024-08-28T20:34:46Z"
+          "updatedAt": "2024-08-29T12:27:47Z"
         }
       ],
       "reviews": [
@@ -48675,6 +48685,19 @@
           "body": "Is it really sufficient to mention this new term \"processed sd-jwt payload\" only **once**?",
           "createdAt": "2024-08-28T20:21:55Z",
           "updatedAt": "2024-08-28T20:21:55Z",
+          "comments": []
+        },
+        {
+          "id": "PRR_kwDOHTmVzM6HQ84b",
+          "commit": {
+            "abbreviatedOid": "f405f43"
+          },
+          "author": "Sakurann",
+          "authorAssociation": "COLLABORATOR",
+          "state": "APPROVED",
+          "body": "agree to common law definition",
+          "createdAt": "2024-08-29T16:09:21Z",
+          "updatedAt": "2024-08-29T16:09:21Z",
           "comments": []
         }
       ]
@@ -48885,6 +48908,32 @@
           "comments": []
         }
       ]
+    },
+    {
+      "number": 460,
+      "id": "PR_kwDOHTmVzM553SmL",
+      "title": "Remove text about publishing private keys",
+      "url": "https://github.com/oauth-wg/oauth-selective-disclosure-jwt/pull/460",
+      "state": "OPEN",
+      "author": "bc-pi",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "to fix #439 ",
+      "createdAt": "2024-08-29T16:52:18Z",
+      "updatedAt": "2024-08-29T16:52:19Z",
+      "baseRepository": "oauth-wg/oauth-selective-disclosure-jwt",
+      "baseRefName": "master",
+      "baseRefOid": "81b1a3ed212b54a732cc6236ad6bd3fb8c128b49",
+      "headRepository": "oauth-wg/oauth-selective-disclosure-jwt",
+      "headRefName": "burn-it-all-down",
+      "headRefOid": "1fa52c80b0db04f4b7945c61a7f10cdf59c4e359",
+      "closedAt": null,
+      "mergedAt": null,
+      "mergedBy": null,
+      "mergeCommit": null,
+      "comments": [],
+      "reviews": []
     }
   ]
 }
