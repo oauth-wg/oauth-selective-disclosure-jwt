@@ -1326,12 +1326,6 @@ respective Disclosures if they contain privacy-sensitive data. It may be
 sufficient to store the result of the verification and any End-User data that is
 needed for the application.
 
-If reliable and secure key rotation and revocation is ensured according
-to (#issuer_signature_key_distribution), Issuers may opt to publish
-expired or revoked private signing keys (after a grace period that
-ensures that the keys are not cached any longer at any Verifier). This
-reduces the value of any leaked credentials as the signatures on them
-can no longer be trusted to originate from the Issuer.
 
 
 ## Confidentiality during Transport
