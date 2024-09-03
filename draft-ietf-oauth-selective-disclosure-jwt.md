@@ -1931,7 +1931,7 @@ data. The original JSON data is then used by the application. See
    * Editorial and reference fixes
    * Better introduce the phrase processed SD-JWT payload in the end of (#sd_jwt_verification) on Verifying the SD-JWT
    * Moved considerations around unlinkability to the top of the Privacy Considerations section
-   * Remove the brief discussion of publishing private key(s) to reduce the value of leaked or stolen data
+   * Remove the brief discussion of publishing private key(s) to attempt to reduce the value of leaked or stolen data
 
    -11
 
