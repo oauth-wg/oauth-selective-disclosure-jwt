@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2024-09-03T00:13:39.551507+00:00",
+  "timestamp": "2024-09-05T00:13:40.232578+00:00",
   "repo": "oauth-wg/oauth-selective-disclosure-jwt",
   "labels": [
     {
@@ -11068,7 +11068,7 @@
       "id": "I_kwDOHTmVzM6M23dT",
       "title": "burn the burning of private keys  ",
       "url": "https://github.com/oauth-wg/oauth-selective-disclosure-jwt/issues/439",
-      "state": "OPEN",
+      "state": "CLOSED",
       "author": "bc-pi",
       "authorAssociation": "COLLABORATOR",
       "assignees": [
@@ -11079,8 +11079,8 @@
       ],
       "body": "As far as I know, the idea of burning private keys to facilitate repudiation or reduced data value didn't resonate with any of the audiences for whom it was intended.\r\n\r\nI think the document would be better off without the paragraph copied below from https://www.ietf.org/archive/id/draft-ietf-oauth-selective-disclosure-jwt-09.html#section-11.1-7 \r\n\r\nAnd we might avoid some potentially difficult/confusing/painful/etc conversations in various latter stage IETF process steps. \r\n\r\n> If reliable and secure key rotation and revocation is ensured according to [Section 10.8](https://www.ietf.org/archive/id/draft-ietf-oauth-selective-disclosure-jwt-09.html#issuer_signature_key_distribution), Issuers may opt to publish expired or revoked private signing keys (after a grace period that ensures that the keys are not cached any longer at any Verifier). This reduces the value of any leaked credentials as the signatures on them can no longer be trusted to originate from the Issuer.",
       "createdAt": "2024-06-19T22:14:18Z",
-      "updatedAt": "2024-08-29T16:58:24Z",
-      "closedAt": null,
+      "updatedAt": "2024-09-03T12:01:48Z",
+      "closedAt": "2024-09-03T12:01:48Z",
       "comments": [
         {
           "author": "bc-pi",
@@ -11288,6 +11288,48 @@
           "body": "notes on appendix: \r\n\r\nhttps://drafts.oauth.net/oauth-selective-disclosure-jwt/processed-sd-jwt-payload/draft-ietf-oauth-selective-disclosure-jwt.html#appendix-A.1-2 say more about the input JWT Claims Set\r\n\r\nhttps://drafts.oauth.net/oauth-selective-disclosure-jwt/processed-sd-jwt-payload/draft-ietf-oauth-selective-disclosure-jwt.html#appendix-A.1-31 show the processed SD-JWT payload somewhere after\r\n\r\nhttps://drafts.oauth.net/oauth-selective-disclosure-jwt/processed-sd-jwt-payload/draft-ietf-oauth-selective-disclosure-jwt.html#appendix-A.2-2  say more about the input JWT Claims Set\r\n\r\nhttps://drafts.oauth.net/oauth-selective-disclosure-jwt/processed-sd-jwt-payload/draft-ietf-oauth-selective-disclosure-jwt.html#appendix-A.2-41 use the processed SD-JWT payload name\r\n\r\nhttps://drafts.oauth.net/oauth-selective-disclosure-jwt/processed-sd-jwt-payload/draft-ietf-oauth-selective-disclosure-jwt.html#appendix-A.3-3 say more about the input JWT Claims Set\r\n\r\nhttps://drafts.oauth.net/oauth-selective-disclosure-jwt/processed-sd-jwt-payload/draft-ietf-oauth-selective-disclosure-jwt.html#appendix-A.3-56 names\r\n\r\nhttps://drafts.oauth.net/oauth-selective-disclosure-jwt/processed-sd-jwt-payload/draft-ietf-oauth-selective-disclosure-jwt.html#appendix-A.4-3 input\r\n\r\nhttps://drafts.oauth.net/oauth-selective-disclosure-jwt/processed-sd-jwt-payload/draft-ietf-oauth-selective-disclosure-jwt.html#appendix-A.4-40 name",
           "createdAt": "2024-08-23T21:09:23Z",
           "updatedAt": "2024-08-23T21:09:23Z"
+        }
+      ]
+    },
+    {
+      "number": 461,
+      "id": "I_kwDOHTmVzM6VHmuO",
+      "title": "reword \"for those who celebrate\" referring to ABNF",
+      "url": "https://github.com/oauth-wg/oauth-selective-disclosure-jwt/issues/461",
+      "state": "OPEN",
+      "author": "rohanmahy",
+      "authorAssociation": "NONE",
+      "assignees": [],
+      "labels": [
+        "discuss-first",
+        "editorial",
+        "pending-close"
+      ],
+      "body": "Now in draft -12\r\n\"As an alternative illustration of the SD-JWT format, for those who celebrate, ABNF [[RFC5234](https://www.ietf.org/archive/id/draft-ietf-oauth-selective-disclosure-jwt-11.html#RFC5234)] for the SD-JWT, SD-JWT+KB, and various constituent parts is provided here:\"\r\n\r\nSuggested:\r\n\"For those who already have tooling using Augmented Backus Naur Form (ABNF) {{!RFC5234}}, an optional ABNF formal grammar representaton of SD-JWT, SD-JWT+KB, and various constituent parts is provided here:\"",
+      "createdAt": "2024-09-03T02:20:06Z",
+      "updatedAt": "2024-09-04T14:43:29Z",
+      "closedAt": null,
+      "comments": [
+        {
+          "author": "bc-pi",
+          "authorAssociation": "COLLABORATOR",
+          "body": "Will discuss with the editor team but the cited text from -12 is intentional and, in the humble opinion of its author, conveys the intent as intended. Meanwhile the suggested text changes the stated audience (some folks find ABNF useful even without tooling), uses a different reference syntax than tooling the draft source uses, and loses the satire in the original text that attempts to poke fun at the occasional absurdity of these endeavors. ",
+          "createdAt": "2024-09-04T12:18:10Z",
+          "updatedAt": "2024-09-04T12:18:10Z"
+        },
+        {
+          "author": "danielfett",
+          "authorAssociation": "MEMBER",
+          "body": "+1",
+          "createdAt": "2024-09-04T12:50:58Z",
+          "updatedAt": "2024-09-04T12:50:58Z"
+        },
+        {
+          "author": "rohanmahy",
+          "authorAssociation": "NONE",
+          "body": "Grammatically, the statement as written is a non-sequitur. For those who celebrate what?  You seem not to care for ABNF, which is fine, but do you celebrate your partner's birthday? Halloween? The beginning of summer? So this ABNF is for you because you celebrate! Happy World Samosa Day, here is your free ASN.1 encoding!\r\n\r\nA specification is for its readers. Including an in-joke is only appropriate to the extent it does not confuse or distract the reader. Take 2: \"An optional Augmented Backus Naur Form (ABNF) {{!RFC5234}} formal grammar representaton of SD-JWT, SD-JWT+KB, and various constituent parts is provided here:\"\r\n\r\nOn a more constructive note, I can write a PR to put the ABNF in an appendix.\r\n\r\n(This is an Issue, not a PR; you clearly understand the reference format which an editor can either adjust during incorporation or ask me to write a PR, which would have the same reference convention as the draft.)",
+          "createdAt": "2024-09-04T14:33:05Z",
+          "updatedAt": "2024-09-04T14:43:29Z"
         }
       ]
     }
@@ -48914,26 +48956,77 @@
       "id": "PR_kwDOHTmVzM553SmL",
       "title": "Remove text about publishing private keys",
       "url": "https://github.com/oauth-wg/oauth-selective-disclosure-jwt/pull/460",
-      "state": "OPEN",
+      "state": "MERGED",
       "author": "bc-pi",
       "authorAssociation": "COLLABORATOR",
       "assignees": [],
       "labels": [],
       "body": "to fix #439 ",
       "createdAt": "2024-08-29T16:52:18Z",
-      "updatedAt": "2024-08-29T16:52:19Z",
+      "updatedAt": "2024-09-03T12:01:47Z",
       "baseRepository": "oauth-wg/oauth-selective-disclosure-jwt",
       "baseRefName": "master",
       "baseRefOid": "81b1a3ed212b54a732cc6236ad6bd3fb8c128b49",
       "headRepository": "oauth-wg/oauth-selective-disclosure-jwt",
       "headRefName": "burn-it-all-down",
       "headRefOid": "1fa52c80b0db04f4b7945c61a7f10cdf59c4e359",
-      "closedAt": null,
-      "mergedAt": null,
-      "mergedBy": null,
-      "mergeCommit": null,
+      "closedAt": "2024-09-03T12:01:47Z",
+      "mergedAt": "2024-09-03T12:01:47Z",
+      "mergedBy": "bc-pi",
+      "mergeCommit": {
+        "oid": "5283b259f7e0c711366f5bd10562bab46a9ac34a"
+      },
       "comments": [],
       "reviews": []
+    },
+    {
+      "number": 462,
+      "id": "PR_kwDOHTmVzM56QXj7",
+      "title": "doc history ",
+      "url": "https://github.com/oauth-wg/oauth-selective-disclosure-jwt/pull/462",
+      "state": "MERGED",
+      "author": "bc-pi",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "Remove the brief discussion of publishing private key(s) to reduce the value of leaked or stolen data",
+      "createdAt": "2024-09-03T12:14:13Z",
+      "updatedAt": "2024-09-03T14:33:49Z",
+      "baseRepository": "oauth-wg/oauth-selective-disclosure-jwt",
+      "baseRefName": "master",
+      "baseRefOid": "5283b259f7e0c711366f5bd10562bab46a9ac34a",
+      "headRepository": "oauth-wg/oauth-selective-disclosure-jwt",
+      "headRefName": "burn-it-all-down-but-keep-mention-in-history",
+      "headRefOid": "9db0425d6d12a371da019fce51327c4d4ef88843",
+      "closedAt": "2024-09-03T14:33:49Z",
+      "mergedAt": "2024-09-03T14:33:49Z",
+      "mergedBy": "bc-pi",
+      "mergeCommit": {
+        "oid": "4694e6bbb11ebb5f8ed67abb09f3e1833866de9b"
+      },
+      "comments": [],
+      "reviews": [
+        {
+          "id": "PRR_kwDOHTmVzM6Hwa44",
+          "commit": {
+            "abbreviatedOid": "8fad63b"
+          },
+          "author": "bc-pi",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2024-09-03T14:26:11Z",
+          "updatedAt": "2024-09-03T14:26:11Z",
+          "comments": [
+            {
+              "originalPosition": 4,
+              "body": "```suggestion\r\n   * Remove the brief discussion of publishing private key(s) to attempt to reduce the value of leaked or stolen data\r\n```",
+              "createdAt": "2024-09-03T14:26:11Z",
+              "updatedAt": "2024-09-03T14:26:11Z"
+            }
+          ]
+        }
+      ]
     }
   ]
 }
