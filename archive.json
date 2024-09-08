@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2024-09-05T00:13:40.232578+00:00",
+  "timestamp": "2024-09-08T00:15:19.485865+00:00",
   "repo": "oauth-wg/oauth-selective-disclosure-jwt",
   "labels": [
     {
@@ -11307,7 +11307,7 @@
       ],
       "body": "Now in draft -12\r\n\"As an alternative illustration of the SD-JWT format, for those who celebrate, ABNF [[RFC5234](https://www.ietf.org/archive/id/draft-ietf-oauth-selective-disclosure-jwt-11.html#RFC5234)] for the SD-JWT, SD-JWT+KB, and various constituent parts is provided here:\"\r\n\r\nSuggested:\r\n\"For those who already have tooling using Augmented Backus Naur Form (ABNF) {{!RFC5234}}, an optional ABNF formal grammar representaton of SD-JWT, SD-JWT+KB, and various constituent parts is provided here:\"",
       "createdAt": "2024-09-03T02:20:06Z",
-      "updatedAt": "2024-09-04T14:43:29Z",
+      "updatedAt": "2024-09-05T07:12:08Z",
       "closedAt": null,
       "comments": [
         {
@@ -11330,6 +11330,13 @@
           "body": "Grammatically, the statement as written is a non-sequitur. For those who celebrate what?  You seem not to care for ABNF, which is fine, but do you celebrate your partner's birthday? Halloween? The beginning of summer? So this ABNF is for you because you celebrate! Happy World Samosa Day, here is your free ASN.1 encoding!\r\n\r\nA specification is for its readers. Including an in-joke is only appropriate to the extent it does not confuse or distract the reader. Take 2: \"An optional Augmented Backus Naur Form (ABNF) {{!RFC5234}} formal grammar representaton of SD-JWT, SD-JWT+KB, and various constituent parts is provided here:\"\r\n\r\nOn a more constructive note, I can write a PR to put the ABNF in an appendix.\r\n\r\n(This is an Issue, not a PR; you clearly understand the reference format which an editor can either adjust during incorporation or ask me to write a PR, which would have the same reference convention as the draft.)",
           "createdAt": "2024-09-04T14:33:05Z",
           "updatedAt": "2024-09-04T14:43:29Z"
+        },
+        {
+          "author": "danielfett",
+          "authorAssociation": "MEMBER",
+          "body": "I think the current wording is fine as an easteregg. We can move the \"for those who celebrate\" part to the end of the sentence to make it easier to read.",
+          "createdAt": "2024-09-05T07:12:07Z",
+          "updatedAt": "2024-09-05T07:12:07Z"
         }
       ]
     }
