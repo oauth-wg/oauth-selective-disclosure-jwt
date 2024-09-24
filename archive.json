@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2024-09-12T00:14:19.857519+00:00",
+  "timestamp": "2024-09-24T00:14:50.055493+00:00",
   "repo": "oauth-wg/oauth-selective-disclosure-jwt",
   "labels": [
     {
@@ -11296,7 +11296,7 @@
       "id": "I_kwDOHTmVzM6VHmuO",
       "title": "reword \"for those who celebrate\" referring to ABNF",
       "url": "https://github.com/oauth-wg/oauth-selective-disclosure-jwt/issues/461",
-      "state": "OPEN",
+      "state": "CLOSED",
       "author": "rohanmahy",
       "authorAssociation": "NONE",
       "assignees": [],
@@ -11307,8 +11307,8 @@
       ],
       "body": "Now in draft -12\r\n\"As an alternative illustration of the SD-JWT format, for those who celebrate, ABNF [[RFC5234](https://www.ietf.org/archive/id/draft-ietf-oauth-selective-disclosure-jwt-11.html#RFC5234)] for the SD-JWT, SD-JWT+KB, and various constituent parts is provided here:\"\r\n\r\nSuggested:\r\n\"For those who already have tooling using Augmented Backus Naur Form (ABNF) {{!RFC5234}}, an optional ABNF formal grammar representaton of SD-JWT, SD-JWT+KB, and various constituent parts is provided here:\"",
       "createdAt": "2024-09-03T02:20:06Z",
-      "updatedAt": "2024-09-05T07:12:08Z",
-      "closedAt": null,
+      "updatedAt": "2024-09-23T16:51:50Z",
+      "closedAt": "2024-09-23T16:51:50Z",
       "comments": [
         {
           "author": "bc-pi",
@@ -11339,6 +11339,148 @@
           "updatedAt": "2024-09-05T07:12:07Z"
         }
       ]
+    },
+    {
+      "number": 463,
+      "id": "I_kwDOHTmVzM6WUMan",
+      "title": "holder key as DID",
+      "url": "https://github.com/oauth-wg/oauth-selective-disclosure-jwt/issues/463",
+      "state": "CLOSED",
+      "author": "ThierryThevenet",
+      "authorAssociation": "NONE",
+      "assignees": [],
+      "labels": [
+        "pending-close"
+      ],
+      "body": "There is no reference about the possibility to use DIDs instead of cnf for the holder identifier\r\nIs there any reason/recommendation not to use DIDs for the holder ?",
+      "createdAt": "2024-09-12T09:36:50Z",
+      "updatedAt": "2024-09-23T18:03:15Z",
+      "closedAt": "2024-09-23T18:03:14Z",
+      "comments": [
+        {
+          "author": "Sakurann",
+          "authorAssociation": "COLLABORATOR",
+          "body": "that is out of scope for sd-jwt, since sd-jwt does not talk anything about the value of holder identifier. this is in scope for sd-jwt vc.",
+          "createdAt": "2024-09-19T16:18:39Z",
+          "updatedAt": "2024-09-19T16:18:39Z"
+        },
+        {
+          "author": "bc-pi",
+          "authorAssociation": "COLLABORATOR",
+          "body": "closing as out of scope ",
+          "createdAt": "2024-09-23T18:03:15Z",
+          "updatedAt": "2024-09-23T18:03:15Z"
+        }
+      ]
+    },
+    {
+      "number": 464,
+      "id": "I_kwDOHTmVzM6Wh_KF",
+      "title": "WGLC updates",
+      "url": "https://github.com/oauth-wg/oauth-selective-disclosure-jwt/issues/464",
+      "state": "OPEN",
+      "author": "bc-pi",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "Placeholder issue to not forget to do appropriate updates resulting from WGLC \r\n\r\nhttps://mailarchive.ietf.org/arch/browse/oauth/?q=%22WGLC%20for%20SD-JWT%22 \r\n\r\n",
+      "createdAt": "2024-09-13T19:08:41Z",
+      "updatedAt": "2024-09-13T19:08:41Z",
+      "closedAt": null,
+      "comments": []
+    },
+    {
+      "number": 465,
+      "id": "I_kwDOHTmVzM6Ws9lR",
+      "title": "JWT and unprotected header - generalisation?",
+      "url": "https://github.com/oauth-wg/oauth-selective-disclosure-jwt/issues/465",
+      "state": "CLOSED",
+      "author": "alenhorvat",
+      "authorAssociation": "NONE",
+      "assignees": [
+        "bc-pi"
+      ],
+      "labels": [],
+      "body": "Dear,\r\n\r\nIssue type: Discussion\r\nBlocking: No\r\nImpact (if considered): Breaking\r\n\r\nJWT as a compact serialised JWT doesn't have support for an unprotected header.\r\n\r\n`~disclosures~KB`\r\n\r\nrepresent information that in JSON serialisation one puts in the unprotected header, as defined in the document.\r\n\r\nShould this specification consider a generalisation of the approach, where an arbitrary \"unprotected header\" can be encoded, in a sense:\r\n`protected.payload.signature.header~<type-specific content>` or\r\n`protected.payload.signature.header.<type-specific content>`\r\nwhere header has a claim 'cty' defining the content type of what follows\r\n\r\nin case of sd-jwt, type specific content is `~disclosures~KB` (and the combination of);\r\n\r\nNote: if such construct should be considered, IMO an annex to https://datatracker.ietf.org/doc/html/rfc7519 would be more appropriate.",
+      "createdAt": "2024-09-16T12:43:59Z",
+      "updatedAt": "2024-09-23T18:39:19Z",
+      "closedAt": "2024-09-23T18:02:22Z",
+      "comments": [
+        {
+          "author": "bc-pi",
+          "authorAssociation": "COLLABORATOR",
+          "body": "While a generalization of the approach is certainly an interesting idea, it's well outside the scope of this work to do so. \r\n\r\nFor consideration of such a construct, I would encourage you bring it to the attention of an appropriate WG or perhaps DISPATCH group. \r\n\r\n",
+          "createdAt": "2024-09-23T18:02:22Z",
+          "updatedAt": "2024-09-23T18:02:22Z"
+        },
+        {
+          "author": "alenhorvat",
+          "authorAssociation": "NONE",
+          "body": "Thank you for your answer.\r\n\r\nWould you kindly suggest which would be the appropriate WG? Where can I find more information about the DISPATCH group?\r\n\r\nThank you in advance!",
+          "createdAt": "2024-09-23T18:39:18Z",
+          "updatedAt": "2024-09-23T18:39:18Z"
+        }
+      ]
+    },
+    {
+      "number": 468,
+      "id": "I_kwDOHTmVzM6Xa-9l",
+      "title": "sd_alg, _sd_alg - Option for claims reuse?",
+      "url": "https://github.com/oauth-wg/oauth-selective-disclosure-jwt/issues/468",
+      "state": "OPEN",
+      "author": "alenhorvat",
+      "authorAssociation": "NONE",
+      "assignees": [
+        "Sakurann"
+      ],
+      "labels": [],
+      "body": "Dear,\r\n\r\nFirst, I would like to express my gratitude for your excellent work on this project.\r\n\r\nI have a question regarding the definitions of the following claims:\r\n\r\nClaim Name: _sd\r\nClaim Description: Digests of Disclosures for object properties\r\n\r\nClaim Name: _sd_alg\r\nClaim Description: Hash algorithm used to generate Disclosure digests and digest over presentation\r\n\r\nCurrently, the _sd claim is limited to digests of disclosures. However, there are other mechanisms available for blinding claims, such as Zero-Knowledge Proofs (ZKPs), signatures, and similar techniques. Since the design of _sd is quite robust and generic, would the authors consider broadening its definition to encompass these additional mechanisms?\r\n\r\nProposal:\r\n\r\nClaim Name: _sd\r\nClaim Description: Blinded (or hidden) claims as defined by the Selective Disclosure Algorithm\r\nAdditionally, similar to _sd_alg, it could be constructed from {sd-name}:{properties}.\r\n\r\nProposal:\r\n\r\nClaim Name: _sd_alg\r\nClaim Description: Selective disclosure algorithm name\r\nFor example, the algorithm name could be registered as something like: sd-jwt:sha-256.\r\n\r\nThank you very much for your time and consideration of this suggestion. I look forward to your feedback.",
+      "createdAt": "2024-09-21T17:38:57Z",
+      "updatedAt": "2024-09-23T22:14:05Z",
+      "closedAt": null,
+      "comments": [
+        {
+          "author": "Sakurann",
+          "authorAssociation": "COLLABORATOR",
+          "body": "Hi Alen! Thank you for the suggestion. It feels a little immature to make a generalization for ZKP when those are not yet stably used with SD-JWT VCs and also feels like a violation of best/common practices by using the same claim for multiple purposes - for both pure sd-jwt mechanisms and zkp-based mechanisms.\r\n\r\nIt might be better and less breaking changes to later define a separate specification how to do sd-jwt with zkp",
+          "createdAt": "2024-09-23T22:14:04Z",
+          "updatedAt": "2024-09-23T22:14:04Z"
+        }
+      ]
+    },
+    {
+      "number": 469,
+      "id": "I_kwDOHTmVzM6XglDp",
+      "title": "Mixed-type arrays",
+      "url": "https://github.com/oauth-wg/oauth-selective-disclosure-jwt/issues/469",
+      "state": "OPEN",
+      "author": "alenhorvat",
+      "authorAssociation": "NONE",
+      "assignees": [
+        "danielfett"
+      ],
+      "labels": [],
+      "body": "Dear,\r\n\r\nthank you for the great work!\r\n\r\nI have a question about the design-rational behind the \"Disclosures for array elements\" (https://www.ietf.org/archive/id/draft-ietf-oauth-selective-disclosure-jwt-12.html#name-disclosures-for-array-eleme)\r\n\r\nThe current design transforms arrays into mixed-type arrays (which is compatible with JSON format), but it is causing parsing inconveniences in some languages; Example: a credential has a claim which is a single-type array, e.g., array of strings. If SD-JWT is applied, the claim type must be changed into an interface and when parsed, type checking is performed to detect hidden claims.\r\n\r\nAn alternative might be\r\n[\"claim-name.3\", \"value\"]  (and put into _sd as key-value claims)\r\nor by introducing explicit types\r\n[\"array-element\", \"array-claim-name\", \"position\", \"value\"]  (and put into _sd as key-value claims)\r\n\r\nthere would be 2 types:\r\n- 0: key-value\r\n- 1: array-element\r\nand enum can be used to minimise the size\r\n\r\nThank you for your time and answers!",
+      "createdAt": "2024-09-23T08:14:57Z",
+      "updatedAt": "2024-09-23T16:59:39Z",
+      "closedAt": null,
+      "comments": []
+    },
+    {
+      "number": 470,
+      "id": "I_kwDOHTmVzM6Xhaz7",
+      "title": "Decoy Digest Implications",
+      "url": "https://github.com/oauth-wg/oauth-selective-disclosure-jwt/issues/470",
+      "state": "OPEN",
+      "author": "AlexHodder",
+      "authorAssociation": "NONE",
+      "assignees": [],
+      "labels": [],
+      "body": "We (Guido Schmitz and Alex Hodder-Williams) have been working on producing a formal analysis of the current specification. We will share more details about this analysis soon, but wanted to point out some observations.\r\n\r\nDuring the issuance phase, it is unclear to us how the holder gets guarantees regarding the entire set of disclosures that verify under the received issuer-signed JWT.\r\nAs specified: the holder should accept an issuance if the signature verifies, and the received set of disclosures all verify according to this SD-JWT presentation. However, the holder doesn't have guarantees that the digests in the issuer-signed JWT that they didn't receive a corresponding disclosure for are in fact decoy digests. These digests could contain other disclosures, which the holder would be unaware of. This would allow colluding issuers and verifiers to create a non-interactive covert channel, where the verifiers are looking for a specific digest. This seems to relate to 11.1 in the specification, but may be worth additional discussion in the document.\r\n\r\nOne possible technical solution could look as follows:\r\n- The holder provides the issuer with a set of nonces that can be used as decoy digests.\r\n- The issuer must then hash these nonces (this prevents the holder from inserting their own non-issued claims)\r\n- The holder can then check if the digests they don't receive disclosures for match their original nonces.\r\nClearly this adds overhead and slightly complicates the standard, however, it is our view that the holder of a credential that has been issued to (and potentially about) them, should have full knowledge of what could be contained in that credential.\r\n\r\nAnother issue stemming from decoy digests, with a different consequence, is that if disclosures get dropped off the end of an SD-JWT presentation in the issuance phase, yet the presentation still verifies, the holder won't ever have the full set of disclosures, but will be unaware that they are missing information.\r\nThis may be mitigated at a different level. Any kind of authenticated channel between the issuer and holder prevents tampering of the initial set of disclosures. This may be out of scope of the SD-JWT document as it is likely to be protocol specific; but again, this might be worth including a remark about.\r\n",
+      "createdAt": "2024-09-23T09:50:32Z",
+      "updatedAt": "2024-09-23T09:50:32Z",
+      "closedAt": null,
+      "comments": []
     }
   ],
   "pulls": [
@@ -49032,6 +49174,166 @@
               "updatedAt": "2024-09-03T14:26:11Z"
             }
           ]
+        }
+      ]
+    },
+    {
+      "number": 466,
+      "id": "PR_kwDOHTmVzM58FxLn",
+      "title": "Addressing one more of Mike's previous review comments",
+      "url": "https://github.com/oauth-wg/oauth-selective-disclosure-jwt/pull/466",
+      "state": "OPEN",
+      "author": "bc-pi",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "https://mailarchive.ietf.org/arch/msg/oauth/W88oMIu_no3KYsU60MTmBsuSIJI/ and I don't know why my response isn't on the mail archive yet but here's a copy:\r\n\r\n\r\n![Screenshot 2024-09-19 at 2 43 48\u202fPM](https://github.com/user-attachments/assets/a8b28c46-3759-4456-9967-f25dd1cf75f2)\r\n",
+      "createdAt": "2024-09-19T20:44:26Z",
+      "updatedAt": "2024-09-23T17:55:04Z",
+      "baseRepository": "oauth-wg/oauth-selective-disclosure-jwt",
+      "baseRefName": "master",
+      "baseRefOid": "817303cd188f5187750c76318517c30aa6ffe530",
+      "headRepository": "oauth-wg/oauth-selective-disclosure-jwt",
+      "headRefName": "say-the-quiet-part-out-loud",
+      "headRefOid": "97aa7288e584ea05aaa65c1e7b90556211885e37",
+      "closedAt": null,
+      "mergedAt": null,
+      "mergedBy": null,
+      "mergeCommit": null,
+      "comments": [
+        {
+          "author": "bc-pi",
+          "authorAssociation": "COLLABORATOR",
+          "body": "oh hey that's fun: \r\n\r\n>  Error: This request has been automatically failed because it uses a deprecated version of `actions/upload-artifact: v2`. Learn more: https://github.blog/changelog/2024-02-13-deprecation-notice-v1-and-v2-of-the-artifact-actions/\r\n",
+          "createdAt": "2024-09-19T20:45:51Z",
+          "updatedAt": "2024-09-19T20:46:09Z"
+        },
+        {
+          "author": "bc-pi",
+          "authorAssociation": "COLLABORATOR",
+          "body": "> oh hey that's fun:\r\n> \r\n> > Error: This request has been automatically failed because it uses a deprecated version of `actions/upload-artifact: v2`. Learn more: https://github.blog/changelog/2024-02-13-deprecation-notice-v1-and-v2-of-the-artifact-actions/\r\n\r\nsadness addressed in 9b7ad2d010e0f49e3dd8b5833c59fe4642e2892b (on the surface anyway) ",
+          "createdAt": "2024-09-23T15:50:20Z",
+          "updatedAt": "2024-09-23T15:50:20Z"
+        },
+        {
+          "author": "Sakurann",
+          "authorAssociation": "COLLABORATOR",
+          "body": "isn't part of this duplicate of #471 ?",
+          "createdAt": "2024-09-23T16:50:51Z",
+          "updatedAt": "2024-09-23T16:50:51Z"
+        },
+        {
+          "author": "bc-pi",
+          "authorAssociation": "COLLABORATOR",
+          "body": "> isn't part of this duplicate of #471 ?\r\n\r\nYeah, I did it here first just to fix things. Then decided fixing the build process should be decoupled from addressing one more of Mike's previous review comments. ",
+          "createdAt": "2024-09-23T17:54:17Z",
+          "updatedAt": "2024-09-23T17:54:17Z"
+        },
+        {
+          "author": "bc-pi",
+          "authorAssociation": "COLLABORATOR",
+          "body": "> > isn't part of this duplicate of #471 ?\r\n> \r\n> Yeah, I did it here first just to fix things. Then decided fixing the build process should be decoupled from addressing one more of Mike's previous review comments.\r\n\r\nNow overcome by events. ",
+          "createdAt": "2024-09-23T17:55:03Z",
+          "updatedAt": "2024-09-23T17:55:03Z"
+        }
+      ],
+      "reviews": [
+        {
+          "id": "PRR_kwDOHTmVzM6Kc5bm",
+          "commit": {
+            "abbreviatedOid": "97aa728"
+          },
+          "author": "Sakurann",
+          "authorAssociation": "COLLABORATOR",
+          "state": "APPROVED",
+          "body": "",
+          "createdAt": "2024-09-23T16:50:30Z",
+          "updatedAt": "2024-09-23T17:54:24Z",
+          "comments": []
+        }
+      ]
+    },
+    {
+      "number": 467,
+      "id": "PR_kwDOHTmVzM58Ov6k",
+      "title": "introduction rewrite",
+      "url": "https://github.com/oauth-wg/oauth-selective-disclosure-jwt/pull/467",
+      "state": "OPEN",
+      "author": "dickhardt",
+      "authorAssociation": "NONE",
+      "assignees": [],
+      "labels": [],
+      "body": "provide more context on what the problem is and why this work is happening, with a summary of how it works\r\n\r\ndeleted spurious language that reads like a patent application",
+      "createdAt": "2024-09-21T04:41:24Z",
+      "updatedAt": "2024-09-22T17:34:25Z",
+      "baseRepository": "oauth-wg/oauth-selective-disclosure-jwt",
+      "baseRefName": "master",
+      "baseRefOid": "4694e6bbb11ebb5f8ed67abb09f3e1833866de9b",
+      "headRepository": "dickhardt/oauth-selective-disclosure-jwt",
+      "headRefName": "master",
+      "headRefOid": "212f6aefc18c9219dab48025ac72a39bdc0829f1",
+      "closedAt": null,
+      "mergedAt": null,
+      "mergedBy": null,
+      "mergeCommit": null,
+      "comments": [
+        {
+          "author": "rohanmahy",
+          "authorAssociation": "NONE",
+          "body": "I am generally OK with a much more concise introduction (but I don't find the current Introduction offensive either). If we were to use a shorter intro I would want to see the following addressed:\r\n\r\n1. Mention that you can create an SD-JWT for an arbitrary JWS (not just a JWT).\r\n2. Reintroduce a casual introduction of the terms \"Claims\" and \"Disclosures\", as this was very useful\r\n3. Spell out SD-JWT on first use\r\n4. s/the verifier would like assurance/the holder can optionally provide assurance/\r\n5. Add back this sentiment \"While JWTs with claims describing natural persons are a common use case, the mechanisms defined in this document are also applicable to other use cases.\"",
+          "createdAt": "2024-09-22T17:34:24Z",
+          "updatedAt": "2024-09-22T17:34:24Z"
+        }
+      ],
+      "reviews": []
+    },
+    {
+      "number": 471,
+      "id": "PR_kwDOHTmVzM58ZI95",
+      "title": "Update upload artifact to v4 ",
+      "url": "https://github.com/oauth-wg/oauth-selective-disclosure-jwt/pull/471",
+      "state": "MERGED",
+      "author": "bc-pi",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "Update upload artifact to v4  to avoid being \"automatically failed because it uses a deprecated version\"\r\n\r\n> Error: This request has been automatically failed because it uses a deprecated version of `actions/upload-artifact: v2`. Learn more: https://github.blog/changelog/2024-02-13-deprecation-notice-v1-and-v2-of-the-artifact-actions/\r\n",
+      "createdAt": "2024-09-23T15:54:35Z",
+      "updatedAt": "2024-09-23T17:51:18Z",
+      "baseRepository": "oauth-wg/oauth-selective-disclosure-jwt",
+      "baseRefName": "master",
+      "baseRefOid": "4694e6bbb11ebb5f8ed67abb09f3e1833866de9b",
+      "headRepository": "oauth-wg/oauth-selective-disclosure-jwt",
+      "headRefName": "make-upload-artifact-v4",
+      "headRefOid": "dd1e43da523914d05cc32ec0b40bae6a3178dba7",
+      "closedAt": "2024-09-23T17:51:18Z",
+      "mergedAt": "2024-09-23T17:51:18Z",
+      "mergedBy": "bc-pi",
+      "mergeCommit": {
+        "oid": "817303cd188f5187750c76318517c30aa6ffe530"
+      },
+      "comments": [
+        {
+          "author": "bc-pi",
+          "authorAssociation": "COLLABORATOR",
+          "body": "Gonna proceed with this even without doctor's approval. ",
+          "createdAt": "2024-09-23T17:51:10Z",
+          "updatedAt": "2024-09-23T17:51:10Z"
+        }
+      ],
+      "reviews": [
+        {
+          "id": "PRR_kwDOHTmVzM6Kc49h",
+          "commit": {
+            "abbreviatedOid": "dd1e43d"
+          },
+          "author": "Sakurann",
+          "authorAssociation": "COLLABORATOR",
+          "state": "APPROVED",
+          "body": "",
+          "createdAt": "2024-09-23T16:49:31Z",
+          "updatedAt": "2024-09-23T16:49:31Z",
+          "comments": []
         }
       ]
     }
