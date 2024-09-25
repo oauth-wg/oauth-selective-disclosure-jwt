@@ -733,7 +733,9 @@ The following payload is used for the SD-JWT:
 
 <{{examples/simple/sd_jwt_payload.json}}
 
-The respective Disclosures are created by the Issuer:
+The respective Disclosures, created by the Issuer, are listed below.
+In the text below and in other locations in this specification,
+the label "SHA-256 Hash:" is used as a shorthand for the label "Base64url-Encoded SHA-256 Hash:".
 
 {{examples/simple/disclosures.md}}
 
