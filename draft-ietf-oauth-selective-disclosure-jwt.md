@@ -147,8 +147,6 @@ Section 2 of [@!RFC7515].
 Throughout the document the term "claims" refers generally to both
 object properties (name/value pairs) as well as array elements.
 
-# Terms and Definitions
-
 Selective Disclosure:
 :  Process of a Holder disclosing to a Verifier a subset of claims contained in a JWT Claims Set issued by an Issuer.
 
@@ -157,7 +155,8 @@ Selectively Disclosable JWT (SD-JWT):
    supports selective disclosure as defined in this document. It can contain both regular claims and digests of selectively-disclosable claims.
 
 Disclosure:
-:  A JSON array containing a combination of a salt, a cleartext claim name (present when the claim is a name/value pair and absent when the claim is an array element), and a cleartext claim value, which is base64url-encoded and used to calculate a digest for the respective claim. The term Disclosure refers to the whole base64url-encoded string.
+:  A base64url-encoded string of a JSON array that contains a salt, a claim name (present when the claim is a name/value pair and absent when the claim is an array element), and a claim value. The Disclosure is used to calculate a digest for the respective claim. The term Disclosure refers to the whole base64url-encoded string.
+
 
 Key Binding:
 :  Ability of the Holder to prove legitimate possession of an SD-JWT by proving
@@ -226,7 +225,7 @@ An SD-JWT, at its core, is a digitally signed JSON document containing digests o
 Each digest value ensures the integrity of, and maps to, the respective Disclosure.  Digest values are calculated using a hash function over the Disclosures, each of which contains a cryptographically secure random salt, the claim name (only when the claim is an object property), and the claim value. The Disclosures are sent to the Holder as part of the SD-JWT in the format defined in (#data_formats).
 When presenting an SD-JWT to a Verifier, the Holder only includes the Disclosures for the claims that it wants to reveal to that Verifier.
 
-An SD-JWT MAY also contain clear-text claims that are always disclosed to the Verifier.
+An SD-JWT MAY also contain cleartext claims that are always disclosed to the Verifier.
 
 ## Disclosing to a Verifier
 
