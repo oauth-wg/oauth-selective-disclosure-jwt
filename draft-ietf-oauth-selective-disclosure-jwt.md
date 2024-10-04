@@ -494,12 +494,10 @@ It is important to note that:
  * The bytes of the output of the hash function MUST be base64url-encoded, and are not the bytes making up the (sometimes used) hex representation of the bytes of the digest.
 
 For example, the base64url-encoded SHA-256 digest of the Disclosure
-`WyI2cU1RdlJMNWhhaiIsICJmYW1pbHlfbmFtZSIsICJNw7ZiaXVzIl0` would be
-`uutlBuYeMDyjLLTpf6Jxi7yNkEF35jdyWMn9U7b_RYY`.
+`WyJfMjZiYzRMVC1hYzZxMktJNmNCVzVlcyIsICJmYW1pbHlfbmFtZSIsICJNw7ZiaXVzIl0`
+for the `family_name` claim from (#disclosures_for_object_properties) above is
+`X9yH0Ajrdm1Oij4tWso9UzzKJvPoDxwmuEcO3XAdRC0`.
 
-The base64url-encoded SHA-256 digest of the Disclosure
-`WyJsa2x4RjVqTVlsR1RQVW92TU5JdkNBIiwgIkZSIl0` would be
-`w0I8EKcdCtUPkGCNUrfwVp2xEgNjtoIDlOxc9-PlOhs`.
 
 ### Embedding Disclosure Digests in SD-JWTs {#embedding_disclosure_digests}
 
@@ -524,8 +522,8 @@ alphanumerically or randomly, after potentially adding
 decoy digests as described in (#decoy_digests). The precise method does not matter as long as it
 does not depend on the original order of elements.
 
-For example, using the digest of the object property Disclosure created above,
-the Issuer could create the following SD-JWT payload to make `given_name`
+For example, using the digest of the Disclosure from (#hashing_disclosures),
+the Issuer could create the following SD-JWT payload to make `family_name`
 selectively disclosable:
 
 ```json
