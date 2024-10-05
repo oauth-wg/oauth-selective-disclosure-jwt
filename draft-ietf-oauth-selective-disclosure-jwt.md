@@ -361,7 +361,7 @@ The payload of an SD-JWT is a JSON object according to the following rules:
 
 The same digest value MUST NOT appear more than once in the SD-JWT.
 
-Applications of SD-JWT SHOULD be explicitly typed using the `typ` header parameter. See (#explicit_typing) for more details.
+Applications of SD-JWT SHOULD be explicitly typed using the `typ` or `cty` header parameter. See (#explicit_typing) for more details.
 
 It is the Issuer who decides which claims are selectively disclosable and which are not. End-User claims MAY be included as plaintext as well, e.g., if hiding the particular claims from the Verifier is not required in the intended use case. See (#sd-validity-claims) for considerations on making validity-controlling claims such as `exp` selectively disclosable.
 
