@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2024-10-03T00:14:50.048270+00:00",
+  "timestamp": "2024-10-06T00:16:09.295631+00:00",
   "repo": "oauth-wg/oauth-selective-disclosure-jwt",
   "labels": [
     {
@@ -11385,9 +11385,17 @@
       "labels": [],
       "body": "Placeholder issue to not forget to do appropriate updates resulting from WGLC \r\n\r\nhttps://mailarchive.ietf.org/arch/browse/oauth/?q=%22WGLC%20for%20SD-JWT%22 \r\n\r\n",
       "createdAt": "2024-09-13T19:08:41Z",
-      "updatedAt": "2024-09-13T19:08:41Z",
+      "updatedAt": "2024-10-04T22:48:05Z",
       "closedAt": null,
-      "comments": []
+      "comments": [
+        {
+          "author": "bc-pi",
+          "authorAssociation": "COLLABORATOR",
+          "body": "#472, #473, and #474 have some of this \r\n\r\nI think something for https://mailarchive.ietf.org/arch/msg/oauth/MN1d1ihchmOTcHVMsZ_RlOcZxRE/ would be good too\r\n\r\nand of course #467 is there too \r\n\r\n",
+          "createdAt": "2024-10-04T22:48:04Z",
+          "updatedAt": "2024-10-04T22:48:04Z"
+        }
+      ]
     },
     {
       "number": 465,
@@ -49335,7 +49343,7 @@
       "labels": [],
       "body": "provide more context on what the problem is and why this work is happening, with a summary of how it works\r\n\r\ndeleted spurious language that reads like a patent application",
       "createdAt": "2024-09-21T04:41:24Z",
-      "updatedAt": "2024-09-24T11:55:38Z",
+      "updatedAt": "2024-10-05T12:25:08Z",
       "baseRepository": "oauth-wg/oauth-selective-disclosure-jwt",
       "baseRefName": "master",
       "baseRefOid": "817303cd188f5187750c76318517c30aa6ffe530",
@@ -49353,9 +49361,30 @@
           "body": "I am generally OK with a much more concise introduction (but I don't find the current Introduction offensive either). If we were to use a shorter intro I would want to see the following addressed:\r\n\r\n1. Mention that you can create an SD-JWT for an arbitrary JWS (not just a JWT).\r\n2. Reintroduce a casual introduction of the terms \"Claims\" and \"Disclosures\", as this was very useful\r\n3. Spell out SD-JWT on first use\r\n4. s/the verifier would like assurance/the holder can optionally provide assurance/\r\n5. Add back this sentiment \"While JWTs with claims describing natural persons are a common use case, the mechanisms defined in this document are also applicable to other use cases.\"",
           "createdAt": "2024-09-22T17:34:24Z",
           "updatedAt": "2024-09-22T17:34:24Z"
+        },
+        {
+          "author": "bc-pi",
+          "authorAssociation": "COLLABORATOR",
+          "body": "Thanks @rohanmahy, I generally agree with that. \r\n\r\nNote that @danielfett has kindly (foolishly?) said he'd take a pass at reviewing or refining or rewriting or reworking this and/or the current (unoffensive, thanks!) Introduction. \r\n\r\n",
+          "createdAt": "2024-10-04T22:27:12Z",
+          "updatedAt": "2024-10-04T22:27:12Z"
         }
       ],
-      "reviews": []
+      "reviews": [
+        {
+          "id": "PRR_kwDOHTmVzM6MC1i9",
+          "commit": {
+            "abbreviatedOid": "6fae293"
+          },
+          "author": "bc-pi",
+          "authorAssociation": "COLLABORATOR",
+          "state": "CHANGES_REQUESTED",
+          "body": "The github UX  tells me that I \"need to leave a comment indicating the requested changes.\"",
+          "createdAt": "2024-10-05T12:25:08Z",
+          "updatedAt": "2024-10-05T12:25:08Z",
+          "comments": []
+        }
+      ]
     },
     {
       "number": 471,
@@ -49406,6 +49435,110 @@
           "comments": []
         }
       ]
+    },
+    {
+      "number": 472,
+      "id": "PR_kwDOHTmVzM59q43O",
+      "title": "WGLC updates 1/x",
+      "url": "https://github.com/oauth-wg/oauth-selective-disclosure-jwt/pull/472",
+      "state": "OPEN",
+      "author": "bc-pi",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "",
+      "createdAt": "2024-10-04T21:21:04Z",
+      "updatedAt": "2024-10-04T21:21:05Z",
+      "baseRepository": "oauth-wg/oauth-selective-disclosure-jwt",
+      "baseRefName": "master",
+      "baseRefOid": "bfc5914fd199bb93e934283aa1d30059efe94264",
+      "headRepository": "oauth-wg/oauth-selective-disclosure-jwt",
+      "headRefName": "1st-wglc-pr-1-of-x",
+      "headRefOid": "1d8c25465c97a7a0e5ad87138fd25169b761a082",
+      "closedAt": null,
+      "mergedAt": null,
+      "mergedBy": null,
+      "mergeCommit": null,
+      "comments": [],
+      "reviews": []
+    },
+    {
+      "number": 473,
+      "id": "PR_kwDOHTmVzM59q7sz",
+      "title": " WGLC updates 2/x",
+      "url": "https://github.com/oauth-wg/oauth-selective-disclosure-jwt/pull/473",
+      "state": "OPEN",
+      "author": "bc-pi",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "remove repetitive repetitive sentence per Dick https://mailarchive.ie)tf.org/arch/msg/oauth/brjnGB53MApGNCsXC03ungeWxI4/",
+      "createdAt": "2024-10-04T21:33:05Z",
+      "updatedAt": "2024-10-04T21:33:06Z",
+      "baseRepository": "oauth-wg/oauth-selective-disclosure-jwt",
+      "baseRefName": "master",
+      "baseRefOid": "bfc5914fd199bb93e934283aa1d30059efe94264",
+      "headRepository": "oauth-wg/oauth-selective-disclosure-jwt",
+      "headRefName": "1st-wglc-pr-2a-of-x",
+      "headRefOid": "ef6bad58a56974e3166a91d020cf2231906fa111",
+      "closedAt": null,
+      "mergedAt": null,
+      "mergedBy": null,
+      "mergeCommit": null,
+      "comments": [],
+      "reviews": []
+    },
+    {
+      "number": 474,
+      "id": "PR_kwDOHTmVzM59rCEo",
+      "title": "WGLC updates 3/x",
+      "url": "https://github.com/oauth-wg/oauth-selective-disclosure-jwt/pull/474",
+      "state": "OPEN",
+      "author": "bc-pi",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "https://mailarchive.ietf.org/arch/msg/oauth/zQ7Q0cwuwiAJOMJoYTols_oR4W4/ ",
+      "createdAt": "2024-10-04T22:06:24Z",
+      "updatedAt": "2024-10-04T22:06:25Z",
+      "baseRepository": "oauth-wg/oauth-selective-disclosure-jwt",
+      "baseRefName": "master",
+      "baseRefOid": "bfc5914fd199bb93e934283aa1d30059efe94264",
+      "headRepository": "oauth-wg/oauth-selective-disclosure-jwt",
+      "headRefName": "1st-wglc-pr-3-of-x",
+      "headRefOid": "5a107398b35e098bda69dd245c67340c476df82c",
+      "closedAt": null,
+      "mergedAt": null,
+      "mergedBy": null,
+      "mergeCommit": null,
+      "comments": [],
+      "reviews": []
+    },
+    {
+      "number": 475,
+      "id": "PR_kwDOHTmVzM59smIu",
+      "title": " ISO/IEC 29100 is too private ",
+      "url": "https://github.com/oauth-wg/oauth-selective-disclosure-jwt/pull/475",
+      "state": "OPEN",
+      "author": "bc-pi",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "https://standards.iso.org/ittf/PubliclyAvailableStandards/index.html no longer has anything for 29100 and https://www.iso.org/standard/45123.html indicates that ISO/IEC 29100:2011 is \"Withdrawn\" and \"Revised by\" ISO/IEC 29100:2024 that is now available for the low low special price of CHF 129, which is approximately $150 / \u20ac137 too much for me to be comfortable referencing",
+      "createdAt": "2024-10-05T12:12:22Z",
+      "updatedAt": "2024-10-05T21:38:00Z",
+      "baseRepository": "oauth-wg/oauth-selective-disclosure-jwt",
+      "baseRefName": "master",
+      "baseRefOid": "6f2051168af2886f8d5bc50aa7cb8d748fc1fef4",
+      "headRepository": "oauth-wg/oauth-selective-disclosure-jwt",
+      "headRefName": "iso-frustrated-by-iso",
+      "headRefOid": "a7cfddc8f3ab93d9443fcf2d1d2d8ee9577b0341",
+      "closedAt": null,
+      "mergedAt": null,
+      "mergedBy": null,
+      "mergeCommit": null,
+      "comments": [],
+      "reviews": []
     }
   ]
 }
