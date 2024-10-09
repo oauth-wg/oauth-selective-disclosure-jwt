@@ -57,7 +57,7 @@ Because JSON Web Token (JWT) [@!RFC7519] is a very prevalent application of JWS 
 
 The JSON-based representation of claims in a signed JWT is
 secured against modification using JWS digital
-signatures. A consumer of a signed JWT that has checked the
+signatures. A consumer of a signed JWT that has validated the
 signature can safely assume that the contents of the token have not been
 modified.  However, anyone receiving an unencrypted JWT can read all the
 claims. Likewise, anyone with the decryption key receiving encrypted JWT
@@ -85,21 +85,20 @@ Web Authorization Protocol (OAuth) working group. However, while both JWT and SD
 have potential OAuth 2.0 applications, their utility and application is certainly not constrained to OAuth 2.0.
 JWT was developed as a general-purpose token format and has seen widespread usage in a
 variety of applications. SD-JWT is a selective disclosure mechanism for JWT and is
-similarly intended to be general-purpose specification.
+similarly intended to be a general-purpose specification.
 
 While JWTs with claims describing natural persons are a common use case, the
 mechanisms defined in this document are also applicable to other use cases.
 
 In an SD-JWT, claims can be hidden, but cryptographically
-protected against undetected modification. "Claims" here refers to both
-object properties (name/value pairs) as well as array elements. When issuing the SD-JWT to
+protected against undetected modification. When issuing the SD-JWT to
 the Holder, the Issuer includes the cleartext counterparts of all hidden
 claims, the so-called Disclosures, outside the signed part of the SD-JWT.
 
 The Holder decides which claims to disclose to a particular Verifier and includes the respective
 Disclosures in the SD-JWT to that Verifier. The Verifier
-has to verify that all disclosed claim values were part of the original
-Issuer-signed JWT. The Verifier will not, however, learn any claim
+has to verify that all disclosed claim values were part of the
+Issuer-signed JWT. The Verifier will not, however, learn any hidden claim
 values not disclosed in the Disclosures.
 
 This document also defines a format for SD-JWTs with Key Binding (SD-JWT+KB).
@@ -145,7 +144,8 @@ appear in all capitals, as shown here.
 **Base64url** denotes the URL-safe base64 encoding without padding defined in
 Section 2 of [@!RFC7515].
 
-# Terms and Definitions
+Throughout the document the term "claims" refers generally to both
+object properties (name/value pairs) as well as array elements.
 
 Selective Disclosure:
 :  Process of a Holder disclosing to a Verifier a subset of claims contained in a JWT Claims Set issued by an Issuer.
@@ -155,7 +155,8 @@ Selectively Disclosable JWT (SD-JWT):
    supports selective disclosure as defined in this document. It can contain both regular claims and digests of selectively-disclosable claims.
 
 Disclosure:
-:  A JSON array containing a combination of a salt, a cleartext claim name (present when the claim is a name/value pair and absent when the claim is an array element), and a cleartext claim value, which is base64url-encoded and used to calculate a digest for the respective claim. The term Disclosure refers to the whole base64url-encoded string.
+:  A base64url-encoded string of a JSON array that contains a salt, a claim name (present when the claim is a name/value pair and absent when the claim is an array element), and a claim value. The Disclosure is used to calculate a digest for the respective claim. The term Disclosure refers to the whole base64url-encoded string.
+
 
 Key Binding:
 :  Ability of the Holder to prove legitimate possession of an SD-JWT by proving
@@ -224,7 +225,7 @@ An SD-JWT, at its core, is a digitally signed JSON document containing digests o
 Each digest value ensures the integrity of, and maps to, the respective Disclosure.  Digest values are calculated using a hash function over the Disclosures, each of which contains a cryptographically secure random salt, the claim name (only when the claim is an object property), and the claim value. The Disclosures are sent to the Holder as part of the SD-JWT in the format defined in (#data_formats).
 When presenting an SD-JWT to a Verifier, the Holder only includes the Disclosures for the claims that it wants to reveal to that Verifier.
 
-An SD-JWT MAY also contain clear-text claims that are always disclosed to the Verifier.
+An SD-JWT MAY also contain cleartext claims that are always disclosed to the Verifier.
 
 ## Disclosing to a Verifier
 
@@ -1926,6 +1927,10 @@ data. The original JSON data is then used by the application. See
 # Document History
 
    [[ To be removed from the final specification ]]
+
+   -13
+
+   * WGLC (part 1) updates
 
    -12
 
