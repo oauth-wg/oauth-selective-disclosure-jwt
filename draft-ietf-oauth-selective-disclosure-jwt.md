@@ -1209,7 +1209,7 @@ modified the list of Disclosures.
 
 [@RFC8725, section 3.11] describes the use of explicit typing as one mechanism to prevent confusion attacks
 (described in [@RFC8725, section 2.8]) in which one kind of JWT is mistaken for another. SD-JWTs are also potentially
-subject to such confusion attacks, so in the absence of other techniques, it is RECOMMENDED that applications/profiles of SD-JWT specify an explicit type
+subject to such confusion attacks, so in the absence of other techniques, it is RECOMMENDED that application profiles of SD-JWT specify an explicit type
 by including the `typ` header parameter when the SD-JWT is issued, and for Verifiers to check this value.
 
 When explicit typing using the `typ` header is employed for an SD-JWT, it is RECOMMENDED that a media type name of the format
