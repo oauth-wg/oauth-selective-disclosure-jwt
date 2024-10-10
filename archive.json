@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2024-10-08T00:14:33.083930+00:00",
+  "timestamp": "2024-10-10T00:14:39.790043+00:00",
   "repo": "oauth-wg/oauth-selective-disclosure-jwt",
   "labels": [
     {
@@ -49441,40 +49441,71 @@
       "id": "PR_kwDOHTmVzM59q43O",
       "title": "WGLC updates 1/x",
       "url": "https://github.com/oauth-wg/oauth-selective-disclosure-jwt/pull/472",
-      "state": "OPEN",
+      "state": "MERGED",
       "author": "bc-pi",
       "authorAssociation": "COLLABORATOR",
       "assignees": [],
       "labels": [],
-      "body": "",
+      "body": "\r\nupdates per https://mailarchive.ietf.org/arch/msg/oauth/QpovghcXuKkhO6MW93pOTyAsmlU/\r\nand https://mailarchive.ietf.org/arch/msg/oauth/rzqD_lSqnY7MsWtP_1TCIyH8zyg/\r\n\r\n",
       "createdAt": "2024-10-04T21:21:04Z",
-      "updatedAt": "2024-10-04T21:21:05Z",
+      "updatedAt": "2024-10-09T17:53:37Z",
       "baseRepository": "oauth-wg/oauth-selective-disclosure-jwt",
       "baseRefName": "master",
       "baseRefOid": "bfc5914fd199bb93e934283aa1d30059efe94264",
       "headRepository": "oauth-wg/oauth-selective-disclosure-jwt",
       "headRefName": "1st-wglc-pr-1-of-x",
       "headRefOid": "1d8c25465c97a7a0e5ad87138fd25169b761a082",
-      "closedAt": null,
-      "mergedAt": null,
-      "mergedBy": null,
-      "mergeCommit": null,
+      "closedAt": "2024-10-09T17:53:37Z",
+      "mergedAt": "2024-10-09T17:53:37Z",
+      "mergedBy": "bc-pi",
+      "mergeCommit": {
+        "oid": "8c928bca98a8f76b7c6cc949efc625b8dec87c9c"
+      },
       "comments": [],
-      "reviews": []
+      "reviews": [
+        {
+          "id": "PRR_kwDOHTmVzM6MhhoU",
+          "commit": {
+            "abbreviatedOid": "1d8c254"
+          },
+          "author": "danielfett",
+          "authorAssociation": "MEMBER",
+          "state": "APPROVED",
+          "body": "Thanks!",
+          "createdAt": "2024-10-09T16:06:36Z",
+          "updatedAt": "2024-10-09T16:06:36Z",
+          "comments": []
+        },
+        {
+          "id": "PRR_kwDOHTmVzM6Mh6ev",
+          "commit": {
+            "abbreviatedOid": "1d8c254"
+          },
+          "author": "Sakurann",
+          "authorAssociation": "COLLABORATOR",
+          "state": "APPROVED",
+          "body": "",
+          "createdAt": "2024-10-09T16:51:25Z",
+          "updatedAt": "2024-10-09T16:51:25Z",
+          "comments": []
+        }
+      ]
     },
     {
       "number": 473,
       "id": "PR_kwDOHTmVzM59q7sz",
-      "title": " WGLC updates 2/x",
+      "title": " WGLC updates 2/x (remove sentence in intro)",
       "url": "https://github.com/oauth-wg/oauth-selective-disclosure-jwt/pull/473",
       "state": "OPEN",
       "author": "bc-pi",
       "authorAssociation": "COLLABORATOR",
       "assignees": [],
-      "labels": [],
+      "labels": [
+        "ready-to-close"
+      ],
       "body": "remove repetitive repetitive sentence per Dick https://mailarchive.ie)tf.org/arch/msg/oauth/brjnGB53MApGNCsXC03ungeWxI4/",
       "createdAt": "2024-10-04T21:33:05Z",
-      "updatedAt": "2024-10-04T21:33:06Z",
+      "updatedAt": "2024-10-09T21:14:30Z",
       "baseRepository": "oauth-wg/oauth-selective-disclosure-jwt",
       "baseRefName": "master",
       "baseRefOid": "bfc5914fd199bb93e934283aa1d30059efe94264",
@@ -49485,13 +49516,55 @@
       "mergedAt": null,
       "mergedBy": null,
       "mergeCommit": null,
-      "comments": [],
-      "reviews": []
+      "comments": [
+        {
+          "author": "bc-pi",
+          "authorAssociation": "COLLABORATOR",
+          "body": "> I am ok with adding Dick as a contributor, but I am not ok removing this sentence (line 111), sorry. like, this is the only sentence that is left from when we used to say \"sd-jwt can be used with json-ld\", and \"The JSON-based representation of claims in a signed JWT...\" in the intro is not as clear as the sentence being deleted.\r\n\r\nOkay, let's just close this one then. I was just trying to incorporate some of the various WGLC feedback and this seemed reasonable. Keeping it seems reasonable as well. COMPLETELY REASONABLE even. ",
+          "createdAt": "2024-10-09T17:39:23Z",
+          "updatedAt": "2024-10-09T17:50:12Z"
+        },
+        {
+          "author": "bc-pi",
+          "authorAssociation": "COLLABORATOR",
+          "body": "@danielfett is going to rework the introduction too ",
+          "createdAt": "2024-10-09T21:14:29Z",
+          "updatedAt": "2024-10-09T21:14:29Z"
+        }
+      ],
+      "reviews": [
+        {
+          "id": "PRR_kwDOHTmVzM6Mhh5x",
+          "commit": {
+            "abbreviatedOid": "ef6bad5"
+          },
+          "author": "danielfett",
+          "authorAssociation": "MEMBER",
+          "state": "APPROVED",
+          "body": "Merci!",
+          "createdAt": "2024-10-09T16:07:07Z",
+          "updatedAt": "2024-10-09T16:07:07Z",
+          "comments": []
+        },
+        {
+          "id": "PRR_kwDOHTmVzM6Mh8lf",
+          "commit": {
+            "abbreviatedOid": "ef6bad5"
+          },
+          "author": "Sakurann",
+          "authorAssociation": "COLLABORATOR",
+          "state": "CHANGES_REQUESTED",
+          "body": "I am ok with adding Dick as a contributor, but I am not ok removing this sentence (line 111), sorry. like, this is the only sentence that is left from when we used to say \"sd-jwt can be used with json-ld\", and \"The JSON-based representation of claims in a signed JWT...\" in the intro is not as clear as the sentence being deleted.",
+          "createdAt": "2024-10-09T16:55:24Z",
+          "updatedAt": "2024-10-09T16:55:24Z",
+          "comments": []
+        }
+      ]
     },
     {
       "number": 474,
       "id": "PR_kwDOHTmVzM59rCEo",
-      "title": "WGLC updates 3/x",
+      "title": "WGLC updates 3/x (Neil's stuff)",
       "url": "https://github.com/oauth-wg/oauth-selective-disclosure-jwt/pull/474",
       "state": "OPEN",
       "author": "bc-pi",
@@ -49500,7 +49573,7 @@
       "labels": [],
       "body": "https://mailarchive.ietf.org/arch/msg/oauth/zQ7Q0cwuwiAJOMJoYTols_oR4W4/ ",
       "createdAt": "2024-10-04T22:06:24Z",
-      "updatedAt": "2024-10-04T22:06:25Z",
+      "updatedAt": "2024-10-09T20:00:34Z",
       "baseRepository": "oauth-wg/oauth-selective-disclosure-jwt",
       "baseRefName": "master",
       "baseRefOid": "bfc5914fd199bb93e934283aa1d30059efe94264",
@@ -49512,7 +49585,21 @@
       "mergedBy": null,
       "mergeCommit": null,
       "comments": [],
-      "reviews": []
+      "reviews": [
+        {
+          "id": "PRR_kwDOHTmVzM6MhicG",
+          "commit": {
+            "abbreviatedOid": "5a10739"
+          },
+          "author": "danielfett",
+          "authorAssociation": "MEMBER",
+          "state": "APPROVED",
+          "body": "Danke!",
+          "createdAt": "2024-10-09T16:08:05Z",
+          "updatedAt": "2024-10-09T16:08:05Z",
+          "comments": []
+        }
+      ]
     },
     {
       "number": 475,
@@ -49526,7 +49613,7 @@
       "labels": [],
       "body": "https://standards.iso.org/ittf/PubliclyAvailableStandards/index.html no longer has anything for 29100 and https://www.iso.org/standard/45123.html indicates that ISO/IEC 29100:2011 is \"Withdrawn\" and \"Revised by\" ISO/IEC 29100:2024 that is now available for the low low special price of CHF 129, which is approximately $150 / \u20ac137 too much for me to be comfortable referencing",
       "createdAt": "2024-10-05T12:12:22Z",
-      "updatedAt": "2024-10-05T21:38:00Z",
+      "updatedAt": "2024-10-09T16:31:29Z",
       "baseRepository": "oauth-wg/oauth-selective-disclosure-jwt",
       "baseRefName": "master",
       "baseRefOid": "6f2051168af2886f8d5bc50aa7cb8d748fc1fef4",
@@ -49537,8 +49624,164 @@
       "mergedAt": null,
       "mergedBy": null,
       "mergeCommit": null,
+      "comments": [
+        {
+          "author": "bc-pi",
+          "authorAssociation": "COLLABORATOR",
+          "body": "> Takk!\r\n\r\nThat was the first one I didn't recognize. Google says Norwegian, \u00e8 corretto?",
+          "createdAt": "2024-10-09T16:11:35Z",
+          "updatedAt": "2024-10-09T16:11:35Z"
+        },
+        {
+          "author": "danielfett",
+          "authorAssociation": "MEMBER",
+          "body": "Det er riktig. \ud83c\uddf3\ud83c\uddf4",
+          "createdAt": "2024-10-09T16:31:04Z",
+          "updatedAt": "2024-10-09T16:31:29Z"
+        }
+      ],
+      "reviews": [
+        {
+          "id": "PRR_kwDOHTmVzM6MhivI",
+          "commit": {
+            "abbreviatedOid": "a7cfddc"
+          },
+          "author": "danielfett",
+          "authorAssociation": "MEMBER",
+          "state": "APPROVED",
+          "body": "Takk!",
+          "createdAt": "2024-10-09T16:08:38Z",
+          "updatedAt": "2024-10-09T16:08:38Z",
+          "comments": []
+        }
+      ]
+    },
+    {
+      "number": 476,
+      "id": "PR_kwDOHTmVzM5-IDLV",
+      "title": "WGLC updates 4/x (explicit typing discussion)",
+      "url": "https://github.com/oauth-wg/oauth-selective-disclosure-jwt/pull/476",
+      "state": "OPEN",
+      "author": "bc-pi",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "From this conversation https://mailarchive.ietf.org/arch/msg/oauth/MN1d1ihchmOTcHVMsZ_RlOcZxRE/ this PR tries to somewhat better explain that explicit typing, per JWT BCP before it, is about distinguishing different types of SD-JWTs. And also be a little more open to other ways of typing, such as cty.",
+      "createdAt": "2024-10-09T19:58:07Z",
+      "updatedAt": "2024-10-09T20:20:07Z",
+      "baseRepository": "oauth-wg/oauth-selective-disclosure-jwt",
+      "baseRefName": "master",
+      "baseRefOid": "8c928bca98a8f76b7c6cc949efc625b8dec87c9c",
+      "headRepository": "oauth-wg/oauth-selective-disclosure-jwt",
+      "headRefName": "expletives_typing",
+      "headRefOid": "e3e52f57be5e059a0398a54d8c8eb7c513fe42db",
+      "closedAt": null,
+      "mergedAt": null,
+      "mergedBy": null,
+      "mergeCommit": null,
       "comments": [],
-      "reviews": []
+      "reviews": [
+        {
+          "id": "PRR_kwDOHTmVzM6Mj1vu",
+          "commit": {
+            "abbreviatedOid": "10a3148"
+          },
+          "author": "OR13",
+          "authorAssociation": "CONTRIBUTOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2024-10-09T20:04:46Z",
+          "updatedAt": "2024-10-09T20:04:47Z",
+          "comments": [
+            {
+              "originalPosition": 18,
+              "body": "```suggestion\r\nsubject to such confusion attacks, so in the absence of other techniques, it is RECOMMENDED that applications profiles of SD-JWT specify an explicit type\r\n```",
+              "createdAt": "2024-10-09T20:04:47Z",
+              "updatedAt": "2024-10-09T20:04:47Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOHTmVzM6Mj2VE",
+          "commit": {
+            "abbreviatedOid": "10a3148"
+          },
+          "author": "bc-pi",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2024-10-09T20:06:08Z",
+          "updatedAt": "2024-10-09T20:06:08Z",
+          "comments": [
+            {
+              "originalPosition": 18,
+              "body": "```suggestion\r\nsubject to such confusion attacks, so in the absence of other techniques, it is RECOMMENDED that application profiles of SD-JWT specify an explicit type\r\n```",
+              "createdAt": "2024-10-09T20:06:08Z",
+              "updatedAt": "2024-10-09T20:06:08Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOHTmVzM6Mj5CW",
+          "commit": {
+            "abbreviatedOid": "10a3148"
+          },
+          "author": "OR13",
+          "authorAssociation": "CONTRIBUTOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2024-10-09T20:12:46Z",
+          "updatedAt": "2024-10-09T20:12:46Z",
+          "comments": [
+            {
+              "originalPosition": 27,
+              "body": "```suggestion\r\nThe `cty` content type header parameter indicates the content type of the SD-JWT payload, and can also be used distinguish different types of JSON object, or different kinds of JWT Claims Sets.\r\n```",
+              "createdAt": "2024-10-09T20:12:46Z",
+              "updatedAt": "2024-10-09T20:18:46Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOHTmVzM6Mj6UW",
+          "commit": {
+            "abbreviatedOid": "10a3148"
+          },
+          "author": "selfissued",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2024-10-09T20:15:57Z",
+          "updatedAt": "2024-10-09T20:15:57Z",
+          "comments": [
+            {
+              "originalPosition": 27,
+              "body": "I agree with Orie's suggestion, after changing \"JSON object\" to \"JSON objects\" and \"JWT claim set\" to \"JWT Claims Sets\".",
+              "createdAt": "2024-10-09T20:15:57Z",
+              "updatedAt": "2024-10-09T20:15:58Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOHTmVzM6Mj8QS",
+          "commit": {
+            "abbreviatedOid": "10a3148"
+          },
+          "author": "bc-pi",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2024-10-09T20:20:07Z",
+          "updatedAt": "2024-10-09T20:20:07Z",
+          "comments": [
+            {
+              "originalPosition": 27,
+              "body": "Steeleing [sic] this from elsewhere with changes per Mike. \r\n```suggestion\r\nUse of the `cty` content type header parameter to indicate the content type of the SD-JWT payload can also be used to distinguish different types of JSON objects, or different kinds of JWT Claim Sets.\r\n```",
+              "createdAt": "2024-10-09T20:20:07Z",
+              "updatedAt": "2024-10-09T20:21:34Z"
+            }
+          ]
+        }
+      ]
     }
   ]
 }
