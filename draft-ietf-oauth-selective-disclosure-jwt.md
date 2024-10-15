@@ -529,7 +529,7 @@ selectively disclosable:
 ```json
 {
   "given_name": "Alice",
-  "_sd": ["uutlBuYeMDyjLLTpf6Jxi7yNkEF35jdyWMn9U7b_RYY"]
+  "_sd": ["X9yH0Ajrdm1Oij4tWso9UzzKJvPoDxwmuEcO3XAdRC0"]
 }
 ```
 
