@@ -1217,7 +1217,7 @@ When explicit typing using the `typ` header is employed for an SD-JWT, it is REC
 The definition of `typ` in Section 4.1.9 of [@!RFC7515] recommends that the "application/" prefix be omitted, so
 "example+sd-jwt" would be the value of the `typ` header parameter.
 
-Use of the `cty` content type header parameter to indicate the content type of the SD-JWT payload is also a completely reasonable approach to indicating the specific kind of SD-JWT in question.
+Use of the `cty` content type header parameter to indicate the content type of the SD-JWT payload can also be used to distinguish different types of JSON objects, or different kinds of JWT Claim Sets.
 
 # Privacy Considerations {#privacy_considerations}
 
