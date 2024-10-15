@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2024-10-13T00:16:05.998144+00:00",
+  "timestamp": "2024-10-15T00:14:52.723132+00:00",
   "repo": "oauth-wg/oauth-selective-disclosure-jwt",
   "labels": [
     {
@@ -49816,7 +49816,7 @@
       "labels": [],
       "body": "Takes inspiration from #467 but is essentially a rewrite of the introduction from scratch.",
       "createdAt": "2024-10-10T08:51:01Z",
-      "updatedAt": "2024-10-10T08:51:45Z",
+      "updatedAt": "2024-10-14T08:20:46Z",
       "baseRepository": "oauth-wg/oauth-selective-disclosure-jwt",
       "baseRefName": "master",
       "baseRefOid": "8c928bca98a8f76b7c6cc949efc625b8dec87c9c",
@@ -49846,6 +49846,74 @@
               "body": "I dropped the part about the relationship to OAuth and JWT and this being generally applicable. If we want to keep it, I suggest including it under a separate \"## Scope\" headline below the intro or below the feature list.",
               "createdAt": "2024-10-10T08:51:45Z",
               "updatedAt": "2024-10-10T10:19:46Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOHTmVzM6M_uN7",
+          "commit": {
+            "abbreviatedOid": "fac4bb4"
+          },
+          "author": "ju-cu",
+          "authorAssociation": "NONE",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2024-10-14T06:53:30Z",
+          "updatedAt": "2024-10-14T08:20:46Z",
+          "comments": [
+            {
+              "originalPosition": 80,
+              "body": "In my mental model, the decoupling is not a new model when it comes to JWTs. With regard to the access token (which is another popular application of JWTs), you already have the decoupling as the client receives the JWT and the resource server verifies it (not that I believe that SD-JWT does make much sense in this context but I think you should not neglect OAuth when talking about JWTs in general). What's new is that the issuer cannot make any assumptions on how the intermediate party is going to use the JWT, i.e. typically the issuer does not know the audiences of a JWT at the time of issuance and consequently cannot minimize the information shared with a verifier/audience in a practical way. The previous intro kind of captured that.",
+              "createdAt": "2024-10-14T07:01:56Z",
+              "updatedAt": "2024-10-14T08:20:46Z"
+            },
+            {
+              "originalPosition": 82,
+              "body": "It's the software that presents the JWT not the user despite this specification using the term `Holder` for both.\r\n\r\n```suggestion\r\nThe Holder can then present the JWT to different verifying parties (Verifiers), that each may only require a subset of the claims in the JWT.\r\n```",
+              "createdAt": "2024-10-14T07:08:06Z",
+              "updatedAt": "2024-10-14T08:20:46Z"
+            },
+            {
+              "originalPosition": 87,
+              "body": "No need to change from JWTs to JSON Web Tokens here. Suggest to be consistent and use the abbreviation.\r\n\r\n```suggestion\r\nThis specification defines such a mechanism for JSON-encoded payloads of JSON Web Signatures, with a primary use case being JWTs.\r\n```",
+              "createdAt": "2024-10-14T07:10:50Z",
+              "updatedAt": "2024-10-14T08:20:46Z"
+            },
+            {
+              "originalPosition": 84,
+              "body": "Maybe remove the human aspect from the sentence so that the disclosure applies equally to the software as its operator, the end-user. A software cannot have needs either, so open for other suggestions. \r\n\r\n```suggestion\r\nThe Holder may call for disclosure of only the address to one Verifier, and only the birthdate to a different Verifier.\r\n```",
+              "createdAt": "2024-10-14T07:32:31Z",
+              "updatedAt": "2024-10-14T08:20:46Z"
+            },
+            {
+              "originalPosition": 86,
+              "body": "It should be clear here that decoupling the issuance from presentation alone may not require selective disclosure but the fact that a JWT may be used in different contexts and shared with various Verifiers. In other words, privacy concerns are the main driver.",
+              "createdAt": "2024-10-14T07:51:38Z",
+              "updatedAt": "2024-10-14T08:20:46Z"
+            },
+            {
+              "originalPosition": 89,
+              "body": "`Issuer` has not been introduced as a formal term (yet).\r\n\r\n```suggestion\r\nSD-JWT is based on an aproach called \"salted hashes\": For any data element that should be selectively disclosable, the issuer of the SD-JWT does not include the cleartext of the data in the JSON-encoded payload of the JWS structure; instead, a hash digest of the data takes its place.\r\n```",
+              "createdAt": "2024-10-14T07:52:55Z",
+              "updatedAt": "2024-10-14T08:20:46Z"
+            },
+            {
+              "originalPosition": 90,
+              "body": "```suggestion\r\nFor presentation to a Verifier, the Holder sends the signed payload along with the cleartext of those claims it wants to disclose.\r\n```",
+              "createdAt": "2024-10-14T07:53:14Z",
+              "updatedAt": "2024-10-14T08:20:46Z"
+            },
+            {
+              "originalPosition": 95,
+              "body": "```suggestion\r\nWhen Key Binding is enforced, a Holder has to prove possession of a private key belonging to a public key contained in the SD-JWT itself.\r\n```",
+              "createdAt": "2024-10-14T08:16:22Z",
+              "updatedAt": "2024-10-14T08:20:46Z"
+            },
+            {
+              "originalPosition": 78,
+              "body": "Isn't the important fact here that the client is also the party verifying the JWT? I think, adding this detail may be useful to understand the issuer-holder-verifier model defined afterwards as it may otherwise be hard for the reader to understand the fundamental shift.",
+              "createdAt": "2024-10-14T08:19:51Z",
+              "updatedAt": "2024-10-14T08:20:46Z"
             }
           ]
         }
