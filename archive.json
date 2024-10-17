@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2024-10-15T00:14:52.723132+00:00",
+  "timestamp": "2024-10-17T00:14:49.361586+00:00",
   "repo": "oauth-wg/oauth-selective-disclosure-jwt",
   "labels": [
     {
@@ -49340,10 +49340,12 @@
       "author": "dickhardt",
       "authorAssociation": "NONE",
       "assignees": [],
-      "labels": [],
+      "labels": [
+        "pending-close"
+      ],
       "body": "provide more context on what the problem is and why this work is happening, with a summary of how it works\r\n\r\ndeleted spurious language that reads like a patent application",
       "createdAt": "2024-09-21T04:41:24Z",
-      "updatedAt": "2024-10-11T07:41:18Z",
+      "updatedAt": "2024-10-16T15:32:40Z",
       "baseRepository": "oauth-wg/oauth-selective-disclosure-jwt",
       "baseRefName": "master",
       "baseRefOid": "817303cd188f5187750c76318517c30aa6ffe530",
@@ -49368,6 +49370,13 @@
           "body": "Thanks @rohanmahy, I generally agree with that. \r\n\r\nNote that @danielfett has kindly (foolishly?) said he'd take a pass at reviewing or refining or rewriting or reworking this and/or the current (unoffensive, thanks!) Introduction. \r\n\r\n",
           "createdAt": "2024-10-04T22:27:12Z",
           "updatedAt": "2024-10-04T22:27:12Z"
+        },
+        {
+          "author": "bc-pi",
+          "authorAssociation": "COLLABORATOR",
+          "body": "> Note that @danielfett has kindly (foolishly?) said he'd take a pass at reviewing or refining or rewriting or reworking this and/or the current (unoffensive, thanks!) Introduction.\r\n\r\nsee #477 for that ",
+          "createdAt": "2024-10-16T15:32:26Z",
+          "updatedAt": "2024-10-16T15:32:26Z"
         }
       ],
       "reviews": [
@@ -49501,11 +49510,11 @@
       "authorAssociation": "COLLABORATOR",
       "assignees": [],
       "labels": [
-        "ready-to-close"
+        "pending-close"
       ],
       "body": "remove repetitive repetitive sentence per Dick https://mailarchive.ie)tf.org/arch/msg/oauth/brjnGB53MApGNCsXC03ungeWxI4/",
       "createdAt": "2024-10-04T21:33:05Z",
-      "updatedAt": "2024-10-09T21:14:30Z",
+      "updatedAt": "2024-10-16T15:33:01Z",
       "baseRepository": "oauth-wg/oauth-selective-disclosure-jwt",
       "baseRefName": "master",
       "baseRefOid": "bfc5914fd199bb93e934283aa1d30059efe94264",
@@ -49573,13 +49582,13 @@
       "labels": [],
       "body": "https://mailarchive.ietf.org/arch/msg/oauth/zQ7Q0cwuwiAJOMJoYTols_oR4W4/ ",
       "createdAt": "2024-10-04T22:06:24Z",
-      "updatedAt": "2024-10-09T20:00:34Z",
+      "updatedAt": "2024-10-15T13:36:36Z",
       "baseRepository": "oauth-wg/oauth-selective-disclosure-jwt",
       "baseRefName": "master",
       "baseRefOid": "bfc5914fd199bb93e934283aa1d30059efe94264",
       "headRepository": "oauth-wg/oauth-selective-disclosure-jwt",
       "headRefName": "1st-wglc-pr-3-of-x",
-      "headRefOid": "5a107398b35e098bda69dd245c67340c476df82c",
+      "headRefOid": "5bec8b4a13fdfdd7f1edfd014ae29b343b75839b",
       "closedAt": null,
       "mergedAt": null,
       "mergedBy": null,
@@ -49598,6 +49607,66 @@
           "createdAt": "2024-10-09T16:08:05Z",
           "updatedAt": "2024-10-09T16:08:05Z",
           "comments": []
+        },
+        {
+          "id": "PRR_kwDOHTmVzM6NMycq",
+          "commit": {
+            "abbreviatedOid": "5a10739"
+          },
+          "author": "Sakurann",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2024-10-15T11:00:09Z",
+          "updatedAt": "2024-10-15T11:00:09Z",
+          "comments": [
+            {
+              "originalPosition": 23,
+              "body": "the value on line 534/532 should also be changed to `X9yH0Ajrdm1Oij4tWso9UzzKJvPoDxwmuEcO3XAdRC0` per https://github.com/oauth-wg/oauth-selective-disclosure-jwt/pull/474/files#diff-40bc3800dd9a7d4411799637caf0b01f82a01242d57264a2e4beb408c3835704R499, no?",
+              "createdAt": "2024-10-15T11:00:09Z",
+              "updatedAt": "2024-10-15T11:00:36Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOHTmVzM6NObT3",
+          "commit": {
+            "abbreviatedOid": "5a10739"
+          },
+          "author": "bc-pi",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2024-10-15T13:34:12Z",
+          "updatedAt": "2024-10-15T13:34:12Z",
+          "comments": [
+            {
+              "originalPosition": 23,
+              "body": "yup, i believe you are correct. good catch, thx ",
+              "createdAt": "2024-10-15T13:34:12Z",
+              "updatedAt": "2024-10-15T13:34:12Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOHTmVzM6NOdLV",
+          "commit": {
+            "abbreviatedOid": "5a10739"
+          },
+          "author": "bc-pi",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2024-10-15T13:36:36Z",
+          "updatedAt": "2024-10-15T13:36:36Z",
+          "comments": [
+            {
+              "originalPosition": 23,
+              "body": "and fixed 5bec8b4a13fdfdd7f1edfd014ae29b343b75839b ",
+              "createdAt": "2024-10-15T13:36:36Z",
+              "updatedAt": "2024-10-15T13:36:36Z"
+            }
+          ]
         }
       ]
     },
@@ -49613,7 +49682,7 @@
       "labels": [],
       "body": "https://standards.iso.org/ittf/PubliclyAvailableStandards/index.html no longer has anything for 29100 and https://www.iso.org/standard/45123.html indicates that ISO/IEC 29100:2011 is \"Withdrawn\" and \"Revised by\" ISO/IEC 29100:2024 that is now available for the low low special price of CHF 129, which is approximately $150 / \u20ac137 too much for me to be comfortable referencing",
       "createdAt": "2024-10-05T12:12:22Z",
-      "updatedAt": "2024-10-12T07:44:17Z",
+      "updatedAt": "2024-10-15T12:11:56Z",
       "baseRepository": "oauth-wg/oauth-selective-disclosure-jwt",
       "baseRefName": "master",
       "baseRefOid": "6f2051168af2886f8d5bc50aa7cb8d748fc1fef4",
@@ -49659,6 +49728,13 @@
           "body": "Just got notified that it is now available from https://standards.iso.org/ittf/PubliclyAvailableStandards/ . ",
           "createdAt": "2024-10-12T07:44:16Z",
           "updatedAt": "2024-10-12T07:44:16Z"
+        },
+        {
+          "author": "bc-pi",
+          "authorAssociation": "COLLABORATOR",
+          "body": "![Screenshot 2024-10-15 at 6 10 46\u202fAM](https://github.com/user-attachments/assets/dd3c31e5-66d3-4f82-87eb-eb956b6f1822)\r\n\r\n![Screenshot 2024-10-15 at 6 11 02\u202fAM](https://github.com/user-attachments/assets/87d80e7c-e00f-469e-8d24-693463cba69f)\r\n",
+          "createdAt": "2024-10-15T12:11:54Z",
+          "updatedAt": "2024-10-15T12:11:54Z"
         }
       ],
       "reviews": [
@@ -49673,6 +49749,19 @@
           "body": "Takk!",
           "createdAt": "2024-10-09T16:08:38Z",
           "updatedAt": "2024-10-09T16:08:38Z",
+          "comments": []
+        },
+        {
+          "id": "PRR_kwDOHTmVzM6NMvdi",
+          "commit": {
+            "abbreviatedOid": "a7cfddc"
+          },
+          "author": "Sakurann",
+          "authorAssociation": "COLLABORATOR",
+          "state": "CHANGES_REQUESTED",
+          "body": "per Nat's comment the standard is publicly available again :) ",
+          "createdAt": "2024-10-15T10:54:53Z",
+          "updatedAt": "2024-10-15T10:54:53Z",
           "comments": []
         }
       ]
@@ -49689,13 +49778,13 @@
       "labels": [],
       "body": "From this conversation https://mailarchive.ietf.org/arch/msg/oauth/MN1d1ihchmOTcHVMsZ_RlOcZxRE/ this PR tries to somewhat better explain that explicit typing, per JWT BCP before it, is about distinguishing different types of SD-JWTs. And also be a little more open to other ways of typing, such as cty.",
       "createdAt": "2024-10-09T19:58:07Z",
-      "updatedAt": "2024-10-09T20:20:07Z",
+      "updatedAt": "2024-10-15T16:31:47Z",
       "baseRepository": "oauth-wg/oauth-selective-disclosure-jwt",
       "baseRefName": "master",
       "baseRefOid": "8c928bca98a8f76b7c6cc949efc625b8dec87c9c",
       "headRepository": "oauth-wg/oauth-selective-disclosure-jwt",
       "headRefName": "expletives_typing",
-      "headRefOid": "e3e52f57be5e059a0398a54d8c8eb7c513fe42db",
+      "headRefOid": "1fd3d71077205aa793afb78a7c9aaf93a41c6ce6",
       "closedAt": null,
       "mergedAt": null,
       "mergedBy": null,
@@ -49801,6 +49890,19 @@
               "updatedAt": "2024-10-09T20:21:34Z"
             }
           ]
+        },
+        {
+          "id": "PRR_kwDOHTmVzM6NMxSR",
+          "commit": {
+            "abbreviatedOid": "e3e52f5"
+          },
+          "author": "Sakurann",
+          "authorAssociation": "COLLABORATOR",
+          "state": "APPROVED",
+          "body": "",
+          "createdAt": "2024-10-15T10:58:04Z",
+          "updatedAt": "2024-10-15T10:58:04Z",
+          "comments": []
         }
       ]
     },
@@ -49816,7 +49918,7 @@
       "labels": [],
       "body": "Takes inspiration from #467 but is essentially a rewrite of the introduction from scratch.",
       "createdAt": "2024-10-10T08:51:01Z",
-      "updatedAt": "2024-10-14T08:20:46Z",
+      "updatedAt": "2024-10-16T13:46:31Z",
       "baseRepository": "oauth-wg/oauth-selective-disclosure-jwt",
       "baseRefName": "master",
       "baseRefOid": "8c928bca98a8f76b7c6cc949efc625b8dec87c9c",
@@ -49916,8 +50018,387 @@
               "updatedAt": "2024-10-14T08:20:46Z"
             }
           ]
+        },
+        {
+          "id": "PRR_kwDOHTmVzM6NKxHM",
+          "commit": {
+            "abbreviatedOid": "fac4bb4"
+          },
+          "author": "Sakurann",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2024-10-15T07:31:18Z",
+          "updatedAt": "2024-10-15T07:31:18Z",
+          "comments": [
+            {
+              "originalPosition": 80,
+              "body": "the AS that issues the access token and the RS that consumes it are assumed to be the same entity though, right?",
+              "createdAt": "2024-10-15T07:31:18Z",
+              "updatedAt": "2024-10-15T07:31:18Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOHTmVzM6NKyQt",
+          "commit": {
+            "abbreviatedOid": "fac4bb4"
+          },
+          "author": "Sakurann",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2024-10-15T07:33:29Z",
+          "updatedAt": "2024-10-15T07:33:29Z",
+          "comments": [
+            {
+              "originalPosition": 86,
+              "body": "agree that it should be more explicit that selective disclosure becomes an important privacy feature because the same JWT can be used for different purposes.",
+              "createdAt": "2024-10-15T07:33:29Z",
+              "updatedAt": "2024-10-15T07:33:29Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOHTmVzM6NMAMf",
+          "commit": {
+            "abbreviatedOid": "fac4bb4"
+          },
+          "author": "ju-cu",
+          "authorAssociation": "NONE",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2024-10-15T09:36:42Z",
+          "updatedAt": "2024-10-15T09:36:43Z",
+          "comments": [
+            {
+              "originalPosition": 80,
+              "body": "Right. I was thinking in technical terms (server and client communication) while the decoupling happens on a different layer which actually is a new (trust) model. I believe, it would be good to focus more on that change of trust where the RS/Verifier is not a single trusted entity (and certainly not the same entity as the one issuing the JWT) but any third party.",
+              "createdAt": "2024-10-15T09:36:42Z",
+              "updatedAt": "2024-10-15T09:36:43Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOHTmVzM6NMsy0",
+          "commit": {
+            "abbreviatedOid": "fac4bb4"
+          },
+          "author": "Sakurann",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2024-10-15T10:50:12Z",
+          "updatedAt": "2024-10-15T10:50:12Z",
+          "comments": [
+            {
+              "originalPosition": 77,
+              "body": "```suggestion\r\nA popular application of JWS are JSON Web Tokens (JWT) [@!RFC7519], which can be used to represent a user's identity.\r\nFor example, an ID Token as defined in OpenID Connect [@?OpenID.Core], is a JWT containing the user's identity claims created by a server for consumption by a client.\r\n```\r\nnot sure user's identity is the most used application of JWTs..\r\nis it JWT that is an application of JWS, or JWS that is an application of JWT? or they are not applications for either..?\r\ni am not good in articles but why `the` server but `a` client?\r\n",
+              "createdAt": "2024-10-15T10:50:12Z",
+              "updatedAt": "2024-10-15T10:50:12Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOHTmVzM6NMtlT",
+          "commit": {
+            "abbreviatedOid": "fac4bb4"
+          },
+          "author": "Sakurann",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2024-10-15T10:51:38Z",
+          "updatedAt": "2024-10-15T10:51:38Z",
+          "comments": [
+            {
+              "originalPosition": 78,
+              "body": "```suggestion\r\nIn case a JWT is sent directly from a server to a client, as in OpenID Connect, the server can select real-time which user claims to include in the JWT, minimizing the information shared with the client, who validates the JWT.\r\n```\r\nreflecting Judith's comment but also really not sure about the articles here...",
+              "createdAt": "2024-10-15T10:51:38Z",
+              "updatedAt": "2024-10-15T10:52:05Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOHTmVzM6NY8oA",
+          "commit": {
+            "abbreviatedOid": "fac4bb4"
+          },
+          "author": "bc-pi",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2024-10-16T11:25:35Z",
+          "updatedAt": "2024-10-16T11:25:35Z",
+          "comments": [
+            {
+              "originalPosition": 7,
+              "body": "I'm curious to understand why \"JSON-encoded data structure\" is used here and elsewhere in the PR vs. \"JSON object\" or \"JSON document\" or \"bit o' JSON\" or something? It reads a bit off to my eye, at first anyway, but I wanted to ask before suggesting changes or otherwise fighting about it. ",
+              "createdAt": "2024-10-16T11:25:35Z",
+              "updatedAt": "2024-10-16T11:25:35Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOHTmVzM6NY_dF",
+          "commit": {
+            "abbreviatedOid": "fac4bb4"
+          },
+          "author": "danielfett",
+          "authorAssociation": "MEMBER",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2024-10-16T11:30:00Z",
+          "updatedAt": "2024-10-16T11:30:00Z",
+          "comments": [
+            {
+              "originalPosition": 7,
+              "body": "Mainly to avoid \"JSON object\" as we can also SD the elements of an array. ",
+              "createdAt": "2024-10-16T11:30:00Z",
+              "updatedAt": "2024-10-16T11:30:00Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOHTmVzM6NZAs2",
+          "commit": {
+            "abbreviatedOid": "fac4bb4"
+          },
+          "author": "bc-pi",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2024-10-16T11:31:37Z",
+          "updatedAt": "2024-10-16T11:31:38Z",
+          "comments": [
+            {
+              "originalPosition": 43,
+              "body": "I wrote some of that in response to questions/comments by Hannes about the appropriateness of this work in the OAUTH WG. But that's kinda old news at this point - maybe the relationship to OAuth and JWT stuff isn't needed anymore. And the generally applicable bit is pretty much implied, in my opinion, even if Dick didn't see it. ",
+              "createdAt": "2024-10-16T11:31:37Z",
+              "updatedAt": "2024-10-16T11:32:04Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOHTmVzM6NZE7X",
+          "commit": {
+            "abbreviatedOid": "fac4bb4"
+          },
+          "author": "bc-pi",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2024-10-16T11:37:24Z",
+          "updatedAt": "2024-10-16T11:37:24Z",
+          "comments": [
+            {
+              "originalPosition": 77,
+              "body": "> not sure user's identity is the most used application of JWTs..\r\n\r\nNot sure either but it's common enough that saying \"are often used\" seems fine.  JWTs are, in fact, often used to represent a user's identity.\r\n\r\n> is it JWT that is an application of JWS, or JWS that is an application of JWT? or they are not applications for either..?\r\n\r\nlayers on layers on layers with unclean lines of demarcation but JWT is an application of JWS. \r\n\r\n>  i am not good in articles but why `the` server but `a` client?\r\n\r\ni am not either\r\n\r\n",
+              "createdAt": "2024-10-16T11:37:24Z",
+              "updatedAt": "2024-10-16T11:37:24Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOHTmVzM6NZFOw",
+          "commit": {
+            "abbreviatedOid": "fac4bb4"
+          },
+          "author": "bc-pi",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2024-10-16T11:38:01Z",
+          "updatedAt": "2024-10-16T11:38:01Z",
+          "comments": [
+            {
+              "originalPosition": 76,
+              "body": "```suggestion\r\nA popular application of JWS is JSON Web Token (JWT) [@!RFC7519], which are often used to represent a user's identity.\r\n```",
+              "createdAt": "2024-10-16T11:38:01Z",
+              "updatedAt": "2024-10-16T11:38:02Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOHTmVzM6NZLjV",
+          "commit": {
+            "abbreviatedOid": "fac4bb4"
+          },
+          "author": "bc-pi",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2024-10-16T11:45:14Z",
+          "updatedAt": "2024-10-16T11:45:15Z",
+          "comments": [
+            {
+              "originalPosition": 77,
+              "body": "\"client\" isn't wrong but has overloaded meaning and isn't used anywhere in this document prior to this PR \r\n```suggestion\r\nAn ID Token as defined in OpenID Connect [@?OpenID.Core], for example, is a JWT containing the user's claims created by the server for consumption by a relying party.\r\n```",
+              "createdAt": "2024-10-16T11:45:14Z",
+              "updatedAt": "2024-10-16T11:45:15Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOHTmVzM6NZQGU",
+          "commit": {
+            "abbreviatedOid": "fac4bb4"
+          },
+          "author": "bc-pi",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2024-10-16T11:53:35Z",
+          "updatedAt": "2024-10-16T11:53:35Z",
+          "comments": [
+            {
+              "originalPosition": 78,
+              "body": "reflecting (maybe) prior comments along with my own nitpicks to create this frankenstein of a sentence : \r\n```suggestion\r\nIn cases where the JWT is sent immediately from the server to the relying party, as in OpenID Connect, the server can select at the time of issuance which user claims to include in the JWT, minimizing the information shared with the relying party, who validates the JWT.\r\n```",
+              "createdAt": "2024-10-16T11:53:35Z",
+              "updatedAt": "2024-10-16T11:53:35Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOHTmVzM6NZURc",
+          "commit": {
+            "abbreviatedOid": "fac4bb4"
+          },
+          "author": "bc-pi",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2024-10-16T12:00:34Z",
+          "updatedAt": "2024-10-16T12:00:34Z",
+          "comments": [
+            {
+              "originalPosition": 7,
+              "body": "Ah ok. I'd read individual elements of a \"JSON document\" or \"bit o' JSON\" to mean all the stuff that might be inside that thing like objects or elements of an array. But I take your point or intention. ",
+              "createdAt": "2024-10-16T12:00:34Z",
+              "updatedAt": "2024-10-16T12:00:35Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOHTmVzM6NZVrl",
+          "commit": {
+            "abbreviatedOid": "fac4bb4"
+          },
+          "author": "bc-pi",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2024-10-16T12:02:49Z",
+          "updatedAt": "2024-10-16T12:02:49Z",
+          "comments": [
+            {
+              "originalPosition": 84,
+              "body": "maybe... i dunno... \r\n```suggestion\r\nThe Holder may elect to disclose only the address to one Verifier, and only the birthdate to a different Verifier.\r\n```",
+              "createdAt": "2024-10-16T12:02:49Z",
+              "updatedAt": "2024-10-16T12:02:49Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOHTmVzM6NZaph",
+          "commit": {
+            "abbreviatedOid": "fac4bb4"
+          },
+          "author": "bc-pi",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2024-10-16T12:11:23Z",
+          "updatedAt": "2024-10-16T12:11:23Z",
+          "comments": [
+            {
+              "originalPosition": 80,
+              "body": "@ju-cu is not wrong here \r\nI've long made the complaint that the new \"three-party model\" sounds silly because we've had 3 party models for a long time.\r\nBut not sure how much of that can or should be captured or conveyed here.\r\nAnd the previous intro might have kind of captured that but not particularly well IMO \r\nwhat about a bit o' qualification to this sentence?\r\n\r\n```suggestion\r\nA new model is emerging that more fully decouples the issuance of a JWT from its presentation.\r\n```",
+              "createdAt": "2024-10-16T12:11:23Z",
+              "updatedAt": "2024-10-16T12:11:23Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOHTmVzM6NZf6u",
+          "commit": {
+            "abbreviatedOid": "fac4bb4"
+          },
+          "author": "bc-pi",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2024-10-16T12:16:46Z",
+          "updatedAt": "2024-10-16T12:16:46Z",
+          "comments": [
+            {
+              "originalPosition": 86,
+              "body": "something like this?\r\n```suggestion\r\nPrivacy principles of minimal disclosure in conjunction with this model demand a mechanism enabling selective disclosure of data elements while ensuring that Verifiers can still check the authenticity of the data provided.\r\n```",
+              "createdAt": "2024-10-16T12:16:46Z",
+              "updatedAt": "2024-10-16T12:16:46Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOHTmVzM6NZmdj",
+          "commit": {
+            "abbreviatedOid": "fac4bb4"
+          },
+          "author": "bc-pi",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2024-10-16T12:23:50Z",
+          "updatedAt": "2024-10-16T12:23:50Z",
+          "comments": [
+            {
+              "originalPosition": 96,
+              "body": "```suggestion\r\nIt usually does so by signing over a data structure containing transaction-specific data, herein defined as the Key Binding JWT.\r\n```",
+              "createdAt": "2024-10-16T12:23:50Z",
+              "updatedAt": "2024-10-16T12:23:51Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOHTmVzM6NahBh",
+          "commit": {
+            "abbreviatedOid": "fac4bb4"
+          },
+          "author": "bc-pi",
+          "authorAssociation": "COLLABORATOR",
+          "state": "CHANGES_REQUESTED",
+          "body": "This is a COMPLETELY REASONABLE rewrite that could use just a few tweaks before merging. ",
+          "createdAt": "2024-10-16T13:46:31Z",
+          "updatedAt": "2024-10-16T13:46:31Z",
+          "comments": []
         }
       ]
+    },
+    {
+      "number": 478,
+      "id": "PR_kwDOHTmVzM5-5KuT",
+      "title": "Added comment regarding holder guarantees (Addressing Issue #470)",
+      "url": "https://github.com/oauth-wg/oauth-selective-disclosure-jwt/pull/478",
+      "state": "OPEN",
+      "author": "AlexHodder",
+      "authorAssociation": "NONE",
+      "assignees": [],
+      "labels": [],
+      "body": "Resolves #470 by adding a comment to Section 8.1 (Verification of the SD-JWT) regarding holder guarantees after validating an SD-JWT presentation from an issuer.",
+      "createdAt": "2024-10-16T22:10:40Z",
+      "updatedAt": "2024-10-16T22:10:41Z",
+      "baseRepository": "oauth-wg/oauth-selective-disclosure-jwt",
+      "baseRefName": "master",
+      "baseRefOid": "8c928bca98a8f76b7c6cc949efc625b8dec87c9c",
+      "headRepository": "AlexHodder/oauth-selective-disclosure-jwt",
+      "headRefName": "ahw/holder_knowledge_edit",
+      "headRefOid": "fc2d443871d48a767a915d44069b17b876e49fae",
+      "closedAt": null,
+      "mergedAt": null,
+      "mergedBy": null,
+      "mergeCommit": null,
+      "comments": [],
+      "reviews": []
     }
   ]
 }
