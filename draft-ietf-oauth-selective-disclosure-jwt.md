@@ -43,75 +43,37 @@ organization="Ping Identity"
 
 .# Abstract
 
-This specification defines a mechanism for selective disclosure of individual elements of a JSON object
-used as the payload of a JSON Web Signature (JWS) structure.
-It can be used for multiple applications, including but not limited to the selective disclosure of JSON Web Token (JWT) claims.
+This specification defines a mechanism for the selective disclosure of individual elements of a JSON-encoded data structure used as the payload of a JSON Web Signature (JWS).
+The primary use case is the selective disclosure of JSON Web Token (JWT) claims.
 
 {mainmatter}
 
 # Introduction {#Introduction}
 
-This document specifies conventions for creating JSON Web Signature (JWS) [@!RFC7515]
-structures with JSON [@!RFC8259] objects as the payload while supporting selective disclosure of individual elements of that JSON.
-Because JSON Web Token (JWT) [@!RFC7519] is a very prevalent application of JWS with a JSON payload, the selective disclosure of JWT claims receives primary treatment herein. However, that does not preclude the mechanism's applicability to other applications of JWS with JSON payloads.
+JSON-encoded data structures for exchange between systems are often secured against modification using JSON Web Signatures (JWS) [@!RFC7515].
+A popular application of JWS is JSON Web Token (JWT) [@!RFC7519], a format that is often used to represent a user's identity.
+An ID Token as defined in OpenID Connect [@?OpenID.Core], for example, is a JWT containing the user's claims created by the server for consumption by a relying party.
+In cases where the JWT is sent immediately from the server to the relying party, as in OpenID Connect, the server can select at the time of issuance which user claims to include in the JWT, minimizing the information shared with the relying party who validates the JWT.
 
-The JSON-based representation of claims in a signed JWT is
-secured against modification using JWS digital
-signatures. A consumer of a signed JWT that has validated the
-signature can safely assume that the contents of the token have not been
-modified.  However, anyone receiving an unencrypted JWT can read all the
-claims. Likewise, anyone with the decryption key receiving encrypted JWT
-can also read all the claims.
+A new model is emerging that fully decouples the issuance of a JWT from its presentation.
+In this model, a JWT containing many claims is issued to an intermediate party, who holds the JWT (the Holder).
+The Holder can then present the JWT to different verifying parties (Verifiers), that each may only require a subset of the claims in the JWT.
+For example, the JWT may contain claims representing both an address and a birthdate.
+The Holder may elect to disclose only the address to one Verifier, and only the birthdate to a different Verifier.
 
-One of the common use cases of a signed JWT is representing a user's
-identity. As long as the signed JWT is one-time
-use, it typically only contains those claims the user has consented to
-disclose to a specific Verifier. However, there is an increasing number
-of use cases where a signed JWT is created once and then used a number
-of times by the user (the "Holder" of the JWT). In such use cases, the signed JWT needs
-to contain the superset of all claims the user of the
-signed JWT might want to disclose to Verifiers at some point. The
-ability to selectively disclose a subset of these claims depending on
-the Verifier becomes crucial to ensure minimum disclosure and prevent
-Verifiers from obtaining claims irrelevant for the transaction at hand.
-SD-JWTs defined in this document enable such selective disclosure of JWT claims.
+Privacy principles of minimal disclosure in conjunction with this model demand a mechanism enabling selective disclosure of data elements while ensuring that Verifiers can still check the authenticity of the data provided.
+This specification defines such a mechanism for JSON-encoded payloads of JSON Web Signatures, with a primary use case being JWTs.
 
-One example of a multi-use JWT is an Issuer-signed
-credential that contains the claims about a subject, and whose authenticity can be
-cryptographically verified.
+SD-JWT is based on an aproach called "salted hashes": For any data element that should be selectively disclosable, the Issuer of the SD-JWT does not include the cleartext of the data in the JSON-encoded payload of the JWS structure; instead, a hash digest of the data takes its place.
+For presentation to a Verifier, the Holder sends the signed payload along with the cleartext of those claims it wants to disclose.
+The Verifier can then compute the digest of the cleartext data and confirm it is included in the signed payload.
+To ensure that Verifiers cannot guess cleartext values of non-disclosed data elements, an additional salt value is used when creating the digest and sent along with the cleartext when disclosing it.
 
-Similar to the JWT specification on which it builds, this document is a product of the
-Web Authorization Protocol (OAuth) working group. However, while both JWT and SD-JWT
-have potential OAuth 2.0 applications, their utility and application is certainly not constrained to OAuth 2.0.
-JWT was developed as a general-purpose token format and has seen widespread usage in a
-variety of applications. SD-JWT is a selective disclosure mechanism for JWT and is
-similarly intended to be a general-purpose specification.
+To prevent attacks in which an SD-JWT is presented to a Verifier without the Holder's consent, this specification additionally defines a mechanism for binding the SD-JWT to a key under the control of the Holder (Key Binding).
+When Key Binding is enforced, a Holder has to prove possession of a private key belonging to a public key contained in the SD-JWT itself.
+It usually does so by signing over a data structure containing transaction-specific data, herein defined as the Key Binding JWT.
+An SD-JWT with a Key Binding JWT is called SD-JWT+KB in this specification.
 
-While JWTs with claims describing natural persons are a common use case, the
-mechanisms defined in this document are also applicable to other use cases.
-
-In an SD-JWT, claims can be hidden, but cryptographically
-protected against undetected modification. When issuing the SD-JWT to
-the Holder, the Issuer includes the cleartext counterparts of all hidden
-claims, the so-called Disclosures, outside the signed part of the SD-JWT.
-
-The Holder decides which claims to disclose to a particular Verifier and includes the respective
-Disclosures in the SD-JWT to that Verifier. The Verifier
-has to verify that all disclosed claim values were part of the
-Issuer-signed JWT. The Verifier will not, however, learn any hidden claim
-values not disclosed in the Disclosures.
-
-This document also defines a format for SD-JWTs with Key Binding (SD-JWT+KB).
-By optionally sending an SD-JWT+KB to a
-Verifier, the Holder can prove to the Verifier that they hold the private key
-associated to the SD-JWT (i.e., using the `cnf` claim [@!RFC7800]). The strength of the binding is conditional upon the trust
-in the protection of the private key of the key pair an SD-JWT is bound to.
-
-SD-JWT can be used with any JSON-based representation of claims.
-
-This specification aims to be easy to implement and to leverage
-established and widely used data formats and cryptographic algorithms
-wherever possible.
 
 ## Feature Summary
 
