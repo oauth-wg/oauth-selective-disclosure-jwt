@@ -1335,6 +1335,7 @@ To mitigate this issue, a group of issuers may elect to use a common Issuer iden
 
 We would like to thank
 Alen Horvat,
+Alex Hodder,
 Anders Rundgren,
 Arjan Geluk,
 Christian Bormann,
@@ -1894,6 +1895,8 @@ data. The original JSON data is then used by the application. See
    -13
 
    * WGLC (part 1) updates
+   * Rewrote introduction
+   * Added note on algorithm for Holder's verification of the SD-JWT
 
    -12
 
