@@ -362,7 +362,7 @@ The payload of an SD-JWT is a JSON object according to the following rules:
 
 The same digest value MUST NOT appear more than once in the SD-JWT.
 
-Applications of SD-JWT SHOULD be explicitly typed using the `typ` header parameter. See (#explicit_typing) for more details.
+Application and profiles of SD-JWT SHOULD be explicitly typed. See (#explicit_typing) for more details.
 
 It is the Issuer who decides which claims are selectively disclosable and which are not. End-User claims MAY be included as plaintext as well, e.g., if hiding the particular claims from the Verifier is not required in the intended use case. See (#sd-validity-claims) for considerations on making validity-controlling claims such as `exp` selectively disclosable.
 
@@ -1206,15 +1206,17 @@ modified the list of Disclosures.
 
 ## Explicit Typing {#explicit_typing}
 
-Section 3.11 of [@RFC8725] describes the use of explicit typing to prevent confusion attacks
-in which one kind of JWT is mistaken for another. SD-JWTs are also potentially
-vulnerable to such confusion attacks, so it is RECOMMENDED to specify an explicit type
+[@RFC8725, section 3.11] describes the use of explicit typing as one mechanism to prevent confusion attacks
+(described in [@RFC8725, section 2.8]) in which one kind of JWT is mistaken for another. SD-JWTs are also potentially
+subject to such confusion attacks, so in the absence of other techniques, it is RECOMMENDED that application profiles of SD-JWT specify an explicit type
 by including the `typ` header parameter when the SD-JWT is issued, and for Verifiers to check this value.
 
-When explicit typing is employed for an SD-JWT, it is RECOMMENDED that a media type name of the format
+When explicit typing using the `typ` header is employed for an SD-JWT, it is RECOMMENDED that a media type name of the format
 "application/example+sd-jwt" be used, where "example" is replaced by the identifier for the specific kind of SD-JWT.
 The definition of `typ` in Section 4.1.9 of [@!RFC7515] recommends that the "application/" prefix be omitted, so
 "example+sd-jwt" would be the value of the `typ` header parameter.
+
+Use of the `cty` content type header parameter to indicate the content type of the SD-JWT payload can also be used to distinguish different types of JSON objects, or different kinds of JWT Claim Sets.
 
 # Privacy Considerations {#privacy_considerations}
 
@@ -1378,6 +1380,7 @@ Christian Paquin,
 Dale Bowie,
 David Bakker,
 David Waite,
+Dick Hardt,
 Fabian Hauck,
 Filip Skokan,
 Giuseppe De Marco,
