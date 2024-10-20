@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2024-10-17T00:14:49.361586+00:00",
+  "timestamp": "2024-10-20T00:16:25.574496+00:00",
   "repo": "oauth-wg/oauth-selective-disclosure-jwt",
   "labels": [
     {
@@ -11378,15 +11378,15 @@
       "id": "I_kwDOHTmVzM6Wh_KF",
       "title": "WGLC updates",
       "url": "https://github.com/oauth-wg/oauth-selective-disclosure-jwt/issues/464",
-      "state": "OPEN",
+      "state": "CLOSED",
       "author": "bc-pi",
       "authorAssociation": "COLLABORATOR",
       "assignees": [],
       "labels": [],
       "body": "Placeholder issue to not forget to do appropriate updates resulting from WGLC \r\n\r\nhttps://mailarchive.ietf.org/arch/browse/oauth/?q=%22WGLC%20for%20SD-JWT%22 \r\n\r\n",
       "createdAt": "2024-09-13T19:08:41Z",
-      "updatedAt": "2024-10-04T22:48:05Z",
-      "closedAt": null,
+      "updatedAt": "2024-10-18T12:39:33Z",
+      "closedAt": "2024-10-18T12:39:09Z",
       "comments": [
         {
           "author": "bc-pi",
@@ -11394,6 +11394,20 @@
           "body": "#472, #473, and #474 have some of this \r\n\r\nI think something for https://mailarchive.ietf.org/arch/msg/oauth/MN1d1ihchmOTcHVMsZ_RlOcZxRE/ would be good too\r\n\r\nand of course #467 is there too \r\n\r\n",
           "createdAt": "2024-10-04T22:48:04Z",
           "updatedAt": "2024-10-04T22:48:04Z"
+        },
+        {
+          "author": "Sakurann",
+          "authorAssociation": "COLLABORATOR",
+          "body": "all merged and addressed",
+          "createdAt": "2024-10-18T12:39:09Z",
+          "updatedAt": "2024-10-18T12:39:18Z"
+        },
+        {
+          "author": "bc-pi",
+          "authorAssociation": "COLLABORATOR",
+          "body": "COMPLETELY REASONABLE changes made ",
+          "createdAt": "2024-10-18T12:39:32Z",
+          "updatedAt": "2024-10-18T12:39:32Z"
         }
       ]
     },
@@ -11449,19 +11463,18 @@
       "id": "I_kwDOHTmVzM6Xa-9l",
       "title": "sd_alg, _sd_alg - Option for claims reuse?",
       "url": "https://github.com/oauth-wg/oauth-selective-disclosure-jwt/issues/468",
-      "state": "OPEN",
+      "state": "CLOSED",
       "author": "alenhorvat",
       "authorAssociation": "NONE",
-      "assignees": [
-        "Sakurann"
-      ],
+      "assignees": [],
       "labels": [
+        "ready-to-close",
         "pending-close"
       ],
       "body": "Dear,\r\n\r\nFirst, I would like to express my gratitude for your excellent work on this project.\r\n\r\nI have a question regarding the definitions of the following claims:\r\n\r\nClaim Name: _sd\r\nClaim Description: Digests of Disclosures for object properties\r\n\r\nClaim Name: _sd_alg\r\nClaim Description: Hash algorithm used to generate Disclosure digests and digest over presentation\r\n\r\nCurrently, the _sd claim is limited to digests of disclosures. However, there are other mechanisms available for blinding claims, such as Zero-Knowledge Proofs (ZKPs), signatures, and similar techniques. Since the design of _sd is quite robust and generic, would the authors consider broadening its definition to encompass these additional mechanisms?\r\n\r\nProposal:\r\n\r\nClaim Name: _sd\r\nClaim Description: Blinded (or hidden) claims as defined by the Selective Disclosure Algorithm\r\nAdditionally, similar to _sd_alg, it could be constructed from {sd-name}:{properties}.\r\n\r\nProposal:\r\n\r\nClaim Name: _sd_alg\r\nClaim Description: Selective disclosure algorithm name\r\nFor example, the algorithm name could be registered as something like: sd-jwt:sha-256.\r\n\r\nThank you very much for your time and consideration of this suggestion. I look forward to your feedback.",
       "createdAt": "2024-09-21T17:38:57Z",
-      "updatedAt": "2024-09-24T11:09:28Z",
-      "closedAt": null,
+      "updatedAt": "2024-10-18T13:03:16Z",
+      "closedAt": "2024-10-18T13:03:16Z",
       "comments": [
         {
           "author": "Sakurann",
@@ -11476,6 +11489,20 @@
           "body": "Dear, Kristina.\r\n\r\nI fully agree that other selective disclosure algorithms should be defined in separate specifications and in no way I'm asking to broaden the scope of this great work.\r\n\r\nMy question is simpler. Since the designs of _sd and _sd_alg are reusable with other (e.g., ZKP?) specifications, my question is if the definitions can be broadened.\r\n\r\nIf this results in a positive resolution, impact on the existing implementations is parsing of the _sd_alg claim that would define the full name of the sd algorithm, in this case something like sd-jwt:sha256 (or similar).\r\n\r\nThank you for your time and answers!",
           "createdAt": "2024-09-24T06:05:18Z",
           "updatedAt": "2024-09-24T06:05:18Z"
+        },
+        {
+          "author": "danielfett",
+          "authorAssociation": "MEMBER",
+          "body": "Hi Alen,\r\n\r\nWe discussed this among the editors and came to the conclusion that introducing this kind of namespacing right now probably doesn't add value. We don't know yet how a future spec may or may not extend the _sd and _sd_alg claims (or the values therein). It may or may not work, but it certainly looks awkward in the meantime as SD-JWT is the only spec using/defining _sd and _sd_alg.",
+          "createdAt": "2024-10-18T12:46:37Z",
+          "updatedAt": "2024-10-18T12:46:37Z"
+        },
+        {
+          "author": "alenhorvat",
+          "authorAssociation": "NONE",
+          "body": "Dear,\r\n\r\nthank you for your time and considerations.\r\n\r\nThe issue can be closed.",
+          "createdAt": "2024-10-18T12:49:15Z",
+          "updatedAt": "2024-10-18T12:49:15Z"
         }
       ]
     },
@@ -11519,15 +11546,15 @@
       "id": "I_kwDOHTmVzM6Xhaz7",
       "title": "Decoy Digest Implications",
       "url": "https://github.com/oauth-wg/oauth-selective-disclosure-jwt/issues/470",
-      "state": "OPEN",
+      "state": "CLOSED",
       "author": "AlexHodder",
-      "authorAssociation": "NONE",
+      "authorAssociation": "CONTRIBUTOR",
       "assignees": [],
       "labels": [],
       "body": "We (Guido Schmitz and Alex Hodder-Williams) have been working on producing a formal analysis of the current specification. We will share more details about this analysis soon, but wanted to point out some observations.\r\n\r\nDuring the issuance phase, it is unclear to us how the holder gets guarantees regarding the entire set of disclosures that verify under the received issuer-signed JWT.\r\nAs specified: the holder should accept an issuance if the signature verifies, and the received set of disclosures all verify according to this SD-JWT presentation. However, the holder doesn't have guarantees that the digests in the issuer-signed JWT that they didn't receive a corresponding disclosure for are in fact decoy digests. These digests could contain other disclosures, which the holder would be unaware of. This would allow colluding issuers and verifiers to create a non-interactive covert channel, where the verifiers are looking for a specific digest. This seems to relate to 11.1 in the specification, but may be worth additional discussion in the document.\r\n\r\nOne possible technical solution could look as follows:\r\n- The holder provides the issuer with a set of nonces that can be used as decoy digests.\r\n- The issuer must then hash these nonces (this prevents the holder from inserting their own non-issued claims)\r\n- The holder can then check if the digests they don't receive disclosures for match their original nonces.\r\nClearly this adds overhead and slightly complicates the standard, however, it is our view that the holder of a credential that has been issued to (and potentially about) them, should have full knowledge of what could be contained in that credential.\r\n\r\nAnother issue stemming from decoy digests, with a different consequence, is that if disclosures get dropped off the end of an SD-JWT presentation in the issuance phase, yet the presentation still verifies, the holder won't ever have the full set of disclosures, but will be unaware that they are missing information.\r\nThis may be mitigated at a different level. Any kind of authenticated channel between the issuer and holder prevents tampering of the initial set of disclosures. This may be out of scope of the SD-JWT document as it is likely to be protocol specific; but again, this might be worth including a remark about.\r\n",
       "createdAt": "2024-09-23T09:50:32Z",
-      "updatedAt": "2024-09-25T15:07:01Z",
-      "closedAt": null,
+      "updatedAt": "2024-10-18T12:38:35Z",
+      "closedAt": "2024-10-18T12:38:35Z",
       "comments": [
         {
           "author": "danielfett",
@@ -11538,7 +11565,7 @@
         },
         {
           "author": "AlexHodder",
-          "authorAssociation": "NONE",
+          "authorAssociation": "CONTRIBUTOR",
           "body": "Re 1. Fair enough, I think in an ideal world I'd still like the credential I am presenting to not contain anything I don't know about but the effort to get this (such as further information from the holder regarding nonces etc.) probably doesn't align with the aims and assumptions of the specification.\r\n\r\nRe 2. Yes, I don't think it's a huge point but probably worth explicit inclusion. I'll try to find a good spot and make a PR. ",
           "createdAt": "2024-09-25T15:06:59Z",
           "updatedAt": "2024-09-25T15:06:59Z"
@@ -49336,7 +49363,7 @@
       "id": "PR_kwDOHTmVzM58Ov6k",
       "title": "introduction rewrite",
       "url": "https://github.com/oauth-wg/oauth-selective-disclosure-jwt/pull/467",
-      "state": "OPEN",
+      "state": "CLOSED",
       "author": "dickhardt",
       "authorAssociation": "NONE",
       "assignees": [],
@@ -49345,14 +49372,14 @@
       ],
       "body": "provide more context on what the problem is and why this work is happening, with a summary of how it works\r\n\r\ndeleted spurious language that reads like a patent application",
       "createdAt": "2024-09-21T04:41:24Z",
-      "updatedAt": "2024-10-16T15:32:40Z",
+      "updatedAt": "2024-10-18T12:27:32Z",
       "baseRepository": "oauth-wg/oauth-selective-disclosure-jwt",
       "baseRefName": "master",
       "baseRefOid": "817303cd188f5187750c76318517c30aa6ffe530",
       "headRepository": "dickhardt/oauth-selective-disclosure-jwt",
       "headRefName": "master",
       "headRefOid": "6fae293b8b40d815b1da2d89682dcb81f4416e7e",
-      "closedAt": null,
+      "closedAt": "2024-10-18T12:27:31Z",
       "mergedAt": null,
       "mergedBy": null,
       "mergeCommit": null,
@@ -49377,6 +49404,13 @@
           "body": "> Note that @danielfett has kindly (foolishly?) said he'd take a pass at reviewing or refining or rewriting or reworking this and/or the current (unoffensive, thanks!) Introduction.\r\n\r\nsee #477 for that ",
           "createdAt": "2024-10-16T15:32:26Z",
           "updatedAt": "2024-10-16T15:32:26Z"
+        },
+        {
+          "author": "Sakurann",
+          "authorAssociation": "COLLABORATOR",
+          "body": "supeceded by #477 ",
+          "createdAt": "2024-10-18T12:27:31Z",
+          "updatedAt": "2024-10-18T12:27:31Z"
         }
       ],
       "reviews": [
@@ -49505,7 +49539,7 @@
       "id": "PR_kwDOHTmVzM59q7sz",
       "title": " WGLC updates 2/x (remove sentence in intro)",
       "url": "https://github.com/oauth-wg/oauth-selective-disclosure-jwt/pull/473",
-      "state": "OPEN",
+      "state": "CLOSED",
       "author": "bc-pi",
       "authorAssociation": "COLLABORATOR",
       "assignees": [],
@@ -49514,14 +49548,14 @@
       ],
       "body": "remove repetitive repetitive sentence per Dick https://mailarchive.ie)tf.org/arch/msg/oauth/brjnGB53MApGNCsXC03ungeWxI4/",
       "createdAt": "2024-10-04T21:33:05Z",
-      "updatedAt": "2024-10-16T15:33:01Z",
+      "updatedAt": "2024-10-18T12:06:22Z",
       "baseRepository": "oauth-wg/oauth-selective-disclosure-jwt",
       "baseRefName": "master",
       "baseRefOid": "bfc5914fd199bb93e934283aa1d30059efe94264",
       "headRepository": "oauth-wg/oauth-selective-disclosure-jwt",
       "headRefName": "1st-wglc-pr-2a-of-x",
       "headRefOid": "ef6bad58a56974e3166a91d020cf2231906fa111",
-      "closedAt": null,
+      "closedAt": "2024-10-18T12:06:22Z",
       "mergedAt": null,
       "mergedBy": null,
       "mergeCommit": null,
@@ -49575,24 +49609,26 @@
       "id": "PR_kwDOHTmVzM59rCEo",
       "title": "WGLC updates 3/x (Neil's stuff)",
       "url": "https://github.com/oauth-wg/oauth-selective-disclosure-jwt/pull/474",
-      "state": "OPEN",
+      "state": "MERGED",
       "author": "bc-pi",
       "authorAssociation": "COLLABORATOR",
       "assignees": [],
       "labels": [],
       "body": "https://mailarchive.ietf.org/arch/msg/oauth/zQ7Q0cwuwiAJOMJoYTols_oR4W4/ ",
       "createdAt": "2024-10-04T22:06:24Z",
-      "updatedAt": "2024-10-15T13:36:36Z",
+      "updatedAt": "2024-10-18T12:07:07Z",
       "baseRepository": "oauth-wg/oauth-selective-disclosure-jwt",
       "baseRefName": "master",
       "baseRefOid": "bfc5914fd199bb93e934283aa1d30059efe94264",
       "headRepository": "oauth-wg/oauth-selective-disclosure-jwt",
       "headRefName": "1st-wglc-pr-3-of-x",
       "headRefOid": "5bec8b4a13fdfdd7f1edfd014ae29b343b75839b",
-      "closedAt": null,
-      "mergedAt": null,
-      "mergedBy": null,
-      "mergeCommit": null,
+      "closedAt": "2024-10-18T12:07:07Z",
+      "mergedAt": "2024-10-18T12:07:07Z",
+      "mergedBy": "Sakurann",
+      "mergeCommit": {
+        "oid": "ff09985cdae13ec7ebf5791f06f5336708a939b0"
+      },
       "comments": [],
       "reviews": [
         {
@@ -49667,6 +49703,19 @@
               "updatedAt": "2024-10-15T13:36:36Z"
             }
           ]
+        },
+        {
+          "id": "PRR_kwDOHTmVzM6Nu-XI",
+          "commit": {
+            "abbreviatedOid": "5bec8b4"
+          },
+          "author": "Sakurann",
+          "authorAssociation": "COLLABORATOR",
+          "state": "APPROVED",
+          "body": "",
+          "createdAt": "2024-10-18T12:06:57Z",
+          "updatedAt": "2024-10-18T12:06:57Z",
+          "comments": []
         }
       ]
     },
@@ -49675,21 +49724,21 @@
       "id": "PR_kwDOHTmVzM59smIu",
       "title": " ISO/IEC 29100 is too private ",
       "url": "https://github.com/oauth-wg/oauth-selective-disclosure-jwt/pull/475",
-      "state": "OPEN",
+      "state": "CLOSED",
       "author": "bc-pi",
       "authorAssociation": "COLLABORATOR",
       "assignees": [],
       "labels": [],
       "body": "https://standards.iso.org/ittf/PubliclyAvailableStandards/index.html no longer has anything for 29100 and https://www.iso.org/standard/45123.html indicates that ISO/IEC 29100:2011 is \"Withdrawn\" and \"Revised by\" ISO/IEC 29100:2024 that is now available for the low low special price of CHF 129, which is approximately $150 / \u20ac137 too much for me to be comfortable referencing",
       "createdAt": "2024-10-05T12:12:22Z",
-      "updatedAt": "2024-10-15T12:11:56Z",
+      "updatedAt": "2024-10-18T12:11:12Z",
       "baseRepository": "oauth-wg/oauth-selective-disclosure-jwt",
       "baseRefName": "master",
       "baseRefOid": "6f2051168af2886f8d5bc50aa7cb8d748fc1fef4",
       "headRepository": "oauth-wg/oauth-selective-disclosure-jwt",
       "headRefName": "iso-frustrated-by-iso",
       "headRefOid": "a7cfddc8f3ab93d9443fcf2d1d2d8ee9577b0341",
-      "closedAt": null,
+      "closedAt": "2024-10-18T12:11:12Z",
       "mergedAt": null,
       "mergedBy": null,
       "mergeCommit": null,
@@ -49735,6 +49784,13 @@
           "body": "![Screenshot 2024-10-15 at 6 10 46\u202fAM](https://github.com/user-attachments/assets/dd3c31e5-66d3-4f82-87eb-eb956b6f1822)\r\n\r\n![Screenshot 2024-10-15 at 6 11 02\u202fAM](https://github.com/user-attachments/assets/87d80e7c-e00f-469e-8d24-693463cba69f)\r\n",
           "createdAt": "2024-10-15T12:11:54Z",
           "updatedAt": "2024-10-15T12:11:54Z"
+        },
+        {
+          "author": "bc-pi",
+          "authorAssociation": "COLLABORATOR",
+          "body": "![Screenshot 2024-10-17 at 5 55 59\u202fAM](https://github.com/user-attachments/assets/05e9d6fe-eb89-4c9b-a79b-9629b3dbe3b8)\r\n\r\nI don't think the ISO.29100 reference should have been included in the first place and it's unavailability isn't helping my opinion. \r\n",
+          "createdAt": "2024-10-17T12:00:16Z",
+          "updatedAt": "2024-10-17T12:00:16Z"
         }
       ],
       "reviews": [
@@ -49771,25 +49827,35 @@
       "id": "PR_kwDOHTmVzM5-IDLV",
       "title": "WGLC updates 4/x (explicit typing discussion)",
       "url": "https://github.com/oauth-wg/oauth-selective-disclosure-jwt/pull/476",
-      "state": "OPEN",
+      "state": "MERGED",
       "author": "bc-pi",
       "authorAssociation": "COLLABORATOR",
       "assignees": [],
       "labels": [],
       "body": "From this conversation https://mailarchive.ietf.org/arch/msg/oauth/MN1d1ihchmOTcHVMsZ_RlOcZxRE/ this PR tries to somewhat better explain that explicit typing, per JWT BCP before it, is about distinguishing different types of SD-JWTs. And also be a little more open to other ways of typing, such as cty.",
       "createdAt": "2024-10-09T19:58:07Z",
-      "updatedAt": "2024-10-15T16:31:47Z",
+      "updatedAt": "2024-10-18T12:13:13Z",
       "baseRepository": "oauth-wg/oauth-selective-disclosure-jwt",
       "baseRefName": "master",
       "baseRefOid": "8c928bca98a8f76b7c6cc949efc625b8dec87c9c",
       "headRepository": "oauth-wg/oauth-selective-disclosure-jwt",
       "headRefName": "expletives_typing",
       "headRefOid": "1fd3d71077205aa793afb78a7c9aaf93a41c6ce6",
-      "closedAt": null,
-      "mergedAt": null,
-      "mergedBy": null,
-      "mergeCommit": null,
-      "comments": [],
+      "closedAt": "2024-10-18T12:13:12Z",
+      "mergedAt": "2024-10-18T12:13:12Z",
+      "mergedBy": "Sakurann",
+      "mergeCommit": {
+        "oid": "73e54aad12ab2fa77eaabdf1d20ac35f88728cff"
+      },
+      "comments": [
+        {
+          "author": "danielfett",
+          "authorAssociation": "MEMBER",
+          "body": "Thanks, looks COMPLETELY REASONABLE to me.",
+          "createdAt": "2024-10-18T12:12:48Z",
+          "updatedAt": "2024-10-18T12:12:48Z"
+        }
+      ],
       "reviews": [
         {
           "id": "PRR_kwDOHTmVzM6Mj1vu",
@@ -49903,6 +49969,19 @@
           "createdAt": "2024-10-15T10:58:04Z",
           "updatedAt": "2024-10-15T10:58:04Z",
           "comments": []
+        },
+        {
+          "id": "PRR_kwDOHTmVzM6NvBBV",
+          "commit": {
+            "abbreviatedOid": "1fd3d71"
+          },
+          "author": "danielfett",
+          "authorAssociation": "MEMBER",
+          "state": "APPROVED",
+          "body": "",
+          "createdAt": "2024-10-18T12:12:25Z",
+          "updatedAt": "2024-10-18T12:12:25Z",
+          "comments": []
         }
       ]
     },
@@ -49911,24 +49990,26 @@
       "id": "PR_kwDOHTmVzM5-L9j2",
       "title": "Rewrite introduction and abstract",
       "url": "https://github.com/oauth-wg/oauth-selective-disclosure-jwt/pull/477",
-      "state": "OPEN",
+      "state": "MERGED",
       "author": "danielfett",
       "authorAssociation": "MEMBER",
       "assignees": [],
       "labels": [],
       "body": "Takes inspiration from #467 but is essentially a rewrite of the introduction from scratch.",
       "createdAt": "2024-10-10T08:51:01Z",
-      "updatedAt": "2024-10-16T13:46:31Z",
+      "updatedAt": "2024-10-18T12:27:18Z",
       "baseRepository": "oauth-wg/oauth-selective-disclosure-jwt",
       "baseRefName": "master",
       "baseRefOid": "8c928bca98a8f76b7c6cc949efc625b8dec87c9c",
       "headRepository": "oauth-wg/oauth-selective-disclosure-jwt",
       "headRefName": "danielfett/rewrite-introduction",
-      "headRefOid": "fac4bb438925918c2731d91ccc02435dfadde373",
-      "closedAt": null,
-      "mergedAt": null,
-      "mergedBy": null,
-      "mergeCommit": null,
+      "headRefOid": "cf0dc80169672630392398c1884f1f12e9eba6d8",
+      "closedAt": "2024-10-18T12:27:18Z",
+      "mergedAt": "2024-10-18T12:27:18Z",
+      "mergedBy": "Sakurann",
+      "mergeCommit": {
+        "oid": "e684ccc114576ce349ed01464c1c52cab3bf9bcb"
+      },
       "comments": [],
       "reviews": [
         {
@@ -49957,7 +50038,7 @@
             "abbreviatedOid": "fac4bb4"
           },
           "author": "ju-cu",
-          "authorAssociation": "NONE",
+          "authorAssociation": "CONTRIBUTOR",
           "state": "COMMENTED",
           "body": "",
           "createdAt": "2024-10-14T06:53:30Z",
@@ -50065,7 +50146,7 @@
             "abbreviatedOid": "fac4bb4"
           },
           "author": "ju-cu",
-          "authorAssociation": "NONE",
+          "authorAssociation": "CONTRIBUTOR",
           "state": "COMMENTED",
           "body": "",
           "createdAt": "2024-10-15T09:36:42Z",
@@ -50371,6 +50452,92 @@
           "createdAt": "2024-10-16T13:46:31Z",
           "updatedAt": "2024-10-16T13:46:31Z",
           "comments": []
+        },
+        {
+          "id": "PRR_kwDOHTmVzM6NvCmA",
+          "commit": {
+            "abbreviatedOid": "fac4bb4"
+          },
+          "author": "danielfett",
+          "authorAssociation": "MEMBER",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2024-10-18T12:15:20Z",
+          "updatedAt": "2024-10-18T12:15:20Z",
+          "comments": [
+            {
+              "originalPosition": 76,
+              "body": "```suggestion\r\nA popular application of JWS is JSON Web Token (JWT) [@!RFC7519], a format that is often used to represent a user's identity.\r\n```",
+              "createdAt": "2024-10-18T12:15:20Z",
+              "updatedAt": "2024-10-18T12:15:27Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOHTmVzM6NvFgA",
+          "commit": {
+            "abbreviatedOid": "fac4bb4"
+          },
+          "author": "Sakurann",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2024-10-18T12:20:26Z",
+          "updatedAt": "2024-10-18T12:20:27Z",
+          "comments": [
+            {
+              "originalPosition": 78,
+              "body": "```suggestion\r\nIn cases where the JWT is sent immediately from the server to the relying party, as in OpenID Connect, the server can select at the time of issuance which user claims to include in the JWT, minimizing the information shared with the relying party who validates the JWT.\r\n```",
+              "createdAt": "2024-10-18T12:20:27Z",
+              "updatedAt": "2024-10-18T12:20:27Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOHTmVzM6NvGV2",
+          "commit": {
+            "abbreviatedOid": "fac4bb4"
+          },
+          "author": "Sakurann",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2024-10-18T12:22:14Z",
+          "updatedAt": "2024-10-18T12:22:14Z",
+          "comments": [
+            {
+              "originalPosition": 80,
+              "body": "```suggestion\r\nA new model is emerging that fully decouples the issuance of a JWT from its presentation.\r\n```",
+              "createdAt": "2024-10-18T12:22:14Z",
+              "updatedAt": "2024-10-18T12:22:14Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOHTmVzM6NvHum",
+          "commit": {
+            "abbreviatedOid": "cf0dc80"
+          },
+          "author": "Sakurann",
+          "authorAssociation": "COLLABORATOR",
+          "state": "APPROVED",
+          "body": "",
+          "createdAt": "2024-10-18T12:24:52Z",
+          "updatedAt": "2024-10-18T12:24:52Z",
+          "comments": []
+        },
+        {
+          "id": "PRR_kwDOHTmVzM6NvH4u",
+          "commit": {
+            "abbreviatedOid": "cf0dc80"
+          },
+          "author": "bc-pi",
+          "authorAssociation": "COLLABORATOR",
+          "state": "APPROVED",
+          "body": "",
+          "createdAt": "2024-10-18T12:25:11Z",
+          "updatedAt": "2024-10-18T12:25:11Z",
+          "comments": []
         }
       ]
     },
@@ -50379,24 +50546,189 @@
       "id": "PR_kwDOHTmVzM5-5KuT",
       "title": "Added comment regarding holder guarantees (Addressing Issue #470)",
       "url": "https://github.com/oauth-wg/oauth-selective-disclosure-jwt/pull/478",
-      "state": "OPEN",
+      "state": "MERGED",
       "author": "AlexHodder",
-      "authorAssociation": "NONE",
+      "authorAssociation": "CONTRIBUTOR",
       "assignees": [],
       "labels": [],
       "body": "Resolves #470 by adding a comment to Section 8.1 (Verification of the SD-JWT) regarding holder guarantees after validating an SD-JWT presentation from an issuer.",
       "createdAt": "2024-10-16T22:10:40Z",
-      "updatedAt": "2024-10-16T22:10:41Z",
+      "updatedAt": "2024-10-18T12:38:34Z",
       "baseRepository": "oauth-wg/oauth-selective-disclosure-jwt",
       "baseRefName": "master",
       "baseRefOid": "8c928bca98a8f76b7c6cc949efc625b8dec87c9c",
       "headRepository": "AlexHodder/oauth-selective-disclosure-jwt",
       "headRefName": "ahw/holder_knowledge_edit",
-      "headRefOid": "fc2d443871d48a767a915d44069b17b876e49fae",
-      "closedAt": null,
-      "mergedAt": null,
-      "mergedBy": null,
-      "mergeCommit": null,
+      "headRefOid": "a902697776237eb947a66c3bb47f99439b1a2b33",
+      "closedAt": "2024-10-18T12:38:34Z",
+      "mergedAt": "2024-10-18T12:38:34Z",
+      "mergedBy": "Sakurann",
+      "mergeCommit": {
+        "oid": "652127b194330bab308d0a4b0048885092a55b12"
+      },
+      "comments": [],
+      "reviews": [
+        {
+          "id": "PRR_kwDOHTmVzM6NvJUC",
+          "commit": {
+            "abbreviatedOid": "fc2d443"
+          },
+          "author": "danielfett",
+          "authorAssociation": "MEMBER",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2024-10-18T12:28:02Z",
+          "updatedAt": "2024-10-18T12:28:03Z",
+          "comments": [
+            {
+              "originalPosition": 5,
+              "body": "```suggestion\r\nIf any step fails, the SD-JWT is not valid, and processing MUST be aborted. Otherwise, the JSON document resulting from the preceding processing and verification steps, herein referred to as the processed SD-JWT payload, can be made available to the application to be used for its intended purpose. \r\n\r\nNote that these processing steps do not yield any guarantees to the Holder about having received a complete set of Disclosures. That is, for some digest values in the Issuer-signed JWT (which are not decoy digests) there may be no corresponding Disclosures, for example, if the message from the Issuer was truncated.\r\n```",
+              "createdAt": "2024-10-18T12:28:02Z",
+              "updatedAt": "2024-10-18T12:30:09Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOHTmVzM6NvMXE",
+          "commit": {
+            "abbreviatedOid": "7d797f0"
+          },
+          "author": "Sakurann",
+          "authorAssociation": "COLLABORATOR",
+          "state": "APPROVED",
+          "body": "",
+          "createdAt": "2024-10-18T12:33:41Z",
+          "updatedAt": "2024-10-18T12:33:41Z",
+          "comments": []
+        },
+        {
+          "id": "PRR_kwDOHTmVzM6NvNJV",
+          "commit": {
+            "abbreviatedOid": "7d797f0"
+          },
+          "author": "Sakurann",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2024-10-18T12:35:18Z",
+          "updatedAt": "2024-10-18T12:35:19Z",
+          "comments": [
+            {
+              "originalPosition": 7,
+              "body": "```suggestion\r\nIf any step fails, the SD-JWT is not valid, and processing MUST be aborted. Otherwise, the JSON document resulting from the preceding processing and verification steps, herein referred to as the processed SD-JWT payload, can be made available to the application to be used for its intended purpose.\r\n\r\nNote that these processing steps do not yield any guarantees to the Holder about having received a complete set of Disclosures. That is, for some digest values in the Issuer-signed JWT (which are not decoy digests) there may be no corresponding Disclosures, for example, if the message from the Issuer was truncated.\r\n```",
+              "createdAt": "2024-10-18T12:35:18Z",
+              "updatedAt": "2024-10-18T12:35:19Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOHTmVzM6NvNg4",
+          "commit": {
+            "abbreviatedOid": "a902697"
+          },
+          "author": "danielfett",
+          "authorAssociation": "MEMBER",
+          "state": "APPROVED",
+          "body": "",
+          "createdAt": "2024-10-18T12:36:03Z",
+          "updatedAt": "2024-10-18T12:36:03Z",
+          "comments": []
+        },
+        {
+          "id": "PRR_kwDOHTmVzM6NvN4Y",
+          "commit": {
+            "abbreviatedOid": "a902697"
+          },
+          "author": "bc-pi",
+          "authorAssociation": "COLLABORATOR",
+          "state": "APPROVED",
+          "body": "",
+          "createdAt": "2024-10-18T12:36:46Z",
+          "updatedAt": "2024-10-18T12:36:46Z",
+          "comments": []
+        }
+      ]
+    },
+    {
+      "number": 479,
+      "id": "PR_kwDOHTmVzM5_GVzt",
+      "title": "Updates for -13",
+      "url": "https://github.com/oauth-wg/oauth-selective-disclosure-jwt/pull/479",
+      "state": "MERGED",
+      "author": "danielfett",
+      "authorAssociation": "MEMBER",
+      "assignees": [],
+      "labels": [],
+      "body": "",
+      "createdAt": "2024-10-18T12:39:19Z",
+      "updatedAt": "2024-10-18T12:42:08Z",
+      "baseRepository": "oauth-wg/oauth-selective-disclosure-jwt",
+      "baseRefName": "master",
+      "baseRefOid": "652127b194330bab308d0a4b0048885092a55b12",
+      "headRepository": "oauth-wg/oauth-selective-disclosure-jwt",
+      "headRefName": "danielfett/updates-for-13",
+      "headRefOid": "5472fd4930cc1823379897470408a3c615ba97ac",
+      "closedAt": "2024-10-18T12:42:08Z",
+      "mergedAt": "2024-10-18T12:42:08Z",
+      "mergedBy": "Sakurann",
+      "mergeCommit": {
+        "oid": "1a90eb22df460a0cadd2b1c88a92517f3e764755"
+      },
+      "comments": [],
+      "reviews": [
+        {
+          "id": "PRR_kwDOHTmVzM6NvPRX",
+          "commit": {
+            "abbreviatedOid": "5472fd4"
+          },
+          "author": "Sakurann",
+          "authorAssociation": "COLLABORATOR",
+          "state": "APPROVED",
+          "body": "",
+          "createdAt": "2024-10-18T12:39:34Z",
+          "updatedAt": "2024-10-18T12:39:34Z",
+          "comments": []
+        },
+        {
+          "id": "PRR_kwDOHTmVzM6NvPxN",
+          "commit": {
+            "abbreviatedOid": "5472fd4"
+          },
+          "author": "bc-pi",
+          "authorAssociation": "COLLABORATOR",
+          "state": "APPROVED",
+          "body": "",
+          "createdAt": "2024-10-18T12:40:34Z",
+          "updatedAt": "2024-10-18T12:40:34Z",
+          "comments": []
+        }
+      ]
+    },
+    {
+      "number": 480,
+      "id": "PR_kwDOHTmVzM5_HtB2",
+      "title": "Update Makefile",
+      "url": "https://github.com/oauth-wg/oauth-selective-disclosure-jwt/pull/480",
+      "state": "MERGED",
+      "author": "bc-pi",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "Set upload email in makefile in an attempt to avoid future failures uploading to the IETF datatracker due to scrobbling the wrong email\r\n\r\nsee also https://github.com/oauth-wg/oauth-sd-jwt-vc/pull/255",
+      "createdAt": "2024-10-18T15:36:14Z",
+      "updatedAt": "2024-10-18T15:39:51Z",
+      "baseRepository": "oauth-wg/oauth-selective-disclosure-jwt",
+      "baseRefName": "master",
+      "baseRefOid": "1a90eb22df460a0cadd2b1c88a92517f3e764755",
+      "headRepository": "oauth-wg/oauth-selective-disclosure-jwt",
+      "headRefName": "scrobbling-wrong-email",
+      "headRefOid": "fb7f65ba1dbad8f6daf5c0e1aef251554e7e85a8",
+      "closedAt": "2024-10-18T15:39:51Z",
+      "mergedAt": "2024-10-18T15:39:51Z",
+      "mergedBy": "bc-pi",
+      "mergeCommit": {
+        "oid": "f3e77f239f9645c10f0af671f8cab5bbab803fe8"
+      },
       "comments": [],
       "reviews": []
     }
