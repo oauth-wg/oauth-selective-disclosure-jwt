@@ -204,7 +204,7 @@ The Key Binding JWT encodes a signature by the Holder's private key over
 
 * a hash of the SD-JWT,
 * a nonce to ensure the freshness of the signature, and
-* an audience value to indicate the intended Verifier or Verifiers for the document.
+* an audience value to indicate the intended Verifier for the document.
 
 Details of the format of Key Binding JWTs are described in (#kb-jwt).
 
