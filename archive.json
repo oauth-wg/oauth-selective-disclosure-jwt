@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2024-10-29T00:15:25.637159+00:00",
+  "timestamp": "2024-10-31T00:15:13.585762+00:00",
   "repo": "oauth-wg/oauth-selective-disclosure-jwt",
   "labels": [
     {
@@ -50744,13 +50744,13 @@
       "labels": [],
       "body": "",
       "createdAt": "2024-10-25T14:55:00Z",
-      "updatedAt": "2024-10-26T12:35:05Z",
+      "updatedAt": "2024-10-29T16:26:14Z",
       "baseRepository": "oauth-wg/oauth-selective-disclosure-jwt",
       "baseRefName": "master",
       "baseRefOid": "f3e77f239f9645c10f0af671f8cab5bbab803fe8",
       "headRepository": "oauth-wg/oauth-selective-disclosure-jwt",
       "headRefName": "danielfett/denis-42",
-      "headRefOid": "d89bf75cb959b0df922ac7c4bdf6d825ed1d6274",
+      "headRefOid": "c131a64efccaff1afcf2728946a2de944a72afab",
       "closedAt": null,
       "mergedAt": null,
       "mergedBy": null,
@@ -50882,6 +50882,46 @@
               "body": "or perhaps\r\n```suggestion\r\nIt is up to the Holder's software how to maintain the mapping between the Disclosures and the plaintext claim values to be able to display them to the user when needed.\r\n```",
               "createdAt": "2024-10-26T12:35:04Z",
               "updatedAt": "2024-10-26T12:35:05Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOHTmVzM6PJ0ag",
+          "commit": {
+            "abbreviatedOid": "d89bf75"
+          },
+          "author": "danielfett",
+          "authorAssociation": "MEMBER",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2024-10-29T12:29:39Z",
+          "updatedAt": "2024-10-29T12:29:40Z",
+          "comments": [
+            {
+              "originalPosition": 60,
+              "body": "Everything here is about the user, so I would go for the first version. I initially removed the sentence because it didn't add much value and deepens the potential Holder/user confusion. But I'm fine with keeping it or a suitable replacement.",
+              "createdAt": "2024-10-29T12:29:39Z",
+              "updatedAt": "2024-10-29T12:29:40Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOHTmVzM6PMw7-",
+          "commit": {
+            "abbreviatedOid": "d89bf75"
+          },
+          "author": "bc-pi",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2024-10-29T16:26:14Z",
+          "updatedAt": "2024-10-29T16:26:14Z",
+          "comments": [
+            {
+              "originalPosition": 60,
+              "body": "I kinda presumed as much. I do think it adds some value so would like something suitable kept or replaced. ",
+              "createdAt": "2024-10-29T16:26:14Z",
+              "updatedAt": "2024-10-29T16:26:14Z"
             }
           ]
         }
