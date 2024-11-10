@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2024-11-07T00:14:53.249488+00:00",
+  "timestamp": "2024-11-10T00:15:53.268117+00:00",
   "repo": "oauth-wg/oauth-selective-disclosure-jwt",
   "labels": [
     {
@@ -11696,7 +11696,7 @@
       "labels": [],
       "body": "Item 2 from Section 1.1. (Feature Summary) states:\r\n\r\n>    2.  SD-JWT+KB is a composite structure enabling cryptographic key\r\n>        binding when presented to the Verifier.  It comprises the\r\n>        following:\r\n> \r\n>        *  (...)\r\n>        *  A format for a Key Binding JWT (KB-JWT) that proves possession\r\n>           of the private key of the associated key pair\r\n\r\nThere is no \"proof of possession\".\r\n\r\nChange the last bullet into:\r\n\r\n>        *  A format for a Key Binding JWT (KB-JWT) that allows to \r\n>           demonstrate to a Verifier that a cryptographic result \r\n>           computed using a private key corresponding to a public key \r\n>           contained in a SD-JWT is correct.\r\n",
       "createdAt": "2024-11-06T10:53:18Z",
-      "updatedAt": "2024-11-06T23:36:36Z",
+      "updatedAt": "2024-11-07T08:12:24Z",
       "closedAt": null,
       "comments": [
         {
@@ -11705,6 +11705,13 @@
           "body": "There is a whole specification called DPoP by this working group which clearly indicates that there is such thing as a proof of possession",
           "createdAt": "2024-11-06T23:36:34Z",
           "updatedAt": "2024-11-06T23:36:34Z"
+        },
+        {
+          "author": "Denisthemalice",
+          "authorAssociation": "NONE",
+          "body": "The abstract from RFC 9449 OAuth 2.0 Demonstrating Proof of Possession (DPoP) states:\r\n\r\n> This document describes a mechanism for sender-constraining OAuth 2.0 tokens via a proof-of-possession mechanism \r\n> on the application level. This mechanism allows for the detection of replay attacks with access and refresh tokens.\r\n\r\nSection 11 (Security Considerations) from RFC 9449 only considers replay attacks by an \"adversary\".\r\nSection 11.1 (DPoP Proof Pre-generation) from RFC 9449 only considers \"an attacker in control of the client\".\r\n\r\nRFC 9449 applies to the OAuth 2.0 framework but not to the Holder, Issuer, Verifier model.\r\nRFC 9449 does not consider collusion attacks between End-Users. \r\n\r\nThe current draft does not consider either collusion attacks between End-Users.\r\nThe threats that apply to the OAuth 2.0 model and to the Holder, Issuer, Verifier are different. \r\n\r\nThe term \"Key Binding\" that used in the draft is the right wording. \r\nWhen key binding is used, it demonstrates the ability of an entity :\r\n\r\n- to correctly use a private key that corresponds to a public placed in the SD-JWT or \r\n- to use the cryptographic result of computation made using that private key,\r\n if there was a collusion between End-Users.\r\n\r\nIn the context of the Holder, Issuer, Verifier model, \"Key binding\" does not demonstrate a \"Proof of Possession\" of any kind.\r\n\r\n\r\n",
+          "createdAt": "2024-11-07T08:12:23Z",
+          "updatedAt": "2024-11-07T08:12:23Z"
         }
       ]
     },
@@ -12241,6 +12248,22 @@
       "body": "The last paragraph of section 10.5 (Issuer Identifier) states:\r\n\r\n>    To mitigate this issue, a group of issuers may elect to use a common\r\n>    Issuer identifier.  A group signature scheme outside the scope of\r\n>    this specification may also be used, instead of an individual\r\n>    signature.\r\n\r\nGiven the proposal to add a new section dedicated to \"Issuer anonymity\", this paragraph can be removed.\r\n",
       "createdAt": "2024-11-06T17:13:59Z",
       "updatedAt": "2024-11-06T17:13:59Z",
+      "closedAt": null,
+      "comments": []
+    },
+    {
+      "number": 523,
+      "id": "I_kwDOHTmVzM6djRMG",
+      "title": "Hash Function Claim value case-sensitivity",
+      "url": "https://github.com/oauth-wg/oauth-selective-disclosure-jwt/issues/523",
+      "state": "OPEN",
+      "author": "spheroid",
+      "authorAssociation": "NONE",
+      "assignees": [],
+      "labels": [],
+      "body": "In Section 4.1.1 Hash Function Claim it's stated that:\r\n\r\n> The hash algorithm identifier MUST be a hash algorithm value from the \"Hash Name String\" column in the IANA \"Named Information Hash Algorithm\" registry [[IANA.Hash.Algorithms](https://www.ietf.org/archive/id/draft-ietf-oauth-selective-disclosure-jwt-13.html#IANA.Hash.Algorithms)] or a value defined in another specification and/or profile of this specification.\r\n\r\nI've seen this kind of reference and phrasing in other recent specifications and it's never indicated whether these values are case-sensitive or not. Perhaps this is fault of RFC 6920 not being explicit on the matter, but being vague here creates interop issues; I've already witnessed one regarding this very claim.\r\n\r\nShould these values be considered case-sensitive or not?",
+      "createdAt": "2024-11-08T08:22:15Z",
+      "updatedAt": "2024-11-08T08:22:15Z",
       "closedAt": null,
       "comments": []
     }
