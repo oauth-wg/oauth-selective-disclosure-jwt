@@ -1894,6 +1894,10 @@ data. The original JSON data is then used by the application. See
 
    [[ To be removed from the final specification ]]
 
+   -14
+
+    * Update the `typ` value in the SD-JWT VC example to `dc+sd-jwt` to align with anticipated changes in the SD-JWT VC draft.
+
    -13
 
    * WGLC (part 1) updates
