@@ -1893,6 +1893,10 @@ data. The original JSON data is then used by the application. See
 
    [[ To be removed from the final specification ]]
 
+   -14
+
+   * Address WGLC comments
+
    -13
 
    * WGLC (part 1) updates
