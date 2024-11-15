@@ -1368,7 +1368,7 @@ The primary use case is the selective disclosure of JSON Web Token (JWT) claims.
                 <p id="section-toc.1-1.10.2.1.1"><a href="#section-10.1" class="auto internal xref">10.1</a>.  <a href="#name-unlinkability" class="internal xref">Unlinkability</a></p>
 </li>
               <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.10.2.2">
-                <p id="section-toc.1-1.10.2.2.1"><a href="#section-10.2" class="auto internal xref">10.2</a>.  <a href="#name-storage-of-signed-user-data" class="internal xref">Storage of Signed User Data</a></p>
+                <p id="section-toc.1-1.10.2.2.1"><a href="#section-10.2" class="auto internal xref">10.2</a>.  <a href="#name-storage-of-user-data" class="internal xref">Storage of User Data</a></p>
 </li>
               <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.10.2.3">
                 <p id="section-toc.1-1.10.2.3.1"><a href="#section-10.3" class="auto internal xref">10.3</a>.  <a href="#name-confidentiality-during-tran" class="internal xref">Confidentiality during Transport</a></p>
@@ -1648,7 +1648,7 @@ The Key Binding JWT encodes a signature by the Holder's private key over<a href=
 </li>
           <li class="compact" id="section-3.3-4.2">a nonce to ensure the freshness of the signature, and<a href="#section-3.3-4.2" class="pilcrow">¶</a>
 </li>
-          <li class="compact" id="section-3.3-4.3">an audience value to indicate the intended audience for the document.<a href="#section-3.3-4.3" class="pilcrow">¶</a>
+          <li class="compact" id="section-3.3-4.3">an audience value to indicate the intended Verifier for the document.<a href="#section-3.3-4.3" class="pilcrow">¶</a>
 </li>
         </ul>
 <p id="section-3.3-5">Details of the format of Key Binding JWTs are described in <a href="#kb-jwt" class="auto internal xref">Section 4.3</a>.<a href="#section-3.3-5" class="pilcrow">¶</a></p>
@@ -1792,7 +1792,7 @@ key. It MUST NOT use the <code>none</code> algorithm.<a href="#section-4.1-1" cl
         </ol>
 <p id="section-4.1-4">The same digest value MUST NOT appear more than once in the SD-JWT.<a href="#section-4.1-4" class="pilcrow">¶</a></p>
 <p id="section-4.1-5">Application and profiles of SD-JWT SHOULD be explicitly typed. See <a href="#explicit_typing" class="auto internal xref">Section 9.11</a> for more details.<a href="#section-4.1-5" class="pilcrow">¶</a></p>
-<p id="section-4.1-6">It is the Issuer who decides which claims are selectively disclosable and which are not. End-User claims MAY be included as plaintext as well, e.g., if hiding the particular claims from the Verifier is not required in the intended use case. See <a href="#sd-validity-claims" class="auto internal xref">Section 9.7</a> for considerations on making validity-controlling claims such as <code>exp</code> selectively disclosable.<a href="#section-4.1-6" class="pilcrow">¶</a></p>
+<p id="section-4.1-6">It is the Issuer who decides which claims are selectively disclosable by the Holder and which are not. Claims MAY be included as plaintext as well, e.g., if hiding the particular claims from the Verifier is not required in the intended use case. See <a href="#sd-validity-claims" class="auto internal xref">Section 9.7</a> for considerations on making validity-controlling claims such as <code>exp</code> selectively disclosable.<a href="#section-4.1-6" class="pilcrow">¶</a></p>
 <p id="section-4.1-7">Claims that are not selectively disclosable are included in the SD-JWT in plaintext just as they would be in any other JSON structure.<a href="#section-4.1-7" class="pilcrow">¶</a></p>
 <div id="hash_function_claim">
 <section id="section-4.1.1">
@@ -2200,13 +2200,14 @@ in <a href="#hash_function_claim" class="auto internal xref">Section 4.1.1</a>).
           <h4 id="name-validating-the-key-binding-">
 <a href="#section-4.3.2" class="section-number selfRef">4.3.2. </a><a href="#name-validating-the-key-binding-" class="section-name selfRef">Validating the Key Binding JWT</a>
           </h4>
-<p id="section-4.3.2-1">The Verifier MUST ensure that the key with which it validates the signature on
+<p id="section-4.3.2-1">Whether to require Key Binding is up to the Verifier's policy, based on the set
+of trust requirements such as trust frameworks it belongs to. See
+<a href="#key_binding_security" class="auto internal xref">Section 9.5</a> for security considerations.<a href="#section-4.3.2-1" class="pilcrow">¶</a></p>
+<p id="section-4.3.2-2">If the Verifier requires Key Binding, the Verifier MUST ensure that the key with which it validates the signature on
 the Key Binding JWT is the key specified in the SD-JWT as the Holder's public
 key.  For example, if the SD-JWT contains a <code>cnf</code> value with a <code>jwk</code> member, the
-Verifier would parse the provided JWK and use it to verify the Key Binding JWT.<a href="#section-4.3.2-1" class="pilcrow">¶</a></p>
-<p id="section-4.3.2-2">Whether to require Key Binding is up to the Verifier's policy, based on the set
-of trust requirements such as trust frameworks it belongs to. See
-<a href="#key_binding_security" class="auto internal xref">Section 9.5</a> for security considerations.<a href="#section-4.3.2-2" class="pilcrow">¶</a></p>
+Verifier would parse the provided JWK and use it to verify the Key Binding JWT.<a href="#section-4.3.2-2" class="pilcrow">¶</a></p>
+<p id="section-4.3.2-3">Details of the Validation process are defined in <a href="#verifier_verification" class="auto internal xref">Section 7.3</a>.<a href="#section-4.3.2-3" class="pilcrow">¶</a></p>
 </section>
 </div>
 </section>
@@ -2258,7 +2259,7 @@ lines in RFCs and for readability. JSON does not allow line breaks within string
 </li>
           <li class="compact" id="section-5.1-4.2">The <code>sub</code> element as well as essential verification data (<code>iss</code>, <code>exp</code>, <code>cnf</code>, etc.) are always visible.<a href="#section-5.1-4.2" class="pilcrow">¶</a>
 </li>
-          <li class="compact" id="section-5.1-4.3">All other End-User claims are selectively disclosable.<a href="#section-5.1-4.3" class="pilcrow">¶</a>
+          <li class="compact" id="section-5.1-4.3">All other claims are selectively disclosable.<a href="#section-5.1-4.3" class="pilcrow">¶</a>
 </li>
           <li class="compact" id="section-5.1-4.4">For <code>address</code>, the Issuer is using a flat structure, i.e., all the claims
 in the <code>address</code> claim can only be disclosed in full. Other options are
@@ -2446,8 +2447,8 @@ ZHJ5M2xjYndIZ2VaOGtoQXYxVTFPU2xlclAwVmtCSnJXWjAifV0sICJfc2RfYWxnIjog
 InNoYS0yNTYiLCAiY25mIjogeyJqd2siOiB7Imt0eSI6ICJFQyIsICJjcnYiOiAiUC0y
 NTYiLCAieCI6ICJUQ0FFUjE5WnZ1M09IRjRqNFc0dmZTVm9ISVAxSUxpbERsczd2Q2VH
 ZW1jIiwgInkiOiAiWnhqaVdXYlpNUUdIVldLVlE0aGJTSWlyc1ZmdWVjQ0U2dDRqVDlG
-MkhaUSJ9fX0.RoxSgDfULk6uTbmw-m5tK4nRo85Fz6kO-T7czH0kmNsdPhYQxeS6R29I
-xQ75kclaNPYY2e0YR9-SKovhl7BtZQ
+MkhaUSJ9fX0.fAQTv4dUu6LNdj2uDX8hI45opvEckEzkyapCb5oI7f4jT5YeextPpbVO
+WNMATklYgu02LwB3f8MvP0HPjypTvg
 
 </pre><a href="#section-5.1-29" class="pilcrow">¶</a>
 </div>
@@ -2469,8 +2470,8 @@ ZHJ5M2xjYndIZ2VaOGtoQXYxVTFPU2xlclAwVmtCSnJXWjAifV0sICJfc2RfYWxnIjog
 InNoYS0yNTYiLCAiY25mIjogeyJqd2siOiB7Imt0eSI6ICJFQyIsICJjcnYiOiAiUC0y
 NTYiLCAieCI6ICJUQ0FFUjE5WnZ1M09IRjRqNFc0dmZTVm9ISVAxSUxpbERsczd2Q2VH
 ZW1jIiwgInkiOiAiWnhqaVdXYlpNUUdIVldLVlE0aGJTSWlyc1ZmdWVjQ0U2dDRqVDlG
-MkhaUSJ9fX0.RoxSgDfULk6uTbmw-m5tK4nRo85Fz6kO-T7czH0kmNsdPhYQxeS6R29I
-xQ75kclaNPYY2e0YR9-SKovhl7BtZQ~WyIyR0xDNDJzS1F2ZUNmR2ZyeU5STjl3IiwgI
+MkhaUSJ9fX0.fAQTv4dUu6LNdj2uDX8hI45opvEckEzkyapCb5oI7f4jT5YeextPpbVO
+WNMATklYgu02LwB3f8MvP0HPjypTvg~WyIyR0xDNDJzS1F2ZUNmR2ZyeU5STjl3IiwgI
 mdpdmVuX25hbWUiLCAiSm9obiJd~WyJlbHVWNU9nM2dTTklJOEVZbnN4QV9BIiwgImZh
 bWlseV9uYW1lIiwgIkRvZSJd~WyI2SWo3dE0tYTVpVlBHYm9TNXRtdlZBIiwgImVtYWl
 sIiwgImpvaG5kb2VAZXhhbXBsZS5jb20iXQ~WyJlSThaV205UW5LUHBOUGVOZW5IZGhR
@@ -2514,18 +2515,18 @@ ZHJ5M2xjYndIZ2VaOGtoQXYxVTFPU2xlclAwVmtCSnJXWjAifV0sICJfc2RfYWxnIjog
 InNoYS0yNTYiLCAiY25mIjogeyJqd2siOiB7Imt0eSI6ICJFQyIsICJjcnYiOiAiUC0y
 NTYiLCAieCI6ICJUQ0FFUjE5WnZ1M09IRjRqNFc0dmZTVm9ISVAxSUxpbERsczd2Q2VH
 ZW1jIiwgInkiOiAiWnhqaVdXYlpNUUdIVldLVlE0aGJTSWlyc1ZmdWVjQ0U2dDRqVDlG
-MkhaUSJ9fX0.RoxSgDfULk6uTbmw-m5tK4nRo85Fz6kO-T7czH0kmNsdPhYQxeS6R29I
-xQ75kclaNPYY2e0YR9-SKovhl7BtZQ~WyJlbHVWNU9nM2dTTklJOEVZbnN4QV9BIiwgI
+MkhaUSJ9fX0.fAQTv4dUu6LNdj2uDX8hI45opvEckEzkyapCb5oI7f4jT5YeextPpbVO
+WNMATklYgu02LwB3f8MvP0HPjypTvg~WyJlbHVWNU9nM2dTTklJOEVZbnN4QV9BIiwgI
 mZhbWlseV9uYW1lIiwgIkRvZSJd~WyJBSngtMDk1VlBycFR0TjRRTU9xUk9BIiwgImFk
 ZHJlc3MiLCB7InN0cmVldF9hZGRyZXNzIjogIjEyMyBNYWluIFN0IiwgImxvY2FsaXR5
 IjogIkFueXRvd24iLCAicmVnaW9uIjogIkFueXN0YXRlIiwgImNvdW50cnkiOiAiVVMi
 fV0~WyIyR0xDNDJzS1F2ZUNmR2ZyeU5STjl3IiwgImdpdmVuX25hbWUiLCAiSm9obiJd
 ~WyJsa2x4RjVqTVlsR1RQVW92TU5JdkNBIiwgIlVTIl0~eyJhbGciOiAiRVMyNTYiLCA
 idHlwIjogImtiK2p3dCJ9.eyJub25jZSI6ICIxMjM0NTY3ODkwIiwgImF1ZCI6ICJodH
-RwczovL3ZlcmlmaWVyLmV4YW1wbGUub3JnIiwgImlhdCI6IDE3MzE2OTM5MzMsICJzZF
-9oYXNoIjogIndGS250bmhaek5ud0ltLUtlNnBPdnV5TWVmWExIcmwzZUdUV2ZtYnVzMl
-kifQ.E4w1Td0gil5DsnzBWl_tAIlLkGXD8o1AnE_zeILbRhfwtwnyOwb0tvVDczSNYdK
-UgHXdRhiOrdJIhnIEnKUsWg
+RwczovL3ZlcmlmaWVyLmV4YW1wbGUub3JnIiwgImlhdCI6IDE3MzE2OTYwMzAsICJzZF
+9oYXNoIjogIkZRUzFDNkFGYWhvWENMMXh1eXdySjJ0WXVpc2xmSUdSaG9lTFAzem5Wcz
+QifQ.7Fr4nnnUyF0kG7CRpblQrpdf0hO4loN5a-FEH0pxnH_FTigPFxXo-lfIEiLl0Ou
+ExVE59Cln8jX92jb-oqKW1A
 
 </pre><a href="#section-5.2-2" class="pilcrow">¶</a>
 </div>
@@ -2534,8 +2535,8 @@ UgHXdRhiOrdJIhnIEnKUsWg
 <pre>{
   "nonce": "1234567890",
   "aud": "https://verifier.example.org",
-  "iat": 1731693933,
-  "sd_hash": "wFKntnhZzNnwIm-Ke6pOvuyMefXLHrl3eGTWfmbus2Y"
+  "iat": 1731696030,
+  "sd_hash": "FQS1C6AFahoXCL1xuywrJ2tYuislfIGRhoeLP3znVs4"
 }
 
 </pre><a href="#section-5.2-4" class="pilcrow">¶</a>
@@ -2936,8 +2937,8 @@ an SD-JWT:<a href="#section-7.1-3" class="pilcrow">¶</a></p>
 </li>
         </ol>
 <p id="section-7.1-5">If any step fails, the SD-JWT is not valid, and processing MUST be aborted. Otherwise, the JSON document resulting from the preceding processing and verification steps, herein referred to as the processed SD-JWT payload, can be made available to the application to be used for its intended purpose.<a href="#section-7.1-5" class="pilcrow">¶</a></p>
-<p id="section-7.1-6">Note that these processing steps do not yield any guarantees to the Holder about having received a complete set of Disclosures. That is, for some digest values in the Issuer-signed JWT (which are not decoy digests) there may be no corresponding Disclosures, for example, if the message from the Issuer was truncated.<a href="#section-7.1-6" class="pilcrow">¶</a></p>
-<p id="section-7.1-7">It is up to the Holder how to maintain the mapping between the Disclosures and the plaintext claim values to be able to display them to the End-User when needed.<a href="#section-7.1-7" class="pilcrow">¶</a></p>
+<p id="section-7.1-6">Note that these processing steps do not yield any guarantees to the Holder about having received a complete set of Disclosures. That is, for some digest values in the Issuer-signed JWT (which are not decoy digests) there may be no corresponding Disclosures, for example, if the message from the Issuer was truncated.
+It is up to the Holder how to maintain the mapping between the Disclosures and the plaintext claim values to be able to display them to the user when needed.<a href="#section-7.1-6" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="holder_verification">
@@ -2949,7 +2950,7 @@ an SD-JWT:<a href="#section-7.1-3" class="pilcrow">¶</a></p>
 receives an SD-JWT+KB, it MUST be rejected.<a href="#section-7.2-1" class="pilcrow">¶</a></p>
 <p id="section-7.2-2">For presentation to a Verifier, the Holder MUST perform the following (or equivalent) steps:<a href="#section-7.2-2" class="pilcrow">¶</a></p>
 <ol start="1" type="1" class="compact type-1" id="section-7.2-3">
-<li id="section-7.2-3.1">Decide which Disclosures to release to the Verifier, obtaining proper End-User consent if necessary.<a href="#section-7.2-3.1" class="pilcrow">¶</a>
+<li id="section-7.2-3.1">Decide which Disclosures to release to the Verifier, obtaining proper consent if necessary.<a href="#section-7.2-3.1" class="pilcrow">¶</a>
 </li>
           <li id="section-7.2-3.2">
             <p id="section-7.2-3.2.1">Verify that each selected Disclosure satisfies one of the two following conditions:<a href="#section-7.2-3.2.1" class="pilcrow">¶</a></p>
@@ -3108,8 +3109,8 @@ issued using the Flattened JSON Serialization:<a href="#section-8.2-2" class="pi
     Z1ZWNDRTZ0NGpUOUYySFpRIn19fQ",
   "protected":
     "eyJhbGciOiAiRVMyNTYiLCAidHlwIjogImV4YW1wbGUrc2Qtand0In0",
-  "signature": "_X5nIoB9zidcou2HR2yLX2mShhhVcwb279kR_Lyo1N1SGwCkWpcn
-    s2J8XJTzJxPpfYvBatTMTEyXAKd9vFviRg"
+  "signature": "2GO9vwU4qLOmiTU4ZRGFHQ9MWEsqsTMynNapHV44u4-s-q6So9JQ
+    VxwSmIQ8mjscB814A8MIpX_84lgjrUbauA"
 }
 
 </pre><a href="#section-8.2-3" class="pilcrow">¶</a>
@@ -3126,10 +3127,10 @@ issued using the Flattened JSON Serialization:<a href="#section-8.2-2" class="pi
     ],
     "kb_jwt": "eyJhbGciOiAiRVMyNTYiLCAidHlwIjogImtiK2p3dCJ9.eyJub25j
       ZSI6ICIxMjM0NTY3ODkwIiwgImF1ZCI6ICJodHRwczovL3ZlcmlmaWVyLmV4YW
-      1wbGUub3JnIiwgImlhdCI6IDE3MzE2OTM5MzMsICJzZF9oYXNoIjogIm5QOGJL
-      cTB4VlFVcEpwSW15VkVzME90OXlFeDlFS1RmR3JsWG1HWkdpOEkifQ.EqKPZVV
-      H6vbSqw8TdyLy-znB7slu7J-7D2FfMPvDhm3bDY0R7e5geIJquKptNE3pQ69ZM
-      igOTEESADQbnShJ1w"
+      1wbGUub3JnIiwgImlhdCI6IDE3MzE2OTYwMzAsICJzZF9oYXNoIjogIllRV2lT
+      em13RGFOREp1ZWlvNzhXaWtHSHNyOC1UTGgtTEtGU2pDVmRzMVkifQ.tQP52jg
+      jR9eI5CcsYH0CTmwJsdFV62QmceeXEqIGGlboOKSCLuG0ZLEV6oKgESWLzLmlp
+      hD2dj2n-F681pnNDg"
   },
   "payload": "eyJfc2QiOiBbIjRIQm42YUlZM1d0dUdHV1R4LXFVajZjZGs2V0JwWn
     lnbHRkRmF2UGE3TFkiLCAiOHNtMVFDZjAyMXBObkhBQ0k1c1A0bTRLWmd5Tk9PQV
@@ -3143,8 +3144,8 @@ issued using the Flattened JSON Serialization:<a href="#section-8.2-2" class="pi
     Z1ZWNDRTZ0NGpUOUYySFpRIn19fQ",
   "protected":
     "eyJhbGciOiAiRVMyNTYiLCAidHlwIjogImV4YW1wbGUrc2Qtand0In0",
-  "signature": "_X5nIoB9zidcou2HR2yLX2mShhhVcwb279kR_Lyo1N1SGwCkWpcn
-    s2J8XJTzJxPpfYvBatTMTEyXAKd9vFviRg"
+  "signature": "2GO9vwU4qLOmiTU4ZRGFHQ9MWEsqsTMynNapHV44u4-s-q6So9JQ
+    VxwSmIQ8mjscB814A8MIpX_84lgjrUbauA"
 }
 
 </pre><a href="#section-8.2-5" class="pilcrow">¶</a>
@@ -3187,15 +3188,15 @@ Serialization:<a href="#section-8.3-2" class="pilcrow">¶</a></p>
         "kid": "issuer-key-1",
         "kb_jwt": "eyJhbGciOiAiRVMyNTYiLCAidHlwIjogImtiK2p3dCJ9.eyJu
           b25jZSI6ICIxMjM0NTY3ODkwIiwgImF1ZCI6ICJodHRwczovL3ZlcmlmaW
-          VyLmV4YW1wbGUub3JnIiwgImlhdCI6IDE3MzE2OTM5MzMsICJzZF9oYXNo
-          IjogIlRFUDJsbmFFSGVZZTkwWkN1Rm9zRnk5SmtZOHJDWEkza0FEYW9SVU
-          VNbFEifQ.qY3-L4OkyUl80roNlJHviJlIrl6K3ygR6QIJNf6EMweEgUEAj
-          aACzU-dMOBYfu20-Ry10zf_V6QhTM9dBW4HiQ"
+          VyLmV4YW1wbGUub3JnIiwgImlhdCI6IDE3MzE2OTYwMzAsICJzZF9oYXNo
+          IjogIk9WNWtNMDhOVXlhNFdIWmZ1Zm1jNHpUSGQ0bWVRRThleUVwSGI2WU
+          lJWE0ifQ.QvnW8DFWj1ClXooeWYrtwDfGq2r7TrPMK9yVutJ7eaZ9uUMcP
+          RkhYO5bGmjtY6qMLKm6YNZiOisKpmBSKAYU4g"
       },
       "protected":
         "eyJhbGciOiAiRVMyNTYiLCAidHlwIjogImV4YW1wbGUrc2Qtand0In0",
-      "signature": "bdoDXysFoThQFWoPuLv9Iwbj63WyzW4NlvgRW420fHzvCAg2
-        ZfF_wiX8zfXVFC-w1pu2wqWi6zKa06gkSJzg0A"
+      "signature": "Zw6EQNURVQ131iLj2mORhQGFR-M-IY0ZT2Jbd8AXTo4cNbeF
+        nvqP1P6sLu8JMB_KW5duQKJFKF5ntuwjqdi8xg"
     },
     {
       "header": {
@@ -3203,8 +3204,8 @@ Serialization:<a href="#section-8.3-2" class="pilcrow">¶</a></p>
       },
       "protected":
         "eyJhbGciOiAiRVMyNTYiLCAidHlwIjogImV4YW1wbGUrc2Qtand0In0",
-      "signature": "cg6buYVKWnL10xTuB4hJKzxGNj5EvMlvHqi4CVN9kJrycONs
-        UjExQC2FaUf3UfQ42AmSo5j5qJGxBirXfCjpuw"
+      "signature": "xIDdX4XUF8SKEibL1n7QSz8ehuhyuIi7EqasqLOGNgtQu80p
+        KhoV4QDiv0-N15ataDudb4Bs0MlkCU54DCFAog"
     }
   ]
 }
@@ -3559,7 +3560,7 @@ about the credentials presented to it. Legal requirements could further enforce 
 Issuer/Verifier unlinkability. Similarly, a large service provider issuing credentials might implicitly pressure
 Verifiers into collusion by incentivizing participation in their larger ecosystem.
 Deployers of SD-JWT must be aware of these potential power dynamics,
-mitigate them as much as possible, and/or make the risks transparent to the End-User.<a href="#section-10.1-7" class="pilcrow">¶</a></p>
+mitigate them as much as possible, and/or make the risks transparent to the user.<a href="#section-10.1-7" class="pilcrow">¶</a></p>
 <p id="section-10.1-8">Contrary to that, Issuer/Verifier unlinkability with an honest Verifier can generally be achieved.
 However, a callback from the Verifier to the Issuer, such as a revocation check, could potentially
 disclose information about the credential's usage to the Issuer.
@@ -3578,26 +3579,25 @@ hours and calculate <code>exp</code> accordingly) or rounded (e.g., rounded down
 beginning of the day).<a href="#section-10.1-9" class="pilcrow">¶</a></p>
 </section>
 </div>
-<div id="storage-of-signed-user-data">
+<div id="storage-of-user-data">
 <section id="section-10.2">
-        <h3 id="name-storage-of-signed-user-data">
-<a href="#section-10.2" class="section-number selfRef">10.2. </a><a href="#name-storage-of-signed-user-data" class="section-name selfRef">Storage of Signed User Data</a>
+        <h3 id="name-storage-of-user-data">
+<a href="#section-10.2" class="section-number selfRef">10.2. </a><a href="#name-storage-of-user-data" class="section-name selfRef">Storage of User Data</a>
         </h3>
-<p id="section-10.2-1">Wherever End-User data is stored, it represents a potential
+<p id="section-10.2-1">Wherever user data is stored, it represents a potential
 target for an attacker. This target can be of particularly
 high value when the data is signed by a trusted authority like an
 official national identity service. For example, in OpenID Connect <span>[<a href="#OpenID.Core" class="cite xref">OpenID.Core</a>]</span>,
 signed ID Tokens can be stored by Relying Parties. In the case of
 SD-JWT, Holders have to store SD-JWTs,
 and Issuers and Verifiers may decide to do so as well.<a href="#section-10.2-1" class="pilcrow">¶</a></p>
-<p id="section-10.2-2">Not surprisingly, a leak of such data risks revealing private data of End-Users
-to third parties. Signed End-User data, the authenticity of which
+<p id="section-10.2-2">Not surprisingly, a leak of such data risks revealing private data of users
+to third parties. Signed user data, the authenticity of which
 can be easily verified by third parties, further exacerbates the risk.
 As discussed in <a href="#key_binding_security" class="auto internal xref">Section 9.5</a>, leaked
 SD-JWTs may also allow attackers to impersonate Holders unless Key
 Binding is enforced and the attacker does not have access to the
-Holder's cryptographic keys. Altogether, leaked SD-JWT credentials may have
-a high monetary value on black markets.<a href="#section-10.2-2" class="pilcrow">¶</a></p>
+Holder's cryptographic keys.<a href="#section-10.2-2" class="pilcrow">¶</a></p>
 <p id="section-10.2-3">Due to these risks, systems implementing SD-JWT SHOULD be designed to minimize
 the amount of data that is stored. All involved parties SHOULD store SD-JWTs
 containing privacy-sensitive data only for as long as needed, including in log
@@ -3607,12 +3607,12 @@ Disclosures if they contain privacy-sensitive data.<a href="#section-10.2-4" cla
 <p id="section-10.2-5">Holders SHOULD store SD-JWTs only in
 encrypted form, and, wherever possible, use hardware-backed encryption
 in particular for the private Key Binding key. Decentralized storage
-of data, e.g., on End-User devices, SHOULD be preferred for End-User
+of data, e.g., on user devices, SHOULD be preferred for user
 credentials over centralized storage. Expired SD-JWTs SHOULD be deleted
 as soon as possible.<a href="#section-10.2-5" class="pilcrow">¶</a></p>
 <p id="section-10.2-6">After Verification, Verifiers SHOULD NOT store the Issuer-signed JWT or the
 respective Disclosures if they contain privacy-sensitive data. It may be
-sufficient to store the result of the verification and any End-User data that is
+sufficient to store the result of the verification and any user data that is
 needed for the application.<a href="#section-10.2-6" class="pilcrow">¶</a></p>
 </section>
 </div>
@@ -3623,7 +3623,7 @@ needed for the application.<a href="#section-10.2-6" class="pilcrow">¶</a></p>
         </h3>
 <p id="section-10.3-1">If the SD-JWT is transmitted over an insecure
 channel during issuance or presentation, an adversary may be able to
-intercept and read the End-User's personal data or correlate the information with previous uses of the same SD-JWT.<a href="#section-10.3-1" class="pilcrow">¶</a></p>
+intercept and read the user's personal data or correlate the information with previous uses of the same SD-JWT.<a href="#section-10.3-1" class="pilcrow">¶</a></p>
 <p id="section-10.3-2">Usually, transport protocols for issuance and presentation of credentials
 are designed to protect the confidentiality of the transmitted data, for
 example, by requiring the use of TLS.<a href="#section-10.3-2" class="pilcrow">¶</a></p>
@@ -3631,7 +3631,7 @@ example, by requiring the use of TLS.<a href="#section-10.3-2" class="pilcrow">�
 provided by the transport protocol and does not specify any encryption
 mechanism.<a href="#section-10.3-3" class="pilcrow">¶</a></p>
 <p id="section-10.3-4">Implementers MUST ensure that the transport protocol provides confidentiality
-if the privacy of End-User data or correlation attacks by passive observers are a concern.<a href="#section-10.3-4" class="pilcrow">¶</a></p>
+if the privacy of user data or correlation attacks by passive observers are a concern.<a href="#section-10.3-4" class="pilcrow">¶</a></p>
 <p id="section-10.3-5">To encrypt the SD-JWT when transmitted over an insecure channel, implementers MAY use JSON Web Encryption (JWE) <span>[<a href="#RFC7516" class="cite xref">RFC7516</a>]</span> by nesting the SD-JWT as the plaintext payload of a JWE.
 Especially, when an SD-JWT is transmitted via a URL and information may be stored/cached in the browser or end up in web server logs, the SD-JWT SHOULD be encrypted using JWE.<a href="#section-10.3-5" class="pilcrow">¶</a></p>
 </section>
@@ -3641,8 +3641,8 @@ Especially, when an SD-JWT is transmitted via a URL and information may be store
         <h3 id="name-decoy-digests-2">
 <a href="#section-10.4" class="section-number selfRef">10.4. </a><a href="#name-decoy-digests-2" class="section-name selfRef">Decoy Digests</a>
         </h3>
-<p id="section-10.4-1">The use of decoy digests is RECOMMENDED when the number of claims (or the existence of particular claims) can be a side-channel disclosing information about otherwise undisclosed claims. In particular, if a claim in an SD-JWT is present only if a certain condition is met (e.g., a membership number is only contained if the End-User is a member of a group), the Issuer SHOULD add decoy digests when the condition is not met.<a href="#section-10.4-1" class="pilcrow">¶</a></p>
-<p id="section-10.4-2">Decoy digests increase the size of the SD-JWT. The number of decoy digests (or whether to use them at all) is a trade-off between the size of the SD-JWT and the privacy of the End-User's data.<a href="#section-10.4-2" class="pilcrow">¶</a></p>
+<p id="section-10.4-1">The use of decoy digests is RECOMMENDED when the number of claims (or the existence of particular claims) can be a side-channel disclosing information about otherwise undisclosed claims. In particular, if a claim in an SD-JWT is present only if a certain condition is met (e.g., a membership number is only contained if the user is a member of a group), the Issuer SHOULD add decoy digests when the condition is not met.<a href="#section-10.4-1" class="pilcrow">¶</a></p>
+<p id="section-10.4-2">Decoy digests increase the size of the SD-JWT. The number of decoy digests (or whether to use them at all) is a trade-off between the size of the SD-JWT and the privacy of the user's data.<a href="#section-10.4-2" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="issuer-identifier">
@@ -4310,8 +4310,8 @@ WUpISVo4VnUtZjlDQ3lWdWIyVWZnRWs4anZ2WGV6d0sxcF9KbmVlWFEiLCAiZ2xUM2hy
 U1U3ZlNXZ3dGNVVEWm1Xd0JUdzMyZ25VbGRJaGk4aEdWQ2FWNCIsICJydkpkNmlxNlQ1
 ZWptc0JNb0d3dU5YaDlxQUFGQVRBY2k0MG9pZEVlVnNBIiwgInVOSG9XWWhYc1poVkpD
 TkUyRHF5LXpxdDd0NjlnSkt5NVFhRnY3R3JNWDQiXX0sICJfc2RfYWxnIjogInNoYS0y
-NTYifQ.n404tPsnlJ04YTK1hTpemsDl9-PK5YfHw0euzK8WDtdO3tPPNtap5yg41ZZEr
-ve2CYsAYc_n4-yk8veFQwaPkQ~WyJHMDJOU3JRZmpGWFE3SW8wOXN5YWpBIiwgInJlZ2
+NTYifQ.IwDzjkd3iDgEJ-k09ttwNLHBLVhJudbqmbFvoq07D7jym6knU-TFOkgSrSuSS
+eDa5ikMwECtvg35hulUlt8tmA~WyJHMDJOU3JRZmpGWFE3SW8wOXN5YWpBIiwgInJlZ2
 lvbiIsICJcdTZlMmZcdTUzM2EiXQ~WyJsa2x4RjVqTVlsR1RQVW92TU5JdkNBIiwgImN
 vdW50cnkiLCAiSlAiXQ~
 
@@ -4662,8 +4662,8 @@ ZFJtc01vIiwgIldOQS1VTks3Rl96aHNBYjlzeVdPNklJUTF1SGxUbU9VOHI4Q3ZKMGNJ
 TWsiLCAiV3hoX3NWM2lSSDliZ3JUQkppLWFZSE5DTHQtdmpoWDFzZC1pZ09mXzlsayIs
 ICJfTy13SmlIM2VuU0I0Uk9IbnRUb1FUOEptTHR6LW1oTzJmMWM4OVhvZXJRIiwgImh2
 RFhod21HY0pRc0JDQTJPdGp1TEFjd0FNcERzYVUwbmtvdmNLT3FXTkUiXX19LCAiX3Nk
-X2FsZyI6ICJzaGEtMjU2In0.BrXHwYAclieWM9JwZjIFTKeJ1cKBj-fdfRdkDSKOSDEo
-gVoe8n1DuujbrRl_mcM3KGGrMh3C7qnyNaPphfSeLA~WyIyR0xDNDJzS1F2ZUNmR2Zye
+X2FsZyI6ICJzaGEtMjU2In0.A85t4fyF5SgV2Rx5kucvQ0lWO7eBkDm56-BZUg5GEg6l
+P1h_L2eWEcUdwlW6mqvr5i711uIHTkv_FGWS3PI9vQ~WyIyR0xDNDJzS1F2ZUNmR2Zye
 U5STjl3IiwgInRpbWUiLCAiMjAxMi0wNC0yM1QxODoyNVoiXQ~WyJQYzMzSk0yTGNoY1
 VfbEhnZ3ZfdWZRIiwgeyJfc2QiOiBbIjl3cGpWUFd1RDdQSzBuc1FETDhCMDZsbWRnVj
 NMVnliaEh5ZFFwVE55TEkiLCAiRzVFbmhPQU9vVTlYXzZRTU52ekZYanBFQV9SYy1BRX
@@ -4783,8 +4783,8 @@ oeTJyMDE4dnJzSmpvLVZqZDZnNnl0N0Fhb25Lb25uaXVKOXplbDNqbyIsICJxcDdaX0t
 6ICJzaGEtMjU2IiwgImNuZiI6IHsiandrIjogeyJrdHkiOiAiRUMiLCAiY3J2IjogIlA
 tMjU2IiwgIngiOiAiVENBRVIxOVp2dTNPSEY0ajRXNHZmU1ZvSElQMUlMaWxEbHM3dkN
 lR2VtYyIsICJ5IjogIlp4amlXV2JaTVFHSFZXS1ZRNGhiU0lpcnNWZnVlY0NFNnQ0alQ
-5RjJIWlEifX19.GMKgQEEURvBDV2byNavZ1OXVKkKTqcDNXvkpAgdHJP1vbsuhuRopl1
-c0IuIf-7w0XYXn39ggFIpx9_qU5E6o2w~WyIyR0xDNDJzS1F2ZUNmR2ZyeU5STjl3Iiw
+5RjJIWlEifX19.wnWjrgtH9eqPkHWDjs_0sgveg_mQj2PBq0R1q2BHX_ssLDtL1C1ULh
+jbto_mU6PrxyrnYQ_aRc7hfVCDMmHCew~WyIyR0xDNDJzS1F2ZUNmR2ZyeU5STjl3Iiw
 gImdpdmVuX25hbWUiLCAiRXJpa2EiXQ~WyJlbHVWNU9nM2dTTklJOEVZbnN4QV9BIiwg
 ImZhbWlseV9uYW1lIiwgIk11c3Rlcm1hbm4iXQ~WyI2SWo3dE0tYTVpVlBHYm9TNXRtd
 lZBIiwgImJpcnRoZGF0ZSIsICIxOTYzLTA4LTEyIl0~WyJlSThaV205UW5LUHBOUGVOZ
@@ -5139,14 +5139,14 @@ oeTJyMDE4dnJzSmpvLVZqZDZnNnl0N0Fhb25Lb25uaXVKOXplbDNqbyIsICJxcDdaX0t
 6ICJzaGEtMjU2IiwgImNuZiI6IHsiandrIjogeyJrdHkiOiAiRUMiLCAiY3J2IjogIlA
 tMjU2IiwgIngiOiAiVENBRVIxOVp2dTNPSEY0ajRXNHZmU1ZvSElQMUlMaWxEbHM3dkN
 lR2VtYyIsICJ5IjogIlp4amlXV2JaTVFHSFZXS1ZRNGhiU0lpcnNWZnVlY0NFNnQ0alQ
-5RjJIWlEifX19.GMKgQEEURvBDV2byNavZ1OXVKkKTqcDNXvkpAgdHJP1vbsuhuRopl1
-c0IuIf-7w0XYXn39ggFIpx9_qU5E6o2w~WyJuUHVvUW5rUkZxM0JJZUFtN0FuWEZBIiw
+5RjJIWlEifX19.wnWjrgtH9eqPkHWDjs_0sgveg_mQj2PBq0R1q2BHX_ssLDtL1C1ULh
+jbto_mU6PrxyrnYQ_aRc7hfVCDMmHCew~WyJuUHVvUW5rUkZxM0JJZUFtN0FuWEZBIiw
 gIm5hdGlvbmFsaXRpZXMiLCBbIkRFIl1d~WyJNMEpiNTd0NDF1YnJrU3V5ckRUM3hBIi
 wgIjE4IiwgdHJ1ZV0~eyJhbGciOiAiRVMyNTYiLCAidHlwIjogImtiK2p3dCJ9.eyJub
 25jZSI6ICIxMjM0NTY3ODkwIiwgImF1ZCI6ICJodHRwczovL3ZlcmlmaWVyLmV4YW1wb
-GUub3JnIiwgImlhdCI6IDE3MzE2OTM5MzMsICJzZF9oYXNoIjogIjNjZ29iWDVGa3dlT
-0ZYT3Z4NnctNl9SY3g4cDV5RVdhLVd0NlVINTNlU1kifQ.9z6vo7xTdcSAkllyBtq7gy
-lQllOMKXgkVSkBw1dLr6_KLNZNbtYoqzbrFq7aoIOJNgaPUco2vGMGCADnqK_VvQ
+GUub3JnIiwgImlhdCI6IDE3MzE2OTYwMzAsICJzZF9oYXNoIjogImVLRENveV93RDdnQ
+TdjNkVYRTRFT0F4WWROek9GTWt6eFZrMzBTbWtUNG8ifQ.RXtbkYbLpjML-iNyP5-uVq
+Fdz6CG_nFBc1OX_SseXClHDblOoQbyRAf-ENLgBulbc5GieTmuKwH0BjFYjDIl2A
 
 </pre><a href="#appendix-A.3-53" class="pilcrow">¶</a>
 </div>
@@ -5155,8 +5155,8 @@ lQllOMKXgkVSkBw1dLr6_KLNZNbtYoqzbrFq7aoIOJNgaPUco2vGMGCADnqK_VvQ
 <pre>{
   "nonce": "1234567890",
   "aud": "https://verifier.example.org",
-  "iat": 1731693933,
-  "sd_hash": "3cgobX5FkweOFXOvx6w-6_Rcx8p5yEWa-Wt6UH53eSY"
+  "iat": 1731696030,
+  "sd_hash": "eKDCoy_wD7gA7c6EXE4EOAxYdNzOFMkzxVk30SmkT4o"
 }
 
 </pre><a href="#appendix-A.3-55" class="pilcrow">¶</a>
@@ -5269,8 +5269,8 @@ VmFjY2luZVJlY2lwaWVudCJ9LCAidHlwZSI6ICJWYWNjaW5hdGlvbkV2ZW50In0sICJf
 c2RfYWxnIjogInNoYS0yNTYiLCAiY25mIjogeyJqd2siOiB7Imt0eSI6ICJFQyIsICJj
 cnYiOiAiUC0yNTYiLCAieCI6ICJUQ0FFUjE5WnZ1M09IRjRqNFc0dmZTVm9ISVAxSUxp
 bERsczd2Q2VHZW1jIiwgInkiOiAiWnhqaVdXYlpNUUdIVldLVlE0aGJTSWlyc1ZmdWVj
-Q0U2dDRqVDlGMkhaUSJ9fX0.5caoSkPhgqF-gg94W20kKEm2gx_K9VlRzswc3akUgraa
-c270tAxrB8g8SDPFe3wAgVT2j8uFlQvckQ3_xqmgPA~WyIyR0xDNDJzS1F2ZUNmR2Zye
+Q0U2dDRqVDlGMkhaUSJ9fX0.p0KP8hACeVA1zecfUBdJlsiRj3zAPdq9wSDj6moDDLhO
+a-kbSCdhc1dQTo7yQdkOxhJO4fLZDOekVtk9htHyog~WyIyR0xDNDJzS1F2ZUNmR2Zye
 U5STjl3IiwgImF0Y0NvZGUiLCAiSjA3QlgwMyJd~WyJlbHVWNU9nM2dTTklJOEVZbnN4
 QV9BIiwgIm1lZGljaW5hbFByb2R1Y3ROYW1lIiwgIkNPVklELTE5IFZhY2NpbmUgTW9k
 ZXJuYSJd~WyI2SWo3dE0tYTVpVlBHYm9TNXRtdlZBIiwgIm1hcmtldGluZ0F1dGhvcml
@@ -5552,18 +5552,18 @@ VmFjY2luZVJlY2lwaWVudCJ9LCAidHlwZSI6ICJWYWNjaW5hdGlvbkV2ZW50In0sICJf
 c2RfYWxnIjogInNoYS0yNTYiLCAiY25mIjogeyJqd2siOiB7Imt0eSI6ICJFQyIsICJj
 cnYiOiAiUC0yNTYiLCAieCI6ICJUQ0FFUjE5WnZ1M09IRjRqNFc0dmZTVm9ISVAxSUxp
 bERsczd2Q2VHZW1jIiwgInkiOiAiWnhqaVdXYlpNUUdIVldLVlE0aGJTSWlyc1ZmdWVj
-Q0U2dDRqVDlGMkhaUSJ9fX0.5caoSkPhgqF-gg94W20kKEm2gx_K9VlRzswc3akUgraa
-c270tAxrB8g8SDPFe3wAgVT2j8uFlQvckQ3_xqmgPA~WyJQYzMzSk0yTGNoY1VfbEhnZ
+Q0U2dDRqVDlGMkhaUSJ9fX0.p0KP8hACeVA1zecfUBdJlsiRj3zAPdq9wSDj6moDDLhO
+a-kbSCdhc1dQTo7yQdkOxhJO4fLZDOekVtk9htHyog~WyJQYzMzSk0yTGNoY1VfbEhnZ
 3ZfdWZRIiwgIm9yZGVyIiwgIjMvMyJd~WyJBSngtMDk1VlBycFR0TjRRTU9xUk9BIiwg
 ImRhdGVPZlZhY2NpbmF0aW9uIiwgIjIwMjEtMDYtMjNUMTM6NDA6MTJaIl0~WyIyR0xD
 NDJzS1F2ZUNmR2ZyeU5STjl3IiwgImF0Y0NvZGUiLCAiSjA3QlgwMyJd~WyJlbHVWNU9
 nM2dTTklJOEVZbnN4QV9BIiwgIm1lZGljaW5hbFByb2R1Y3ROYW1lIiwgIkNPVklELTE
 5IFZhY2NpbmUgTW9kZXJuYSJd~eyJhbGciOiAiRVMyNTYiLCAidHlwIjogImtiK2p3dC
 J9.eyJub25jZSI6ICIxMjM0NTY3ODkwIiwgImF1ZCI6ICJodHRwczovL3ZlcmlmaWVyL
-mV4YW1wbGUub3JnIiwgImlhdCI6IDE3MzE2OTM5MzMsICJzZF9oYXNoIjogIjJsOUFtM
-GNBcDhHWDVDbU5XYnlCb21hcVNaaUNhRk85bW4zOXhxUVRySWMifQ.-nkx1f5flrp-vi
-isNx5XBFb2O1_4Xg0juHEYn0JZnNSKg77FD3pn6fWB8OV2Cu9fqaLer8NMIWhtA9W37g
-s8nA
+mV4YW1wbGUub3JnIiwgImlhdCI6IDE3MzE2OTYwMzAsICJzZF9oYXNoIjogIkluTGJNS
+Dh4a1BmRDB5TE56c3RKMEEtb0phU1hrcldxQWVjZ05NckNVY3cifQ.IqrlsQQjreQ-fr
+rIb9wzWvuYYU-4djpsh3bOaC3NolIXX0J90sMHO-FamaVW0ELtedRMekmbGtFBii3Q3I
+EuVA
 
 </pre><a href="#appendix-A.4-39" class="pilcrow">¶</a>
 </div>
@@ -5740,9 +5740,11 @@ data. The original JSON data is then used by the application. See
 <p id="appendix-C-1">[[ To be removed from the final specification ]]<a href="#appendix-C-1" class="pilcrow">¶</a></p>
 <p id="appendix-C-2">-14<a href="#appendix-C-2" class="pilcrow">¶</a></p>
 <ul class="compact">
-<li class="compact" id="appendix-C-3.1">Note that the Hash Function Claim value is case-sensitive<a href="#appendix-C-3.1" class="pilcrow">¶</a>
+<li class="compact" id="appendix-C-3.1">Address WGLC (part 2) comments<a href="#appendix-C-3.1" class="pilcrow">¶</a>
 </li>
-        <li class="compact" id="appendix-C-3.2">Update the <code>typ</code> value in the SD-JWT VC example to <code>dc+sd-jwt</code> to align with anticipated changes in the SD-JWT VC draft.<a href="#appendix-C-3.2" class="pilcrow">¶</a>
+        <li class="compact" id="appendix-C-3.2">Note that the Hash Function Claim value is case-sensitive<a href="#appendix-C-3.2" class="pilcrow">¶</a>
+</li>
+        <li class="compact" id="appendix-C-3.3">Update the <code>typ</code> value in the SD-JWT VC example to <code>dc+sd-jwt</code> to align with anticipated changes in the SD-JWT VC draft.<a href="#appendix-C-3.3" class="pilcrow">¶</a>
 </li>
       </ul>
 <p id="appendix-C-4">-13<a href="#appendix-C-4" class="pilcrow">¶</a></p>
