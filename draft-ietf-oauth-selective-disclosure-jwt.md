@@ -1898,6 +1898,7 @@ data. The original JSON data is then used by the application. See
    -14
 
    * Note that the Hash Function Claim value is case-sensitive
+   * Update the `typ` value in the SD-JWT VC example to `dc+sd-jwt` to align with anticipated changes in the SD-JWT VC draft.
 
    -13
 
