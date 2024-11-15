@@ -137,7 +137,7 @@ Issuer:
 :  An entity that creates SD-JWTs.
 
 Holder:
-:  An entity that received SD-JWTs from the Issuer and has control over them. In the context of this document, the term may refer to the actual user, the supporting hardware and software in their possession, or both.
+: An entity that received SD-JWTs from the Issuer and has control over them. In the context of this document, the term may refer to the actual user, the supporting hardware and software in their possession, or both.
 
 Verifier:
 :  An entity that requests, checks, and extracts the claims from an SD-JWT with its respective Disclosures.
@@ -204,7 +204,7 @@ The Key Binding JWT encodes a signature by the Holder's private key over
 
 * a hash of the SD-JWT,
 * a nonce to ensure the freshness of the signature, and
-* an audience value to indicate the intended audience for the document.
+* an audience value to indicate the intended Verifier for the document.
 
 Details of the format of Key Binding JWTs are described in (#kb-jwt).
 
@@ -326,7 +326,7 @@ The same digest value MUST NOT appear more than once in the SD-JWT.
 
 Application and profiles of SD-JWT SHOULD be explicitly typed. See (#explicit_typing) for more details.
 
-It is the Issuer who decides which claims are selectively disclosable and which are not. End-User claims MAY be included as plaintext as well, e.g., if hiding the particular claims from the Verifier is not required in the intended use case. See (#sd-validity-claims) for considerations on making validity-controlling claims such as `exp` selectively disclosable.
+It is the Issuer who decides which claims are selectively disclosable by the Holder and which are not. Claims MAY be included as plaintext as well, e.g., if hiding the particular claims from the Verifier is not required in the intended use case. See (#sd-validity-claims) for considerations on making validity-controlling claims such as `exp` selectively disclosable.
 
 Claims that are not selectively disclosable are included in the SD-JWT in plaintext just as they would be in any other JSON structure.
 
@@ -658,14 +658,16 @@ in (#hash_function_claim)).
 
 ### Validating the Key Binding JWT
 
-The Verifier MUST ensure that the key with which it validates the signature on
+Whether to require Key Binding is up to the Verifier's policy, based on the set
+of trust requirements such as trust frameworks it belongs to. See
+(#key_binding_security) for security considerations.
+
+If the Verifier requires Key Binding, the Verifier MUST ensure that the key with which it validates the signature on
 the Key Binding JWT is the key specified in the SD-JWT as the Holder's public
 key.  For example, if the SD-JWT contains a `cnf` value with a `jwk` member, the
 Verifier would parse the provided JWK and use it to verify the Key Binding JWT.
 
-Whether to require Key Binding is up to the Verifier's policy, based on the set
-of trust requirements such as trust frameworks it belongs to. See
-(#key_binding_security) for security considerations.
+Details of the Validation process are defined in (#verifier_verification).
 
 
 # Example SD-JWT {#main-example}
@@ -686,7 +688,7 @@ In this example, the following decisions were made by the Issuer in constructing
 
 * The `nationalities` array is always visible, but its contents are selectively disclosable.
 * The `sub` element as well as essential verification data (`iss`, `exp`, `cnf`, etc.) are always visible.
-* All other End-User claims are selectively disclosable.
+* All other claims are selectively disclosable.
 * For `address`, the Issuer is using a flat structure, i.e., all the claims
   in the `address` claim can only be disclosed in full. Other options are
   discussed in (#nested_data).
@@ -833,9 +835,7 @@ an SD-JWT:
 If any step fails, the SD-JWT is not valid, and processing MUST be aborted. Otherwise, the JSON document resulting from the preceding processing and verification steps, herein referred to as the processed SD-JWT payload, can be made available to the application to be used for its intended purpose.
 
 Note that these processing steps do not yield any guarantees to the Holder about having received a complete set of Disclosures. That is, for some digest values in the Issuer-signed JWT (which are not decoy digests) there may be no corresponding Disclosures, for example, if the message from the Issuer was truncated.
-
-It is up to the Holder how to maintain the mapping between the Disclosures and the plaintext claim values to be able to display them to the End-User when needed.
-
+It is up to the Holder how to maintain the mapping between the Disclosures and the plaintext claim values to be able to display them to the user when needed.
 ## Processing by the Holder  {#holder_verification}
 
 The Issuer MUST provide the Holder an SD-JWT, not an SD-JWT+KB.  If the Holder
@@ -843,7 +843,7 @@ receives an SD-JWT+KB, it MUST be rejected.
 
 For presentation to a Verifier, the Holder MUST perform the following (or equivalent) steps:
 
- 1. Decide which Disclosures to release to the Verifier, obtaining proper End-User consent if necessary.
+ 1. Decide which Disclosures to release to the Verifier, obtaining proper consent if necessary.
  2. Verify that each selected Disclosure satisfies one of the two following conditions:
     1. The hash of the Disclosure is contained in the Issuer-signed JWT claims
     2. The hash of the Disclosure is contained in the claim value of another selected Disclosure
@@ -1235,7 +1235,7 @@ about the credentials presented to it. Legal requirements could further enforce 
 Issuer/Verifier unlinkability. Similarly, a large service provider issuing credentials might implicitly pressure
 Verifiers into collusion by incentivizing participation in their larger ecosystem.
 Deployers of SD-JWT must be aware of these potential power dynamics,
-mitigate them as much as possible, and/or make the risks transparent to the End-User.
+mitigate them as much as possible, and/or make the risks transparent to the user.
 
 Contrary to that, Issuer/Verifier unlinkability with an honest Verifier can generally be achieved.
 However, a callback from the Verifier to the Issuer, such as a revocation check, could potentially
@@ -1255,9 +1255,9 @@ time period considered appropriate (e.g., randomize `iat` within the last 24
 hours and calculate `exp` accordingly) or rounded (e.g., rounded down to the
 beginning of the day).
 
-## Storage of Signed User Data
+## Storage of User Data
 
-Wherever End-User data is stored, it represents a potential
+Wherever user data is stored, it represents a potential
 target for an attacker. This target can be of particularly
 high value when the data is signed by a trusted authority like an
 official national identity service. For example, in OpenID Connect [@?OpenID.Core],
@@ -1265,14 +1265,13 @@ signed ID Tokens can be stored by Relying Parties. In the case of
 SD-JWT, Holders have to store SD-JWTs,
 and Issuers and Verifiers may decide to do so as well.
 
-Not surprisingly, a leak of such data risks revealing private data of End-Users
-to third parties. Signed End-User data, the authenticity of which
+Not surprisingly, a leak of such data risks revealing private data of users
+to third parties. Signed user data, the authenticity of which
 can be easily verified by third parties, further exacerbates the risk.
 As discussed in (#key_binding_security), leaked
 SD-JWTs may also allow attackers to impersonate Holders unless Key
 Binding is enforced and the attacker does not have access to the
-Holder's cryptographic keys. Altogether, leaked SD-JWT credentials may have
-a high monetary value on black markets.
+Holder's cryptographic keys.
 
 Due to these risks, systems implementing SD-JWT SHOULD be designed to minimize
 the amount of data that is stored. All involved parties SHOULD store SD-JWTs
@@ -1285,13 +1284,13 @@ Disclosures if they contain privacy-sensitive data.
 Holders SHOULD store SD-JWTs only in
 encrypted form, and, wherever possible, use hardware-backed encryption
 in particular for the private Key Binding key. Decentralized storage
-of data, e.g., on End-User devices, SHOULD be preferred for End-User
+of data, e.g., on user devices, SHOULD be preferred for user
 credentials over centralized storage. Expired SD-JWTs SHOULD be deleted
 as soon as possible.
 
 After Verification, Verifiers SHOULD NOT store the Issuer-signed JWT or the
 respective Disclosures if they contain privacy-sensitive data. It may be
-sufficient to store the result of the verification and any End-User data that is
+sufficient to store the result of the verification and any user data that is
 needed for the application.
 
 
@@ -1300,7 +1299,7 @@ needed for the application.
 
 If the SD-JWT is transmitted over an insecure
 channel during issuance or presentation, an adversary may be able to
-intercept and read the End-User's personal data or correlate the information with previous uses of the same SD-JWT.
+intercept and read the user's personal data or correlate the information with previous uses of the same SD-JWT.
 
 Usually, transport protocols for issuance and presentation of credentials
 are designed to protect the confidentiality of the transmitted data, for
@@ -1311,16 +1310,16 @@ provided by the transport protocol and does not specify any encryption
 mechanism.
 
 Implementers MUST ensure that the transport protocol provides confidentiality
-if the privacy of End-User data or correlation attacks by passive observers are a concern.
+if the privacy of user data or correlation attacks by passive observers are a concern.
 
 To encrypt the SD-JWT when transmitted over an insecure channel, implementers MAY use JSON Web Encryption (JWE) [@!RFC7516] by nesting the SD-JWT as the plaintext payload of a JWE.
 Especially, when an SD-JWT is transmitted via a URL and information may be stored/cached in the browser or end up in web server logs, the SD-JWT SHOULD be encrypted using JWE.
 
 ## Decoy Digests {#decoy_digests_privacy}
 
-The use of decoy digests is RECOMMENDED when the number of claims (or the existence of particular claims) can be a side-channel disclosing information about otherwise undisclosed claims. In particular, if a claim in an SD-JWT is present only if a certain condition is met (e.g., a membership number is only contained if the End-User is a member of a group), the Issuer SHOULD add decoy digests when the condition is not met.
+The use of decoy digests is RECOMMENDED when the number of claims (or the existence of particular claims) can be a side-channel disclosing information about otherwise undisclosed claims. In particular, if a claim in an SD-JWT is present only if a certain condition is met (e.g., a membership number is only contained if the user is a member of a group), the Issuer SHOULD add decoy digests when the condition is not met.
 
-Decoy digests increase the size of the SD-JWT. The number of decoy digests (or whether to use them at all) is a trade-off between the size of the SD-JWT and the privacy of the End-User's data.
+Decoy digests increase the size of the SD-JWT. The number of decoy digests (or whether to use them at all) is a trade-off between the size of the SD-JWT and the privacy of the user's data.
 
 ## Issuer Identifier
 
@@ -1897,6 +1896,7 @@ data. The original JSON data is then used by the application. See
 
    -14
 
+   * Address WGLC (part 2) comments
    * Note that the Hash Function Claim value is case-sensitive
    * Update the `typ` value in the SD-JWT VC example to `dc+sd-jwt` to align with anticipated changes in the SD-JWT VC draft.
 
