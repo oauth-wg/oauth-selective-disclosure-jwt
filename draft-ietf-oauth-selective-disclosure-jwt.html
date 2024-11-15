@@ -1804,7 +1804,8 @@ the digests as described in <a href="#creating_disclosures" class="auto internal
 appear at the top level of the SD-JWT payload. It
 MUST NOT be used in any object nested within the payload. If the  <code>_sd_alg</code>
 claim is not present at the top level, a default value of <code>sha-256</code> MUST be used.<a href="#section-4.1.1-1" class="pilcrow">¶</a></p>
-<p id="section-4.1.1-2">The hash algorithm identifier MUST be a hash algorithm value from the "Hash Name
+<p id="section-4.1.1-2">This claim value is a case-sensitive string with the hash algorithm identifier.
+The hash algorithm identifier MUST be a hash algorithm value from the "Hash Name
 String" column in the IANA "Named Information Hash Algorithm" registry
 <span>[<a href="#IANA.Hash.Algorithms" class="cite xref">IANA.Hash.Algorithms</a>]</span> or a value defined in another specification and/or
 profile of this specification.<a href="#section-4.1.1-2" class="pilcrow">¶</a></p>
@@ -2445,8 +2446,8 @@ ZHJ5M2xjYndIZ2VaOGtoQXYxVTFPU2xlclAwVmtCSnJXWjAifV0sICJfc2RfYWxnIjog
 InNoYS0yNTYiLCAiY25mIjogeyJqd2siOiB7Imt0eSI6ICJFQyIsICJjcnYiOiAiUC0y
 NTYiLCAieCI6ICJUQ0FFUjE5WnZ1M09IRjRqNFc0dmZTVm9ISVAxSUxpbERsczd2Q2VH
 ZW1jIiwgInkiOiAiWnhqaVdXYlpNUUdIVldLVlE0aGJTSWlyc1ZmdWVjQ0U2dDRqVDlG
-MkhaUSJ9fX0.GhTpe-0S2hL7w_uhEZ7g-1A0gjtUf_2xhrGRwfQY4Y93sQRpK--k-RpI
-pnS_9Ye37YmKoi5j-HOvoyl8USr8Pw
+MkhaUSJ9fX0.RoxSgDfULk6uTbmw-m5tK4nRo85Fz6kO-T7czH0kmNsdPhYQxeS6R29I
+xQ75kclaNPYY2e0YR9-SKovhl7BtZQ
 
 </pre><a href="#section-5.1-29" class="pilcrow">¶</a>
 </div>
@@ -2468,8 +2469,8 @@ ZHJ5M2xjYndIZ2VaOGtoQXYxVTFPU2xlclAwVmtCSnJXWjAifV0sICJfc2RfYWxnIjog
 InNoYS0yNTYiLCAiY25mIjogeyJqd2siOiB7Imt0eSI6ICJFQyIsICJjcnYiOiAiUC0y
 NTYiLCAieCI6ICJUQ0FFUjE5WnZ1M09IRjRqNFc0dmZTVm9ISVAxSUxpbERsczd2Q2VH
 ZW1jIiwgInkiOiAiWnhqaVdXYlpNUUdIVldLVlE0aGJTSWlyc1ZmdWVjQ0U2dDRqVDlG
-MkhaUSJ9fX0.GhTpe-0S2hL7w_uhEZ7g-1A0gjtUf_2xhrGRwfQY4Y93sQRpK--k-RpI
-pnS_9Ye37YmKoi5j-HOvoyl8USr8Pw~WyIyR0xDNDJzS1F2ZUNmR2ZyeU5STjl3IiwgI
+MkhaUSJ9fX0.RoxSgDfULk6uTbmw-m5tK4nRo85Fz6kO-T7czH0kmNsdPhYQxeS6R29I
+xQ75kclaNPYY2e0YR9-SKovhl7BtZQ~WyIyR0xDNDJzS1F2ZUNmR2ZyeU5STjl3IiwgI
 mdpdmVuX25hbWUiLCAiSm9obiJd~WyJlbHVWNU9nM2dTTklJOEVZbnN4QV9BIiwgImZh
 bWlseV9uYW1lIiwgIkRvZSJd~WyI2SWo3dE0tYTVpVlBHYm9TNXRtdlZBIiwgImVtYWl
 sIiwgImpvaG5kb2VAZXhhbXBsZS5jb20iXQ~WyJlSThaV205UW5LUHBOUGVOZW5IZGhR
@@ -2513,18 +2514,18 @@ ZHJ5M2xjYndIZ2VaOGtoQXYxVTFPU2xlclAwVmtCSnJXWjAifV0sICJfc2RfYWxnIjog
 InNoYS0yNTYiLCAiY25mIjogeyJqd2siOiB7Imt0eSI6ICJFQyIsICJjcnYiOiAiUC0y
 NTYiLCAieCI6ICJUQ0FFUjE5WnZ1M09IRjRqNFc0dmZTVm9ISVAxSUxpbERsczd2Q2VH
 ZW1jIiwgInkiOiAiWnhqaVdXYlpNUUdIVldLVlE0aGJTSWlyc1ZmdWVjQ0U2dDRqVDlG
-MkhaUSJ9fX0.GhTpe-0S2hL7w_uhEZ7g-1A0gjtUf_2xhrGRwfQY4Y93sQRpK--k-RpI
-pnS_9Ye37YmKoi5j-HOvoyl8USr8Pw~WyJlbHVWNU9nM2dTTklJOEVZbnN4QV9BIiwgI
+MkhaUSJ9fX0.RoxSgDfULk6uTbmw-m5tK4nRo85Fz6kO-T7czH0kmNsdPhYQxeS6R29I
+xQ75kclaNPYY2e0YR9-SKovhl7BtZQ~WyJlbHVWNU9nM2dTTklJOEVZbnN4QV9BIiwgI
 mZhbWlseV9uYW1lIiwgIkRvZSJd~WyJBSngtMDk1VlBycFR0TjRRTU9xUk9BIiwgImFk
 ZHJlc3MiLCB7InN0cmVldF9hZGRyZXNzIjogIjEyMyBNYWluIFN0IiwgImxvY2FsaXR5
 IjogIkFueXRvd24iLCAicmVnaW9uIjogIkFueXN0YXRlIiwgImNvdW50cnkiOiAiVVMi
 fV0~WyIyR0xDNDJzS1F2ZUNmR2ZyeU5STjl3IiwgImdpdmVuX25hbWUiLCAiSm9obiJd
 ~WyJsa2x4RjVqTVlsR1RQVW92TU5JdkNBIiwgIlVTIl0~eyJhbGciOiAiRVMyNTYiLCA
 idHlwIjogImtiK2p3dCJ9.eyJub25jZSI6ICIxMjM0NTY3ODkwIiwgImF1ZCI6ICJodH
-RwczovL3ZlcmlmaWVyLmV4YW1wbGUub3JnIiwgImlhdCI6IDE3MzE2Njg5MDgsICJzZF
-9oYXNoIjogIjBVNXBlT0QzLV9xa2dEUEx4aTExODFkakFaY3BBZzBwbnZsQnBTZjE0Rj
-gifQ.LaZMzxriGp0DYjPn77w8zCrpPeRU6C7YZX3owuwZbNxf2-F-IMTM9XlnFXN6cKk
-DwnE3hLAKfoIUOhHQzsrAVQ
+RwczovL3ZlcmlmaWVyLmV4YW1wbGUub3JnIiwgImlhdCI6IDE3MzE2OTM5MzMsICJzZF
+9oYXNoIjogIndGS250bmhaek5ud0ltLUtlNnBPdnV5TWVmWExIcmwzZUdUV2ZtYnVzMl
+kifQ.E4w1Td0gil5DsnzBWl_tAIlLkGXD8o1AnE_zeILbRhfwtwnyOwb0tvVDczSNYdK
+UgHXdRhiOrdJIhnIEnKUsWg
 
 </pre><a href="#section-5.2-2" class="pilcrow">¶</a>
 </div>
@@ -2533,8 +2534,8 @@ DwnE3hLAKfoIUOhHQzsrAVQ
 <pre>{
   "nonce": "1234567890",
   "aud": "https://verifier.example.org",
-  "iat": 1731668908,
-  "sd_hash": "0U5peOD3-_qkgDPLxi1181djAZcpAg0pnvlBpSf14F8"
+  "iat": 1731693933,
+  "sd_hash": "wFKntnhZzNnwIm-Ke6pOvuyMefXLHrl3eGTWfmbus2Y"
 }
 
 </pre><a href="#section-5.2-4" class="pilcrow">¶</a>
@@ -3107,8 +3108,8 @@ issued using the Flattened JSON Serialization:<a href="#section-8.2-2" class="pi
     Z1ZWNDRTZ0NGpUOUYySFpRIn19fQ",
   "protected":
     "eyJhbGciOiAiRVMyNTYiLCAidHlwIjogImV4YW1wbGUrc2Qtand0In0",
-  "signature": "j9eDb1Ol3afANo2ePgLEG40KKynHMEG17QbXv8KyRYZzHcUfG5NA
-    IDnOwuzlUO-271mHXlwiaZeQJ1yh7eyi8w"
+  "signature": "_X5nIoB9zidcou2HR2yLX2mShhhVcwb279kR_Lyo1N1SGwCkWpcn
+    s2J8XJTzJxPpfYvBatTMTEyXAKd9vFviRg"
 }
 
 </pre><a href="#section-8.2-3" class="pilcrow">¶</a>
@@ -3125,10 +3126,10 @@ issued using the Flattened JSON Serialization:<a href="#section-8.2-2" class="pi
     ],
     "kb_jwt": "eyJhbGciOiAiRVMyNTYiLCAidHlwIjogImtiK2p3dCJ9.eyJub25j
       ZSI6ICIxMjM0NTY3ODkwIiwgImF1ZCI6ICJodHRwczovL3ZlcmlmaWVyLmV4YW
-      1wbGUub3JnIiwgImlhdCI6IDE3MzE2Njg5MDgsICJzZF9oYXNoIjogInF3VzlL
-      VUxKZGZxbktQb2FDWDNVV2lhNlZSajBQb2VCWU5fRGJEaC0zRXMifQ.r0l0u3a
-      JQPTGBtk3EeRoY_oJVTrM8RPHanF-7YDPI6l-xpVLOWa_a_IkTK0IJ7FLvKCPK
-      DSU1aU81B1HmWUbFg"
+      1wbGUub3JnIiwgImlhdCI6IDE3MzE2OTM5MzMsICJzZF9oYXNoIjogIm5QOGJL
+      cTB4VlFVcEpwSW15VkVzME90OXlFeDlFS1RmR3JsWG1HWkdpOEkifQ.EqKPZVV
+      H6vbSqw8TdyLy-znB7slu7J-7D2FfMPvDhm3bDY0R7e5geIJquKptNE3pQ69ZM
+      igOTEESADQbnShJ1w"
   },
   "payload": "eyJfc2QiOiBbIjRIQm42YUlZM1d0dUdHV1R4LXFVajZjZGs2V0JwWn
     lnbHRkRmF2UGE3TFkiLCAiOHNtMVFDZjAyMXBObkhBQ0k1c1A0bTRLWmd5Tk9PQV
@@ -3142,8 +3143,8 @@ issued using the Flattened JSON Serialization:<a href="#section-8.2-2" class="pi
     Z1ZWNDRTZ0NGpUOUYySFpRIn19fQ",
   "protected":
     "eyJhbGciOiAiRVMyNTYiLCAidHlwIjogImV4YW1wbGUrc2Qtand0In0",
-  "signature": "j9eDb1Ol3afANo2ePgLEG40KKynHMEG17QbXv8KyRYZzHcUfG5NA
-    IDnOwuzlUO-271mHXlwiaZeQJ1yh7eyi8w"
+  "signature": "_X5nIoB9zidcou2HR2yLX2mShhhVcwb279kR_Lyo1N1SGwCkWpcn
+    s2J8XJTzJxPpfYvBatTMTEyXAKd9vFviRg"
 }
 
 </pre><a href="#section-8.2-5" class="pilcrow">¶</a>
@@ -3186,15 +3187,15 @@ Serialization:<a href="#section-8.3-2" class="pilcrow">¶</a></p>
         "kid": "issuer-key-1",
         "kb_jwt": "eyJhbGciOiAiRVMyNTYiLCAidHlwIjogImtiK2p3dCJ9.eyJu
           b25jZSI6ICIxMjM0NTY3ODkwIiwgImF1ZCI6ICJodHRwczovL3ZlcmlmaW
-          VyLmV4YW1wbGUub3JnIiwgImlhdCI6IDE3MzE2Njg5MDgsICJzZF9oYXNo
-          IjogIjIzLXN0SGk2dy1YYTFWczBtSkljUm1KM2V1Nl9iUjlSbWpuZTY5V1
-          NEbWMifQ.XtmEK7KrcyIPfcKL_hCVnSPfGx4vqN5Dcd_jEbVTrdptrfvzc
-          dSDQlZ6GaSavN0qZX-tEe9lyKrsDXPBHfZVww"
+          VyLmV4YW1wbGUub3JnIiwgImlhdCI6IDE3MzE2OTM5MzMsICJzZF9oYXNo
+          IjogIlRFUDJsbmFFSGVZZTkwWkN1Rm9zRnk5SmtZOHJDWEkza0FEYW9SVU
+          VNbFEifQ.qY3-L4OkyUl80roNlJHviJlIrl6K3ygR6QIJNf6EMweEgUEAj
+          aACzU-dMOBYfu20-Ry10zf_V6QhTM9dBW4HiQ"
       },
       "protected":
         "eyJhbGciOiAiRVMyNTYiLCAidHlwIjogImV4YW1wbGUrc2Qtand0In0",
-      "signature": "6Iz6Pzw_xrKps008XhbLDQP8TdPBfqy_vIL2W5TtI8nbHvhw
-        nOti5cfJ48fujI2sGnx5FnOWBb0LFJ6ycC-KIg"
+      "signature": "bdoDXysFoThQFWoPuLv9Iwbj63WyzW4NlvgRW420fHzvCAg2
+        ZfF_wiX8zfXVFC-w1pu2wqWi6zKa06gkSJzg0A"
     },
     {
       "header": {
@@ -3202,8 +3203,8 @@ Serialization:<a href="#section-8.3-2" class="pilcrow">¶</a></p>
       },
       "protected":
         "eyJhbGciOiAiRVMyNTYiLCAidHlwIjogImV4YW1wbGUrc2Qtand0In0",
-      "signature": "KXkaLUnank0tKVRUUxh-lvLGnOLN6SHBNeNchRusi90U8yd3
-        tsv_uBi5r2JMatLz2Pl9FHSJAHoahQQEPEtrWw"
+      "signature": "cg6buYVKWnL10xTuB4hJKzxGNj5EvMlvHqi4CVN9kJrycONs
+        UjExQC2FaUf3UfQ42AmSo5j5qJGxBirXfCjpuw"
     }
   ]
 }
@@ -4309,8 +4310,8 @@ WUpISVo4VnUtZjlDQ3lWdWIyVWZnRWs4anZ2WGV6d0sxcF9KbmVlWFEiLCAiZ2xUM2hy
 U1U3ZlNXZ3dGNVVEWm1Xd0JUdzMyZ25VbGRJaGk4aEdWQ2FWNCIsICJydkpkNmlxNlQ1
 ZWptc0JNb0d3dU5YaDlxQUFGQVRBY2k0MG9pZEVlVnNBIiwgInVOSG9XWWhYc1poVkpD
 TkUyRHF5LXpxdDd0NjlnSkt5NVFhRnY3R3JNWDQiXX0sICJfc2RfYWxnIjogInNoYS0y
-NTYifQ.Xm782MaEhu42OhgQk7JohLLXG5bHKQHke1ozHgknRtBdWcVIIgY0912aUnuU8
-i32nuroO7HCV1lHZPqnS-9eOQ~WyJHMDJOU3JRZmpGWFE3SW8wOXN5YWpBIiwgInJlZ2
+NTYifQ.n404tPsnlJ04YTK1hTpemsDl9-PK5YfHw0euzK8WDtdO3tPPNtap5yg41ZZEr
+ve2CYsAYc_n4-yk8veFQwaPkQ~WyJHMDJOU3JRZmpGWFE3SW8wOXN5YWpBIiwgInJlZ2
 lvbiIsICJcdTZlMmZcdTUzM2EiXQ~WyJsa2x4RjVqTVlsR1RQVW92TU5JdkNBIiwgImN
 vdW50cnkiLCAiSlAiXQ~
 
@@ -4661,8 +4662,8 @@ ZFJtc01vIiwgIldOQS1VTks3Rl96aHNBYjlzeVdPNklJUTF1SGxUbU9VOHI4Q3ZKMGNJ
 TWsiLCAiV3hoX3NWM2lSSDliZ3JUQkppLWFZSE5DTHQtdmpoWDFzZC1pZ09mXzlsayIs
 ICJfTy13SmlIM2VuU0I0Uk9IbnRUb1FUOEptTHR6LW1oTzJmMWM4OVhvZXJRIiwgImh2
 RFhod21HY0pRc0JDQTJPdGp1TEFjd0FNcERzYVUwbmtvdmNLT3FXTkUiXX19LCAiX3Nk
-X2FsZyI6ICJzaGEtMjU2In0.tRpQY2mcp7Ly60eG9M0QxCukXTOIoyG3T2ydWUOBS2XN
-pXlSa2UhsIBIfZHVpt87DbnL7bvC5zPgRBg6QUchtA~WyIyR0xDNDJzS1F2ZUNmR2Zye
+X2FsZyI6ICJzaGEtMjU2In0.BrXHwYAclieWM9JwZjIFTKeJ1cKBj-fdfRdkDSKOSDEo
+gVoe8n1DuujbrRl_mcM3KGGrMh3C7qnyNaPphfSeLA~WyIyR0xDNDJzS1F2ZUNmR2Zye
 U5STjl3IiwgInRpbWUiLCAiMjAxMi0wNC0yM1QxODoyNVoiXQ~WyJQYzMzSk0yTGNoY1
 VfbEhnZ3ZfdWZRIiwgeyJfc2QiOiBbIjl3cGpWUFd1RDdQSzBuc1FETDhCMDZsbWRnVj
 NMVnliaEh5ZFFwVE55TEkiLCAiRzVFbmhPQU9vVTlYXzZRTU52ekZYanBFQV9SYy1BRX
@@ -4782,8 +4783,8 @@ oeTJyMDE4dnJzSmpvLVZqZDZnNnl0N0Fhb25Lb25uaXVKOXplbDNqbyIsICJxcDdaX0t
 6ICJzaGEtMjU2IiwgImNuZiI6IHsiandrIjogeyJrdHkiOiAiRUMiLCAiY3J2IjogIlA
 tMjU2IiwgIngiOiAiVENBRVIxOVp2dTNPSEY0ajRXNHZmU1ZvSElQMUlMaWxEbHM3dkN
 lR2VtYyIsICJ5IjogIlp4amlXV2JaTVFHSFZXS1ZRNGhiU0lpcnNWZnVlY0NFNnQ0alQ
-5RjJIWlEifX19.ft75cVD9js8XbyUAmJQgn7yxH6WtmIIMwYgLp0fBKgh8F91lbemi5o
-I4DebdLirJgi_8rl0mmXeiP5GlfQ-PEg~WyIyR0xDNDJzS1F2ZUNmR2ZyeU5STjl3Iiw
+5RjJIWlEifX19.GMKgQEEURvBDV2byNavZ1OXVKkKTqcDNXvkpAgdHJP1vbsuhuRopl1
+c0IuIf-7w0XYXn39ggFIpx9_qU5E6o2w~WyIyR0xDNDJzS1F2ZUNmR2ZyeU5STjl3Iiw
 gImdpdmVuX25hbWUiLCAiRXJpa2EiXQ~WyJlbHVWNU9nM2dTTklJOEVZbnN4QV9BIiwg
 ImZhbWlseV9uYW1lIiwgIk11c3Rlcm1hbm4iXQ~WyI2SWo3dE0tYTVpVlBHYm9TNXRtd
 lZBIiwgImJpcnRoZGF0ZSIsICIxOTYzLTA4LTEyIl0~WyJlSThaV205UW5LUHBOUGVOZ
@@ -5138,14 +5139,14 @@ oeTJyMDE4dnJzSmpvLVZqZDZnNnl0N0Fhb25Lb25uaXVKOXplbDNqbyIsICJxcDdaX0t
 6ICJzaGEtMjU2IiwgImNuZiI6IHsiandrIjogeyJrdHkiOiAiRUMiLCAiY3J2IjogIlA
 tMjU2IiwgIngiOiAiVENBRVIxOVp2dTNPSEY0ajRXNHZmU1ZvSElQMUlMaWxEbHM3dkN
 lR2VtYyIsICJ5IjogIlp4amlXV2JaTVFHSFZXS1ZRNGhiU0lpcnNWZnVlY0NFNnQ0alQ
-5RjJIWlEifX19.ft75cVD9js8XbyUAmJQgn7yxH6WtmIIMwYgLp0fBKgh8F91lbemi5o
-I4DebdLirJgi_8rl0mmXeiP5GlfQ-PEg~WyJuUHVvUW5rUkZxM0JJZUFtN0FuWEZBIiw
+5RjJIWlEifX19.GMKgQEEURvBDV2byNavZ1OXVKkKTqcDNXvkpAgdHJP1vbsuhuRopl1
+c0IuIf-7w0XYXn39ggFIpx9_qU5E6o2w~WyJuUHVvUW5rUkZxM0JJZUFtN0FuWEZBIiw
 gIm5hdGlvbmFsaXRpZXMiLCBbIkRFIl1d~WyJNMEpiNTd0NDF1YnJrU3V5ckRUM3hBIi
 wgIjE4IiwgdHJ1ZV0~eyJhbGciOiAiRVMyNTYiLCAidHlwIjogImtiK2p3dCJ9.eyJub
 25jZSI6ICIxMjM0NTY3ODkwIiwgImF1ZCI6ICJodHRwczovL3ZlcmlmaWVyLmV4YW1wb
-GUub3JnIiwgImlhdCI6IDE3MzE2Njg5MDgsICJzZF9oYXNoIjogIklpcHJKZ216bzBDb
-HhkM2V3NkpjSXhpa0VLSHNScVQzRURMNE4xMnJUeTQifQ.1U8ctjaGcZEDfIJ2AKuk68
-o65TxA9HUOXuz0vDt2FG9LqytbNZDXPNfMDmJs0msLVgTc8u7Lcq_b3y5hdBvgcQ
+GUub3JnIiwgImlhdCI6IDE3MzE2OTM5MzMsICJzZF9oYXNoIjogIjNjZ29iWDVGa3dlT
+0ZYT3Z4NnctNl9SY3g4cDV5RVdhLVd0NlVINTNlU1kifQ.9z6vo7xTdcSAkllyBtq7gy
+lQllOMKXgkVSkBw1dLr6_KLNZNbtYoqzbrFq7aoIOJNgaPUco2vGMGCADnqK_VvQ
 
 </pre><a href="#appendix-A.3-53" class="pilcrow">¶</a>
 </div>
@@ -5154,8 +5155,8 @@ o65TxA9HUOXuz0vDt2FG9LqytbNZDXPNfMDmJs0msLVgTc8u7Lcq_b3y5hdBvgcQ
 <pre>{
   "nonce": "1234567890",
   "aud": "https://verifier.example.org",
-  "iat": 1731668908,
-  "sd_hash": "IiprJgmzo0Clxd3ew6JcIxikEKHsRqT3EDL4N12rTy4"
+  "iat": 1731693933,
+  "sd_hash": "3cgobX5FkweOFXOvx6w-6_Rcx8p5yEWa-Wt6UH53eSY"
 }
 
 </pre><a href="#appendix-A.3-55" class="pilcrow">¶</a>
@@ -5268,8 +5269,8 @@ VmFjY2luZVJlY2lwaWVudCJ9LCAidHlwZSI6ICJWYWNjaW5hdGlvbkV2ZW50In0sICJf
 c2RfYWxnIjogInNoYS0yNTYiLCAiY25mIjogeyJqd2siOiB7Imt0eSI6ICJFQyIsICJj
 cnYiOiAiUC0yNTYiLCAieCI6ICJUQ0FFUjE5WnZ1M09IRjRqNFc0dmZTVm9ISVAxSUxp
 bERsczd2Q2VHZW1jIiwgInkiOiAiWnhqaVdXYlpNUUdIVldLVlE0aGJTSWlyc1ZmdWVj
-Q0U2dDRqVDlGMkhaUSJ9fX0.nk4QGUE78MAIoqAO1kuU7Wya95aLWMJDQn_b_JJsvDD7
-hrodOz8sqoXbDAfE0CKFin66z91l0zNKgwI1HUn6mQ~WyIyR0xDNDJzS1F2ZUNmR2Zye
+Q0U2dDRqVDlGMkhaUSJ9fX0.5caoSkPhgqF-gg94W20kKEm2gx_K9VlRzswc3akUgraa
+c270tAxrB8g8SDPFe3wAgVT2j8uFlQvckQ3_xqmgPA~WyIyR0xDNDJzS1F2ZUNmR2Zye
 U5STjl3IiwgImF0Y0NvZGUiLCAiSjA3QlgwMyJd~WyJlbHVWNU9nM2dTTklJOEVZbnN4
 QV9BIiwgIm1lZGljaW5hbFByb2R1Y3ROYW1lIiwgIkNPVklELTE5IFZhY2NpbmUgTW9k
 ZXJuYSJd~WyI2SWo3dE0tYTVpVlBHYm9TNXRtdlZBIiwgIm1hcmtldGluZ0F1dGhvcml
@@ -5551,18 +5552,18 @@ VmFjY2luZVJlY2lwaWVudCJ9LCAidHlwZSI6ICJWYWNjaW5hdGlvbkV2ZW50In0sICJf
 c2RfYWxnIjogInNoYS0yNTYiLCAiY25mIjogeyJqd2siOiB7Imt0eSI6ICJFQyIsICJj
 cnYiOiAiUC0yNTYiLCAieCI6ICJUQ0FFUjE5WnZ1M09IRjRqNFc0dmZTVm9ISVAxSUxp
 bERsczd2Q2VHZW1jIiwgInkiOiAiWnhqaVdXYlpNUUdIVldLVlE0aGJTSWlyc1ZmdWVj
-Q0U2dDRqVDlGMkhaUSJ9fX0.nk4QGUE78MAIoqAO1kuU7Wya95aLWMJDQn_b_JJsvDD7
-hrodOz8sqoXbDAfE0CKFin66z91l0zNKgwI1HUn6mQ~WyJQYzMzSk0yTGNoY1VfbEhnZ
+Q0U2dDRqVDlGMkhaUSJ9fX0.5caoSkPhgqF-gg94W20kKEm2gx_K9VlRzswc3akUgraa
+c270tAxrB8g8SDPFe3wAgVT2j8uFlQvckQ3_xqmgPA~WyJQYzMzSk0yTGNoY1VfbEhnZ
 3ZfdWZRIiwgIm9yZGVyIiwgIjMvMyJd~WyJBSngtMDk1VlBycFR0TjRRTU9xUk9BIiwg
 ImRhdGVPZlZhY2NpbmF0aW9uIiwgIjIwMjEtMDYtMjNUMTM6NDA6MTJaIl0~WyIyR0xD
 NDJzS1F2ZUNmR2ZyeU5STjl3IiwgImF0Y0NvZGUiLCAiSjA3QlgwMyJd~WyJlbHVWNU9
 nM2dTTklJOEVZbnN4QV9BIiwgIm1lZGljaW5hbFByb2R1Y3ROYW1lIiwgIkNPVklELTE
 5IFZhY2NpbmUgTW9kZXJuYSJd~eyJhbGciOiAiRVMyNTYiLCAidHlwIjogImtiK2p3dC
 J9.eyJub25jZSI6ICIxMjM0NTY3ODkwIiwgImF1ZCI6ICJodHRwczovL3ZlcmlmaWVyL
-mV4YW1wbGUub3JnIiwgImlhdCI6IDE3MzE2Njg5MDgsICJzZF9oYXNoIjogIlVMZGpRQ
-lFDNENXQzdXVWhpTmVLVVlpWWFnR0NYX1c2X2dDemU3RkliOEEifQ.PiGi5grRqLlJXI
-kM0iVGecGndmgqzRpm_yvTOHXDIfeWKDOft45gtcfOwVGN4tsSJwjKmJzxZ8n6IBCGsn
-ctLA
+mV4YW1wbGUub3JnIiwgImlhdCI6IDE3MzE2OTM5MzMsICJzZF9oYXNoIjogIjJsOUFtM
+GNBcDhHWDVDbU5XYnlCb21hcVNaaUNhRk85bW4zOXhxUVRySWMifQ.-nkx1f5flrp-vi
+isNx5XBFb2O1_4Xg0juHEYn0JZnNSKg77FD3pn6fWB8OV2Cu9fqaLer8NMIWhtA9W37g
+s8nA
 
 </pre><a href="#appendix-A.4-39" class="pilcrow">¶</a>
 </div>
@@ -5739,7 +5740,9 @@ data. The original JSON data is then used by the application. See
 <p id="appendix-C-1">[[ To be removed from the final specification ]]<a href="#appendix-C-1" class="pilcrow">¶</a></p>
 <p id="appendix-C-2">-14<a href="#appendix-C-2" class="pilcrow">¶</a></p>
 <ul class="compact">
-<li class="compact" id="appendix-C-3.1">Update the <code>typ</code> value in the SD-JWT VC example to <code>dc+sd-jwt</code> to align with anticipated changes in the SD-JWT VC draft.<a href="#appendix-C-3.1" class="pilcrow">¶</a>
+<li class="compact" id="appendix-C-3.1">Note that the Hash Function Claim value is case-sensitive<a href="#appendix-C-3.1" class="pilcrow">¶</a>
+</li>
+        <li class="compact" id="appendix-C-3.2">Update the <code>typ</code> value in the SD-JWT VC example to <code>dc+sd-jwt</code> to align with anticipated changes in the SD-JWT VC draft.<a href="#appendix-C-3.2" class="pilcrow">¶</a>
 </li>
       </ul>
 <p id="appendix-C-4">-13<a href="#appendix-C-4" class="pilcrow">¶</a></p>
