@@ -339,7 +339,7 @@ appear at the top level of the SD-JWT payload. It
 MUST NOT be used in any object nested within the payload. If the  `_sd_alg`
 claim is not present at the top level, a default value of `sha-256` MUST be used.
 
-The claim value is a case-sensitive string with the hash algorithm identifier.
+This claim value is a case-sensitive string with the hash algorithm identifier.
 The hash algorithm identifier MUST be a hash algorithm value from the "Hash Name
 String" column in the IANA "Named Information Hash Algorithm" registry
 [@IANA.Hash.Algorithms] or a value defined in another specification and/or
