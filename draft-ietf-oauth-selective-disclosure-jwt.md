@@ -137,7 +137,7 @@ Issuer:
 :  An entity that creates SD-JWTs.
 
 Holder:
-:  An entity that received SD-JWTs from the Issuer and has control over them. In the context of this document, the term usually refers to the actual user and the supporting hardware and software in their possession.
+: An entity that received SD-JWTs from the Issuer and has control over them. In the context of this document, the term may refer to the actual user, the supporting hardware and software in their possession, or both.
 
 Verifier:
 :  An entity that requests, checks, and extracts the claims from an SD-JWT with its respective Disclosures.
