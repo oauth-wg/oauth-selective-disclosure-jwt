@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2024-11-28T00:16:11.982304+00:00",
+  "timestamp": "2024-12-01T00:19:18.257244+00:00",
   "repo": "oauth-wg/oauth-selective-disclosure-jwt",
   "labels": [
     {
@@ -12359,12 +12359,22 @@
       "author": "rohanmahy",
       "authorAssociation": "NONE",
       "assignees": [],
-      "labels": [],
+      "labels": [
+        "ready-for-PR"
+      ],
       "body": "In Section 7.2 \"Processing by the Holder\" there is no mention of the validation that a Holder needs to do to validate an Issued SD-JWT. The holder needs to a) look at all the disclosures and validate that the claims are acceptable to the Holder (the Issuer isn't claiming something incorrect), and b) make sure that there is a disclosure for each claim object after recursively replacing any `_sd` object or in any object with the reserved object key with its disclosed claim.",
       "createdAt": "2024-11-20T17:55:23Z",
-      "updatedAt": "2024-11-20T17:56:06Z",
+      "updatedAt": "2024-11-28T17:15:58Z",
       "closedAt": null,
-      "comments": []
+      "comments": [
+        {
+          "author": "Sakurann",
+          "authorAssociation": "COLLABORATOR",
+          "body": "7.2 is in addition to the checks in 7.1, just like 7.3.\r\n7.3 says\r\n> Upon receiving a presentation from a Holder, in the form of either an SD-JWT or an SD-JWT+KB, in addition to the checks outlined in [Section 7.1](https://drafts.oauth.net/oauth-selective-disclosure-jwt/draft-ietf-oauth-selective-disclosure-jwt.html#sd_jwt_verification), Verifiers need to ensure that\r\n\r\nbut 7.2 can be clearer on this. will clarify this.",
+          "createdAt": "2024-11-28T17:15:47Z",
+          "updatedAt": "2024-11-28T17:15:54Z"
+        }
+      ]
     },
     {
       "number": 531,
