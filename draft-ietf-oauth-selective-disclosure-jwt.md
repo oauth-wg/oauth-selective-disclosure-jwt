@@ -161,7 +161,7 @@ Verifier:
            |            |
            +------------+
                  |
-         Presents SD-JWT+KB
+     Presents SD-JWT or SD-JWT+KB
     including selected Disclosures
                  |
                  v
