@@ -121,7 +121,7 @@ Disclosure:
 
 
 Key Binding:
-:  Ability of the Holder to prove legitimate possession of an SD-JWT by proving
+:  Ability of the Holder to prove possession of an SD-JWT by proving
   control over a private key during the presentation. When utilizing Key Binding, an SD-JWT contains
   the public key corresponding to the private key controlled by the Holder (or a reference to this public key).
 
@@ -963,7 +963,7 @@ other disclosed claims or sources other than the presented SD-JWT.
 
 **Integrity:** A malicious Holder cannot modify names or values of selectively disclosable claims without detection by the Verifier.
 
-Additionally, as described in (#key_binding_security), the application of Key Binding can ensure that the presenter of an SD-JWT credential is the legitimate Holder of the credential.
+Additionally, as described in (#key_binding_security), the application of Key Binding can ensure that the presenter of an SD-JWT credential is the Holder of the credential.
 
 ## Mandatory Signing of the Issuer-signed JWT {#sec-is-jwt}
 
@@ -1051,7 +1051,7 @@ revealed fundamental weaknesses and MUST NOT be used.
 
 ## Key Binding {#key_binding_security}
 
-Key Binding aims to ensure that the presenter of an SD-JWT credential is actually the legitimate Holder of the credential.
+Key Binding aims to ensure that the presenter of an SD-JWT credential is actually the Holder of the credential.
 An SD-JWT compatible with Key Binding contains a public key, or a reference to a public key, that corresponds to a private key possessed by the Holder.
 The Verifier requires that the Holder prove possession of that private key when presenting the SD-JWT credential.
 
