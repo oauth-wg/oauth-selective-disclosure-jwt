@@ -294,8 +294,8 @@ An SD-JWT+KB with Disclosures:
 <Issuer-signed JWT>~<Disclosure 1>~<Disclosure N>~<KB-JWT>
 ```
 
-As an alternative illustration of the SD-JWT format, for those who celebrate, ABNF [@?RFC5234] for the
-SD-JWT, SD-JWT+KB, and various constituent parts is provided here:
+As an alternative illustration of the SD-JWT format, ABNF [@?RFC5234] for the
+SD-JWT, SD-JWT+KB, and various constituent parts is provided here (for those who celebrate):
 ```abnf
 ALPHA = %x41-5A / %x61-7A ; A-Z / a-z
 DIGIT = %x30-39 ; 0-9
