@@ -1183,6 +1183,22 @@ The definition of `typ` in Section 4.1.9 of [@!RFC7515] recommends that the "app
 
 Use of the `cty` content type header parameter to indicate the content type of the SD-JWT payload can also be used to distinguish different types of JSON objects, or different kinds of JWT Claim Sets.
 
+## Key Pair Generation and Lifecycle Management
+
+Implementations of SD-JWT rely on asymmetric cryptographic keys and must therefore ensure that key pair generation,
+handling, storage, and lifecycle management are performed securely.
+
+While the specific mechanisms for secure key management are out of scope for this document, implementers
+should follow established best practices, such as those outlined in NIST SP 800-57 Part 1 [@?NIST.SP.800-57pt1r5].
+This includes:
+
+* Secure Generation: Using cryptographically secure methods and random number generators.
+* Secure Storage: Protecting private keys from unauthorized access.
+* Lifecycle Management: Ensuring secure key rotation, revocation, and disposal as needed.
+
+Appropriate key management is essential, as any compromise can lead to unauthorized disclosure or forgery of SD-JWTs.
+
+
 # Privacy Considerations {#privacy_considerations}
 
 The privacy principles of [@ISO.29100] should be adhered to.
@@ -1632,6 +1648,27 @@ the media type is encoded as an SD-JWT.
   <title>JSON Web Token Claims</title>
   <author><organization>IANA</organization></author>
  </front>
+</reference>
+
+<reference anchor="NIST.SP.800-57pt1r5" target="https://nvlpubs.nist.gov/nistpubs/SpecialPublications/NIST.SP.800-57pt1r5.pdf">
+  <front>
+    <title>Recommendation for key management:part 1 - general</title>
+    <author fullname="Elaine Barker" surname="Barker">
+      <organization>Information Technology Laboratory</organization>
+    </author>
+    <author>
+      <organization abbrev="NIST">National Institute of Standards and Technology</organization>
+      <address>
+        <postal>
+          <country>US</country>
+          <city>Gaithersburg</city>
+        </postal>
+      </address>
+    </author>
+    <date month="May" year="2020"/>
+  </front>
+  <seriesInfo name="NIST Special Publications (General)" value="800-57pt1r5"/>
+  <seriesInfo name="DOI" value="10.6028/NIST.SP.800-57pt1r5"/>
 </reference>
 
 {backmatter}
