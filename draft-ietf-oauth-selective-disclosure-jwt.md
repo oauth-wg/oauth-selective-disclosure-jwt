@@ -89,7 +89,7 @@ This specification defines two primary data formats:
     transport of the Issuer-signed JSON data structure and disclosure data
 
 2. SD-JWT+KB is a composite structure enabling cryptographic key binding when presented to the Verifier. It comprises the following:
-  - A facility for associating an SD-JWT with a key pair
+  - A mechanism for associating an SD-JWT with a key pair
   - A format for a Key Binding JWT (KB-JWT) that allows proof of possession of the private key of
     the associated key pair
   - A format extending the SD-JWT format for the combined transport of the SD-JWT
