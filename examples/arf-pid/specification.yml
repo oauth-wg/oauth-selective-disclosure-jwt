@@ -44,4 +44,4 @@ add_decoy_claims: false
 key_binding: true
 
 extra_header_parameters:
-  typ: "vc+sd-jwt"
+  typ: "dc+sd-jwt"
