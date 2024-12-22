@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2024-12-19T00:16:03.313881+00:00",
+  "timestamp": "2024-12-22T00:16:37.071892+00:00",
   "repo": "oauth-wg/oauth-selective-disclosure-jwt",
   "labels": [
     {
@@ -52084,19 +52084,75 @@
       "labels": [],
       "body": "These changes are me trying to follow though with what I said we'd do here https://mailarchive.ietf.org/arch/msg/oauth/qC4Bq6sOkmYzJ_93_VWmqN824gI/ \r\n\r\nPreview at https://drafts.oauth.net/oauth-selective-disclosure-jwt/denis-and-the-ad/draft-ietf-oauth-selective-disclosure-jwt.html",
       "createdAt": "2024-12-17T21:47:37Z",
-      "updatedAt": "2024-12-18T15:58:13Z",
+      "updatedAt": "2024-12-20T13:02:29Z",
       "baseRepository": "oauth-wg/oauth-selective-disclosure-jwt",
       "baseRefName": "master",
       "baseRefOid": "c95bc07ba5ef5a45b848eaeab7abae9dc5ae2c30",
       "headRepository": "oauth-wg/oauth-selective-disclosure-jwt",
       "headRefName": "denis-and-the-ad",
-      "headRefOid": "fe69ef3aec1abedd1e2c07bd68d9c68568d385f1",
+      "headRefOid": "9f7e43ec8069cea2582716f407513b5c20ae61aa",
       "closedAt": null,
       "mergedAt": null,
       "mergedBy": null,
       "mergeCommit": null,
-      "comments": [],
-      "reviews": []
+      "comments": [
+        {
+          "author": "debcooley",
+          "authorAssociation": "NONE",
+          "body": "These all look fine to me,  TY \r\n\r\nOne nit:  on the Key Binding JWT def:  You need a space between the sentences.  \r\n\r\n",
+          "createdAt": "2024-12-20T12:07:24Z",
+          "updatedAt": "2024-12-20T12:07:24Z"
+        },
+        {
+          "author": "bc-pi",
+          "authorAssociation": "COLLABORATOR",
+          "body": "> These all look fine to me, TY\r\n> \r\n> One nit: on the Key Binding JWT def: You need a space between the sentences.\r\n\r\nthanks for reviewing. that nit has been fixed 9f7e43ec8069cea2582716f407513b5c20ae61aa ",
+          "createdAt": "2024-12-20T13:02:27Z",
+          "updatedAt": "2024-12-20T13:02:27Z"
+        }
+      ],
+      "reviews": [
+        {
+          "id": "PRR_kwDOHTmVzM6WDhd8",
+          "commit": {
+            "abbreviatedOid": "fe69ef3"
+          },
+          "author": "bc-pi",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2024-12-20T12:58:54Z",
+          "updatedAt": "2024-12-20T12:58:54Z",
+          "comments": [
+            {
+              "originalPosition": 25,
+              "body": "\"One nit: on the Key Binding JWT def: You need a space between the sentences.\" \r\nthanks @debcooley \r\n```suggestion\r\n  includes a hash of the SD-JWT in its `sd_hash` claim. A JWT for proving Key Binding\r\n```",
+              "createdAt": "2024-12-20T12:58:54Z",
+              "updatedAt": "2024-12-20T12:58:54Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOHTmVzM6WDiBM",
+          "commit": {
+            "abbreviatedOid": "fe69ef3"
+          },
+          "author": "debcooley",
+          "authorAssociation": "NONE",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2024-12-20T13:00:16Z",
+          "updatedAt": "2024-12-20T13:00:16Z",
+          "comments": [
+            {
+              "originalPosition": 25,
+              "body": "perfect.  TY\r\n",
+              "createdAt": "2024-12-20T13:00:16Z",
+              "updatedAt": "2024-12-20T13:00:16Z"
+            }
+          ]
+        }
+      ]
     }
   ]
 }
