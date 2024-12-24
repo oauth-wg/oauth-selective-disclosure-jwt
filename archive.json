@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2024-12-22T00:16:37.071892+00:00",
+  "timestamp": "2024-12-24T00:15:09.517726+00:00",
   "repo": "oauth-wg/oauth-selective-disclosure-jwt",
   "labels": [
     {
@@ -12413,7 +12413,7 @@
       "id": "I_kwDOHTmVzM6fl0o-",
       "title": "Small (and optional) editorial SD-JWT+KB's spec suggestion: remove whitespace from examples of JSON serialization ",
       "url": "https://github.com/oauth-wg/oauth-selective-disclosure-jwt/issues/531",
-      "state": "OPEN",
+      "state": "CLOSED",
       "author": "samuelgoto",
       "authorAssociation": "NONE",
       "assignees": [],
@@ -12422,8 +12422,8 @@
       ],
       "body": "> I couldn't find where to file issues for the SD-JWT+KB, so sending this here -- feel free to ignore this or ask me to move it to a more appropriate please\r\n\r\n> I initially filed this here https://github.com/openid/OpenID4VP/issues/325 and moved it here.\r\n\r\nJust a small note, as I was reading along the SD-JWT+KB and ran into a problem implementing this section:\r\n\r\nhttps://www.ietf.org/archive/id/draft-ietf-oauth-selective-disclosure-jwt-13.html#section-4.2.1-2.2\r\n\r\nThe problem is that in this section, my JSON serializer (and I think, most people's web-based JSON.stringy()-based serializer) removes white space between\u00a0array elements.\u00a0\r\n\r\nSo, I was getting `[\"_26bc4LT-ac6q2KI6cBW5es\",\"family_name\",\"M\u00f6bius\"]` rather than `[\"_26bc4LT-ac6q2KI6cBW5es\", \"family_name\", \"M\u00f6bius\"]`, which base64url encodes to `WyJfMjZiYzRMVC1hYzZxMktJNmNCVzVlcyIsImZhbWlseV9uYW1lIiwiTcO2Yml1cyJd` rather than `WyJfMjZiYzRMVC1hYzZxMktJNmNCVzVlcyIsICJmYW1pbHlfbmFtZSIsICJNw7ZiaXVzIl0` as is in the example. \r\n\r\nSince it wasn't matching what was in the spec, I had to debug for a while before I convinced myself that my implementation was valid, so figured other people would too.",
       "createdAt": "2024-11-20T23:22:44Z",
-      "updatedAt": "2024-12-18T21:34:48Z",
-      "closedAt": null,
+      "updatedAt": "2024-12-23T22:11:10Z",
+      "closedAt": "2024-12-23T22:11:10Z",
       "comments": [
         {
           "author": "bc-pi",
@@ -12431,6 +12431,13 @@
           "body": "As mentioned over on https://github.com/openid/OpenID4VP/issues/325 there are a ton of other arrays in that draft that also have space between elements. And that's unlikely to change. One of the main reasons for the base64url encoded stuff as the input to integrity calculations is the tolerance for (or really just not having to deal with at all) different JSON representations that are semantically equivalent. Whatever JSON serializer the [SD-JWT Reference Implementation](https://github.com/openwallet-foundation-labs/sd-jwt-python) that generates nearly all the examples in the aspiring RFC uses seems to like spaces between array elements. And that's okay. ",
           "createdAt": "2024-12-18T21:33:34Z",
           "updatedAt": "2024-12-18T21:33:34Z"
+        },
+        {
+          "author": "bc-pi",
+          "authorAssociation": "COLLABORATOR",
+          "body": "\"thanks! feel free to close as WAI if that's useful.\" - @samuelgoto in a conversation on slack ",
+          "createdAt": "2024-12-23T22:11:10Z",
+          "updatedAt": "2024-12-23T22:11:10Z"
         }
       ]
     },
@@ -12439,15 +12446,15 @@
       "id": "I_kwDOHTmVzM6fmDj8",
       "title": "SD-JWT Parser requires saving the base64 encoded values?",
       "url": "https://github.com/oauth-wg/oauth-selective-disclosure-jwt/issues/532",
-      "state": "OPEN",
+      "state": "CLOSED",
       "author": "samuelgoto",
       "authorAssociation": "NONE",
       "assignees": [],
       "labels": [],
       "body": "I ran into this problem while writing a parser for SD-JWT and a presenter that does the -KB parts. I'm not sure if this is a real problem,  but figured I should ask here.\r\n\r\nI'm not sure if I did this correctly, but I think I couldn't find a way to avoid saving the base64 encoded values to reconstruct the SD-JWT and present it, because the JSON serialization isn't normalized (somewhat related to #531, except I don't think this is just a small and editorial problem, but an ergonomic one).\r\n\r\nHere are some steps on how to reproduce the problem I'm facing preparing a sd-jwt for presentation:\r\n\r\n1) Get an `sd-jwt`\r\n2) Parse the the `sd-jwt` into a `jwt` + `disclosures`\r\n3) Check that the holder's `key` is inside of the `jwt.cnf`\r\n4) Select `some` of the `disclosures` for disclosure\r\n5) Puts together the `jwt` + `some`\r\n6) Constructs a `kb` jwt with the holder's `key`\r\n\r\nIn step (5), you can't serialize back the `jwt` from a parsed structure (e.g. JSON), because the parsing is non-invertible: you can't parse and serialize and go back to necessarily the same value, because of #531. So, that means, that, in step (2), you have to parse the `sd-jwt` but *also* keep the original base64url encoded value of the jwt, because you can't reconstruct it from a parsed structure.\r\n\r\nBeing opinionated about how JSON serialization is done (e.g. requiring the removal of whitespace) would make (i think) the parsing invertible and solve this problem.\r\n\r\nApologies for not being able to articulate this more clearly, but wanted to send this out in case someone is able to spot something wrong I might be doing while implementing a parser.\r\n\r\nThe environment in which I'm doing this is likely way more convoluted than an average holder , so it is also possible that even if this is a problem it could be marked as \"not important enough because there are very few holders would run into this being a problem\".",
       "createdAt": "2024-11-20T23:36:35Z",
-      "updatedAt": "2024-12-18T23:46:55Z",
-      "closedAt": null,
+      "updatedAt": "2024-12-23T22:10:56Z",
+      "closedAt": "2024-12-23T22:10:56Z",
       "comments": [
         {
           "author": "bc-pi",
@@ -12455,6 +12462,13 @@
           "body": "The requirement to save the various base64url parts (really the issuer-signed JWT and each of the disclosures) in order to [re]construct the SD-JWT[+KB] and present it is absolutely just a fundamental part of how this stuff works. It builds on and reuses constructs from JWS and JWE that recognize JSON's nondeterminism and avoids the complexities, interoperability problems, and security pitfalls of canonicalization by just base64url encoding and calculating integrity (signature, mac, hash) over that. \r\n\r\nThere is undoubtedly some historical context and understanding here that isn't necessarily conveyed in this draft. But we've tried. https://www.ietf.org/archive/id/draft-ietf-oauth-selective-disclosure-jwt-14.html#name-disclosure-format-considera for example has some treatment of these concepts. And statements like the one https://www.ietf.org/archive/id/draft-ietf-oauth-selective-disclosure-jwt-14.html#section-4.2.3-2 try too. \r\n\r\nI'd be open to ideas about how to better convey these ideas. Within reason, of course. And also with consideration that the document in question has past last call (twice!).\r\n\r\n\r\n\r\n",
           "createdAt": "2024-12-18T23:46:54Z",
           "updatedAt": "2024-12-18T23:46:54Z"
+        },
+        {
+          "author": "bc-pi",
+          "authorAssociation": "COLLABORATOR",
+          "body": "\"thanks! feel free to close as WAI if that's useful.\" - @samuelgoto in a conversation on slack ",
+          "createdAt": "2024-12-23T22:10:56Z",
+          "updatedAt": "2024-12-23T22:10:56Z"
         }
       ]
     }
