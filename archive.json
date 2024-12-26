@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2024-12-24T00:15:09.517726+00:00",
+  "timestamp": "2024-12-26T00:14:58.910258+00:00",
   "repo": "oauth-wg/oauth-selective-disclosure-jwt",
   "labels": [
     {
@@ -49020,7 +49020,7 @@
       "labels": [],
       "body": "",
       "createdAt": "2024-07-31T17:30:57Z",
-      "updatedAt": "2024-08-12T19:57:42Z",
+      "updatedAt": "2024-12-24T13:39:13Z",
       "baseRepository": "oauth-wg/oauth-selective-disclosure-jwt",
       "baseRefName": "master",
       "baseRefOid": "841a4f43ec08b6a9623ac05b598df9846f69dbf3",
@@ -49060,6 +49060,19 @@
               "updatedAt": "2024-08-01T10:17:26Z"
             }
           ]
+        },
+        {
+          "id": "PRR_kwDOHTmVzM6WUj78",
+          "commit": {
+            "abbreviatedOid": "870a172"
+          },
+          "author": "105Jimmy2023",
+          "authorAssociation": "NONE",
+          "state": "APPROVED",
+          "body": "",
+          "createdAt": "2024-12-24T13:39:13Z",
+          "updatedAt": "2024-12-24T13:39:13Z",
+          "comments": []
         }
       ]
     },
@@ -50631,7 +50644,7 @@
       "labels": [],
       "body": "https://standards.iso.org/ittf/PubliclyAvailableStandards/index.html no longer has anything for 29100 and https://www.iso.org/standard/45123.html indicates that ISO/IEC 29100:2011 is \"Withdrawn\" and \"Revised by\" ISO/IEC 29100:2024 that is now available for the low low special price of CHF 129, which is approximately $150 / \u20ac137 too much for me to be comfortable referencing",
       "createdAt": "2024-10-05T12:12:22Z",
-      "updatedAt": "2024-12-18T20:36:38Z",
+      "updatedAt": "2024-12-24T23:24:47Z",
       "baseRepository": "oauth-wg/oauth-selective-disclosure-jwt",
       "baseRefName": "master",
       "baseRefOid": "c95bc07ba5ef5a45b848eaeab7abae9dc5ae2c30",
@@ -50725,6 +50738,19 @@
           "body": "per Nat's comment the standard is publicly available again :) ",
           "createdAt": "2024-10-15T10:54:53Z",
           "updatedAt": "2024-10-15T10:54:53Z",
+          "comments": []
+        },
+        {
+          "id": "PRR_kwDOHTmVzM6WVkVh",
+          "commit": {
+            "abbreviatedOid": "a09702e"
+          },
+          "author": "Sakurann",
+          "authorAssociation": "COLLABORATOR",
+          "state": "CHANGES_REQUESTED",
+          "body": "I believe what needs to be done is change the reference to 29100:2024 from 29100:2011, not removing the reference",
+          "createdAt": "2024-12-24T23:24:47Z",
+          "updatedAt": "2024-12-24T23:24:47Z",
           "comments": []
         }
       ]
@@ -52098,7 +52124,7 @@
       "labels": [],
       "body": "These changes are me trying to follow though with what I said we'd do here https://mailarchive.ietf.org/arch/msg/oauth/qC4Bq6sOkmYzJ_93_VWmqN824gI/ \r\n\r\nPreview at https://drafts.oauth.net/oauth-selective-disclosure-jwt/denis-and-the-ad/draft-ietf-oauth-selective-disclosure-jwt.html",
       "createdAt": "2024-12-17T21:47:37Z",
-      "updatedAt": "2024-12-20T13:02:29Z",
+      "updatedAt": "2024-12-24T23:23:03Z",
       "baseRepository": "oauth-wg/oauth-selective-disclosure-jwt",
       "baseRefName": "master",
       "baseRefOid": "c95bc07ba5ef5a45b848eaeab7abae9dc5ae2c30",
@@ -52163,6 +52189,32 @@
               "body": "perfect.  TY\r\n",
               "createdAt": "2024-12-20T13:00:16Z",
               "updatedAt": "2024-12-20T13:00:16Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOHTmVzM6WVkOm",
+          "commit": {
+            "abbreviatedOid": "9f7e43e"
+          },
+          "author": "Sakurann",
+          "authorAssociation": "COLLABORATOR",
+          "state": "CHANGES_REQUESTED",
+          "body": "I am ok with the rest of the text, but would like to see definition of KB JWT changed.",
+          "createdAt": "2024-12-24T23:21:35Z",
+          "updatedAt": "2024-12-24T23:23:03Z",
+          "comments": [
+            {
+              "originalPosition": 26,
+              "body": "but what binds KB JWT to SD-JWT is the fact that KB JWT's payload is signed using the key included in the SD-JWT payload.\r\n\r\n```suggestion\r\n:  A Key Binding JWT is said to \"be tied to\" a particular SD-JWT when its payload\r\n  is signed using the key included in the SD-JWT payload, and also contains\r\n  a hash of the SD-JWT in its `sd_hash` claim. A JWT for proving Key Binding\r\n  as defined in (#kb-jwt).\r\n```",
+              "createdAt": "2024-12-24T23:21:35Z",
+              "updatedAt": "2024-12-24T23:23:03Z"
+            },
+            {
+              "originalPosition": 55,
+              "body": "```suggestion\r\nSD-JWT, SD-JWT+KB, and various constituent parts is provided here:\r\n```",
+              "createdAt": "2024-12-24T23:22:06Z",
+              "updatedAt": "2024-12-24T23:23:03Z"
             }
           ]
         }
