@@ -1052,7 +1052,7 @@ svg :is([fill="white"], [fill^="#fff"]) {
 </tr></thead>
 <tfoot><tr>
 <td class="left">Fett, et al.</td>
-<td class="center">Expires 23 June 2025</td>
+<td class="center">Expires 30 June 2025</td>
 <td class="right">[Page]</td>
 </tr></tfoot>
 </table>
@@ -1065,12 +1065,12 @@ svg :is([fill="white"], [fill^="#fff"]) {
 <dd class="internet-draft">draft-ietf-oauth-selective-disclosure-jwt-latest</dd>
 <dt class="label-published">Published:</dt>
 <dd class="published">
-<time datetime="2024-12-20" class="published">20 December 2024</time>
+<time datetime="2024-12-27" class="published">27 December 2024</time>
     </dd>
 <dt class="label-intended-status">Intended Status:</dt>
 <dd class="intended-status">Standards Track</dd>
 <dt class="label-expires">Expires:</dt>
-<dd class="expires"><time datetime="2025-06-23">23 June 2025</time></dd>
+<dd class="expires"><time datetime="2025-06-30">30 June 2025</time></dd>
 <dt class="label-authors">Authors:</dt>
 <dd class="authors">
 <div class="author">
@@ -1124,7 +1124,7 @@ The primary use case is the selective disclosure of JSON Web Token (JWT) claims.
         time. It is inappropriate to use Internet-Drafts as reference
         material or to cite them other than as "work in progress."<a href="#section-boilerplate.1-3" class="pilcrow">¶</a></p>
 <p id="section-boilerplate.1-4">
-        This Internet-Draft will expire on 23 June 2025.<a href="#section-boilerplate.1-4" class="pilcrow">¶</a></p>
+        This Internet-Draft will expire on 30 June 2025.<a href="#section-boilerplate.1-4" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="copyright">
@@ -1511,7 +1511,8 @@ the public key corresponding to the private key controlled by the Holder (or a r
           <dd class="break"></dd>
 <dt id="section-1.2-4.9">Key Binding JWT (KB-JWT):</dt>
           <dd style="margin-left: 1.5em" id="section-1.2-4.10">A Key Binding JWT is said to "be tied to" a particular SD-JWT when its payload
-includes a hash of the SD-JWT in its <code>sd_hash</code> claim. A JWT for proving Key Binding
+is signed using the key included in the SD-JWT payload, and also contains
+a hash of the SD-JWT in its <code>sd_hash</code> claim. A JWT for proving Key Binding
 as defined in <a href="#kb-jwt" class="auto internal xref">Section 4.3</a>.<a href="#section-1.2-4.10" class="pilcrow">¶</a>
 </dd>
           <dd class="break"></dd>
@@ -2417,8 +2418,8 @@ ZHJ5M2xjYndIZ2VaOGtoQXYxVTFPU2xlclAwVmtCSnJXWjAifV0sICJfc2RfYWxnIjog
 InNoYS0yNTYiLCAiY25mIjogeyJqd2siOiB7Imt0eSI6ICJFQyIsICJjcnYiOiAiUC0y
 NTYiLCAieCI6ICJUQ0FFUjE5WnZ1M09IRjRqNFc0dmZTVm9ISVAxSUxpbERsczd2Q2VH
 ZW1jIiwgInkiOiAiWnhqaVdXYlpNUUdIVldLVlE0aGJTSWlyc1ZmdWVjQ0U2dDRqVDlG
-MkhaUSJ9fX0.7aU1oCSIjmXn1riQoMvDJCfS-g_GATaXBifxv-HyAmflkIWUQt8oKwB6
-AZVpwXwHjWrlgXdYdJgOCxQGvT_bvQ
+MkhaUSJ9fX0.xp23js2lR33Uc-6sMwiZCQLskJDZ-mmR_FFrvne7eYxO_RpvTMc_OO4W
+RSDe8KSgSEJrWmRrztnEw_-liGZ5Nw
 
 </pre><a href="#section-5.1-29" class="pilcrow">¶</a>
 </div>
@@ -2440,8 +2441,8 @@ ZHJ5M2xjYndIZ2VaOGtoQXYxVTFPU2xlclAwVmtCSnJXWjAifV0sICJfc2RfYWxnIjog
 InNoYS0yNTYiLCAiY25mIjogeyJqd2siOiB7Imt0eSI6ICJFQyIsICJjcnYiOiAiUC0y
 NTYiLCAieCI6ICJUQ0FFUjE5WnZ1M09IRjRqNFc0dmZTVm9ISVAxSUxpbERsczd2Q2VH
 ZW1jIiwgInkiOiAiWnhqaVdXYlpNUUdIVldLVlE0aGJTSWlyc1ZmdWVjQ0U2dDRqVDlG
-MkhaUSJ9fX0.7aU1oCSIjmXn1riQoMvDJCfS-g_GATaXBifxv-HyAmflkIWUQt8oKwB6
-AZVpwXwHjWrlgXdYdJgOCxQGvT_bvQ~WyIyR0xDNDJzS1F2ZUNmR2ZyeU5STjl3IiwgI
+MkhaUSJ9fX0.xp23js2lR33Uc-6sMwiZCQLskJDZ-mmR_FFrvne7eYxO_RpvTMc_OO4W
+RSDe8KSgSEJrWmRrztnEw_-liGZ5Nw~WyIyR0xDNDJzS1F2ZUNmR2ZyeU5STjl3IiwgI
 mdpdmVuX25hbWUiLCAiSm9obiJd~WyJlbHVWNU9nM2dTTklJOEVZbnN4QV9BIiwgImZh
 bWlseV9uYW1lIiwgIkRvZSJd~WyI2SWo3dE0tYTVpVlBHYm9TNXRtdlZBIiwgImVtYWl
 sIiwgImpvaG5kb2VAZXhhbXBsZS5jb20iXQ~WyJlSThaV205UW5LUHBOUGVOZW5IZGhR
@@ -2485,18 +2486,18 @@ ZHJ5M2xjYndIZ2VaOGtoQXYxVTFPU2xlclAwVmtCSnJXWjAifV0sICJfc2RfYWxnIjog
 InNoYS0yNTYiLCAiY25mIjogeyJqd2siOiB7Imt0eSI6ICJFQyIsICJjcnYiOiAiUC0y
 NTYiLCAieCI6ICJUQ0FFUjE5WnZ1M09IRjRqNFc0dmZTVm9ISVAxSUxpbERsczd2Q2VH
 ZW1jIiwgInkiOiAiWnhqaVdXYlpNUUdIVldLVlE0aGJTSWlyc1ZmdWVjQ0U2dDRqVDlG
-MkhaUSJ9fX0.7aU1oCSIjmXn1riQoMvDJCfS-g_GATaXBifxv-HyAmflkIWUQt8oKwB6
-AZVpwXwHjWrlgXdYdJgOCxQGvT_bvQ~WyJlbHVWNU9nM2dTTklJOEVZbnN4QV9BIiwgI
+MkhaUSJ9fX0.xp23js2lR33Uc-6sMwiZCQLskJDZ-mmR_FFrvne7eYxO_RpvTMc_OO4W
+RSDe8KSgSEJrWmRrztnEw_-liGZ5Nw~WyJlbHVWNU9nM2dTTklJOEVZbnN4QV9BIiwgI
 mZhbWlseV9uYW1lIiwgIkRvZSJd~WyJBSngtMDk1VlBycFR0TjRRTU9xUk9BIiwgImFk
 ZHJlc3MiLCB7InN0cmVldF9hZGRyZXNzIjogIjEyMyBNYWluIFN0IiwgImxvY2FsaXR5
 IjogIkFueXRvd24iLCAicmVnaW9uIjogIkFueXN0YXRlIiwgImNvdW50cnkiOiAiVVMi
 fV0~WyIyR0xDNDJzS1F2ZUNmR2ZyeU5STjl3IiwgImdpdmVuX25hbWUiLCAiSm9obiJd
 ~WyJsa2x4RjVqTVlsR1RQVW92TU5JdkNBIiwgIlVTIl0~eyJhbGciOiAiRVMyNTYiLCA
 idHlwIjogImtiK2p3dCJ9.eyJub25jZSI6ICIxMjM0NTY3ODkwIiwgImF1ZCI6ICJodH
-RwczovL3ZlcmlmaWVyLmV4YW1wbGUub3JnIiwgImlhdCI6IDE3MzQ2OTk2ODQsICJzZF
-9oYXNoIjogInkyVEFvd3NOUjlFdHpiRlQ5X0UtREQ2TnNUWng2ZWw3VDJURG9sZkZRSU
-UifQ.727rRR7JkSS4JSQOYWkReCMqNvUy1NuICPIsXCKTYd6A73uMuG78ErNsetHoFtY
-YPolJrsKEiS30lxiUiDShEw
+RwczovL3ZlcmlmaWVyLmV4YW1wbGUub3JnIiwgImlhdCI6IDE3MzUzMDYyMzMsICJzZF
+9oYXNoIjogIlBFbFV4a3poMGItRjJObkQwNEJQMkZmTzFMRU01a0huRWlkaEw3UG9Lbm
+sifQ.JcamqEtFuO0MQdKCVU4ltwdiZfj5aygYDznWhfLj9BSxUHmC9QweoJRzHD64OyZ
+OgtPnU-SrWtP6efwdkvHv6A
 
 </pre><a href="#section-5.2-2" class="pilcrow">¶</a>
 </div>
@@ -2505,8 +2506,8 @@ YPolJrsKEiS30lxiUiDShEw
 <pre>{
   "nonce": "1234567890",
   "aud": "https://verifier.example.org",
-  "iat": 1734699684,
-  "sd_hash": "y2TAowsNR9EtzbFT9_E-DD6NsTZx6el7T2TDolfFQIE"
+  "iat": 1735306233,
+  "sd_hash": "PElUxkzh0b-F2NnD04BP2FfO1LEM5kHnEidhL7PoKnk"
 }
 
 </pre><a href="#section-5.2-4" class="pilcrow">¶</a>
@@ -3079,8 +3080,8 @@ issued using the Flattened JSON Serialization:<a href="#section-8.2-2" class="pi
     Z1ZWNDRTZ0NGpUOUYySFpRIn19fQ",
   "protected":
     "eyJhbGciOiAiRVMyNTYiLCAidHlwIjogImV4YW1wbGUrc2Qtand0In0",
-  "signature": "axFV0LxzjO9qi0UUEozs1KBZq298EQo7U2yA7ceoZu_6VibIXUhs
-    TQW7aA9gB8lo6REItC9OY0xC3mLU8WRngw"
+  "signature": "xsJE6bVY2rxPp-6r39hHa1L8s_BbDIeKUlrBczNCBePMn3AKXRZe
+    DemUdzHqygIhI7JoYb7cxcjzMfuAmN1fPQ"
 }
 
 </pre><a href="#section-8.2-3" class="pilcrow">¶</a>
@@ -3097,10 +3098,10 @@ issued using the Flattened JSON Serialization:<a href="#section-8.2-2" class="pi
     ],
     "kb_jwt": "eyJhbGciOiAiRVMyNTYiLCAidHlwIjogImtiK2p3dCJ9.eyJub25j
       ZSI6ICIxMjM0NTY3ODkwIiwgImF1ZCI6ICJodHRwczovL3ZlcmlmaWVyLmV4YW
-      1wbGUub3JnIiwgImlhdCI6IDE3MzQ2OTk2ODQsICJzZF9oYXNoIjogInlVa0VQ
-      MzRwdDVkNUhjWEN6RGx0WUtPMTl2ZnpnbzJDTGtUWmZaZlZ2eFUifQ.of-2J51
-      4TC_p94r0YcWGJs2VoWoN6-ZlQijLKj3Igt5GHoANCzT-MeX2sxdt0Xm93rP1H
-      JhtXwmRLt2kjW3bzQ"
+      1wbGUub3JnIiwgImlhdCI6IDE3MzUzMDYyMzMsICJzZF9oYXNoIjogIkFfbmdX
+      MVFESXVpTFlTdnZPeFhYakJQdW5taXFpMVBmSzdBMURHUnY3V0kifQ.7fotfku
+      qVGIQY53zhFV_RFfiGVOJYTG79Rk1IwPziKuoJ4Xi3TWlyyrypauDRllzOLfqh
+      skPkx6nGiGu6z0mSQ"
   },
   "payload": "eyJfc2QiOiBbIjRIQm42YUlZM1d0dUdHV1R4LXFVajZjZGs2V0JwWn
     lnbHRkRmF2UGE3TFkiLCAiOHNtMVFDZjAyMXBObkhBQ0k1c1A0bTRLWmd5Tk9PQV
@@ -3114,8 +3115,8 @@ issued using the Flattened JSON Serialization:<a href="#section-8.2-2" class="pi
     Z1ZWNDRTZ0NGpUOUYySFpRIn19fQ",
   "protected":
     "eyJhbGciOiAiRVMyNTYiLCAidHlwIjogImV4YW1wbGUrc2Qtand0In0",
-  "signature": "axFV0LxzjO9qi0UUEozs1KBZq298EQo7U2yA7ceoZu_6VibIXUhs
-    TQW7aA9gB8lo6REItC9OY0xC3mLU8WRngw"
+  "signature": "xsJE6bVY2rxPp-6r39hHa1L8s_BbDIeKUlrBczNCBePMn3AKXRZe
+    DemUdzHqygIhI7JoYb7cxcjzMfuAmN1fPQ"
 }
 
 </pre><a href="#section-8.2-5" class="pilcrow">¶</a>
@@ -3158,15 +3159,15 @@ Serialization:<a href="#section-8.3-2" class="pilcrow">¶</a></p>
         "kid": "issuer-key-1",
         "kb_jwt": "eyJhbGciOiAiRVMyNTYiLCAidHlwIjogImtiK2p3dCJ9.eyJu
           b25jZSI6ICIxMjM0NTY3ODkwIiwgImF1ZCI6ICJodHRwczovL3ZlcmlmaW
-          VyLmV4YW1wbGUub3JnIiwgImlhdCI6IDE3MzQ2OTk2ODQsICJzZF9oYXNo
-          IjogIjlNbWxkWF9peUlETkt4Wk52TS1JeHlNQVhLSlNYaThmNGQ4UVBFVE
-          VGT0kifQ.e-k1OFqY4kpbdObjfYIawganf-gsX5Efvb9I0lo3BWp7u0QWR
-          uPIks4PRP8CyutN4ZHOUBWOj7HTBJ5mC7Jtyw"
+          VyLmV4YW1wbGUub3JnIiwgImlhdCI6IDE3MzUzMDYyMzMsICJzZF9oYXNo
+          IjogImhMZ2ZuLTdEdElHQ3ZkZDlnTW1ZMy1HeUhpdEMzbzB3WlYxZ09Xan
+          paLVEifQ._6CUeHmAqx2T4CX7k50jBrXlkmom9LYmAnlvfeexdje08zvRv
+          APb8bRfZHi70uxgn_yv0OLgZd-mF7CbPuZEKQ"
       },
       "protected":
         "eyJhbGciOiAiRVMyNTYiLCAidHlwIjogImV4YW1wbGUrc2Qtand0In0",
-      "signature": "EuI_03CuV68uHgmW04i4dSWoF2Z_qxKeAO5NKMN6NRbc8nL6
-        cDmuCtJfCRoU26l9akxOH3ni2jMb2IytRwBPSw"
+      "signature": "gpb4WPiSzjnC-I_R8ajN5o_5Fee8XYTV5NMlJSCIt-aJMAkG
+        gATR6_cnMngvqOYo2w6ejhDBrApdrXcNGPP4Ew"
     },
     {
       "header": {
@@ -3174,8 +3175,8 @@ Serialization:<a href="#section-8.3-2" class="pilcrow">¶</a></p>
       },
       "protected":
         "eyJhbGciOiAiRVMyNTYiLCAidHlwIjogImV4YW1wbGUrc2Qtand0In0",
-      "signature": "bjkLofuUmhYBDciRNvA3hrjg19rXrQw0zFXpAjhqadrB6ZLn
-        nNcboi57M-s95Al0xyo5FFVz9gbyvJHDJJlPZA"
+      "signature": "WKhLKlHnv-Jnj5Nf9_YOEmR6h1t95g1qxuU38Gj-8y2e8t7x
+        qV9Q4aorN7DFglWgJ8BY7EYz8EsputnDgl_K-g"
     }
   ]
 }
@@ -4305,8 +4306,8 @@ WUpISVo4VnUtZjlDQ3lWdWIyVWZnRWs4anZ2WGV6d0sxcF9KbmVlWFEiLCAiZ2xUM2hy
 U1U3ZlNXZ3dGNVVEWm1Xd0JUdzMyZ25VbGRJaGk4aEdWQ2FWNCIsICJydkpkNmlxNlQ1
 ZWptc0JNb0d3dU5YaDlxQUFGQVRBY2k0MG9pZEVlVnNBIiwgInVOSG9XWWhYc1poVkpD
 TkUyRHF5LXpxdDd0NjlnSkt5NVFhRnY3R3JNWDQiXX0sICJfc2RfYWxnIjogInNoYS0y
-NTYifQ.PsqjnSy60n6WVC23zaw_TynGwQHCiLyA4jLcz4VjFndUshL3uxX_XP4g9oXDi
-kRhcsKu6iuxOXX0RvkSV4N48Q~WyJHMDJOU3JRZmpGWFE3SW8wOXN5YWpBIiwgInJlZ2
+NTYifQ.ZNwRWJDI5G5Wx6GjxchcOcfKWAofiTt53LhMGs4BXkETbGRnP0qoW8L31ozoy
+KPBdPMVHfITtOwGEJiLXzWlHw~WyJHMDJOU3JRZmpGWFE3SW8wOXN5YWpBIiwgInJlZ2
 lvbiIsICJcdTZlMmZcdTUzM2EiXQ~WyJsa2x4RjVqTVlsR1RQVW92TU5JdkNBIiwgImN
 vdW50cnkiLCAiSlAiXQ~
 
@@ -4657,8 +4658,8 @@ ZFJtc01vIiwgIldOQS1VTks3Rl96aHNBYjlzeVdPNklJUTF1SGxUbU9VOHI4Q3ZKMGNJ
 TWsiLCAiV3hoX3NWM2lSSDliZ3JUQkppLWFZSE5DTHQtdmpoWDFzZC1pZ09mXzlsayIs
 ICJfTy13SmlIM2VuU0I0Uk9IbnRUb1FUOEptTHR6LW1oTzJmMWM4OVhvZXJRIiwgImh2
 RFhod21HY0pRc0JDQTJPdGp1TEFjd0FNcERzYVUwbmtvdmNLT3FXTkUiXX19LCAiX3Nk
-X2FsZyI6ICJzaGEtMjU2In0.WYsjf2F8kDjeZ0L1-D8WtQ7BWNy3AYWAfhIiDArrK6nQ
-jAqofjAgc8PJyPzU5fWbFj-VoB9CM6yHLJJnVWIKBA~WyIyR0xDNDJzS1F2ZUNmR2Zye
+X2FsZyI6ICJzaGEtMjU2In0.Wi68_zEb8PLb05XYJzuLyC-tMunCFf0BLz85iMIF3AGf
+weUXxbZRUnrVZscS8Q6qu9ioFD2Xzkg6lYMtDmnv3Q~WyIyR0xDNDJzS1F2ZUNmR2Zye
 U5STjl3IiwgInRpbWUiLCAiMjAxMi0wNC0yM1QxODoyNVoiXQ~WyJQYzMzSk0yTGNoY1
 VfbEhnZ3ZfdWZRIiwgeyJfc2QiOiBbIjl3cGpWUFd1RDdQSzBuc1FETDhCMDZsbWRnVj
 NMVnliaEh5ZFFwVE55TEkiLCAiRzVFbmhPQU9vVTlYXzZRTU52ekZYanBFQV9SYy1BRX
@@ -4778,8 +4779,8 @@ oeTJyMDE4dnJzSmpvLVZqZDZnNnl0N0Fhb25Lb25uaXVKOXplbDNqbyIsICJxcDdaX0t
 6ICJzaGEtMjU2IiwgImNuZiI6IHsiandrIjogeyJrdHkiOiAiRUMiLCAiY3J2IjogIlA
 tMjU2IiwgIngiOiAiVENBRVIxOVp2dTNPSEY0ajRXNHZmU1ZvSElQMUlMaWxEbHM3dkN
 lR2VtYyIsICJ5IjogIlp4amlXV2JaTVFHSFZXS1ZRNGhiU0lpcnNWZnVlY0NFNnQ0alQ
-5RjJIWlEifX19.-icWD9yLDmxp4hEv07OpGatHNSALxIxpGzw0jGMsSJ1S0jhy9VthII
-q4on_wZQXfkAU15ceCbZa-8Y3xnXsvXw~WyIyR0xDNDJzS1F2ZUNmR2ZyeU5STjl3Iiw
+5RjJIWlEifX19.8t86iRPPU0ZXtN_oiK3QAr-1ZQaCQfrG4mr4JJaz1FLocyFuxaVyL9
+3GXHqoLdKGcf-4K5sUoVp0GJI6AVXM3w~WyIyR0xDNDJzS1F2ZUNmR2ZyeU5STjl3Iiw
 gImdpdmVuX25hbWUiLCAiRXJpa2EiXQ~WyJlbHVWNU9nM2dTTklJOEVZbnN4QV9BIiwg
 ImZhbWlseV9uYW1lIiwgIk11c3Rlcm1hbm4iXQ~WyI2SWo3dE0tYTVpVlBHYm9TNXRtd
 lZBIiwgImJpcnRoZGF0ZSIsICIxOTYzLTA4LTEyIl0~WyJlSThaV205UW5LUHBOUGVOZ
@@ -5134,14 +5135,14 @@ oeTJyMDE4dnJzSmpvLVZqZDZnNnl0N0Fhb25Lb25uaXVKOXplbDNqbyIsICJxcDdaX0t
 6ICJzaGEtMjU2IiwgImNuZiI6IHsiandrIjogeyJrdHkiOiAiRUMiLCAiY3J2IjogIlA
 tMjU2IiwgIngiOiAiVENBRVIxOVp2dTNPSEY0ajRXNHZmU1ZvSElQMUlMaWxEbHM3dkN
 lR2VtYyIsICJ5IjogIlp4amlXV2JaTVFHSFZXS1ZRNGhiU0lpcnNWZnVlY0NFNnQ0alQ
-5RjJIWlEifX19.-icWD9yLDmxp4hEv07OpGatHNSALxIxpGzw0jGMsSJ1S0jhy9VthII
-q4on_wZQXfkAU15ceCbZa-8Y3xnXsvXw~WyJuUHVvUW5rUkZxM0JJZUFtN0FuWEZBIiw
+5RjJIWlEifX19.8t86iRPPU0ZXtN_oiK3QAr-1ZQaCQfrG4mr4JJaz1FLocyFuxaVyL9
+3GXHqoLdKGcf-4K5sUoVp0GJI6AVXM3w~WyJuUHVvUW5rUkZxM0JJZUFtN0FuWEZBIiw
 gIm5hdGlvbmFsaXRpZXMiLCBbIkRFIl1d~WyJNMEpiNTd0NDF1YnJrU3V5ckRUM3hBIi
 wgIjE4IiwgdHJ1ZV0~eyJhbGciOiAiRVMyNTYiLCAidHlwIjogImtiK2p3dCJ9.eyJub
 25jZSI6ICIxMjM0NTY3ODkwIiwgImF1ZCI6ICJodHRwczovL3ZlcmlmaWVyLmV4YW1wb
-GUub3JnIiwgImlhdCI6IDE3MzQ2OTk2ODQsICJzZF9oYXNoIjogIks3TUpBSDk2MHVYe
-TdnRnRjRXBWekNEYndsNWphSmxVaHlWcWN3VU1VU00ifQ.PDOGI9WmyyGbCISlgbYqRf
-rUKoTaaKpmhkm7VGYRrpHDKGhcUwO5TbictPKKv8Bh7eTwJaynNJpaH2eBFBpMOA
+GUub3JnIiwgImlhdCI6IDE3MzUzMDYyMzMsICJzZF9oYXNoIjogImh5aVRCejRBWldoX
+2JSTlJIcVJveUVvcXEwVkpPUHdhQ1FvMEY2Um40WEEifQ.t2eZ4gB9F7pmnNdGRHyXON
+TvOQCuHs3wK7bD0DYtO-CrJQugcMc8rP07_EkPdvoivghdAy2pejz7t9Y-i5VgcA
 
 </pre><a href="#appendix-A.3-53" class="pilcrow">¶</a>
 </div>
@@ -5150,8 +5151,8 @@ rUKoTaaKpmhkm7VGYRrpHDKGhcUwO5TbictPKKv8Bh7eTwJaynNJpaH2eBFBpMOA
 <pre>{
   "nonce": "1234567890",
   "aud": "https://verifier.example.org",
-  "iat": 1734699684,
-  "sd_hash": "K7MJAH960uXy7gFtcEpVzCDbwl5jaJlUhyVqcwUMUSM"
+  "iat": 1735306233,
+  "sd_hash": "hyiTBz4AZWh_bRNRHqRoyEoqq0VJOPwaCQo0F6Rn4XA"
 }
 
 </pre><a href="#appendix-A.3-55" class="pilcrow">¶</a>
@@ -5264,8 +5265,8 @@ VmFjY2luZVJlY2lwaWVudCJ9LCAidHlwZSI6ICJWYWNjaW5hdGlvbkV2ZW50In0sICJf
 c2RfYWxnIjogInNoYS0yNTYiLCAiY25mIjogeyJqd2siOiB7Imt0eSI6ICJFQyIsICJj
 cnYiOiAiUC0yNTYiLCAieCI6ICJUQ0FFUjE5WnZ1M09IRjRqNFc0dmZTVm9ISVAxSUxp
 bERsczd2Q2VHZW1jIiwgInkiOiAiWnhqaVdXYlpNUUdIVldLVlE0aGJTSWlyc1ZmdWVj
-Q0U2dDRqVDlGMkhaUSJ9fX0.5Q_Z1wbEYDb-ueVXQJPue8VpbSdWEKIEjplcHKdLGjAQ
--JPYFO-zq6ZmsdRcNxL3EjVWUG-fMA5rY4OCd9VKIg~WyIyR0xDNDJzS1F2ZUNmR2Zye
+Q0U2dDRqVDlGMkhaUSJ9fX0.nxEOG4VgrQkNR3aAnZ06u9UtUPU1qKqpT3BL_UsvTwMJ
+IxFtzPQP87so5beX1YM28tG898EZyK7lLqZraHbEcA~WyIyR0xDNDJzS1F2ZUNmR2Zye
 U5STjl3IiwgImF0Y0NvZGUiLCAiSjA3QlgwMyJd~WyJlbHVWNU9nM2dTTklJOEVZbnN4
 QV9BIiwgIm1lZGljaW5hbFByb2R1Y3ROYW1lIiwgIkNPVklELTE5IFZhY2NpbmUgTW9k
 ZXJuYSJd~WyI2SWo3dE0tYTVpVlBHYm9TNXRtdlZBIiwgIm1hcmtldGluZ0F1dGhvcml
@@ -5547,18 +5548,18 @@ VmFjY2luZVJlY2lwaWVudCJ9LCAidHlwZSI6ICJWYWNjaW5hdGlvbkV2ZW50In0sICJf
 c2RfYWxnIjogInNoYS0yNTYiLCAiY25mIjogeyJqd2siOiB7Imt0eSI6ICJFQyIsICJj
 cnYiOiAiUC0yNTYiLCAieCI6ICJUQ0FFUjE5WnZ1M09IRjRqNFc0dmZTVm9ISVAxSUxp
 bERsczd2Q2VHZW1jIiwgInkiOiAiWnhqaVdXYlpNUUdIVldLVlE0aGJTSWlyc1ZmdWVj
-Q0U2dDRqVDlGMkhaUSJ9fX0.5Q_Z1wbEYDb-ueVXQJPue8VpbSdWEKIEjplcHKdLGjAQ
--JPYFO-zq6ZmsdRcNxL3EjVWUG-fMA5rY4OCd9VKIg~WyJQYzMzSk0yTGNoY1VfbEhnZ
+Q0U2dDRqVDlGMkhaUSJ9fX0.nxEOG4VgrQkNR3aAnZ06u9UtUPU1qKqpT3BL_UsvTwMJ
+IxFtzPQP87so5beX1YM28tG898EZyK7lLqZraHbEcA~WyJQYzMzSk0yTGNoY1VfbEhnZ
 3ZfdWZRIiwgIm9yZGVyIiwgIjMvMyJd~WyJBSngtMDk1VlBycFR0TjRRTU9xUk9BIiwg
 ImRhdGVPZlZhY2NpbmF0aW9uIiwgIjIwMjEtMDYtMjNUMTM6NDA6MTJaIl0~WyIyR0xD
 NDJzS1F2ZUNmR2ZyeU5STjl3IiwgImF0Y0NvZGUiLCAiSjA3QlgwMyJd~WyJlbHVWNU9
 nM2dTTklJOEVZbnN4QV9BIiwgIm1lZGljaW5hbFByb2R1Y3ROYW1lIiwgIkNPVklELTE
 5IFZhY2NpbmUgTW9kZXJuYSJd~eyJhbGciOiAiRVMyNTYiLCAidHlwIjogImtiK2p3dC
 J9.eyJub25jZSI6ICIxMjM0NTY3ODkwIiwgImF1ZCI6ICJodHRwczovL3ZlcmlmaWVyL
-mV4YW1wbGUub3JnIiwgImlhdCI6IDE3MzQ2OTk2ODQsICJzZF9oYXNoIjogIi02ZGtfM
-0doM1FfNjYxX0tTWTYtZm1lcHhSRUVIeC1JUi1lblBPV2o4LXcifQ.4TjObSSAv9MVII
-oD-9_1dlPAPE_ExmJ972HaVt2rgsRGror3Ab-rrw_Tewxt-9-9ySUWlXI-ltSUqxP0C5
-SErg
+mV4YW1wbGUub3JnIiwgImlhdCI6IDE3MzUzMDYyMzMsICJzZF9oYXNoIjogIlVqcER1Y
+3duS2dQSGRHN3U2T2tDMUxYMWNCQWhLVTBXcm1TWEstQmNXYTAifQ.WCqQfQZ2RiOHyb
+2rSJw-cPIgHlefih_3wM-bRMXSZv10u_7Lh6FVjdmqLYp6sFeLrXhvH85M1ACKwIDgZ4
+8cuw
 
 </pre><a href="#appendix-A.4-39" class="pilcrow">¶</a>
 </div>
