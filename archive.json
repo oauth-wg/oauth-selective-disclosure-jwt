@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2024-12-26T00:14:58.910258+00:00",
+  "timestamp": "2024-12-29T00:16:45.544608+00:00",
   "repo": "oauth-wg/oauth-selective-disclosure-jwt",
   "labels": [
     {
@@ -12471,6 +12471,22 @@
           "updatedAt": "2024-12-23T22:10:56Z"
         }
       ]
+    },
+    {
+      "number": 534,
+      "id": "I_kwDOHTmVzM6kkLRA",
+      "title": "text for privacy considerations",
+      "url": "https://github.com/oauth-wg/oauth-selective-disclosure-jwt/issues/534",
+      "state": "OPEN",
+      "author": "bc-pi",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "\"[What exactly am I supposed to do with that](https://mailarchive.ietf.org/arch/msg/oauth/iUvTckt1s7aIU-mH-7mQBWoJgQQ/)\" is a question I have asked myself too. [This thread](https://mailarchive.ietf.org/arch/msg/oauth/v6tb-7l_9lT5ZJd4wecwWcE7h-Q/) is trying to move in a direction that folks can maybe live with.   ",
+      "createdAt": "2024-12-27T14:25:07Z",
+      "updatedAt": "2024-12-27T14:25:07Z",
+      "closedAt": null,
+      "comments": []
     }
   ],
   "pulls": [
@@ -50644,7 +50660,7 @@
       "labels": [],
       "body": "https://standards.iso.org/ittf/PubliclyAvailableStandards/index.html no longer has anything for 29100 and https://www.iso.org/standard/45123.html indicates that ISO/IEC 29100:2011 is \"Withdrawn\" and \"Revised by\" ISO/IEC 29100:2024 that is now available for the low low special price of CHF 129, which is approximately $150 / \u20ac137 too much for me to be comfortable referencing",
       "createdAt": "2024-10-05T12:12:22Z",
-      "updatedAt": "2024-12-24T23:24:47Z",
+      "updatedAt": "2024-12-28T21:59:12Z",
       "baseRepository": "oauth-wg/oauth-selective-disclosure-jwt",
       "baseRefName": "master",
       "baseRefOid": "c95bc07ba5ef5a45b848eaeab7abae9dc5ae2c30",
@@ -50711,6 +50727,13 @@
           "body": "https://mailarchive.ietf.org/arch/msg/oauth/SmGW8DevLyuydXAWLPeIgxX4MBo/ mentions this reference again ",
           "createdAt": "2024-12-18T20:36:17Z",
           "updatedAt": "2024-12-18T20:36:17Z"
+        },
+        {
+          "author": "bc-pi",
+          "authorAssociation": "COLLABORATOR",
+          "body": "> I believe what needs to be done is change the reference to 29100:2024 from 29100:2011, not removing the reference\r\n\r\nThat's an option too. But have you read all of ISO/IEC 29100:2024 and are all of it's principles applicable to SD-JWT? I don't know, I've only glanced at it. But I don't personally find content like \"The privacy principles of [@ISO.29100] should be adhered to.\" to be particularity helpful in a document like this and think it'd be better off without a vague and general statement to go see this other document that's not easily accessed. That how it's not easily accessed keeps changing is more a reminder that, in my opinion anyway, it never should have been referenced from SD-JWT in the first place. ",
+          "createdAt": "2024-12-27T14:03:59Z",
+          "updatedAt": "2024-12-28T21:59:12Z"
         }
       ],
       "reviews": [
@@ -52124,13 +52147,13 @@
       "labels": [],
       "body": "These changes are me trying to follow though with what I said we'd do here https://mailarchive.ietf.org/arch/msg/oauth/qC4Bq6sOkmYzJ_93_VWmqN824gI/ \r\n\r\nPreview at https://drafts.oauth.net/oauth-selective-disclosure-jwt/denis-and-the-ad/draft-ietf-oauth-selective-disclosure-jwt.html",
       "createdAt": "2024-12-17T21:47:37Z",
-      "updatedAt": "2024-12-24T23:23:03Z",
+      "updatedAt": "2024-12-27T14:33:47Z",
       "baseRepository": "oauth-wg/oauth-selective-disclosure-jwt",
       "baseRefName": "master",
       "baseRefOid": "c95bc07ba5ef5a45b848eaeab7abae9dc5ae2c30",
       "headRepository": "oauth-wg/oauth-selective-disclosure-jwt",
       "headRefName": "denis-and-the-ad",
-      "headRefOid": "9f7e43ec8069cea2582716f407513b5c20ae61aa",
+      "headRefOid": "f15b5c5ab58d0d5388731d923437f1f7dcb59a75",
       "closedAt": null,
       "mergedAt": null,
       "mergedBy": null,
@@ -52149,6 +52172,13 @@
           "body": "> These all look fine to me, TY\r\n> \r\n> One nit: on the Key Binding JWT def: You need a space between the sentences.\r\n\r\nthanks for reviewing. that nit has been fixed 9f7e43ec8069cea2582716f407513b5c20ae61aa ",
           "createdAt": "2024-12-20T13:02:27Z",
           "updatedAt": "2024-12-20T13:02:27Z"
+        },
+        {
+          "author": "bc-pi",
+          "authorAssociation": "COLLABORATOR",
+          "body": "> I am ok with the rest of the text, but would like to see definition of KB JWT changed.\r\n\r\nyeah, took your improved text for KB JWT definition f15b5c5ab58d0d5388731d923437f1f7dcb59a75",
+          "createdAt": "2024-12-27T13:33:32Z",
+          "updatedAt": "2024-12-27T13:33:32Z"
         }
       ],
       "reviews": [
@@ -52215,6 +52245,46 @@
               "body": "```suggestion\r\nSD-JWT, SD-JWT+KB, and various constituent parts is provided here:\r\n```",
               "createdAt": "2024-12-24T23:22:06Z",
               "updatedAt": "2024-12-24T23:23:03Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOHTmVzM6Wcj_A",
+          "commit": {
+            "abbreviatedOid": "9f7e43e"
+          },
+          "author": "bc-pi",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2024-12-27T13:32:08Z",
+          "updatedAt": "2024-12-27T13:32:08Z",
+          "comments": [
+            {
+              "originalPosition": 55,
+              "body": "I'm rather attached to that text ",
+              "createdAt": "2024-12-27T13:32:08Z",
+              "updatedAt": "2024-12-27T13:32:09Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOHTmVzM6WcxAn",
+          "commit": {
+            "abbreviatedOid": "9f7e43e"
+          },
+          "author": "bc-pi",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2024-12-27T14:33:46Z",
+          "updatedAt": "2024-12-27T14:33:47Z",
+          "comments": [
+            {
+              "originalPosition": 55,
+              "body": "especially around this time of year ",
+              "createdAt": "2024-12-27T14:33:46Z",
+              "updatedAt": "2024-12-27T14:33:47Z"
             }
           ]
         }
