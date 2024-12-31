@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2024-12-29T00:16:45.544608+00:00",
+  "timestamp": "2024-12-31T00:14:52.365916+00:00",
   "repo": "oauth-wg/oauth-selective-disclosure-jwt",
   "labels": [
     {
@@ -49082,7 +49082,7 @@
           "commit": {
             "abbreviatedOid": "870a172"
           },
-          "author": "105Jimmy2023",
+          "author": "SatoshiNakamoto2007",
           "authorAssociation": "NONE",
           "state": "APPROVED",
           "body": "",
