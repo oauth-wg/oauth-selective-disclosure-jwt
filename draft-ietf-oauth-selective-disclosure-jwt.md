@@ -1281,8 +1281,8 @@ lead to expect from user interface interactions and lead to them make choices th
 would not otherwise make. Workarounds such as batch issuance as
 described above help for keeping
 Verifiers from linking different presentations, but cannot work for Issuer/Verifier unlinkability.
-This issue applies to all selective disclosure based approaches,
-including mDL and mDoc [@?ISO.18013-5], and SD-CWT [@?I-D.ietf-spice-sd-cwt].
+This issue applies to all salted hash-based approaches,
+including mDL/mDoc [@?ISO.18013-5] and SD-CWT [@?I-D.ietf-spice-sd-cwt].
 
 ## Storage of User Data
 
