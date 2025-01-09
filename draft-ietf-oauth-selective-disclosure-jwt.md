@@ -1272,7 +1272,7 @@ time period considered appropriate (e.g., randomize `iat` within the last 24
 hours and calculate `exp` accordingly) or rounded (e.g., rounded down to the
 beginning of the day).
 
-SD-JWT only conceals the value of claims that aren't revealed.
+SD-JWT only conceals the value of claims that are not revealed.
 It does not meet standard security notations for anonymous credentials. In
 particular Verifiers and Issuers can know when they have seen the same
 credential no matter what fields have been disclosed, even none of them.
