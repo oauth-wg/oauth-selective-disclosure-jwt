@@ -1278,9 +1278,9 @@ particular Verifiers and Issuers can know when they have seen the same
 credential no matter what fields have been disclosed, even none of them.
 This behavior may not accord with what users intuitively expect or are
 lead to expect from user interface interactions and lead to them make choices they
-would not otherwise make. Workarounds such as issuing multiple
-credentials at once and using them only one time can help for keeping
-Verifiers from linking different presentations, but cannot work for Issuers.
+would not otherwise make. Workarounds such as batch issuance as
+described above help for keeping
+Verifiers from linking different presentations, but cannot work for Issuer/Verifier unlinkability.
 This issue applies to all selective disclosure based approaches,
 including mDL and mDoc [@?ISO.18013-5], and SD-CWT [@?I-D.ietf-spice-sd-cwt].
 
