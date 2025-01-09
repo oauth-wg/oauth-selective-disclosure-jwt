@@ -1255,6 +1255,18 @@ time period considered appropriate (e.g., randomize `iat` within the last 24
 hours and calculate `exp` accordingly) or rounded (e.g., rounded down to the
 beginning of the day).
 
+SD-JWT only conceals the value of claims that aren't revealed.
+It does not meet standard security notations for anonymous credentials. In
+particular Verifiers and Issuers can know when they have seen the same
+credential no matter what fields have been disclosed, even none of them.
+This behavior may not accord with what users intuitively expect or are
+lead to expect from user interface interactions and lead to them make choices they
+would not otherwise make. Workarounds such as issuing multiple
+credentials at once and using them only one time can help for keeping
+Verifiers from linking different presentations, but cannot work for Issuers.
+This issue applies to all selective disclosure based approaches,
+including mDL and mDoc [@?ISO.18013-5], and SD-CWT [@?I-D.ietf-spice-sd-cwt].
+
 ## Storage of User Data
 
 Wherever user data is stored, it represents a potential
@@ -1375,7 +1387,8 @@ Simon Schulz,
 Tobias Looker,
 Takahiko Kawasaki,
 Torsten Lodderstedt,
-Vittorio Bertocci, and
+Vittorio Bertocci,
+Watson Ladd, and
 Yaron Sheffer
 for their contributions (some of which substantial) to this draft and to the initial set of implementations.
 
@@ -1631,7 +1644,17 @@ the media type is encoded as an SD-JWT.
  <front>
   <title>JSON Web Token Claims</title>
   <author><organization>IANA</organization></author>
- </front>
+</front>
+</reference>
+
+<reference anchor="ISO.18013-5" target="https://www.iso.org/standard/69084.html">
+<front>
+  <title>ISO/IEC 18013-5:2021 Personal identification — ISO-compliant driving license — Part 5: Mobile driving license (mDL)  application</title>
+  <author>
+    <organization> ISO/IEC JTC 1/SC 17 Cards and security devices for personal identification</organization>
+  </author>
+  <date year="2021"/>
+</front>
 </reference>
 
 {backmatter}
@@ -1893,6 +1916,10 @@ data. The original JSON data is then used by the application. See
 # Document History
 
    [[ To be removed from the final specification ]]
+
+   -15
+
+   * Additions and adjustments to privacy considerations
 
    -14
 
