@@ -89,8 +89,8 @@ This specification defines two primary data formats:
     transport of the Issuer-signed JSON data structure and disclosure data
 
 2. SD-JWT+KB is a composite structure enabling cryptographic key binding when presented to the Verifier. It comprises the following:
-  - A facility for associating an SD-JWT with a key pair
-  - A format for a Key Binding JWT (KB-JWT) that proves possession of the private key of
+  - A mechanism for associating an SD-JWT with a key pair
+  - A format for a Key Binding JWT (KB-JWT) that allows proof of possession of the private key of
     the associated key pair
   - A format extending the SD-JWT format for the combined transport of the SD-JWT
     and the KB-JWT
@@ -121,14 +121,15 @@ Disclosure:
 
 
 Key Binding:
-:  Ability of the Holder to prove legitimate possession of an SD-JWT by proving
+:  Ability of the Holder to prove possession of an SD-JWT by proving
   control over a private key during the presentation. When utilizing Key Binding, an SD-JWT contains
   the public key corresponding to the private key controlled by the Holder (or a reference to this public key).
 
 Key Binding JWT (KB-JWT):
-:  A JWT for proving Key Binding as defined in (#kb-jwt).  A Key Binding JWT is
-   said to "be tied to" a particular SD-JWT when its payload includes a hash of the
-   SD-JWT in its `sd_hash` claim.
+:  A Key Binding JWT is said to "be tied to" a particular SD-JWT when its payload
+  is signed using the key included in the SD-JWT payload, and also contains
+  a hash of the SD-JWT in its `sd_hash` claim. A JWT for proving Key Binding
+  as defined in (#kb-jwt).
 
 Selectively Disclosable JWT with Key Binding (SD-JWT+KB):
 : A composite structure, comprising an SD-JWT and a Key Binding JWT tied to that SD-JWT.
@@ -161,7 +162,7 @@ Verifier:
            |            |
            +------------+
                  |
-         Presents SD-JWT+KB
+     Presents SD-JWT or SD-JWT+KB
     including selected Disclosures
                  |
                  v
@@ -184,7 +185,7 @@ conceptual level, abstracting from the data formats described in (#data_formats)
 
 An SD-JWT, at its core, is a digitally signed JSON document containing digests over the selectively disclosable claims with the Disclosures outside the document. Disclosures can be omitted without breaking the signature, and modifying them can be detected. Selectively disclosable claims can be individual object properties (name/value pairs) or array elements.
 
-Each digest value ensures the integrity of, and maps to, the respective Disclosure.  Digest values are calculated using a hash function over the Disclosures, each of which contains a cryptographically secure random salt, the claim name (only when the claim is an object property), and the claim value. The Disclosures are sent to the Holder as part of the SD-JWT in the format defined in (#data_formats).
+Each digest value ensures the integrity of, and maps to, the respective Disclosure.  Digest values are calculated using a hash function over the Disclosures, each of which contains a cryptographically secure random salt, the claim name (only when the claim is an object property), and the claim value. The Disclosures are sent to the Holder with the SD-JWT in the format defined in (#data_formats).
 When presenting an SD-JWT to a Verifier, the Holder only includes the Disclosures for the claims that it wants to reveal to that Verifier.
 
 An SD-JWT MAY also contain cleartext claims that are always disclosed to the Verifier.
@@ -294,8 +295,8 @@ An SD-JWT+KB with Disclosures:
 <Issuer-signed JWT>~<Disclosure 1>~<Disclosure N>~<KB-JWT>
 ```
 
-As an alternative illustration of the SD-JWT format, for those who celebrate, ABNF [@?RFC5234] for the
-SD-JWT, SD-JWT+KB, and various constituent parts is provided here:
+As an alternative illustration of the SD-JWT format, ABNF [@?RFC5234] for the
+SD-JWT, SD-JWT+KB, and various constituent parts is provided here (for those who celebrate):
 ```abnf
 ALPHA = %x41-5A / %x61-7A ; A-Z / a-z
 DIGIT = %x30-39 ; 0-9
@@ -963,7 +964,7 @@ other disclosed claims or sources other than the presented SD-JWT.
 
 **Integrity:** A malicious Holder cannot modify names or values of selectively disclosable claims without detection by the Verifier.
 
-Additionally, as described in (#key_binding_security), the application of Key Binding can ensure that the presenter of an SD-JWT credential is the legitimate Holder of the credential.
+Additionally, as described in (#key_binding_security), the application of Key Binding can ensure that the presenter of an SD-JWT credential is the Holder of the credential.
 
 ## Mandatory Signing of the Issuer-signed JWT {#sec-is-jwt}
 
@@ -1051,7 +1052,7 @@ revealed fundamental weaknesses and MUST NOT be used.
 
 ## Key Binding {#key_binding_security}
 
-Key Binding aims to ensure that the presenter of an SD-JWT credential is actually the legitimate Holder of the credential.
+Key Binding aims to ensure that the presenter of an SD-JWT credential is actually the Holder of the credential.
 An SD-JWT compatible with Key Binding contains a public key, or a reference to a public key, that corresponds to a private key possessed by the Holder.
 The Verifier requires that the Holder prove possession of that private key when presenting the SD-JWT credential.
 
@@ -1182,6 +1183,22 @@ The definition of `typ` in Section 4.1.9 of [@!RFC7515] recommends that the "app
 "example+sd-jwt" would be the value of the `typ` header parameter.
 
 Use of the `cty` content type header parameter to indicate the content type of the SD-JWT payload can also be used to distinguish different types of JSON objects, or different kinds of JWT Claim Sets.
+
+## Key Pair Generation and Lifecycle Management
+
+Implementations of SD-JWT rely on asymmetric cryptographic keys and must therefore ensure that key pair generation,
+handling, storage, and lifecycle management are performed securely.
+
+While the specific mechanisms for secure key management are out of scope for this document, implementers
+should follow established best practices, such as those outlined in NIST SP 800-57 Part 1 [@?NIST.SP.800-57pt1r5].
+This includes:
+
+* Secure Generation: Using cryptographically secure methods and random number generators.
+* Secure Storage: Protecting private keys from unauthorized access.
+* Lifecycle Management: Ensuring secure key rotation, revocation, and disposal as needed.
+
+Appropriate key management is essential, as any compromise can lead to unauthorized disclosure or forgery of SD-JWTs.
+
 
 # Privacy Considerations {#privacy_considerations}
 
@@ -1657,6 +1674,27 @@ the media type is encoded as an SD-JWT.
 </front>
 </reference>
 
+<reference anchor="NIST.SP.800-57pt1r5" target="https://nvlpubs.nist.gov/nistpubs/SpecialPublications/NIST.SP.800-57pt1r5.pdf">
+  <front>
+    <title>Recommendation for key management:part 1 - general</title>
+    <author fullname="Elaine Barker" surname="Barker">
+      <organization>Information Technology Laboratory</organization>
+    </author>
+    <author>
+      <organization abbrev="NIST">National Institute of Standards and Technology</organization>
+      <address>
+        <postal>
+          <country>US</country>
+          <city>Gaithersburg</city>
+        </postal>
+      </address>
+    </author>
+    <date month="May" year="2020"/>
+  </front>
+  <seriesInfo name="NIST Special Publications (General)" value="800-57pt1r5"/>
+  <seriesInfo name="DOI" value="10.6028/NIST.SP.800-57pt1r5"/>
+</reference>
+
 {backmatter}
 
 # Additional Examples
@@ -1920,6 +1958,7 @@ data. The original JSON data is then used by the application. See
    -15
 
    * Additions and adjustments to privacy considerations
+   * Address AD review comments resulting from evaluation of formal appeal
 
    -14
 
