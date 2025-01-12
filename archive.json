@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2025-01-09T00:15:10.982855+00:00",
+  "timestamp": "2025-01-12T00:17:02.534000+00:00",
   "repo": "oauth-wg/oauth-selective-disclosure-jwt",
   "labels": [
     {
@@ -12323,15 +12323,15 @@
       "id": "I_kwDOHTmVzM6e12Le",
       "title": "Comments and issues raised during the 1rst and the 2nd WGLC have not been addressed in -14",
       "url": "https://github.com/oauth-wg/oauth-selective-disclosure-jwt/issues/528",
-      "state": "OPEN",
+      "state": "CLOSED",
       "author": "Denisthemalice",
       "authorAssociation": "NONE",
       "assignees": [],
       "labels": [],
       "body": "Appendix C. Document History from draft-ietf-oauth-selective-disclosure-jwt-14 states:\r\n\r\n> \r\n* Address WGLC (part 2) comments\r\n\r\nI raised forty-one issues during the second WGLC. \r\nAll these issues have been closed by one of the editors without being discussed.\r\nHence, the WGLC (part 2) comments have not been addressed.\r\n\r\nPlease, re-open these forty-one issues so that they can be discussed. The list is below.\r\n    \r\n\r\n1. https://github.com/oauth-wg/oauth-selective-disclosure-jwt/pull/482\r\n\r\n2. https://github.com/oauth-wg/oauth-selective-disclosure-jwt/pull/483\r\n\r\n3. https://github.com/oauth-wg/oauth-selective-disclosure-jwt/pull/484\r\n\r\n4. https://github.com/oauth-wg/oauth-selective-disclosure-jwt/pull/485\r\n\r\n5. https://github.com/oauth-wg/oauth-selective-disclosure-jwt/pull/486\r\n\r\n6. https://github.com/oauth-wg/oauth-selective-disclosure-jwt/pull/487\r\n\r\n7. https://github.com/oauth-wg/oauth-selective-disclosure-jwt/pull/488\r\n\r\n8. https://github.com/oauth-wg/oauth-selective-disclosure-jwt/pull/489\r\n\r\n9. https://github.com/oauth-wg/oauth-selective-disclosure-jwt/pull/490\r\n\r\n10. https://github.com/oauth-wg/oauth-selective-disclosure-jwt/pull/491\r\n\r\n11. https://github.com/oauth-wg/oauth-selective-disclosure-jwt/pull/492\r\n\r\n12. https://github.com/oauth-wg/oauth-selective-disclosure-jwt/pull/493\r\n\r\n13. https://github.com/oauth-wg/oauth-selective-disclosure-jwt/pull/495\r\n\r\n14. https://github.com/oauth-wg/oauth-selective-disclosure-jwt/pull/494\r\n\r\n15. https://github.com/oauth-wg/oauth-selective-disclosure-jwt/pull/496\r\n\r\n16. https://github.com/oauth-wg/oauth-selective-disclosure-jwt/pull/497\r\n\r\n17. https://github.com/oauth-wg/oauth-selective-disclosure-jwt/pull/498\r\n\r\n18. https://github.com/oauth-wg/oauth-selective-disclosure-jwt/pull/499\r\n\r\n19. https://github.com/oauth-wg/oauth-selective-disclosure-jwt/pull/500\r\n\r\n20. https://github.com/oauth-wg/oauth-selective-disclosure-jwt/pull/501\r\n\r\n21. https://github.com/oauth-wg/oauth-selective-disclosure-jwt/pull/502\r\n\r\n22. https://github.com/oauth-wg/oauth-selective-disclosure-jwt/pull/503\r\n\r\n23. https://github.com/oauth-wg/oauth-selective-disclosure-jwt/pull/504\r\n\r\n24. https://github.com/oauth-wg/oauth-selective-disclosure-jwt/pull/505\r\n\r\n25. https://github.com/oauth-wg/oauth-selective-disclosure-jwt/pull/506\r\n\r\n26. https://github.com/oauth-wg/oauth-selective-disclosure-jwt/pull/507\r\n\r\n27. https://github.com/oauth-wg/oauth-selective-disclosure-jwt/pull/508\r\n\r\n28. https://github.com/oauth-wg/oauth-selective-disclosure-jwt/pull/509\r\n\r\n29. https://github.com/oauth-wg/oauth-selective-disclosure-jwt/pull/510\r\n\r\n30. https://github.com/oauth-wg/oauth-selective-disclosure-jwt/pull/511\r\n\r\n31. https://github.com/oauth-wg/oauth-selective-disclosure-jwt/pull/512\r\n\r\n32. https://github.com/oauth-wg/oauth-selective-disclosure-jwt/pull/513\r\n\r\n33. https://github.com/oauth-wg/oauth-selective-disclosure-jwt/pull/514\r\n\r\n34. https://github.com/oauth-wg/oauth-selective-disclosure-jwt/pull/515\r\n\r\n35. https://github.com/oauth-wg/oauth-selective-disclosure-jwt/pull/516\r\n\r\n36. https://github.com/oauth-wg/oauth-selective-disclosure-jwt/pull/517\r\n\r\n37. https://github.com/oauth-wg/oauth-selective-disclosure-jwt/pull/518\r\n\r\n38. https://github.com/oauth-wg/oauth-selective-disclosure-jwt/pull/519\r\n\r\n39. https://github.com/oauth-wg/oauth-selective-disclosure-jwt/pull/520\r\n\r\n40. https://github.com/oauth-wg/oauth-selective-disclosure-jwt/pull/521\r\n\r\n41. https://github.com/oauth-wg/oauth-selective-disclosure-jwt/pull/522\r\n\r\n\r\n\r\n",
       "createdAt": "2024-11-16T20:41:19Z",
-      "updatedAt": "2024-12-12T15:01:36Z",
-      "closedAt": null,
+      "updatedAt": "2025-01-09T17:12:44Z",
+      "closedAt": "2025-01-09T17:12:44Z",
       "comments": [
         {
           "author": "bc-pi",
@@ -12347,7 +12347,7 @@
       "id": "I_kwDOHTmVzM6e14y-",
       "title": "Update of Issue #514 (new section 9.12) for the support of Post Quantum cryptography",
       "url": "https://github.com/oauth-wg/oauth-selective-disclosure-jwt/issues/529",
-      "state": "OPEN",
+      "state": "CLOSED",
       "author": "Denisthemalice",
       "authorAssociation": "NONE",
       "assignees": [],
@@ -12356,8 +12356,8 @@
       ],
       "body": "A section should be added to consider the case of a presentation of claims to Verifier that have been issued by different Issuers #514\r\n\r\n```\r\n9.12. Presentation of claims issued by different Issuers\r\n\r\n9.12.1 Using conventional cryptography\r\n\r\n    There exist use cases where claims issued by different Issuers need\r\n    to be presented to one Verifier. For example, an End-User would like\r\n    to demonstrate to a Verifier that that he lives in California using\r\n    a SD-JWT issued by a governmental organization and that he got a\r\n    specific diploma using a SD-JWT issued by a University.\r\n\r\n    When there is a need to demonstrate to a Verifier that two SD-JWTs\r\n    have been issued to the same End-User, the Holder can generate a one-time\r\n    key pair and use the same private key to request a SD-JWT from each\r\n    Issuer.\r\n\r\n    The two issued SD-JWTs will contain the same public key and, using\r\n    the corresponding private key, the Holder will be able to demonstrate\r\n    to one Verifier that the two presentations of the two SD-JWTs originate\r\n    from the same Holder.\r\n\r\n    Verifiers MUST be able to obtain the characteristics of the Holder\r\n    to be confident that Holder indeed supports this scheme in a secure way.\r\n\r\n    Since that key pair will only be used once towards a single Verifier,\r\n    a linkage between different collaborative Verifiers using the framing\r\n    of the SD-JWT will not be possible.\r\n\r\n    This scheme mandates to the generation of batches of one-time use SD-JWTs.\r\n\r\n9.12.1 Using Post-Quantum resistant cryptography\r\n\r\n    The technique previously described uses conventional cryptography which is not \r\n    Post-Quantum resistant. Hash-Based signature schemes are believed to be \r\n    Post-Quantum resistant. \r\n\r\n    Their security depends on the infeasibility of finding a preimage or a second preimage. \r\n\r\n    In 1979, Leslie Lamport invented the first One-Time Signatures (OTS) scheme \r\n    that was named the \"Lamport Signature\". Since then, many variations appeared. \r\n\r\n    Among them, the Winternitz OTS (W-OTS) scheme that allows small verification key sizes \r\n    and a trade-of between the signature size and the signature generation time.\r\n\r\n    OTS schemes have a major constrain ... which is not a constrain in the context of a Holder: \r\n    the private key of a key pair shall only be used once. If used twice, 50 % of the private key \r\n    would be revealed.  When an OTS scheme is used, this means that, the private key\r\n    corresponding to the public key placed into a SD-JWT shall only be used once.\r\n \r\n    When presenting a single SD-JWT to a Verifier, the following structure is used.\r\n````\r\nSD-JWT + Selected Disclosures + KB-JWT\r\n\r\n```\r\n    When presenting a two SD-JWTs to a Verifier, the following structure SHALL not be used.\r\n\r\n```\r\nSD-JWT1 + Selected Disclosures1 + KB-JWT1\r\nSD-JWT2 + Selected Disclosures2 + KB-JWT2\r\n\r\n```\r\n    since two digital signatures would be required.  Instead the following structure SHALL be used:\r\n\r\n```\r\nSD-JWT1 + Selected Disclosures1 + SD-JWT2 + Selected Disclosures2  + KB-JWT\r\n\r\n```\r\n\r\n    When using ordinary hash-functions, it can be observed that it is already possible to implement, \r\n    in a Holder, a key binding technique that can be Post-Quantum resistant and which supports \r\n    the \"Verifier-Verifier unlinkability\" property. \r\n\r\n\r\n\r\n\r\n",
       "createdAt": "2024-11-16T20:57:41Z",
-      "updatedAt": "2024-12-18T16:50:17Z",
-      "closedAt": null,
+      "updatedAt": "2025-01-09T19:05:14Z",
+      "closedAt": "2025-01-09T19:05:14Z",
       "comments": [
         {
           "author": "Denisthemalice",
@@ -12485,6 +12485,70 @@
       "body": "\"[What exactly am I supposed to do with that](https://mailarchive.ietf.org/arch/msg/oauth/iUvTckt1s7aIU-mH-7mQBWoJgQQ/)\" is a question I have asked myself too. [This thread](https://mailarchive.ietf.org/arch/msg/oauth/v6tb-7l_9lT5ZJd4wecwWcE7h-Q/) is trying to move in a direction that folks can maybe live with.   ",
       "createdAt": "2024-12-27T14:25:07Z",
       "updatedAt": "2024-12-27T14:25:07Z",
+      "closedAt": null,
+      "comments": []
+    },
+    {
+      "number": 536,
+      "id": "I_kwDOHTmVzM6luMHm",
+      "title": "It is outside of the scope of this document to appraise the effectiveness of the Key Binding mechanism",
+      "url": "https://github.com/oauth-wg/oauth-selective-disclosure-jwt/issues/536",
+      "state": "OPEN",
+      "author": "Denisthemalice",
+      "authorAssociation": "NONE",
+      "assignees": [],
+      "labels": [],
+      "body": "This issue is only intended to provide explanations for further text change proposals made in subsequent issues related to Key Binding. \r\n\r\nSection 4.1.2 (Key binding) states:\r\n\r\n> It is out of the scope of this document to describe how the Holder key pair is established. For example, the Holder MAY create a key pair and provide a public key to the Issuer, the Issuer MAY create the key pair for the Holder, or Holder and Issuer MAY use pre-established key material.\r\n\r\nLet us keep these sentences unchanged.\r\n\r\nNow, let us pull on the thread from the right end. \r\n\r\nSection 4 (Security Considerations) from [RFC7800] mentions that \"possessing a key is only valuable if it is kept secret.  Appropriate means must be used to ensure that unintended parties do not learn private key\".\r\n\r\nIt is important to recall a definition for a private key from ISO/IEC 9798-1:\r\n\r\n> private key\r\n> key of an entity's asymmetric key pair that is kept secret and that should only be *used* by that entity\r\n> \r\n> [SOURCE: ISO/IEC 9798-1:2010, 3.22]\r\n\r\nThe key sentences from RFC 7800 are true, but are restricted. They concentrate of the *protection* and the *knowledge* of the private key but they do not consider the *use* of the private key.\r\n\r\nA smart card user can *use* of private present in his smart card but will never be able to know its value.\r\n\r\nA difference should be made between :\r\n1) the description of the cryptographic mechanism and\r\n2) what can be achieved using this mechanism which is conditional on \"appropriate means that MUST be used to ensure that unintended parties do not learn private key\".\r\n\r\nThe proposed rewordings of this draft have been carefully thought to refer first to the description of the data elements that are needed and exchanged, while the 'proof of possession' concept has been separately addressed and expanded.\r\n\r\nWhen considering threats that can reduce to nothing the effectiveness of this cryptographic (\"binding\") mechanism, there is the need to consider the presence of End-Users, that come in addition to Holders which are applications running using some hardware (and usually also using an OS). \r\n\r\nAn Holder cannot \"give its consent\", but an End-user (i.e. a human being) can. Attacks can be performed either without or with the End-user consent. Hence there is the need to : \r\n(1) use the term \"End-User\" and \r\n(2) make a difference between the term \"Holder\" (application) and the term \"End-User\".\r\n\r\nThe way to address the problem of the appraisal of the effectiveness of the Key Binding mechanism is to recognize that it is outside the scope of this document to specify how Verifiers can know whether appropriate means are effectively used to ensure that unintended parties do not learn the value of the private keys or whether the private keys that are supposed to be under the control of the Holder cannot be used for the benefit of other End-Users (with or without the End-User consent).\r\n\r\nWhen proposing revised text, terms like 'ensure', 'legitimate Holder' or 'prove possession' that were present in this draft have been avoided. Hence, the following two sentences have not been retained:\r\n\r\n> Key Binding aims to ensure that the presenter of an SD-JWT credential is actually the legitimate Holder of the credential. \r\n> The Verifier requires that the Holder prove possession of that private key when presenting the SD-JWT credential.\r\n",
+      "createdAt": "2025-01-10T14:43:06Z",
+      "updatedAt": "2025-01-10T14:43:06Z",
+      "closedAt": null,
+      "comments": []
+    },
+    {
+      "number": 537,
+      "id": "I_kwDOHTmVzM6luO_A",
+      "title": "Proposed rewording in Section 1 about Key Binding",
+      "url": "https://github.com/oauth-wg/oauth-selective-disclosure-jwt/issues/537",
+      "state": "OPEN",
+      "author": "Denisthemalice",
+      "authorAssociation": "NONE",
+      "assignees": [],
+      "labels": [],
+      "body": "In clause 1, the following sentences are present:\r\n\r\n> To prevent attacks in which an SD-JWT is presented to a Verifier without the Holder's consent, this specification additionally defines a mechanism for binding the SD-JWT to a key under the control of the Holder (Key Binding). When Key Binding is enforced, a Holder has to prove possession of a private key belonging to a public key contained in the SD-JWT itself.\r\n\r\n\r\nReplace with:\r\n\r\n> This specification defines a mechanism for binding the SD-JWT to a key that is assumed to be under the control of the Holder (Key Binding). When Key Binding is enforced, the Verifier can verify that a private key corresponding to a public key that has been included by the Issuer into the SD-JWT has correctly been used to compute a cryptographic checksum that is placed into a KB-JWT.\r\n\r\nTerms like 'Holder's consent' or 'prove possession of a private key' that were present in this draft have been avoided.\r\n\r\n",
+      "createdAt": "2025-01-10T14:48:04Z",
+      "updatedAt": "2025-01-10T14:48:04Z",
+      "closedAt": null,
+      "comments": []
+    },
+    {
+      "number": 538,
+      "id": "I_kwDOHTmVzM6luPi9",
+      "title": "Proposed rewording in Section 1.2 about Key Binding",
+      "url": "https://github.com/oauth-wg/oauth-selective-disclosure-jwt/issues/538",
+      "state": "OPEN",
+      "author": "Denisthemalice",
+      "authorAssociation": "NONE",
+      "assignees": [],
+      "labels": [],
+      "body": "Clause 1.2 states:\r\n\r\n> Key Binding:\r\n> Ability of the Holder to prove legitimate possession of an SD-JWT by proving control over a private key during the presentation. When utilizing Key Binding, an SD-JWT contains the public key corresponding to the private key controlled by the Holder (or a reference to this public key).\r\n\r\nChange into:\r\n\r\n> Key Binding:\r\n> When utilizing Key Binding, an SD-JWT contains the public key corresponding to the private key controlled by the Holder (or a reference to this public key). In that case, the Verifier can verify that a private key corresponding to a public key that has been included by the Issuer into the SD-JWT has correctly been used to compute a cryptographic checksum.\r\n",
+      "createdAt": "2025-01-10T14:49:12Z",
+      "updatedAt": "2025-01-10T14:49:12Z",
+      "closedAt": null,
+      "comments": []
+    },
+    {
+      "number": 539,
+      "id": "I_kwDOHTmVzM6luWNQ",
+      "title": "Proposed rewording for Section 9.5 about Key Binding",
+      "url": "https://github.com/oauth-wg/oauth-selective-disclosure-jwt/issues/539",
+      "state": "OPEN",
+      "author": "Denisthemalice",
+      "authorAssociation": "NONE",
+      "assignees": [],
+      "labels": [],
+      "body": "The first sentence which uses the word \"legitimate\" is inappropriate:\r\n\r\n> Key Binding aims to ensure that the presenter of an SD-JWT credential is actually the legitimate Holder of the credential.\r\n\r\nThe third sentence uses the wording \"prove possession\" which should be avoided:\r\n\r\n> The Verifier requires that the Holder prove possession of that private key when presenting the SD-JWT credential.\r\n\r\nAs said earlier, it is important to make the difference between :\r\n(1) the description of the cryptographic mechanism and \r\n(2) what can really be achieved using this mechanism which is conditional to other characteristics which are out of the scope of this document.\r\n\r\nBefore proposing a rewriting for Section 9.5 on Key Binding, the following text has been reviewed and after analysis, it is proposed to remove it.\r\n\r\n> It is important that a Verifier does not make its security policy decisions based on data that can be influenced by an attacker. For this reason, when deciding whether Key Binding is required or not, Verifiers MUST NOT take into account whether the Holder has provided an SD-JWT+KB or a bare SD-JWT, since otherwise an attacker could strip the KB-JWT from an SD-JWT+KB and present the resulting SD-JWT. Furthermore, Verifiers should be aware that Key Binding information may have been added to an SD-JWT in a format that they do not recognize and therefore may not be able to tell whether the SD-JWT supports Key Binding or not. If a Verifier determines that Key Binding is required for a particular use case and the Holder presents either a bare SD-JWT or an SD-JWT+KB with an invalid Key Binding JWT, then the Verifier will reject the presentation when following the verification steps described in Section 7.3.\r\n> \r\n> If a SD-JWT contains a public key, then this means that a KB-JWT must also be present. If the KB-JWT has been stripped, then the Verifier must refuse it.\r\n\r\nTherefore, the following rewording is proposed:\r\n\r\n> An SD-JWT compatible with Key Binding contains a public key, or a reference to a public key, that corresponds to a private key from a key pair. \r\n> \r\n> Without Key Binding, a Verifier only gets the proof that the credential was issued by a particular Issuer, but the credential itself can be replayed by anyone who gets access to it. This means that, for example, after a credential was leaked to an attacker, the attacker can present the credential to any verifier that does not require a binding. But also a malicious Verifier to which the Holder presented the credential can present the credential to another Verifier if that other Verifier does not require Key Binding. \r\n> \r\n> With Key Binding, a Verifier gets the proof that the private key which corresponds to the public key placed in the SD-JWT has been correctly used.\r\n> \r\n> Verifiers MUST decide whether Key Binding is required for a particular use case before verifying a credential. This decision can be informed by various factors including, but not limited to the following: business requirements, the use case, the type of binding between a Holder and its credential that is required for a use case, the sensitivity of the use case, the expected properties of a credential, the type and contents of other credentials expected to be presented at the same time, etc.\r\n> \r\n> If Key Binding is required, then the Verifier must verify that the SD-JWT that is presented contains a public key and that a KB-JWT is also present.\r\n\r\n> Section 4 (Security Considerations) from [RFC7800] indicates that possessing a key is only valuable if it is kept secret.  Appropriate means must be used to ensure that unintended parties do not learn private key.\r\n> \r\n> The key sentences from RFC 7800 are true, but are restricted. They concentrate of the *protection* and the *knowledge* of the private key but they do not consider the *use* of the private key.\r\n> \r\n> It is important to recall a definition for a private key from ISO/IEC 9798-1:\r\n> \r\n> private key\r\n> key of an entity's asymmetric key pair that is kept secret and that should only be *used* by that entity\r\n> \r\n> [SOURCE: ISO/IEC 9798-1:2010, 3.22] \r\n\r\n> Using the current content of a SD-JWT, Verifiers are unable to appraise the effectiveness of the Key Binding mechanism.  It is outside the scope of this document to specify how Verifiers can know whether appropriate means are effectively used to ensure that unintended parties do not learn the value of the private keys or whether the private keys that are supposed to be under the control of the Holder cannot be used for the benefit of other End-Users, with or without the End-User consent.\r\n> \r\n> 9.5.1 Attacks performed with the End-user consent\r\n> \r\n> If two End-Users accept to collaborate, one End-User can perform cryptographic computations for the benefit of another End-User. An example scenario is as follows: one End-user connects to a Verifier and receives back a challenge and a list of claim types that need to be presented to get an access. That End-User forwards to another End-User the challenge received from the Verifier, the name of the Verifier and the set of claim types and values that it wishes to present to the Verifier. It receives back from the other End-User the data structure that he needs to get an access to that Verifier and so the End-User can present it to the Verifier and gets the access.\r\n> \r\n> For example, an application specifically downloaded by the End-User can perform cryptographic computations for the benefit of another End-User, if it is able to use the private keys. As another example, impersonation of the End-User can be achieved if private keys can be exported with the End-user consent and used by another End-User.\r\n> \r\n> 9.5.2 Attacks performed without the End-user consent\r\n> \r\n> A malicious application would be able to use the private keys intended to be used by the Holder or be able to trick the key pair generation process used by the Holder. \r\n> \r\n> As an example, if the private key is only protected by software, a virus would be able use the private key without the End-User being aware of it. Alternatively, the key pair generation process could be modified, so that the generated key pair can be known by malicious application and then exported.\r\n> ",
+      "createdAt": "2025-01-10T15:02:34Z",
+      "updatedAt": "2025-01-10T15:02:34Z",
       "closedAt": null,
       "comments": []
     }
@@ -50660,7 +50724,7 @@
       "labels": [],
       "body": "https://standards.iso.org/ittf/PubliclyAvailableStandards/index.html no longer has anything for 29100 and https://www.iso.org/standard/45123.html indicates that ISO/IEC 29100:2011 is \"Withdrawn\" and \"Revised by\" ISO/IEC 29100:2024 that is now available for the low low special price of CHF 129, which is approximately $150 / \u20ac137 too much for me to be comfortable referencing",
       "createdAt": "2024-10-05T12:12:22Z",
-      "updatedAt": "2024-12-28T21:59:12Z",
+      "updatedAt": "2025-01-09T17:17:16Z",
       "baseRepository": "oauth-wg/oauth-selective-disclosure-jwt",
       "baseRefName": "master",
       "baseRefOid": "c95bc07ba5ef5a45b848eaeab7abae9dc5ae2c30",
@@ -50734,6 +50798,13 @@
           "body": "> I believe what needs to be done is change the reference to 29100:2024 from 29100:2011, not removing the reference\r\n\r\nThat's an option too. But have you read all of ISO/IEC 29100:2024 and are all of it's principles applicable to SD-JWT? I don't know, I've only glanced at it. But I don't personally find content like \"The privacy principles of [@ISO.29100] should be adhered to.\" to be particularity helpful in a document like this and think it'd be better off without a vague and general statement to go see this other document that's not easily accessed. That how it's not easily accessed keeps changing is more a reminder that, in my opinion anyway, it never should have been referenced from SD-JWT in the first place. ",
           "createdAt": "2024-12-27T14:03:59Z",
           "updatedAt": "2024-12-28T21:59:12Z"
+        },
+        {
+          "author": "danielfett",
+          "authorAssociation": "MEMBER",
+          "body": "29100 is now available again, it seems.\r\n\r\nI share the concern that the current reference is very broad and not actionable at all.",
+          "createdAt": "2025-01-09T17:17:14Z",
+          "updatedAt": "2025-01-09T17:17:14Z"
         }
       ],
       "reviews": [
@@ -52140,24 +52211,26 @@
       "id": "PR_kwDOHTmVzM6Fj1TX",
       "title": "Changes aimed at AD's review of the formal appeal",
       "url": "https://github.com/oauth-wg/oauth-selective-disclosure-jwt/pull/533",
-      "state": "OPEN",
+      "state": "MERGED",
       "author": "bc-pi",
       "authorAssociation": "COLLABORATOR",
       "assignees": [],
       "labels": [],
       "body": "These changes are me trying to follow though with what I said we'd do here https://mailarchive.ietf.org/arch/msg/oauth/qC4Bq6sOkmYzJ_93_VWmqN824gI/ \r\n\r\nPreview at https://drafts.oauth.net/oauth-selective-disclosure-jwt/denis-and-the-ad/draft-ietf-oauth-selective-disclosure-jwt.html",
       "createdAt": "2024-12-17T21:47:37Z",
-      "updatedAt": "2024-12-27T14:33:47Z",
+      "updatedAt": "2025-01-09T17:12:43Z",
       "baseRepository": "oauth-wg/oauth-selective-disclosure-jwt",
       "baseRefName": "master",
       "baseRefOid": "c95bc07ba5ef5a45b848eaeab7abae9dc5ae2c30",
       "headRepository": "oauth-wg/oauth-selective-disclosure-jwt",
       "headRefName": "denis-and-the-ad",
       "headRefOid": "f15b5c5ab58d0d5388731d923437f1f7dcb59a75",
-      "closedAt": null,
-      "mergedAt": null,
-      "mergedBy": null,
-      "mergeCommit": null,
+      "closedAt": "2025-01-09T17:12:42Z",
+      "mergedAt": "2025-01-09T17:12:42Z",
+      "mergedBy": "bc-pi",
+      "mergeCommit": {
+        "oid": "01084e8e994c07b66290e307483df858d3c216ce"
+      },
       "comments": [
         {
           "author": "debcooley",
@@ -52285,6 +52358,128 @@
               "body": "especially around this time of year ",
               "createdAt": "2024-12-27T14:33:46Z",
               "updatedAt": "2024-12-27T14:33:47Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOHTmVzM6XbNkK",
+          "commit": {
+            "abbreviatedOid": "f15b5c5"
+          },
+          "author": "danielfett",
+          "authorAssociation": "MEMBER",
+          "state": "APPROVED",
+          "body": "",
+          "createdAt": "2025-01-09T17:11:08Z",
+          "updatedAt": "2025-01-09T17:11:08Z",
+          "comments": []
+        }
+      ]
+    },
+    {
+      "number": 535,
+      "id": "PR_kwDOHTmVzM6HPE05",
+      "title": "add Watson Ladd's suggested text with minor adaptations",
+      "url": "https://github.com/oauth-wg/oauth-selective-disclosure-jwt/pull/535",
+      "state": "OPEN",
+      "author": "bc-pi",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "https://mailarchive.ietf.org/arch/msg/oauth/zC8fU5nOVHsY4S5erBlBEy2fDTI/ and https://mailarchive.ietf.org/arch/msg/oauth/ugVBj2O0hw-nuWNVTFpt0JH3yVY/ are *some* threads on the mailing list ",
+      "createdAt": "2025-01-09T17:16:24Z",
+      "updatedAt": "2025-01-10T16:11:30Z",
+      "baseRepository": "oauth-wg/oauth-selective-disclosure-jwt",
+      "baseRefName": "master",
+      "baseRefOid": "01084e8e994c07b66290e307483df858d3c216ce",
+      "headRepository": "oauth-wg/oauth-selective-disclosure-jwt",
+      "headRefName": "considering-more-considerations-about-privacy",
+      "headRefOid": "e14e93c1f3d356549229fee55b38512f5c2c4b9f",
+      "closedAt": null,
+      "mergedAt": null,
+      "mergedBy": null,
+      "mergeCommit": null,
+      "comments": [
+        {
+          "author": "dhs-BI",
+          "authorAssociation": "NONE",
+          "body": "I'm unclear what the statement \"It does not meet standard security notations for anonymous credentials\" means.  If there is a standard or other document that this language refers to I suggest linking to it.",
+          "createdAt": "2025-01-09T18:28:06Z",
+          "updatedAt": "2025-01-09T18:28:06Z"
+        },
+        {
+          "author": "Denisthemalice",
+          "authorAssociation": "NONE",
+          "body": "I have objections/concerns with this text.\r\n\r\nThe text states:\r\n\r\n> \"SD-JWT conceals only the values that aren't revealed. It does not\r\n> meet standard security notations for anonymous credentials. In\r\n> particular Verifiers and Issuers can know when they have seen the same\r\n> credential no matter what fields have been opened, even none of them.\r\n> This behavior may not accord with what users naively expect or are\r\n> lead to expect from UX interactions and lead to them make choices they\r\n> would not otherwise make. Workarounds such as issuing multiple\r\n> credentials at once and using them only one time can help for keeping\r\n> Verifiers from linking different showing.\r\n> \r\n\r\nThe text is confusing because it addresses two different topics:\r\nVerifier-Verifier unlinkability and Issuer-Verifier Unlinkability. \r\n\r\nThe last sentence means that problem can be addressed for the Verifier-Verifier unlinkability.\r\nIt is not necessary to use strong sentences like:\r\n\r\n> \" It does not meet standard security notations for anonymous credentials\"\r\n\r\n which are not explained.\r\n\r\nThe sentence terminates with:\r\n\r\n> but cannot work for Issuers.\r\n\r\nThis is the case for the Issuer-Verifier unlinkability.\r\n\r\nAt the moment there is text in section 10.1 that states :\r\n\r\n> Issuer/Verifier unlinkability with a colluding or compromised Verifier cannot be achieved in salted-hash based selective disclosure approaches, such as SD-JWT, as the issued credential with the Issuer's signature is directly presented to the Verifier, who can forward it to the Issuer.\r\n\r\nSo the proposed text is redondant.\r\n\r\nHowever, the use of the wording \"colluding or compromised\" does not seem to be appropriate.\r\n\r\nThe Issuer will not directly \"collude\" with a Verifier. However, a national authority might oblige a Verifier to reveal the SD-JWT that has been used for a given access and afterwards might also oblige the Issuer to reveal the identity of the End-User. \r\n\r\nThis situation can only happen if both the Issuer and the Verifier memorize the SD-JWTs they have respectively issued or received.\r\n\r\nSo saying that \"Issuer/Verifier unlinkability with a colluding or compromised Verifier cannot be achieved in salted-hash based selective disclosure approaches\" is not appropriate.\r\n\r\nChange into:\r\n\r\n> Issuer/Verifier unlinkability can be achieved in salted-hash based selective disclosure approaches, such as SD-JWT, if the Verifier does not memorize the SD-JWTs that it has received.\r\n\r\n> On the contrary, if the Verifier memorizes the SD-JWTs that it has received and if the Issuer memorizes the SD-JWTs that it has issued, then some authority might oblige a Verifier to reveal the SD-JWT that has been used for a given access and then oblige the Issuer of these SD-JWTs to reveal the identity of the End-Users.\r\n\r\nThe notions of \"honest\" or \"dishonest\" Verifier are not relevant. If a Verifier obeys to a local law, it should not be considered to be \"dishonest\".  By definition, an Issuer is trusted to be honest.\r\n\r\nIn section 10.1, the following text should be removed:\r\n\r\n> In considering Issuer/Verifier unlinkability, it is important to note the potential for an asymmetric power dynamic between Issuers and Verifiers. This dynamic can compel an otherwise honest Verifier into collusion. For example, a governmental Issuer might have the authority to mandate that a Verifier report back information about the credentials presented to it. \r\n> Legal requirements could further enforce this, explicitly undermining Issuer/Verifier unlinkability. Similarly, a large service provider issuing credentials might implicitly pressure Verifiers into collusion by incentivizing participation in their larger ecosystem. \r\n> Deployers of SD-JWT must be aware of these potential power dynamics, mitigate them as much as possible, and/or make the risks transparent to the user.\r\n> Contrary to that, Issuer/Verifier unlinkability with an honest Verifier can generally be achieved. \r\n\r\nIf the Verifier does not memorize the SD-JWTs that it has received, then the risk can be avoided.\r\n\r\nBut there are also implications with section 10.2 , where the text states:\r\n\r\n> All involved parties SHOULD store SD-JWTs containing privacy-sensitive data only for as long as needed, including in log files.\r\n> \r\n> After Issuance, Issuers SHOULD NOT store the Issuer-signed JWT or the respective Disclosures if they contain privacy-sensitive data.\r\n\r\nThe term \" privacy-sensitive data\" is not defined.  A SD-JWT necessarily contains 'privacy-sensitive data'. \r\n\r\nThe first sentence would prevent to support the Issuer/Verifier unlinkability that can be achieved. \r\nThis first sentence should be removed.\r\n\r\nThe second sentence should be shortened and changed into:\r\n\r\n> After Issuance, Issuers SHOULD NOT store the Issuer-signed JWT.\r\n\r\nIn section 10.2, the text continues with:\r\n\r\n> Holders SHOULD store SD-JWTs only in encrypted form, and, wherever possible, use hardware-backed encryption in particular for the private Key Binding key. Decentralized storage of data, e.g., on user devices, SHOULD be preferred for user credentials over centralized storage. \r\n>\r\n> Expired SD-JWTs SHOULD be deleted as soon as possible.\r\n> \r\n> After Verification, Verifiers SHOULD NOT store the Issuer-signed JWT or the respective Disclosures if they contain privacy-sensitive data. It may be sufficient to store the result of the verification and any user data that is needed for the application.\r\n\r\nThe first recommendation is an implementation option. It should be removed.\r\n\r\nThe second recommendation might be misunderstood, as it would mean that Holders SHOULD NOT delete NON-EXPIRED SD-JWTs. It should be removed.\r\n\r\nThe third recommendation can also be misunderstood, as it would mean that Verifiers SHOULD store the Issuer-signed JWT or the respective Disclosures *if* they DO NOT contain privacy-sensitive data. \r\n\r\nIt should be changed into:\r\n\r\n> After Verification, Verifiers SHOULD NOT store the Issuer-signed JWT. It may be sufficient to store the result of the verification and any user data that is needed for the application.\r\n\r\nThis closes the loop: if neither the Issuer nor the Verifier stores the SD-JWT, then Issuer/Verifier unlinkability can be achieved. \r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n",
+          "createdAt": "2025-01-09T18:57:21Z",
+          "updatedAt": "2025-01-09T18:57:21Z"
+        },
+        {
+          "author": "wbl",
+          "authorAssociation": "NONE",
+          "body": "Denis, the goal of my contribution was to provide a simple summary paragraph of the entire set of considerations. In that sense it is redundant. We can add a citation to CL01, or some other paper that uses the standard security notion to explain it. I'm looking for a good one.\r\n\r\nAfter that's done I expect there would need to be some editing to avoid excessive repetition.\r\n\r\nI think a bunch of your comment is directed at the existing text rather than this PR. But I do want to say that we can't assume erasure happens. There's a whole bunch of places where data ends up in modern architectures that aren't really visible: HTTP logs, temporary files etc. We also don't assume that people will behave in security considerations: that's the joke in 3514, so guidance that only works if the verifier or issuer behave doesn't really do anything.",
+          "createdAt": "2025-01-09T19:55:00Z",
+          "updatedAt": "2025-01-09T19:55:23Z"
+        },
+        {
+          "author": "bc-pi",
+          "authorAssociation": "COLLABORATOR",
+          "body": "I am not familiar with CL01 - is it this https://eprint.iacr.org/2001/019 that you mentioned in https://mailarchive.ietf.org/arch/msg/oauth/4M0qAdKhlMvACIWPpCaBTqiAOrs/ ? \r\n\r\nWe can add a reference to that. Or a better one, if you can find one https://mailarchive.ietf.org/arch/msg/oauth/j5FoZeisLiw0kIgiNlcYZAyIsMo/ ",
+          "createdAt": "2025-01-09T21:59:26Z",
+          "updatedAt": "2025-01-09T21:59:26Z"
+        },
+        {
+          "author": "wbl",
+          "authorAssociation": "NONE",
+          "body": "I think referencing that eprint and paper will do. Not sure there is a much better one out there.",
+          "createdAt": "2025-01-09T22:05:40Z",
+          "updatedAt": "2025-01-09T22:05:40Z"
+        },
+        {
+          "author": "Denisthemalice",
+          "authorAssociation": "NONE",
+          "body": "This paper (2001)  which is rather old is advocating a fully different technique which is not compatible with the protocol we are describing.\r\n\r\nThere exist similar techniques like BBS, BBS + or BBS # that we have deliberately not considered.\r\n\r\nWhen using one-time use SD-JWTs, the same advantages that can be obtained by using these techniques can also be obtained using such SD-JWTs. \r\n\r\nThe text you are proposing looks like a criticism:\r\n\r\n> It does not meet standard security notations for anonymous credentials\r\n> \r\n> This behavior may not accord with what users naively expect or are lead to expect from UX interactions and lead to them make choices they would not otherwise make.\r\n\r\nThe full text is confusing and misleading. \r\n\r\nIt should not be included. \r\n\r\n\r\n \r\n",
+          "createdAt": "2025-01-10T14:15:25Z",
+          "updatedAt": "2025-01-10T14:15:25Z"
+        },
+        {
+          "author": "wbl",
+          "authorAssociation": "NONE",
+          "body": "Denis, I think that comment needs to be on the list (not sure how the WG works, but that's certainly where we've had most of the important discussions)",
+          "createdAt": "2025-01-10T16:11:29Z",
+          "updatedAt": "2025-01-10T16:11:29Z"
+        }
+      ],
+      "reviews": [
+        {
+          "id": "PRR_kwDOHTmVzM6XbRGK",
+          "commit": {
+            "abbreviatedOid": "57580ac"
+          },
+          "author": "danielfett",
+          "authorAssociation": "MEMBER",
+          "state": "APPROVED",
+          "body": "",
+          "createdAt": "2025-01-09T17:18:19Z",
+          "updatedAt": "2025-01-09T17:21:35Z",
+          "comments": [
+            {
+              "originalPosition": 4,
+              "body": "```suggestion\r\nSD-JWT only conceals the value of claims that are not revealed.\r\n```",
+              "createdAt": "2025-01-09T17:18:19Z",
+              "updatedAt": "2025-01-09T17:21:35Z"
+            },
+            {
+              "originalPosition": 12,
+              "body": "```suggestion\r\nwould not otherwise make. Workarounds such as batch issuance as\r\ndescribed above help for keeping\r\nVerifiers from linking different presentations, but cannot work for Issuer/Verifier unlinkability.\r\n```",
+              "createdAt": "2025-01-09T17:20:30Z",
+              "updatedAt": "2025-01-09T17:21:35Z"
+            },
+            {
+              "originalPosition": 14,
+              "body": "```suggestion\r\nThis issue applies to all salted hash-based approaches,\r\nincluding mDL/mDoc [@?ISO.18013-5] and SD-CWT [@?I-D.ietf-spice-sd-cwt].\r\n```",
+              "createdAt": "2025-01-09T17:20:52Z",
+              "updatedAt": "2025-01-09T17:21:35Z"
             }
           ]
         }
