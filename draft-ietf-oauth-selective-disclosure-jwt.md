@@ -846,7 +846,7 @@ receives an SD-JWT+KB, it MUST be rejected.
 
 When receiving an SD-JWT, the Holder MUST do the following:
 
- 1. Process the SD-JWT as defined in (#sd_jwt_verification) to validate the presentation and extract the payload.
+ 1. Process the SD-JWT as defined in (#sd_jwt_verification) to validate it and extract the payload.
  2. Ensure that the contents of claims in the payload are acceptable (depending on the application; for example, check that any values the Holder can check are correct).
 
 For presentation to a Verifier, the Holder MUST perform the following (or equivalent) steps (in addition to the checks described in (#sd_jwt_verification) performed after receiving the SD-JWT):
