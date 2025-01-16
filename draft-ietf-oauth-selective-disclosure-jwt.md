@@ -89,8 +89,8 @@ This specification defines two primary data formats:
     transport of the Issuer-signed JSON data structure and disclosure data
 
 2. SD-JWT+KB is a composite structure enabling cryptographic key binding when presented to the Verifier. It comprises the following:
-  - A facility for associating an SD-JWT with a key pair
-  - A format for a Key Binding JWT (KB-JWT) that proves possession of the private key of
+  - A mechanism for associating an SD-JWT with a key pair
+  - A format for a Key Binding JWT (KB-JWT) that allows proof of possession of the private key of
     the associated key pair
   - A format extending the SD-JWT format for the combined transport of the SD-JWT
     and the KB-JWT
@@ -121,14 +121,15 @@ Disclosure:
 
 
 Key Binding:
-:  Ability of the Holder to prove legitimate possession of an SD-JWT by proving
+:  Ability of the Holder to prove possession of an SD-JWT by proving
   control over a private key during the presentation. When utilizing Key Binding, an SD-JWT contains
   the public key corresponding to the private key controlled by the Holder (or a reference to this public key).
 
 Key Binding JWT (KB-JWT):
-:  A JWT for proving Key Binding as defined in (#kb-jwt).  A Key Binding JWT is
-   said to "be tied to" a particular SD-JWT when its payload includes a hash of the
-   SD-JWT in its `sd_hash` claim.
+:  A Key Binding JWT is said to "be tied to" a particular SD-JWT when its payload
+  is signed using the key included in the SD-JWT payload, and also contains
+  a hash of the SD-JWT in its `sd_hash` claim. A JWT for proving Key Binding
+  as defined in (#kb-jwt).
 
 Selectively Disclosable JWT with Key Binding (SD-JWT+KB):
 : A composite structure, comprising an SD-JWT and a Key Binding JWT tied to that SD-JWT.
@@ -161,7 +162,7 @@ Verifier:
            |            |
            +------------+
                  |
-         Presents SD-JWT+KB
+     Presents SD-JWT or SD-JWT+KB
     including selected Disclosures
                  |
                  v
@@ -184,7 +185,7 @@ conceptual level, abstracting from the data formats described in (#data_formats)
 
 An SD-JWT, at its core, is a digitally signed JSON document containing digests over the selectively disclosable claims with the Disclosures outside the document. Disclosures can be omitted without breaking the signature, and modifying them can be detected. Selectively disclosable claims can be individual object properties (name/value pairs) or array elements.
 
-Each digest value ensures the integrity of, and maps to, the respective Disclosure.  Digest values are calculated using a hash function over the Disclosures, each of which contains a cryptographically secure random salt, the claim name (only when the claim is an object property), and the claim value. The Disclosures are sent to the Holder as part of the SD-JWT in the format defined in (#data_formats).
+Each digest value ensures the integrity of, and maps to, the respective Disclosure.  Digest values are calculated using a hash function over the Disclosures, each of which contains a cryptographically secure random salt, the claim name (only when the claim is an object property), and the claim value. The Disclosures are sent to the Holder with the SD-JWT in the format defined in (#data_formats).
 When presenting an SD-JWT to a Verifier, the Holder only includes the Disclosures for the claims that it wants to reveal to that Verifier.
 
 An SD-JWT MAY also contain cleartext claims that are always disclosed to the Verifier.
@@ -294,8 +295,8 @@ An SD-JWT+KB with Disclosures:
 <Issuer-signed JWT>~<Disclosure 1>~<Disclosure N>~<KB-JWT>
 ```
 
-As an alternative illustration of the SD-JWT format, for those who celebrate, ABNF [@?RFC5234] for the
-SD-JWT, SD-JWT+KB, and various constituent parts is provided here:
+As an alternative illustration of the SD-JWT format, ABNF [@?RFC5234] for the
+SD-JWT, SD-JWT+KB, and various constituent parts is provided here (for those who celebrate):
 ```abnf
 ALPHA = %x41-5A / %x61-7A ; A-Z / a-z
 DIGIT = %x30-39 ; 0-9
@@ -799,7 +800,7 @@ or a Verifier needs to ensure that:
  * all Disclosures are valid and correspond to a respective digest value in the Issuer-signed JWT (directly in the payload or recursively included in the contents of other Disclosures).
 
 The Holder or the Verifier MUST perform the following (or equivalent) steps when receiving
-an SD-JWT:
+an SD-JWT to validate the SD-JWT and extract the payload:
 
 1. Separate the SD-JWT into the Issuer-signed JWT and the Disclosures (if any).
 2. Validate the Issuer-signed JWT:
@@ -836,12 +837,19 @@ If any step fails, the SD-JWT is not valid, and processing MUST be aborted. Othe
 
 Note that these processing steps do not yield any guarantees to the Holder about having received a complete set of Disclosures. That is, for some digest values in the Issuer-signed JWT (which are not decoy digests) there may be no corresponding Disclosures, for example, if the message from the Issuer was truncated.
 It is up to the Holder how to maintain the mapping between the Disclosures and the plaintext claim values to be able to display them to the user when needed.
+
+
 ## Processing by the Holder  {#holder_verification}
 
 The Issuer MUST provide the Holder an SD-JWT, not an SD-JWT+KB.  If the Holder
 receives an SD-JWT+KB, it MUST be rejected.
 
-For presentation to a Verifier, the Holder MUST perform the following (or equivalent) steps:
+When receiving an SD-JWT, the Holder MUST do the following:
+
+ 1. Process the SD-JWT as defined in (#sd_jwt_verification) to validate it and extract the payload.
+ 2. Ensure that the contents of claims in the payload are acceptable (depending on the application; for example, check that any values the Holder can check are correct).
+
+For presentation to a Verifier, the Holder MUST perform the following (or equivalent) steps (in addition to the checks described in (#sd_jwt_verification) performed after receiving the SD-JWT):
 
  1. Decide which Disclosures to release to the Verifier, obtaining proper consent if necessary.
  2. Verify that each selected Disclosure satisfies one of the two following conditions:
@@ -858,7 +866,7 @@ For presentation to a Verifier, the Holder MUST perform the following (or equiva
 ## Verification by the Verifier  {#verifier_verification}
 
 Upon receiving a presentation from a Holder, in the form of either an SD-JWT or
-an SD-JWT+KB, in addition to the checks outlined in (#sd_jwt_verification), Verifiers need to ensure that
+an SD-JWT+KB, in addition to the checks described in (#sd_jwt_verification), Verifiers need to ensure that
 
  * if Key Binding is required, then the Holder has provided an SD-JWT+KB, and
  * the Key Binding JWT is signed by the Holder and valid.
@@ -871,7 +879,7 @@ To this end, Verifiers MUST follow the following steps (or equivalent):
    details.
 2. If Key Binding is required and the Holder has provided an SD-JWT (without Key Binding), the Verifier MUST reject the presentation.
 3. If the Holder has provided an SD-JWT+KB, parse it into an SD-JWT and a Key Binding JWT.
-4. Process the SD-JWT as defined in (#sd_jwt_verification).
+4. Process the SD-JWT as defined in (#sd_jwt_verification) to validate the presentation and extract the payload.
 5. If Key Binding is required:
     1. Determine the public key for the Holder from the SD-JWT (see (#key_binding)).
     2. Ensure that a signing algorithm was used that was deemed secure for the application. Refer to [@RFC8725], Sections 3.1 and 3.2 for details. The `none` algorithm MUST NOT be accepted.
@@ -963,7 +971,7 @@ other disclosed claims or sources other than the presented SD-JWT.
 
 **Integrity:** A malicious Holder cannot modify names or values of selectively disclosable claims without detection by the Verifier.
 
-Additionally, as described in (#key_binding_security), the application of Key Binding can ensure that the presenter of an SD-JWT credential is the legitimate Holder of the credential.
+Additionally, as described in (#key_binding_security), the application of Key Binding can ensure that the presenter of an SD-JWT credential is the Holder of the credential.
 
 ## Mandatory Signing of the Issuer-signed JWT {#sec-is-jwt}
 
@@ -1051,7 +1059,7 @@ revealed fundamental weaknesses and MUST NOT be used.
 
 ## Key Binding {#key_binding_security}
 
-Key Binding aims to ensure that the presenter of an SD-JWT credential is actually the legitimate Holder of the credential.
+Key Binding aims to ensure that the presenter of an SD-JWT credential is actually the Holder of the credential.
 An SD-JWT compatible with Key Binding contains a public key, or a reference to a public key, that corresponds to a private key possessed by the Holder.
 The Verifier requires that the Holder prove possession of that private key when presenting the SD-JWT credential.
 
@@ -1183,9 +1191,27 @@ The definition of `typ` in Section 4.1.9 of [@!RFC7515] recommends that the "app
 
 Use of the `cty` content type header parameter to indicate the content type of the SD-JWT payload can also be used to distinguish different types of JSON objects, or different kinds of JWT Claim Sets.
 
+## Key Pair Generation and Lifecycle Management
+
+Implementations of SD-JWT rely on asymmetric cryptographic keys and must therefore ensure that key pair generation,
+handling, storage, and lifecycle management are performed securely.
+
+While the specific mechanisms for secure key management are out of scope for this document, implementers
+should follow established best practices, such as those outlined in NIST SP 800-57 Part 1 [@?NIST.SP.800-57pt1r5].
+This includes:
+
+* Secure Generation: Using cryptographically secure methods and random number generators.
+* Secure Storage: Protecting private keys from unauthorized access.
+* Lifecycle Management: Ensuring secure key rotation, revocation, and disposal as needed.
+
+Appropriate key management is essential, as any compromise can lead to unauthorized disclosure or forgery of SD-JWTs.
+
+
 # Privacy Considerations {#privacy_considerations}
 
-## Unlinkability
+## Unlinkability {#unlinkability}
+
+The privacy principles of [@ISO.29100] should be adhered to.
 
 Unlinkability is a property whereby adversaries are prevented from correlating
 credential presentations of the same user beyond the user's consent.
@@ -1205,15 +1231,18 @@ The following types of unlinkability are considered here:
 
 * Presentation Unlinkability: A Verifier should not be able to link two
   presentations of the same credential.
-* Verifier/Verifier Unlinkability: Two colluding Verifiers should not be able to
-  learn that they have received presentations of the same credential.
+* Verifier/Verifier Unlinkability: The presentations made to two different
+  Verifiers should not reveal that the same credential was presented (e.g., if the two
+  Verifiers collude, or if they are forced by a third party to reveal the presentations
+  made to them, or data leaks from one Verifier to the other).
 * Issuer/Verifier Unlinkability (Honest Verifier): An Issuer of a credential
-  should not be able to know that a user presented the credential to a certain
-  Verifier that is not behaving maliciously.
-* Issuer/Verifier Unlinkability (Colluding/Compromised Verifier): An Issuer of a
-  credential should not be able to tell that a user presented the credential to
-  a certain Verifier, even if the Verifier colludes with the Issuer or becomes
-  compromised and leaks stored credentials from presentations.
+  should not be able to know that a user presented this credential unless
+  the Verifier is sharing presentation data with the Issuer
+  accidentally, deliberately, or because it is forced to do so.
+* Issuer/Verifier Unlinkability (Careless/Colluding/Compromised/Coerced Verifier): An Issuer of a
+  credential should under no circumstances be able to tell that a user presented this credential to
+  a certain Verifier. In particular this includes cases when the Verifier accidentally or deliberately shares
+  presentation data with the Issuer or is forced to do so.
 
 In all cases, unlinkability is limited to cases where the disclosed claims do
 not contain information that directly or indirectly identifies the user. For
@@ -1221,10 +1250,11 @@ example, when a taxpayer identification number is contained in the disclosed cla
 Verifier can easily link the user's transactions. However, when the user only
 discloses a birthdate to one Verifier and a postal code to another Verifier, the two Verifiers should not be able to determine that they were interacting with the same user.
 
-Issuer/Verifier unlinkability with a colluding or compromised Verifier cannot be
+Issuer/Verifier unlinkability with a careless, colluding, compromised, or coerced Verifier cannot be
 achieved in salted-hash based selective disclosure approaches, such as SD-JWT, as the
 issued credential with the Issuer's signature is directly presented to the Verifier, who can forward it to
-the Issuer.
+the Issuer. To reduce the risk of revealing the data later on, (#data_storage) defines
+requirements to reduce the amount of data stored.
 
 In considering Issuer/Verifier unlinkability, it is important to note the potential for an asymmetric power dynamic
 between Issuers and Verifiers. This dynamic can compel an otherwise honest Verifier into collusion.
@@ -1253,7 +1283,7 @@ time period considered appropriate (e.g., randomize `iat` within the last 24
 hours and calculate `exp` accordingly) or rounded (e.g., rounded down to the
 beginning of the day).
 
-## Storage of User Data
+## Storage of User Data {#data_storage}
 
 Wherever user data is stored, it represents a potential
 target for an attacker. This target can be of particularly
@@ -1271,13 +1301,12 @@ SD-JWTs may also allow attackers to impersonate Holders unless Key
 Binding is enforced and the attacker does not have access to the
 Holder's cryptographic keys.
 
-Due to these risks, systems implementing SD-JWT SHOULD be designed to minimize
-the amount of data that is stored. All involved parties SHOULD store SD-JWTs
-containing privacy-sensitive data only for as long as needed, including in log
-files.
+Due to these risks, and the risks described in (#unlinkability), systems implementing SD-JWT SHOULD be designed to minimize
+the amount of data that is stored. All involved parties SHOULD NOT store SD-JWTs
+longer than strictly needed, including in log files.
 
 After Issuance, Issuers SHOULD NOT store the Issuer-signed JWT or the respective
-Disclosures if they contain privacy-sensitive data.
+Disclosures.
 
 Holders SHOULD store SD-JWTs only in
 encrypted form, and, wherever possible, use hardware-backed encryption
@@ -1287,10 +1316,13 @@ credentials over centralized storage. Expired SD-JWTs SHOULD be deleted
 as soon as possible.
 
 After Verification, Verifiers SHOULD NOT store the Issuer-signed JWT or the
-respective Disclosures if they contain privacy-sensitive data. It may be
+respective Disclosures. It may be
 sufficient to store the result of the verification and any user data that is
 needed for the application.
 
+Exceptions from the rules above can be made if there are strong requirements to do
+so (e.g., functional requirements or legal audit requirements), secure storage can
+be ensured, and the privacy impact has been assessed.
 
 
 ## Confidentiality during Transport
@@ -1625,6 +1657,27 @@ the media type is encoded as an SD-JWT.
  </front>
 </reference>
 
+<reference anchor="NIST.SP.800-57pt1r5" target="https://nvlpubs.nist.gov/nistpubs/SpecialPublications/NIST.SP.800-57pt1r5.pdf">
+  <front>
+    <title>Recommendation for key management:part 1 - general</title>
+    <author fullname="Elaine Barker" surname="Barker">
+      <organization>Information Technology Laboratory</organization>
+    </author>
+    <author>
+      <organization abbrev="NIST">National Institute of Standards and Technology</organization>
+      <address>
+        <postal>
+          <country>US</country>
+          <city>Gaithersburg</city>
+        </postal>
+      </address>
+    </author>
+    <date month="May" year="2020"/>
+  </front>
+  <seriesInfo name="NIST Special Publications (General)" value="800-57pt1r5"/>
+  <seriesInfo name="DOI" value="10.6028/NIST.SP.800-57pt1r5"/>
+</reference>
+
 {backmatter}
 
 # Additional Examples
@@ -1884,6 +1937,11 @@ data. The original JSON data is then used by the application. See
 # Document History
 
    [[ To be removed from the final specification ]]
+
+   -15
+
+    * Address AD review comments resulting from evaluation of formal appeal
+    * Clarify language around compromised/coerced verifiers
 
    -14
 
