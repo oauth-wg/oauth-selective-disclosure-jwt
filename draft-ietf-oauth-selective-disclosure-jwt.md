@@ -1283,6 +1283,18 @@ time period considered appropriate (e.g., randomize `iat` within the last 24
 hours and calculate `exp` accordingly) or rounded (e.g., rounded down to the
 beginning of the day).
 
+SD-JWT only conceals the value of claims that are not revealed.
+It does not meet security notations for anonymous credentials [@?CL01]. In
+particular, colluding Verifiers and Issuers can know when they have seen the same
+credential no matter what fields have been disclosed, even when none have been disclosed.
+This behavior may not align with what users naturally anticipate or are guided to
+expect from user interface interactions, potentially causing them to make decisions
+they might not otherwise make. Workarounds such as batch issuance, as
+described above, help with keeping
+Verifiers from linking different presentations, but cannot work for Issuer/Verifier unlinkability.
+This issue applies to all salted hash-based approaches,
+including mDL/mDoc [@?ISO.18013-5] and SD-CWT [@?I-D.ietf-spice-sd-cwt].
+
 ## Storage of User Data {#data_storage}
 
 Wherever user data is stored, it represents a potential
@@ -1405,7 +1417,8 @@ Simon Schulz,
 Tobias Looker,
 Takahiko Kawasaki,
 Torsten Lodderstedt,
-Vittorio Bertocci, and
+Vittorio Bertocci,
+Watson Ladd, and
 Yaron Sheffer
 for their contributions (some of which substantial) to this draft and to the initial set of implementations.
 
@@ -1661,7 +1674,31 @@ the media type is encoded as an SD-JWT.
  <front>
   <title>JSON Web Token Claims</title>
   <author><organization>IANA</organization></author>
- </front>
+</front>
+</reference>
+
+<reference anchor="ISO.18013-5" target="https://www.iso.org/standard/69084.html">
+<front>
+  <title>ISO/IEC 18013-5:2021 Personal identification — ISO-compliant driving license — Part 5: Mobile driving license (mDL) application</title>
+  <author>
+    <organization> ISO/IEC JTC 1/SC 17 Cards and security devices for personal identification</organization>
+  </author>
+  <date year="2021"/>
+</front>
+</reference>
+
+<reference anchor="CL01" target="https://eprint.iacr.org/2001/019.pdf">
+  <front>
+    <title>An Efficient System for Non-Transferable Anonymous Credentials with Optional Anonymity Revocation</title>
+    <author initials="J." surname="Camenisch" fullname="Jan Camenisch">
+      <organization>IBM Research</organization>
+    </author>
+    <author initials="A." surname="Lysyanskaya" fullname="Anna Lysyanskaya">
+      <organization>MIT</organization>
+    </author>
+    <date year="2001" />
+  </front>
+  <seriesInfo name="Proceedings of the International Conference on the Theory and Application of Cryptographic Techniques (EUROCRYPT)" value="2001" />
 </reference>
 
 <reference anchor="NIST.SP.800-57pt1r5" target="https://nvlpubs.nist.gov/nistpubs/SpecialPublications/NIST.SP.800-57pt1r5.pdf">
@@ -1947,8 +1984,9 @@ data. The original JSON data is then used by the application. See
 
    -15
 
-    * Address AD review comments resulting from evaluation of formal appeal
-    * Clarify language around compromised/coerced verifiers
+   * Additions and adjustments to privacy considerations
+   * Address AD review comments resulting from evaluation of formal appeal
+   * Clarify language around compromised/coerced verifiers
 
    -14
 
