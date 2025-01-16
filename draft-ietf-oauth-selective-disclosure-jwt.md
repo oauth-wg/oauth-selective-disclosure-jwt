@@ -1229,12 +1229,12 @@ The following types of unlinkability are considered here:
   Verifiers collude, data leaks from one Verifier to the other, or if both
   are forced by a third party to reveal the presentations made to them).
 * Issuer/Verifier Unlinkability (Honest Verifier): An Issuer of a credential
-  should not be able to know that a user presented this credential if
-  the Verifier is not sharing presentation data with the Issuer
+  should not be able to know that a user presented this credential unless
+  the Verifier is sharing presentation data with the Issuer
   accidentally, deliberately, or because it is forced to do so.
-* Issuer/Verifier Unlinkability (Colluding/Compromised/Coerced Verifier): An Issuer of a
-  credential should not be able to tell that a user presented this credential to
-  a certain Verifier, even if the Verifier accidentally or deliberately shares
+* Issuer/Verifier Unlinkability (Careless/Colluding/Compromised/Coerced Verifier): An Issuer of a
+  credential should under no circumstances be able to tell that a user presented this credential to
+  a certain Verifier. In particular this includes cases when the Verifier accidentally or deliberately shares
   presentation data with the Issuer or is forced to do so.
 
 In all cases, unlinkability is limited to cases where the disclosed claims do
