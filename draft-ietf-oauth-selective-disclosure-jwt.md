@@ -1209,8 +1209,6 @@ Appropriate key management is essential, as any compromise can lead to unauthori
 
 # Privacy Considerations {#privacy_considerations}
 
-The privacy principles of [@ISO.29100] should be adhered to.
-
 ## Unlinkability {#unlinkability}
 
 Unlinkability is a property whereby adversaries are prevented from correlating
@@ -1578,13 +1576,6 @@ the media type is encoded as an SD-JWT.
       <organization abbrev="Disney (was at Salesforce)">Disney</organization>
     </author>
    <date day="15" month="Dec" year="2023"/>
-  </front>
-</reference>
-
-<reference anchor="ISO.29100" target="https://standards.iso.org/ittf/PubliclyAvailableStandards/index.html">
-  <front>
-    <author fullname="ISO"></author>
-    <title>ISO/IEC 29100:2011 Information technology — Security techniques — Privacy framework</title>
   </front>
 </reference>
 
