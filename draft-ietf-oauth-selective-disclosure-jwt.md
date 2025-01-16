@@ -1211,7 +1211,7 @@ Appropriate key management is essential, as any compromise can lead to unauthori
 
 The privacy principles of [@ISO.29100] should be adhered to.
 
-## Unlinkability
+## Unlinkability {#unlinkability}
 
 Unlinkability is a property whereby adversaries are prevented from correlating
 credential presentations of the same user beyond the user's consent.
@@ -1231,15 +1231,18 @@ The following types of unlinkability are considered here:
 
 * Presentation Unlinkability: A Verifier should not be able to link two
   presentations of the same credential.
-* Verifier/Verifier Unlinkability: Two colluding Verifiers should not be able to
-  learn that they have received presentations of the same credential.
+* Verifier/Verifier Unlinkability: The presentations made to two different
+  Verifiers should not reveal that the same credential was presented (e.g., if the two
+  Verifiers collude, or if they are forced by a third party to reveal the presentations
+  made to them, or data leaks from one Verifier to the other).
 * Issuer/Verifier Unlinkability (Honest Verifier): An Issuer of a credential
-  should not be able to know that a user presented the credential to a certain
-  Verifier that is not behaving maliciously.
-* Issuer/Verifier Unlinkability (Colluding/Compromised Verifier): An Issuer of a
-  credential should not be able to tell that a user presented the credential to
-  a certain Verifier, even if the Verifier colludes with the Issuer or becomes
-  compromised and leaks stored credentials from presentations.
+  should not be able to know that a user presented this credential unless
+  the Verifier is sharing presentation data with the Issuer
+  accidentally, deliberately, or because it is forced to do so.
+* Issuer/Verifier Unlinkability (Careless/Colluding/Compromised/Coerced Verifier): An Issuer of a
+  credential should under no circumstances be able to tell that a user presented this credential to
+  a certain Verifier. In particular this includes cases when the Verifier accidentally or deliberately shares
+  presentation data with the Issuer or is forced to do so.
 
 In all cases, unlinkability is limited to cases where the disclosed claims do
 not contain information that directly or indirectly identifies the user. For
@@ -1247,10 +1250,11 @@ example, when a taxpayer identification number is contained in the disclosed cla
 Verifier can easily link the user's transactions. However, when the user only
 discloses a birthdate to one Verifier and a postal code to another Verifier, the two Verifiers should not be able to determine that they were interacting with the same user.
 
-Issuer/Verifier unlinkability with a colluding or compromised Verifier cannot be
+Issuer/Verifier unlinkability with a careless, colluding, compromised, or coerced Verifier cannot be
 achieved in salted-hash based selective disclosure approaches, such as SD-JWT, as the
 issued credential with the Issuer's signature is directly presented to the Verifier, who can forward it to
-the Issuer.
+the Issuer. To reduce the risk of revealing the data later on, (#data_storage) defines
+requirements to reduce the amount of data stored.
 
 In considering Issuer/Verifier unlinkability, it is important to note the potential for an asymmetric power dynamic
 between Issuers and Verifiers. This dynamic can compel an otherwise honest Verifier into collusion.
@@ -1279,7 +1283,7 @@ time period considered appropriate (e.g., randomize `iat` within the last 24
 hours and calculate `exp` accordingly) or rounded (e.g., rounded down to the
 beginning of the day).
 
-## Storage of User Data
+## Storage of User Data {#data_storage}
 
 Wherever user data is stored, it represents a potential
 target for an attacker. This target can be of particularly
@@ -1297,13 +1301,12 @@ SD-JWTs may also allow attackers to impersonate Holders unless Key
 Binding is enforced and the attacker does not have access to the
 Holder's cryptographic keys.
 
-Due to these risks, systems implementing SD-JWT SHOULD be designed to minimize
-the amount of data that is stored. All involved parties SHOULD store SD-JWTs
-containing privacy-sensitive data only for as long as needed, including in log
-files.
+Due to these risks, and the risks described in (#unlinkability), systems implementing SD-JWT SHOULD be designed to minimize
+the amount of data that is stored. All involved parties SHOULD NOT store SD-JWTs
+longer than strictly needed, including in log files.
 
 After Issuance, Issuers SHOULD NOT store the Issuer-signed JWT or the respective
-Disclosures if they contain privacy-sensitive data.
+Disclosures.
 
 Holders SHOULD store SD-JWTs only in
 encrypted form, and, wherever possible, use hardware-backed encryption
@@ -1313,10 +1316,13 @@ credentials over centralized storage. Expired SD-JWTs SHOULD be deleted
 as soon as possible.
 
 After Verification, Verifiers SHOULD NOT store the Issuer-signed JWT or the
-respective Disclosures if they contain privacy-sensitive data. It may be
+respective Disclosures. It may be
 sufficient to store the result of the verification and any user data that is
 needed for the application.
 
+Exceptions from the rules above can be made if there are strong requirements to do
+so (e.g., functional requirements or legal audit requirements), secure storage can
+be ensured, and the privacy impact has been assessed.
 
 
 ## Confidentiality during Transport
@@ -1942,6 +1948,7 @@ data. The original JSON data is then used by the application. See
    -15
 
     * Address AD review comments resulting from evaluation of formal appeal
+    * Clarify language around compromised/coerced verifiers
 
    -14
 
