@@ -1226,8 +1226,8 @@ The following types of unlinkability are considered here:
   presentations of the same credential.
 * Verifier/Verifier Unlinkability: The presentations made to two different
   Verifiers should not reveal that the same credential was presented (e.g., if the two
-  Verifiers collude, data leaks from one Verifier to the other, or if both
-  are forced by a third party to reveal the presentations made to them).
+  Verifiers collude, or if they are forced by a third party to reveal the presentations
+  made to them, or data leaks from one Verifier to the other).
 * Issuer/Verifier Unlinkability (Honest Verifier): An Issuer of a credential
   should not be able to know that a user presented this credential unless
   the Verifier is sharing presentation data with the Issuer
@@ -1243,7 +1243,7 @@ example, when a taxpayer identification number is contained in the disclosed cla
 Verifier can easily link the user's transactions. However, when the user only
 discloses a birthdate to one Verifier and a postal code to another Verifier, the two Verifiers should not be able to determine that they were interacting with the same user.
 
-Issuer/Verifier unlinkability with a colluding, compromised, or coerced Verifier cannot be
+Issuer/Verifier unlinkability with a careless, colluding, compromised, or coerced Verifier cannot be
 achieved in salted-hash based selective disclosure approaches, such as SD-JWT, as the
 issued credential with the Issuer's signature is directly presented to the Verifier, who can forward it to
 the Issuer. To reduce the risk of revealing the data later on, (#data_storage) defines
