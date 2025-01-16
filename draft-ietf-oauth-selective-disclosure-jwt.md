@@ -1211,8 +1211,6 @@ Appropriate key management is essential, as any compromise can lead to unauthori
 
 ## Unlinkability {#unlinkability}
 
-The privacy principles of [@ISO.29100] should be adhered to.
-
 Unlinkability is a property whereby adversaries are prevented from correlating
 credential presentations of the same user beyond the user's consent.
 Without unlinkability, an adversary might be able to learn more about the user than the user
