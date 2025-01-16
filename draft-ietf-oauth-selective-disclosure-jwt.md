@@ -1273,13 +1273,13 @@ hours and calculate `exp` accordingly) or rounded (e.g., rounded down to the
 beginning of the day).
 
 SD-JWT only conceals the value of claims that are not revealed.
-It does not meet standard security notations for anonymous credentials. In
-particular Verifiers and Issuers can know when they have seen the same
-credential no matter what fields have been disclosed, even none of them.
-This behavior may not accord with what users intuitively expect or are
-lead to expect from user interface interactions and lead to them make choices they
-would not otherwise make. Workarounds such as batch issuance as
-described above help for keeping
+It does not meet security notations for anonymous credentials [@?CL01]. In
+particular, colluding Verifiers and Issuers can know when they have seen the same
+credential no matter what fields have been disclosed, even when none are disclosed.
+This behavior may not align with what users naturally anticipate or are guided to
+expect from user interface interactions, potentially causing them to make decisions
+they might not otherwise make. Workarounds such as batch issuance as
+described above help with keeping
 Verifiers from linking different presentations, but cannot work for Issuer/Verifier unlinkability.
 This issue applies to all salted hash-based approaches,
 including mDL/mDoc [@?ISO.18013-5] and SD-CWT [@?I-D.ietf-spice-sd-cwt].
@@ -1672,6 +1672,19 @@ the media type is encoded as an SD-JWT.
   </author>
   <date year="2021"/>
 </front>
+<reference anchor="CL01" target="https://eprint.iacr.org/2001/019.pdf">
+  <front>
+    <title>An Efficient System for Non-Transferable Anonymous Credentials with Optional Anonymity Revocation</title>
+    <author initials="J." surname="Camenisch" fullname="Jan Camenisch">
+      <organization>IBM Research</organization>
+    </author>
+    <author initials="A." surname="Lysyanskaya" fullname="Anna Lysyanskaya">
+      <organization>MIT</organization>
+    </author>
+    <date year="2001" />
+  </front>
+  <seriesInfo name="Proceedings of the International Conference on the Theory and Application of Cryptographic Techniques (EUROCRYPT)" value="2001" />
+</reference>
 </reference>
 
 <reference anchor="NIST.SP.800-57pt1r5" target="https://nvlpubs.nist.gov/nistpubs/SpecialPublications/NIST.SP.800-57pt1r5.pdf">
