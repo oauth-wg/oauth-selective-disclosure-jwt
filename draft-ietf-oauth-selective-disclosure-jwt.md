@@ -1275,11 +1275,11 @@ beginning of the day).
 SD-JWT only conceals the value of claims that are not revealed.
 It does not meet security notations for anonymous credentials [@?CL01]. In
 particular, colluding Verifiers and Issuers can know when they have seen the same
-credential no matter what fields have been disclosed, even when none are disclosed.
+credential no matter what fields have been disclosed, even when none have been disclosed.
 This behavior may not align with what users naturally anticipate or are guided to
 expect from user interface interactions, potentially causing them to make decisions
-they might not otherwise make. Workarounds such as batch issuance as
-described above help with keeping
+they might not otherwise make. Workarounds such as batch issuance, as
+described above, help with keeping
 Verifiers from linking different presentations, but cannot work for Issuer/Verifier unlinkability.
 This issue applies to all salted hash-based approaches,
 including mDL/mDoc [@?ISO.18013-5] and SD-CWT [@?I-D.ietf-spice-sd-cwt].
