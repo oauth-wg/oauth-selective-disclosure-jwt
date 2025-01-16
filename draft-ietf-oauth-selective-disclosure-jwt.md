@@ -800,7 +800,7 @@ or a Verifier needs to ensure that:
  * all Disclosures are valid and correspond to a respective digest value in the Issuer-signed JWT (directly in the payload or recursively included in the contents of other Disclosures).
 
 The Holder or the Verifier MUST perform the following (or equivalent) steps when receiving
-an SD-JWT:
+an SD-JWT to validate the SD-JWT and extract the payload:
 
 1. Separate the SD-JWT into the Issuer-signed JWT and the Disclosures (if any).
 2. Validate the Issuer-signed JWT:
@@ -837,12 +837,19 @@ If any step fails, the SD-JWT is not valid, and processing MUST be aborted. Othe
 
 Note that these processing steps do not yield any guarantees to the Holder about having received a complete set of Disclosures. That is, for some digest values in the Issuer-signed JWT (which are not decoy digests) there may be no corresponding Disclosures, for example, if the message from the Issuer was truncated.
 It is up to the Holder how to maintain the mapping between the Disclosures and the plaintext claim values to be able to display them to the user when needed.
+
+
 ## Processing by the Holder  {#holder_verification}
 
 The Issuer MUST provide the Holder an SD-JWT, not an SD-JWT+KB.  If the Holder
 receives an SD-JWT+KB, it MUST be rejected.
 
-For presentation to a Verifier, the Holder MUST perform the following (or equivalent) steps:
+When receiving an SD-JWT, the Holder MUST do the following:
+
+ 1. Process the SD-JWT as defined in (#sd_jwt_verification) to validate it and extract the payload.
+ 2. Ensure that the contents of claims in the payload are acceptable (depending on the application; for example, check that any values the Holder can check are correct).
+
+For presentation to a Verifier, the Holder MUST perform the following (or equivalent) steps (in addition to the checks described in (#sd_jwt_verification) performed after receiving the SD-JWT):
 
  1. Decide which Disclosures to release to the Verifier, obtaining proper consent if necessary.
  2. Verify that each selected Disclosure satisfies one of the two following conditions:
@@ -859,7 +866,7 @@ For presentation to a Verifier, the Holder MUST perform the following (or equiva
 ## Verification by the Verifier  {#verifier_verification}
 
 Upon receiving a presentation from a Holder, in the form of either an SD-JWT or
-an SD-JWT+KB, in addition to the checks outlined in (#sd_jwt_verification), Verifiers need to ensure that
+an SD-JWT+KB, in addition to the checks described in (#sd_jwt_verification), Verifiers need to ensure that
 
  * if Key Binding is required, then the Holder has provided an SD-JWT+KB, and
  * the Key Binding JWT is signed by the Holder and valid.
@@ -872,7 +879,7 @@ To this end, Verifiers MUST follow the following steps (or equivalent):
    details.
 2. If Key Binding is required and the Holder has provided an SD-JWT (without Key Binding), the Verifier MUST reject the presentation.
 3. If the Holder has provided an SD-JWT+KB, parse it into an SD-JWT and a Key Binding JWT.
-4. Process the SD-JWT as defined in (#sd_jwt_verification).
+4. Process the SD-JWT as defined in (#sd_jwt_verification) to validate the presentation and extract the payload.
 5. If Key Binding is required:
     1. Determine the public key for the Holder from the SD-JWT (see (#key_binding)).
     2. Ensure that a signing algorithm was used that was deemed secure for the application. Refer to [@RFC8725], Sections 3.1 and 3.2 for details. The `none` algorithm MUST NOT be accepted.
