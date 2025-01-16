@@ -1672,6 +1672,8 @@ the media type is encoded as an SD-JWT.
   </author>
   <date year="2021"/>
 </front>
+</reference>
+
 <reference anchor="CL01" target="https://eprint.iacr.org/2001/019.pdf">
   <front>
     <title>An Efficient System for Non-Transferable Anonymous Credentials with Optional Anonymity Revocation</title>
@@ -1684,7 +1686,6 @@ the media type is encoded as an SD-JWT.
     <date year="2001" />
   </front>
   <seriesInfo name="Proceedings of the International Conference on the Theory and Application of Cryptographic Techniques (EUROCRYPT)" value="2001" />
-</reference>
 </reference>
 
 <reference anchor="NIST.SP.800-57pt1r5" target="https://nvlpubs.nist.gov/nistpubs/SpecialPublications/NIST.SP.800-57pt1r5.pdf">
