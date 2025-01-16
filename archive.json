@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2025-01-12T00:17:02.534000+00:00",
+  "timestamp": "2025-01-16T00:14:49.317512+00:00",
   "repo": "oauth-wg/oauth-selective-disclosure-jwt",
   "labels": [
     {
@@ -12378,11 +12378,11 @@
       "authorAssociation": "NONE",
       "assignees": [],
       "labels": [
-        "ready-for-PR"
+        "has-PR"
       ],
       "body": "In Section 7.2 \"Processing by the Holder\" there is no mention of the validation that a Holder needs to do to validate an Issued SD-JWT. The holder needs to a) look at all the disclosures and validate that the claims are acceptable to the Holder (the Issuer isn't claiming something incorrect), and b) make sure that there is a disclosure for each claim object after recursively replacing any `_sd` object or in any object with the reserved object key with its disclosed claim.",
       "createdAt": "2024-11-20T17:55:23Z",
-      "updatedAt": "2024-12-13T17:42:48Z",
+      "updatedAt": "2025-01-13T12:52:30Z",
       "closedAt": null,
       "comments": [
         {
@@ -12405,6 +12405,13 @@
           "body": "> https://www.ietf.org/archive/id/draft-ietf-oauth-selective-disclosure-jwt-14.html#section-7.1-4.5 in 7.1 covers (I think) \"b)\". And \"a)\" would be an implementation choice/detail that could maybe be mentioned but wouldn't be a normative requirement.\r\n\r\nRegarding steps 4 and 5, I think these are just plain wrong in the Holder verification case. These steps should be moved from 7.1 to 7.3. If the Holder does not have all the disclosures, they shouldn't use the SD-JWT. It is meaningless to say the Holder *removes* array elements and `_sd` keys from the payload, (because they can't send a payload to the Verifier without these elements). The Holder also cannot check for kleptographic attacks where the  Issuer and Verifier collude.\r\n\r\nI don't see why we would argue about a). It is probably a single sentence in 7.2, something like: \"The Holder verifies that the disclosures it receives from the Issuer are acceptable to the Holder.\" If the policy of the Holder is that any disclosure asserted by the Issuer is ok, then it is still complying with the sentence. However it is an important reminder that there is something important to check here. The idea that the Holder may not always and completely trust the Issuer will be new to many readers.",
           "createdAt": "2024-12-13T17:42:46Z",
           "updatedAt": "2024-12-13T17:42:46Z"
+        },
+        {
+          "author": "danielfett",
+          "authorAssociation": "MEMBER",
+          "body": "I generally agree, but I also think you're contradicting yourself: The holder needs to perform all the steps including removing clutter from the payload in order to verify the claims. \r\n\r\nI filed PR #541 in an attempt to address this issue. I clarified that the holder runs these steps to extract the payload and I added a sentence saying that the holder must verify the payload, although that is really hard to make actionable.",
+          "createdAt": "2025-01-13T11:20:38Z",
+          "updatedAt": "2025-01-13T11:20:38Z"
         }
       ]
     },
@@ -52388,13 +52395,13 @@
       "labels": [],
       "body": "https://mailarchive.ietf.org/arch/msg/oauth/zC8fU5nOVHsY4S5erBlBEy2fDTI/ and https://mailarchive.ietf.org/arch/msg/oauth/ugVBj2O0hw-nuWNVTFpt0JH3yVY/ are *some* threads on the mailing list ",
       "createdAt": "2025-01-09T17:16:24Z",
-      "updatedAt": "2025-01-10T16:11:30Z",
+      "updatedAt": "2025-01-14T19:14:48Z",
       "baseRepository": "oauth-wg/oauth-selective-disclosure-jwt",
       "baseRefName": "master",
       "baseRefOid": "01084e8e994c07b66290e307483df858d3c216ce",
       "headRepository": "oauth-wg/oauth-selective-disclosure-jwt",
       "headRefName": "considering-more-considerations-about-privacy",
-      "headRefOid": "e14e93c1f3d356549229fee55b38512f5c2c4b9f",
+      "headRefOid": "0b23e097ca7fea34c440c991d5defa8a29e2a00a",
       "closedAt": null,
       "mergedAt": null,
       "mergedBy": null,
@@ -52448,6 +52455,48 @@
           "body": "Denis, I think that comment needs to be on the list (not sure how the WG works, but that's certainly where we've had most of the important discussions)",
           "createdAt": "2025-01-10T16:11:29Z",
           "updatedAt": "2025-01-10T16:11:29Z"
+        },
+        {
+          "author": "danielfett",
+          "authorAssociation": "MEMBER",
+          "body": "@Denisthemalice I think some of your points should go into a separate PR. I'll try and create one...",
+          "createdAt": "2025-01-13T10:22:49Z",
+          "updatedAt": "2025-01-13T10:22:49Z"
+        },
+        {
+          "author": "Denisthemalice",
+          "authorAssociation": "NONE",
+          "body": "You are right, my text change proposals should be addressed in another issue. So please create a new issue.\r\n\r\nI propose the following title for it: \r\n\r\n> Issuer/Verifier unlinkability and Storage of SD-JWTs\r\n\r\nHowever, these two issues are strongly related.\r\n\r\nThe revised text that is being proposed is still misleading and the rational is mentioned in this \"other\" issue.\r\n\r\nA sentence like \r\n\r\n> \" This behavior may not accord with what users intuitively expect or are lead to expect from user interface interactions and lead to them make choices they would not otherwise make\" \r\n\r\nis not understandable and should not be included into the document.\r\n\r\nWhen using one-time use digital credentials, the same benefits as systems using ZKP can be obtained when considering the whole picture, I mean, including suspension and revocation checking.\r\n\r\nWe will be able to fix this issue 535 when the \"other issue\" will be fixed. So please , place this issue \"on hold\". ",
+          "createdAt": "2025-01-13T10:43:47Z",
+          "updatedAt": "2025-01-13T10:43:47Z"
+        },
+        {
+          "author": "danielfett",
+          "authorAssociation": "MEMBER",
+          "body": "Please see PR #540 ",
+          "createdAt": "2025-01-13T11:03:20Z",
+          "updatedAt": "2025-01-13T11:03:20Z"
+        },
+        {
+          "author": "wbl",
+          "authorAssociation": "NONE",
+          "body": "Dennis please expand on your points on the list. I agree revocation checking and suspension are challenges, but there are ways to handle them that preserve a high degree of privacy. People have been working on this for a long time.",
+          "createdAt": "2025-01-13T15:37:55Z",
+          "updatedAt": "2025-01-13T15:37:55Z"
+        },
+        {
+          "author": "Denisthemalice",
+          "authorAssociation": "NONE",
+          "body": "You wrote:\r\n\r\n> Yes, if every credential has a unique serial number that's always revealed, you have a problem.\r\n\r\n\r\nThere is a technique that does not need to include either a unique serial number or a tuple of uri and index \r\ninside a Referenced Token. This has been explained in detail when discussing revocation checking and suspension in:\r\n\r\nhttps://github.com/oauth-wg/draft-ietf-oauth-status-list/issues/209#issuecomment-2558666716\r\n\r\nThis technique is different from what :\r\n\r\n> \"People have been working on this for a long time\".",
+          "createdAt": "2025-01-13T16:53:46Z",
+          "updatedAt": "2025-01-13T16:53:46Z"
+        },
+        {
+          "author": "wbl",
+          "authorAssociation": "NONE",
+          "body": "Denis, my point about serial numbers was not for you. It was in response to Brian's question about what the sign and prove techniques do. \r\n\r\nThe link you gave is not terribly detailed. I was thinking along the lines of proving an element isn't a list, of which there are lots of protocols of varying efficiency and with varying tradeoffs. Again there is a vast literature here that everyone involved in making this spec seems to have entirely ignored.\r\n\r\nI don't think this is a great format for having this discussion given the UI and the comparatively few people looking at it: I think you should send an email to the list.",
+          "createdAt": "2025-01-13T17:06:27Z",
+          "updatedAt": "2025-01-13T17:06:27Z"
         }
       ],
       "reviews": [
@@ -52482,6 +52531,552 @@
               "updatedAt": "2025-01-09T17:21:35Z"
             }
           ]
+        },
+        {
+          "id": "PRR_kwDOHTmVzM6XxFBw",
+          "commit": {
+            "abbreviatedOid": "e14e93c"
+          },
+          "author": "danielfett",
+          "authorAssociation": "MEMBER",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2025-01-13T10:21:43Z",
+          "updatedAt": "2025-01-13T10:21:43Z",
+          "comments": [
+            {
+              "originalPosition": 15,
+              "body": "In an attempt to consolidate the comments above: \r\n\r\n```suggestion\r\nSD-JWT only conceals the value of claims that are not revealed.\r\nIt does not provide Issuer/Verifier unlinkability without constraints\r\nas schemes using zero-knowledge protocols do (for example, [@?CL01]). In\r\nparticular, entities with access to the SD-JWTs and their presentations can know when they have seen the same\r\ncredential no matter what fields have been disclosed, even none of them.\r\nThis behavior may not accord with what users intuitively expect or are\r\nlead to expect from user interface interactions and lead to them make choices they\r\nwould not otherwise make. Workarounds such as batch issuance as\r\ndescribed above help for keeping\r\nVerifiers from linking different presentations, but cannot work for Issuer/Verifier unlinkability.\r\nThis issue applies to all salted hash-based approaches,\r\nincluding mDL/mDoc [@?ISO.18013-5] and SD-CWT [@?I-D.ietf-spice-sd-cwt].\r\n\r\n```",
+              "createdAt": "2025-01-13T10:21:43Z",
+              "updatedAt": "2025-01-13T12:50:31Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOHTmVzM6Xykui",
+          "commit": {
+            "abbreviatedOid": "e14e93c"
+          },
+          "author": "bc-pi",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2025-01-13T13:31:15Z",
+          "updatedAt": "2025-01-13T13:31:15Z",
+          "comments": [
+            {
+              "originalPosition": 39,
+              "body": "```suggestion\r\n  <title>ISO/IEC 18013-5:2021 Personal identification \u2014 ISO-compliant driving license \u2014 Part 5: Mobile driving license (mDL) application</title>\r\n```",
+              "createdAt": "2025-01-13T13:31:15Z",
+              "updatedAt": "2025-01-13T13:31:15Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOHTmVzM6Xykzb",
+          "commit": {
+            "abbreviatedOid": "e14e93c"
+          },
+          "author": "bc-pi",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2025-01-13T13:31:23Z",
+          "updatedAt": "2025-01-13T13:31:23Z",
+          "comments": [
+            {
+              "originalPosition": 15,
+              "body": "is `[@?CL01]` just gonna work? I need to reevaluate some of my belief systems, if it does. ",
+              "createdAt": "2025-01-13T13:31:23Z",
+              "updatedAt": "2025-01-13T13:31:24Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOHTmVzM6Xymrg",
+          "commit": {
+            "abbreviatedOid": "e14e93c"
+          },
+          "author": "bc-pi",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2025-01-13T13:34:45Z",
+          "updatedAt": "2025-01-13T13:34:45Z",
+          "comments": [
+            {
+              "originalPosition": 15,
+              "body": "do not schemes using zero-knowledge protocols also have constraints with respect to Issuer/Verifier unlinkability? Just somewhat less constraining constraints. ",
+              "createdAt": "2025-01-13T13:34:45Z",
+              "updatedAt": "2025-01-13T13:34:45Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOHTmVzM6X0Jhs",
+          "commit": {
+            "abbreviatedOid": "e14e93c"
+          },
+          "author": "wbl",
+          "authorAssociation": "NONE",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2025-01-13T15:36:42Z",
+          "updatedAt": "2025-01-13T15:36:42Z",
+          "comments": [
+            {
+              "originalPosition": 15,
+              "body": "Brian, I don't quite understand your question. Yes, if every credential has a unique serial number that's always revealed, you have a problem. But you don't have more problems than that: they simulate ideal functionality.\r\n\r\nI do think taking out \"It does not meet standard security notations for anonymous credentials.\" and saying some schemes meet tighter notions is a bad idea. The whole point is that every application we've been discussing for the past quarter century won't automatically work with this scheme: that we need to signpost we didn't do the right thing here. I don't think Daniel's suggestion does that as strongly. I do like changing to entity in the rest of the text.",
+              "createdAt": "2025-01-13T15:36:42Z",
+              "updatedAt": "2025-01-13T15:36:42Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOHTmVzM6X-GrV",
+          "commit": {
+            "abbreviatedOid": "e14e93c"
+          },
+          "author": "bc-pi",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2025-01-14T13:00:57Z",
+          "updatedAt": "2025-01-14T13:00:57Z",
+          "comments": [
+            {
+              "originalPosition": 15,
+              "body": "> Brian, I don't quite understand your question.\r\n\r\n@danielfett's suggested text here changed \"does not meet standard security notations for anonymous credentials\" to \"does not provide Issuer/Verifier unlinkability without constraints as schemes using zero-knowledge protocols\". And my question was to question whether \"without constraints\" was too strong a statement because even ZK schemes have constraints. \r\n\r\n> Yes, if every credential has a unique serial number that's always revealed, you have a problem.\r\n\r\nOr email, or name + dob, or SSN, or TIN, NINo, TFN, NIN, passport #, phone #, etc.. \r\n",
+              "createdAt": "2025-01-14T13:00:57Z",
+              "updatedAt": "2025-01-14T13:00:57Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOHTmVzM6YAL_T",
+          "commit": {
+            "abbreviatedOid": "0b23e09"
+          },
+          "author": "Sakurann",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2025-01-14T15:53:37Z",
+          "updatedAt": "2025-01-14T15:53:37Z",
+          "comments": [
+            {
+              "originalPosition": 6,
+              "body": "```suggestion\r\nparticular, colluding Verifiers and Issuers can know when they have seen the same\r\n```",
+              "createdAt": "2025-01-14T15:53:37Z",
+              "updatedAt": "2025-01-14T15:54:12Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOHTmVzM6YAMRT",
+          "commit": {
+            "abbreviatedOid": "0b23e09"
+          },
+          "author": "Sakurann",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2025-01-14T15:54:04Z",
+          "updatedAt": "2025-01-14T15:54:04Z",
+          "comments": [
+            {
+              "originalPosition": 7,
+              "body": "```suggestion\r\ncredential no matter what fields have been disclosed, even when none.\r\n```",
+              "createdAt": "2025-01-14T15:54:04Z",
+              "updatedAt": "2025-01-14T15:57:13Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOHTmVzM6YANip",
+          "commit": {
+            "abbreviatedOid": "0b23e09"
+          },
+          "author": "Sakurann",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2025-01-14T15:55:50Z",
+          "updatedAt": "2025-01-14T15:55:50Z",
+          "comments": [
+            {
+              "originalPosition": 10,
+              "body": "```suggestion\r\nThis behavior may not align with what users naturally anticipate or are guided to\r\nexpect from user interface interactions, potentially causing them to make decisions\r\nthey might not otherwise choose. Workarounds such as batch issuance as\r\n```",
+              "createdAt": "2025-01-14T15:55:50Z",
+              "updatedAt": "2025-01-14T15:55:50Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOHTmVzM6YAOCD",
+          "commit": {
+            "abbreviatedOid": "0b23e09"
+          },
+          "author": "Sakurann",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2025-01-14T15:56:34Z",
+          "updatedAt": "2025-01-14T15:56:35Z",
+          "comments": [
+            {
+              "originalPosition": 12,
+              "body": "```suggestion\r\ndescribed above help with keeping\r\nVerifiers from linking different presentations, but cannot work for Issuer/Verifier unlinkability.\r\n```",
+              "createdAt": "2025-01-14T15:56:34Z",
+              "updatedAt": "2025-01-14T15:56:35Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOHTmVzM6YAPqO",
+          "commit": {
+            "abbreviatedOid": "0b23e09"
+          },
+          "author": "Sakurann",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2025-01-14T15:58:06Z",
+          "updatedAt": "2025-01-14T15:58:06Z",
+          "comments": [
+            {
+              "originalPosition": 5,
+              "body": "Can we have a reference to what \"anonymous credentials\"? do we really expect all of the readers to know what it is? this is the first time that they are mentioned in the text I believe?",
+              "createdAt": "2025-01-14T15:58:06Z",
+              "updatedAt": "2025-01-14T15:58:06Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOHTmVzM6YAQPv",
+          "commit": {
+            "abbreviatedOid": "0b23e09"
+          },
+          "author": "Sakurann",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2025-01-14T15:59:01Z",
+          "updatedAt": "2025-01-14T15:59:01Z",
+          "comments": [
+            {
+              "originalPosition": 15,
+              "body": "please combine this suggestion with the suggestions I have made above :)",
+              "createdAt": "2025-01-14T15:59:01Z",
+              "updatedAt": "2025-01-14T15:59:01Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOHTmVzM6YCjzG",
+          "commit": {
+            "abbreviatedOid": "e14e93c"
+          },
+          "author": "wbl",
+          "authorAssociation": "NONE",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2025-01-14T19:14:17Z",
+          "updatedAt": "2025-01-14T19:14:17Z",
+          "comments": [
+            {
+              "originalPosition": 15,
+              "body": "@bc-pi Exactly. Saying without further conditions doesn't quite work, saying what the exact notion is is technical, pointing to a reference is the happy medium and lets us get the important part across.",
+              "createdAt": "2025-01-14T19:14:17Z",
+              "updatedAt": "2025-01-14T19:14:17Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOHTmVzM6YCkBW",
+          "commit": {
+            "abbreviatedOid": "0b23e09"
+          },
+          "author": "wbl",
+          "authorAssociation": "NONE",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2025-01-14T19:14:48Z",
+          "updatedAt": "2025-01-14T19:14:48Z",
+          "comments": [
+            {
+              "originalPosition": 5,
+              "body": "I think the idea was to add a citation to CL01, but that might not actually have the phrase in it easily findable...",
+              "createdAt": "2025-01-14T19:14:48Z",
+              "updatedAt": "2025-01-14T19:14:48Z"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "number": 540,
+      "id": "PR_kwDOHTmVzM6Hg3ou",
+      "title": "Changes to linkability and data storage sections",
+      "url": "https://github.com/oauth-wg/oauth-selective-disclosure-jwt/pull/540",
+      "state": "OPEN",
+      "author": "danielfett",
+      "authorAssociation": "MEMBER",
+      "assignees": [],
+      "labels": [],
+      "body": "Inspired by Denis' comments [here](https://github.com/oauth-wg/oauth-selective-disclosure-jwt/pull/535#issuecomment-2581041028), addressing most of them and changing some related text as well. ",
+      "createdAt": "2025-01-13T10:57:45Z",
+      "updatedAt": "2025-01-14T19:19:40Z",
+      "baseRepository": "oauth-wg/oauth-selective-disclosure-jwt",
+      "baseRefName": "master",
+      "baseRefOid": "01084e8e994c07b66290e307483df858d3c216ce",
+      "headRepository": "oauth-wg/oauth-selective-disclosure-jwt",
+      "headRefName": "danielfett/denis-editorial",
+      "headRefOid": "3a15b295341024d4035e439be7c45c2048b1374b",
+      "closedAt": null,
+      "mergedAt": null,
+      "mergedBy": null,
+      "mergeCommit": null,
+      "comments": [],
+      "reviews": [
+        {
+          "id": "PRR_kwDOHTmVzM6XybFw",
+          "commit": {
+            "abbreviatedOid": "fad6096"
+          },
+          "author": "bc-pi",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2025-01-13T13:13:19Z",
+          "updatedAt": "2025-01-13T13:13:20Z",
+          "comments": [
+            {
+              "originalPosition": 41,
+              "body": "Oxford?\r\n```suggestion\r\nIssuer/Verifier unlinkability with a colluding, compromised, or coerced Verifier cannot be\r\n```",
+              "createdAt": "2025-01-13T13:13:20Z",
+              "updatedAt": "2025-01-13T13:13:20Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOHTmVzM6XybiF",
+          "commit": {
+            "abbreviatedOid": "fad6096"
+          },
+          "author": "bc-pi",
+          "authorAssociation": "COLLABORATOR",
+          "state": "APPROVED",
+          "body": "colluding, compromised, and coerced to approve ",
+          "createdAt": "2025-01-13T13:14:10Z",
+          "updatedAt": "2025-01-13T13:14:10Z",
+          "comments": []
+        },
+        {
+          "id": "PRR_kwDOHTmVzM6YCiPy",
+          "commit": {
+            "abbreviatedOid": "3a15b29"
+          },
+          "author": "Sakurann",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2025-01-14T19:10:44Z",
+          "updatedAt": "2025-01-14T19:10:44Z",
+          "comments": [
+            {
+              "originalPosition": 18,
+              "body": "```suggestion\r\n* Verifier/Verifier Unlinkability: The presentations made to two different\r\n  Verifiers should not reveal that the same credential was presented (e.g., if the two\r\n  Verifiers collude, or if they are forced by a third party to reveal the presentations\r\n  made to them data leaks from one Verifier to the other).\r\n```\r\nmight improve readability a little bit",
+              "createdAt": "2025-01-14T19:10:44Z",
+              "updatedAt": "2025-01-14T19:11:03Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOHTmVzM6YCkw0",
+          "commit": {
+            "abbreviatedOid": "3a15b29"
+          },
+          "author": "Sakurann",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2025-01-14T19:16:22Z",
+          "updatedAt": "2025-01-14T19:16:23Z",
+          "comments": [
+            {
+              "originalPosition": 32,
+              "body": "```suggestion\r\n  should not be able to know that a user presented this credential if\r\n  the Verifier is not accidentally sharing presentation data with the Issuer.\r\n* Issuer/Verifier Unlinkability (Colluding/Compromised/Coerced Verifier): An Issuer of a\r\n  credential should not be able to tell that a user presented this credential to\r\n  a certain Verifier, even if the Verifier deliberately shares\r\n  presentation data with the Issuer or is forced to do so.\r\n```\r\nColluding/Compromised/Coerced Verifier would only share deliberately and not accidentally, right? likewise, honest verifier would no share deliberately or forced to do so? current text undemines the differentiation btw honest and bad verifier that is being introduced.",
+              "createdAt": "2025-01-14T19:16:22Z",
+              "updatedAt": "2025-01-14T19:17:14Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOHTmVzM6YCna2",
+          "commit": {
+            "abbreviatedOid": "3a15b29"
+          },
+          "author": "Sakurann",
+          "authorAssociation": "COLLABORATOR",
+          "state": "APPROVED",
+          "body": "looks ok overall, but would like to see my suggestion accepted",
+          "createdAt": "2025-01-14T19:19:40Z",
+          "updatedAt": "2025-01-14T19:19:40Z",
+          "comments": []
+        }
+      ]
+    },
+    {
+      "number": 541,
+      "id": "PR_kwDOHTmVzM6HhBJH",
+      "title": "Try to address Rohan's comments",
+      "url": "https://github.com/oauth-wg/oauth-selective-disclosure-jwt/pull/541",
+      "state": "OPEN",
+      "author": "danielfett",
+      "authorAssociation": "MEMBER",
+      "assignees": [],
+      "labels": [],
+      "body": "Fix Issue #530 ",
+      "createdAt": "2025-01-13T11:18:12Z",
+      "updatedAt": "2025-01-14T19:22:40Z",
+      "baseRepository": "oauth-wg/oauth-selective-disclosure-jwt",
+      "baseRefName": "master",
+      "baseRefOid": "01084e8e994c07b66290e307483df858d3c216ce",
+      "headRepository": "oauth-wg/oauth-selective-disclosure-jwt",
+      "headRefName": "danielfett/fix-530",
+      "headRefOid": "f47b3842ed39099a2ef4bfea75d49ac9238e1628",
+      "closedAt": null,
+      "mergedAt": null,
+      "mergedBy": null,
+      "mergeCommit": null,
+      "comments": [],
+      "reviews": [
+        {
+          "id": "PRR_kwDOHTmVzM6Xxqet",
+          "commit": {
+            "abbreviatedOid": "7ef4f51"
+          },
+          "author": "paulbastian",
+          "authorAssociation": "NONE",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2025-01-13T11:37:43Z",
+          "updatedAt": "2025-01-13T11:38:12Z",
+          "comments": [
+            {
+              "originalPosition": 23,
+              "body": "If this means the holder receives it during issuance, then I think presentation is the wrong wording here",
+              "createdAt": "2025-01-13T11:37:43Z",
+              "updatedAt": "2025-01-13T11:38:12Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOHTmVzM6XyOCt",
+          "commit": {
+            "abbreviatedOid": "7ef4f51"
+          },
+          "author": "danielfett",
+          "authorAssociation": "MEMBER",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2025-01-13T12:48:00Z",
+          "updatedAt": "2025-01-13T12:48:00Z",
+          "comments": [
+            {
+              "originalPosition": 23,
+              "body": "Correct, that was copy paste from below. \r\n```suggestion\r\n 1. Process the SD-JWT as defined in (#sd_jwt_verification) to validate the SD-JWT and extract the payload.\r\n```",
+              "createdAt": "2025-01-13T12:48:00Z",
+              "updatedAt": "2025-01-13T12:48:00Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOHTmVzM6XyPhI",
+          "commit": {
+            "abbreviatedOid": "7ef4f51"
+          },
+          "author": "bc-pi",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2025-01-13T12:51:03Z",
+          "updatedAt": "2025-01-13T12:51:03Z",
+          "comments": [
+            {
+              "originalPosition": 23,
+              "body": "I agree with @paulbastian --- for better or worse the term \"presentation\" has come to have some specific connotations in the world of digital verifiable credentials that don't align with the holder receiving the thing.  ",
+              "createdAt": "2025-01-13T12:51:03Z",
+              "updatedAt": "2025-01-13T12:51:03Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOHTmVzM6XyPub",
+          "commit": {
+            "abbreviatedOid": "7ef4f51"
+          },
+          "author": "bc-pi",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2025-01-13T12:51:28Z",
+          "updatedAt": "2025-01-13T12:51:28Z",
+          "comments": [
+            {
+              "originalPosition": 23,
+              "body": "```suggestion\r\n 1. Process the SD-JWT as defined in (#sd_jwt_verification) to validate it and extract the payload.\r\n```",
+              "createdAt": "2025-01-13T12:51:28Z",
+              "updatedAt": "2025-01-13T12:51:28Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOHTmVzM6XyrFM",
+          "commit": {
+            "abbreviatedOid": "7ef4f51"
+          },
+          "author": "bc-pi",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2025-01-13T13:42:21Z",
+          "updatedAt": "2025-01-13T13:42:21Z",
+          "comments": [
+            {
+              "originalPosition": 23,
+              "body": "Either suggestion above would be fine but using \"SD-JWT\" twice in the one sentence felt a little too redondant. \r\n\r\n",
+              "createdAt": "2025-01-13T13:42:21Z",
+              "updatedAt": "2025-01-13T13:42:21Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOHTmVzM6XzBOQ",
+          "commit": {
+            "abbreviatedOid": "f47b384"
+          },
+          "author": "bc-pi",
+          "authorAssociation": "COLLABORATOR",
+          "state": "APPROVED",
+          "body": "",
+          "createdAt": "2025-01-13T14:12:06Z",
+          "updatedAt": "2025-01-13T14:12:06Z",
+          "comments": []
+        },
+        {
+          "id": "PRR_kwDOHTmVzM6YCo8R",
+          "commit": {
+            "abbreviatedOid": "f47b384"
+          },
+          "author": "Sakurann",
+          "authorAssociation": "COLLABORATOR",
+          "state": "APPROVED",
+          "body": "",
+          "createdAt": "2025-01-14T19:22:40Z",
+          "updatedAt": "2025-01-14T19:22:40Z",
+          "comments": []
         }
       ]
     }
