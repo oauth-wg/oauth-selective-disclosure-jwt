@@ -1282,7 +1282,7 @@ hours and calculate `exp` accordingly) or rounded (e.g., rounded down to the
 beginning of the day).
 
 SD-JWT only conceals the value of claims that are not revealed.
-It does not meet security notations for anonymous credentials [@?CL01]. In
+It does not meet the standard security notations for anonymous credentials [@?CL01]. In
 particular, colluding Verifiers and Issuers can know when they have seen the same
 credential no matter what fields have been disclosed, even when none have been disclosed.
 This behavior may not align with what users naturally anticipate or are guided to
