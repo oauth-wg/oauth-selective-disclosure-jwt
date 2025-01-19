@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2025-01-16T00:14:49.317512+00:00",
+  "timestamp": "2025-01-19T00:16:05.583580+00:00",
   "repo": "oauth-wg/oauth-selective-disclosure-jwt",
   "labels": [
     {
@@ -12373,7 +12373,7 @@
       "id": "I_kwDOHTmVzM6fi3Ip",
       "title": "Missing procedures for Holder to validate disclosures received from Issuer",
       "url": "https://github.com/oauth-wg/oauth-selective-disclosure-jwt/issues/530",
-      "state": "OPEN",
+      "state": "CLOSED",
       "author": "rohanmahy",
       "authorAssociation": "NONE",
       "assignees": [],
@@ -12382,8 +12382,8 @@
       ],
       "body": "In Section 7.2 \"Processing by the Holder\" there is no mention of the validation that a Holder needs to do to validate an Issued SD-JWT. The holder needs to a) look at all the disclosures and validate that the claims are acceptable to the Holder (the Issuer isn't claiming something incorrect), and b) make sure that there is a disclosure for each claim object after recursively replacing any `_sd` object or in any object with the reserved object key with its disclosed claim.",
       "createdAt": "2024-11-20T17:55:23Z",
-      "updatedAt": "2025-01-13T12:52:30Z",
-      "closedAt": null,
+      "updatedAt": "2025-01-16T17:42:57Z",
+      "closedAt": "2025-01-16T17:42:57Z",
       "comments": [
         {
           "author": "Sakurann",
@@ -12484,15 +12484,15 @@
       "id": "I_kwDOHTmVzM6kkLRA",
       "title": "text for privacy considerations",
       "url": "https://github.com/oauth-wg/oauth-selective-disclosure-jwt/issues/534",
-      "state": "OPEN",
+      "state": "CLOSED",
       "author": "bc-pi",
       "authorAssociation": "COLLABORATOR",
       "assignees": [],
       "labels": [],
       "body": "\"[What exactly am I supposed to do with that](https://mailarchive.ietf.org/arch/msg/oauth/iUvTckt1s7aIU-mH-7mQBWoJgQQ/)\" is a question I have asked myself too. [This thread](https://mailarchive.ietf.org/arch/msg/oauth/v6tb-7l_9lT5ZJd4wecwWcE7h-Q/) is trying to move in a direction that folks can maybe live with.   ",
       "createdAt": "2024-12-27T14:25:07Z",
-      "updatedAt": "2024-12-27T14:25:07Z",
-      "closedAt": null,
+      "updatedAt": "2025-01-16T18:09:36Z",
+      "closedAt": "2025-01-16T18:09:36Z",
       "comments": []
     },
     {
@@ -50724,24 +50724,26 @@
       "id": "PR_kwDOHTmVzM59smIu",
       "title": " ISO/IEC 29100 is too private ",
       "url": "https://github.com/oauth-wg/oauth-selective-disclosure-jwt/pull/475",
-      "state": "OPEN",
+      "state": "MERGED",
       "author": "bc-pi",
       "authorAssociation": "COLLABORATOR",
       "assignees": [],
       "labels": [],
       "body": "https://standards.iso.org/ittf/PubliclyAvailableStandards/index.html no longer has anything for 29100 and https://www.iso.org/standard/45123.html indicates that ISO/IEC 29100:2011 is \"Withdrawn\" and \"Revised by\" ISO/IEC 29100:2024 that is now available for the low low special price of CHF 129, which is approximately $150 / \u20ac137 too much for me to be comfortable referencing",
       "createdAt": "2024-10-05T12:12:22Z",
-      "updatedAt": "2025-01-09T17:17:16Z",
+      "updatedAt": "2025-01-16T18:14:23Z",
       "baseRepository": "oauth-wg/oauth-selective-disclosure-jwt",
       "baseRefName": "master",
-      "baseRefOid": "c95bc07ba5ef5a45b848eaeab7abae9dc5ae2c30",
+      "baseRefOid": "563b57f30761c6498200f8bcb22d743d161e71d0",
       "headRepository": "oauth-wg/oauth-selective-disclosure-jwt",
       "headRefName": "iso-frustrated-by-iso",
-      "headRefOid": "a09702e4c83d4ba96875c96d7d55d2fb5d9e4a17",
-      "closedAt": null,
-      "mergedAt": null,
-      "mergedBy": null,
-      "mergeCommit": null,
+      "headRefOid": "52f71acc236bb088989eb5e857412744737fb217",
+      "closedAt": "2025-01-16T18:14:22Z",
+      "mergedAt": "2025-01-16T18:14:22Z",
+      "mergedBy": "Sakurann",
+      "mergeCommit": {
+        "oid": "105ba168249853073d495bbe10f181a9bdee990e"
+      },
       "comments": [
         {
           "author": "bc-pi",
@@ -50853,6 +50855,39 @@
           "createdAt": "2024-12-24T23:24:47Z",
           "updatedAt": "2024-12-24T23:24:47Z",
           "comments": []
+        },
+        {
+          "id": "PRR_kwDOHTmVzM6YZusY",
+          "commit": {
+            "abbreviatedOid": "a09702e"
+          },
+          "author": "Sakurann",
+          "authorAssociation": "COLLABORATOR",
+          "state": "APPROVED",
+          "body": "I give in to the concern that `current reference is very broad and not actionable at all`.",
+          "createdAt": "2025-01-16T18:08:34Z",
+          "updatedAt": "2025-01-16T18:08:34Z",
+          "comments": []
+        },
+        {
+          "id": "PRR_kwDOHTmVzM6YZv0H",
+          "commit": {
+            "abbreviatedOid": "54e2072"
+          },
+          "author": "Sakurann",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2025-01-16T18:10:57Z",
+          "updatedAt": "2025-01-16T18:10:58Z",
+          "comments": [
+            {
+              "originalPosition": 9,
+              "body": "```suggestion\r\n```",
+              "createdAt": "2025-01-16T18:10:57Z",
+              "updatedAt": "2025-01-16T18:10:58Z"
+            }
+          ]
         }
       ]
     },
@@ -52388,24 +52423,26 @@
       "id": "PR_kwDOHTmVzM6HPE05",
       "title": "add Watson Ladd's suggested text with minor adaptations",
       "url": "https://github.com/oauth-wg/oauth-selective-disclosure-jwt/pull/535",
-      "state": "OPEN",
+      "state": "MERGED",
       "author": "bc-pi",
       "authorAssociation": "COLLABORATOR",
       "assignees": [],
       "labels": [],
       "body": "https://mailarchive.ietf.org/arch/msg/oauth/zC8fU5nOVHsY4S5erBlBEy2fDTI/ and https://mailarchive.ietf.org/arch/msg/oauth/ugVBj2O0hw-nuWNVTFpt0JH3yVY/ are *some* threads on the mailing list ",
       "createdAt": "2025-01-09T17:16:24Z",
-      "updatedAt": "2025-01-14T19:14:48Z",
+      "updatedAt": "2025-01-16T18:09:35Z",
       "baseRepository": "oauth-wg/oauth-selective-disclosure-jwt",
       "baseRefName": "master",
-      "baseRefOid": "01084e8e994c07b66290e307483df858d3c216ce",
+      "baseRefOid": "563b57f30761c6498200f8bcb22d743d161e71d0",
       "headRepository": "oauth-wg/oauth-selective-disclosure-jwt",
       "headRefName": "considering-more-considerations-about-privacy",
-      "headRefOid": "0b23e097ca7fea34c440c991d5defa8a29e2a00a",
-      "closedAt": null,
-      "mergedAt": null,
-      "mergedBy": null,
-      "mergeCommit": null,
+      "headRefOid": "fcfba44439db47357bd5d14e9832644683c1d8df",
+      "closedAt": "2025-01-16T18:09:35Z",
+      "mergedAt": "2025-01-16T18:09:35Z",
+      "mergedBy": "bc-pi",
+      "mergeCommit": {
+        "oid": "4c6b98c595cd516ffb9c41a180b749cbed52d2d2"
+      },
       "comments": [
         {
           "author": "dhs-BI",
@@ -52811,6 +52848,159 @@
               "updatedAt": "2025-01-14T19:14:48Z"
             }
           ]
+        },
+        {
+          "id": "PRR_kwDOHTmVzM6YY5ZA",
+          "commit": {
+            "abbreviatedOid": "0b23e09"
+          },
+          "author": "danielfett",
+          "authorAssociation": "MEMBER",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2025-01-16T16:28:21Z",
+          "updatedAt": "2025-01-16T16:28:21Z",
+          "comments": [
+            {
+              "originalPosition": 44,
+              "body": "```suggestion\r\n</front>\r\n<reference anchor=\"CL01\" target=\"https://eprint.iacr.org/2001/019.pdf\">\r\n  <front>\r\n    <title>An Efficient System for Non-Transferable Anonymous Credentials with Optional Anonymity Revocation</title>\r\n    <author initials=\"J.\" surname=\"Camenisch\" fullname=\"Jan Camenisch\">\r\n      <organization>IBM Research</organization>\r\n    </author>\r\n    <author initials=\"A.\" surname=\"Lysyanskaya\" fullname=\"Anna Lysyanskaya\">\r\n      <organization>MIT</organization>\r\n    </author>\r\n    <date year=\"2001\" />\r\n  </front>\r\n  <seriesInfo name=\"Proceedings of the International Conference on the Theory and Application of Cryptographic Techniques (EUROCRYPT)\" value=\"2001\" />\r\n</reference>\r\n```",
+              "createdAt": "2025-01-16T16:28:21Z",
+              "updatedAt": "2025-01-16T16:28:22Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOHTmVzM6YZHwd",
+          "commit": {
+            "abbreviatedOid": "0b23e09"
+          },
+          "author": "danielfett",
+          "authorAssociation": "MEMBER",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2025-01-16T16:52:25Z",
+          "updatedAt": "2025-01-16T16:52:25Z",
+          "comments": [
+            {
+              "originalPosition": 5,
+              "body": "I added the citation below.",
+              "createdAt": "2025-01-16T16:52:25Z",
+              "updatedAt": "2025-01-16T16:52:25Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOHTmVzM6YZIQt",
+          "commit": {
+            "abbreviatedOid": "0b23e09"
+          },
+          "author": "danielfett",
+          "authorAssociation": "MEMBER",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2025-01-16T16:53:21Z",
+          "updatedAt": "2025-01-16T16:53:21Z",
+          "comments": [
+            {
+              "originalPosition": 7,
+              "body": "```suggestion\r\ncredential no matter what fields have been disclosed, even when none are disclosed.\r\n```",
+              "createdAt": "2025-01-16T16:53:21Z",
+              "updatedAt": "2025-01-16T16:53:22Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOHTmVzM6YZIlv",
+          "commit": {
+            "abbreviatedOid": "0b23e09"
+          },
+          "author": "danielfett",
+          "authorAssociation": "MEMBER",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2025-01-16T16:53:54Z",
+          "updatedAt": "2025-01-16T16:53:55Z",
+          "comments": [
+            {
+              "originalPosition": 10,
+              "body": "```suggestion\r\nThis behavior may not align with what users naturally anticipate or are guided to\r\nexpect from user interface interactions, potentially causing them to make decisions\r\nthey might not otherwise make. Workarounds such as batch issuance as\r\n```",
+              "createdAt": "2025-01-16T16:53:54Z",
+              "updatedAt": "2025-01-16T16:53:55Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOHTmVzM6YZo0o",
+          "commit": {
+            "abbreviatedOid": "0b23e09"
+          },
+          "author": "Sakurann",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2025-01-16T17:55:52Z",
+          "updatedAt": "2025-01-16T17:55:52Z",
+          "comments": [
+            {
+              "originalPosition": 5,
+              "body": "```suggestion\r\nIt does not meet security notations for anonymous credentials [@?CL01]. In\r\n```",
+              "createdAt": "2025-01-16T17:55:52Z",
+              "updatedAt": "2025-01-16T17:56:06Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOHTmVzM6YZqfi",
+          "commit": {
+            "abbreviatedOid": "4be1306"
+          },
+          "author": "Sakurann",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2025-01-16T17:59:24Z",
+          "updatedAt": "2025-01-16T17:59:25Z",
+          "comments": [
+            {
+              "originalPosition": 14,
+              "body": "```suggestion\r\nSD-JWT only conceals the value of claims that are not revealed.\r\nIt does not meet security notations for anonymous credentials [@?CL01]. In\r\nparticular, colluding Verifiers and Issuers can know when they have seen the same\r\ncredential no matter what fields have been disclosed, even when none have been disclosed.\r\nThis behavior may not align with what users naturally anticipate or are guided to\r\nexpect from user interface interactions, potentially causing them to make decisions\r\nthey might not otherwise make. Workarounds such as batch issuance, as\r\ndescribed above, help with keeping\r\nVerifiers from linking different presentations, but cannot work for Issuer/Verifier unlinkability.\r\nThis issue applies to all salted hash-based approaches,\r\nincluding mDL/mDoc [@?ISO.18013-5] and SD-CWT [@?I-D.ietf-spice-sd-cwt].\r\n```",
+              "createdAt": "2025-01-16T17:59:24Z",
+              "updatedAt": "2025-01-16T17:59:25Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOHTmVzM6YZqy9",
+          "commit": {
+            "abbreviatedOid": "21c9caf"
+          },
+          "author": "Sakurann",
+          "authorAssociation": "COLLABORATOR",
+          "state": "APPROVED",
+          "body": "",
+          "createdAt": "2025-01-16T18:00:02Z",
+          "updatedAt": "2025-01-16T18:00:02Z",
+          "comments": []
+        },
+        {
+          "id": "PRR_kwDOHTmVzM6YZrU6",
+          "commit": {
+            "abbreviatedOid": "21c9caf"
+          },
+          "author": "Sakurann",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2025-01-16T18:01:12Z",
+          "updatedAt": "2025-01-16T18:01:12Z",
+          "comments": [
+            {
+              "originalPosition": 58,
+              "body": "```suggestion\r\n<reference anchor=\"ISO.18013-5\" target=\"https://www.iso.org/standard/69084.html\">\r\n<front>\r\n  <title>ISO/IEC 18013-5:2021 Personal identification \u2014 ISO-compliant driving license \u2014 Part 5: Mobile driving license (mDL) application</title>\r\n  <author>\r\n    <organization> ISO/IEC JTC 1/SC 17 Cards and security devices for personal identification</organization>\r\n  </author>\r\n  <date year=\"2021\"/>\r\n</front>\r\n</reference>\r\n\r\n<reference anchor=\"CL01\" target=\"https://eprint.iacr.org/2001/019.pdf\">\r\n  <front>\r\n    <title>An Efficient System for Non-Transferable Anonymous Credentials with Optional Anonymity Revocation</title>\r\n    <author initials=\"J.\" surname=\"Camenisch\" fullname=\"Jan Camenisch\">\r\n      <organization>IBM Research</organization>\r\n    </author>\r\n    <author initials=\"A.\" surname=\"Lysyanskaya\" fullname=\"Anna Lysyanskaya\">\r\n      <organization>MIT</organization>\r\n    </author>\r\n    <date year=\"2001\" />\r\n  </front>\r\n  <seriesInfo name=\"Proceedings of the International Conference on the Theory and Application of Cryptographic Techniques (EUROCRYPT)\" value=\"2001\" />\r\n</reference>\r\n```",
+              "createdAt": "2025-01-16T18:01:12Z",
+              "updatedAt": "2025-01-16T18:01:12Z"
+            }
+          ]
         }
       ]
     },
@@ -52819,24 +53009,26 @@
       "id": "PR_kwDOHTmVzM6Hg3ou",
       "title": "Changes to linkability and data storage sections",
       "url": "https://github.com/oauth-wg/oauth-selective-disclosure-jwt/pull/540",
-      "state": "OPEN",
+      "state": "MERGED",
       "author": "danielfett",
       "authorAssociation": "MEMBER",
       "assignees": [],
       "labels": [],
       "body": "Inspired by Denis' comments [here](https://github.com/oauth-wg/oauth-selective-disclosure-jwt/pull/535#issuecomment-2581041028), addressing most of them and changing some related text as well. ",
       "createdAt": "2025-01-13T10:57:45Z",
-      "updatedAt": "2025-01-14T19:19:40Z",
+      "updatedAt": "2025-01-16T18:02:36Z",
       "baseRepository": "oauth-wg/oauth-selective-disclosure-jwt",
       "baseRefName": "master",
       "baseRefOid": "01084e8e994c07b66290e307483df858d3c216ce",
       "headRepository": "oauth-wg/oauth-selective-disclosure-jwt",
       "headRefName": "danielfett/denis-editorial",
-      "headRefOid": "3a15b295341024d4035e439be7c45c2048b1374b",
-      "closedAt": null,
-      "mergedAt": null,
-      "mergedBy": null,
-      "mergeCommit": null,
+      "headRefOid": "53db935e718bdcb656ec39e55ec2a0343667077a",
+      "closedAt": "2025-01-16T18:02:36Z",
+      "mergedAt": "2025-01-16T18:02:36Z",
+      "mergedBy": "Sakurann",
+      "mergeCommit": {
+        "oid": "563b57f30761c6498200f8bcb22d743d161e71d0"
+      },
       "comments": [],
       "reviews": [
         {
@@ -52924,6 +53116,106 @@
           "createdAt": "2025-01-14T19:19:40Z",
           "updatedAt": "2025-01-14T19:19:40Z",
           "comments": []
+        },
+        {
+          "id": "PRR_kwDOHTmVzM6YYxkg",
+          "commit": {
+            "abbreviatedOid": "3a15b29"
+          },
+          "author": "danielfett",
+          "authorAssociation": "MEMBER",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2025-01-16T16:15:28Z",
+          "updatedAt": "2025-01-16T16:15:28Z",
+          "comments": [
+            {
+              "originalPosition": 18,
+              "body": "```suggestion\r\n* Verifier/Verifier Unlinkability: The presentations made to two different\r\n  Verifiers should not reveal that the same credential was presented (e.g., if the two\r\n  Verifiers collude, or if they are forced by a third party to reveal the presentations\r\n  made to them, or data leaks from one Verifier to the other).\r\n```",
+              "createdAt": "2025-01-16T16:15:28Z",
+              "updatedAt": "2025-01-16T16:15:29Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOHTmVzM6YYy_t",
+          "commit": {
+            "abbreviatedOid": "3a15b29"
+          },
+          "author": "danielfett",
+          "authorAssociation": "MEMBER",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2025-01-16T16:17:52Z",
+          "updatedAt": "2025-01-16T16:17:52Z",
+          "comments": [
+            {
+              "originalPosition": 32,
+              "body": "Maybe \"honest\" should be changed to a different name implying \"non-leaking\"? We could also add \"careless\" to the Issuer that does leak:\r\n```suggestion\r\n  should not be able to know that a user presented this credential if\r\n  the Verifier is not sharing presentation data with the Issuer\r\n  accidentally, deliberately, or because it is forced to do so.\r\n* Issuer/Verifier Unlinkability (Careless/Colluding/Compromised/Coerced Verifier): An Issuer of a\r\n  credential should not be able to tell that a user presented this credential to\r\n  a certain Verifier, even if the Verifier accidentally or deliberately shares\r\n  presentation data with the Issuer or is forced to do so.\r\n```",
+              "createdAt": "2025-01-16T16:17:52Z",
+              "updatedAt": "2025-01-16T16:17:52Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOHTmVzM6YYzki",
+          "commit": {
+            "abbreviatedOid": "3a15b29"
+          },
+          "author": "danielfett",
+          "authorAssociation": "MEMBER",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2025-01-16T16:18:51Z",
+          "updatedAt": "2025-01-16T16:18:51Z",
+          "comments": [
+            {
+              "originalPosition": 19,
+              "body": "```suggestion\r\n* Issuer/Verifier Unlinkability (without leak from Verifier): An Issuer of a credential\r\n```",
+              "createdAt": "2025-01-16T16:18:51Z",
+              "updatedAt": "2025-01-16T16:18:52Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOHTmVzM6YYz45",
+          "commit": {
+            "abbreviatedOid": "3a15b29"
+          },
+          "author": "danielfett",
+          "authorAssociation": "MEMBER",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2025-01-16T16:19:19Z",
+          "updatedAt": "2025-01-16T16:19:19Z",
+          "comments": [
+            {
+              "originalPosition": 41,
+              "body": "```suggestion\r\nIssuer/Verifier unlinkability with a careless, colluding, compromised, or coerced Verifier cannot be\r\n```",
+              "createdAt": "2025-01-16T16:19:19Z",
+              "updatedAt": "2025-01-16T16:19:19Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOHTmVzM6YZmVB",
+          "commit": {
+            "abbreviatedOid": "3a15b29"
+          },
+          "author": "Sakurann",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2025-01-16T17:50:36Z",
+          "updatedAt": "2025-01-16T17:50:37Z",
+          "comments": [
+            {
+              "originalPosition": 32,
+              "body": "```suggestion\r\n  should not be able to know that a user presented this credential unless\r\n  the Verifier is sharing presentation data with the Issuer\r\n  accidentally, deliberately, or because it is forced to do so.\r\n* Issuer/Verifier Unlinkability (Careless/Colluding/Compromised/Coerced Verifier): An Issuer of a\r\n  credential should under no circumstances be able to tell that a user presented this credential to\r\n  a certain Verifier. In particular this includes cases when the Verifier accidentally or deliberately shares\r\n  presentation data with the Issuer or is forced to do so.\r\n```",
+              "createdAt": "2025-01-16T17:50:37Z",
+              "updatedAt": "2025-01-16T17:51:13Z"
+            }
+          ]
         }
       ]
     },
@@ -52932,25 +53224,35 @@
       "id": "PR_kwDOHTmVzM6HhBJH",
       "title": "Try to address Rohan's comments",
       "url": "https://github.com/oauth-wg/oauth-selective-disclosure-jwt/pull/541",
-      "state": "OPEN",
+      "state": "MERGED",
       "author": "danielfett",
       "authorAssociation": "MEMBER",
       "assignees": [],
       "labels": [],
       "body": "Fix Issue #530 ",
       "createdAt": "2025-01-13T11:18:12Z",
-      "updatedAt": "2025-01-14T19:22:40Z",
+      "updatedAt": "2025-01-16T17:42:57Z",
       "baseRepository": "oauth-wg/oauth-selective-disclosure-jwt",
       "baseRefName": "master",
       "baseRefOid": "01084e8e994c07b66290e307483df858d3c216ce",
       "headRepository": "oauth-wg/oauth-selective-disclosure-jwt",
       "headRefName": "danielfett/fix-530",
       "headRefOid": "f47b3842ed39099a2ef4bfea75d49ac9238e1628",
-      "closedAt": null,
-      "mergedAt": null,
-      "mergedBy": null,
-      "mergeCommit": null,
-      "comments": [],
+      "closedAt": "2025-01-16T17:42:56Z",
+      "mergedAt": "2025-01-16T17:42:56Z",
+      "mergedBy": "bc-pi",
+      "mergeCommit": {
+        "oid": "ca25d0b1117232b631655695c17a2e752123c70b"
+      },
+      "comments": [
+        {
+          "author": "bc-pi",
+          "authorAssociation": "COLLABORATOR",
+          "body": "Two approvals. Open for a little while. Good to go. ",
+          "createdAt": "2025-01-16T17:42:39Z",
+          "updatedAt": "2025-01-16T17:42:39Z"
+        }
+      ],
       "reviews": [
         {
           "id": "PRR_kwDOHTmVzM6Xxqet",
@@ -53076,6 +53378,156 @@
           "body": "",
           "createdAt": "2025-01-14T19:22:40Z",
           "updatedAt": "2025-01-14T19:22:40Z",
+          "comments": []
+        }
+      ]
+    },
+    {
+      "number": 542,
+      "id": "PR_kwDOHTmVzM6IEjGA",
+      "title": "-16 ",
+      "url": "https://github.com/oauth-wg/oauth-selective-disclosure-jwt/pull/542",
+      "state": "MERGED",
+      "author": "bc-pi",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "https://mailarchive.ietf.org/arch/msg/oauth/owX_r)WedN-oVLbGLLGDMNks2YrI/",
+      "createdAt": "2025-01-16T22:27:48Z",
+      "updatedAt": "2025-01-17T12:55:20Z",
+      "baseRepository": "oauth-wg/oauth-selective-disclosure-jwt",
+      "baseRefName": "master",
+      "baseRefOid": "105ba168249853073d495bbe10f181a9bdee990e",
+      "headRepository": "oauth-wg/oauth-selective-disclosure-jwt",
+      "headRefName": "sweet-sixteen",
+      "headRefOid": "824675c555fdb6af4996c44ed178bdb30ddd6d4b",
+      "closedAt": "2025-01-17T12:55:20Z",
+      "mergedAt": "2025-01-17T12:55:19Z",
+      "mergedBy": "bc-pi",
+      "mergeCommit": {
+        "oid": "8facc53223d121d45116d355d507c8c14e9991be"
+      },
+      "comments": [],
+      "reviews": [
+        {
+          "id": "PRR_kwDOHTmVzM6Ye3yc",
+          "commit": {
+            "abbreviatedOid": "824675c"
+          },
+          "author": "danielfett",
+          "authorAssociation": "MEMBER",
+          "state": "APPROVED",
+          "body": "",
+          "createdAt": "2025-01-17T08:20:13Z",
+          "updatedAt": "2025-01-17T08:20:13Z",
+          "comments": []
+        }
+      ]
+    },
+    {
+      "number": 543,
+      "id": "PR_kwDOHTmVzM6IFa7E",
+      "title": "cleanup typo ",
+      "url": "https://github.com/oauth-wg/oauth-selective-disclosure-jwt/pull/543",
+      "state": "OPEN",
+      "author": "wbl",
+      "authorAssociation": "NONE",
+      "assignees": [],
+      "labels": [],
+      "body": "This seems to have gotten dropped in some editorial passes",
+      "createdAt": "2025-01-17T00:57:10Z",
+      "updatedAt": "2025-01-17T18:31:13Z",
+      "baseRepository": "oauth-wg/oauth-selective-disclosure-jwt",
+      "baseRefName": "master",
+      "baseRefOid": "8facc53223d121d45116d355d507c8c14e9991be",
+      "headRepository": "wbl/oauth-selective-disclosure-jwt",
+      "headRefName": "patch-2",
+      "headRefOid": "e1bdc321e22867dde61d502ba378bd6d5ba1043e",
+      "closedAt": null,
+      "mergedAt": null,
+      "mergedBy": null,
+      "mergeCommit": null,
+      "comments": [
+        {
+          "author": "wbl",
+          "authorAssociation": "NONE",
+          "body": "The current sentence reads \"It does not meet security notations for anonymous credentials [@?CL01].\"  Probably a typo introduced by me, that should read notions. I'll assume we fix that. A reader is left wondering why the security notions it does not meet are relevant. There needs to be some indication of why these properties matter, and importantly that it cannot be dropped in where other schemes could be used.\r\n\r\n(Maybe properties is clearer overall: I think we should change to that on reading this again)",
+          "createdAt": "2025-01-17T18:21:04Z",
+          "updatedAt": "2025-01-17T18:21:04Z"
+        },
+        {
+          "author": "bc-pi",
+          "authorAssociation": "COLLABORATOR",
+          "body": "> The current sentence reads \"It does not meet security notations for anonymous credentials [@?CL01].\" Probably a typo introduced by me, that should read notions. I'll assume we fix that. A reader is left wondering why the security notions it does not meet are relevant. There needs to be some indication of why these properties matter, and importantly that it cannot be dropped in where other schemes could be used.\r\n> \r\n> (Maybe properties is clearer overall: I think we should change to that on reading this again)\r\n\r\nsome possibilities suggested on the text ",
+          "createdAt": "2025-01-17T18:30:25Z",
+          "updatedAt": "2025-01-17T18:30:25Z"
+        }
+      ],
+      "reviews": [
+        {
+          "id": "PRR_kwDOHTmVzM6YkZnT",
+          "commit": {
+            "abbreviatedOid": "081889a"
+          },
+          "author": "bc-pi",
+          "authorAssociation": "COLLABORATOR",
+          "state": "CHANGES_REQUESTED",
+          "body": "Upon consultation and review yesterday with the editors (@Sakurann, @danielfett and myself) agreed that we preferred the text omitting \"the standard\". \r\n",
+          "createdAt": "2025-01-17T18:15:15Z",
+          "updatedAt": "2025-01-17T18:15:15Z",
+          "comments": []
+        },
+        {
+          "id": "PRR_kwDOHTmVzM6YkhKw",
+          "commit": {
+            "abbreviatedOid": "081889a"
+          },
+          "author": "bc-pi",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2025-01-17T18:28:16Z",
+          "updatedAt": "2025-01-17T18:28:17Z",
+          "comments": [
+            {
+              "originalPosition": 5,
+              "body": "```suggestion\r\nIt does not meet the security notions for anonymous credentials [@?CL01]. In\r\n```",
+              "createdAt": "2025-01-17T18:28:16Z",
+              "updatedAt": "2025-01-17T18:28:17Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOHTmVzM6Ykhux",
+          "commit": {
+            "abbreviatedOid": "081889a"
+          },
+          "author": "bc-pi",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2025-01-17T18:28:49Z",
+          "updatedAt": "2025-01-17T18:28:49Z",
+          "comments": [
+            {
+              "originalPosition": 5,
+              "body": "or\r\n```suggestion\r\nIt does not meet the security properties for anonymous credentials [@?CL01]. In\r\n```",
+              "createdAt": "2025-01-17T18:28:49Z",
+              "updatedAt": "2025-01-17T18:28:49Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOHTmVzM6Ykjod",
+          "commit": {
+            "abbreviatedOid": "e1bdc32"
+          },
+          "author": "bc-pi",
+          "authorAssociation": "COLLABORATOR",
+          "state": "APPROVED",
+          "body": "",
+          "createdAt": "2025-01-17T18:30:49Z",
+          "updatedAt": "2025-01-17T18:30:58Z",
           "comments": []
         }
       ]
