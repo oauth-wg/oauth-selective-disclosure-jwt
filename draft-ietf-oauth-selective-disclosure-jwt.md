@@ -1975,6 +1975,8 @@ data. The original JSON data is then used by the application. See
 
    -16
 
+   * Editorial updates to text introduced in -15
+
    -15
 
    * Additions and adjustments to privacy considerations
