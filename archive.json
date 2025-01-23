@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2025-01-21T00:14:40.982048+00:00",
+  "timestamp": "2025-01-23T00:14:37.381608+00:00",
   "repo": "oauth-wg/oauth-selective-disclosure-jwt",
   "labels": [
     {
@@ -49102,7 +49102,7 @@
       "url": "https://github.com/oauth-wg/oauth-selective-disclosure-jwt/pull/448",
       "state": "CLOSED",
       "author": "wbl",
-      "authorAssociation": "NONE",
+      "authorAssociation": "CONTRIBUTOR",
       "assignees": [],
       "labels": [],
       "body": "",
@@ -52430,7 +52430,7 @@
       "labels": [],
       "body": "https://mailarchive.ietf.org/arch/msg/oauth/zC8fU5nOVHsY4S5erBlBEy2fDTI/ and https://mailarchive.ietf.org/arch/msg/oauth/ugVBj2O0hw-nuWNVTFpt0JH3yVY/ are *some* threads on the mailing list ",
       "createdAt": "2025-01-09T17:16:24Z",
-      "updatedAt": "2025-01-16T18:09:35Z",
+      "updatedAt": "2025-01-22T21:23:15Z",
       "baseRepository": "oauth-wg/oauth-selective-disclosure-jwt",
       "baseRefName": "master",
       "baseRefOid": "563b57f30761c6498200f8bcb22d743d161e71d0",
@@ -52460,7 +52460,7 @@
         },
         {
           "author": "wbl",
-          "authorAssociation": "NONE",
+          "authorAssociation": "CONTRIBUTOR",
           "body": "Denis, the goal of my contribution was to provide a simple summary paragraph of the entire set of considerations. In that sense it is redundant. We can add a citation to CL01, or some other paper that uses the standard security notion to explain it. I'm looking for a good one.\r\n\r\nAfter that's done I expect there would need to be some editing to avoid excessive repetition.\r\n\r\nI think a bunch of your comment is directed at the existing text rather than this PR. But I do want to say that we can't assume erasure happens. There's a whole bunch of places where data ends up in modern architectures that aren't really visible: HTTP logs, temporary files etc. We also don't assume that people will behave in security considerations: that's the joke in 3514, so guidance that only works if the verifier or issuer behave doesn't really do anything.",
           "createdAt": "2025-01-09T19:55:00Z",
           "updatedAt": "2025-01-09T19:55:23Z"
@@ -52474,7 +52474,7 @@
         },
         {
           "author": "wbl",
-          "authorAssociation": "NONE",
+          "authorAssociation": "CONTRIBUTOR",
           "body": "I think referencing that eprint and paper will do. Not sure there is a much better one out there.",
           "createdAt": "2025-01-09T22:05:40Z",
           "updatedAt": "2025-01-09T22:05:40Z"
@@ -52488,7 +52488,7 @@
         },
         {
           "author": "wbl",
-          "authorAssociation": "NONE",
+          "authorAssociation": "CONTRIBUTOR",
           "body": "Denis, I think that comment needs to be on the list (not sure how the WG works, but that's certainly where we've had most of the important discussions)",
           "createdAt": "2025-01-10T16:11:29Z",
           "updatedAt": "2025-01-10T16:11:29Z"
@@ -52516,7 +52516,7 @@
         },
         {
           "author": "wbl",
-          "authorAssociation": "NONE",
+          "authorAssociation": "CONTRIBUTOR",
           "body": "Dennis please expand on your points on the list. I agree revocation checking and suspension are challenges, but there are ways to handle them that preserve a high degree of privacy. People have been working on this for a long time.",
           "createdAt": "2025-01-13T15:37:55Z",
           "updatedAt": "2025-01-13T15:37:55Z"
@@ -52530,10 +52530,31 @@
         },
         {
           "author": "wbl",
-          "authorAssociation": "NONE",
+          "authorAssociation": "CONTRIBUTOR",
           "body": "Denis, my point about serial numbers was not for you. It was in response to Brian's question about what the sign and prove techniques do. \r\n\r\nThe link you gave is not terribly detailed. I was thinking along the lines of proving an element isn't a list, of which there are lots of protocols of varying efficiency and with varying tradeoffs. Again there is a vast literature here that everyone involved in making this spec seems to have entirely ignored.\r\n\r\nI don't think this is a great format for having this discussion given the UI and the comparatively few people looking at it: I think you should send an email to the list.",
           "createdAt": "2025-01-13T17:06:27Z",
           "updatedAt": "2025-01-13T17:06:27Z"
+        },
+        {
+          "author": "Denisthemalice",
+          "authorAssociation": "NONE",
+          "body": "The text states:\r\n\r\n>    SD-JWT only conceals the value of claims that are not revealed.  \r\n>    It does not meet security notations for anonymous credentials [CL01].\r\n\r\n[CL01] does not contain the words \"notation\", \"anonymous\"or \"credentials\".\r\nHence, this sentence is not understandable. Either remove this sentence or rephrase it.\r\n\r\nThe text continues with:\r\n\r\n>    In particular, colluding Verifiers and Issuers can know when they\r\n>    have seen the same credential no matter what fields have been\r\n>    disclosed, even when none have been disclosed.  This behavior may not\r\n>    align with what users naturally anticipate or are guided to expect\r\n>    from user interface interactions, potentially causing them to make\r\n>    decisions they might not otherwise make. \r\n> \r\n\r\nIt is not possible to understand which \"behavior may not align with what users naturally anticipate or \r\nare guided to expect from user interface interactions\".\r\n\r\nIt is not possible either to understand why this behavior will \"potentially causing them to make decisions \r\nthey might not otherwise make\".\r\n\r\nEither remove this sentence or rephrase it.\r\n\r\nThe text continues with:\r\n\r\n>    Workarounds such as batch  issuance, as described above, help with keeping Verifiers from\r\n>    linking different presentations, but cannot work for Issuer/Verifier  unlinkability.  \r\n\r\nThis is untrue. If the Verifier deletes the presentations immediately after it has received them, \r\npresentations, including one-time-use presentations, cannot be used to link presentations with the Issuer.\r\n\r\nFurthermore, if the Issuer is using a suspension / revocation mechanism different from the Status List Token, it does not need to use  \"Referenced Tokens\" and will still be able to revoke or suspend all the credentials that have been issued for the benefit of a given Holder. In such a case, the Issuer does not need to \"remember\" SD-JWTs that it has issued. If neither the Issuer, nor  the Verifier, keeps a record of respectively issued and received SD-JWTs, Issuer/Verifier  unlinkability can be \"twice\" achieved.\r\n\r\nSince a specific mechanism to handle the suspension / revocation of a SD-JWT is outside the scope of this document, it is untrue to say that Issuer/Verifier  unlinkability \"cannot work\".\r\n\r\nEither remove this sentence or rephrase it.\r\n",
+          "createdAt": "2025-01-22T17:32:40Z",
+          "updatedAt": "2025-01-22T17:32:40Z"
+        },
+        {
+          "author": "wbl",
+          "authorAssociation": "CONTRIBUTOR",
+          "body": "Dennis, I once again would ask that you bring this to the list. This is not a great format for discussion and we need more eyes on it.",
+          "createdAt": "2025-01-22T17:50:13Z",
+          "updatedAt": "2025-01-22T17:50:13Z"
+        },
+        {
+          "author": "wbl",
+          "authorAssociation": "CONTRIBUTOR",
+          "body": "> The text states:\r\n> \r\n> > SD-JWT only conceals the value of claims that are not revealed.\r\n> > It does not meet security notations for anonymous credentials [CL01].\r\n> \r\n> [CL01] does not contain the words \"notation\", \"anonymous\"or \"credentials\". Hence, this sentence is not understandable. Either remove this sentence or rephrase it.\r\n\r\nDo you have a better reference for the security properties introduced there? This sentence now reads with s/notation/properties/.\r\n> \r\n> The text continues with:\r\n> \r\n> > In particular, colluding Verifiers and Issuers can know when they\r\n> > have seen the same credential no matter what fields have been\r\n> > disclosed, even when none have been disclosed.  This behavior may not\r\n> > align with what users naturally anticipate or are guided to expect\r\n> > from user interface interactions, potentially causing them to make\r\n> > decisions they might not otherwise make.\r\n> \r\n> It is not possible to understand which \"behavior may not align with what users naturally anticipate or are guided to expect from user interface interactions\".\r\n\r\nHappy to rephrase. I don't think that sentence is beyond the bounds of comprehensibility. The point is the user doesn't expect that exposing age lets someone unambigiously link everywhere they have shown their age: they would expect that only their age be revealed.\r\n\r\n> \r\n> It is not possible either to understand why this behavior will \"potentially causing them to make decisions they might not otherwise make\".\r\n\r\nBecause the risks are not necessarily the same as what they expect their decisions aren't the ones they would make if they understood them.\r\n\r\n> \r\n> Either remove this sentence or rephrase it.\r\n\r\nDo you have suggestions for rephrasing.\r\n\r\n> \r\n> The text continues with:\r\n> \r\n> > Workarounds such as batch  issuance, as described above, help with keeping Verifiers from\r\n> > linking different presentations, but cannot work for Issuer/Verifier  unlinkability.\r\n> \r\n> This is untrue. If the Verifier deletes the presentations immediately after it has received them, presentations, including one-time-use presentations, cannot be used to link presentations with the Issuer.\r\n\r\nThere's no way for anyone to enforce that on the Verifier. It's also hard to ensure that data is erased even when trying: software stacks are complex.\r\n\r\n> \r\n> Furthermore, if the Issuer is using a suspension / revocation mechanism different from the Status List Token, it does not need to use \"Referenced Tokens\" and will still be able to revoke or suspend all the credentials that have been issued for the benefit of a given Holder. In such a case, the Issuer does not need to \"remember\" SD-JWTs that it has issued. If neither the Issuer, nor the Verifier, keeps a record of respectively issued and received SD-JWTs, Issuer/Verifier unlinkability can be \"twice\" achieved.\r\n\r\nWe can't trust the Issuer doesn't record just because they don't have to. If men were angels, there would be no locksmiths.\r\n\r\n> \r\n> Since a specific mechanism to handle the suspension / revocation of a SD-JWT is outside the scope of this document, it is untrue to say that Issuer/Verifier unlinkability \"cannot work\".\r\n\r\nThat is not what the sentence says. It says the mechanism in the document cannot guarantee it. Which is true: deletion on the part of other parties isn't enforced by anything here.\r\n\r\n> \r\n> Either remove this sentence or rephrase it.\r\n\r\n",
+          "createdAt": "2025-01-22T21:23:14Z",
+          "updatedAt": "2025-01-22T21:23:14Z"
         }
       ],
       "reviews": [
@@ -52655,7 +52676,7 @@
             "abbreviatedOid": "e14e93c"
           },
           "author": "wbl",
-          "authorAssociation": "NONE",
+          "authorAssociation": "CONTRIBUTOR",
           "state": "COMMENTED",
           "body": "",
           "createdAt": "2025-01-13T15:36:42Z",
@@ -52815,7 +52836,7 @@
             "abbreviatedOid": "e14e93c"
           },
           "author": "wbl",
-          "authorAssociation": "NONE",
+          "authorAssociation": "CONTRIBUTOR",
           "state": "COMMENTED",
           "body": "",
           "createdAt": "2025-01-14T19:14:17Z",
@@ -52835,7 +52856,7 @@
             "abbreviatedOid": "0b23e09"
           },
           "author": "wbl",
-          "authorAssociation": "NONE",
+          "authorAssociation": "CONTRIBUTOR",
           "state": "COMMENTED",
           "body": "",
           "createdAt": "2025-01-14T19:14:48Z",
@@ -53427,30 +53448,32 @@
     {
       "number": 543,
       "id": "PR_kwDOHTmVzM6IFa7E",
-      "title": "cleanup typo ",
+      "title": "editorial cleanup",
       "url": "https://github.com/oauth-wg/oauth-selective-disclosure-jwt/pull/543",
-      "state": "OPEN",
+      "state": "MERGED",
       "author": "wbl",
-      "authorAssociation": "NONE",
+      "authorAssociation": "CONTRIBUTOR",
       "assignees": [],
       "labels": [],
       "body": "This seems to have gotten dropped in some editorial passes",
       "createdAt": "2025-01-17T00:57:10Z",
-      "updatedAt": "2025-01-17T18:31:13Z",
+      "updatedAt": "2025-01-22T17:45:04Z",
       "baseRepository": "oauth-wg/oauth-selective-disclosure-jwt",
       "baseRefName": "master",
       "baseRefOid": "8facc53223d121d45116d355d507c8c14e9991be",
       "headRepository": "wbl/oauth-selective-disclosure-jwt",
       "headRefName": "patch-2",
       "headRefOid": "e1bdc321e22867dde61d502ba378bd6d5ba1043e",
-      "closedAt": null,
-      "mergedAt": null,
-      "mergedBy": null,
-      "mergeCommit": null,
+      "closedAt": "2025-01-22T17:45:03Z",
+      "mergedAt": "2025-01-22T17:45:03Z",
+      "mergedBy": "bc-pi",
+      "mergeCommit": {
+        "oid": "b2e0da32dca0b7d4cf840ea3bdd21088ca254b42"
+      },
       "comments": [
         {
           "author": "wbl",
-          "authorAssociation": "NONE",
+          "authorAssociation": "CONTRIBUTOR",
           "body": "The current sentence reads \"It does not meet security notations for anonymous credentials [@?CL01].\"  Probably a typo introduced by me, that should read notions. I'll assume we fix that. A reader is left wondering why the security notions it does not meet are relevant. There needs to be some indication of why these properties matter, and importantly that it cannot be dropped in where other schemes could be used.\r\n\r\n(Maybe properties is clearer overall: I think we should change to that on reading this again)",
           "createdAt": "2025-01-17T18:21:04Z",
           "updatedAt": "2025-01-17T18:21:04Z"
@@ -53531,6 +53554,34 @@
           "comments": []
         }
       ]
+    },
+    {
+      "number": 544,
+      "id": "PR_kwDOHTmVzM6IqUAS",
+      "title": "Editorial updates to text introduced in -15 to doc history",
+      "url": "https://github.com/oauth-wg/oauth-selective-disclosure-jwt/pull/544",
+      "state": "MERGED",
+      "author": "bc-pi",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": " for #543 to be in doc history kinda",
+      "createdAt": "2025-01-22T17:50:10Z",
+      "updatedAt": "2025-01-22T18:07:54Z",
+      "baseRepository": "oauth-wg/oauth-selective-disclosure-jwt",
+      "baseRefName": "master",
+      "baseRefOid": "b2e0da32dca0b7d4cf840ea3bdd21088ca254b42",
+      "headRepository": "oauth-wg/oauth-selective-disclosure-jwt",
+      "headRefName": "for-posterity-or-whatever",
+      "headRefOid": "99b2bb648946a8c0f09c28d4a461458ac87ca11f",
+      "closedAt": "2025-01-22T18:07:54Z",
+      "mergedAt": "2025-01-22T18:07:54Z",
+      "mergedBy": "bc-pi",
+      "mergeCommit": {
+        "oid": "15c51a56a0a6f80d16bc7238d666ce8db29f7ec1"
+      },
+      "comments": [],
+      "reviews": []
     }
   ]
 }
