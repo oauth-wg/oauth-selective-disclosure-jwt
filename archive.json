@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2025-01-30T00:14:31.076218+00:00",
+  "timestamp": "2025-02-02T00:16:02.577814+00:00",
   "repo": "oauth-wg/oauth-selective-disclosure-jwt",
   "labels": [
     {
@@ -12500,15 +12500,15 @@
       "id": "I_kwDOHTmVzM6luMHm",
       "title": "It is outside of the scope of this document to appraise the effectiveness of the Key Binding mechanism",
       "url": "https://github.com/oauth-wg/oauth-selective-disclosure-jwt/issues/536",
-      "state": "OPEN",
+      "state": "CLOSED",
       "author": "Denisthemalice",
       "authorAssociation": "NONE",
       "assignees": [],
       "labels": [],
       "body": "This issue is only intended to provide explanations for further text change proposals made in subsequent issues related to Key Binding. \r\n\r\nSection 4.1.2 (Key binding) states:\r\n\r\n> It is out of the scope of this document to describe how the Holder key pair is established. For example, the Holder MAY create a key pair and provide a public key to the Issuer, the Issuer MAY create the key pair for the Holder, or Holder and Issuer MAY use pre-established key material.\r\n\r\nLet us keep these sentences unchanged.\r\n\r\nNow, let us pull on the thread from the right end. \r\n\r\nSection 4 (Security Considerations) from [RFC7800] mentions that \"possessing a key is only valuable if it is kept secret.  Appropriate means must be used to ensure that unintended parties do not learn private key\".\r\n\r\nIt is important to recall a definition for a private key from ISO/IEC 9798-1:\r\n\r\n> private key\r\n> key of an entity's asymmetric key pair that is kept secret and that should only be *used* by that entity\r\n> \r\n> [SOURCE: ISO/IEC 9798-1:2010, 3.22]\r\n\r\nThe key sentences from RFC 7800 are true, but are restricted. They concentrate of the *protection* and the *knowledge* of the private key but they do not consider the *use* of the private key.\r\n\r\nA smart card user can *use* of private present in his smart card but will never be able to know its value.\r\n\r\nA difference should be made between :\r\n1) the description of the cryptographic mechanism and\r\n2) what can be achieved using this mechanism which is conditional on \"appropriate means that MUST be used to ensure that unintended parties do not learn private key\".\r\n\r\nThe proposed rewordings of this draft have been carefully thought to refer first to the description of the data elements that are needed and exchanged, while the 'proof of possession' concept has been separately addressed and expanded.\r\n\r\nWhen considering threats that can reduce to nothing the effectiveness of this cryptographic (\"binding\") mechanism, there is the need to consider the presence of End-Users, that come in addition to Holders which are applications running using some hardware (and usually also using an OS). \r\n\r\nAn Holder cannot \"give its consent\", but an End-user (i.e. a human being) can. Attacks can be performed either without or with the End-user consent. Hence there is the need to : \r\n(1) use the term \"End-User\" and \r\n(2) make a difference between the term \"Holder\" (application) and the term \"End-User\".\r\n\r\nThe way to address the problem of the appraisal of the effectiveness of the Key Binding mechanism is to recognize that it is outside the scope of this document to specify how Verifiers can know whether appropriate means are effectively used to ensure that unintended parties do not learn the value of the private keys or whether the private keys that are supposed to be under the control of the Holder cannot be used for the benefit of other End-Users (with or without the End-User consent).\r\n\r\nWhen proposing revised text, terms like 'ensure', 'legitimate Holder' or 'prove possession' that were present in this draft have been avoided. Hence, the following two sentences have not been retained:\r\n\r\n> Key Binding aims to ensure that the presenter of an SD-JWT credential is actually the legitimate Holder of the credential. \r\n> The Verifier requires that the Holder prove possession of that private key when presenting the SD-JWT credential.\r\n",
       "createdAt": "2025-01-10T14:43:06Z",
-      "updatedAt": "2025-01-10T14:43:06Z",
-      "closedAt": null,
+      "updatedAt": "2025-01-31T16:09:32Z",
+      "closedAt": "2025-01-31T16:09:32Z",
       "comments": []
     },
     {
@@ -12516,15 +12516,15 @@
       "id": "I_kwDOHTmVzM6luO_A",
       "title": "Proposed rewording in Section 1 about Key Binding",
       "url": "https://github.com/oauth-wg/oauth-selective-disclosure-jwt/issues/537",
-      "state": "OPEN",
+      "state": "CLOSED",
       "author": "Denisthemalice",
       "authorAssociation": "NONE",
       "assignees": [],
       "labels": [],
       "body": "In clause 1, the following sentences are present:\r\n\r\n> To prevent attacks in which an SD-JWT is presented to a Verifier without the Holder's consent, this specification additionally defines a mechanism for binding the SD-JWT to a key under the control of the Holder (Key Binding). When Key Binding is enforced, a Holder has to prove possession of a private key belonging to a public key contained in the SD-JWT itself.\r\n\r\n\r\nReplace with:\r\n\r\n> This specification defines a mechanism for binding the SD-JWT to a key that is assumed to be under the control of the Holder (Key Binding). When Key Binding is enforced, the Verifier can verify that a private key corresponding to a public key that has been included by the Issuer into the SD-JWT has correctly been used to compute a cryptographic checksum that is placed into a KB-JWT.\r\n\r\nTerms like 'Holder's consent' or 'prove possession of a private key' that were present in this draft have been avoided.\r\n\r\n",
       "createdAt": "2025-01-10T14:48:04Z",
-      "updatedAt": "2025-01-10T14:48:04Z",
-      "closedAt": null,
+      "updatedAt": "2025-01-31T16:09:33Z",
+      "closedAt": "2025-01-31T16:09:33Z",
       "comments": []
     },
     {
@@ -12532,15 +12532,15 @@
       "id": "I_kwDOHTmVzM6luPi9",
       "title": "Proposed rewording in Section 1.2 about Key Binding",
       "url": "https://github.com/oauth-wg/oauth-selective-disclosure-jwt/issues/538",
-      "state": "OPEN",
+      "state": "CLOSED",
       "author": "Denisthemalice",
       "authorAssociation": "NONE",
       "assignees": [],
       "labels": [],
       "body": "Clause 1.2 states:\r\n\r\n> Key Binding:\r\n> Ability of the Holder to prove legitimate possession of an SD-JWT by proving control over a private key during the presentation. When utilizing Key Binding, an SD-JWT contains the public key corresponding to the private key controlled by the Holder (or a reference to this public key).\r\n\r\nChange into:\r\n\r\n> Key Binding:\r\n> When utilizing Key Binding, an SD-JWT contains the public key corresponding to the private key controlled by the Holder (or a reference to this public key). In that case, the Verifier can verify that a private key corresponding to a public key that has been included by the Issuer into the SD-JWT has correctly been used to compute a cryptographic checksum.\r\n",
       "createdAt": "2025-01-10T14:49:12Z",
-      "updatedAt": "2025-01-10T14:49:12Z",
-      "closedAt": null,
+      "updatedAt": "2025-01-31T16:09:33Z",
+      "closedAt": "2025-01-31T16:09:33Z",
       "comments": []
     },
     {
@@ -12548,16 +12548,56 @@
       "id": "I_kwDOHTmVzM6luWNQ",
       "title": "Proposed rewording for Section 9.5 about Key Binding",
       "url": "https://github.com/oauth-wg/oauth-selective-disclosure-jwt/issues/539",
-      "state": "OPEN",
+      "state": "CLOSED",
       "author": "Denisthemalice",
       "authorAssociation": "NONE",
       "assignees": [],
       "labels": [],
       "body": "The first sentence which uses the word \"legitimate\" is inappropriate:\r\n\r\n> Key Binding aims to ensure that the presenter of an SD-JWT credential is actually the legitimate Holder of the credential.\r\n\r\nThe third sentence uses the wording \"prove possession\" which should be avoided:\r\n\r\n> The Verifier requires that the Holder prove possession of that private key when presenting the SD-JWT credential.\r\n\r\nAs said earlier, it is important to make the difference between :\r\n(1) the description of the cryptographic mechanism and \r\n(2) what can really be achieved using this mechanism which is conditional to other characteristics which are out of the scope of this document.\r\n\r\nBefore proposing a rewriting for Section 9.5 on Key Binding, the following text has been reviewed and after analysis, it is proposed to remove it.\r\n\r\n> It is important that a Verifier does not make its security policy decisions based on data that can be influenced by an attacker. For this reason, when deciding whether Key Binding is required or not, Verifiers MUST NOT take into account whether the Holder has provided an SD-JWT+KB or a bare SD-JWT, since otherwise an attacker could strip the KB-JWT from an SD-JWT+KB and present the resulting SD-JWT. Furthermore, Verifiers should be aware that Key Binding information may have been added to an SD-JWT in a format that they do not recognize and therefore may not be able to tell whether the SD-JWT supports Key Binding or not. If a Verifier determines that Key Binding is required for a particular use case and the Holder presents either a bare SD-JWT or an SD-JWT+KB with an invalid Key Binding JWT, then the Verifier will reject the presentation when following the verification steps described in Section 7.3.\r\n> \r\n> If a SD-JWT contains a public key, then this means that a KB-JWT must also be present. If the KB-JWT has been stripped, then the Verifier must refuse it.\r\n\r\nTherefore, the following rewording is proposed:\r\n\r\n> An SD-JWT compatible with Key Binding contains a public key, or a reference to a public key, that corresponds to a private key from a key pair. \r\n> \r\n> Without Key Binding, a Verifier only gets the proof that the credential was issued by a particular Issuer, but the credential itself can be replayed by anyone who gets access to it. This means that, for example, after a credential was leaked to an attacker, the attacker can present the credential to any verifier that does not require a binding. But also a malicious Verifier to which the Holder presented the credential can present the credential to another Verifier if that other Verifier does not require Key Binding. \r\n> \r\n> With Key Binding, a Verifier gets the proof that the private key which corresponds to the public key placed in the SD-JWT has been correctly used.\r\n> \r\n> Verifiers MUST decide whether Key Binding is required for a particular use case before verifying a credential. This decision can be informed by various factors including, but not limited to the following: business requirements, the use case, the type of binding between a Holder and its credential that is required for a use case, the sensitivity of the use case, the expected properties of a credential, the type and contents of other credentials expected to be presented at the same time, etc.\r\n> \r\n> If Key Binding is required, then the Verifier must verify that the SD-JWT that is presented contains a public key and that a KB-JWT is also present.\r\n\r\n> Section 4 (Security Considerations) from [RFC7800] indicates that possessing a key is only valuable if it is kept secret.  Appropriate means must be used to ensure that unintended parties do not learn private key.\r\n> \r\n> The key sentences from RFC 7800 are true, but are restricted. They concentrate of the *protection* and the *knowledge* of the private key but they do not consider the *use* of the private key.\r\n> \r\n> It is important to recall a definition for a private key from ISO/IEC 9798-1:\r\n> \r\n> private key\r\n> key of an entity's asymmetric key pair that is kept secret and that should only be *used* by that entity\r\n> \r\n> [SOURCE: ISO/IEC 9798-1:2010, 3.22] \r\n\r\n> Using the current content of a SD-JWT, Verifiers are unable to appraise the effectiveness of the Key Binding mechanism.  It is outside the scope of this document to specify how Verifiers can know whether appropriate means are effectively used to ensure that unintended parties do not learn the value of the private keys or whether the private keys that are supposed to be under the control of the Holder cannot be used for the benefit of other End-Users, with or without the End-User consent.\r\n> \r\n> 9.5.1 Attacks performed with the End-user consent\r\n> \r\n> If two End-Users accept to collaborate, one End-User can perform cryptographic computations for the benefit of another End-User. An example scenario is as follows: one End-user connects to a Verifier and receives back a challenge and a list of claim types that need to be presented to get an access. That End-User forwards to another End-User the challenge received from the Verifier, the name of the Verifier and the set of claim types and values that it wishes to present to the Verifier. It receives back from the other End-User the data structure that he needs to get an access to that Verifier and so the End-User can present it to the Verifier and gets the access.\r\n> \r\n> For example, an application specifically downloaded by the End-User can perform cryptographic computations for the benefit of another End-User, if it is able to use the private keys. As another example, impersonation of the End-User can be achieved if private keys can be exported with the End-user consent and used by another End-User.\r\n> \r\n> 9.5.2 Attacks performed without the End-user consent\r\n> \r\n> A malicious application would be able to use the private keys intended to be used by the Holder or be able to trick the key pair generation process used by the Holder. \r\n> \r\n> As an example, if the private key is only protected by software, a virus would be able use the private key without the End-User being aware of it. Alternatively, the key pair generation process could be modified, so that the generated key pair can be known by malicious application and then exported.\r\n> ",
       "createdAt": "2025-01-10T15:02:34Z",
-      "updatedAt": "2025-01-10T15:02:34Z",
-      "closedAt": null,
+      "updatedAt": "2025-01-31T16:09:14Z",
+      "closedAt": "2025-01-31T16:09:14Z",
       "comments": []
+    },
+    {
+      "number": 545,
+      "id": "I_kwDOHTmVzM6oJLih",
+      "title": "[KB-JWT] exp recommended?",
+      "url": "https://github.com/oauth-wg/oauth-selective-disclosure-jwt/issues/545",
+      "state": "OPEN",
+      "author": "peppelinux",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [
+        "pending-close"
+      ],
+      "body": "In section 4.3 of the OAuth Selective Disclosure JWT draft, we have a proper definition of all the required claims.\n\nConsidering that the kb-jwt is signed, what do you think about including `exp` as a required or recommended claim?\n\nI have found some implementations using `exp` due to the sensitivity of some implementers who treat signed JWS as artifacts that always require an expiration.\n\nIf `exp` must not be considered in the set of claims documented as recommended or required in this specification, this issue would offer guidance to those developers.",
+      "createdAt": "2025-01-30T14:25:35Z",
+      "updatedAt": "2025-01-31T19:00:52Z",
+      "closedAt": null,
+      "comments": [
+        {
+          "author": "bc-pi",
+          "authorAssociation": "COLLABORATOR",
+          "body": "Ciao Giuseppe,\n\nThe acceptable lifetime of a KB-JWT is constrained by the iat claim https://datatracker.ietf.org/doc/html/draft-ietf-oauth-selective-disclosure-jwt-15#section-4.3-3.2.2.1 and the verifier's policy on how much time they'd be okay with https://datatracker.ietf.org/doc/html/draft-ietf-oauth-selective-disclosure-jwt-15#section-7.3-4.5.2.5\n\nAnd of course the other requirements on nonce and aud ",
+          "createdAt": "2025-01-30T19:22:30Z",
+          "updatedAt": "2025-01-30T19:22:30Z"
+        },
+        {
+          "author": "peppelinux",
+          "authorAssociation": "COLLABORATOR",
+          "body": "If we dont want to use exp, we may evaluate to include your indications in the security section.\n\nFrom my perspective exp is very explicit and I admit to prefer it explicit",
+          "createdAt": "2025-01-30T20:25:32Z",
+          "updatedAt": "2025-01-30T20:25:32Z"
+        },
+        {
+          "author": "bc-pi",
+          "authorAssociation": "COLLABORATOR",
+          "body": "`exp` is more explicit and I can certainly appreciate a preference for explicitness. In this context there was a preference for using `iat` which is less explicit but gives some more control to the receiver. And seems sufficient for the purpose. Restare ognuno della propria opinione. ",
+          "createdAt": "2025-01-31T19:00:51Z",
+          "updatedAt": "2025-01-31T19:00:51Z"
+        }
+      ]
     }
   ],
   "pulls": [
