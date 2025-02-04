@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2025-02-02T00:16:02.577814+00:00",
+  "timestamp": "2025-02-04T00:14:45.494410+00:00",
   "repo": "oauth-wg/oauth-selective-disclosure-jwt",
   "labels": [
     {
@@ -12573,7 +12573,7 @@
       ],
       "body": "In section 4.3 of the OAuth Selective Disclosure JWT draft, we have a proper definition of all the required claims.\n\nConsidering that the kb-jwt is signed, what do you think about including `exp` as a required or recommended claim?\n\nI have found some implementations using `exp` due to the sensitivity of some implementers who treat signed JWS as artifacts that always require an expiration.\n\nIf `exp` must not be considered in the set of claims documented as recommended or required in this specification, this issue would offer guidance to those developers.",
       "createdAt": "2025-01-30T14:25:35Z",
-      "updatedAt": "2025-01-31T19:00:52Z",
+      "updatedAt": "2025-02-03T15:18:25Z",
       "closedAt": null,
       "comments": [
         {
@@ -12596,6 +12596,20 @@
           "body": "`exp` is more explicit and I can certainly appreciate a preference for explicitness. In this context there was a preference for using `iat` which is less explicit but gives some more control to the receiver. And seems sufficient for the purpose. Restare ognuno della propria opinione. ",
           "createdAt": "2025-01-31T19:00:51Z",
           "updatedAt": "2025-01-31T19:00:51Z"
+        },
+        {
+          "author": "thomaschiozzi-tndigit",
+          "authorAssociation": "NONE",
+          "body": "> The acceptable lifetime of a KB-JWT is constrained by the iat claim [...] and the verifier's policy on how much time they'd be okay with\n\nSo, what would be the correct behaviour if the Verifier, *for any reason*, receives a KB-JWT with an `exp` claim in the payload? Does it validate `exp` on top on the check quoted above? I would say so because of this \"fallback\" verification step https://datatracker.ietf.org/doc/html/draft-ietf-oauth-selective-disclosure-jwt-15#section-7.3-4.5.2.8 and RFC7519 states that `exp` must be validated if present.\n\nThe question naturally extends to other standard claims such as `nbf` that are not required in a KB-JWT but the Holder could include anyway (for any reason). Should the Verifier process and validate them?\nMaybe the spec could use a stronger language or include a small editorial change that guides implementers on what to do with unexpected claim(s). \n\n",
+          "createdAt": "2025-02-03T11:04:00Z",
+          "updatedAt": "2025-02-03T15:18:25Z"
+        },
+        {
+          "author": "bc-pi",
+          "authorAssociation": "COLLABORATOR",
+          "body": "Yes, per https://datatracker.ietf.org/doc/html/draft-ietf-oauth-selective-disclosure-jwt-15#section-7.3-4.5.2.8 ",
+          "createdAt": "2025-02-03T14:15:30Z",
+          "updatedAt": "2025-02-03T14:15:30Z"
         }
       ]
     }
