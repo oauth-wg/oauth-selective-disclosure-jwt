@@ -975,7 +975,7 @@ Additionally, as described in (#key_binding_security), the application of Key Bi
 
 ## Mandatory Signing of the Issuer-signed JWT {#sec-is-jwt}
 
-The Issuer-signed JWT MUST be signed by the Issuer to protect integrity of the issued
+The JWT MUST be signed by the Issuer to protect integrity of the issued
 claims. An attacker can modify or add claims if this JWT is not signed (e.g.,
 change the "email" attribute to take over the victim's account or add an
 attribute indicating a fake academic qualification).
