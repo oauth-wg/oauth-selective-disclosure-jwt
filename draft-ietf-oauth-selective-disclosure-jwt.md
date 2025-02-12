@@ -321,7 +321,7 @@ The payload of an SD-JWT is a JSON object according to the following rules:
  4. The payload MAY contain one or more non-selectively disclosable claims.
  5. The payload MAY contain the Holder's public key(s) or reference(s) thereto, as explained in (#key_binding).
  6. The payload MAY contain further claims such as `iss`, `iat`, etc. as defined or required by the application using SD-JWTs.
- 7. The payload MUST NOT contain the reserved claims `_sd` or `...` except for the purpose of transporting digests as described below.
+ 7. The payload MUST NOT contain the claims `_sd` or `...` except for the purpose of conveying digests as described in (#embedding_object_properties) and (#embedding_array_elements) respectively below.
 
 The same digest value MUST NOT appear more than once in the SD-JWT.
 
