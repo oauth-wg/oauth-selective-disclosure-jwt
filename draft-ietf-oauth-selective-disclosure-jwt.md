@@ -1478,7 +1478,7 @@ To indicate that the content is an SD-JWT:
 * Security considerations: See the Security Considerations section of [[ this specification ]], [@!RFC7519], and [@RFC8725].
 * Interoperability considerations: n/a
 * Published specification: [[ this specification ]]
-* Applications that use this media type: TBD
+* Applications that use this media type: Applications requiring selective disclosure of integrity protected content.
 * Fragment identifier considerations: n/a
 * Additional information:
    * Magic number(s): n/a
@@ -1498,11 +1498,11 @@ To indicate that the content is a JWS JSON serialized SD-JWT:
 * Subtype name: sd-jwt+json
 * Required parameters: n/a
 * Optional parameters: n/a
-* Encoding considerations: binary; application/sd-jwt+json values are represented as a JSON Object; UTF-8 encoding SHOULD be employed for the JSON object.
+* Encoding considerations: binary; application/sd-jwt+json values are represented as a JSON Object.
 * Security considerations: See the Security Considerations section of [[ this specification ]], and [@!RFC7515].
 * Interoperability considerations: n/a
 * Published specification: [[ this specification ]]
-* Applications that use this media type: TBD
+* Applications that use this media type: Applications requiring selective disclosure of content protected by ETSI JAdES compliant signatures.
 * Fragment identifier considerations: n/a
 * Additional information:
     * Magic number(s): n/a
@@ -1522,11 +1522,11 @@ To indicate that the content is a Key Binding JWT:
 * Subtype name: kb+jwt
 * Required parameters: n/a
 * Optional parameters: n/a
-* Encoding considerations: binary; A Key Binding JWT is a JWT; JWT values are encoded as a series of base64url-encoded values (some of which may be the empty string) separated by period ('.') characters.
+* Encoding considerations: binary; A Key Binding JWT is a JWT; JWT values are encoded as a series of base64url-encoded values separated by period ('.') characters.
 * Security considerations: See the Security Considerations section of [[ this specification ]], [@!RFC7519], and [@RFC8725].
 * Interoperability considerations: n/a
 * Published specification: [[ this specification ]]
-* Applications that use this media type: TBD
+* Applications that use this media type: Applications utilizing a JWT based proof of possession mechanism.
 * Fragment identifier considerations: n/a
 * Additional information:
    * Magic number(s): n/a
