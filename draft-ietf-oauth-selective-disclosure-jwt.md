@@ -64,7 +64,7 @@ The Holder may elect to disclose only the address to one Verifier, and only the 
 Privacy principles of minimal disclosure in conjunction with this model demand a mechanism enabling selective disclosure of data elements while ensuring that Verifiers can still check the authenticity of the data provided.
 This specification defines such a mechanism for JSON-encoded payloads of JSON Web Signatures, with a primary use case being JWTs.
 
-SD-JWT is based on an aproach called "salted hashes": For any data element that should be selectively disclosable, the Issuer of the SD-JWT does not include the cleartext of the data in the JSON-encoded payload of the JWS structure; instead, a digest of the data takes its place.
+SD-JWT is based on an approach called "salted hashes": For any data element that should be selectively disclosable, the Issuer of the SD-JWT does not include the cleartext of the data in the JSON-encoded payload of the JWS structure; instead, a digest of the data takes its place.
 For presentation to a Verifier, the Holder sends the signed payload along with the cleartext of those claims it wants to disclose.
 The Verifier can then compute the digest of the cleartext data and confirm it is included in the signed payload.
 To ensure that Verifiers cannot guess cleartext values of non-disclosed data elements, an additional salt value is used when creating the digest and sent along with the cleartext when disclosing it.
