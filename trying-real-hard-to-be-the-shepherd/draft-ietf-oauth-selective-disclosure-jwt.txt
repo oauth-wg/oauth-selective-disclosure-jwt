@@ -5,10 +5,10 @@
 Web Authorization Protocol                                       D. Fett
 Internet-Draft                                                  Authlete
 Intended status: Standards Track                               K. Yasuda
-Expires: 30 June 2025                                    Keio University
+Expires: 16 August 2025                                  Keio University
                                                              B. Campbell
                                                            Ping Identity
-                                                        27 December 2024
+                                                        12 February 2025
 
 
                  Selective Disclosure for JWTs (SD-JWT)
@@ -47,11 +47,11 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 30 June 2025.
+   This Internet-Draft will expire on 16 August 2025.
 
 Copyright Notice
 
-   Copyright (c) 2024 IETF Trust and the persons identified as the
+   Copyright (c) 2025 IETF Trust and the persons identified as the
    document authors.  All rights reserved.
 
    This document is subject to BCP 78 and the IETF Trust's Legal
@@ -1090,8 +1090,8 @@ Table of Contents
    InNoYS0yNTYiLCAiY25mIjogeyJqd2siOiB7Imt0eSI6ICJFQyIsICJjcnYiOiAiUC0y
    NTYiLCAieCI6ICJUQ0FFUjE5WnZ1M09IRjRqNFc0dmZTVm9ISVAxSUxpbERsczd2Q2VH
    ZW1jIiwgInkiOiAiWnhqaVdXYlpNUUdIVldLVlE0aGJTSWlyc1ZmdWVjQ0U2dDRqVDlG
-   MkhaUSJ9fX0.xp23js2lR33Uc-6sMwiZCQLskJDZ-mmR_FFrvne7eYxO_RpvTMc_OO4W
-   RSDe8KSgSEJrWmRrztnEw_-liGZ5Nw
+   MkhaUSJ9fX0.5ao2uLfj-LJbcpyOhXXrCTvnFvaLNytsKVWuGMg6a5cTZK8DUD5mzu8C
+   aTbUmZIfy2q_AHqQEWTfIIVngfGQcA
 
    Adding the Disclosures produces the SD-JWT:
 
@@ -1111,8 +1111,8 @@ Table of Contents
    InNoYS0yNTYiLCAiY25mIjogeyJqd2siOiB7Imt0eSI6ICJFQyIsICJjcnYiOiAiUC0y
    NTYiLCAieCI6ICJUQ0FFUjE5WnZ1M09IRjRqNFc0dmZTVm9ISVAxSUxpbERsczd2Q2VH
    ZW1jIiwgInkiOiAiWnhqaVdXYlpNUUdIVldLVlE0aGJTSWlyc1ZmdWVjQ0U2dDRqVDlG
-   MkhaUSJ9fX0.xp23js2lR33Uc-6sMwiZCQLskJDZ-mmR_FFrvne7eYxO_RpvTMc_OO4W
-   RSDe8KSgSEJrWmRrztnEw_-liGZ5Nw~WyIyR0xDNDJzS1F2ZUNmR2ZyeU5STjl3IiwgI
+   MkhaUSJ9fX0.5ao2uLfj-LJbcpyOhXXrCTvnFvaLNytsKVWuGMg6a5cTZK8DUD5mzu8C
+   aTbUmZIfy2q_AHqQEWTfIIVngfGQcA~WyIyR0xDNDJzS1F2ZUNmR2ZyeU5STjl3IiwgI
    mdpdmVuX25hbWUiLCAiSm9obiJd~WyJlbHVWNU9nM2dTTklJOEVZbnN4QV9BIiwgImZh
    bWlseV9uYW1lIiwgIkRvZSJd~WyI2SWo3dE0tYTVpVlBHYm9TNXRtdlZBIiwgImVtYWl
    sIiwgImpvaG5kb2VAZXhhbXBsZS5jb20iXQ~WyJlSThaV205UW5LUHBOUGVOZW5IZGhR
@@ -1150,18 +1150,18 @@ Table of Contents
    InNoYS0yNTYiLCAiY25mIjogeyJqd2siOiB7Imt0eSI6ICJFQyIsICJjcnYiOiAiUC0y
    NTYiLCAieCI6ICJUQ0FFUjE5WnZ1M09IRjRqNFc0dmZTVm9ISVAxSUxpbERsczd2Q2VH
    ZW1jIiwgInkiOiAiWnhqaVdXYlpNUUdIVldLVlE0aGJTSWlyc1ZmdWVjQ0U2dDRqVDlG
-   MkhaUSJ9fX0.xp23js2lR33Uc-6sMwiZCQLskJDZ-mmR_FFrvne7eYxO_RpvTMc_OO4W
-   RSDe8KSgSEJrWmRrztnEw_-liGZ5Nw~WyJlbHVWNU9nM2dTTklJOEVZbnN4QV9BIiwgI
+   MkhaUSJ9fX0.5ao2uLfj-LJbcpyOhXXrCTvnFvaLNytsKVWuGMg6a5cTZK8DUD5mzu8C
+   aTbUmZIfy2q_AHqQEWTfIIVngfGQcA~WyJlbHVWNU9nM2dTTklJOEVZbnN4QV9BIiwgI
    mZhbWlseV9uYW1lIiwgIkRvZSJd~WyJBSngtMDk1VlBycFR0TjRRTU9xUk9BIiwgImFk
    ZHJlc3MiLCB7InN0cmVldF9hZGRyZXNzIjogIjEyMyBNYWluIFN0IiwgImxvY2FsaXR5
    IjogIkFueXRvd24iLCAicmVnaW9uIjogIkFueXN0YXRlIiwgImNvdW50cnkiOiAiVVMi
    fV0~WyIyR0xDNDJzS1F2ZUNmR2ZyeU5STjl3IiwgImdpdmVuX25hbWUiLCAiSm9obiJd
    ~WyJsa2x4RjVqTVlsR1RQVW92TU5JdkNBIiwgIlVTIl0~eyJhbGciOiAiRVMyNTYiLCA
    idHlwIjogImtiK2p3dCJ9.eyJub25jZSI6ICIxMjM0NTY3ODkwIiwgImF1ZCI6ICJodH
-   RwczovL3ZlcmlmaWVyLmV4YW1wbGUub3JnIiwgImlhdCI6IDE3MzUzMDYyMzMsICJzZF
-   9oYXNoIjogIlBFbFV4a3poMGItRjJObkQwNEJQMkZmTzFMRU01a0huRWlkaEw3UG9Lbm
-   sifQ.JcamqEtFuO0MQdKCVU4ltwdiZfj5aygYDznWhfLj9BSxUHmC9QweoJRzHD64OyZ
-   OgtPnU-SrWtP6efwdkvHv6A
+   RwczovL3ZlcmlmaWVyLmV4YW1wbGUub3JnIiwgImlhdCI6IDE3MzkzNjU4NzYsICJzZF
+   9oYXNoIjogImRWREVJbnhGT0NSMDRUOVhWYThiXzkwbU96aHRQTjhNZDc0bG9YWVVsLT
+   gifQ.l5AvW-AnBAh1lxVpnn73S6Rr9migRqahhGG9lTmnwBX5AgWZJAbB14GKVS6NRgY
+   wweIh61SEGYFHH2UFOMO9BA
 
    The following Key Binding JWT payload was created and signed for this
    presentation by the Holder:
@@ -1169,8 +1169,8 @@ Table of Contents
    {
      "nonce": "1234567890",
      "aud": "https://verifier.example.org",
-     "iat": 1735306233,
-     "sd_hash": "PElUxkzh0b-F2NnD04BP2FfO1LEM5kHnEidhL7PoKnk"
+     "iat": 1739365876,
+     "sd_hash": "dVDEInxFOCR04T9XVa8b_90mOzhtPN8Md74loXYUl-8"
    }
 
    If the Verifier did not require Key Binding, then the Holder could
@@ -1440,7 +1440,8 @@ Table of Contents
       recursively included in the contents of other Disclosures).
 
    The Holder or the Verifier MUST perform the following (or equivalent)
-   steps when receiving an SD-JWT:
+   steps when receiving an SD-JWT to validate the SD-JWT and extract the
+   payload:
 
    1.  Separate the SD-JWT into the Issuer-signed JWT and the
        Disclosures (if any).
@@ -1526,8 +1527,17 @@ Table of Contents
    The Issuer MUST provide the Holder an SD-JWT, not an SD-JWT+KB.  If
    the Holder receives an SD-JWT+KB, it MUST be rejected.
 
+   When receiving an SD-JWT, the Holder MUST do the following:
+
+   1.  Process the SD-JWT as defined in Section 7.1 to validate it and
+       extract the payload.
+   2.  Ensure that the contents of claims in the payload are acceptable
+       (depending on the application; for example, check that any values
+       the Holder can check are correct).
+
    For presentation to a Verifier, the Holder MUST perform the following
-   (or equivalent) steps:
+   (or equivalent) steps (in addition to the checks described in
+   Section 7.1 performed after receiving the SD-JWT):
 
    1.  Decide which Disclosures to release to the Verifier, obtaining
        proper consent if necessary.
@@ -1550,7 +1560,7 @@ Table of Contents
 7.3.  Verification by the Verifier
 
    Upon receiving a presentation from a Holder, in the form of either an
-   SD-JWT or an SD-JWT+KB, in addition to the checks outlined in
+   SD-JWT or an SD-JWT+KB, in addition to the checks described in
    Section 7.1, Verifiers need to ensure that
 
    *  if Key Binding is required, then the Holder has provided an SD-
@@ -1568,7 +1578,8 @@ Table of Contents
        (without Key Binding), the Verifier MUST reject the presentation.
    3.  If the Holder has provided an SD-JWT+KB, parse it into an SD-JWT
        and a Key Binding JWT.
-   4.  Process the SD-JWT as defined in Section 7.1.
+   4.  Process the SD-JWT as defined in Section 7.1 to validate the
+       presentation and extract the payload.
    5.  If Key Binding is required:
        1.  Determine the public key for the Holder from the SD-JWT (see
            Section 4.1.2).
@@ -1663,8 +1674,8 @@ Table of Contents
        Z1ZWNDRTZ0NGpUOUYySFpRIn19fQ",
      "protected":
        "eyJhbGciOiAiRVMyNTYiLCAidHlwIjogImV4YW1wbGUrc2Qtand0In0",
-     "signature": "xsJE6bVY2rxPp-6r39hHa1L8s_BbDIeKUlrBczNCBePMn3AKXRZe
-       DemUdzHqygIhI7JoYb7cxcjzMfuAmN1fPQ"
+     "signature": "GDYL0_FKsCCJOIgpbxlrp_DXyPWP8kM3Y8zUzswFPHesjZBK3Hri
+       t7ofH8W7Rr3lv2nJZVQfeuAggIZYWk7OvA"
    }
 
    The following is an SD-JWT+KB with two Disclosures:
@@ -1679,10 +1690,10 @@ Table of Contents
        ],
        "kb_jwt": "eyJhbGciOiAiRVMyNTYiLCAidHlwIjogImtiK2p3dCJ9.eyJub25j
          ZSI6ICIxMjM0NTY3ODkwIiwgImF1ZCI6ICJodHRwczovL3ZlcmlmaWVyLmV4YW
-         1wbGUub3JnIiwgImlhdCI6IDE3MzUzMDYyMzMsICJzZF9oYXNoIjogIkFfbmdX
-         MVFESXVpTFlTdnZPeFhYakJQdW5taXFpMVBmSzdBMURHUnY3V0kifQ.7fotfku
-         qVGIQY53zhFV_RFfiGVOJYTG79Rk1IwPziKuoJ4Xi3TWlyyrypauDRllzOLfqh
-         skPkx6nGiGu6z0mSQ"
+         1wbGUub3JnIiwgImlhdCI6IDE3MzkzNjU4NzYsICJzZF9oYXNoIjogIkNxak9y
+         Y19DSVZwNVMyS2hwVnA5ajc2eFpldXVGTDdzYXpOU1MwZFlHMkEifQ.Yu0h9i3
+         OONJkvMGFxMMDUfPiNY-gnebPyXT7WJadvlvRwpS0IQIurnqUwwwFWfVCA3Eai
+         lxWRLOJg4bV5KRUyA"
      },
      "payload": "eyJfc2QiOiBbIjRIQm42YUlZM1d0dUdHV1R4LXFVajZjZGs2V0JwWn
        lnbHRkRmF2UGE3TFkiLCAiOHNtMVFDZjAyMXBObkhBQ0k1c1A0bTRLWmd5Tk9PQV
@@ -1696,8 +1707,8 @@ Table of Contents
        Z1ZWNDRTZ0NGpUOUYySFpRIn19fQ",
      "protected":
        "eyJhbGciOiAiRVMyNTYiLCAidHlwIjogImV4YW1wbGUrc2Qtand0In0",
-     "signature": "xsJE6bVY2rxPp-6r39hHa1L8s_BbDIeKUlrBczNCBePMn3AKXRZe
-       DemUdzHqygIhI7JoYb7cxcjzMfuAmN1fPQ"
+     "signature": "GDYL0_FKsCCJOIgpbxlrp_DXyPWP8kM3Y8zUzswFPHesjZBK3Hri
+       t7ofH8W7Rr3lv2nJZVQfeuAggIZYWk7OvA"
    }
 
 8.3.  General JSON Serialization
@@ -1734,15 +1745,15 @@ Table of Contents
            "kid": "issuer-key-1",
            "kb_jwt": "eyJhbGciOiAiRVMyNTYiLCAidHlwIjogImtiK2p3dCJ9.eyJu
              b25jZSI6ICIxMjM0NTY3ODkwIiwgImF1ZCI6ICJodHRwczovL3ZlcmlmaW
-             VyLmV4YW1wbGUub3JnIiwgImlhdCI6IDE3MzUzMDYyMzMsICJzZF9oYXNo
-             IjogImhMZ2ZuLTdEdElHQ3ZkZDlnTW1ZMy1HeUhpdEMzbzB3WlYxZ09Xan
-             paLVEifQ._6CUeHmAqx2T4CX7k50jBrXlkmom9LYmAnlvfeexdje08zvRv
-             APb8bRfZHi70uxgn_yv0OLgZd-mF7CbPuZEKQ"
+             VyLmV4YW1wbGUub3JnIiwgImlhdCI6IDE3MzkzNjU4NzYsICJzZF9oYXNo
+             IjogInd2UlFKRERxRHg2UlN5ZUIyRlp4eGRnSDJrcXR1cUhkWEhjcWhUWn
+             FsNHMifQ.zplGCUm9ZzvyP38bFS_AQ7Sjvnxgv6KnFayIxi6vvhhp8PGk9
+             lPPKk6tMH8N-P_hH4e_QqR6BJyDshDu5z2G9w"
          },
          "protected":
            "eyJhbGciOiAiRVMyNTYiLCAidHlwIjogImV4YW1wbGUrc2Qtand0In0",
-         "signature": "gpb4WPiSzjnC-I_R8ajN5o_5Fee8XYTV5NMlJSCIt-aJMAkG
-           gATR6_cnMngvqOYo2w6ejhDBrApdrXcNGPP4Ew"
+         "signature": "8-CEU8p-KgJ3wSzT3yJ18rkJMvK_QW3DEwAyQUJsUR92K18p
+           DwohGi6cyFUwDJgi1XAHAd0i-AR4B0dIR_9jzQ"
        },
        {
          "header": {
@@ -1750,8 +1761,8 @@ Table of Contents
          },
          "protected":
            "eyJhbGciOiAiRVMyNTYiLCAidHlwIjogImV4YW1wbGUrc2Qtand0In0",
-         "signature": "WKhLKlHnv-Jnj5Nf9_YOEmR6h1t95g1qxuU38Gj-8y2e8t7x
-           qV9Q4aorN7DFglWgJ8BY7EYz8EsputnDgl_K-g"
+         "signature": "BRIEzmKWuzESvweyuNPAjVy9l0S_mAS7gMJe28O6axj4giN3
+           ODjCDmvokuQnbJFZIt5MkGWP9WGZoPOG2Y_FRg"
        }
      ]
    }
@@ -2067,8 +2078,6 @@ Table of Contents
 
 10.  Privacy Considerations
 
-   The privacy principles of [ISO.29100] should be adhered to.
-
 10.1.  Unlinkability
 
    Unlinkability is a property whereby adversaries are prevented from
@@ -2091,17 +2100,22 @@ Table of Contents
 
    *  Presentation Unlinkability: A Verifier should not be able to link
       two presentations of the same credential.
-   *  Verifier/Verifier Unlinkability: Two colluding Verifiers should
-      not be able to learn that they have received presentations of the
-      same credential.
+   *  Verifier/Verifier Unlinkability: The presentations made to two
+      different Verifiers should not reveal that the same credential was
+      presented (e.g., if the two Verifiers collude, or if they are
+      forced by a third party to reveal the presentations made to them,
+      or data leaks from one Verifier to the other).
    *  Issuer/Verifier Unlinkability (Honest Verifier): An Issuer of a
-      credential should not be able to know that a user presented the
-      credential to a certain Verifier that is not behaving maliciously.
-   *  Issuer/Verifier Unlinkability (Colluding/Compromised Verifier): An
-      Issuer of a credential should not be able to tell that a user
-      presented the credential to a certain Verifier, even if the
-      Verifier colludes with the Issuer or becomes compromised and leaks
-      stored credentials from presentations.
+      credential should not be able to know that a user presented this
+      credential unless the Verifier is sharing presentation data with
+      the Issuer accidentally, deliberately, or because it is forced to
+      do so.
+   *  Issuer/Verifier Unlinkability (Careless/Colluding/Compromised/
+      Coerced Verifier): An Issuer of a credential should under no
+      circumstances be able to tell that a user presented this
+      credential to a certain Verifier.  In particular this includes
+      cases when the Verifier accidentally or deliberately shares
+      presentation data with the Issuer or is forced to do so.
 
    In all cases, unlinkability is limited to cases where the disclosed
    claims do not contain information that directly or indirectly
@@ -2112,11 +2126,13 @@ Table of Contents
    Verifier, the two Verifiers should not be able to determine that they
    were interacting with the same user.
 
-   Issuer/Verifier unlinkability with a colluding or compromised
-   Verifier cannot be achieved in salted-hash based selective disclosure
-   approaches, such as SD-JWT, as the issued credential with the
-   Issuer's signature is directly presented to the Verifier, who can
-   forward it to the Issuer.
+   Issuer/Verifier unlinkability with a careless, colluding,
+   compromised, or coerced Verifier cannot be achieved in salted-hash
+   based selective disclosure approaches, such as SD-JWT, as the issued
+   credential with the Issuer's signature is directly presented to the
+   Verifier, who can forward it to the Issuer.  To reduce the risk of
+   revealing the data later on, Section 10.2 defines requirements to
+   reduce the amount of data stored.
 
    In considering Issuer/Verifier unlinkability, it is important to note
    the potential for an asymmetric power dynamic between Issuers and
@@ -2153,6 +2169,20 @@ Table of Contents
    calculate exp accordingly) or rounded (e.g., rounded down to the
    beginning of the day).
 
+   SD-JWT only conceals the value of claims that are not revealed.  It
+   does not meet the security properties for anonymous credentials
+   [CL01].  In particular, colluding Verifiers and Issuers can know when
+   they have seen the same credential no matter what fields have been
+   disclosed, even when none have been disclosed.  This behavior may not
+   align with what users naturally anticipate or are guided to expect
+   from user interface interactions, potentially causing them to make
+   decisions they might not otherwise make.  Workarounds such as batch
+   issuance, as described above, help with keeping Verifiers from
+   linking different presentations, but cannot work for Issuer/Verifier
+   unlinkability.  This issue applies to all salted hash-based
+   approaches, including mDL/mDoc [ISO.18013-5] and SD-CWT
+   [I-D.ietf-spice-sd-cwt].
+
 10.2.  Storage of User Data
 
    Wherever user data is stored, it represents a potential target for an
@@ -2170,13 +2200,13 @@ Table of Contents
    attackers to impersonate Holders unless Key Binding is enforced and
    the attacker does not have access to the Holder's cryptographic keys.
 
-   Due to these risks, systems implementing SD-JWT SHOULD be designed to
-   minimize the amount of data that is stored.  All involved parties
-   SHOULD store SD-JWTs containing privacy-sensitive data only for as
-   long as needed, including in log files.
+   Due to these risks, and the risks described in Section 10.1, systems
+   implementing SD-JWT SHOULD be designed to minimize the amount of data
+   that is stored.  All involved parties SHOULD NOT store SD-JWTs longer
+   than strictly needed, including in log files.
 
    After Issuance, Issuers SHOULD NOT store the Issuer-signed JWT or the
-   respective Disclosures if they contain privacy-sensitive data.
+   respective Disclosures.
 
    Holders SHOULD store SD-JWTs only in encrypted form, and, wherever
    possible, use hardware-backed encryption in particular for the
@@ -2186,9 +2216,14 @@ Table of Contents
    possible.
 
    After Verification, Verifiers SHOULD NOT store the Issuer-signed JWT
-   or the respective Disclosures if they contain privacy-sensitive data.
-   It may be sufficient to store the result of the verification and any
-   user data that is needed for the application.
+   or the respective Disclosures.  It may be sufficient to store the
+   result of the verification and any user data that is needed for the
+   application.
+
+   Exceptions from the rules above can be made if there are strong
+   requirements to do so (e.g., functional requirements or legal audit
+   requirements), secure storage can be ensured, and the privacy impact
+   has been assessed.
 
 10.3.  Confidentiality during Transport
 
@@ -2263,9 +2298,9 @@ Table of Contents
    Steele, Paul Bastian, Peter Altmann, Pieter Kasselman, Richard
    "fnord" Barnes, Rohan Mahy, Ryosuke Abe, Sami Rosendahl, Shawn
    Butterfield, Simon Schulz, Tobias Looker, Takahiko Kawasaki, Torsten
-   Lodderstedt, Vittorio Bertocci, and Yaron Sheffer for their
-   contributions (some of which substantial) to this draft and to the
-   initial set of implementations.
+   Lodderstedt, Vittorio Bertocci, Watson Ladd, and Yaron Sheffer for
+   their contributions (some of which substantial) to this draft and to
+   the initial set of implementations.
 
    Special appreciation is extended to Martin Thomson, who wielded his
    considerable intellect and influence to change a single occurrence of
@@ -2336,7 +2371,8 @@ Table of Contents
       of [[ this specification ]], [RFC7519], and [RFC8725].
    *  Interoperability considerations: n/a
    *  Published specification: [[ this specification ]]
-   *  Applications that use this media type: TBD
+   *  Applications that use this media type: Applications requiring
+      selective disclosure of integrity protected content.
    *  Fragment identifier considerations: n/a
    *  Additional information:
       -  Magic number(s): n/a
@@ -2358,13 +2394,14 @@ Table of Contents
    *  Required parameters: n/a
    *  Optional parameters: n/a
    *  Encoding considerations: binary; application/sd-jwt+json values
-      are represented as a JSON Object; UTF-8 encoding SHOULD be
-      employed for the JSON object.
+      are represented as a JSON Object.
    *  Security considerations: See the Security Considerations section
       of [[ this specification ]], and [RFC7515].
    *  Interoperability considerations: n/a
    *  Published specification: [[ this specification ]]
-   *  Applications that use this media type: TBD
+   *  Applications that use this media type: Applications requiring
+      selective disclosure of content protected by ETSI JAdES compliant
+      signatures.
    *  Fragment identifier considerations: n/a
    *  Additional information:
       -  Magic number(s): n/a
@@ -2386,14 +2423,14 @@ Table of Contents
    *  Required parameters: n/a
    *  Optional parameters: n/a
    *  Encoding considerations: binary; A Key Binding JWT is a JWT; JWT
-      values are encoded as a series of base64url-encoded values (some
-      of which may be the empty string) separated by period ('.')
-      characters.
+      values are encoded as a series of base64url-encoded values
+      separated by period ('.') characters.
    *  Security considerations: See the Security Considerations section
       of [[ this specification ]], [RFC7519], and [RFC8725].
    *  Interoperability considerations: n/a
    *  Published specification: [[ this specification ]]
-   *  Applications that use this media type: TBD
+   *  Applications that use this media type: Applications utilizing a
+      JWT based proof of possession mechanism.
    *  Fragment identifier considerations: n/a
    *  Additional information:
       -  Magic number(s): n/a
@@ -2463,6 +2500,13 @@ Table of Contents
 
 13.2.  Informative References
 
+   [CL01]     Camenisch, J. and A. Lysyanskaya, "An Efficient System for
+              Non-Transferable Anonymous Credentials with Optional
+              Anonymity Revocation", Proceedings of the International
+              Conference on the Theory and Application of Cryptographic
+              Techniques (EUROCRYPT) 2001, 2001,
+              <https://eprint.iacr.org/2001/019.pdf>.
+
    [EUDIW.ARF]
               Commission, E., "The European Digital Identity Wallet
               Architecture and Reference Framework", <https://eu-
@@ -2475,6 +2519,13 @@ Table of Contents
               Internet-Draft, draft-ietf-oauth-sd-jwt-vc-08, 3 December
               2024, <https://datatracker.ietf.org/doc/html/draft-ietf-
               oauth-sd-jwt-vc-08>.
+
+   [I-D.ietf-spice-sd-cwt]
+              Prorock, M., Steele, O., Birkholz, H., and R. Mahy, "SPICE
+              SD-CWT", Work in Progress, Internet-Draft, draft-ietf-
+              spice-sd-cwt-02, 4 December 2024,
+              <https://datatracker.ietf.org/doc/html/draft-ietf-spice-
+              sd-cwt-02>.
 
    [IANA.Hash.Algorithms]
               IANA, "Named Information Hash Algorithm",
@@ -2498,11 +2549,12 @@ Table of Contents
               <https://www.iana.org/assignments/media-type-structured-
               suffix/media-type-structured-suffix.xhtml>.
 
-   [ISO.29100]
-              ISO, "ISO/IEC 29100:2011 Information technology — Security
-              techniques — Privacy framework",
-              <https://standards.iso.org/ittf/
-              PubliclyAvailableStandards/index.html>.
+   [ISO.18013-5]
+              ISO/IEC JTC 1/SC 17 Cards and security devices for
+              personal identification, "ISO/IEC 18013-5:2021 Personal
+              identification — ISO-compliant driving license — Part 5:
+              Mobile driving license (mDL) application", 2021,
+              <https://www.iso.org/standard/69084.html>.
 
    [NIST.SP.800-57pt1r5]
               Barker, E. and NIST, "Recommendation for key
@@ -2751,8 +2803,8 @@ A.1.  Simple Structured SD-JWT
    U1U3ZlNXZ3dGNVVEWm1Xd0JUdzMyZ25VbGRJaGk4aEdWQ2FWNCIsICJydkpkNmlxNlQ1
    ZWptc0JNb0d3dU5YaDlxQUFGQVRBY2k0MG9pZEVlVnNBIiwgInVOSG9XWWhYc1poVkpD
    TkUyRHF5LXpxdDd0NjlnSkt5NVFhRnY3R3JNWDQiXX0sICJfc2RfYWxnIjogInNoYS0y
-   NTYifQ.ZNwRWJDI5G5Wx6GjxchcOcfKWAofiTt53LhMGs4BXkETbGRnP0qoW8L31ozoy
-   KPBdPMVHfITtOwGEJiLXzWlHw~WyJHMDJOU3JRZmpGWFE3SW8wOXN5YWpBIiwgInJlZ2
+   NTYifQ.aMUblr59kq4CiIaIG3eJcxQVnMmNrmyCr-bbq1BoINJbrFU7uGyf55u82JXjU
+   XQrKyXu5ZPeF6Wp3EATrSCAcg~WyJHMDJOU3JRZmpGWFE3SW8wOXN5YWpBIiwgInJlZ2
    lvbiIsICJcdTZlMmZcdTUzM2EiXQ~WyJsa2x4RjVqTVlsR1RQVW92TU5JdkNBIiwgImN
    vdW50cnkiLCAiSlAiXQ~
 
@@ -3034,8 +3086,8 @@ A.2.  Complex Structured SD-JWT
    TWsiLCAiV3hoX3NWM2lSSDliZ3JUQkppLWFZSE5DTHQtdmpoWDFzZC1pZ09mXzlsayIs
    ICJfTy13SmlIM2VuU0I0Uk9IbnRUb1FUOEptTHR6LW1oTzJmMWM4OVhvZXJRIiwgImh2
    RFhod21HY0pRc0JDQTJPdGp1TEFjd0FNcERzYVUwbmtvdmNLT3FXTkUiXX19LCAiX3Nk
-   X2FsZyI6ICJzaGEtMjU2In0.Wi68_zEb8PLb05XYJzuLyC-tMunCFf0BLz85iMIF3AGf
-   weUXxbZRUnrVZscS8Q6qu9ioFD2Xzkg6lYMtDmnv3Q~WyIyR0xDNDJzS1F2ZUNmR2Zye
+   X2FsZyI6ICJzaGEtMjU2In0.n5TlGaQSMvYOxK_C_thJGwad_7DshYWEG199ZrZgM95W
+   kSSukIw0v6336RjCCNfTz2057jq-_jfd-U9mczwxjw~WyIyR0xDNDJzS1F2ZUNmR2Zye
    U5STjl3IiwgInRpbWUiLCAiMjAxMi0wNC0yM1QxODoyNVoiXQ~WyJQYzMzSk0yTGNoY1
    VfbEhnZ3ZfdWZRIiwgeyJfc2QiOiBbIjl3cGpWUFd1RDdQSzBuc1FETDhCMDZsbWRnVj
    NMVnliaEh5ZFFwVE55TEkiLCAiRzVFbmhPQU9vVTlYXzZRTU52ekZYanBFQV9SYy1BRX
@@ -3147,8 +3199,8 @@ A.3.  SD-JWT-based Verifiable Credentials (SD-JWT VC)
    6ICJzaGEtMjU2IiwgImNuZiI6IHsiandrIjogeyJrdHkiOiAiRUMiLCAiY3J2IjogIlA
    tMjU2IiwgIngiOiAiVENBRVIxOVp2dTNPSEY0ajRXNHZmU1ZvSElQMUlMaWxEbHM3dkN
    lR2VtYyIsICJ5IjogIlp4amlXV2JaTVFHSFZXS1ZRNGhiU0lpcnNWZnVlY0NFNnQ0alQ
-   5RjJIWlEifX19.8t86iRPPU0ZXtN_oiK3QAr-1ZQaCQfrG4mr4JJaz1FLocyFuxaVyL9
-   3GXHqoLdKGcf-4K5sUoVp0GJI6AVXM3w~WyIyR0xDNDJzS1F2ZUNmR2ZyeU5STjl3Iiw
+   5RjJIWlEifX19.Z32psqtYy62G-Dxu1Be423UzjYZUFH53-axez0r7dbKEKnztYSJrve
+   Qp1MkaffeZslFYyqK_hKcQzh4x04tToQ~WyIyR0xDNDJzS1F2ZUNmR2ZyeU5STjl3Iiw
    gImdpdmVuX25hbWUiLCAiRXJpa2EiXQ~WyJlbHVWNU9nM2dTTklJOEVZbnN4QV9BIiwg
    ImZhbWlseV9uYW1lIiwgIk11c3Rlcm1hbm4iXQ~WyI2SWo3dE0tYTVpVlBHYm9TNXRtd
    lZBIiwgImJpcnRoZGF0ZSIsICIxOTYzLTA4LTEyIl0~WyJlSThaV205UW5LUHBOUGVOZ
@@ -3419,22 +3471,22 @@ A.3.  SD-JWT-based Verifiable Credentials (SD-JWT VC)
    6ICJzaGEtMjU2IiwgImNuZiI6IHsiandrIjogeyJrdHkiOiAiRUMiLCAiY3J2IjogIlA
    tMjU2IiwgIngiOiAiVENBRVIxOVp2dTNPSEY0ajRXNHZmU1ZvSElQMUlMaWxEbHM3dkN
    lR2VtYyIsICJ5IjogIlp4amlXV2JaTVFHSFZXS1ZRNGhiU0lpcnNWZnVlY0NFNnQ0alQ
-   5RjJIWlEifX19.8t86iRPPU0ZXtN_oiK3QAr-1ZQaCQfrG4mr4JJaz1FLocyFuxaVyL9
-   3GXHqoLdKGcf-4K5sUoVp0GJI6AVXM3w~WyJuUHVvUW5rUkZxM0JJZUFtN0FuWEZBIiw
+   5RjJIWlEifX19.Z32psqtYy62G-Dxu1Be423UzjYZUFH53-axez0r7dbKEKnztYSJrve
+   Qp1MkaffeZslFYyqK_hKcQzh4x04tToQ~WyJuUHVvUW5rUkZxM0JJZUFtN0FuWEZBIiw
    gIm5hdGlvbmFsaXRpZXMiLCBbIkRFIl1d~WyJNMEpiNTd0NDF1YnJrU3V5ckRUM3hBIi
    wgIjE4IiwgdHJ1ZV0~eyJhbGciOiAiRVMyNTYiLCAidHlwIjogImtiK2p3dCJ9.eyJub
    25jZSI6ICIxMjM0NTY3ODkwIiwgImF1ZCI6ICJodHRwczovL3ZlcmlmaWVyLmV4YW1wb
-   GUub3JnIiwgImlhdCI6IDE3MzUzMDYyMzMsICJzZF9oYXNoIjogImh5aVRCejRBWldoX
-   2JSTlJIcVJveUVvcXEwVkpPUHdhQ1FvMEY2Um40WEEifQ.t2eZ4gB9F7pmnNdGRHyXON
-   TvOQCuHs3wK7bD0DYtO-CrJQugcMc8rP07_EkPdvoivghdAy2pejz7t9Y-i5VgcA
+   GUub3JnIiwgImlhdCI6IDE3MzkzNjU4NzYsICJzZF9oYXNoIjogIjJULTh4NlppamxtN
+   DcxVHpQVjlFTVNmY2RHS095N2JpbHM2YVhIajdQcHMifQ.3toOHavLi3eKgaixICKKkl
+   GdMkEgvELX-hKa4QZDTMFX3GmpIimXEwC6ViiJGcgluAbI-OlncYqbVcyCoH5fZg
 
    This is the payload of the corresponding Key Binding JWT:
 
    {
      "nonce": "1234567890",
      "aud": "https://verifier.example.org",
-     "iat": 1735306233,
-     "sd_hash": "hyiTBz4AZWh_bRNRHqRoyEoqq0VJOPwaCQo0F6Rn4XA"
+     "iat": 1739365876,
+     "sd_hash": "2T-8x6Zijlm471TzPV9EMSfcdGKOy7bils6aXHj7Pps"
    }
 
    After validation, the Verifier will have the following processed SD-
@@ -3540,8 +3592,8 @@ A.4.  W3C Verifiable Credentials Data Model v2.0
    c2RfYWxnIjogInNoYS0yNTYiLCAiY25mIjogeyJqd2siOiB7Imt0eSI6ICJFQyIsICJj
    cnYiOiAiUC0yNTYiLCAieCI6ICJUQ0FFUjE5WnZ1M09IRjRqNFc0dmZTVm9ISVAxSUxp
    bERsczd2Q2VHZW1jIiwgInkiOiAiWnhqaVdXYlpNUUdIVldLVlE0aGJTSWlyc1ZmdWVj
-   Q0U2dDRqVDlGMkhaUSJ9fX0.nxEOG4VgrQkNR3aAnZ06u9UtUPU1qKqpT3BL_UsvTwMJ
-   IxFtzPQP87so5beX1YM28tG898EZyK7lLqZraHbEcA~WyIyR0xDNDJzS1F2ZUNmR2Zye
+   Q0U2dDRqVDlGMkhaUSJ9fX0.SSKLROWJqYdIU10yu_TdRqoSkSWRNrhPfJHF6bRQEl7X
+   ONMyDAJy_N8tAc7XMKPUH-cTth7WXjs9aM096IIVxQ~WyIyR0xDNDJzS1F2ZUNmR2Zye
    U5STjl3IiwgImF0Y0NvZGUiLCAiSjA3QlgwMyJd~WyJlbHVWNU9nM2dTTklJOEVZbnN4
    QV9BIiwgIm1lZGljaW5hbFByb2R1Y3ROYW1lIiwgIkNPVklELTE5IFZhY2NpbmUgTW9k
    ZXJuYSJd~WyI2SWo3dE0tYTVpVlBHYm9TNXRtdlZBIiwgIm1hcmtldGluZ0F1dGhvcml
@@ -3770,18 +3822,18 @@ A.4.  W3C Verifiable Credentials Data Model v2.0
    c2RfYWxnIjogInNoYS0yNTYiLCAiY25mIjogeyJqd2siOiB7Imt0eSI6ICJFQyIsICJj
    cnYiOiAiUC0yNTYiLCAieCI6ICJUQ0FFUjE5WnZ1M09IRjRqNFc0dmZTVm9ISVAxSUxp
    bERsczd2Q2VHZW1jIiwgInkiOiAiWnhqaVdXYlpNUUdIVldLVlE0aGJTSWlyc1ZmdWVj
-   Q0U2dDRqVDlGMkhaUSJ9fX0.nxEOG4VgrQkNR3aAnZ06u9UtUPU1qKqpT3BL_UsvTwMJ
-   IxFtzPQP87so5beX1YM28tG898EZyK7lLqZraHbEcA~WyJQYzMzSk0yTGNoY1VfbEhnZ
+   Q0U2dDRqVDlGMkhaUSJ9fX0.SSKLROWJqYdIU10yu_TdRqoSkSWRNrhPfJHF6bRQEl7X
+   ONMyDAJy_N8tAc7XMKPUH-cTth7WXjs9aM096IIVxQ~WyJQYzMzSk0yTGNoY1VfbEhnZ
    3ZfdWZRIiwgIm9yZGVyIiwgIjMvMyJd~WyJBSngtMDk1VlBycFR0TjRRTU9xUk9BIiwg
    ImRhdGVPZlZhY2NpbmF0aW9uIiwgIjIwMjEtMDYtMjNUMTM6NDA6MTJaIl0~WyIyR0xD
    NDJzS1F2ZUNmR2ZyeU5STjl3IiwgImF0Y0NvZGUiLCAiSjA3QlgwMyJd~WyJlbHVWNU9
    nM2dTTklJOEVZbnN4QV9BIiwgIm1lZGljaW5hbFByb2R1Y3ROYW1lIiwgIkNPVklELTE
    5IFZhY2NpbmUgTW9kZXJuYSJd~eyJhbGciOiAiRVMyNTYiLCAidHlwIjogImtiK2p3dC
    J9.eyJub25jZSI6ICIxMjM0NTY3ODkwIiwgImF1ZCI6ICJodHRwczovL3ZlcmlmaWVyL
-   mV4YW1wbGUub3JnIiwgImlhdCI6IDE3MzUzMDYyMzMsICJzZF9oYXNoIjogIlVqcER1Y
-   3duS2dQSGRHN3U2T2tDMUxYMWNCQWhLVTBXcm1TWEstQmNXYTAifQ.WCqQfQZ2RiOHyb
-   2rSJw-cPIgHlefih_3wM-bRMXSZv10u_7Lh6FVjdmqLYp6sFeLrXhvH85M1ACKwIDgZ4
-   8cuw
+   mV4YW1wbGUub3JnIiwgImlhdCI6IDE3MzkzNjU4NzYsICJzZF9oYXNoIjogIjRTRG9ic
+   ThCQjlRSWw2VGJVSG9NQldfNDliSXN3NlZKZ0lSVGx5RGwyYncifQ.Dtyj0z-m9JrH4_
+   zgytjy3AtHGjPzrEp5H3I8AbKj2Nb5WskQEsnn1ImgxFlez-81irlV5GAKZdmKaMft79
+   9Z2g
 
    After the validation, the Verifier will have the following processed
    SD-JWT payload available for further handling:
@@ -3956,9 +4008,16 @@ Appendix C.  Document History
 
    [[ To be removed from the final specification ]]
 
+   -16
+
+   *  Editorial updates to text introduced in -15
+
    -15
 
- * Address AD review comments resulting from evaluation of formal appeal
+   *  Additions and adjustments to privacy considerations
+   *  Address AD review comments resulting from evaluation of formal
+      appeal
+   *  Clarify language around compromised/coerced verifiers
 
    -14
 
