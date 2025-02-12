@@ -1035,7 +1035,7 @@ the hash function MUST ensure that it is infeasible to calculate any portion of 
 (salt, claim name, claim value) from a particular digest. This implies the hash function MUST
 be preimage resistant, but should also not allow an observer to infer any partial information about
 the undisclosed content. In the terminology of cryptographic commitment schemes, the hash function
-MUST be computationally hiding.
+needs to be computationally hiding.
 
 To ensure the integrity of selectively disclosable claims, the hash function MUST be second-preimage
 resistant. That is, for any combination of salt, claim name and claim value, it is infeasible to find a different combination of salt,
