@@ -1225,7 +1225,7 @@ intended to disclose, for example:
   originally anonymous information presented to Verifier B, therefore revealing
   the identities of users of Verifier B.
 
-The following types of unlinkability are considered here:
+The following types of unlinkability are discussed below:
 
 * Presentation Unlinkability: A Verifier should not be able to link two
   presentations of the same credential.
