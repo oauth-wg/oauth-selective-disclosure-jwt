@@ -804,7 +804,7 @@ an SD-JWT to validate the SD-JWT and extract the payload:
 
 1. Separate the SD-JWT into the Issuer-signed JWT and the Disclosures (if any).
 2. Validate the Issuer-signed JWT:
-    1. Ensure that a signing algorithm was used that was deemed secure for the application. Refer to [@RFC8725], Sections 3.1 and 3.2 for details. The `none` algorithm MUST NOT be accepted.
+    1. Ensure that a signing algorithm was used that was deemed secure for the application. Refer to [@!RFC8725], Sections 3.1 and 3.2 for details. The `none` algorithm MUST NOT be accepted.
     2. Validate the signature over the Issuer-signed JWT per Section 5.2 of [@!RFC7515].
     3. Validate the Issuer and that the signing key belongs to this Issuer.
     5. Check that the `_sd_alg` claim value is understood and the hash algorithm is deemed secure (see (#hash_function_claim)).
@@ -882,7 +882,7 @@ To this end, Verifiers MUST follow the following steps (or equivalent):
 4. Process the SD-JWT as defined in (#sd_jwt_verification) to validate the presentation and extract the payload.
 5. If Key Binding is required:
     1. Determine the public key for the Holder from the SD-JWT (see (#key_binding)).
-    2. Ensure that a signing algorithm was used that was deemed secure for the application. Refer to [@RFC8725], Sections 3.1 and 3.2 for details. The `none` algorithm MUST NOT be accepted.
+    2. Ensure that a signing algorithm was used that was deemed secure for the application. Refer to [@!RFC8725], Sections 3.1 and 3.2 for details. The `none` algorithm MUST NOT be accepted.
     3. Validate the signature over the Key Binding JWT per Section 5.2 of [@!RFC7515].
     4. Check that the `typ` of the Key Binding JWT is `kb+jwt` (see (#kb-jwt)).
     5. Check that the creation time of the Key Binding JWT, as determined by the `iat` claim, is within an acceptable window.
@@ -1179,8 +1179,8 @@ modified the list of Disclosures.
 
 ## Explicit Typing {#explicit_typing}
 
-[@RFC8725, section 3.11] describes the use of explicit typing as one mechanism to prevent confusion attacks
-(described in [@RFC8725, section 2.8]) in which one kind of JWT is mistaken for another. SD-JWTs are also potentially
+[@!RFC8725, section 3.11] describes the use of explicit typing as one mechanism to prevent confusion attacks
+(described in [@!RFC8725, section 2.8]) in which one kind of JWT is mistaken for another. SD-JWTs are also potentially
 subject to such confusion attacks, so in the absence of other techniques, it is RECOMMENDED that application profiles of SD-JWT specify an explicit type
 by including the `typ` header parameter when the SD-JWT is issued, and for Verifiers to check this value.
 
@@ -1463,7 +1463,7 @@ IANA "JSON Web Token Claims" registry [@IANA.JWT] established by [@!RFC7519].
 
 This section requests registration of the following media types [@RFC2046] in
 the "Media Types" registry [@IANA.MediaTypes] in the manner described
-in [@RFC6838].
+in [@!RFC6838].
 
 Note: For the media type value used in the `typ` header in the Issuer-signed JWT
 itself, see (#explicit_typing).
@@ -1475,7 +1475,7 @@ To indicate that the content is an SD-JWT:
 * Required parameters: n/a
 * Optional parameters: n/a
 * Encoding considerations: binary; application/sd-jwt values are a series of base64url-encoded values (some of which may be the empty string) separated by period ('.') and tilde ('~') characters.
-* Security considerations: See the Security Considerations section of [[ this specification ]], [@!RFC7519], and [@RFC8725].
+* Security considerations: See the Security Considerations section of [[ this specification ]], [@!RFC7519], and [@!RFC8725].
 * Interoperability considerations: n/a
 * Published specification: [[ this specification ]]
 * Applications that use this media type: Applications requiring selective disclosure of integrity protected content.
@@ -1523,7 +1523,7 @@ To indicate that the content is a Key Binding JWT:
 * Required parameters: n/a
 * Optional parameters: n/a
 * Encoding considerations: binary; A Key Binding JWT is a JWT; JWT values are encoded as a series of base64url-encoded values separated by period ('.') characters.
-* Security considerations: See the Security Considerations section of [[ this specification ]], [@!RFC7519], and [@RFC8725].
+* Security considerations: See the Security Considerations section of [[ this specification ]], [@!RFC7519], and [@!RFC8725].
 * Interoperability considerations: n/a
 * Published specification: [[ this specification ]]
 * Applications that use this media type: Applications utilizing a JWT based proof of possession mechanism.
@@ -1543,7 +1543,7 @@ To indicate that the content is a Key Binding JWT:
 
 This section requests registration of the "+sd-jwt" structured syntax suffix in
 the "Structured Syntax Suffix" registry [@IANA.StructuredSuffix] in
-the manner described in [RFC6838], which can be used to indicate that
+the manner described in [@!RFC6838], which can be used to indicate that
 the media type is encoded as an SD-JWT.
 
 * Name: SD-JWT
@@ -1552,7 +1552,7 @@ the media type is encoded as an SD-JWT.
 * Encoding considerations: binary; SD-JWT values are a series of base64url-encoded values (some of which may be the empty string) separated by period ('.') or tilde ('~') characters.
 * Interoperability considerations: n/a
 * Fragment identifier considerations: n/a
-* Security considerations: See the Security Considerations section of [[ this specification ]], [@!RFC7519], and [@RFC8725].
+* Security considerations: See the Security Considerations section of [[ this specification ]], [@!RFC7519], and [@!RFC8725].
 * Contact: Daniel Fett, mail@danielfett.de
 * Author/Change controller: IETF
 
