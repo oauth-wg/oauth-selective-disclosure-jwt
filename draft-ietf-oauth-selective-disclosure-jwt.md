@@ -385,7 +385,7 @@ For each claim that is an object property and that is to be made selectively dis
  * Create an array of three elements in this order:
    1. A salt value. MUST be a string. See (#salt-entropy) for security considerations. It is RECOMMENDED to base64url-encode a minimum of 128 bits of cryptographically secure random data, producing a string. The salt value MUST be unique for each claim that is to be selectively disclosed. The Issuer MUST NOT reveal the salt value to any party other than the Holder.
    2. The claim name, or key, as it would be used in a regular JWT payload. It MUST be a string and MUST NOT be `_sd`, `...`, or a claim name existing in the object as a non-selectively disclosable claim.
-   3. The claim value, as it would be used in a regular JWT payload. The value MAY be of any type that is allowed in JSON, including numbers, strings, booleans, arrays, null, and objects.
+   3. The claim value, as it would be used in a regular JWT payload. The value can be of any type that is allowed in JSON, including numbers, strings, booleans, arrays, null, and objects.
  * JSON-encode the array, producing an UTF-8 string.
  * base64url-encode the byte representation of the UTF-8 string, producing a US-ASCII [@!RFC20] string. This string is the Disclosure.
 
@@ -426,7 +426,7 @@ For each claim that is an array element and that is to be made selectively discl
 
  * The array MUST contain two elements in this order:
    1. The salt value as described in (#disclosures_for_object_properties).
-   2. The array element that is to be hidden. This value MAY be of any type that is allowed in JSON, including numbers, strings, booleans, arrays, and objects.
+   2. The array element that is to be hidden. This value can be of any type that is allowed in JSON, including numbers, strings, booleans, arrays, and objects.
 
 The Disclosure string is created by JSON-encoding this array and base64url-encoding the byte representation of the resulting string as described in (#disclosures_for_object_properties). The same considerations regarding
 variations in the result of the JSON encoding apply.
