@@ -1133,7 +1133,7 @@ The precise set of required validity claims will typically be defined by
 ecosystem rules, application-specific profile, or the credential format and MAY include claims other than
 those listed herein.
 
-## Issuer Signature Verification Key Distribution and Rotation {#issuer_signature_key_distribution}
+## Distribution and Rotation of Issuer Signature Verification Key  {#issuer_signature_key_distribution}
 
 This specification does not define how signature verification keys of
 Issuers are distributed to Verifiers. However, it is RECOMMENDED that
