@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2025-02-13T00:15:05.251238+00:00",
+  "timestamp": "2025-02-16T00:16:34.581118+00:00",
   "repo": "oauth-wg/oauth-selective-disclosure-jwt",
   "labels": [
     {
@@ -53767,19 +53767,66 @@
       "labels": [],
       "body": "This PR comprises draft updates aimed at addressing feedback from Hannes Tschofenig in the shepherd review https://mailarchive.ietf.org/arch/msg/oauth/rRpI6rpHDXPXHm-dzyLsBQ-LiEQ/\r\n\r\nPreview editors' draft here: https://drafts.oauth.net/oauth-selective-disclosure-jwt/trying-real-hard-to-be-the-shepherd/draft-ietf-oauth-selective-disclosure-jwt.html\r\n\r\nhttps://mailarchive.ietf.org/arch/msg/oauth/xrzfN70NjAWxMnHWOIlWkJcK9yU/ is the on-list reply to the review, which referes back to this PR #552\r\n\r\n",
       "createdAt": "2025-02-12T13:11:55Z",
-      "updatedAt": "2025-02-12T19:54:13Z",
+      "updatedAt": "2025-02-13T17:50:22Z",
       "baseRepository": "oauth-wg/oauth-selective-disclosure-jwt",
       "baseRefName": "master",
       "baseRefOid": "15c51a56a0a6f80d16bc7238d666ce8db29f7ec1",
       "headRepository": "oauth-wg/oauth-selective-disclosure-jwt",
       "headRefName": "trying-real-hard-to-be-the-shepherd",
-      "headRefOid": "b7f34b62c126a6976e455d2818ec0e9ca6bc8b39",
+      "headRefOid": "3157a12e71a42fd10887f9b296f8ba8e86781bb0",
       "closedAt": null,
       "mergedAt": null,
       "mergedBy": null,
       "mergeCommit": null,
       "comments": [],
-      "reviews": []
+      "reviews": [
+        {
+          "id": "PRR_kwDOHTmVzM6b6gUq",
+          "commit": {
+            "abbreviatedOid": "b7f34b6"
+          },
+          "author": "Sakurann",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2025-02-13T17:43:11Z",
+          "updatedAt": "2025-02-13T17:43:12Z",
+          "comments": [
+            {
+              "originalPosition": 77,
+              "body": "```suggestion\r\n## Distribution and Rotation of Issuer Signature Verification Key  {#issuer_signature_key_distribution}\r\n```",
+              "createdAt": "2025-02-13T17:43:11Z",
+              "updatedAt": "2025-02-13T17:43:12Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOHTmVzM6b6ghA",
+          "commit": {
+            "abbreviatedOid": "b7f34b6"
+          },
+          "author": "danielfett",
+          "authorAssociation": "MEMBER",
+          "state": "APPROVED",
+          "body": "",
+          "createdAt": "2025-02-13T17:43:33Z",
+          "updatedAt": "2025-02-13T17:43:33Z",
+          "comments": []
+        },
+        {
+          "id": "PRR_kwDOHTmVzM6b6jqj",
+          "commit": {
+            "abbreviatedOid": "b7f34b6"
+          },
+          "author": "Sakurann",
+          "authorAssociation": "COLLABORATOR",
+          "state": "APPROVED",
+          "body": "LGTM",
+          "createdAt": "2025-02-13T17:49:10Z",
+          "updatedAt": "2025-02-13T17:49:10Z",
+          "comments": []
+        }
+      ]
     }
   ]
 }
