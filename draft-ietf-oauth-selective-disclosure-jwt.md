@@ -1975,6 +1975,7 @@ data. The original JSON data is then used by the application. See
 
    -16
 
+   * Updates following review of -15 by Hannes Tschofenig, document shepherd
    * Editorial updates to text introduced in -15
 
    -15
