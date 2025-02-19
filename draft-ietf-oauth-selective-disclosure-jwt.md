@@ -388,7 +388,7 @@ For each claim that is an object property and that is to be made selectively dis
  * JSON-encode the array, producing an UTF-8 string.
  * base64url-encode the byte representation of the UTF-8 string. This string is the Disclosure.
 
-Note: The order was decided based on readability considerations: salts have a
+> Note: The order was decided based on readability considerations: salts have a
 constant length within the SD-JWT, claim names would be around the same length
 all the time, and claim values would vary in size, potentially being large
 objects.
