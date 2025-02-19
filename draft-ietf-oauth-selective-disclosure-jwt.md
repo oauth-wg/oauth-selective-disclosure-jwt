@@ -197,7 +197,7 @@ To disclose to a Verifier a subset of the SD-JWT claim values, a Holder sends on
 
 Key Binding is an optional feature. When Key Binding is required by the use case, the SD-JWT MUST contain information about the key material controlled by the Holder.
 
-Note: How the public key is included in SD-JWT is described in (#key_binding).
+> Note: How the public key is included in SD-JWT is described in (#key_binding).
 
 When a Verifier requires Key Binding, the Holder presents an SD-JWT+KB, consisting of an SD-JWT as well as a Key Binding JWT tied to that SD-JWT.
 The Key Binding JWT encodes a signature by the Holder's private key over
@@ -358,7 +358,7 @@ associated with the Holder, or a reference thereto, using the `cnf` claim as def
 The `jwk` confirmation method, as defined in Section 3.2 of [@!RFC7800], is
 suggested for doing so, however, other confirmation methods can be used.
 
-Note that, as was stated in [@!RFC7800],
+> Note that, as was stated in [@!RFC7800],
 if an application needs to represent multiple proof-of-possession
 keys in the same SD-JWT, one way to achieve this is to use other
 claim names, in addition to `cnf`, to hold the additional proof-of-possession key information.
@@ -368,7 +368,7 @@ established. For example, the Holder MAY create a key pair and provide a public 
 the Issuer MAY create the key pair for the Holder, or
 Holder and Issuer MAY use pre-established key material.
 
-Note: The examples throughout this document use the `cnf` claim with the `jwk` member to include
+> Note: The examples throughout this document use the `cnf` claim with the `jwk` member to include
 the raw public key by value in SD-JWT.
 
 ## Disclosures {#creating_disclosures}
@@ -678,7 +678,7 @@ Details of the Validation process are defined in (#verifier_verification).
 
 In this example, a simple SD-JWT is demonstrated. This example is split into issuance and presentation.
 
-Note: Throughout the examples in this document, line breaks had to be added to
+> Note: Throughout the examples in this document, line breaks had to be added to
 JSON strings and base64-encoded strings to adhere to the 72-character limit for
 lines in RFCs and for readability. JSON does not allow line breaks within strings.
 
@@ -752,7 +752,7 @@ The following input JWT Claims Set is used as an example throughout this section
 
 <{{examples/address_only_flat/user_claims.json}}
 
-Note: The following examples of the structures are non-normative and are not intended to
+> Note: The following examples of the structures are non-normative and are not intended to
 represent all possible options. They are also not meant to define or restrict
 how `address` can be represented in an SD-JWT.
 
@@ -838,7 +838,7 @@ an SD-JWT to validate the SD-JWT and extract the payload:
 
 If any step fails, the SD-JWT is not valid, and processing MUST be aborted. Otherwise, the JSON document resulting from the preceding processing and verification steps, herein referred to as the processed SD-JWT payload, can be made available to the application to be used for its intended purpose.
 
-Note that these processing steps do not yield any guarantees to the Holder about having received a complete set of Disclosures. That is, for some digest values in the Issuer-signed JWT (which are not decoy digests) there may be no corresponding Disclosures, for example, if the message from the Issuer was truncated.
+> Note that these processing steps do not yield any guarantees to the Holder about having received a complete set of Disclosures. That is, for some digest values in the Issuer-signed JWT (which are not decoy digests) there may be no corresponding Disclosures, for example, if the message from the Issuer was truncated.
 It is up to the Holder how to maintain the mapping between the Disclosures and the plaintext claim values to be able to display them to the user when needed.
 
 
@@ -1470,7 +1470,7 @@ This section requests registration of the following media types [@RFC2046] in
 the "Media Types" registry [@IANA.MediaTypes] in the manner described
 in [@RFC6838].
 
-Note: For the media type value used in the `typ` header in the Issuer-signed JWT
+> Note: For the media type value used in the `typ` header in the Issuer-signed JWT
 itself, see (#explicit_typing).
 
 To indicate that the content is an SD-JWT:
