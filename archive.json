@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2025-02-18T00:15:00.689383+00:00",
+  "timestamp": "2025-02-20T00:15:15.313171+00:00",
   "repo": "oauth-wg/oauth-selective-disclosure-jwt",
   "labels": [
     {
@@ -53767,13 +53767,13 @@
       "labels": [],
       "body": "This PR comprises draft updates aimed at addressing feedback from Hannes Tschofenig in the shepherd review https://mailarchive.ietf.org/arch/msg/oauth/rRpI6rpHDXPXHm-dzyLsBQ-LiEQ/\r\n\r\nPreview editors' draft here: https://drafts.oauth.net/oauth-selective-disclosure-jwt/trying-real-hard-to-be-the-shepherd/draft-ietf-oauth-selective-disclosure-jwt.html\r\n\r\nhttps://mailarchive.ietf.org/arch/msg/oauth/xrzfN70NjAWxMnHWOIlWkJcK9yU/ is the on-list reply to the review, which referes back to this PR #552\r\n\r\n",
       "createdAt": "2025-02-12T13:11:55Z",
-      "updatedAt": "2025-02-13T17:50:22Z",
+      "updatedAt": "2025-02-18T15:12:07Z",
       "baseRepository": "oauth-wg/oauth-selective-disclosure-jwt",
       "baseRefName": "master",
       "baseRefOid": "15c51a56a0a6f80d16bc7238d666ce8db29f7ec1",
       "headRepository": "oauth-wg/oauth-selective-disclosure-jwt",
       "headRefName": "trying-real-hard-to-be-the-shepherd",
-      "headRefOid": "3157a12e71a42fd10887f9b296f8ba8e86781bb0",
+      "headRefOid": "4fd6532ca161eba10ba1983bd7b2fc3b146dff96",
       "closedAt": null,
       "mergedAt": null,
       "mergedBy": null,
@@ -53825,6 +53825,53 @@
           "createdAt": "2025-02-13T17:49:10Z",
           "updatedAt": "2025-02-13T17:49:10Z",
           "comments": []
+        }
+      ]
+    },
+    {
+      "number": 553,
+      "id": "PR_kwDOHTmVzM6LyBS5",
+      "title": "some updates resulting from late WG review ",
+      "url": "https://github.com/oauth-wg/oauth-selective-disclosure-jwt/pull/553",
+      "state": "OPEN",
+      "author": "bc-pi",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "Selective incorporation of changes based on feedback received nearly four months after the end of the second working group last call (thread at https://mailarchive.ietf.org/arch/msg/oauth/o9G6ibRuibzHQeoKHG7hLpU-CUM/)",
+      "createdAt": "2025-02-19T17:08:59Z",
+      "updatedAt": "2025-02-19T18:30:23Z",
+      "baseRepository": "oauth-wg/oauth-selective-disclosure-jwt",
+      "baseRefName": "master",
+      "baseRefOid": "15c51a56a0a6f80d16bc7238d666ce8db29f7ec1",
+      "headRepository": "oauth-wg/oauth-selective-disclosure-jwt",
+      "headRefName": "things-from-late-review-by-rohan",
+      "headRefOid": "741c4c9b59ffcb0b6e01337c1ef1740be9f069cc",
+      "closedAt": null,
+      "mergedAt": null,
+      "mergedBy": null,
+      "mergeCommit": null,
+      "comments": [],
+      "reviews": [
+        {
+          "id": "PRR_kwDOHTmVzM6cnnnD",
+          "commit": {
+            "abbreviatedOid": "8760e44"
+          },
+          "author": "rohanmahy",
+          "authorAssociation": "NONE",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2025-02-19T18:17:25Z",
+          "updatedAt": "2025-02-19T18:17:26Z",
+          "comments": [
+            {
+              "originalPosition": 65,
+              "body": "```suggestion\r\n> Note: The order was decided based on readability considerations: salts have a\r\n```",
+              "createdAt": "2025-02-19T18:17:25Z",
+              "updatedAt": "2025-02-19T18:17:26Z"
+            }
+          ]
         }
       ]
     }
