@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2025-02-20T00:15:15.313171+00:00",
+  "timestamp": "2025-02-23T00:16:34.353210+00:00",
   "repo": "oauth-wg/oauth-selective-disclosure-jwt",
   "labels": [
     {
@@ -53874,6 +53874,32 @@
           ]
         }
       ]
+    },
+    {
+      "number": 554,
+      "id": "PR_kwDOHTmVzM6MFyh6",
+      "title": "add a swift lib to Implementations list",
+      "url": "https://github.com/oauth-wg/oauth-selective-disclosure-jwt/pull/554",
+      "state": "OPEN",
+      "author": "bc-pi",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "add https://github.com/openwallet-foundation-labs/multiformat-vc-ios to Implementations list",
+      "createdAt": "2025-02-21T19:00:42Z",
+      "updatedAt": "2025-02-21T19:00:42Z",
+      "baseRepository": "oauth-wg/oauth-selective-disclosure-jwt",
+      "baseRefName": "master",
+      "baseRefOid": "15c51a56a0a6f80d16bc7238d666ce8db29f7ec1",
+      "headRepository": "oauth-wg/oauth-selective-disclosure-jwt",
+      "headRefName": "travis-kelce-swift",
+      "headRefOid": "ff29eaa43616b85ca83a5e588a9b46aae919477a",
+      "closedAt": null,
+      "mergedAt": null,
+      "mergedBy": null,
+      "mergeCommit": null,
+      "comments": [],
+      "reviews": []
     }
   ]
 }
