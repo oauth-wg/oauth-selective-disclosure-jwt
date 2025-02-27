@@ -64,7 +64,7 @@ The Holder may elect to disclose only the address to one Verifier, and only the 
 Privacy principles of minimal disclosure in conjunction with this model demand a mechanism enabling selective disclosure of data elements while ensuring that Verifiers can still check the authenticity of the data provided.
 This specification defines such a mechanism for JSON-encoded payloads of JSON Web Signatures, with a primary use case being JWTs.
 
-SD-JWT is based on an aproach called "salted hashes": For any data element that should be selectively disclosable, the Issuer of the SD-JWT does not include the cleartext of the data in the JSON-encoded payload of the JWS structure; instead, a hash digest of the data takes its place.
+SD-JWT is based on an approach called "salted hashes": For any data element that should be selectively disclosable, the Issuer of the SD-JWT does not include the cleartext of the data in the JSON-encoded payload of the JWS structure; instead, a digest of the data takes its place.
 For presentation to a Verifier, the Holder sends the signed payload along with the cleartext of those claims it wants to disclose.
 The Verifier can then compute the digest of the cleartext data and confirm it is included in the signed payload.
 To ensure that Verifiers cannot guess cleartext values of non-disclosed data elements, an additional salt value is used when creating the digest and sent along with the cleartext when disclosing it.
@@ -320,7 +320,7 @@ The payload of an SD-JWT is a JSON object according to the following rules:
  4. The payload MAY contain one or more non-selectively disclosable claims.
  5. The payload MAY contain the Holder's public key(s) or reference(s) thereto, as explained in (#key_binding).
  6. The payload MAY contain further claims such as `iss`, `iat`, etc. as defined or required by the application using SD-JWTs.
- 7. The payload MUST NOT contain the reserved claims `_sd` or `...` except for the purpose of transporting digests as described below.
+ 7. The payload MUST NOT contain the claims `_sd` or `...` except for the purpose of conveying digests as described in (#embedding_object_properties) and (#embedding_array_elements) respectively below.
 
 The same digest value MUST NOT appear more than once in the SD-JWT.
 
@@ -384,7 +384,7 @@ For each claim that is an object property and that is to be made selectively dis
  * Create an array of three elements in this order:
    1. A salt value. MUST be a string. See (#salt-entropy) for security considerations. It is RECOMMENDED to base64url-encode a minimum of 128 bits of cryptographically secure random data, producing a string. The salt value MUST be unique for each claim that is to be selectively disclosed. The Issuer MUST NOT reveal the salt value to any party other than the Holder.
    2. The claim name, or key, as it would be used in a regular JWT payload. It MUST be a string and MUST NOT be `_sd`, `...`, or a claim name existing in the object as a non-selectively disclosable claim.
-   3. The claim value, as it would be used in a regular JWT payload. The value MAY be of any type that is allowed in JSON, including numbers, strings, booleans, arrays, null, and objects.
+   3. The claim value, as it would be used in a regular JWT payload. The value can be of any type that is allowed in JSON, including numbers, strings, booleans, arrays, null, and objects.
  * JSON-encode the array, producing an UTF-8 string.
  * base64url-encode the byte representation of the UTF-8 string. This string is the Disclosure.
 
@@ -427,7 +427,7 @@ For each claim that is an array element and that is to be made selectively discl
 
  * The array MUST contain two elements in this order:
    1. The salt value as described in (#disclosures_for_object_properties).
-   2. The array element that is to be hidden. This value MAY be of any type that is allowed in JSON, including numbers, strings, booleans, arrays, and objects.
+   2. The array element that is to be hidden. This value can be of any type that is allowed in JSON, including numbers, strings, booleans, arrays, and objects.
 
 The Disclosure string is created by JSON-encoding this array and base64url-encoding the byte representation of the resulting string as described in (#disclosures_for_object_properties). The same considerations regarding
 variations in the result of the JSON encoding apply.
@@ -807,7 +807,7 @@ an SD-JWT to validate the SD-JWT and extract the payload:
 
 1. Separate the SD-JWT into the Issuer-signed JWT and the Disclosures (if any).
 2. Validate the Issuer-signed JWT:
-    1. Ensure that a signing algorithm was used that was deemed secure for the application. Refer to [@RFC8725], Sections 3.1 and 3.2 for details. The `none` algorithm MUST NOT be accepted.
+    1. Ensure that a signing algorithm was used that was deemed secure for the application. Refer to [@!RFC8725], Sections 3.1 and 3.2 for details. The `none` algorithm MUST NOT be accepted.
     2. Validate the signature over the Issuer-signed JWT per Section 5.2 of [@!RFC7515].
     3. Validate the Issuer and that the signing key belongs to this Issuer.
     5. Check that the `_sd_alg` claim value is understood and the hash algorithm is deemed secure (see (#hash_function_claim)).
@@ -885,7 +885,7 @@ To this end, Verifiers MUST follow the following steps (or equivalent):
 4. Process the SD-JWT as defined in (#sd_jwt_verification) to validate the presentation and extract the payload.
 5. If Key Binding is required:
     1. Determine the public key for the Holder from the SD-JWT (see (#key_binding)).
-    2. Ensure that a signing algorithm was used that was deemed secure for the application. Refer to [@RFC8725], Sections 3.1 and 3.2 for details. The `none` algorithm MUST NOT be accepted.
+    2. Ensure that a signing algorithm was used that was deemed secure for the application. Refer to [@!RFC8725], Sections 3.1 and 3.2 for details. The `none` algorithm MUST NOT be accepted.
     3. Validate the signature over the Key Binding JWT per Section 5.2 of [@!RFC7515].
     4. Check that the `typ` of the Key Binding JWT is `kb+jwt` (see (#kb-jwt)).
     5. Check that the creation time of the Key Binding JWT, as determined by the `iat` claim, is within an acceptable window.
@@ -978,7 +978,7 @@ Additionally, as described in (#key_binding_security), the application of Key Bi
 
 ## Mandatory Signing of the Issuer-signed JWT {#sec-is-jwt}
 
-The Issuer-signed JWT MUST be signed by the Issuer to protect integrity of the issued
+The JWT MUST be signed by the Issuer to protect integrity of the issued
 claims. An attacker can modify or add claims if this JWT is not signed (e.g.,
 change the "email" attribute to take over the victim's account or add an
 attribute indicating a fake academic qualification).
@@ -1038,7 +1038,7 @@ the hash function MUST ensure that it is infeasible to calculate any portion of 
 (salt, claim name, claim value) from a particular digest. This implies the hash function MUST
 be preimage resistant, but should also not allow an observer to infer any partial information about
 the undisclosed content. In the terminology of cryptographic commitment schemes, the hash function
-MUST be computationally hiding.
+needs to be computationally hiding.
 
 To ensure the integrity of selectively disclosable claims, the hash function MUST be second-preimage
 resistant. That is, for any combination of salt, claim name and claim value, it is infeasible to find a different combination of salt,
@@ -1136,7 +1136,7 @@ The precise set of required validity claims will typically be defined by
 ecosystem rules, application-specific profile, or the credential format and MAY include claims other than
 those listed herein.
 
-## Issuer Signature Key Distribution and Rotation {#issuer_signature_key_distribution}
+## Distribution and Rotation of Issuer Signature Verification Key  {#issuer_signature_key_distribution}
 
 This specification does not define how signature verification keys of
 Issuers are distributed to Verifiers. However, it is RECOMMENDED that
@@ -1182,8 +1182,8 @@ modified the list of Disclosures.
 
 ## Explicit Typing {#explicit_typing}
 
-[@RFC8725, section 3.11] describes the use of explicit typing as one mechanism to prevent confusion attacks
-(described in [@RFC8725, section 2.8]) in which one kind of JWT is mistaken for another. SD-JWTs are also potentially
+[@!RFC8725, section 3.11] describes the use of explicit typing as one mechanism to prevent confusion attacks
+(described in [@!RFC8725, section 2.8]) in which one kind of JWT is mistaken for another. SD-JWTs are also potentially
 subject to such confusion attacks, so in the absence of other techniques, it is RECOMMENDED that application profiles of SD-JWT specify an explicit type
 by including the `typ` header parameter when the SD-JWT is issued, and for Verifiers to check this value.
 
@@ -1228,7 +1228,7 @@ intended to disclose, for example:
   originally anonymous information presented to Verifier B, therefore revealing
   the identities of users of Verifier B.
 
-The following types of unlinkability are considered here:
+The following types of unlinkability are discussed below:
 
 * Presentation Unlinkability: A Verifier should not be able to link two
   presentations of the same credential.
@@ -1411,7 +1411,7 @@ Orie Steele,
 Paul Bastian,
 Peter Altmann,
 Pieter Kasselman,
-Richard "fnord" Barnes,
+Richard Barnes,
 Rohan Mahy,
 Ryosuke Abe,
 Sami Rosendahl,
@@ -1468,7 +1468,7 @@ IANA "JSON Web Token Claims" registry [@IANA.JWT] established by [@!RFC7519].
 
 This section requests registration of the following media types [@RFC2046] in
 the "Media Types" registry [@IANA.MediaTypes] in the manner described
-in [@RFC6838].
+in [@!RFC6838].
 
 > Note: For the media type value used in the `typ` header in the Issuer-signed JWT
 itself, see (#explicit_typing).
@@ -1480,10 +1480,10 @@ To indicate that the content is an SD-JWT:
 * Required parameters: n/a
 * Optional parameters: n/a
 * Encoding considerations: binary; application/sd-jwt values are a series of base64url-encoded values (some of which may be the empty string) separated by period ('.') and tilde ('~') characters.
-* Security considerations: See the Security Considerations section of [[ this specification ]], [@!RFC7519], and [@RFC8725].
+* Security considerations: See the Security Considerations section of [[ this specification ]], [@!RFC7519], and [@!RFC8725].
 * Interoperability considerations: n/a
 * Published specification: [[ this specification ]]
-* Applications that use this media type: TBD
+* Applications that use this media type: Applications requiring selective disclosure of integrity protected content.
 * Fragment identifier considerations: n/a
 * Additional information:
    * Magic number(s): n/a
@@ -1503,11 +1503,11 @@ To indicate that the content is a JWS JSON serialized SD-JWT:
 * Subtype name: sd-jwt+json
 * Required parameters: n/a
 * Optional parameters: n/a
-* Encoding considerations: binary; application/sd-jwt+json values are represented as a JSON Object; UTF-8 encoding SHOULD be employed for the JSON object.
+* Encoding considerations: binary; application/sd-jwt+json values are represented as a JSON Object.
 * Security considerations: See the Security Considerations section of [[ this specification ]], and [@!RFC7515].
 * Interoperability considerations: n/a
 * Published specification: [[ this specification ]]
-* Applications that use this media type: TBD
+* Applications that use this media type: Applications requiring selective disclosure of content protected by ETSI JAdES compliant signatures.
 * Fragment identifier considerations: n/a
 * Additional information:
     * Magic number(s): n/a
@@ -1527,11 +1527,11 @@ To indicate that the content is a Key Binding JWT:
 * Subtype name: kb+jwt
 * Required parameters: n/a
 * Optional parameters: n/a
-* Encoding considerations: binary; A Key Binding JWT is a JWT; JWT values are encoded as a series of base64url-encoded values (some of which may be the empty string) separated by period ('.') characters.
-* Security considerations: See the Security Considerations section of [[ this specification ]], [@!RFC7519], and [@RFC8725].
+* Encoding considerations: binary; A Key Binding JWT is a JWT; JWT values are encoded as a series of base64url-encoded values separated by period ('.') characters.
+* Security considerations: See the Security Considerations section of [[ this specification ]], [@!RFC7519], and [@!RFC8725].
 * Interoperability considerations: n/a
 * Published specification: [[ this specification ]]
-* Applications that use this media type: TBD
+* Applications that use this media type: Applications utilizing a JWT based proof of possession mechanism.
 * Fragment identifier considerations: n/a
 * Additional information:
    * Magic number(s): n/a
@@ -1548,7 +1548,7 @@ To indicate that the content is a Key Binding JWT:
 
 This section requests registration of the "+sd-jwt" structured syntax suffix in
 the "Structured Syntax Suffix" registry [@IANA.StructuredSuffix] in
-the manner described in [RFC6838], which can be used to indicate that
+the manner described in [@!RFC6838], which can be used to indicate that
 the media type is encoded as an SD-JWT.
 
 * Name: SD-JWT
@@ -1557,7 +1557,7 @@ the media type is encoded as an SD-JWT.
 * Encoding considerations: binary; SD-JWT values are a series of base64url-encoded values (some of which may be the empty string) separated by period ('.') or tilde ('~') characters.
 * Interoperability considerations: n/a
 * Fragment identifier considerations: n/a
-* Security considerations: See the Security Considerations section of [[ this specification ]], [@!RFC7519], and [@RFC8725].
+* Security considerations: See the Security Considerations section of [[ this specification ]], [@!RFC7519], and [@!RFC8725].
 * Contact: Daniel Fett, mail@danielfett.de
 * Author/Change controller: IETF
 
@@ -1980,6 +1980,7 @@ data. The original JSON data is then used by the application. See
 
    -16
 
+   * Updates following review of -15 by Hannes Tschofenig, document shepherd
    * Editorial updates to text introduced in -15
    * Changes based on feedback received after the end of the second working group last call
 
