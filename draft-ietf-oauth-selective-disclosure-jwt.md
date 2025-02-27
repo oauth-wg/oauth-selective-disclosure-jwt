@@ -1981,7 +1981,7 @@ data. The original JSON data is then used by the application. See
    -16
 
    * Editorial updates to text introduced in -15
-   * Selective incorporation of changes based on feedback received nearly four months after the end of the second working group last call
+   * Changes based on feedback received after the end of the second working group last call
 
    -15
 
