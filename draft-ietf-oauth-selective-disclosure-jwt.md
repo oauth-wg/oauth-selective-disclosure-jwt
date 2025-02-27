@@ -844,7 +844,7 @@ It is up to the Holder how to maintain the mapping between the Disclosures and t
 
 ## Processing by the Holder  {#holder_verification}
 
-The Issuer provides the Holder an SD-JWT, not an SD-JWT+KB.  If the Holder
+The Issuer provides the Holder with an SD-JWT, not an SD-JWT+KB.  If the Holder
 receives an SD-JWT+KB, it MUST be rejected.
 
 When receiving an SD-JWT, the Holder MUST do the following:
