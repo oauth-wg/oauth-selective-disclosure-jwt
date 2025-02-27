@@ -403,7 +403,7 @@ The array is created as follows:
 The resulting Disclosure is: `WyJfMjZiYzRMVC1hYzZxMktJNmNCVzVlcyIsICJmYW1pbHlfbmFtZSIsICJNw7ZiaXVzIl0`
 
 Note that variations in whitespace, encoding of Unicode characters, ordering of object properties, etc., are allowed
-in the JSON representation and no canonicalization needs be performed before base64url-encoding because the digest is calculated over the base64url-encoded value itself.
+in the JSON representation and no canonicalization needs to be performed before base64url-encoding because the digest is calculated over the base64url-encoded value itself.
 For example, the following strings are all valid and encode the
 same claim value "Möbius":
 
