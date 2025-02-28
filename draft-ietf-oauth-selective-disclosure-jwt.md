@@ -1978,6 +1978,8 @@ data. The original JSON data is then used by the application. See
 
    [[ To be removed from the final specification ]]
 
+   -17
+
    -16
 
    * Updates following review of -15 by Hannes Tschofenig, document shepherd
