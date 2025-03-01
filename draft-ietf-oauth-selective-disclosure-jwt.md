@@ -1400,6 +1400,7 @@ John Mattsson,
 Joseph Heenan,
 Justin Richer,
 Kushal Das,
+Martin Thomson,
 Matthew Miller,
 Michael Fraser,
 Michael B. Jones,
@@ -1424,8 +1425,6 @@ Vittorio Bertocci,
 Watson Ladd, and
 Yaron Sheffer
 for their contributions (some of which were substantial) to this draft and to the initial set of implementations.
-
-Special appreciation is extended to Martin Thomson, who wielded his considerable intellect and influence to change a single occurrence of the word "to" to "with" in the midst of a significant proposal that would be integrated into this document six months later.
 
 The work on this draft was started at OAuth Security Workshop 2022 in Trondheim, Norway.
 
@@ -1979,6 +1978,8 @@ data. The original JSON data is then used by the application. See
    [[ To be removed from the final specification ]]
 
    -17
+
+   * Acknowledgements updates
 
    -16
 
