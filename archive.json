@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2025-02-27T00:15:24.263049+00:00",
+  "timestamp": "2025-03-02T00:16:41.783019+00:00",
   "repo": "oauth-wg/oauth-selective-disclosure-jwt",
   "labels": [
     {
@@ -11298,7 +11298,7 @@
       "url": "https://github.com/oauth-wg/oauth-selective-disclosure-jwt/issues/461",
       "state": "CLOSED",
       "author": "rohanmahy",
-      "authorAssociation": "NONE",
+      "authorAssociation": "CONTRIBUTOR",
       "assignees": [],
       "labels": [
         "discuss-first",
@@ -11326,7 +11326,7 @@
         },
         {
           "author": "rohanmahy",
-          "authorAssociation": "NONE",
+          "authorAssociation": "CONTRIBUTOR",
           "body": "Grammatically, the statement as written is a non-sequitur. For those who celebrate what?  You seem not to care for ABNF, which is fine, but do you celebrate your partner's birthday? Halloween? The beginning of summer? So this ABNF is for you because you celebrate! Happy World Samosa Day, here is your free ASN.1 encoding!\r\n\r\nA specification is for its readers. Including an in-joke is only appropriate to the extent it does not confuse or distract the reader. Take 2: \"An optional Augmented Backus Naur Form (ABNF) {{!RFC5234}} formal grammar representaton of SD-JWT, SD-JWT+KB, and various constituent parts is provided here:\"\r\n\r\nOn a more constructive note, I can write a PR to put the ABNF in an appendix.\r\n\r\n(This is an Issue, not a PR; you clearly understand the reference format which an editor can either adjust during incorporation or ask me to write a PR, which would have the same reference convention as the draft.)",
           "createdAt": "2024-09-04T14:33:05Z",
           "updatedAt": "2024-09-04T14:43:29Z"
@@ -12375,7 +12375,7 @@
       "url": "https://github.com/oauth-wg/oauth-selective-disclosure-jwt/issues/530",
       "state": "CLOSED",
       "author": "rohanmahy",
-      "authorAssociation": "NONE",
+      "authorAssociation": "CONTRIBUTOR",
       "assignees": [],
       "labels": [
         "has-PR"
@@ -12401,7 +12401,7 @@
         },
         {
           "author": "rohanmahy",
-          "authorAssociation": "NONE",
+          "authorAssociation": "CONTRIBUTOR",
           "body": "> https://www.ietf.org/archive/id/draft-ietf-oauth-selective-disclosure-jwt-14.html#section-7.1-4.5 in 7.1 covers (I think) \"b)\". And \"a)\" would be an implementation choice/detail that could maybe be mentioned but wouldn't be a normative requirement.\r\n\r\nRegarding steps 4 and 5, I think these are just plain wrong in the Holder verification case. These steps should be moved from 7.1 to 7.3. If the Holder does not have all the disclosures, they shouldn't use the SD-JWT. It is meaningless to say the Holder *removes* array elements and `_sd` keys from the payload, (because they can't send a payload to the Verifier without these elements). The Holder also cannot check for kleptographic attacks where the  Issuer and Verifier collude.\r\n\r\nI don't see why we would argue about a). It is probably a single sentence in 7.2, something like: \"The Holder verifies that the disclosures it receives from the Issuer are acceptable to the Holder.\" If the policy of the Holder is that any disclosure asserted by the Issuer is ok, then it is still complying with the sentence. However it is an important reminder that there is something important to check here. The idea that the Holder may not always and completely trust the Issuer will be new to many readers.",
           "createdAt": "2024-12-13T17:42:46Z",
           "updatedAt": "2024-12-13T17:42:46Z"
@@ -12713,6 +12713,102 @@
       "body": "In section 10.3, the text states:\n\n> Usually, transport protocols for issuance and presentation of credentials are designed to protect the confidentiality of the transmitted data, for example, by requiring the use of TLS.\n> \n> This specification therefore considers the confidentiality of the data to be provided by the transport protocol and does not specify any encryption mechanism.\n\nConfidentiality alone would be insufficient. It is necessary to consider both confidentiality and integrity. \nEverybody is using TLS today which supports both confidentiality and integrity.\n\nChange into:\n\n> 10.3. Confidentiality and integrity during Transport\n> \n> Usually, transport protocols for issuance and presentation of credentials are designed to protect the confidentiality and the integrity of the transmitted data, for example, by requiring the use of TLS.\n> \n> This specification therefore considers the confidentiality and the integrity of the data to be provided by the transport protocol and does not specify any specific cryptographic mechanism.\n \n This text is sufficient and the remaining of this section which is copied below can be deleted:\n \n> Implementers MUST ensure that the transport protocol provides confidentiality if the privacy of user data or correlation attacks by passive observers are a concern. To encrypt the SD-JWT when transmitted over an insecure channel, implementers MAY use JSON Web Encryption (JWE) [[RFC7516](https://drafts.oauth.net/oauth-selective-disclosure-jwt/draft-ietf-oauth-selective-disclosure-jwt.html#RFC7516)] by nesting the SD-JWT as the plaintext payload of a JWE. Especially, when an SD-JWT is transmitted via a URL and information may be stored/cached in the browser or end up in web server logs, the SD-JWT SHOULD be encrypted using JWE.",
       "createdAt": "2025-02-06T15:14:04Z",
       "updatedAt": "2025-02-06T15:14:04Z",
+      "closedAt": null,
+      "comments": []
+    },
+    {
+      "number": 557,
+      "id": "I_kwDOHTmVzM6sMcd_",
+      "title": "In Section 1.2, the term End-User should be defined as it is a fundamental entity in ISO 29100",
+      "url": "https://github.com/oauth-wg/oauth-selective-disclosure-jwt/issues/557",
+      "state": "OPEN",
+      "author": "Denisthemalice",
+      "authorAssociation": "NONE",
+      "assignees": [],
+      "labels": [],
+      "body": "This comment is a consequence of the issue #550 \n\nAdd the following definition:\n\n> End-User\n> An individual that has the control of a Holder. When requested by the Holder, the individual is able to take decisions, \nin particular, to indicate which selectable claims he consents to be disclosed to a Verifier.\n",
+      "createdAt": "2025-03-01T14:35:12Z",
+      "updatedAt": "2025-03-01T14:35:12Z",
+      "closedAt": null,
+      "comments": []
+    },
+    {
+      "number": 558,
+      "id": "I_kwDOHTmVzM6sMclW",
+      "title": "Proposed rewording in Section 1.2 for the term Holder",
+      "url": "https://github.com/oauth-wg/oauth-selective-disclosure-jwt/issues/558",
+      "state": "OPEN",
+      "author": "Denisthemalice",
+      "authorAssociation": "NONE",
+      "assignees": [],
+      "labels": [],
+      "body": "This comment is a consequence of the issue #550 \n\nIt is important to make the difference between an application and an End-User. \n\nClause 1.2 states:\n\n> Holder:\n> An entity that received SD-JWTs from the Issuer and has control over them. \nIn the context of this document, the term may refer to the actual user, the supporting hardware and software in their possession, or both.\n> \n\nChange into:\n\n> Holder:\n> An application supported by a hardware that received SD-JWTs + all Disclosures from the Issuer and presents SD-JWT + selected Disclosures \nto a Verifier. In the context of this document, the request to an Issuer of SD-JWTs + all Disclosures by a Holder is not described. That application is assumed to be under the control of an End-User.\n",
+      "createdAt": "2025-03-01T14:36:10Z",
+      "updatedAt": "2025-03-01T14:36:10Z",
+      "closedAt": null,
+      "comments": []
+    },
+    {
+      "number": 559,
+      "id": "I_kwDOHTmVzM6sMcoq",
+      "title": "Figure 1 should illustrate the involvement of an End-User and be closer to the data structures that are exchanged",
+      "url": "https://github.com/oauth-wg/oauth-selective-disclosure-jwt/issues/559",
+      "state": "OPEN",
+      "author": "Denisthemalice",
+      "authorAssociation": "NONE",
+      "assignees": [],
+      "labels": [],
+      "body": "This comment is a consequence of the issue #550.\n\nThe End-User should be represented on Figure 1 to indicate that an End-User provides his consent to some operations. \n\nThis would be an important guidance for implementations.\n\nBetween the Issuer and the Holder the text states:\n\n>             Issues SD-JWT\n>       including all Disclosures\n\nThis means that the SD-JWT INCLUDES all Diclosures which is wrong. The SD-JWT DOES NOT INCLUDE \"all Diclosures\".\n\nThe text should be corrected in the following way:\n\n>       Issues SD-JWT + all Disclosures\n\nBetween the Holder and the Verifier the text states:\n\n>          Presents SD-JWT+KB\n>     including selected Disclosures\n\nThe SD-JWT+KB is an acronym that does not correspond to the data elements that are identified in this draft.\n\nThe text should be corrected in the following way:\n\n>     Presents SD-JWT + selected Disclosures\n>            + KB-JWT (Optional)\n> \n\nThis would lead to the modified following Figure 1:\n\n```\n           +------------+\n           |            |\n           |   Issuer   |\n           |            |\n           +------------+\n                 |\n                 |\n      Issues SD-JWT + all Disclosures\n                 |\n                 v\n           +------------+\n           |            |   Consent\n           |   Holder   |<---------- End-User\n           |            |\n           +------------+\n                 |\n                 |\n    Presents SD-JWT + selected Disclosures\n           + KB-JWT (Optional)\n                 |\n                 v\n           +-------------+\n           |             |+\n           |  Verifiers  ||+\n           |             |||\n           +-------------+||\n            +-------------+|\n             +-------------+\n\n\n```\nIn the remaining of the text, the same kind of changes should be done.\n",
+      "createdAt": "2025-03-01T14:36:34Z",
+      "updatedAt": "2025-03-01T14:36:34Z",
+      "closedAt": null,
+      "comments": []
+    },
+    {
+      "number": 560,
+      "id": "I_kwDOHTmVzM6sMc6x",
+      "title": "The definition of an Issuer would need to be polished",
+      "url": "https://github.com/oauth-wg/oauth-selective-disclosure-jwt/issues/560",
+      "state": "OPEN",
+      "author": "Denisthemalice",
+      "authorAssociation": "NONE",
+      "assignees": [],
+      "labels": [],
+      "body": "This comment is a consequence of the issue #559\n\nThe current definition of Issuer is:\n\n> Issuer: An entity that creates SD-JWTs.\n\nReplace this definition by:\n\n> Issuer: An entity that issues SD-JWTs and all Disclosures.\n\nThis would match with the proposed revised Figure 1.\n",
+      "createdAt": "2025-03-01T14:38:36Z",
+      "updatedAt": "2025-03-01T14:38:36Z",
+      "closedAt": null,
+      "comments": []
+    },
+    {
+      "number": 561,
+      "id": "I_kwDOHTmVzM6sMdP3",
+      "title": "Proposed rewording in Section 1.1 about SD-JWT+KB",
+      "url": "https://github.com/oauth-wg/oauth-selective-disclosure-jwt/issues/561",
+      "state": "OPEN",
+      "author": "Denisthemalice",
+      "authorAssociation": "NONE",
+      "assignees": [],
+      "labels": [],
+      "body": "Clause 1.1 states:\n \n\n> SD-JWT+KB is a composite structure enabling cryptographic key binding when presented to the Verifier. It comprises the following:\n>        *  A facility for associating an SD-JWT with a key pair\n>        *  A format for a Key Binding JWT (KB-JWT) that proves possession\n>           of the private key of the associated key pair\n>        *  A format extending the SD-JWT format for the combined\n>           transport of the SD-JWT and the KB-JWT\n\nSD-JWT+KB is more a concept than a structure. A description that matches with the structure should be used instead.\n\nChange into:\n\n> SD-JWT + selected Disclosures + KB-JWT is a composite structure enabling cryptographic key binding when presented to the Verifier. \nIt comprises the following:\n> \n>    *  A SD-JWT that includes a claim that contains a public key,\n>    *  Selected Disclosures,\n>    *  A KB-JWT that contains a cryptographic checksum computed over \n>       the two previous parameters using a private key that corresponds\n>       to the public key that is included into a claim of the SD-JWT.\n",
+      "createdAt": "2025-03-01T14:41:08Z",
+      "updatedAt": "2025-03-01T14:41:08Z",
+      "closedAt": null,
+      "comments": []
+    },
+    {
+      "number": 562,
+      "id": "I_kwDOHTmVzM6sMdTz",
+      "title": "Add the wording \"one-time use digital credentials\" in the context of \"batches of credentials\".",
+      "url": "https://github.com/oauth-wg/oauth-selective-disclosure-jwt/issues/562",
+      "state": "OPEN",
+      "author": "Denisthemalice",
+      "authorAssociation": "NONE",
+      "assignees": [],
+      "labels": [],
+      "body": "\nIn section 10.1, the text states:\n\n> Verifier/Verifier unlinkability and presentation unlinkability can be achieved using batch issuance: A batch of credentials based on the same claims is issued to the Holder instead of just a single credential. The Holder can then use a different credential for each Verifier or even for each session with a Verifier.\n\nWhat is important is not the issuance of batches of digital credentials, but the fact that each digital credential shall only be used once by the Holder. \n\nThe key wording is \"one-time use digital credential\" and this wording is not present in the text.\n\nChange into:\n\n> Verifier/Verifier unlinkability and presentation unlinkability can be achieved using one-time use digital credentials. This can be accomplished if the Holder is able to obtain a set of digital credentials that does not permit a Verifier to establish links between them. When Key Binding is supported, the SD-JWT shall contain a different public key. Since multiple credentials need to be issued, this mechanism is also named \"batch issuance of digital credentials\". The Holder shall then use a different credential for each Verifier (i.e. for the Verifier/Verifier unlinkability case) or even for each session with a Verifier (i.e. for the presentation unlinkability case).\n",
+      "createdAt": "2025-03-01T14:41:36Z",
+      "updatedAt": "2025-03-01T14:41:36Z",
       "closedAt": null,
       "comments": []
     }
@@ -50530,7 +50626,7 @@
       "comments": [
         {
           "author": "rohanmahy",
-          "authorAssociation": "NONE",
+          "authorAssociation": "CONTRIBUTOR",
           "body": "I am generally OK with a much more concise introduction (but I don't find the current Introduction offensive either). If we were to use a shorter intro I would want to see the following addressed:\r\n\r\n1. Mention that you can create an SD-JWT for an arbitrary JWS (not just a JWT).\r\n2. Reintroduce a casual introduction of the terms \"Claims\" and \"Disclosures\", as this was very useful\r\n3. Spell out SD-JWT on first use\r\n4. s/the verifier would like assurance/the holder can optionally provide assurance/\r\n5. Add back this sentiment \"While JWTs with claims describing natural persons are a common use case, the mechanisms defined in this document are also applicable to other use cases.\"",
           "createdAt": "2024-09-22T17:34:24Z",
           "updatedAt": "2024-09-22T17:34:24Z"
@@ -53760,24 +53856,26 @@
       "id": "PR_kwDOHTmVzM6K9Ce_",
       "title": "shepherd review updates",
       "url": "https://github.com/oauth-wg/oauth-selective-disclosure-jwt/pull/552",
-      "state": "OPEN",
+      "state": "MERGED",
       "author": "bc-pi",
       "authorAssociation": "COLLABORATOR",
       "assignees": [],
       "labels": [],
       "body": "This PR comprises draft updates aimed at addressing feedback from Hannes Tschofenig in the shepherd review https://mailarchive.ietf.org/arch/msg/oauth/rRpI6rpHDXPXHm-dzyLsBQ-LiEQ/\r\n\r\nPreview editors' draft here: https://drafts.oauth.net/oauth-selective-disclosure-jwt/trying-real-hard-to-be-the-shepherd/draft-ietf-oauth-selective-disclosure-jwt.html\r\n\r\nhttps://mailarchive.ietf.org/arch/msg/oauth/xrzfN70NjAWxMnHWOIlWkJcK9yU/ is the on-list reply to the review, which referes back to this PR #552\r\n\r\n",
       "createdAt": "2025-02-12T13:11:55Z",
-      "updatedAt": "2025-02-26T17:42:27Z",
+      "updatedAt": "2025-02-27T13:56:54Z",
       "baseRepository": "oauth-wg/oauth-selective-disclosure-jwt",
       "baseRefName": "master",
       "baseRefOid": "2a1e13a9de80e9283a17aade124e3b8576140855",
       "headRepository": "oauth-wg/oauth-selective-disclosure-jwt",
       "headRefName": "trying-real-hard-to-be-the-shepherd",
       "headRefOid": "3eb495f882337a91624ef42470d1c5b88ba8fcec",
-      "closedAt": null,
-      "mergedAt": null,
-      "mergedBy": null,
-      "mergeCommit": null,
+      "closedAt": "2025-02-27T13:56:53Z",
+      "mergedAt": "2025-02-27T13:56:53Z",
+      "mergedBy": "danielfett",
+      "mergeCommit": {
+        "oid": "f4df942db2f60367a1a1b6779271d7aff592b72a"
+      },
       "comments": [],
       "reviews": [
         {
@@ -53825,6 +53923,19 @@
           "createdAt": "2025-02-13T17:49:10Z",
           "updatedAt": "2025-02-13T17:49:10Z",
           "comments": []
+        },
+        {
+          "id": "PRR_kwDOHTmVzM6d0yp6",
+          "commit": {
+            "abbreviatedOid": "3eb495f"
+          },
+          "author": "danielfett",
+          "authorAssociation": "MEMBER",
+          "state": "APPROVED",
+          "body": "",
+          "createdAt": "2025-02-27T13:56:06Z",
+          "updatedAt": "2025-02-27T13:56:06Z",
+          "comments": []
         }
       ]
     },
@@ -53833,24 +53944,26 @@
       "id": "PR_kwDOHTmVzM6LyBS5",
       "title": "some updates resulting from late WG review ",
       "url": "https://github.com/oauth-wg/oauth-selective-disclosure-jwt/pull/553",
-      "state": "OPEN",
+      "state": "MERGED",
       "author": "bc-pi",
       "authorAssociation": "COLLABORATOR",
       "assignees": [],
       "labels": [],
       "body": "Selective incorporation of changes based on feedback received nearly four months after the end of the second working group last call (thread at https://mailarchive.ietf.org/arch/msg/oauth/o9G6ibRuibzHQeoKHG7hLpU-CUM/)",
       "createdAt": "2025-02-19T17:08:59Z",
-      "updatedAt": "2025-02-26T17:42:09Z",
+      "updatedAt": "2025-02-27T14:19:04Z",
       "baseRepository": "oauth-wg/oauth-selective-disclosure-jwt",
       "baseRefName": "master",
-      "baseRefOid": "2a1e13a9de80e9283a17aade124e3b8576140855",
+      "baseRefOid": "f4df942db2f60367a1a1b6779271d7aff592b72a",
       "headRepository": "oauth-wg/oauth-selective-disclosure-jwt",
       "headRefName": "things-from-late-review-by-rohan",
-      "headRefOid": "7e81a47104e0c397d8e3c1edea1ad9fe4e572c3b",
-      "closedAt": null,
-      "mergedAt": null,
-      "mergedBy": null,
-      "mergeCommit": null,
+      "headRefOid": "f5311bca7382d1b8505a542448abe12b80077139",
+      "closedAt": "2025-02-27T14:19:03Z",
+      "mergedAt": "2025-02-27T14:19:03Z",
+      "mergedBy": "bc-pi",
+      "mergeCommit": {
+        "oid": "f7d5cf16d21f5d7c017293ec5714812db885b54f"
+      },
       "comments": [],
       "reviews": [
         {
@@ -53859,7 +53972,7 @@
             "abbreviatedOid": "8760e44"
           },
           "author": "rohanmahy",
-          "authorAssociation": "NONE",
+          "authorAssociation": "CONTRIBUTOR",
           "state": "COMMENTED",
           "body": "",
           "createdAt": "2025-02-19T18:17:25Z",
@@ -53870,6 +53983,219 @@
               "body": "```suggestion\r\n> Note: The order was decided based on readability considerations: salts have a\r\n```",
               "createdAt": "2025-02-19T18:17:25Z",
               "updatedAt": "2025-02-19T18:17:26Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOHTmVzM6d0wLq",
+          "commit": {
+            "abbreviatedOid": "7e81a47"
+          },
+          "author": "danielfett",
+          "authorAssociation": "MEMBER",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2025-02-27T13:52:48Z",
+          "updatedAt": "2025-02-27T13:52:49Z",
+          "comments": [
+            {
+              "originalPosition": 175,
+              "body": "Is a 'with' missing here?",
+              "createdAt": "2025-02-27T13:52:48Z",
+              "updatedAt": "2025-02-27T13:52:49Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOHTmVzM6d0xTj",
+          "commit": {
+            "abbreviatedOid": "7e81a47"
+          },
+          "author": "danielfett",
+          "authorAssociation": "MEMBER",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2025-02-27T13:54:10Z",
+          "updatedAt": "2025-02-27T13:54:11Z",
+          "comments": [
+            {
+              "originalPosition": 214,
+              "body": "```suggestion\r\n   * Changes based on feedback received after the end of the second working group last call\r\n```",
+              "createdAt": "2025-02-27T13:54:10Z",
+              "updatedAt": "2025-02-27T13:54:11Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOHTmVzM6d01_U",
+          "commit": {
+            "abbreviatedOid": "7e81a47"
+          },
+          "author": "Sakurann",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2025-02-27T14:00:37Z",
+          "updatedAt": "2025-02-27T14:00:37Z",
+          "comments": [
+            {
+              "originalPosition": 105,
+              "body": "```suggestion\r\nin the JSON representation and no canonicalization needs to be performed before base64url-encoding because the digest is calculated over the base64url-encoded value itself.\r\n```",
+              "createdAt": "2025-02-27T14:00:37Z",
+              "updatedAt": "2025-02-27T14:00:37Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOHTmVzM6d02qH",
+          "commit": {
+            "abbreviatedOid": "7e81a47"
+          },
+          "author": "Sakurann",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2025-02-27T14:01:33Z",
+          "updatedAt": "2025-02-27T14:01:33Z",
+          "comments": [
+            {
+              "originalPosition": 113,
+              "body": "```suggestion\r\nHowever, the digest is calculated over the respective base64url-encoded value itself, which effectively signs the variation chosen by the Issuer and makes it immutable in the context of a particular SD-JWT.\r\n```",
+              "createdAt": "2025-02-27T14:01:33Z",
+              "updatedAt": "2025-02-27T14:01:33Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOHTmVzM6d03JC",
+          "commit": {
+            "abbreviatedOid": "7e81a47"
+          },
+          "author": "Sakurann",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2025-02-27T14:02:16Z",
+          "updatedAt": "2025-02-27T14:02:16Z",
+          "comments": [
+            {
+              "originalPosition": 175,
+              "body": "```suggestion\r\nThe Issuer provides the Holder with an SD-JWT, not an SD-JWT+KB.  If the Holder\r\n```",
+              "createdAt": "2025-02-27T14:02:16Z",
+              "updatedAt": "2025-02-27T14:02:16Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOHTmVzM6d03mV",
+          "commit": {
+            "abbreviatedOid": "7e81a47"
+          },
+          "author": "Sakurann",
+          "authorAssociation": "COLLABORATOR",
+          "state": "APPROVED",
+          "body": "",
+          "createdAt": "2025-02-27T14:02:57Z",
+          "updatedAt": "2025-02-27T14:02:57Z",
+          "comments": []
+        },
+        {
+          "id": "PRR_kwDOHTmVzM6d05x8",
+          "commit": {
+            "abbreviatedOid": "7e81a47"
+          },
+          "author": "danielfett",
+          "authorAssociation": "MEMBER",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2025-02-27T14:05:55Z",
+          "updatedAt": "2025-02-27T14:05:55Z",
+          "comments": [
+            {
+              "originalPosition": 113,
+              "body": "'the' seems fine here.",
+              "createdAt": "2025-02-27T14:05:55Z",
+              "updatedAt": "2025-02-27T14:05:55Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOHTmVzM6d0-cc",
+          "commit": {
+            "abbreviatedOid": "7e81a47"
+          },
+          "author": "bc-pi",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2025-02-27T14:12:26Z",
+          "updatedAt": "2025-02-27T14:12:26Z",
+          "comments": [
+            {
+              "originalPosition": 105,
+              "body": "thank you ",
+              "createdAt": "2025-02-27T14:12:26Z",
+              "updatedAt": "2025-02-27T14:12:26Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOHTmVzM6d0_QT",
+          "commit": {
+            "abbreviatedOid": "c427cfa"
+          },
+          "author": "bc-pi",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2025-02-27T14:13:39Z",
+          "updatedAt": "2025-02-27T14:13:39Z",
+          "comments": [
+            {
+              "originalPosition": 175,
+              "body": "sure",
+              "createdAt": "2025-02-27T14:13:39Z",
+              "updatedAt": "2025-02-27T14:13:40Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOHTmVzM6d0__Z",
+          "commit": {
+            "abbreviatedOid": "6de2855"
+          },
+          "author": "bc-pi",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2025-02-27T14:14:43Z",
+          "updatedAt": "2025-02-27T14:14:43Z",
+          "comments": [
+            {
+              "originalPosition": 214,
+              "body": "okay ",
+              "createdAt": "2025-02-27T14:14:43Z",
+              "updatedAt": "2025-02-27T14:14:43Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOHTmVzM6d1BcP",
+          "commit": {
+            "abbreviatedOid": "3ff3701"
+          },
+          "author": "bc-pi",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2025-02-27T14:16:33Z",
+          "updatedAt": "2025-02-27T14:16:33Z",
+          "comments": [
+            {
+              "originalPosition": 113,
+              "body": "I think the 'the' seems fine too   ",
+              "createdAt": "2025-02-27T14:16:33Z",
+              "updatedAt": "2025-02-27T14:16:33Z"
             }
           ]
         }
@@ -53916,6 +54242,84 @@
           "comments": []
         }
       ]
+    },
+    {
+      "number": 555,
+      "id": "PR_kwDOHTmVzM6M7ZN6",
+      "title": "add a seventeen to the history",
+      "url": "https://github.com/oauth-wg/oauth-selective-disclosure-jwt/pull/555",
+      "state": "MERGED",
+      "author": "bc-pi",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "",
+      "createdAt": "2025-02-28T11:47:20Z",
+      "updatedAt": "2025-02-28T16:41:45Z",
+      "baseRepository": "oauth-wg/oauth-selective-disclosure-jwt",
+      "baseRefName": "master",
+      "baseRefOid": "f7d5cf16d21f5d7c017293ec5714812db885b54f",
+      "headRepository": "oauth-wg/oauth-selective-disclosure-jwt",
+      "headRefName": "dash-seventeen",
+      "headRefOid": "e897726771346f3437a50285fcd1bb33d106b37f",
+      "closedAt": "2025-02-28T16:41:45Z",
+      "mergedAt": "2025-02-28T16:41:45Z",
+      "mergedBy": "bc-pi",
+      "mergeCommit": {
+        "oid": "04b39cc34dc112d28289559ed8dc5819d58212cc"
+      },
+      "comments": [
+        {
+          "author": "bc-pi",
+          "authorAssociation": "COLLABORATOR",
+          "body": "Editorial. One approval. Open for nearly 4 hours. Merging. ",
+          "createdAt": "2025-02-28T16:41:31Z",
+          "updatedAt": "2025-02-28T16:41:31Z"
+        }
+      ],
+      "reviews": [
+        {
+          "id": "PRR_kwDOHTmVzM6eAsUQ",
+          "commit": {
+            "abbreviatedOid": "e897726"
+          },
+          "author": "danielfett",
+          "authorAssociation": "MEMBER",
+          "state": "APPROVED",
+          "body": "",
+          "createdAt": "2025-02-28T14:53:53Z",
+          "updatedAt": "2025-02-28T14:53:53Z",
+          "comments": []
+        }
+      ]
+    },
+    {
+      "number": 556,
+      "id": "PR_kwDOHTmVzM6NBid0",
+      "title": "MT in regular acks",
+      "url": "https://github.com/oauth-wg/oauth-selective-disclosure-jwt/pull/556",
+      "state": "MERGED",
+      "author": "bc-pi",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "https://github.com/oauth-wg/oauth-selective-disclosure-jwt/pull/450 to the regular list ",
+      "createdAt": "2025-03-01T08:32:10Z",
+      "updatedAt": "2025-03-01T08:34:45Z",
+      "baseRepository": "oauth-wg/oauth-selective-disclosure-jwt",
+      "baseRefName": "master",
+      "baseRefOid": "04b39cc34dc112d28289559ed8dc5819d58212cc",
+      "headRepository": "oauth-wg/oauth-selective-disclosure-jwt",
+      "headRefName": "acks-4-17",
+      "headRefOid": "0b89e0d4a47ccf632a4d27632555c7090bad4007",
+      "closedAt": "2025-03-01T08:34:45Z",
+      "mergedAt": "2025-03-01T08:34:44Z",
+      "mergedBy": "bc-pi",
+      "mergeCommit": {
+        "oid": "6037da31a95d6a3c8a4821337ed43477b1ac8d68"
+      },
+      "comments": [],
+      "reviews": []
     }
   ]
 }
