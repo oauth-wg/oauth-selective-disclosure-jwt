@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2025-03-27T00:16:04.665387+00:00",
+  "timestamp": "2025-03-30T00:17:40.187169+00:00",
   "repo": "oauth-wg/oauth-selective-disclosure-jwt",
   "labels": [
     {
@@ -54204,7 +54204,7 @@
           "commit": {
             "abbreviatedOid": "f5311bc"
           },
-          "author": "Natthachai-arm",
+          "author": null,
           "authorAssociation": "NONE",
           "state": "COMMENTED",
           "body": "updates resulting from late WG",
