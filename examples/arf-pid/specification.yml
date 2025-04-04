@@ -1,5 +1,6 @@
 user_claims:
   vct: urn:eudi:pid:de:1
+  iss: https://pid-issuer.bund.de.example
 #  vct#integrity: sha256-jo8433ot48utul8ura33
   !sd given_name: Erika
   !sd family_name: Mustermann
