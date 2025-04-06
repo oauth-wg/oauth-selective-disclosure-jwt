@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2025-04-01T00:18:49.587604+00:00",
+  "timestamp": "2025-04-06T00:17:30.034019+00:00",
   "repo": "oauth-wg/oauth-selective-disclosure-jwt",
   "labels": [
     {
@@ -12809,6 +12809,22 @@
       "body": "\nIn section 10.1, the text states:\n\n> Verifier/Verifier unlinkability and presentation unlinkability can be achieved using batch issuance: A batch of credentials based on the same claims is issued to the Holder instead of just a single credential. The Holder can then use a different credential for each Verifier or even for each session with a Verifier.\n\nWhat is important is not the issuance of batches of digital credentials, but the fact that each digital credential shall only be used once by the Holder. \n\nThe key wording is \"one-time use digital credential\" and this wording is not present in the text.\n\nChange into:\n\n> Verifier/Verifier unlinkability and presentation unlinkability can be achieved using one-time use digital credentials. This can be accomplished if the Holder is able to obtain a set of digital credentials that does not permit a Verifier to establish links between them. When Key Binding is supported, the SD-JWT shall contain a different public key. Since multiple credentials need to be issued, this mechanism is also named \"batch issuance of digital credentials\". The Holder shall then use a different credential for each Verifier (i.e. for the Verifier/Verifier unlinkability case) or even for each session with a Verifier (i.e. for the presentation unlinkability case).\n",
       "createdAt": "2025-03-01T14:41:36Z",
       "updatedAt": "2025-03-01T14:41:36Z",
+      "closedAt": null,
+      "comments": []
+    },
+    {
+      "number": 563,
+      "id": "I_kwDOHTmVzM6xCN2n",
+      "title": "the phrase \"non-selectively disclosable claims\" is confusing",
+      "url": "https://github.com/oauth-wg/oauth-selective-disclosure-jwt/issues/563",
+      "state": "OPEN",
+      "author": "bc-pi",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "\nfrom https://mailarchive.ietf.org/arch/msg/oauth/hnWzvLJfNXRapMTpeznw-SVrjDU/\n\n\n> [OAUTH-WG] Re: draft-ietf-oauth-selective-disclosure-jwt non-selectively disclosable claims\n> \n> Daniel Fett <mail@danielfett.de> Thu, 03 April 2025 07:57 UTC[Show header](https://mailarchive.ietf.org/arch/msg/oauth/hnWzvLJfNXRapMTpeznw-SVrjDU/#)\n> \n> Thanks Chad, these are good points. I like the \"permanently disclosed \n> claims\" wording.\n> \n> We'll look into this for the next revision.\n> \n> -Daniel\n> \n> Am 03.04.25 um 08:59 schrieb Chad Parry:\n> >\n> > The phrase \"non-selectively disclosable claims\" confused me. At first \n> > I interpreted it to mean \"claims that are disclosable but not in a \n> > selective way.\" The intended reading is \"claims that are not \n> > selectively disclosable.\" The ambiguity is between \"(non-selectively) \n> > disclosable claims\" and \"non-(selectively disclosable) claims.\" I \n> > believe that the phrase would be clarified by punctuating it \n> > \"non-selectively-disclosable claims.\" An adverb ending in \"ly\" does \n> > not normally get hyphenated in compound phrases, but this is different \n> > because of the ambiguity. Alternatively, invent a new phrase like \n> > \"permanently disclosed claims\" or \"unconditionally disclosed claims\" \n> > that can't be misinterpreted.\n> >\n> > Also, section 9.6 uses the phrase \"not disclosable,\" which sounds like \n> > a name that will never get disclosed. I think it means \n> > \"non-selectively-disclosable.\" The entire section, with the word \n> > \"blinding\" that is not used anywhere else, looks like an unnecessary \n> > holdover from old versions of the document.\n> >\n> > _______________________________________________\n> > OAuth mailing list -- [oauth@ietf.org](mailto:oauth@ietf.org)\n> > To unsubscribe send an email to [oauth-leave@ietf.org](mailto:oauth-leave@ietf.org)",
+      "createdAt": "2025-04-03T16:35:48Z",
+      "updatedAt": "2025-04-03T16:35:48Z",
       "closedAt": null,
       "comments": []
     }
@@ -54333,6 +54349,54 @@
       },
       "comments": [],
       "reviews": []
+    },
+    {
+      "number": 564,
+      "id": "PR_kwDOHTmVzM6RXg38",
+      "title": "Align PID example with latest ARF",
+      "url": "https://github.com/oauth-wg/oauth-selective-disclosure-jwt/pull/564",
+      "state": "OPEN",
+      "author": "danielfett",
+      "authorAssociation": "MEMBER",
+      "assignees": [],
+      "labels": [],
+      "body": "",
+      "createdAt": "2025-04-04T08:09:19Z",
+      "updatedAt": "2025-04-04T12:31:27Z",
+      "baseRepository": "oauth-wg/oauth-selective-disclosure-jwt",
+      "baseRefName": "master",
+      "baseRefOid": "6037da31a95d6a3c8a4821337ed43477b1ac8d68",
+      "headRepository": "oauth-wg/oauth-selective-disclosure-jwt",
+      "headRefName": "danielfett/update-pid-example-arf-latest",
+      "headRefOid": "ee09d2f25a00cf930bdb858a14a205b72bfb8da4",
+      "closedAt": null,
+      "mergedAt": null,
+      "mergedBy": null,
+      "mergeCommit": null,
+      "comments": [
+        {
+          "author": "bc-pi",
+          "authorAssociation": "COLLABORATOR",
+          "body": "https://drafts.oauth.net/oauth-selective-disclosure-jwt/danielfett/update-pid-example-arf-latest/draft-ietf-oauth-selective-disclosure-jwt.html#name-sd-jwt-based-verifiable-cre for those playing along at home ",
+          "createdAt": "2025-04-04T11:57:57Z",
+          "updatedAt": "2025-04-04T11:57:57Z"
+        }
+      ],
+      "reviews": [
+        {
+          "id": "PRR_kwDOHTmVzM6jfHK3",
+          "commit": {
+            "abbreviatedOid": "ee09d2f"
+          },
+          "author": "bc-pi",
+          "authorAssociation": "COLLABORATOR",
+          "state": "APPROVED",
+          "body": "",
+          "createdAt": "2025-04-04T12:31:27Z",
+          "updatedAt": "2025-04-04T12:31:27Z",
+          "comments": []
+        }
+      ]
     }
   ]
 }
