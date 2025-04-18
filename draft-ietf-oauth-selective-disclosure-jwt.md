@@ -1416,6 +1416,7 @@ Richard Barnes,
 Rohan Mahy,
 Ryosuke Abe,
 Sami Rosendahl,
+Shawn Emery,
 Shawn Butterfield,
 Simon Schulz,
 Tobias Looker,
@@ -1980,6 +1981,7 @@ data. The original JSON data is then used by the application. See
    -18
 
    * Update PID example to align with the latest ARF and update the ARF reference
+   * Editorial updates from SECDIR IETF LC review
 
    -17
 
