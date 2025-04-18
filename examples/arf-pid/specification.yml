@@ -1,10 +1,10 @@
 user_claims:
-  vct: https://bmi.bund.example/credential/pid/1.0
+  vct: urn:eudi:pid:de:1
+  iss: https://pid-issuer.bund.de.example
 #  vct#integrity: sha256-jo8433ot48utul8ura33
   !sd given_name: Erika
   !sd family_name: Mustermann
   !sd birthdate: '1963-08-12'
-  !sd source_document_type: id_card
   !sd address:
     !sd street_address: Heidestraße 17
     !sd locality: Köln
@@ -12,19 +12,26 @@ user_claims:
     !sd country: DE
   !sd nationalities:
   - DE
-  !sd gender: female
+  !sd sex: 2
   !sd birth_family_name: Gabler
   !sd place_of_birth:
     !sd locality: Berlin
-    country: DE
-  !sd also_known_as: Schwester Agnes
-  age_equal_or_over:
+    !sd country: DE
+  !sd age_equal_or_over:
     !sd "12": true
     !sd "14": true
     !sd "16": true
     !sd "18": true
     !sd "21": true
     !sd "65": false
+  !sd age_in_years: 62
+  !sd age_birth_year: 1963
+
+  !sd issuance_date: "2020-03-11"
+  !sd expiry_date: "2030-03-12"
+
+  !sd issuing_authority: DE
+  !sd issuing_country: DE
 
   #cnf:
   #  jwk:

@@ -1788,7 +1788,7 @@ The Verifier will have this processed SD-JWT payload available after validation:
 This example shows how the artifacts defined in this specification could be
 used in the context of SD-JWT-based Verifiable
 Credentials (SD-JWT VC) [@I-D.ietf-oauth-sd-jwt-vc] to represent the concept of
-a Person Identification Data (PID) [@EUDIW.ARF] using the data of
+a Person Identification Data (PID) as defined in the "PID Rulebook" in [@EUDIW.ARF]. This example uses fictional data of
 a German citizen.
 
 Key Binding is applied
@@ -1976,6 +1976,10 @@ data. The original JSON data is then used by the application. See
 # Document History
 
    [[ To be removed from the final specification ]]
+
+   -18
+
+   * Update PID example to align with the latest ARF and update the ARF reference
 
    -17
 
