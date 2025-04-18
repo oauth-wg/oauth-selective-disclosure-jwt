@@ -746,7 +746,7 @@ times in an SD-JWT, and likewise, there MAY be multiple arrays within the
 hierarchy with each having selectively disclosable elements. Digests of
 selectively disclosable claims MAY even appear within other Disclosures.
 
-The following examples illustrate some of the options an Issuer has. It is up to the Issuer to decide which structure to use, depending on, for example, the expected use cases for the SD-JWT, requirements for privacy, size considerations, or ecosystem requirements. For more examples with nested structures, see (#example-simple_structured) and (#example-complex-structured-sd-jwt).
+The following examples illustrate some of the options an Issuer has. It is up to the Issuer to decide which structure to use, depending on, for example, the expected use cases for the SD-JWT, requirements for privacy, size considerations, or operating environment requirements. For more examples with nested structures, see (#example-simple_structured) and (#example-complex-structured-sd-jwt).
 
 The following input JWT Claims Set is used as an example throughout this section:
 
@@ -1133,7 +1133,7 @@ validation of the SD-JWT. This is implemented in the last
 step of the verification defined in (#sd_jwt_verification).
 
 The precise set of required validity claims will typically be defined by
-ecosystem rules, application-specific profile, or the credential format and MAY include claims other than
+operating environment rules, application-specific profile, or the credential format and MAY include claims other than
 those listed herein.
 
 ## Distribution and Rotation of Issuer Signature Verification Key  {#issuer_signature_key_distribution}
@@ -1262,7 +1262,7 @@ between Issuers and Verifiers. This dynamic can compel an otherwise honest Verif
 For example, a governmental Issuer might have the authority to mandate that a Verifier report back information
 about the credentials presented to it. Legal requirements could further enforce this, explicitly undermining
 Issuer/Verifier unlinkability. Similarly, a large service provider issuing credentials might implicitly pressure
-Verifiers into collusion by incentivizing participation in their larger ecosystem.
+Verifiers into collusion by incentivizing participation in their larger operating environment.
 Deployers of SD-JWT must be aware of these potential power dynamics,
 mitigate them as much as possible, and/or make the risks transparent to the user.
 
