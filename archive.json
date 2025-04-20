@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2025-04-06T00:17:30.034019+00:00",
+  "timestamp": "2025-04-20T00:18:16.018941+00:00",
   "repo": "oauth-wg/oauth-selective-disclosure-jwt",
   "labels": [
     {
@@ -54355,24 +54355,26 @@
       "id": "PR_kwDOHTmVzM6RXg38",
       "title": "Align PID example with latest ARF",
       "url": "https://github.com/oauth-wg/oauth-selective-disclosure-jwt/pull/564",
-      "state": "OPEN",
+      "state": "MERGED",
       "author": "danielfett",
       "authorAssociation": "MEMBER",
       "assignees": [],
       "labels": [],
       "body": "",
       "createdAt": "2025-04-04T08:09:19Z",
-      "updatedAt": "2025-04-04T12:31:27Z",
+      "updatedAt": "2025-04-18T20:34:53Z",
       "baseRepository": "oauth-wg/oauth-selective-disclosure-jwt",
       "baseRefName": "master",
       "baseRefOid": "6037da31a95d6a3c8a4821337ed43477b1ac8d68",
       "headRepository": "oauth-wg/oauth-selective-disclosure-jwt",
       "headRefName": "danielfett/update-pid-example-arf-latest",
       "headRefOid": "ee09d2f25a00cf930bdb858a14a205b72bfb8da4",
-      "closedAt": null,
-      "mergedAt": null,
-      "mergedBy": null,
-      "mergeCommit": null,
+      "closedAt": "2025-04-18T20:34:53Z",
+      "mergedAt": "2025-04-18T20:34:53Z",
+      "mergedBy": "bc-pi",
+      "mergeCommit": {
+        "oid": "c9e4144bc2df5ffad7238020603a56419132e4d0"
+      },
       "comments": [
         {
           "author": "bc-pi",
@@ -54394,6 +54396,46 @@
           "body": "",
           "createdAt": "2025-04-04T12:31:27Z",
           "updatedAt": "2025-04-04T12:31:27Z",
+          "comments": []
+        }
+      ]
+    },
+    {
+      "number": 565,
+      "id": "PR_kwDOHTmVzM6TKZC7",
+      "title": "Editorial nits from secdir last call review",
+      "url": "https://github.com/oauth-wg/oauth-selective-disclosure-jwt/pull/565",
+      "state": "OPEN",
+      "author": "bc-pi",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "https://mailarchive.ietf.org/arch/msg/oauth/ZlxTviDTq4DOysYddwnpS7cVxn8/ ",
+      "createdAt": "2025-04-18T20:41:06Z",
+      "updatedAt": "2025-04-18T21:43:14Z",
+      "baseRepository": "oauth-wg/oauth-selective-disclosure-jwt",
+      "baseRefName": "master",
+      "baseRefOid": "c9e4144bc2df5ffad7238020603a56419132e4d0",
+      "headRepository": "oauth-wg/oauth-selective-disclosure-jwt",
+      "headRefName": "secdir-last-call-review",
+      "headRefOid": "bd90807cea07783703b0ccd4be471a5ec82f27b1",
+      "closedAt": null,
+      "mergedAt": null,
+      "mergedBy": null,
+      "mergeCommit": null,
+      "comments": [],
+      "reviews": [
+        {
+          "id": "PRR_kwDOHTmVzM6lq5ZZ",
+          "commit": {
+            "abbreviatedOid": "bd90807"
+          },
+          "author": "danielfett",
+          "authorAssociation": "MEMBER",
+          "state": "APPROVED",
+          "body": "",
+          "createdAt": "2025-04-18T21:43:14Z",
+          "updatedAt": "2025-04-18T21:43:14Z",
           "comments": []
         }
       ]
