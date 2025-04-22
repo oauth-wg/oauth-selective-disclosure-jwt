@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2025-04-20T00:18:16.018941+00:00",
+  "timestamp": "2025-04-22T00:16:51.828333+00:00",
   "repo": "oauth-wg/oauth-selective-disclosure-jwt",
   "labels": [
     {
@@ -12569,11 +12569,11 @@
       "authorAssociation": "COLLABORATOR",
       "assignees": [],
       "labels": [
-        "pending-close"
+        "has-PR"
       ],
       "body": "In section 4.3 of the OAuth Selective Disclosure JWT draft, we have a proper definition of all the required claims.\n\nConsidering that the kb-jwt is signed, what do you think about including `exp` as a required or recommended claim?\n\nI have found some implementations using `exp` due to the sensitivity of some implementers who treat signed JWS as artifacts that always require an expiration.\n\nIf `exp` must not be considered in the set of claims documented as recommended or required in this specification, this issue would offer guidance to those developers.",
       "createdAt": "2025-01-30T14:25:35Z",
-      "updatedAt": "2025-02-06T08:11:32Z",
+      "updatedAt": "2025-04-21T15:42:58Z",
       "closedAt": null,
       "comments": [
         {
@@ -12617,6 +12617,13 @@
           "body": "> this issue would offer guidance\n\nI would humbly offer my guidance here, however, that content in the KB-JWT other than that explicitly mentioned in [its definition](https://datatracker.ietf.org/doc/html/draft-ietf-oauth-selective-disclosure-jwt-15#name-key-binding-jwt) is probably not necessary and shouldn't be used without an identified and compelling reason.  ",
           "createdAt": "2025-02-06T08:11:30Z",
           "updatedAt": "2025-02-06T08:11:30Z"
+        },
+        {
+          "author": "bc-pi",
+          "authorAssociation": "COLLABORATOR",
+          "body": "PR #566 has some prospective text that tries to explicitly discourage using more claims than needed in the KB-JWT. ",
+          "createdAt": "2025-04-21T15:41:48Z",
+          "updatedAt": "2025-04-21T15:41:48Z"
         }
       ]
     },
@@ -54405,24 +54412,26 @@
       "id": "PR_kwDOHTmVzM6TKZC7",
       "title": "Editorial nits from secdir last call review",
       "url": "https://github.com/oauth-wg/oauth-selective-disclosure-jwt/pull/565",
-      "state": "OPEN",
+      "state": "MERGED",
       "author": "bc-pi",
       "authorAssociation": "COLLABORATOR",
       "assignees": [],
       "labels": [],
       "body": "https://mailarchive.ietf.org/arch/msg/oauth/ZlxTviDTq4DOysYddwnpS7cVxn8/ ",
       "createdAt": "2025-04-18T20:41:06Z",
-      "updatedAt": "2025-04-18T21:43:14Z",
+      "updatedAt": "2025-04-21T10:35:38Z",
       "baseRepository": "oauth-wg/oauth-selective-disclosure-jwt",
       "baseRefName": "master",
       "baseRefOid": "c9e4144bc2df5ffad7238020603a56419132e4d0",
       "headRepository": "oauth-wg/oauth-selective-disclosure-jwt",
       "headRefName": "secdir-last-call-review",
       "headRefOid": "bd90807cea07783703b0ccd4be471a5ec82f27b1",
-      "closedAt": null,
-      "mergedAt": null,
-      "mergedBy": null,
-      "mergeCommit": null,
+      "closedAt": "2025-04-21T10:35:38Z",
+      "mergedAt": "2025-04-21T10:35:38Z",
+      "mergedBy": "bc-pi",
+      "mergeCommit": {
+        "oid": "a61376797794f9eb7a340dfab37a5687b855a98a"
+      },
       "comments": [],
       "reviews": [
         {
@@ -54439,6 +54448,32 @@
           "comments": []
         }
       ]
+    },
+    {
+      "number": 566,
+      "id": "PR_kwDOHTmVzM6TSRQG",
+      "title": "Suggest against using extra claims/headers in the KB-JWT without a good reason",
+      "url": "https://github.com/oauth-wg/oauth-selective-disclosure-jwt/pull/566",
+      "state": "OPEN",
+      "author": "bc-pi",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "to fix #545 ",
+      "createdAt": "2025-04-21T10:59:30Z",
+      "updatedAt": "2025-04-21T11:00:08Z",
+      "baseRepository": "oauth-wg/oauth-selective-disclosure-jwt",
+      "baseRefName": "master",
+      "baseRefOid": "a61376797794f9eb7a340dfab37a5687b855a98a",
+      "headRepository": "oauth-wg/oauth-selective-disclosure-jwt",
+      "headRefName": "less-is-more-in-kb-jwt",
+      "headRefOid": "c3697d19555c7726035a45a7e88ff90423177c9d",
+      "closedAt": null,
+      "mergedAt": null,
+      "mergedBy": null,
+      "mergeCommit": null,
+      "comments": [],
+      "reviews": []
     }
   ]
 }
