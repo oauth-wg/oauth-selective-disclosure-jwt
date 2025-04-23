@@ -317,7 +317,7 @@ The payload of an SD-JWT is a JSON object according to the following rules:
  1. The payload MAY contain the `_sd_alg` key described in (#hash_function_claim).
  2. The payload MAY contain one or more digests of Disclosures to enable selective disclosure of the respective claims, created and formatted as described in (#creating_disclosures).
  3. The payload MAY contain one or more decoy digests to obscure the actual number of claims in the SD-JWT, created and formatted as described in (#decoy_digests).
- 4. The payload MAY contain one or more non-selectively disclosable claims.
+ 4. The payload MAY contain one or more permanently disclosable claims.
  5. The payload MAY contain the Holder's public key(s) or reference(s) thereto, as explained in (#key_binding).
  6. The payload MAY contain further claims such as `iss`, `iat`, etc. as defined or required by the application using SD-JWTs.
  7. The payload MUST NOT contain the claims `_sd` or `...` except for the purpose of conveying digests as described in (#embedding_object_properties) and (#embedding_array_elements) respectively below.
@@ -383,7 +383,7 @@ For each claim that is an object property and that is to be made selectively dis
 
  * Create an array of three elements in this order:
    1. A salt value. MUST be a string. See (#salt-entropy) for security considerations. It is RECOMMENDED to base64url-encode a minimum of 128 bits of cryptographically secure random data, producing a string. The salt value MUST be unique for each claim that is to be selectively disclosed. The Issuer MUST NOT reveal the salt value to any party other than the Holder.
-   2. The claim name, or key, as it would be used in a regular JWT payload. It MUST be a string and MUST NOT be `_sd`, `...`, or a claim name existing in the object as a non-selectively disclosable claim.
+   2. The claim name, or key, as it would be used in a regular JWT payload. It MUST be a string and MUST NOT be `_sd`, `...`, or a claim name existing in the object as a permanently disclosable claim.
    3. The claim value, as it would be used in a regular JWT payload. The value can be of any type that is allowed in JSON, including numbers, strings, booleans, arrays, null, and objects.
  * JSON-encode the array, producing an UTF-8 string.
  * base64url-encode the byte representation of the UTF-8 string. This string is the Disclosure.
@@ -776,7 +776,7 @@ In this case, the Issuer would use the following data in the Disclosures for the
 
 {{examples/address_only_structured/disclosures.md}}
 
-The Issuer may also make one sub-claim of `address` non-selectively disclosable and hide only the other sub-claims:
+The Issuer may also make one sub-claim of `address` permanently disclosable and hide only the other sub-claims:
 
 <{{examples/address_only_structured_one_open/sd_jwt_payload.json}}
 
@@ -1097,13 +1097,13 @@ particular use case and the Holder presents either a bare SD-JWT or an SD-JWT+KB
 an invalid Key Binding JWT, then the Verifier will reject the presentation
 when following the verification steps described in (#verifier_verification).
 
-## Blinding Claim Names {#blinding-claim-names}
+## Concealing Claim Names
 
 SD-JWT ensures that names of claims that are selectively disclosable are
-always blinded. This prevents an attacker from learning the names of the
-disclosable claims. However, the names of the claims that are not
-disclosable are not blinded. This includes the keys of objects that themselves
-are not blinded, but contain disclosable claims. This limitation
+always concealed. This prevents an attacker from learning the names of such
+claims. However, the names of the claims that are permanently
+disclosable are not hidden. This includes the keys of objects that themselves
+are not concealed, but contain concealed claims. This limitation
 needs to be taken into account by Issuers when creating the structure of
 the SD-JWT.
 
@@ -1385,6 +1385,7 @@ Alen Horvat,
 Alex Hodder,
 Anders Rundgren,
 Arjan Geluk,
+Chad Parry,
 Christian Bormann,
 Christian Paquin,
 Dale Bowie,
@@ -1982,6 +1983,7 @@ data. The original JSON data is then used by the application. See
 
    * Update PID example to align with the latest ARF and update the ARF reference
    * Editorial updates from SECDIR IETF LC review
+   * Terminology improvements around the phrase "non-selectively disclosable claims" and "not disclosable"
 
    -17
 
