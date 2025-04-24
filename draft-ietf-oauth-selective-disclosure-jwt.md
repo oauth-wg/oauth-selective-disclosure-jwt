@@ -776,7 +776,7 @@ In this case, the Issuer would use the following data in the Disclosures for the
 
 {{examples/address_only_structured/disclosures.md}}
 
-The Issuer may also make one sub-claim of `address` permanently disclosable and hide only the other sub-claims:
+The Issuer may also make one sub-claim of `address` permanently disclosed and hide only the other sub-claims:
 
 <{{examples/address_only_structured_one_open/sd_jwt_payload.json}}
 
