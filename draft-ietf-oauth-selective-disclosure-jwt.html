@@ -1309,7 +1309,7 @@ The primary use case is the selective disclosure of JSON Web Token (JWT) claims.
                 <p id="section-toc.1-1.9.2.5.1"><a href="#section-9.5" class="auto internal xref">9.5</a>.  <a href="#name-key-binding-2" class="internal xref">Key Binding</a></p>
 </li>
               <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.9.2.6">
-                <p id="section-toc.1-1.9.2.6.1"><a href="#section-9.6" class="auto internal xref">9.6</a>.  <a href="#name-blinding-claim-names" class="internal xref">Blinding Claim Names</a></p>
+                <p id="section-toc.1-1.9.2.6.1"><a href="#section-9.6" class="auto internal xref">9.6</a>.  <a href="#name-concealing-claim-names" class="internal xref">Concealing Claim Names</a></p>
 </li>
               <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.9.2.7">
                 <p id="section-toc.1-1.9.2.7.1"><a href="#section-9.7" class="auto internal xref">9.7</a>.  <a href="#name-selectively-disclosable-val" class="internal xref">Selectively-Disclosable Validity Claims</a></p>
@@ -1753,7 +1753,7 @@ key. It MUST NOT use the <code>none</code> algorithm.<a href="#section-4.1-1" cl
 </li>
           <li id="section-4.1-3.3">The payload MAY contain one or more decoy digests to obscure the actual number of claims in the SD-JWT, created and formatted as described in <a href="#decoy_digests" class="auto internal xref">Section 4.2.5</a>.<a href="#section-4.1-3.3" class="pilcrow">¶</a>
 </li>
-          <li id="section-4.1-3.4">The payload MAY contain one or more non-selectively disclosable claims.<a href="#section-4.1-3.4" class="pilcrow">¶</a>
+          <li id="section-4.1-3.4">The payload MAY contain one or more permanently disclosed claims.<a href="#section-4.1-3.4" class="pilcrow">¶</a>
 </li>
           <li id="section-4.1-3.5">The payload MAY contain the Holder's public key(s) or reference(s) thereto, as explained in <a href="#key_binding" class="auto internal xref">Section 4.1.2</a>.<a href="#section-4.1-3.5" class="pilcrow">¶</a>
 </li>
@@ -1838,7 +1838,7 @@ the raw public key by value in SD-JWT.<a href="#section-4.1.2-4.1" class="pilcro
 <ol start="1" type="1" class="compact type-1" id="section-4.2.1-2.1.2">
 <li id="section-4.2.1-2.1.2.1">A salt value. MUST be a string. See <a href="#salt-entropy" class="auto internal xref">Section 9.3</a> for security considerations. It is RECOMMENDED to base64url-encode a minimum of 128 bits of cryptographically secure random data, producing a string. The salt value MUST be unique for each claim that is to be selectively disclosed. The Issuer MUST NOT reveal the salt value to any party other than the Holder.<a href="#section-4.2.1-2.1.2.1" class="pilcrow">¶</a>
 </li>
-                <li id="section-4.2.1-2.1.2.2">The claim name, or key, as it would be used in a regular JWT payload. It MUST be a string and MUST NOT be <code>_sd</code>, <code>...</code>, or a claim name existing in the object as a non-selectively disclosable claim.<a href="#section-4.2.1-2.1.2.2" class="pilcrow">¶</a>
+                <li id="section-4.2.1-2.1.2.2">The claim name, or key, as it would be used in a regular JWT payload. It MUST be a string and MUST NOT be <code>_sd</code>, <code>...</code>, or a claim name existing in the object as a permanently disclosed claim.<a href="#section-4.2.1-2.1.2.2" class="pilcrow">¶</a>
 </li>
                 <li id="section-4.2.1-2.1.2.3">The claim value, as it would be used in a regular JWT payload. The value can be of any type that is allowed in JSON, including numbers, strings, booleans, arrays, null, and objects.<a href="#section-4.2.1-2.1.2.3" class="pilcrow">¶</a>
 </li>
@@ -2432,8 +2432,8 @@ ZHJ5M2xjYndIZ2VaOGtoQXYxVTFPU2xlclAwVmtCSnJXWjAifV0sICJfc2RfYWxnIjog
 InNoYS0yNTYiLCAiY25mIjogeyJqd2siOiB7Imt0eSI6ICJFQyIsICJjcnYiOiAiUC0y
 NTYiLCAieCI6ICJUQ0FFUjE5WnZ1M09IRjRqNFc0dmZTVm9ISVAxSUxpbERsczd2Q2VH
 ZW1jIiwgInkiOiAiWnhqaVdXYlpNUUdIVldLVlE0aGJTSWlyc1ZmdWVjQ0U2dDRqVDlG
-MkhaUSJ9fX0.cK6Z45gLjc_z9UJiRvoqtsExca9M2SM5mOSH_7aMlio6B4XFPa3_XwoY
-IQA_k9mIVGZtdpKT400U45eweUoS5w
+MkhaUSJ9fX0.dICo9ImI0-9vr2-RUbgixzobXiRhZW9Aplgw4XgK5XHuLYJscJKXknA_
+qvKu3uDZBs9tPv8E6KYAta0fH_WV9w
 
 </pre><a href="#section-5.1-29" class="pilcrow">¶</a>
 </div>
@@ -2455,8 +2455,8 @@ ZHJ5M2xjYndIZ2VaOGtoQXYxVTFPU2xlclAwVmtCSnJXWjAifV0sICJfc2RfYWxnIjog
 InNoYS0yNTYiLCAiY25mIjogeyJqd2siOiB7Imt0eSI6ICJFQyIsICJjcnYiOiAiUC0y
 NTYiLCAieCI6ICJUQ0FFUjE5WnZ1M09IRjRqNFc0dmZTVm9ISVAxSUxpbERsczd2Q2VH
 ZW1jIiwgInkiOiAiWnhqaVdXYlpNUUdIVldLVlE0aGJTSWlyc1ZmdWVjQ0U2dDRqVDlG
-MkhaUSJ9fX0.cK6Z45gLjc_z9UJiRvoqtsExca9M2SM5mOSH_7aMlio6B4XFPa3_XwoY
-IQA_k9mIVGZtdpKT400U45eweUoS5w~WyIyR0xDNDJzS1F2ZUNmR2ZyeU5STjl3IiwgI
+MkhaUSJ9fX0.dICo9ImI0-9vr2-RUbgixzobXiRhZW9Aplgw4XgK5XHuLYJscJKXknA_
+qvKu3uDZBs9tPv8E6KYAta0fH_WV9w~WyIyR0xDNDJzS1F2ZUNmR2ZyeU5STjl3IiwgI
 mdpdmVuX25hbWUiLCAiSm9obiJd~WyJlbHVWNU9nM2dTTklJOEVZbnN4QV9BIiwgImZh
 bWlseV9uYW1lIiwgIkRvZSJd~WyI2SWo3dE0tYTVpVlBHYm9TNXRtdlZBIiwgImVtYWl
 sIiwgImpvaG5kb2VAZXhhbXBsZS5jb20iXQ~WyJlSThaV205UW5LUHBOUGVOZW5IZGhR
@@ -2500,18 +2500,18 @@ ZHJ5M2xjYndIZ2VaOGtoQXYxVTFPU2xlclAwVmtCSnJXWjAifV0sICJfc2RfYWxnIjog
 InNoYS0yNTYiLCAiY25mIjogeyJqd2siOiB7Imt0eSI6ICJFQyIsICJjcnYiOiAiUC0y
 NTYiLCAieCI6ICJUQ0FFUjE5WnZ1M09IRjRqNFc0dmZTVm9ISVAxSUxpbERsczd2Q2VH
 ZW1jIiwgInkiOiAiWnhqaVdXYlpNUUdIVldLVlE0aGJTSWlyc1ZmdWVjQ0U2dDRqVDlG
-MkhaUSJ9fX0.cK6Z45gLjc_z9UJiRvoqtsExca9M2SM5mOSH_7aMlio6B4XFPa3_XwoY
-IQA_k9mIVGZtdpKT400U45eweUoS5w~WyJlbHVWNU9nM2dTTklJOEVZbnN4QV9BIiwgI
+MkhaUSJ9fX0.dICo9ImI0-9vr2-RUbgixzobXiRhZW9Aplgw4XgK5XHuLYJscJKXknA_
+qvKu3uDZBs9tPv8E6KYAta0fH_WV9w~WyJlbHVWNU9nM2dTTklJOEVZbnN4QV9BIiwgI
 mZhbWlseV9uYW1lIiwgIkRvZSJd~WyJBSngtMDk1VlBycFR0TjRRTU9xUk9BIiwgImFk
 ZHJlc3MiLCB7InN0cmVldF9hZGRyZXNzIjogIjEyMyBNYWluIFN0IiwgImxvY2FsaXR5
 IjogIkFueXRvd24iLCAicmVnaW9uIjogIkFueXN0YXRlIiwgImNvdW50cnkiOiAiVVMi
 fV0~WyIyR0xDNDJzS1F2ZUNmR2ZyeU5STjl3IiwgImdpdmVuX25hbWUiLCAiSm9obiJd
 ~WyJsa2x4RjVqTVlsR1RQVW92TU5JdkNBIiwgIlVTIl0~eyJhbGciOiAiRVMyNTYiLCA
 idHlwIjogImtiK2p3dCJ9.eyJub25jZSI6ICIxMjM0NTY3ODkwIiwgImF1ZCI6ICJodH
-RwczovL3ZlcmlmaWVyLmV4YW1wbGUub3JnIiwgImlhdCI6IDE3NDU4NDA2MzcsICJzZF
-9oYXNoIjogImc4ZThTOEpPMzJuUzNmNlpJNWdYSTdkandyZnIwOUlTNGJ4akF1bGtXa2
-8ifQ.HlaNKYrTjziLvmLmTFIdev7n-i0Z7mZHf_-F-Fr05owZ90mP-blyLdmZWsVWURD
-nOEdz64HXeFyVT6ZFNSwVmA
+RwczovL3ZlcmlmaWVyLmV4YW1wbGUub3JnIiwgImlhdCI6IDE3NDU4NDA3ODAsICJzZF
+9oYXNoIjogImZ6ZGNEQ21NSWg4Qk1Td19QdmkwcUJ0b08wUzQ0R1hJNFc1MGt2OFJfUm
+8ifQ.9jP4TekyrZnBycv2ZHh1C8a6R-H5PJXSsQoSh4D2cwynmAYJf51TFuFd8ibaoWx
+x4A5QA8J7qsKVo9Q7EuwaIw
 
 </pre><a href="#section-5.2-2" class="pilcrow">¶</a>
 </div>
@@ -2520,8 +2520,8 @@ nOEdz64HXeFyVT6ZFNSwVmA
 <pre>{
   "nonce": "1234567890",
   "aud": "https://verifier.example.org",
-  "iat": 1745840637,
-  "sd_hash": "g8e8S8JO32nS3f6ZI5gXI7djwrfr09IS4bxjAulkWko"
+  "iat": 1745840780,
+  "sd_hash": "fzdcDCmMIh8BMSw_Pvi0qBtoO0S44GXI4W50kv8R_Ro"
 }
 
 </pre><a href="#section-5.2-4" class="pilcrow">¶</a>
@@ -2705,7 +2705,7 @@ how <code>address</code> can be represented in an SD-JWT.<a href="#section-6-6.1
 <code>["eI8ZWm9QnKPpNPeNenHdhQ", "country", "DE"]</code><a href="#section-6.2-11.3" class="pilcrow">¶</a>
 </li>
         </ul>
-<p id="section-6.2-12">The Issuer may also make one sub-claim of <code>address</code> non-selectively disclosable and hide only the other sub-claims:<a href="#section-6.2-12" class="pilcrow">¶</a></p>
+<p id="section-6.2-12">The Issuer may also make one sub-claim of <code>address</code> permanently disclosed and hide only the other sub-claims:<a href="#section-6.2-12" class="pilcrow">¶</a></p>
 <div class="lang-json sourcecode" id="section-6.2-13">
 <pre>{
   "iss": "https://issuer.example.com",
@@ -3105,8 +3105,8 @@ issued using the Flattened JSON Serialization:<a href="#section-8.2-2" class="pi
     Z1ZWNDRTZ0NGpUOUYySFpRIn19fQ",
   "protected":
     "eyJhbGciOiAiRVMyNTYiLCAidHlwIjogImV4YW1wbGUrc2Qtand0In0",
-  "signature": "_Pdqiw1dBpRiPgrN--wgyifCb6-bsTb2eKLsZNSxehPKcZ6Xv_UG
-    i2T_IxXgnY4zxDYsIJLSTuojnUlhqlicxw"
+  "signature": "c7vgEXEvnzWAnFLIpVA1WH5sPhXbUhNYoZRauJI5X_djul9NS_LN
+    470XE_s10cfz4Pgs8DoKZlPUBYEi9AQRyg"
 }
 
 </pre><a href="#section-8.2-3" class="pilcrow">¶</a>
@@ -3123,10 +3123,10 @@ issued using the Flattened JSON Serialization:<a href="#section-8.2-2" class="pi
     ],
     "kb_jwt": "eyJhbGciOiAiRVMyNTYiLCAidHlwIjogImtiK2p3dCJ9.eyJub25j
       ZSI6ICIxMjM0NTY3ODkwIiwgImF1ZCI6ICJodHRwczovL3ZlcmlmaWVyLmV4YW
-      1wbGUub3JnIiwgImlhdCI6IDE3NDU4NDA2MzcsICJzZF9oYXNoIjogIlo1T3da
-      UW1MUmlHaG1BX2R3WWtmdlY0R25GdWxONlRpV0lxMlVfeTVLdE0ifQ.ctZex8O
-      6E6HPcRgaMiZlzvHM-Sbd1ATKK3MZpTJOTV3_9jXaCRJuj_peUT_s41QlG0_iT
-      T2WBuQj93DRpQX6Yg"
+      1wbGUub3JnIiwgImlhdCI6IDE3NDU4NDA3ODAsICJzZF9oYXNoIjogIlpGajdo
+      M1Y5cWtnTnZQNXpQTWdaWmNXRE1fVFp5cVlTTkFEbjVzNjd6a0UifQ.2C09jk0
+      j8yaa7R63m98M8l8E0tNzxihHU0V8X0jypKMqhTRTRIOdXROU-7tiHXm_HO1du
+      Ws3JnGdUDr_9r6mCg"
   },
   "payload": "eyJfc2QiOiBbIjRIQm42YUlZM1d0dUdHV1R4LXFVajZjZGs2V0JwWn
     lnbHRkRmF2UGE3TFkiLCAiOHNtMVFDZjAyMXBObkhBQ0k1c1A0bTRLWmd5Tk9PQV
@@ -3140,8 +3140,8 @@ issued using the Flattened JSON Serialization:<a href="#section-8.2-2" class="pi
     Z1ZWNDRTZ0NGpUOUYySFpRIn19fQ",
   "protected":
     "eyJhbGciOiAiRVMyNTYiLCAidHlwIjogImV4YW1wbGUrc2Qtand0In0",
-  "signature": "_Pdqiw1dBpRiPgrN--wgyifCb6-bsTb2eKLsZNSxehPKcZ6Xv_UG
-    i2T_IxXgnY4zxDYsIJLSTuojnUlhqlicxw"
+  "signature": "c7vgEXEvnzWAnFLIpVA1WH5sPhXbUhNYoZRauJI5X_djul9NS_LN
+    470XE_s10cfz4Pgs8DoKZlPUBYEi9AQRyg"
 }
 
 </pre><a href="#section-8.2-5" class="pilcrow">¶</a>
@@ -3184,15 +3184,15 @@ Serialization:<a href="#section-8.3-2" class="pilcrow">¶</a></p>
         "kid": "issuer-key-1",
         "kb_jwt": "eyJhbGciOiAiRVMyNTYiLCAidHlwIjogImtiK2p3dCJ9.eyJu
           b25jZSI6ICIxMjM0NTY3ODkwIiwgImF1ZCI6ICJodHRwczovL3ZlcmlmaW
-          VyLmV4YW1wbGUub3JnIiwgImlhdCI6IDE3NDU4NDA2MzcsICJzZF9oYXNo
-          IjogImdJNnNwV1ZoRVM0RFNjSk0temMtZURsV2NQNWVlbzRTTG1XSlhUdF
-          lFX1UifQ.yW0eYo-WmSSlOyWMdlig7VVN66eotZGFfP670OV9aWd_hsvxi
-          hL8ZQFfZuCKsS-QNvuFW0IihKoj_duE3XecbQ"
+          VyLmV4YW1wbGUub3JnIiwgImlhdCI6IDE3NDU4NDA3ODAsICJzZF9oYXNo
+          IjogIi1jTm1PSkI3eTVnTHNIcllhdFEtVms4Y0kzOEpDRWNMMGFOVW9DZn
+          VDZHMifQ.kSPPPPI3fq96eBNd3raf8qOs0XS7em18B9rZrXjwlQTVqHrdD
+          YKiC4x4ikRS7t2LPnRuPjpC1LNeNYasR7z5iA"
       },
       "protected":
         "eyJhbGciOiAiRVMyNTYiLCAidHlwIjogImV4YW1wbGUrc2Qtand0In0",
-      "signature": "P6lFQCCc-t-tMu-2JGmnsDd9DGZMRyFuGj9KPYijWPUvhDN0
-        NgUjVO9IVW1tXHJag7h6a9KDhRvnevu0i9FNlQ"
+      "signature": "C5IvELQuTR6Tmav9bsQ95tZfb981grO4X9na3nuw8QM1vEOV
+        UL4YVMRDDQcOhyePM7CLcG8WQAgM-KMjaIL8Mw"
     },
     {
       "header": {
@@ -3200,8 +3200,8 @@ Serialization:<a href="#section-8.3-2" class="pilcrow">¶</a></p>
       },
       "protected":
         "eyJhbGciOiAiRVMyNTYiLCAidHlwIjogImV4YW1wbGUrc2Qtand0In0",
-      "signature": "_QplrcoH2QyeY08ZrI6-YWCkM6ZY2x1TDUZT9qwa3CHE1AOG
-        XOoLtWmB7qtUD2UUGd_9bMQLfcI1rhGAje8rCQ"
+      "signature": "NQ9q-CwOxjfpt3ABbCSTgoqBadL-V-ujHlgi8p5CSjh0sUJ2
+        -lc5TMUdTJME8WvV7-DntTt3YhwXVEIRiDJiEg"
     }
   ]
 }
@@ -3368,16 +3368,16 @@ an invalid Key Binding JWT, then the Verifier will reject the presentation
 when following the verification steps described in <a href="#verifier_verification" class="auto internal xref">Section 7.3</a>.<a href="#section-9.5-6" class="pilcrow">¶</a></p>
 </section>
 </div>
-<div id="blinding-claim-names">
+<div id="concealing-claim-names">
 <section id="section-9.6">
-        <h3 id="name-blinding-claim-names">
-<a href="#section-9.6" class="section-number selfRef">9.6. </a><a href="#name-blinding-claim-names" class="section-name selfRef">Blinding Claim Names</a>
+        <h3 id="name-concealing-claim-names">
+<a href="#section-9.6" class="section-number selfRef">9.6. </a><a href="#name-concealing-claim-names" class="section-name selfRef">Concealing Claim Names</a>
         </h3>
 <p id="section-9.6-1">SD-JWT ensures that names of claims that are selectively disclosable are
-always blinded. This prevents an attacker from learning the names of the
-disclosable claims. However, the names of the claims that are not
-disclosable are not blinded. This includes the keys of objects that themselves
-are not blinded, but contain disclosable claims. This limitation
+always concealed unless the claim's value is disclosed. This prevents an attacker from learning the names of such
+claims. However, the names of the claims that are permanently
+disclosed are not hidden. This includes the keys of objects that themselves
+are not concealed, but contain concealed claims. This limitation
 needs to be taken into account by Issuers when creating the structure of
 the SD-JWT.<a href="#section-9.6-1" class="pilcrow">¶</a></p>
 </section>
@@ -3704,6 +3704,7 @@ Alen Horvat,
 Alex Hodder,
 Anders Rundgren,
 Arjan Geluk,
+Chad Parry,
 Christian Bormann,
 Christian Paquin,
 Dale Bowie,
@@ -4361,8 +4362,8 @@ WUpISVo4VnUtZjlDQ3lWdWIyVWZnRWs4anZ2WGV6d0sxcF9KbmVlWFEiLCAiZ2xUM2hy
 U1U3ZlNXZ3dGNVVEWm1Xd0JUdzMyZ25VbGRJaGk4aEdWQ2FWNCIsICJydkpkNmlxNlQ1
 ZWptc0JNb0d3dU5YaDlxQUFGQVRBY2k0MG9pZEVlVnNBIiwgInVOSG9XWWhYc1poVkpD
 TkUyRHF5LXpxdDd0NjlnSkt5NVFhRnY3R3JNWDQiXX0sICJfc2RfYWxnIjogInNoYS0y
-NTYifQ.olG1rBb3Xix6SW2ynvMVfTb6WhP-DfrTAoeP-QsYfExxXO0GXajqiI7I93mm4
-jfGM0ZFJE4Cc8V-oXovw2MvMQ~WyJHMDJOU3JRZmpGWFE3SW8wOXN5YWpBIiwgInJlZ2
+NTYifQ.JnKnjfTGP8wFExMLYQ2wYYKdlAOQbd_kRbjKOha_F8jtNfVuHsS8asunElH0Q
+uCKjQumJeugbVmQAEYM36TveQ~WyJHMDJOU3JRZmpGWFE3SW8wOXN5YWpBIiwgInJlZ2
 lvbiIsICJcdTZlMmZcdTUzM2EiXQ~WyJsa2x4RjVqTVlsR1RQVW92TU5JdkNBIiwgImN
 vdW50cnkiLCAiSlAiXQ~
 
@@ -4713,8 +4714,8 @@ ZFJtc01vIiwgIldOQS1VTks3Rl96aHNBYjlzeVdPNklJUTF1SGxUbU9VOHI4Q3ZKMGNJ
 TWsiLCAiV3hoX3NWM2lSSDliZ3JUQkppLWFZSE5DTHQtdmpoWDFzZC1pZ09mXzlsayIs
 ICJfTy13SmlIM2VuU0I0Uk9IbnRUb1FUOEptTHR6LW1oTzJmMWM4OVhvZXJRIiwgImh2
 RFhod21HY0pRc0JDQTJPdGp1TEFjd0FNcERzYVUwbmtvdmNLT3FXTkUiXX19LCAiX3Nk
-X2FsZyI6ICJzaGEtMjU2In0.u-YJEVU2tPmkfFY-o_bG4_9ekXhFz-bpsDZP4cM3e4QL
-4eUgJ4wzPiSpq4I5wbIvR5ScT1LzLxReNXGANPU59w~WyIyR0xDNDJzS1F2ZUNmR2Zye
+X2FsZyI6ICJzaGEtMjU2In0.2P-iwztoETcBlRmUAjcqpC6-C_-gz8xxADjns43O-McR
+AFKdYVVmK6KNwgNz1-hjUqcFk66QxD-wSNgIJQMlAg~WyIyR0xDNDJzS1F2ZUNmR2Zye
 U5STjl3IiwgInRpbWUiLCAiMjAxMi0wNC0yM1QxODoyNVoiXQ~WyJQYzMzSk0yTGNoY1
 VfbEhnZ3ZfdWZRIiwgeyJfc2QiOiBbIjl3cGpWUFd1RDdQSzBuc1FETDhCMDZsbWRnVj
 NMVnliaEh5ZFFwVE55TEkiLCAiRzVFbmhPQU9vVTlYXzZRTU52ekZYanBFQV9SYy1BRX
@@ -4837,8 +4838,8 @@ iZXhwIjogMTg4MzAwMDAwMCwgInZjdCI6ICJ1cm46ZXVkaTpwaWQ6ZGU6MSIsICJfc2R
 fYWxnIjogInNoYS0yNTYiLCAiY25mIjogeyJqd2siOiB7Imt0eSI6ICJFQyIsICJjcnY
 iOiAiUC0yNTYiLCAieCI6ICJUQ0FFUjE5WnZ1M09IRjRqNFc0dmZTVm9ISVAxSUxpbER
 sczd2Q2VHZW1jIiwgInkiOiAiWnhqaVdXYlpNUUdIVldLVlE0aGJTSWlyc1ZmdWVjQ0U
-2dDRqVDlGMkhaUSJ9fX0.b-CPCRZyU5oTSgrRWAuO-Dw8oZQ1LU0c-OpLZ2ftWmNdGau
-AQ20rlEIizJk9GcZur_AmZCaNsz5uL7gwuBUJuw~WyIyR0xDNDJzS1F2ZUNmR2ZyeU5S
+2dDRqVDlGMkhaUSJ9fX0.AZlZJaIHpwhyzBjeh3PFT9E_RFV2D6CvLn5EbRp-95mMYmM
+SSP6hmz2p1D0Gkx_SVwH1kVm_tViCrsGuGH6uzA~WyIyR0xDNDJzS1F2ZUNmR2ZyeU5S
 Tjl3IiwgImdpdmVuX25hbWUiLCAiRXJpa2EiXQ~WyJlbHVWNU9nM2dTTklJOEVZbnN4Q
 V9BIiwgImZhbWlseV9uYW1lIiwgIk11c3Rlcm1hbm4iXQ~WyI2SWo3dE0tYTVpVlBHYm
 9TNXRtdlZBIiwgImJpcnRoZGF0ZSIsICIxOTYzLTA4LTEyIl0~WyJlSThaV205UW5LUH
@@ -5279,8 +5280,8 @@ iZXhwIjogMTg4MzAwMDAwMCwgInZjdCI6ICJ1cm46ZXVkaTpwaWQ6ZGU6MSIsICJfc2R
 fYWxnIjogInNoYS0yNTYiLCAiY25mIjogeyJqd2siOiB7Imt0eSI6ICJFQyIsICJjcnY
 iOiAiUC0yNTYiLCAieCI6ICJUQ0FFUjE5WnZ1M09IRjRqNFc0dmZTVm9ISVAxSUxpbER
 sczd2Q2VHZW1jIiwgInkiOiAiWnhqaVdXYlpNUUdIVldLVlE0aGJTSWlyc1ZmdWVjQ0U
-2dDRqVDlGMkhaUSJ9fX0.b-CPCRZyU5oTSgrRWAuO-Dw8oZQ1LU0c-OpLZ2ftWmNdGau
-AQ20rlEIizJk9GcZur_AmZCaNsz5uL7gwuBUJuw~WyJlSzVvNXBIZmd1cFBwbHRqMXFo
+2dDRqVDlGMkhaUSJ9fX0.AZlZJaIHpwhyzBjeh3PFT9E_RFV2D6CvLn5EbRp-95mMYmM
+SSP6hmz2p1D0Gkx_SVwH1kVm_tViCrsGuGH6uzA~WyJlSzVvNXBIZmd1cFBwbHRqMXFo
 QUp3IiwgImFnZV9lcXVhbF9vcl9vdmVyIiwgeyJfc2QiOiBbIjF0RWl5elBSWU9Lc2Y3
 U3NZR01nUFpLc09UMWxRWlJ4SFhBMHI1X0J3a2siLCAiQ1ZLbmx5NVA5MHlKczNFd3R4
 UWlPdFVjemFYQ1lOQTRJY3pSYW9ock1EZyIsICJhNDQtZzJHcjhfM0FtSncyWFo4a0kx
@@ -5291,9 +5292,9 @@ ZU8wS3FhekdJIl19XQ~WyJPQktsVFZsdkxnLUFkd3FZR2JQOFpBIiwgIjE4IiwgdHJ1Z
 V0~WyJsa2x4RjVqTVlsR1RQVW92TU5JdkNBIiwgIm5hdGlvbmFsaXRpZXMiLCBbIkRFI
 l1d~eyJhbGciOiAiRVMyNTYiLCAidHlwIjogImtiK2p3dCJ9.eyJub25jZSI6ICIxMjM
 0NTY3ODkwIiwgImF1ZCI6ICJodHRwczovL3ZlcmlmaWVyLmV4YW1wbGUub3JnIiwgIml
-hdCI6IDE3NDU4NDA2MzcsICJzZF9oYXNoIjogIlFvRVc2MGN2RVpQazg5RU40X0NKM2E
-xdmNqRTBrcEw3eWZrRVlDc25tS2sifQ.vHnSBFjBPQK9LbU4yDflQpyF5Pq7Yo8Leit6
-k3BdpGTLtYFK6yx7bv7mJnI_q2dxCmXfupFzYV6jNglY5i16Fg
+hdCI6IDE3NDU4NDA3ODAsICJzZF9oYXNoIjogIk9FODd2cmp5d0lsQnFKdlVLTnlGMXJ
+2TkhOMDhqMnZPdmVoZE5GUlFyeGsifQ.5t5JLrpKGSV4cfKBb_7vD4ZGiuQOS9BnmzRB
+QTXSxHXuY6QFBG2IkrEvMNvPUOWNip2L9wOuZDeeqv9FGjB4wg
 
 </pre><a href="#appendix-A.3-65" class="pilcrow">¶</a>
 </div>
@@ -5302,8 +5303,8 @@ k3BdpGTLtYFK6yx7bv7mJnI_q2dxCmXfupFzYV6jNglY5i16Fg
 <pre>{
   "nonce": "1234567890",
   "aud": "https://verifier.example.org",
-  "iat": 1745840637,
-  "sd_hash": "QoEW60cvEZPk89EN4_CJ3a1vcjE0kpL7yfkEYCsnmKk"
+  "iat": 1745840780,
+  "sd_hash": "OE87vrjywIlBqJvUKNyF1rvNHN08j2vOvehdNFRQrxk"
 }
 
 </pre><a href="#appendix-A.3-67" class="pilcrow">¶</a>
@@ -5416,8 +5417,8 @@ VmFjY2luZVJlY2lwaWVudCJ9LCAidHlwZSI6ICJWYWNjaW5hdGlvbkV2ZW50In0sICJf
 c2RfYWxnIjogInNoYS0yNTYiLCAiY25mIjogeyJqd2siOiB7Imt0eSI6ICJFQyIsICJj
 cnYiOiAiUC0yNTYiLCAieCI6ICJUQ0FFUjE5WnZ1M09IRjRqNFc0dmZTVm9ISVAxSUxp
 bERsczd2Q2VHZW1jIiwgInkiOiAiWnhqaVdXYlpNUUdIVldLVlE0aGJTSWlyc1ZmdWVj
-Q0U2dDRqVDlGMkhaUSJ9fX0.FIreSmVo8WogSqkvm8Y5ICJVagEaG4ToZdMhIcbWpmv2
-VFTbYSPpq6Fu_2UkoIkcycysijbwD36Qj68bt-4Cng~WyIyR0xDNDJzS1F2ZUNmR2Zye
+Q0U2dDRqVDlGMkhaUSJ9fX0.IlZHsu0I7uI5rJUykV7gDDhgm0yq4CuS7kk8Xzm0T1a3
+KOVe9mESrwWlFlj5ACRVXFDfBFLNKJeoKxM8QNKkew~WyIyR0xDNDJzS1F2ZUNmR2Zye
 U5STjl3IiwgImF0Y0NvZGUiLCAiSjA3QlgwMyJd~WyJlbHVWNU9nM2dTTklJOEVZbnN4
 QV9BIiwgIm1lZGljaW5hbFByb2R1Y3ROYW1lIiwgIkNPVklELTE5IFZhY2NpbmUgTW9k
 ZXJuYSJd~WyI2SWo3dE0tYTVpVlBHYm9TNXRtdlZBIiwgIm1hcmtldGluZ0F1dGhvcml
@@ -5699,18 +5700,18 @@ VmFjY2luZVJlY2lwaWVudCJ9LCAidHlwZSI6ICJWYWNjaW5hdGlvbkV2ZW50In0sICJf
 c2RfYWxnIjogInNoYS0yNTYiLCAiY25mIjogeyJqd2siOiB7Imt0eSI6ICJFQyIsICJj
 cnYiOiAiUC0yNTYiLCAieCI6ICJUQ0FFUjE5WnZ1M09IRjRqNFc0dmZTVm9ISVAxSUxp
 bERsczd2Q2VHZW1jIiwgInkiOiAiWnhqaVdXYlpNUUdIVldLVlE0aGJTSWlyc1ZmdWVj
-Q0U2dDRqVDlGMkhaUSJ9fX0.FIreSmVo8WogSqkvm8Y5ICJVagEaG4ToZdMhIcbWpmv2
-VFTbYSPpq6Fu_2UkoIkcycysijbwD36Qj68bt-4Cng~WyJQYzMzSk0yTGNoY1VfbEhnZ
+Q0U2dDRqVDlGMkhaUSJ9fX0.IlZHsu0I7uI5rJUykV7gDDhgm0yq4CuS7kk8Xzm0T1a3
+KOVe9mESrwWlFlj5ACRVXFDfBFLNKJeoKxM8QNKkew~WyJQYzMzSk0yTGNoY1VfbEhnZ
 3ZfdWZRIiwgIm9yZGVyIiwgIjMvMyJd~WyJBSngtMDk1VlBycFR0TjRRTU9xUk9BIiwg
 ImRhdGVPZlZhY2NpbmF0aW9uIiwgIjIwMjEtMDYtMjNUMTM6NDA6MTJaIl0~WyIyR0xD
 NDJzS1F2ZUNmR2ZyeU5STjl3IiwgImF0Y0NvZGUiLCAiSjA3QlgwMyJd~WyJlbHVWNU9
 nM2dTTklJOEVZbnN4QV9BIiwgIm1lZGljaW5hbFByb2R1Y3ROYW1lIiwgIkNPVklELTE
 5IFZhY2NpbmUgTW9kZXJuYSJd~eyJhbGciOiAiRVMyNTYiLCAidHlwIjogImtiK2p3dC
 J9.eyJub25jZSI6ICIxMjM0NTY3ODkwIiwgImF1ZCI6ICJodHRwczovL3ZlcmlmaWVyL
-mV4YW1wbGUub3JnIiwgImlhdCI6IDE3NDU4NDA2MzcsICJzZF9oYXNoIjogInVtNC1EN
-GU1MVhiVWwxV3EwOVk4VjVkVHNCT2w4VHRYY1JtYm9oclZGYUEifQ.fDAjcVhSqcHy2J
-r_BfniFlH1SyOjiCLvxVhe3iOIFzBF0Trg7dHT3SqCbOqRKFEwr4cZH5_EDP1UaiR2SR
-x78g
+mV4YW1wbGUub3JnIiwgImlhdCI6IDE3NDU4NDA3ODAsICJzZF9oYXNoIjogIm04d0ZpR
+FJDUDdBWS1YRjgzY281RENDRG4yT2NoMldpcjFEVEJicldIWTAifQ.thgBaAzR5x-oXI
+oInf4-TzE12O-4s9o4_pr3Le74km1pQvhXTXSIBmieyubI9n5cFiaEf3wi1Swv8zqVm3
+gzgg
 
 </pre><a href="#appendix-A.4-39" class="pilcrow">¶</a>
 </div>
@@ -5891,7 +5892,9 @@ data. The original JSON data is then used by the application. See
 </li>
         <li class="compact" id="appendix-C-3.2">Editorial updates from SECDIR IETF LC review<a href="#appendix-C-3.2" class="pilcrow">¶</a>
 </li>
-        <li class="compact" id="appendix-C-3.3">Suggest against using extra claims/headers in the KB-JWT without a good reason<a href="#appendix-C-3.3" class="pilcrow">¶</a>
+        <li class="compact" id="appendix-C-3.3">Terminology improvements around the phrase "non-selectively disclosable claims" and "not disclosable"<a href="#appendix-C-3.3" class="pilcrow">¶</a>
+</li>
+        <li class="compact" id="appendix-C-3.4">Suggest against using extra claims/headers in the KB-JWT without a good reason<a href="#appendix-C-3.4" class="pilcrow">¶</a>
 </li>
       </ul>
 <p id="appendix-C-4">-17<a href="#appendix-C-4" class="pilcrow">¶</a></p>
