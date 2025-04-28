@@ -1102,7 +1102,7 @@ when following the verification steps described in (#verifier_verification).
 SD-JWT ensures that names of claims that are selectively disclosable are
 always concealed unless the claim's value is disclosed. This prevents an attacker from learning the names of such
 claims. However, the names of the claims that are permanently
-disclosable are not hidden. This includes the keys of objects that themselves
+disclosed are not hidden. This includes the keys of objects that themselves
 are not concealed, but contain concealed claims. This limitation
 needs to be taken into account by Issuers when creating the structure of
 the SD-JWT.
