@@ -642,6 +642,9 @@ The Key Binding JWT MUST be a JWT according to [@!RFC7519] and its payload MUST 
     * `nonce`: REQUIRED. Ensures the freshness of the signature. The value type of this claim MUST be a string. How this value is obtained is up to the protocol used and out of scope of this specification.
     * `sd_hash`: REQUIRED. The base64url-encoded hash value over the Issuer-signed JWT and the selected Disclosures as defined below.
 
+The general extensibility model of JWT means that additional claims and header parameters can be added to the Key Binding JWT.
+However, unless there is a compelling reason, this SHOULD be avoided, as it may harm interoperability and burden conceptual integrity.
+
 ### Binding to an SD-JWT {#integrity-protection-of-the-presentation}
 
 The hash value in the `sd_hash` claim binds the KB-JWT to the specific SD-JWT.
@@ -1984,6 +1987,7 @@ data. The original JSON data is then used by the application. See
    * Update PID example to align with the latest ARF and update the ARF reference
    * Editorial updates from SECDIR IETF LC review
    * Terminology improvements around the phrase "non-selectively disclosable claims" and "not disclosable"
+   * Suggest against using extra claims/headers in the KB-JWT without a good reason
 
    -17
 
