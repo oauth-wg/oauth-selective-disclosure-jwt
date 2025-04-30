@@ -639,7 +639,7 @@ The Key Binding JWT MUST be a JWT according to [@!RFC7519] and its payload MUST 
 * in the JWT payload,
     * `iat`: REQUIRED. The value of this claim MUST be the time at which the Key Binding JWT was issued using the syntax defined in [@!RFC7519].
     * `aud`: REQUIRED. The intended receiver of the Key Binding JWT. How the value is represented is up to the protocol used and out of scope of this specification.
-    * `nonce`: REQUIRED. Ensures the freshness of the signature. The value type of this claim MUST be a string. How this value is obtained is up to the protocol used and out of scope of this specification.
+    * `nonce`: REQUIRED. Ensures the freshness of the signature or its binding to the given transaction. The value type of this claim MUST be a string. How this value is obtained is up to the protocol used and out of scope of this specification.
     * `sd_hash`: REQUIRED. The base64url-encoded hash value over the Issuer-signed JWT and the selected Disclosures as defined below.
 
 The general extensibility model of JWT means that additional claims and header parameters can be added to the Key Binding JWT.
@@ -802,7 +802,7 @@ The Issuer creates Disclosures first for the sub-claims and then includes their 
 Upon receiving an SD-JWT, either directly or as a component of an SD-JWT+KB, a Holder
 or a Verifier needs to ensure that:
 
- * the Issuer-signed JWT is valid, i.e., it is signed by the Issuer and the signature is valid, and
+ * the Issuer-signed JWT is valid, i.e., it is signed by the Issuer, the signature is valid, it is not expired, it is not suspended or revoked, etc., and
  * all Disclosures are valid and correspond to a respective digest value in the Issuer-signed JWT (directly in the payload or recursively included in the contents of other Disclosures).
 
 The Holder or the Verifier MUST perform the following (or equivalent) steps when receiving
@@ -892,7 +892,7 @@ To this end, Verifiers MUST follow the following steps (or equivalent):
     3. Validate the signature over the Key Binding JWT per Section 5.2 of [@!RFC7515].
     4. Check that the `typ` of the Key Binding JWT is `kb+jwt` (see (#kb-jwt)).
     5. Check that the creation time of the Key Binding JWT, as determined by the `iat` claim, is within an acceptable window.
-    6. Determine that the Key Binding JWT is bound to the current transaction and was created for this Verifier (replay protection) by validating `nonce` and `aud` claims.
+    6. Determine that the Key Binding JWT is bound to the current transaction and was created for this Verifier (replay detection) by validating `nonce` and `aud` claims.
     7. Calculate the digest over the Issuer-signed JWT and Disclosures as defined in (#integrity-protection-of-the-presentation) and verify that it matches the value of the `sd_hash` claim in the Key Binding JWT.
     8. Check that the Key Binding JWT is a valid JWT in all other respects, per [@!RFC7519] and [@!RFC8725].
 
@@ -1981,6 +1981,10 @@ data. The original JSON data is then used by the application. See
 # Document History
 
    [[ To be removed from the final specification ]]
+
+   -19
+
+   * updates from AD's review of comments
 
    -18
 
