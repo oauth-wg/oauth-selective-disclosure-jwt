@@ -534,7 +534,7 @@ element unless a matching Disclosure for the second element is received.
 
 An Issuer MAY add additional digests to the SD-JWT payload that are not associated with
 any claim.  The purpose of such "decoy" digests is to make it more difficult for
-an advisory to see the original number of claims or array elements contained in the SD-JWT. Decoy
+an adversary to see the original number of claims or array elements contained in the SD-JWT. Decoy
 digests MAY be added both to the `_sd` array for objects as well as in arrays.
 
 It is RECOMMENDED to create the decoy digests by hashing over a
