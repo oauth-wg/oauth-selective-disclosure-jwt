@@ -436,7 +436,7 @@ For example, a Disclosure for the second element of the `nationalities` array in
 
 ```json
 {
-  "nationalities": ["DE", "FR"]
+  "nationalities": ["DE", "FR", "US"]
 }
 ```
 
@@ -447,6 +447,10 @@ could be created by first creating the following array:
 ```
 
 The resulting Disclosure would be: `WyJsa2x4RjVqTVlsR1RQVW92TU5JdkNBIiwgIkZSIl0`
+
+> Note that the size of an array alone can potentially reveal unintended information.
+The use of decoys, as described in (#decoy_digests), to consistently pad the size of an array can help obscure
+the actual number of elements present in any particular instance.
 
 ### Hashing Disclosures {#hashing_disclosures}
 
@@ -510,14 +514,14 @@ string `...` (three dots). The value MUST be the digest of the Disclosure create
 described in (#hashing_disclosures). There MUST NOT be any other keys in the
 object. Note that the string `...` was chosen because the ellipsis character, typically entered as three period characters, is commonly used in places where content is omitted from the present context.
 
-For example, using the digest of the array element Disclosure created above,
+For example, using the digest of the array element Disclosure created above in (#disclosures_for_array_elements),
 the Issuer could create the following SD-JWT payload to make the second element
 of the `nationalities` array selectively disclosable:
 
 ```json
 {
   "nationalities":
-    ["DE", {"...": "w0I8EKcdCtUPkGCNUrfwVp2xEgNjtoIDlOxc9-PlOhs"}]
+    ["DE", {"...":"w0I8EKcdCtUPkGCNUrfwVp2xEgNjtoIDlOxc9-PlOhs"}, "US"]
 }
 ```
 
@@ -530,7 +534,7 @@ element unless a matching Disclosure for the second element is received.
 
 An Issuer MAY add additional digests to the SD-JWT payload that are not associated with
 any claim.  The purpose of such "decoy" digests is to make it more difficult for
-an attacker to see the original number of claims contained in the SD-JWT. Decoy
+an advisory to see the original number of claims or array elements contained in the SD-JWT. Decoy
 digests MAY be added both to the `_sd` array for objects as well as in arrays.
 
 It is RECOMMENDED to create the decoy digests by hashing over a
