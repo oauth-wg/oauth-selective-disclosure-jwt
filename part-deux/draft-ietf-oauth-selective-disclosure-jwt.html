@@ -2026,7 +2026,7 @@ element unless a matching Disclosure for the second element is received.<a href=
           </h4>
 <p id="section-4.2.5-1">An Issuer MAY add additional digests to the SD-JWT payload that are not associated with
 any claim.  The purpose of such "decoy" digests is to make it more difficult for
-an advisory to see the original number of claims or array elements contained in the SD-JWT. Decoy
+an adversary to see the original number of claims or array elements contained in the SD-JWT. Decoy
 digests MAY be added both to the <code>_sd</code> array for objects as well as in arrays.<a href="#section-4.2.5-1" class="pilcrow">¶</a></p>
 <p id="section-4.2.5-2">It is RECOMMENDED to create the decoy digests by hashing over a
 cryptographically secure random number. The bytes of the digest MUST then be
@@ -2437,8 +2437,8 @@ ZHJ5M2xjYndIZ2VaOGtoQXYxVTFPU2xlclAwVmtCSnJXWjAifV0sICJfc2RfYWxnIjog
 InNoYS0yNTYiLCAiY25mIjogeyJqd2siOiB7Imt0eSI6ICJFQyIsICJjcnYiOiAiUC0y
 NTYiLCAieCI6ICJUQ0FFUjE5WnZ1M09IRjRqNFc0dmZTVm9ISVAxSUxpbERsczd2Q2VH
 ZW1jIiwgInkiOiAiWnhqaVdXYlpNUUdIVldLVlE0aGJTSWlyc1ZmdWVjQ0U2dDRqVDlG
-MkhaUSJ9fX0.a8oGxFMjbgvA0uuiq5wug7QfPqZCG7eeL7g9yfqNdRD6-E6i9osAKqTp
-So-XKs3475zyKz-ff82fbYDEuOnJ-A
+MkhaUSJ9fX0.JU7qjiCHyGucPDCRMM5lwdGasNufp1hGzVUtJ1zW81c2ROPLXASIvS5O
+cUdkyBPToD6O7HKYneajSav1cSEy5w
 
 </pre><a href="#section-5.1-29" class="pilcrow">¶</a>
 </div>
@@ -2460,8 +2460,8 @@ ZHJ5M2xjYndIZ2VaOGtoQXYxVTFPU2xlclAwVmtCSnJXWjAifV0sICJfc2RfYWxnIjog
 InNoYS0yNTYiLCAiY25mIjogeyJqd2siOiB7Imt0eSI6ICJFQyIsICJjcnYiOiAiUC0y
 NTYiLCAieCI6ICJUQ0FFUjE5WnZ1M09IRjRqNFc0dmZTVm9ISVAxSUxpbERsczd2Q2VH
 ZW1jIiwgInkiOiAiWnhqaVdXYlpNUUdIVldLVlE0aGJTSWlyc1ZmdWVjQ0U2dDRqVDlG
-MkhaUSJ9fX0.a8oGxFMjbgvA0uuiq5wug7QfPqZCG7eeL7g9yfqNdRD6-E6i9osAKqTp
-So-XKs3475zyKz-ff82fbYDEuOnJ-A~WyIyR0xDNDJzS1F2ZUNmR2ZyeU5STjl3IiwgI
+MkhaUSJ9fX0.JU7qjiCHyGucPDCRMM5lwdGasNufp1hGzVUtJ1zW81c2ROPLXASIvS5O
+cUdkyBPToD6O7HKYneajSav1cSEy5w~WyIyR0xDNDJzS1F2ZUNmR2ZyeU5STjl3IiwgI
 mdpdmVuX25hbWUiLCAiSm9obiJd~WyJlbHVWNU9nM2dTTklJOEVZbnN4QV9BIiwgImZh
 bWlseV9uYW1lIiwgIkRvZSJd~WyI2SWo3dE0tYTVpVlBHYm9TNXRtdlZBIiwgImVtYWl
 sIiwgImpvaG5kb2VAZXhhbXBsZS5jb20iXQ~WyJlSThaV205UW5LUHBOUGVOZW5IZGhR
@@ -2505,18 +2505,18 @@ ZHJ5M2xjYndIZ2VaOGtoQXYxVTFPU2xlclAwVmtCSnJXWjAifV0sICJfc2RfYWxnIjog
 InNoYS0yNTYiLCAiY25mIjogeyJqd2siOiB7Imt0eSI6ICJFQyIsICJjcnYiOiAiUC0y
 NTYiLCAieCI6ICJUQ0FFUjE5WnZ1M09IRjRqNFc0dmZTVm9ISVAxSUxpbERsczd2Q2VH
 ZW1jIiwgInkiOiAiWnhqaVdXYlpNUUdIVldLVlE0aGJTSWlyc1ZmdWVjQ0U2dDRqVDlG
-MkhaUSJ9fX0.a8oGxFMjbgvA0uuiq5wug7QfPqZCG7eeL7g9yfqNdRD6-E6i9osAKqTp
-So-XKs3475zyKz-ff82fbYDEuOnJ-A~WyJlbHVWNU9nM2dTTklJOEVZbnN4QV9BIiwgI
+MkhaUSJ9fX0.JU7qjiCHyGucPDCRMM5lwdGasNufp1hGzVUtJ1zW81c2ROPLXASIvS5O
+cUdkyBPToD6O7HKYneajSav1cSEy5w~WyJlbHVWNU9nM2dTTklJOEVZbnN4QV9BIiwgI
 mZhbWlseV9uYW1lIiwgIkRvZSJd~WyJBSngtMDk1VlBycFR0TjRRTU9xUk9BIiwgImFk
 ZHJlc3MiLCB7InN0cmVldF9hZGRyZXNzIjogIjEyMyBNYWluIFN0IiwgImxvY2FsaXR5
 IjogIkFueXRvd24iLCAicmVnaW9uIjogIkFueXN0YXRlIiwgImNvdW50cnkiOiAiVVMi
 fV0~WyIyR0xDNDJzS1F2ZUNmR2ZyeU5STjl3IiwgImdpdmVuX25hbWUiLCAiSm9obiJd
 ~WyJsa2x4RjVqTVlsR1RQVW92TU5JdkNBIiwgIlVTIl0~eyJhbGciOiAiRVMyNTYiLCA
 idHlwIjogImtiK2p3dCJ9.eyJub25jZSI6ICIxMjM0NTY3ODkwIiwgImF1ZCI6ICJodH
-RwczovL3ZlcmlmaWVyLmV4YW1wbGUub3JnIiwgImlhdCI6IDE3NDYxMjcxNTcsICJzZF
-9oYXNoIjogInhHRzFkWnktLWZYaV9ocVN1dVBpY2lXZDRXZjc5T3dfbjVRWXg2S0RhNT
-AifQ.oJ6Upjt7yteCDfdv4ZVNaM-0DMx66axcdTeRE8ZVsUP9VO0tCx5LksROl77bjHn
-hv9GxjIWTEPuMOktX2j_9aw
+RwczovL3ZlcmlmaWVyLmV4YW1wbGUub3JnIiwgImlhdCI6IDE3NDYxMjczNDAsICJzZF
+9oYXNoIjogImFucENNVm5BbHhDZllMbTY3N1ZKX0kwWkJSY283UnowamFwMHAzZDV4dT
+AifQ.XnRA_Mj8vTFNZMXoZFaZJbziCPvBpxspwAw9NHlDOnZJz5a6pWCAdvzdjDAvWg7
+QdVlW5PpckycevcwzC2jr_Q
 
 </pre><a href="#section-5.2-2" class="pilcrow">¶</a>
 </div>
@@ -2525,8 +2525,8 @@ hv9GxjIWTEPuMOktX2j_9aw
 <pre>{
   "nonce": "1234567890",
   "aud": "https://verifier.example.org",
-  "iat": 1746127157,
-  "sd_hash": "xGG1dZy--fXi_hqSuuPiciWd4Wf79Ow_n5QYx6KDa50"
+  "iat": 1746127340,
+  "sd_hash": "anpCMVnAlxCfYLm677VJ_I0ZBRco7Rz0jap0p3d5xu0"
 }
 
 </pre><a href="#section-5.2-4" class="pilcrow">¶</a>
@@ -3110,8 +3110,8 @@ issued using the Flattened JSON Serialization:<a href="#section-8.2-2" class="pi
     Z1ZWNDRTZ0NGpUOUYySFpRIn19fQ",
   "protected":
     "eyJhbGciOiAiRVMyNTYiLCAidHlwIjogImV4YW1wbGUrc2Qtand0In0",
-  "signature": "ww-HVS4Nx-LZdg1gnsTanWVS7U4QeaxXmyk-EY520QR-ZsvOf6Yx
-    a9AS-hphcAMrGxWgMlCZXweGQrDD0K2JMg"
+  "signature": "dET4Z3A39j4QIL8tIfMszAdx-cF5jF8FqGTfEPdn04PT7eDPS6uy
+    ArGd9TOCRcbZuVeXnhQEuKc_XP4wnioVXw"
 }
 
 </pre><a href="#section-8.2-3" class="pilcrow">¶</a>
@@ -3128,10 +3128,10 @@ issued using the Flattened JSON Serialization:<a href="#section-8.2-2" class="pi
     ],
     "kb_jwt": "eyJhbGciOiAiRVMyNTYiLCAidHlwIjogImtiK2p3dCJ9.eyJub25j
       ZSI6ICIxMjM0NTY3ODkwIiwgImF1ZCI6ICJodHRwczovL3ZlcmlmaWVyLmV4YW
-      1wbGUub3JnIiwgImlhdCI6IDE3NDYxMjcxNTcsICJzZF9oYXNoIjogImxYQV9h
-      azVCUnpFcWhTU2hLdlBncHhLTDV0SjZTcVdkQ21hbkk2NkVVODgifQ.0sdVRM3
-      c_KOQPqY6OnBPk6uJZ2R8HYErjOBz8EK1ISwkNLC41ZGb2eoEf-8f2KYVvevnp
-      Cc1jwMMf-cc89s67w"
+      1wbGUub3JnIiwgImlhdCI6IDE3NDYxMjczNDAsICJzZF9oYXNoIjogIlkwaDI3
+      eWk1b0ZzNFpiaUczQkZIOWNOUmwwWk5VUU43UF9DR2JjTjgzeFUifQ.kMJMZKx
+      s9rMENoOyPbvBeJlzi7Ij7b0tpAQJk3qoBvtJLgV2VXl_Rvw0z7HIoCz7tS-VE
+      wxJE-9JUuPBjCnjmQ"
   },
   "payload": "eyJfc2QiOiBbIjRIQm42YUlZM1d0dUdHV1R4LXFVajZjZGs2V0JwWn
     lnbHRkRmF2UGE3TFkiLCAiOHNtMVFDZjAyMXBObkhBQ0k1c1A0bTRLWmd5Tk9PQV
@@ -3145,8 +3145,8 @@ issued using the Flattened JSON Serialization:<a href="#section-8.2-2" class="pi
     Z1ZWNDRTZ0NGpUOUYySFpRIn19fQ",
   "protected":
     "eyJhbGciOiAiRVMyNTYiLCAidHlwIjogImV4YW1wbGUrc2Qtand0In0",
-  "signature": "ww-HVS4Nx-LZdg1gnsTanWVS7U4QeaxXmyk-EY520QR-ZsvOf6Yx
-    a9AS-hphcAMrGxWgMlCZXweGQrDD0K2JMg"
+  "signature": "dET4Z3A39j4QIL8tIfMszAdx-cF5jF8FqGTfEPdn04PT7eDPS6uy
+    ArGd9TOCRcbZuVeXnhQEuKc_XP4wnioVXw"
 }
 
 </pre><a href="#section-8.2-5" class="pilcrow">¶</a>
@@ -3189,15 +3189,15 @@ Serialization:<a href="#section-8.3-2" class="pilcrow">¶</a></p>
         "kid": "issuer-key-1",
         "kb_jwt": "eyJhbGciOiAiRVMyNTYiLCAidHlwIjogImtiK2p3dCJ9.eyJu
           b25jZSI6ICIxMjM0NTY3ODkwIiwgImF1ZCI6ICJodHRwczovL3ZlcmlmaW
-          VyLmV4YW1wbGUub3JnIiwgImlhdCI6IDE3NDYxMjcxNTcsICJzZF9oYXNo
-          IjogIlpxYWNlOXBkSmtvT0tST21rSG40OHNWdng4QmtSQi1wV09HbS1jdl
-          U3MUEifQ.31BBKdUrM_qEBezmRgSA6jypSLrmg0hlibKHetgtI9HWjJoww
-          swapeTjGPSSe5WnDILl_RSF_PzWhCqVlwytQw"
+          VyLmV4YW1wbGUub3JnIiwgImlhdCI6IDE3NDYxMjczNDAsICJzZF9oYXNo
+          IjogIllCVndvbm1ZcjBxV2hKQWFLRks3d1V3RmN0cFZYV09SLUZlUWlSbG
+          JNcmcifQ.yaIfwFQ_YTuwDwMMn2tcDXUdsm-gD5yats7_tvf7BGLOcQze7
+          KBvYE7kP5n5z17MNkwpnEQ2LtNrYYEsjMURYA"
       },
       "protected":
         "eyJhbGciOiAiRVMyNTYiLCAidHlwIjogImV4YW1wbGUrc2Qtand0In0",
-      "signature": "rCVnqae0c1LW8p_zeMsvKjDrnRY-E5GRvm_OU3C4tsdMhC1q
-        9CeDCNptAdi0GzVrWeelFB54YudSM3fnrZPffA"
+      "signature": "o5_xnoZiSY4KhWb-i6MTnAV9hS-R5F1VWkeJuybVQMvH2TjF
+        AfqhiLL1O3GON-n9bm31m5csht73i-ibBSmVQQ"
     },
     {
       "header": {
@@ -3205,8 +3205,8 @@ Serialization:<a href="#section-8.3-2" class="pilcrow">¶</a></p>
       },
       "protected":
         "eyJhbGciOiAiRVMyNTYiLCAidHlwIjogImV4YW1wbGUrc2Qtand0In0",
-      "signature": "3MI1Z9oXDM9JogNeNTeulQzjcS0fAqax1G9W-Hjy1feSV_Nt
-        DD6x8Q00LcEOlgW6IkJO0hyxgQVI0tElJEi1NQ"
+      "signature": "WigmwpNF56RGl25DqBgUdc18NAImgbkfbtlDcVCKv7qbuvV4
+        eMTVwJxaFkbRRBQcu9e02AkyL-Ybjd8jpDqahQ"
     }
   ]
 }
@@ -4367,8 +4367,8 @@ WUpISVo4VnUtZjlDQ3lWdWIyVWZnRWs4anZ2WGV6d0sxcF9KbmVlWFEiLCAiZ2xUM2hy
 U1U3ZlNXZ3dGNVVEWm1Xd0JUdzMyZ25VbGRJaGk4aEdWQ2FWNCIsICJydkpkNmlxNlQ1
 ZWptc0JNb0d3dU5YaDlxQUFGQVRBY2k0MG9pZEVlVnNBIiwgInVOSG9XWWhYc1poVkpD
 TkUyRHF5LXpxdDd0NjlnSkt5NVFhRnY3R3JNWDQiXX0sICJfc2RfYWxnIjogInNoYS0y
-NTYifQ.zV93LFtWGVtNLxNIVfXTDXN0Ql6NWZ0MtAZwxtDZ-PfUvAyJnd5YLfCEkr3qx
-mwR0kGSyMzO8HWBliqyUqbNGw~WyJHMDJOU3JRZmpGWFE3SW8wOXN5YWpBIiwgInJlZ2
+NTYifQ.1EGcmjA1vtXTUvZ4ycs8vvFgfabec601NPiJ1zEzyAG5vfQ5_rVc-d8-pocTb
+sYyrp2XnPo29qt1n0HZ41FcNw~WyJHMDJOU3JRZmpGWFE3SW8wOXN5YWpBIiwgInJlZ2
 lvbiIsICJcdTZlMmZcdTUzM2EiXQ~WyJsa2x4RjVqTVlsR1RQVW92TU5JdkNBIiwgImN
 vdW50cnkiLCAiSlAiXQ~
 
@@ -4719,8 +4719,8 @@ ZFJtc01vIiwgIldOQS1VTks3Rl96aHNBYjlzeVdPNklJUTF1SGxUbU9VOHI4Q3ZKMGNJ
 TWsiLCAiV3hoX3NWM2lSSDliZ3JUQkppLWFZSE5DTHQtdmpoWDFzZC1pZ09mXzlsayIs
 ICJfTy13SmlIM2VuU0I0Uk9IbnRUb1FUOEptTHR6LW1oTzJmMWM4OVhvZXJRIiwgImh2
 RFhod21HY0pRc0JDQTJPdGp1TEFjd0FNcERzYVUwbmtvdmNLT3FXTkUiXX19LCAiX3Nk
-X2FsZyI6ICJzaGEtMjU2In0.2wM2io5H9KTApGom5rpXUxiNU86pbczVRM1jFEaIgifx
-XUwqmiUgAJUISNzRWNtVir9Xlsx8uVMyoYe1aQSVeA~WyIyR0xDNDJzS1F2ZUNmR2Zye
+X2FsZyI6ICJzaGEtMjU2In0.4p3d4l-CwZ40oZEkoDR1I4ulSldnxz1yuizy5YMS24pv
+-tNCjjasRytI6esd74SRIrN5bkd0s2QADQ1enABFXg~WyIyR0xDNDJzS1F2ZUNmR2Zye
 U5STjl3IiwgInRpbWUiLCAiMjAxMi0wNC0yM1QxODoyNVoiXQ~WyJQYzMzSk0yTGNoY1
 VfbEhnZ3ZfdWZRIiwgeyJfc2QiOiBbIjl3cGpWUFd1RDdQSzBuc1FETDhCMDZsbWRnVj
 NMVnliaEh5ZFFwVE55TEkiLCAiRzVFbmhPQU9vVTlYXzZRTU52ekZYanBFQV9SYy1BRX
@@ -4843,8 +4843,8 @@ iZXhwIjogMTg4MzAwMDAwMCwgInZjdCI6ICJ1cm46ZXVkaTpwaWQ6ZGU6MSIsICJfc2R
 fYWxnIjogInNoYS0yNTYiLCAiY25mIjogeyJqd2siOiB7Imt0eSI6ICJFQyIsICJjcnY
 iOiAiUC0yNTYiLCAieCI6ICJUQ0FFUjE5WnZ1M09IRjRqNFc0dmZTVm9ISVAxSUxpbER
 sczd2Q2VHZW1jIiwgInkiOiAiWnhqaVdXYlpNUUdIVldLVlE0aGJTSWlyc1ZmdWVjQ0U
-2dDRqVDlGMkhaUSJ9fX0.-UViwATT7waUzmveK1o7yl8TGrMS9QK7Lb1g7nb_CzmFSEY
-XGgEYrEG6jME5czSFqmQPt85jfuqStyh1CKdppQ~WyIyR0xDNDJzS1F2ZUNmR2ZyeU5S
+2dDRqVDlGMkhaUSJ9fX0.x1PyKHvlyg9NYLJnnuX7Rl8qFoGgU5XJ5n_QEEzx8Q1tTEZ
+S55hGYvhI4quSXNRATs7nu4Eo7MKaKYHqQOWelg~WyIyR0xDNDJzS1F2ZUNmR2ZyeU5S
 Tjl3IiwgImdpdmVuX25hbWUiLCAiRXJpa2EiXQ~WyJlbHVWNU9nM2dTTklJOEVZbnN4Q
 V9BIiwgImZhbWlseV9uYW1lIiwgIk11c3Rlcm1hbm4iXQ~WyI2SWo3dE0tYTVpVlBHYm
 9TNXRtdlZBIiwgImJpcnRoZGF0ZSIsICIxOTYzLTA4LTEyIl0~WyJlSThaV205UW5LUH
@@ -5285,8 +5285,8 @@ iZXhwIjogMTg4MzAwMDAwMCwgInZjdCI6ICJ1cm46ZXVkaTpwaWQ6ZGU6MSIsICJfc2R
 fYWxnIjogInNoYS0yNTYiLCAiY25mIjogeyJqd2siOiB7Imt0eSI6ICJFQyIsICJjcnY
 iOiAiUC0yNTYiLCAieCI6ICJUQ0FFUjE5WnZ1M09IRjRqNFc0dmZTVm9ISVAxSUxpbER
 sczd2Q2VHZW1jIiwgInkiOiAiWnhqaVdXYlpNUUdIVldLVlE0aGJTSWlyc1ZmdWVjQ0U
-2dDRqVDlGMkhaUSJ9fX0.-UViwATT7waUzmveK1o7yl8TGrMS9QK7Lb1g7nb_CzmFSEY
-XGgEYrEG6jME5czSFqmQPt85jfuqStyh1CKdppQ~WyJlSzVvNXBIZmd1cFBwbHRqMXFo
+2dDRqVDlGMkhaUSJ9fX0.x1PyKHvlyg9NYLJnnuX7Rl8qFoGgU5XJ5n_QEEzx8Q1tTEZ
+S55hGYvhI4quSXNRATs7nu4Eo7MKaKYHqQOWelg~WyJlSzVvNXBIZmd1cFBwbHRqMXFo
 QUp3IiwgImFnZV9lcXVhbF9vcl9vdmVyIiwgeyJfc2QiOiBbIjF0RWl5elBSWU9Lc2Y3
 U3NZR01nUFpLc09UMWxRWlJ4SFhBMHI1X0J3a2siLCAiQ1ZLbmx5NVA5MHlKczNFd3R4
 UWlPdFVjemFYQ1lOQTRJY3pSYW9ock1EZyIsICJhNDQtZzJHcjhfM0FtSncyWFo4a0kx
@@ -5297,9 +5297,9 @@ ZU8wS3FhekdJIl19XQ~WyJPQktsVFZsdkxnLUFkd3FZR2JQOFpBIiwgIjE4IiwgdHJ1Z
 V0~WyJsa2x4RjVqTVlsR1RQVW92TU5JdkNBIiwgIm5hdGlvbmFsaXRpZXMiLCBbIkRFI
 l1d~eyJhbGciOiAiRVMyNTYiLCAidHlwIjogImtiK2p3dCJ9.eyJub25jZSI6ICIxMjM
 0NTY3ODkwIiwgImF1ZCI6ICJodHRwczovL3ZlcmlmaWVyLmV4YW1wbGUub3JnIiwgIml
-hdCI6IDE3NDYxMjcxNTcsICJzZF9oYXNoIjogInRfS19lVEItWXZTb1hUY3luZUZzOWJ
-WZ245a0ctMlVQYXY0NW5aMElmMEEifQ.CwkG6NlCldG6cBC_7nEg3ufTar8Tm9GrVzt5
-4tNQGyg0-AjRrRPBdpn9eLRmIM6WP9ckDIuPmuVdQMGFKbdjyw
+hdCI6IDE3NDYxMjczNDAsICJzZF9oYXNoIjogIlNxSm9ZQ0dxbDFSODl2UXlYcG1pbmp
+NWHhSRU1CbDY0QmI2ZXZIcy1LTUkifQ.MpxC-XKnKNSWte4Sgxt47XFz3vdPTvoYTg4f
+xxpmnsJHY5t4jqtUOKTeS87mukvQVOQdaadnm-l6RMYRBu_ZuA
 
 </pre><a href="#appendix-A.3-65" class="pilcrow">¶</a>
 </div>
@@ -5308,8 +5308,8 @@ WZ245a0ctMlVQYXY0NW5aMElmMEEifQ.CwkG6NlCldG6cBC_7nEg3ufTar8Tm9GrVzt5
 <pre>{
   "nonce": "1234567890",
   "aud": "https://verifier.example.org",
-  "iat": 1746127157,
-  "sd_hash": "t_K_eTB-YvSoXTcyneFs9bVgn9kG-2UPav45nZ0If0A"
+  "iat": 1746127340,
+  "sd_hash": "SqJoYCGql1R89vQyXpminjMXxREMBl64Bb6evHs-KMI"
 }
 
 </pre><a href="#appendix-A.3-67" class="pilcrow">¶</a>
@@ -5422,8 +5422,8 @@ VmFjY2luZVJlY2lwaWVudCJ9LCAidHlwZSI6ICJWYWNjaW5hdGlvbkV2ZW50In0sICJf
 c2RfYWxnIjogInNoYS0yNTYiLCAiY25mIjogeyJqd2siOiB7Imt0eSI6ICJFQyIsICJj
 cnYiOiAiUC0yNTYiLCAieCI6ICJUQ0FFUjE5WnZ1M09IRjRqNFc0dmZTVm9ISVAxSUxp
 bERsczd2Q2VHZW1jIiwgInkiOiAiWnhqaVdXYlpNUUdIVldLVlE0aGJTSWlyc1ZmdWVj
-Q0U2dDRqVDlGMkhaUSJ9fX0.feUQAjSp-_TzWGe1EqceHJ-eywfU0Q-gXuq1JdGNIZ0n
-7a-xcitKEwbP23PCARSHOtA_xcYwD8pfwMNbIieqOg~WyIyR0xDNDJzS1F2ZUNmR2Zye
+Q0U2dDRqVDlGMkhaUSJ9fX0.uM5zdzNJMbTZ8xGqnIZPC7zXCrKKU4AVlGJqlipMkg-F
+ygxXADBVAGtqBaHzFasKqv6H8dB8gOu1knWiG6vZuw~WyIyR0xDNDJzS1F2ZUNmR2Zye
 U5STjl3IiwgImF0Y0NvZGUiLCAiSjA3QlgwMyJd~WyJlbHVWNU9nM2dTTklJOEVZbnN4
 QV9BIiwgIm1lZGljaW5hbFByb2R1Y3ROYW1lIiwgIkNPVklELTE5IFZhY2NpbmUgTW9k
 ZXJuYSJd~WyI2SWo3dE0tYTVpVlBHYm9TNXRtdlZBIiwgIm1hcmtldGluZ0F1dGhvcml
@@ -5705,18 +5705,18 @@ VmFjY2luZVJlY2lwaWVudCJ9LCAidHlwZSI6ICJWYWNjaW5hdGlvbkV2ZW50In0sICJf
 c2RfYWxnIjogInNoYS0yNTYiLCAiY25mIjogeyJqd2siOiB7Imt0eSI6ICJFQyIsICJj
 cnYiOiAiUC0yNTYiLCAieCI6ICJUQ0FFUjE5WnZ1M09IRjRqNFc0dmZTVm9ISVAxSUxp
 bERsczd2Q2VHZW1jIiwgInkiOiAiWnhqaVdXYlpNUUdIVldLVlE0aGJTSWlyc1ZmdWVj
-Q0U2dDRqVDlGMkhaUSJ9fX0.feUQAjSp-_TzWGe1EqceHJ-eywfU0Q-gXuq1JdGNIZ0n
-7a-xcitKEwbP23PCARSHOtA_xcYwD8pfwMNbIieqOg~WyJQYzMzSk0yTGNoY1VfbEhnZ
+Q0U2dDRqVDlGMkhaUSJ9fX0.uM5zdzNJMbTZ8xGqnIZPC7zXCrKKU4AVlGJqlipMkg-F
+ygxXADBVAGtqBaHzFasKqv6H8dB8gOu1knWiG6vZuw~WyJQYzMzSk0yTGNoY1VfbEhnZ
 3ZfdWZRIiwgIm9yZGVyIiwgIjMvMyJd~WyJBSngtMDk1VlBycFR0TjRRTU9xUk9BIiwg
 ImRhdGVPZlZhY2NpbmF0aW9uIiwgIjIwMjEtMDYtMjNUMTM6NDA6MTJaIl0~WyIyR0xD
 NDJzS1F2ZUNmR2ZyeU5STjl3IiwgImF0Y0NvZGUiLCAiSjA3QlgwMyJd~WyJlbHVWNU9
 nM2dTTklJOEVZbnN4QV9BIiwgIm1lZGljaW5hbFByb2R1Y3ROYW1lIiwgIkNPVklELTE
 5IFZhY2NpbmUgTW9kZXJuYSJd~eyJhbGciOiAiRVMyNTYiLCAidHlwIjogImtiK2p3dC
 J9.eyJub25jZSI6ICIxMjM0NTY3ODkwIiwgImF1ZCI6ICJodHRwczovL3ZlcmlmaWVyL
-mV4YW1wbGUub3JnIiwgImlhdCI6IDE3NDYxMjcxNTcsICJzZF9oYXNoIjogIjhFdEhna
-Eg5RDgtTjF3cWtDeFBZVHRxU2V4RzdlRmNvdW5OLU5qZzhlM0UifQ.Ughx1jLWp4kCVB
-iDLBKughArdjAlnEIBFy-UYmk95XLS8XtWToUCE60L_T3FQWHGKhiClrV54zWYg2TCyA
-7JSQ
+mV4YW1wbGUub3JnIiwgImlhdCI6IDE3NDYxMjczNDAsICJzZF9oYXNoIjogIkNRazdUU
+1VPeXM1S0ktMlZzNEFEZXhRLUw4SnNEWFVFTERJeUJhVEJMR3cifQ.4NrzlW4ztgR2xL
+KSIhDn9Z9Gbl4etyy4ygianCYv63k66w0tcxuRIQLitr1HK3pQwecXCrunVhmDBUJ-ex
+H-KQ
 
 </pre><a href="#appendix-A.4-39" class="pilcrow">¶</a>
 </div>
