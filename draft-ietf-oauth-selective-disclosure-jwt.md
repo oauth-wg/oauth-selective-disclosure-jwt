@@ -302,7 +302,7 @@ DIGIT = %x30-39 ; 0-9
 BASE64URL = 1*(ALPHA / DIGIT / "-" / "_")
 JWT = BASE64URL "." BASE64URL "." BASE64URL
 DISCLOSURE = BASE64URL
-SD-JWT = JWT "~" *[DISCLOSURE "~"]
+SD-JWT = JWT "~" *(DISCLOSURE "~")
 KB-JWT = JWT
 SD-JWT-KB = SD-JWT KB-JWT
 ```
@@ -1983,6 +1983,8 @@ data. The original JSON data is then used by the application. See
    [[ To be removed from the final specification ]]
 
    -19
+
+    * Update the ABNF to something that is cleaner, less ambiguous, and more idiomatic
 
    -18
 
