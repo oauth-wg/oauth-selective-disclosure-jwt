@@ -1984,7 +1984,7 @@ data. The original JSON data is then used by the application. See
 
    -19
 
-    * Update the ABNF to something that is cleaner, less ambiguous, and more idiomatic
+    * Update the ABNF to something that is cleaner and more idiomatic
 
    -18
 
