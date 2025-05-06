@@ -385,7 +385,7 @@ For each claim that is an object property and that is to be made selectively dis
    1. A salt value. MUST be a string. See (#salt-entropy) for security considerations. It is RECOMMENDED to base64url-encode a minimum of 128 bits of cryptographically secure random data, producing a string. The salt value MUST be unique for each claim that is to be selectively disclosed. The Issuer MUST NOT reveal the salt value to any party other than the Holder.
    2. The claim name, or key, as it would be used in a regular JWT payload. It MUST be a string and MUST NOT be `_sd`, `...`, or a claim name existing in the object as a permanently disclosed claim.
    3. The claim value, as it would be used in a regular JWT payload. The value can be of any type that is allowed in JSON, including numbers, strings, booleans, arrays, null, and objects.
- * base64url-encode the UTF-8 byte sequence of the JSON array's string representation. This string is the Disclosure.
+ * base64url-encode the UTF-8 byte sequence of the JSON array. This string is the Disclosure.
 
 > Note: The order was decided based on readability considerations: salts have a
 constant length within the SD-JWT, claim names would be around the same length
