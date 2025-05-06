@@ -436,7 +436,7 @@ For example, a Disclosure for the second element of the `nationalities` array in
 
 ```json
 {
-  "nationalities": ["DE", "FR"]
+  "nationalities": ["DE", "FR", "US"]
 }
 ```
 
@@ -447,6 +447,10 @@ could be created by first creating the following array:
 ```
 
 The resulting Disclosure would be: `WyJsa2x4RjVqTVlsR1RQVW92TU5JdkNBIiwgIkZSIl0`
+
+> Note that the size of an array alone can potentially reveal unintended information.
+The use of decoys, as described in (#decoy_digests), to consistently pad the size of an array can help obscure
+the actual number of elements present in any particular instance.
 
 ### Hashing Disclosures {#hashing_disclosures}
 
@@ -510,14 +514,14 @@ string `...` (three dots). The value MUST be the digest of the Disclosure create
 described in (#hashing_disclosures). There MUST NOT be any other keys in the
 object. Note that the string `...` was chosen because the ellipsis character, typically entered as three period characters, is commonly used in places where content is omitted from the present context.
 
-For example, using the digest of the array element Disclosure created above,
+For example, using the digest of the array element Disclosure created above in (#disclosures_for_array_elements),
 the Issuer could create the following SD-JWT payload to make the second element
 of the `nationalities` array selectively disclosable:
 
 ```json
 {
   "nationalities":
-    ["DE", {"...": "w0I8EKcdCtUPkGCNUrfwVp2xEgNjtoIDlOxc9-PlOhs"}]
+    ["DE", {"...":"w0I8EKcdCtUPkGCNUrfwVp2xEgNjtoIDlOxc9-PlOhs"}, "US"]
 }
 ```
 
@@ -530,7 +534,7 @@ element unless a matching Disclosure for the second element is received.
 
 An Issuer MAY add additional digests to the SD-JWT payload that are not associated with
 any claim.  The purpose of such "decoy" digests is to make it more difficult for
-an attacker to see the original number of claims contained in the SD-JWT. Decoy
+an adversary to see the original number of claims or array elements contained in the SD-JWT. Decoy
 digests MAY be added both to the `_sd` array for objects as well as in arrays.
 
 It is RECOMMENDED to create the decoy digests by hashing over a
@@ -639,7 +643,7 @@ The Key Binding JWT MUST be a JWT according to [@!RFC7519] and its payload MUST 
 * in the JWT payload,
     * `iat`: REQUIRED. The value of this claim MUST be the time at which the Key Binding JWT was issued using the syntax defined in [@!RFC7519].
     * `aud`: REQUIRED. The intended receiver of the Key Binding JWT. How the value is represented is up to the protocol used and out of scope of this specification.
-    * `nonce`: REQUIRED. Ensures the freshness of the signature. The value type of this claim MUST be a string. How this value is obtained is up to the protocol used and out of scope of this specification.
+    * `nonce`: REQUIRED. Ensures the freshness of the signature or its binding to the given transaction. The value type of this claim MUST be a string. How this value is obtained is up to the protocol used and out of scope of this specification.
     * `sd_hash`: REQUIRED. The base64url-encoded hash value over the Issuer-signed JWT and the selected Disclosures as defined below.
 
 The general extensibility model of JWT means that additional claims and header parameters can be added to the Key Binding JWT.
@@ -802,7 +806,7 @@ The Issuer creates Disclosures first for the sub-claims and then includes their 
 Upon receiving an SD-JWT, either directly or as a component of an SD-JWT+KB, a Holder
 or a Verifier needs to ensure that:
 
- * the Issuer-signed JWT is valid, i.e., it is signed by the Issuer and the signature is valid, and
+ * the Issuer-signed JWT is valid, i.e., it is signed by the Issuer, the signature is valid, it is not expired, it is not suspended or revoked, etc., and
  * all Disclosures are valid and correspond to a respective digest value in the Issuer-signed JWT (directly in the payload or recursively included in the contents of other Disclosures).
 
 The Holder or the Verifier MUST perform the following (or equivalent) steps when receiving
@@ -892,7 +896,7 @@ To this end, Verifiers MUST follow the following steps (or equivalent):
     3. Validate the signature over the Key Binding JWT per Section 5.2 of [@!RFC7515].
     4. Check that the `typ` of the Key Binding JWT is `kb+jwt` (see (#kb-jwt)).
     5. Check that the creation time of the Key Binding JWT, as determined by the `iat` claim, is within an acceptable window.
-    6. Determine that the Key Binding JWT is bound to the current transaction and was created for this Verifier (replay protection) by validating `nonce` and `aud` claims.
+    6. Determine that the Key Binding JWT is bound to the current transaction and was created for this Verifier (replay detection) by validating `nonce` and `aud` claims.
     7. Calculate the digest over the Issuer-signed JWT and Disclosures as defined in (#integrity-protection-of-the-presentation) and verify that it matches the value of the `sd_hash` claim in the Key Binding JWT.
     8. Check that the Key Binding JWT is a valid JWT in all other respects, per [@!RFC7519] and [@!RFC8725].
 
@@ -1983,6 +1987,8 @@ data. The original JSON data is then used by the application. See
    [[ To be removed from the final specification ]]
 
    -19
+
+   * updates from AD's review of comments
 
    -18
 
