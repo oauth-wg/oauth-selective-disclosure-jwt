@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2025-05-04T00:19:03.676394+00:00",
+  "timestamp": "2025-05-06T00:17:13.037333+00:00",
   "repo": "oauth-wg/oauth-selective-disclosure-jwt",
   "labels": [
     {
@@ -12924,10 +12924,12 @@
       "author": "bc-pi",
       "authorAssociation": "COLLABORATOR",
       "assignees": [],
-      "labels": [],
+      "labels": [
+        "has-PR"
+      ],
       "body": "per Henry (not Hunter) S. Thompson with some help from Carsten (not Christian) Bormann there may be the opportunity to improve some language in the draft https://mailarchive.ietf.org/arch/msg/oauth/hd1CKEIdVodkRKmdNx-vhlTrLt0/ ",
       "createdAt": "2025-05-03T13:31:28Z",
-      "updatedAt": "2025-05-03T14:30:07Z",
+      "updatedAt": "2025-05-05T20:26:13Z",
       "closedAt": null,
       "comments": [
         {
@@ -54789,7 +54791,7 @@
       "labels": [],
       "body": "based mostly on https://mailarchive.ietf.org/arch/msg/oauth/a-uMb-zcAOjE1PMpK1Yv0gWmrKk/ and related discussions",
       "createdAt": "2025-05-01T19:20:48Z",
-      "updatedAt": "2025-05-03T13:32:37Z",
+      "updatedAt": "2025-05-05T06:55:59Z",
       "baseRepository": "oauth-wg/oauth-selective-disclosure-jwt",
       "baseRefName": "master",
       "baseRefOid": "e0589513f955f61f273c4d421333a98029cc2fcb",
@@ -54801,12 +54803,26 @@
       "mergedBy": null,
       "mergeCommit": null,
       "comments": [],
-      "reviews": []
+      "reviews": [
+        {
+          "id": "PRR_kwDOHTmVzM6nuVCx",
+          "commit": {
+            "abbreviatedOid": "23ee0b4"
+          },
+          "author": "danielfett",
+          "authorAssociation": "MEMBER",
+          "state": "APPROVED",
+          "body": "",
+          "createdAt": "2025-05-05T06:55:59Z",
+          "updatedAt": "2025-05-05T06:55:59Z",
+          "comments": []
+        }
+      ]
     },
     {
       "number": 572,
       "id": "PR_kwDOHTmVzM6U01x2",
-      "title": "Update the ABNF to be cleaner, less ambiguous, and more idiomatic",
+      "title": "Update the ABNF to be cleaner and more idiomatic",
       "url": "https://github.com/oauth-wg/oauth-selective-disclosure-jwt/pull/572",
       "state": "OPEN",
       "author": "bc-pi",
@@ -54815,19 +54831,266 @@
       "labels": [],
       "body": "Update the ABNF to something that is cleaner, less ambiguous, and more idiomatic per https://mailarchive.ietf.org/arch/msg/oauth/-4_YbqYffE6MFIN94H6nTGWaNm8/\r\n\r\nto fix #570",
       "createdAt": "2025-05-03T14:17:05Z",
-      "updatedAt": "2025-05-03T14:17:06Z",
+      "updatedAt": "2025-05-05T06:56:55Z",
       "baseRepository": "oauth-wg/oauth-selective-disclosure-jwt",
       "baseRefName": "master",
       "baseRefOid": "e0589513f955f61f273c4d421333a98029cc2fcb",
       "headRepository": "oauth-wg/oauth-selective-disclosure-jwt",
       "headRefName": "same-same-but-better",
-      "headRefOid": "97a96b0ffa36f055305c14f6f7ab7015906644ab",
+      "headRefOid": "7039d1792c367bf4763a46906940669264059a1b",
       "closedAt": null,
       "mergedAt": null,
       "mergedBy": null,
       "mergeCommit": null,
       "comments": [],
-      "reviews": []
+      "reviews": [
+        {
+          "id": "PRR_kwDOHTmVzM6nsJuf",
+          "commit": {
+            "abbreviatedOid": "97a96b0"
+          },
+          "author": "cabo",
+          "authorAssociation": "NONE",
+          "state": "APPROVED",
+          "body": "",
+          "createdAt": "2025-05-04T06:03:48Z",
+          "updatedAt": "2025-05-04T06:06:15Z",
+          "comments": [
+            {
+              "originalPosition": 5,
+              "body": "Thank you.\r\nThis simplification avoids problems with tools that validate ABNF via a PEG parser.\r\nIt also avoids a double take by people trying to read the grammar.",
+              "createdAt": "2025-05-04T06:03:48Z",
+              "updatedAt": "2025-05-04T06:06:15Z"
+            },
+            {
+              "originalPosition": 13,
+              "body": "Well, *[foo] is not ambiguous in the strict sense, it is just laying a trap by nesting repetition indicators.\r\n\r\n",
+              "createdAt": "2025-05-04T06:05:32Z",
+              "updatedAt": "2025-05-04T06:06:15Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOHTmVzM6nsvk7",
+          "commit": {
+            "abbreviatedOid": "97a96b0"
+          },
+          "author": "bc-pi",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2025-05-04T17:46:41Z",
+          "updatedAt": "2025-05-04T17:46:41Z",
+          "comments": [
+            {
+              "originalPosition": 13,
+              "body": "fair, I was just using the langue AI gave me ",
+              "createdAt": "2025-05-04T17:46:41Z",
+              "updatedAt": "2025-05-04T17:46:41Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOHTmVzM6nsvog",
+          "commit": {
+            "abbreviatedOid": "97a96b0"
+          },
+          "author": "bc-pi",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2025-05-04T17:47:52Z",
+          "updatedAt": "2025-05-04T17:47:53Z",
+          "comments": [
+            {
+              "originalPosition": 5,
+              "body": "someday I hope to not do a double take when mixing up @c2bo and @cabo  ",
+              "createdAt": "2025-05-04T17:47:52Z",
+              "updatedAt": "2025-05-04T17:47:53Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOHTmVzM6ns_Oz",
+          "commit": {
+            "abbreviatedOid": "97a96b0"
+          },
+          "author": "bc-pi",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2025-05-04T22:04:51Z",
+          "updatedAt": "2025-05-04T22:04:51Z",
+          "comments": [
+            {
+              "originalPosition": 13,
+              "body": "```suggestion\r\n    * Update the ABNF to something that is cleaner and more idiomatic\r\n```",
+              "createdAt": "2025-05-04T22:04:51Z",
+              "updatedAt": "2025-05-04T22:04:51Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOHTmVzM6nuVbB",
+          "commit": {
+            "abbreviatedOid": "7039d17"
+          },
+          "author": "danielfett",
+          "authorAssociation": "MEMBER",
+          "state": "APPROVED",
+          "body": "",
+          "createdAt": "2025-05-05T06:56:55Z",
+          "updatedAt": "2025-05-05T06:56:55Z",
+          "comments": []
+        }
+      ]
+    },
+    {
+      "number": 573,
+      "id": "PR_kwDOHTmVzM6U_s4K",
+      "title": "try to improve some language around exactly what bytes get base64url encoded",
+      "url": "https://github.com/oauth-wg/oauth-selective-disclosure-jwt/pull/573",
+      "state": "OPEN",
+      "author": "bc-pi",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "Inspired by https://mailarchive.ietf.org/arch/msg/oauth/hd1CKEIdVodkRKmdNx-vhlTrLt0/ this PR attempts to improve some language around exactly what bytes get base64url encoded ",
+      "createdAt": "2025-05-05T20:24:54Z",
+      "updatedAt": "2025-05-05T21:48:06Z",
+      "baseRepository": "oauth-wg/oauth-selective-disclosure-jwt",
+      "baseRefName": "master",
+      "baseRefOid": "e0589513f955f61f273c4d421333a98029cc2fcb",
+      "headRepository": "oauth-wg/oauth-selective-disclosure-jwt",
+      "headRefName": "json-is-as-json-does",
+      "headRefOid": "f23115cea88e35118e84d70d563b61fd467b8d13",
+      "closedAt": null,
+      "mergedAt": null,
+      "mergedBy": null,
+      "mergeCommit": null,
+      "comments": [],
+      "reviews": [
+        {
+          "id": "PRR_kwDOHTmVzM6n2mso",
+          "commit": {
+            "abbreviatedOid": "f23115c"
+          },
+          "author": "cabo",
+          "authorAssociation": "NONE",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2025-05-05T21:05:45Z",
+          "updatedAt": "2025-05-05T21:05:45Z",
+          "comments": [
+            {
+              "originalPosition": 49,
+              "body": "Please don't use \"string representation\" unless strings are involved.\r\nThis is one place where \"JSON encoding\" would make sense.\r\n",
+              "createdAt": "2025-05-05T21:05:45Z",
+              "updatedAt": "2025-05-05T21:05:45Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOHTmVzM6n2tCW",
+          "commit": {
+            "abbreviatedOid": "f23115c"
+          },
+          "author": "bc-pi",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2025-05-05T21:18:53Z",
+          "updatedAt": "2025-05-05T21:18:53Z",
+          "comments": [
+            {
+              "originalPosition": 49,
+              "body": "It is JSON so I'm not sure \"JSON encoding\" does make sense. ",
+              "createdAt": "2025-05-05T21:18:53Z",
+              "updatedAt": "2025-05-05T21:18:53Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOHTmVzM6n2tc-",
+          "commit": {
+            "abbreviatedOid": "f23115c"
+          },
+          "author": "bc-pi",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2025-05-05T21:19:56Z",
+          "updatedAt": "2025-05-05T21:19:56Z",
+          "comments": [
+            {
+              "originalPosition": 49,
+              "body": "The language is hard. ",
+              "createdAt": "2025-05-05T21:19:56Z",
+              "updatedAt": "2025-05-05T21:19:56Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOHTmVzM6n2u9k",
+          "commit": {
+            "abbreviatedOid": "f23115c"
+          },
+          "author": "bc-pi",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2025-05-05T21:23:00Z",
+          "updatedAt": "2025-05-05T21:23:01Z",
+          "comments": [
+            {
+              "originalPosition": 49,
+              "body": "this better or worse? or are we miscommunicating? \r\n```suggestion\r\nThe Disclosure string is created by base64url-encoding the UTF-8 byte sequence of the resulting JSON array representation as described in (#disclosures_for_object_properties). The same considerations regarding\r\n```",
+              "createdAt": "2025-05-05T21:23:00Z",
+              "updatedAt": "2025-05-05T21:23:01Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOHTmVzM6n2vg1",
+          "commit": {
+            "abbreviatedOid": "f23115c"
+          },
+          "author": "bc-pi",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2025-05-05T21:24:27Z",
+          "updatedAt": "2025-05-05T21:24:27Z",
+          "comments": [
+            {
+              "originalPosition": 49,
+              "body": "Did you not have the same concern about the text on line 388 or not notice it?",
+              "createdAt": "2025-05-05T21:24:27Z",
+              "updatedAt": "2025-05-05T21:24:27Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOHTmVzM6n26b-",
+          "commit": {
+            "abbreviatedOid": "f23115c"
+          },
+          "author": "bc-pi",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2025-05-05T21:48:06Z",
+          "updatedAt": "2025-05-05T21:48:06Z",
+          "comments": [
+            {
+              "originalPosition": 49,
+              "body": "There are lots of strings in involved. So to maybe to phrase it differently, what would you call the thing here https://www.ietf.org/archive/id/draft-ietf-oauth-selective-disclosure-jwt-18.html#section-5.1-9.3 and in many other places after the label `Contents: `? You want to base64url encode that. But the bytes of that. Because you base64 encode bytes or a string of bytes or a sequence of bytes. ",
+              "createdAt": "2025-05-05T21:48:06Z",
+              "updatedAt": "2025-05-05T21:51:04Z"
+            }
+          ]
+        }
+      ]
     }
   ]
 }
