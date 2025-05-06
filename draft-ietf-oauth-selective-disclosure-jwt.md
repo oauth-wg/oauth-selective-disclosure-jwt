@@ -428,7 +428,7 @@ For each claim that is an array element and that is to be made selectively discl
    1. The salt value as described in (#disclosures_for_object_properties).
    2. The array element that is to be hidden. This value can be of any type that is allowed in JSON, including numbers, strings, booleans, arrays, and objects.
 
-The Disclosure string is created by base64url-encoding the UTF-8 byte sequence of the resulting JSON array's string representation as described in (#disclosures_for_object_properties). The same considerations regarding
+The Disclosure string is created by base64url-encoding the UTF-8 byte sequence of the resulting JSON array as described in (#disclosures_for_object_properties). The same considerations regarding
 variations in the result of the JSON encoding apply.
 
 For example, a Disclosure for the second element of the `nationalities` array in the following JWT Claims Set:
