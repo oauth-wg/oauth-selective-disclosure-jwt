@@ -1052,7 +1052,7 @@ svg :is([fill="white"], [fill^="#fff"]) {
 </tr></thead>
 <tfoot><tr>
 <td class="left">Fett, et al.</td>
-<td class="center">Expires 5 November 2025</td>
+<td class="center">Expires 8 November 2025</td>
 <td class="right">[Page]</td>
 </tr></tfoot>
 </table>
@@ -1065,12 +1065,12 @@ svg :is([fill="white"], [fill^="#fff"]) {
 <dd class="internet-draft">draft-ietf-oauth-selective-disclosure-jwt-latest</dd>
 <dt class="label-published">Published:</dt>
 <dd class="published">
-<time datetime="2025-05-04" class="published">4 May 2025</time>
+<time datetime="2025-05-07" class="published">7 May 2025</time>
     </dd>
 <dt class="label-intended-status">Intended Status:</dt>
 <dd class="intended-status">Standards Track</dd>
 <dt class="label-expires">Expires:</dt>
-<dd class="expires"><time datetime="2025-11-05">5 November 2025</time></dd>
+<dd class="expires"><time datetime="2025-11-08">8 November 2025</time></dd>
 <dt class="label-authors">Authors:</dt>
 <dd class="authors">
 <div class="author">
@@ -1124,7 +1124,7 @@ The primary use case is the selective disclosure of JSON Web Token (JWT) claims.
         time. It is inappropriate to use Internet-Drafts as reference
         material or to cite them other than as "work in progress."<a href="#section-boilerplate.1-3" class="pilcrow">¶</a></p>
 <p id="section-boilerplate.1-4">
-        This Internet-Draft will expire on 5 November 2025.<a href="#section-boilerplate.1-4" class="pilcrow">¶</a></p>
+        This Internet-Draft will expire on 8 November 2025.<a href="#section-boilerplate.1-4" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="copyright">
@@ -1907,7 +1907,7 @@ variations in the result of the JSON encoding apply.<a href="#section-4.2.2-3" c
 <p id="section-4.2.2-4">For example, a Disclosure for the second element of the <code>nationalities</code> array in the following JWT Claims Set:<a href="#section-4.2.2-4" class="pilcrow">¶</a></p>
 <div class="lang-json sourcecode" id="section-4.2.2-5">
 <pre>{
-  "nationalities": ["DE", "FR"]
+  "nationalities": ["DE", "FR", "US"]
 }
 
 </pre><a href="#section-4.2.2-5" class="pilcrow">¶</a>
@@ -1919,6 +1919,11 @@ variations in the result of the JSON encoding apply.<a href="#section-4.2.2-3" c
 </pre><a href="#section-4.2.2-7" class="pilcrow">¶</a>
 </div>
 <p id="section-4.2.2-8">The resulting Disclosure would be: <code>WyJsa2x4RjVqTVlsR1RQVW92TU5JdkNBIiwgIkZSIl0</code><a href="#section-4.2.2-8" class="pilcrow">¶</a></p>
+<blockquote id="section-4.2.2-9">
+            <p id="section-4.2.2-9.1">Note that the size of an array alone can potentially reveal unintended information.
+The use of decoys, as described in <a href="#decoy_digests" class="auto internal xref">Section 4.2.5</a>, to consistently pad the size of an array can help obscure
+the actual number of elements present in any particular instance.<a href="#section-4.2.2-9.1" class="pilcrow">¶</a></p>
+</blockquote>
 </section>
 </div>
 <div id="hashing_disclosures">
@@ -1995,13 +2000,13 @@ of the form <code>{"...": "&lt;digest&gt;"}</code> is added to the array. The ke
 string <code>...</code> (three dots). The value MUST be the digest of the Disclosure created as
 described in <a href="#hashing_disclosures" class="auto internal xref">Section 4.2.3</a>. There MUST NOT be any other keys in the
 object. Note that the string <code>...</code> was chosen because the ellipsis character, typically entered as three period characters, is commonly used in places where content is omitted from the present context.<a href="#section-4.2.4.2-1" class="pilcrow">¶</a></p>
-<p id="section-4.2.4.2-2">For example, using the digest of the array element Disclosure created above,
+<p id="section-4.2.4.2-2">For example, using the digest of the array element Disclosure created above in <a href="#disclosures_for_array_elements" class="auto internal xref">Section 4.2.2</a>,
 the Issuer could create the following SD-JWT payload to make the second element
 of the <code>nationalities</code> array selectively disclosable:<a href="#section-4.2.4.2-2" class="pilcrow">¶</a></p>
 <div class="lang-json sourcecode" id="section-4.2.4.2-3">
 <pre>{
   "nationalities":
-    ["DE", {"...": "w0I8EKcdCtUPkGCNUrfwVp2xEgNjtoIDlOxc9-PlOhs"}]
+    ["DE", {"...":"w0I8EKcdCtUPkGCNUrfwVp2xEgNjtoIDlOxc9-PlOhs"}, "US"]
 }
 
 </pre><a href="#section-4.2.4.2-3" class="pilcrow">¶</a>
@@ -2021,7 +2026,7 @@ element unless a matching Disclosure for the second element is received.<a href=
           </h4>
 <p id="section-4.2.5-1">An Issuer MAY add additional digests to the SD-JWT payload that are not associated with
 any claim.  The purpose of such "decoy" digests is to make it more difficult for
-an attacker to see the original number of claims contained in the SD-JWT. Decoy
+an adversary to see the original number of claims or array elements contained in the SD-JWT. Decoy
 digests MAY be added both to the <code>_sd</code> array for objects as well as in arrays.<a href="#section-4.2.5-1" class="pilcrow">¶</a></p>
 <p id="section-4.2.5-2">It is RECOMMENDED to create the decoy digests by hashing over a
 cryptographically secure random number. The bytes of the digest MUST then be
@@ -2147,7 +2152,7 @@ signature over an SD-JWT by the Holder's private key.<a href="#section-4.3-1" cl
                 <code>aud</code>: REQUIRED. The intended receiver of the Key Binding JWT. How the value is represented is up to the protocol used and out of scope of this specification.<a href="#section-4.3-3.2.2.2" class="pilcrow">¶</a>
 </li>
               <li class="compact" id="section-4.3-3.2.2.3">
-                <code>nonce</code>: REQUIRED. Ensures the freshness of the signature. The value type of this claim MUST be a string. How this value is obtained is up to the protocol used and out of scope of this specification.<a href="#section-4.3-3.2.2.3" class="pilcrow">¶</a>
+                <code>nonce</code>: REQUIRED. Ensures the freshness of the signature or its binding to the given transaction. The value type of this claim MUST be a string. How this value is obtained is up to the protocol used and out of scope of this specification.<a href="#section-4.3-3.2.2.3" class="pilcrow">¶</a>
 </li>
               <li class="compact" id="section-4.3-3.2.2.4">
                 <code>sd_hash</code>: REQUIRED. The base64url-encoded hash value over the Issuer-signed JWT and the selected Disclosures as defined below.<a href="#section-4.3-3.2.2.4" class="pilcrow">¶</a>
@@ -2432,8 +2437,8 @@ ZHJ5M2xjYndIZ2VaOGtoQXYxVTFPU2xlclAwVmtCSnJXWjAifV0sICJfc2RfYWxnIjog
 InNoYS0yNTYiLCAiY25mIjogeyJqd2siOiB7Imt0eSI6ICJFQyIsICJjcnYiOiAiUC0y
 NTYiLCAieCI6ICJUQ0FFUjE5WnZ1M09IRjRqNFc0dmZTVm9ISVAxSUxpbERsczd2Q2VH
 ZW1jIiwgInkiOiAiWnhqaVdXYlpNUUdIVldLVlE0aGJTSWlyc1ZmdWVjQ0U2dDRqVDlG
-MkhaUSJ9fX0.QUo5IAjmF43cXvwBrwbyq-zthHaMFcAr35yvT7zWHxIWAW14pfQ_ov7q
-4lMIjFFzi0mhtwXCrO701VcxU7ju7A
+MkhaUSJ9fX0.BnW0H8dNU0hYfhDLxqvC0VB83DRTcYB6QhEUD9J_gMJVCFUoMACplWf1
+sOGdqUIYRtXyw2IdDCm0atE1yppNHw
 
 </pre><a href="#section-5.1-29" class="pilcrow">¶</a>
 </div>
@@ -2455,8 +2460,8 @@ ZHJ5M2xjYndIZ2VaOGtoQXYxVTFPU2xlclAwVmtCSnJXWjAifV0sICJfc2RfYWxnIjog
 InNoYS0yNTYiLCAiY25mIjogeyJqd2siOiB7Imt0eSI6ICJFQyIsICJjcnYiOiAiUC0y
 NTYiLCAieCI6ICJUQ0FFUjE5WnZ1M09IRjRqNFc0dmZTVm9ISVAxSUxpbERsczd2Q2VH
 ZW1jIiwgInkiOiAiWnhqaVdXYlpNUUdIVldLVlE0aGJTSWlyc1ZmdWVjQ0U2dDRqVDlG
-MkhaUSJ9fX0.QUo5IAjmF43cXvwBrwbyq-zthHaMFcAr35yvT7zWHxIWAW14pfQ_ov7q
-4lMIjFFzi0mhtwXCrO701VcxU7ju7A~WyIyR0xDNDJzS1F2ZUNmR2ZyeU5STjl3IiwgI
+MkhaUSJ9fX0.BnW0H8dNU0hYfhDLxqvC0VB83DRTcYB6QhEUD9J_gMJVCFUoMACplWf1
+sOGdqUIYRtXyw2IdDCm0atE1yppNHw~WyIyR0xDNDJzS1F2ZUNmR2ZyeU5STjl3IiwgI
 mdpdmVuX25hbWUiLCAiSm9obiJd~WyJlbHVWNU9nM2dTTklJOEVZbnN4QV9BIiwgImZh
 bWlseV9uYW1lIiwgIkRvZSJd~WyI2SWo3dE0tYTVpVlBHYm9TNXRtdlZBIiwgImVtYWl
 sIiwgImpvaG5kb2VAZXhhbXBsZS5jb20iXQ~WyJlSThaV205UW5LUHBOUGVOZW5IZGhR
@@ -2500,18 +2505,18 @@ ZHJ5M2xjYndIZ2VaOGtoQXYxVTFPU2xlclAwVmtCSnJXWjAifV0sICJfc2RfYWxnIjog
 InNoYS0yNTYiLCAiY25mIjogeyJqd2siOiB7Imt0eSI6ICJFQyIsICJjcnYiOiAiUC0y
 NTYiLCAieCI6ICJUQ0FFUjE5WnZ1M09IRjRqNFc0dmZTVm9ISVAxSUxpbERsczd2Q2VH
 ZW1jIiwgInkiOiAiWnhqaVdXYlpNUUdIVldLVlE0aGJTSWlyc1ZmdWVjQ0U2dDRqVDlG
-MkhaUSJ9fX0.QUo5IAjmF43cXvwBrwbyq-zthHaMFcAr35yvT7zWHxIWAW14pfQ_ov7q
-4lMIjFFzi0mhtwXCrO701VcxU7ju7A~WyJlbHVWNU9nM2dTTklJOEVZbnN4QV9BIiwgI
+MkhaUSJ9fX0.BnW0H8dNU0hYfhDLxqvC0VB83DRTcYB6QhEUD9J_gMJVCFUoMACplWf1
+sOGdqUIYRtXyw2IdDCm0atE1yppNHw~WyJlbHVWNU9nM2dTTklJOEVZbnN4QV9BIiwgI
 mZhbWlseV9uYW1lIiwgIkRvZSJd~WyJBSngtMDk1VlBycFR0TjRRTU9xUk9BIiwgImFk
 ZHJlc3MiLCB7InN0cmVldF9hZGRyZXNzIjogIjEyMyBNYWluIFN0IiwgImxvY2FsaXR5
 IjogIkFueXRvd24iLCAicmVnaW9uIjogIkFueXN0YXRlIiwgImNvdW50cnkiOiAiVVMi
 fV0~WyIyR0xDNDJzS1F2ZUNmR2ZyeU5STjl3IiwgImdpdmVuX25hbWUiLCAiSm9obiJd
 ~WyJsa2x4RjVqTVlsR1RQVW92TU5JdkNBIiwgIlVTIl0~eyJhbGciOiAiRVMyNTYiLCA
 idHlwIjogImtiK2p3dCJ9.eyJub25jZSI6ICIxMjM0NTY3ODkwIiwgImF1ZCI6ICJodH
-RwczovL3ZlcmlmaWVyLmV4YW1wbGUub3JnIiwgImlhdCI6IDE3NDYzOTcxMTIsICJzZF
-9oYXNoIjogIkFDTFZFeVBhLU9yQ1FESVZfVFNmVHloSElabV80cGFkWWo2cHhwNG5mUU
-EifQ.VyoBcEAWM44Lj10sOhuEyQTP2JChMAh2DPGv4e5FPzsVyCVn3Pnu-Pnfuojeizt
-GuCtfPfDfw6rbLQwXSEXFSw
+RwczovL3ZlcmlmaWVyLmV4YW1wbGUub3JnIiwgImlhdCI6IDE3NDY2MjMyNTgsICJzZF
+9oYXNoIjogIlpMNUhfN21pQzUyWEVmNUhnSDFJV1ZMQkxTdWp5V0FWckVmU3lIZnJaTk
+0ifQ.GX5oYOs2Pcy4hv66a9S5Y_jAqFPtLIkFCI0KJrtCAcRrkaxt26Zyl0UsBuQ-6Cx
+lc7fF3WZ_dGnwmS0_1pi58w
 
 </pre><a href="#section-5.2-2" class="pilcrow">¶</a>
 </div>
@@ -2520,8 +2525,8 @@ GuCtfPfDfw6rbLQwXSEXFSw
 <pre>{
   "nonce": "1234567890",
   "aud": "https://verifier.example.org",
-  "iat": 1746397112,
-  "sd_hash": "ACLVEyPa-OrCQDIV_TSfTyhHIZm_4padYj6pxp4nfQA"
+  "iat": 1746623258,
+  "sd_hash": "ZL5H_7miC52XEf5HgH1IWVLBLSujyWAVrEfSyHfrZNM"
 }
 
 </pre><a href="#section-5.2-4" class="pilcrow">¶</a>
@@ -2833,7 +2838,7 @@ how <code>address</code> can be represented in an SD-JWT.<a href="#section-6-6.1
 <p id="section-7.1-1">Upon receiving an SD-JWT, either directly or as a component of an SD-JWT+KB, a Holder
 or a Verifier needs to ensure that:<a href="#section-7.1-1" class="pilcrow">¶</a></p>
 <ul class="compact">
-<li class="compact" id="section-7.1-2.1">the Issuer-signed JWT is valid, i.e., it is signed by the Issuer and the signature is valid, and<a href="#section-7.1-2.1" class="pilcrow">¶</a>
+<li class="compact" id="section-7.1-2.1">the Issuer-signed JWT is valid, i.e., it is signed by the Issuer, the signature is valid, it is not expired, it is not suspended or revoked, etc., and<a href="#section-7.1-2.1" class="pilcrow">¶</a>
 </li>
           <li class="compact" id="section-7.1-2.2">all Disclosures are valid and correspond to a respective digest value in the Issuer-signed JWT (directly in the payload or recursively included in the contents of other Disclosures).<a href="#section-7.1-2.2" class="pilcrow">¶</a>
 </li>
@@ -3019,7 +3024,7 @@ details.<a href="#section-7.3-4.1" class="pilcrow">¶</a>
 </li>
               <li id="section-7.3-4.5.2.5">Check that the creation time of the Key Binding JWT, as determined by the <code>iat</code> claim, is within an acceptable window.<a href="#section-7.3-4.5.2.5" class="pilcrow">¶</a>
 </li>
-              <li id="section-7.3-4.5.2.6">Determine that the Key Binding JWT is bound to the current transaction and was created for this Verifier (replay protection) by validating <code>nonce</code> and <code>aud</code> claims.<a href="#section-7.3-4.5.2.6" class="pilcrow">¶</a>
+              <li id="section-7.3-4.5.2.6">Determine that the Key Binding JWT is bound to the current transaction and was created for this Verifier (replay detection) by validating <code>nonce</code> and <code>aud</code> claims.<a href="#section-7.3-4.5.2.6" class="pilcrow">¶</a>
 </li>
               <li id="section-7.3-4.5.2.7">Calculate the digest over the Issuer-signed JWT and Disclosures as defined in <a href="#integrity-protection-of-the-presentation" class="auto internal xref">Section 4.3.1</a> and verify that it matches the value of the <code>sd_hash</code> claim in the Key Binding JWT.<a href="#section-7.3-4.5.2.7" class="pilcrow">¶</a>
 </li>
@@ -3105,8 +3110,8 @@ issued using the Flattened JSON Serialization:<a href="#section-8.2-2" class="pi
     Z1ZWNDRTZ0NGpUOUYySFpRIn19fQ",
   "protected":
     "eyJhbGciOiAiRVMyNTYiLCAidHlwIjogImV4YW1wbGUrc2Qtand0In0",
-  "signature": "dfA9fh36YzzKtryZfPy5dPNC4J-zOuvv6hgtEhto-6grMsb8QWJf
-    idfUZVsTPM1zPuEbKluNwJNEFh582dye-Q"
+  "signature": "6RUnhx2Wwd9N3sOLLo4I8_mfPZN5oeO_Py5p5EQiuvLzWTOXdyO3
+    -x5s77HNs3HP9vaDulxWn_YtHSQS_A3Tuw"
 }
 
 </pre><a href="#section-8.2-3" class="pilcrow">¶</a>
@@ -3123,10 +3128,10 @@ issued using the Flattened JSON Serialization:<a href="#section-8.2-2" class="pi
     ],
     "kb_jwt": "eyJhbGciOiAiRVMyNTYiLCAidHlwIjogImtiK2p3dCJ9.eyJub25j
       ZSI6ICIxMjM0NTY3ODkwIiwgImF1ZCI6ICJodHRwczovL3ZlcmlmaWVyLmV4YW
-      1wbGUub3JnIiwgImlhdCI6IDE3NDYzOTcxMTIsICJzZF9oYXNoIjogIlVMWFVE
-      eXExbFQ3di1qR2dnY3duUDBCaHRJYWxuajFlYjhzeEVIdjEwajgifQ.lZhvk5E
-      Fp-CZwuPEFDK93s7MNoKTOQuLZoi3lhew1AxJQ9YjD2NnOJLZYi7fINPdD2ayn
-      cj6Pu8aujMJHDS2oQ"
+      1wbGUub3JnIiwgImlhdCI6IDE3NDY2MjMyNTgsICJzZF9oYXNoIjogIm5ZTVVk
+      czZ1c0RCVlE3bEFmVHRZVDVjWUMtNm5kQmsxZ2pSUnNUdS12WmMifQ.I4vpgpP
+      YRDP0hIl4Ps0BYf0fj3jiMRZjDxqVrc0J-LkxtHIfH2OzO6Vv577qQ2eZwkarY
+      _mm-xesI8xolTJp3Q"
   },
   "payload": "eyJfc2QiOiBbIjRIQm42YUlZM1d0dUdHV1R4LXFVajZjZGs2V0JwWn
     lnbHRkRmF2UGE3TFkiLCAiOHNtMVFDZjAyMXBObkhBQ0k1c1A0bTRLWmd5Tk9PQV
@@ -3140,8 +3145,8 @@ issued using the Flattened JSON Serialization:<a href="#section-8.2-2" class="pi
     Z1ZWNDRTZ0NGpUOUYySFpRIn19fQ",
   "protected":
     "eyJhbGciOiAiRVMyNTYiLCAidHlwIjogImV4YW1wbGUrc2Qtand0In0",
-  "signature": "dfA9fh36YzzKtryZfPy5dPNC4J-zOuvv6hgtEhto-6grMsb8QWJf
-    idfUZVsTPM1zPuEbKluNwJNEFh582dye-Q"
+  "signature": "6RUnhx2Wwd9N3sOLLo4I8_mfPZN5oeO_Py5p5EQiuvLzWTOXdyO3
+    -x5s77HNs3HP9vaDulxWn_YtHSQS_A3Tuw"
 }
 
 </pre><a href="#section-8.2-5" class="pilcrow">¶</a>
@@ -3184,15 +3189,15 @@ Serialization:<a href="#section-8.3-2" class="pilcrow">¶</a></p>
         "kid": "issuer-key-1",
         "kb_jwt": "eyJhbGciOiAiRVMyNTYiLCAidHlwIjogImtiK2p3dCJ9.eyJu
           b25jZSI6ICIxMjM0NTY3ODkwIiwgImF1ZCI6ICJodHRwczovL3ZlcmlmaW
-          VyLmV4YW1wbGUub3JnIiwgImlhdCI6IDE3NDYzOTcxMTIsICJzZF9oYXNo
-          IjogIjVsZEVuOXQ0dmJkNUhSczVuZDh1VHlsYk9UY1dIOEJ5TlJoajlIZG
-          l0UHcifQ.t4squ54WCd0ld_TXB8NOgHz-A9kzFTnX22EbrVsRq7Ths5xoy
-          F6FD1H7s7j9pF9dDZiQ03nGzKvbZghJ3I-cMQ"
+          VyLmV4YW1wbGUub3JnIiwgImlhdCI6IDE3NDY2MjMyNTgsICJzZF9oYXNo
+          IjogIjI3UVZzYWc4eWx5YzVfb2FKdWg1RXVLdGd0SWZ6d1FfNHFiVTNzcH
+          ZKdzgifQ.x8dl1BlluJry1Rh22hj96M4bLleufor67Bv766IuIfGDmO5bZ
+          YClmei5J-acthr-pEzHUKB15HuVVV5ygKI4nA"
       },
       "protected":
         "eyJhbGciOiAiRVMyNTYiLCAidHlwIjogImV4YW1wbGUrc2Qtand0In0",
-      "signature": "hD1Hy29pm0IvMyUNnZDrS4o6cFlwwfhDDR2e1SNs-bBNsah5
-        yImIlelY967NpD0z3BHc7evtGyKgpceErYilkg"
+      "signature": "ePjfxsUAImdJwtm-FS6UF9WNunNmsy1XnLcuue29YOljiTLU
+        fyUzEQHMwgFfekxBLscqWgJClXsCQEFmNWVFZQ"
     },
     {
       "header": {
@@ -3200,8 +3205,8 @@ Serialization:<a href="#section-8.3-2" class="pilcrow">¶</a></p>
       },
       "protected":
         "eyJhbGciOiAiRVMyNTYiLCAidHlwIjogImV4YW1wbGUrc2Qtand0In0",
-      "signature": "0sH9qmY5ljRoU7LPiSl5t4Dbiii8mcbgxde5d2VKmC5U8Zij
-        2Wc-Ayo5xd1-g0oIOeaEuj8qqLtr0A4jj-jLbg"
+      "signature": "At8J9343InQC5iPS7DuZpqpRri9ws-LNk5PsUorN_vJxmxPS
+        QQLUpdkOX7LaEKKue3pK3wASZ_Knjk2x2LkEiw"
     }
   ]
 }
@@ -4362,8 +4367,8 @@ WUpISVo4VnUtZjlDQ3lWdWIyVWZnRWs4anZ2WGV6d0sxcF9KbmVlWFEiLCAiZ2xUM2hy
 U1U3ZlNXZ3dGNVVEWm1Xd0JUdzMyZ25VbGRJaGk4aEdWQ2FWNCIsICJydkpkNmlxNlQ1
 ZWptc0JNb0d3dU5YaDlxQUFGQVRBY2k0MG9pZEVlVnNBIiwgInVOSG9XWWhYc1poVkpD
 TkUyRHF5LXpxdDd0NjlnSkt5NVFhRnY3R3JNWDQiXX0sICJfc2RfYWxnIjogInNoYS0y
-NTYifQ.LPXNReCooKYe7g9NJn1_WgCMd-mGY6jnKp-xIvFNvmaviWK1AhJ16Dwp71hSY
-75EpT4iD9bVTan78Htr2u_qRw~WyJHMDJOU3JRZmpGWFE3SW8wOXN5YWpBIiwgInJlZ2
+NTYifQ.k4leO7qUTyugOyB0fhFsI7yDdyY5el2uySiZRDX9UqH_6vZRfxiIxWJAJtJ-y
+o0u-z3SUBvfgA2lIJXjWzTRzw~WyJHMDJOU3JRZmpGWFE3SW8wOXN5YWpBIiwgInJlZ2
 lvbiIsICJcdTZlMmZcdTUzM2EiXQ~WyJsa2x4RjVqTVlsR1RQVW92TU5JdkNBIiwgImN
 vdW50cnkiLCAiSlAiXQ~
 
@@ -4714,8 +4719,8 @@ ZFJtc01vIiwgIldOQS1VTks3Rl96aHNBYjlzeVdPNklJUTF1SGxUbU9VOHI4Q3ZKMGNJ
 TWsiLCAiV3hoX3NWM2lSSDliZ3JUQkppLWFZSE5DTHQtdmpoWDFzZC1pZ09mXzlsayIs
 ICJfTy13SmlIM2VuU0I0Uk9IbnRUb1FUOEptTHR6LW1oTzJmMWM4OVhvZXJRIiwgImh2
 RFhod21HY0pRc0JDQTJPdGp1TEFjd0FNcERzYVUwbmtvdmNLT3FXTkUiXX19LCAiX3Nk
-X2FsZyI6ICJzaGEtMjU2In0.z3jtvP4R6vzlGq55IJVpycr4YyZRMML2cVt23_Ei7txa
-kt4LrcRXDoGvgX1LLkatRjwdk8XmmpTS1pcDHZlGJw~WyIyR0xDNDJzS1F2ZUNmR2Zye
+X2FsZyI6ICJzaGEtMjU2In0.V_PVjMB3xLq6IoOODN2sBmm2R6ZqeGs7Xp0ciAIPC9to
+CGemLLLP5V7gRfMYi4YiMHulYbz8lol0lq4cXGhTjw~WyIyR0xDNDJzS1F2ZUNmR2Zye
 U5STjl3IiwgInRpbWUiLCAiMjAxMi0wNC0yM1QxODoyNVoiXQ~WyJQYzMzSk0yTGNoY1
 VfbEhnZ3ZfdWZRIiwgeyJfc2QiOiBbIjl3cGpWUFd1RDdQSzBuc1FETDhCMDZsbWRnVj
 NMVnliaEh5ZFFwVE55TEkiLCAiRzVFbmhPQU9vVTlYXzZRTU52ekZYanBFQV9SYy1BRX
@@ -4838,8 +4843,8 @@ iZXhwIjogMTg4MzAwMDAwMCwgInZjdCI6ICJ1cm46ZXVkaTpwaWQ6ZGU6MSIsICJfc2R
 fYWxnIjogInNoYS0yNTYiLCAiY25mIjogeyJqd2siOiB7Imt0eSI6ICJFQyIsICJjcnY
 iOiAiUC0yNTYiLCAieCI6ICJUQ0FFUjE5WnZ1M09IRjRqNFc0dmZTVm9ISVAxSUxpbER
 sczd2Q2VHZW1jIiwgInkiOiAiWnhqaVdXYlpNUUdIVldLVlE0aGJTSWlyc1ZmdWVjQ0U
-2dDRqVDlGMkhaUSJ9fX0.WGTVc1SF-AsLTkNIKvpWyLye2hft9372bigBlwaiOsvhrKB
-T_E2kegyi12BSLxJnMzca1NnFjsn7nsHSnOeUpg~WyIyR0xDNDJzS1F2ZUNmR2ZyeU5S
+2dDRqVDlGMkhaUSJ9fX0.BFZ0y174woYQnUdYk6o5QPVsJxZsdlqpEk1Eez_nv5NcOTj
+gA5Dv-GgJQIbUJlC6OBjecGSXoYNsTgCYMfpzFg~WyIyR0xDNDJzS1F2ZUNmR2ZyeU5S
 Tjl3IiwgImdpdmVuX25hbWUiLCAiRXJpa2EiXQ~WyJlbHVWNU9nM2dTTklJOEVZbnN4Q
 V9BIiwgImZhbWlseV9uYW1lIiwgIk11c3Rlcm1hbm4iXQ~WyI2SWo3dE0tYTVpVlBHYm
 9TNXRtdlZBIiwgImJpcnRoZGF0ZSIsICIxOTYzLTA4LTEyIl0~WyJlSThaV205UW5LUH
@@ -5280,8 +5285,8 @@ iZXhwIjogMTg4MzAwMDAwMCwgInZjdCI6ICJ1cm46ZXVkaTpwaWQ6ZGU6MSIsICJfc2R
 fYWxnIjogInNoYS0yNTYiLCAiY25mIjogeyJqd2siOiB7Imt0eSI6ICJFQyIsICJjcnY
 iOiAiUC0yNTYiLCAieCI6ICJUQ0FFUjE5WnZ1M09IRjRqNFc0dmZTVm9ISVAxSUxpbER
 sczd2Q2VHZW1jIiwgInkiOiAiWnhqaVdXYlpNUUdIVldLVlE0aGJTSWlyc1ZmdWVjQ0U
-2dDRqVDlGMkhaUSJ9fX0.WGTVc1SF-AsLTkNIKvpWyLye2hft9372bigBlwaiOsvhrKB
-T_E2kegyi12BSLxJnMzca1NnFjsn7nsHSnOeUpg~WyJlSzVvNXBIZmd1cFBwbHRqMXFo
+2dDRqVDlGMkhaUSJ9fX0.BFZ0y174woYQnUdYk6o5QPVsJxZsdlqpEk1Eez_nv5NcOTj
+gA5Dv-GgJQIbUJlC6OBjecGSXoYNsTgCYMfpzFg~WyJlSzVvNXBIZmd1cFBwbHRqMXFo
 QUp3IiwgImFnZV9lcXVhbF9vcl9vdmVyIiwgeyJfc2QiOiBbIjF0RWl5elBSWU9Lc2Y3
 U3NZR01nUFpLc09UMWxRWlJ4SFhBMHI1X0J3a2siLCAiQ1ZLbmx5NVA5MHlKczNFd3R4
 UWlPdFVjemFYQ1lOQTRJY3pSYW9ock1EZyIsICJhNDQtZzJHcjhfM0FtSncyWFo4a0kx
@@ -5292,9 +5297,9 @@ ZU8wS3FhekdJIl19XQ~WyJPQktsVFZsdkxnLUFkd3FZR2JQOFpBIiwgIjE4IiwgdHJ1Z
 V0~WyJsa2x4RjVqTVlsR1RQVW92TU5JdkNBIiwgIm5hdGlvbmFsaXRpZXMiLCBbIkRFI
 l1d~eyJhbGciOiAiRVMyNTYiLCAidHlwIjogImtiK2p3dCJ9.eyJub25jZSI6ICIxMjM
 0NTY3ODkwIiwgImF1ZCI6ICJodHRwczovL3ZlcmlmaWVyLmV4YW1wbGUub3JnIiwgIml
-hdCI6IDE3NDYzOTcxMTIsICJzZF9oYXNoIjogIkpvQWwtSTBuX2hSV2tTV1hCZkNIYnh
-XV1BkUG1PZ0x2VHhjbFhrTjlUeUkifQ.CC_3YhQMiqn-HkbQTNw3WLKn99fXps9JlYpq
-tdOgOHSRYcirTGdkg7qRlOWWFp6ZVSmmaZ8qF4wSaJE6XU1YRQ
+hdCI6IDE3NDY2MjMyNTgsICJzZF9oYXNoIjogInpDbFZWTFpCZTlwbEpTamFuQS1PWWI
+3QWJrOE9Rb0hReWxUc1E5WWhleVEifQ.7oD1wm0ZGR-3_Bw4XYje1tEJF2-PeLNffq8L
+aKLrtDqVw68Xwtkc8v3ZqNaDFbrxgKUzkiN6YvXQwIuk_MgBgQ
 
 </pre><a href="#appendix-A.3-65" class="pilcrow">¶</a>
 </div>
@@ -5303,8 +5308,8 @@ tdOgOHSRYcirTGdkg7qRlOWWFp6ZVSmmaZ8qF4wSaJE6XU1YRQ
 <pre>{
   "nonce": "1234567890",
   "aud": "https://verifier.example.org",
-  "iat": 1746397112,
-  "sd_hash": "JoAl-I0n_hRWkSWXBfCHbxWWPdPmOgLvTxclXkN9TyI"
+  "iat": 1746623258,
+  "sd_hash": "zClVVLZBe9plJSjanA-OYb7Abk8OQoHQylTsQ9YheyQ"
 }
 
 </pre><a href="#appendix-A.3-67" class="pilcrow">¶</a>
@@ -5417,8 +5422,8 @@ VmFjY2luZVJlY2lwaWVudCJ9LCAidHlwZSI6ICJWYWNjaW5hdGlvbkV2ZW50In0sICJf
 c2RfYWxnIjogInNoYS0yNTYiLCAiY25mIjogeyJqd2siOiB7Imt0eSI6ICJFQyIsICJj
 cnYiOiAiUC0yNTYiLCAieCI6ICJUQ0FFUjE5WnZ1M09IRjRqNFc0dmZTVm9ISVAxSUxp
 bERsczd2Q2VHZW1jIiwgInkiOiAiWnhqaVdXYlpNUUdIVldLVlE0aGJTSWlyc1ZmdWVj
-Q0U2dDRqVDlGMkhaUSJ9fX0.B9n0PpgJec8UibU5GDGd9snHFTLxQA4B-h503DQ9-nMY
-5V7N-2iVl-XRekWbYKIFmqYPc7qeOhhDDx5Hm22lwQ~WyIyR0xDNDJzS1F2ZUNmR2Zye
+Q0U2dDRqVDlGMkhaUSJ9fX0.Lt-x-wju1woAOaD3mdZqn28g0g0EK6BubAg_9w_fVHiK
+jeeSSphL7yt1x5skhja8WIpyTeiU_PQuJJeaSwzQWA~WyIyR0xDNDJzS1F2ZUNmR2Zye
 U5STjl3IiwgImF0Y0NvZGUiLCAiSjA3QlgwMyJd~WyJlbHVWNU9nM2dTTklJOEVZbnN4
 QV9BIiwgIm1lZGljaW5hbFByb2R1Y3ROYW1lIiwgIkNPVklELTE5IFZhY2NpbmUgTW9k
 ZXJuYSJd~WyI2SWo3dE0tYTVpVlBHYm9TNXRtdlZBIiwgIm1hcmtldGluZ0F1dGhvcml
@@ -5700,18 +5705,18 @@ VmFjY2luZVJlY2lwaWVudCJ9LCAidHlwZSI6ICJWYWNjaW5hdGlvbkV2ZW50In0sICJf
 c2RfYWxnIjogInNoYS0yNTYiLCAiY25mIjogeyJqd2siOiB7Imt0eSI6ICJFQyIsICJj
 cnYiOiAiUC0yNTYiLCAieCI6ICJUQ0FFUjE5WnZ1M09IRjRqNFc0dmZTVm9ISVAxSUxp
 bERsczd2Q2VHZW1jIiwgInkiOiAiWnhqaVdXYlpNUUdIVldLVlE0aGJTSWlyc1ZmdWVj
-Q0U2dDRqVDlGMkhaUSJ9fX0.B9n0PpgJec8UibU5GDGd9snHFTLxQA4B-h503DQ9-nMY
-5V7N-2iVl-XRekWbYKIFmqYPc7qeOhhDDx5Hm22lwQ~WyJQYzMzSk0yTGNoY1VfbEhnZ
+Q0U2dDRqVDlGMkhaUSJ9fX0.Lt-x-wju1woAOaD3mdZqn28g0g0EK6BubAg_9w_fVHiK
+jeeSSphL7yt1x5skhja8WIpyTeiU_PQuJJeaSwzQWA~WyJQYzMzSk0yTGNoY1VfbEhnZ
 3ZfdWZRIiwgIm9yZGVyIiwgIjMvMyJd~WyJBSngtMDk1VlBycFR0TjRRTU9xUk9BIiwg
 ImRhdGVPZlZhY2NpbmF0aW9uIiwgIjIwMjEtMDYtMjNUMTM6NDA6MTJaIl0~WyIyR0xD
 NDJzS1F2ZUNmR2ZyeU5STjl3IiwgImF0Y0NvZGUiLCAiSjA3QlgwMyJd~WyJlbHVWNU9
 nM2dTTklJOEVZbnN4QV9BIiwgIm1lZGljaW5hbFByb2R1Y3ROYW1lIiwgIkNPVklELTE
 5IFZhY2NpbmUgTW9kZXJuYSJd~eyJhbGciOiAiRVMyNTYiLCAidHlwIjogImtiK2p3dC
 J9.eyJub25jZSI6ICIxMjM0NTY3ODkwIiwgImF1ZCI6ICJodHRwczovL3ZlcmlmaWVyL
-mV4YW1wbGUub3JnIiwgImlhdCI6IDE3NDYzOTcxMTIsICJzZF9oYXNoIjogIkY4MDk3Y
-zBYMkJGMG8xMWtVS2NKT05KQUhqcU80cER5MTZmZHN5ZFQ1QmcifQ.67VHAZsEfJEv-u
-etfOoqiil0lMlfYHTrQHb9xUu-uS01feJx7XZ9NRvHBqvRpgEfpaM5f6O0MDJ3JGA0wa
-Bh3A
+mV4YW1wbGUub3JnIiwgImlhdCI6IDE3NDY2MjMyNTgsICJzZF9oYXNoIjogImIwbUZKM
+zZyZERvN3Fqajk2SWg4RzVOZ1diOGlHOXFDQTZ4SGt6WEtTVDAifQ.KD5Il-xqqol6Q-
+K5GAneahmFBEhTJqp0KSSJ2u0V04jBi6RsQ9cXzSjEcQyqZdhW09KC6z_n8lyW0z8XuU
+3ArA
 
 </pre><a href="#appendix-A.4-39" class="pilcrow">¶</a>
 </div>
@@ -5887,11 +5892,12 @@ data. The original JSON data is then used by the application. See
       </h2>
 <p id="appendix-C-1">[[ To be removed from the final specification ]]<a href="#appendix-C-1" class="pilcrow">¶</a></p>
 <p id="appendix-C-2">-19<a href="#appendix-C-2" class="pilcrow">¶</a></p>
-<div class="alignLeft art-text artwork" id="appendix-C-3">
-<pre>* Update the ABNF to something that is cleaner and more idiomatic
-
-</pre><a href="#appendix-C-3" class="pilcrow">¶</a>
-</div>
+<ul class="compact">
+<li class="compact" id="appendix-C-3.1">Update the ABNF to something that is cleaner and more idiomatic<a href="#appendix-C-3.1" class="pilcrow">¶</a>
+</li>
+        <li class="compact" id="appendix-C-3.2">updates from AD's review of comments<a href="#appendix-C-3.2" class="pilcrow">¶</a>
+</li>
+      </ul>
 <p id="appendix-C-4">-18<a href="#appendix-C-4" class="pilcrow">¶</a></p>
 <ul class="compact">
 <li class="compact" id="appendix-C-5.1">Update PID example to align with the latest ARF and update the ARF reference<a href="#appendix-C-5.1" class="pilcrow">¶</a>
