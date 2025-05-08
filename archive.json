@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2025-05-06T00:17:13.037333+00:00",
+  "timestamp": "2025-05-08T00:17:25.418345+00:00",
   "repo": "oauth-wg/oauth-selective-disclosure-jwt",
   "labels": [
     {
@@ -12923,13 +12923,15 @@
       "state": "OPEN",
       "author": "bc-pi",
       "authorAssociation": "COLLABORATOR",
-      "assignees": [],
+      "assignees": [
+        "bc-pi"
+      ],
       "labels": [
         "has-PR"
       ],
       "body": "per Henry (not Hunter) S. Thompson with some help from Carsten (not Christian) Bormann there may be the opportunity to improve some language in the draft https://mailarchive.ietf.org/arch/msg/oauth/hd1CKEIdVodkRKmdNx-vhlTrLt0/ ",
       "createdAt": "2025-05-03T13:31:28Z",
-      "updatedAt": "2025-05-05T20:26:13Z",
+      "updatedAt": "2025-05-06T20:42:41Z",
       "closedAt": null,
       "comments": [
         {
@@ -54784,24 +54786,26 @@
       "id": "PR_kwDOHTmVzM6UrTEm",
       "title": "updates from AD's review of comments",
       "url": "https://github.com/oauth-wg/oauth-selective-disclosure-jwt/pull/569",
-      "state": "OPEN",
+      "state": "MERGED",
       "author": "bc-pi",
       "authorAssociation": "COLLABORATOR",
       "assignees": [],
       "labels": [],
       "body": "based mostly on https://mailarchive.ietf.org/arch/msg/oauth/a-uMb-zcAOjE1PMpK1Yv0gWmrKk/ and related discussions",
       "createdAt": "2025-05-01T19:20:48Z",
-      "updatedAt": "2025-05-05T06:55:59Z",
+      "updatedAt": "2025-05-06T20:42:24Z",
       "baseRepository": "oauth-wg/oauth-selective-disclosure-jwt",
       "baseRefName": "master",
       "baseRefOid": "e0589513f955f61f273c4d421333a98029cc2fcb",
       "headRepository": "oauth-wg/oauth-selective-disclosure-jwt",
       "headRefName": "part-deux",
       "headRefOid": "23ee0b422e0de88ea145a17dd3a79722936bf678",
-      "closedAt": null,
-      "mergedAt": null,
-      "mergedBy": null,
-      "mergeCommit": null,
+      "closedAt": "2025-05-06T20:42:24Z",
+      "mergedAt": "2025-05-06T20:42:24Z",
+      "mergedBy": "bc-pi",
+      "mergeCommit": {
+        "oid": "fb7aa92c8e71b77379dc8ff20e553ec2e644972b"
+      },
       "comments": [],
       "reviews": [
         {
@@ -54831,13 +54835,13 @@
       "labels": [],
       "body": "Update the ABNF to something that is cleaner, less ambiguous, and more idiomatic per https://mailarchive.ietf.org/arch/msg/oauth/-4_YbqYffE6MFIN94H6nTGWaNm8/\r\n\r\nto fix #570",
       "createdAt": "2025-05-03T14:17:05Z",
-      "updatedAt": "2025-05-05T06:56:55Z",
+      "updatedAt": "2025-05-07T13:07:18Z",
       "baseRepository": "oauth-wg/oauth-selective-disclosure-jwt",
       "baseRefName": "master",
-      "baseRefOid": "e0589513f955f61f273c4d421333a98029cc2fcb",
+      "baseRefOid": "fb7aa92c8e71b77379dc8ff20e553ec2e644972b",
       "headRepository": "oauth-wg/oauth-selective-disclosure-jwt",
       "headRefName": "same-same-but-better",
-      "headRefOid": "7039d1792c367bf4763a46906940669264059a1b",
+      "headRefOid": "5cc69112a19e24a91b12e3cbd7aad28bde98b20a",
       "closedAt": null,
       "mergedAt": null,
       "mergedBy": null,
@@ -54957,13 +54961,13 @@
       "labels": [],
       "body": "Inspired by https://mailarchive.ietf.org/arch/msg/oauth/hd1CKEIdVodkRKmdNx-vhlTrLt0/ this PR attempts to improve some language around exactly what bytes get base64url encoded ",
       "createdAt": "2025-05-05T20:24:54Z",
-      "updatedAt": "2025-05-05T21:48:06Z",
+      "updatedAt": "2025-05-07T13:06:37Z",
       "baseRepository": "oauth-wg/oauth-selective-disclosure-jwt",
       "baseRefName": "master",
-      "baseRefOid": "e0589513f955f61f273c4d421333a98029cc2fcb",
+      "baseRefOid": "fb7aa92c8e71b77379dc8ff20e553ec2e644972b",
       "headRepository": "oauth-wg/oauth-selective-disclosure-jwt",
       "headRefName": "json-is-as-json-does",
-      "headRefOid": "f23115cea88e35118e84d70d563b61fd467b8d13",
+      "headRefOid": "2a8e0e83fd946c9af99a5671bd67d0b80efc0fbf",
       "closedAt": null,
       "mergedAt": null,
       "mergedBy": null,
@@ -55087,6 +55091,99 @@
               "body": "There are lots of strings in involved. So to maybe to phrase it differently, what would you call the thing here https://www.ietf.org/archive/id/draft-ietf-oauth-selective-disclosure-jwt-18.html#section-5.1-9.3 and in many other places after the label `Contents: `? You want to base64url encode that. But the bytes of that. Because you base64 encode bytes or a string of bytes or a sequence of bytes. ",
               "createdAt": "2025-05-05T21:48:06Z",
               "updatedAt": "2025-05-05T21:51:04Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOHTmVzM6oBTr1",
+          "commit": {
+            "abbreviatedOid": "f23115c"
+          },
+          "author": "OR13",
+          "authorAssociation": "CONTRIBUTOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2025-05-06T16:25:28Z",
+          "updatedAt": "2025-05-06T16:25:29Z",
+          "comments": [
+            {
+              "originalPosition": 49,
+              "body": "```suggestion\r\nThe Disclosure string is created by base64url-encoding the UTF-8 byte sequence of the resulting JSON array as described in (#disclosures_for_object_properties). The same considerations regarding\r\n```",
+              "createdAt": "2025-05-06T16:25:28Z",
+              "updatedAt": "2025-05-06T16:25:29Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOHTmVzM6oBUHS",
+          "commit": {
+            "abbreviatedOid": "f23115c"
+          },
+          "author": "OR13",
+          "authorAssociation": "CONTRIBUTOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2025-05-06T16:25:48Z",
+          "updatedAt": "2025-05-06T16:25:48Z",
+          "comments": [
+            {
+              "originalPosition": 49,
+              "body": "To me a JSON array is a string.",
+              "createdAt": "2025-05-06T16:25:48Z",
+              "updatedAt": "2025-05-06T16:25:48Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOHTmVzM6oBUVS",
+          "commit": {
+            "abbreviatedOid": "f23115c"
+          },
+          "author": "OR13",
+          "authorAssociation": "CONTRIBUTOR",
+          "state": "APPROVED",
+          "body": "",
+          "createdAt": "2025-05-06T16:26:02Z",
+          "updatedAt": "2025-05-06T16:26:02Z",
+          "comments": []
+        },
+        {
+          "id": "PRR_kwDOHTmVzM6oBjCl",
+          "commit": {
+            "abbreviatedOid": "f23115c"
+          },
+          "author": "bc-pi",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2025-05-06T16:38:21Z",
+          "updatedAt": "2025-05-06T16:38:21Z",
+          "comments": [
+            {
+              "originalPosition": 49,
+              "body": "that wording would be okay with me ",
+              "createdAt": "2025-05-06T16:38:21Z",
+              "updatedAt": "2025-05-06T16:38:21Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOHTmVzM6oBluJ",
+          "commit": {
+            "abbreviatedOid": "8f012d8"
+          },
+          "author": "bc-pi",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2025-05-06T16:42:52Z",
+          "updatedAt": "2025-05-06T16:42:52Z",
+          "comments": [
+            {
+              "originalPosition": 40,
+              "body": "```suggestion\r\n * base64url-encode the UTF-8 byte sequence of the JSON array. This string is the Disclosure.\r\n```",
+              "createdAt": "2025-05-06T16:42:52Z",
+              "updatedAt": "2025-05-06T16:42:52Z"
             }
           ]
         }
