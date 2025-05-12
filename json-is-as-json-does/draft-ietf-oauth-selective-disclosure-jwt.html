@@ -1052,7 +1052,7 @@ svg :is([fill="white"], [fill^="#fff"]) {
 </tr></thead>
 <tfoot><tr>
 <td class="left">Fett, et al.</td>
-<td class="center">Expires 8 November 2025</td>
+<td class="center">Expires 13 November 2025</td>
 <td class="right">[Page]</td>
 </tr></tfoot>
 </table>
@@ -1065,12 +1065,12 @@ svg :is([fill="white"], [fill^="#fff"]) {
 <dd class="internet-draft">draft-ietf-oauth-selective-disclosure-jwt-latest</dd>
 <dt class="label-published">Published:</dt>
 <dd class="published">
-<time datetime="2025-05-07" class="published">7 May 2025</time>
+<time datetime="2025-05-12" class="published">12 May 2025</time>
     </dd>
 <dt class="label-intended-status">Intended Status:</dt>
 <dd class="intended-status">Standards Track</dd>
 <dt class="label-expires">Expires:</dt>
-<dd class="expires"><time datetime="2025-11-08">8 November 2025</time></dd>
+<dd class="expires"><time datetime="2025-11-13">13 November 2025</time></dd>
 <dt class="label-authors">Authors:</dt>
 <dd class="authors">
 <div class="author">
@@ -1124,7 +1124,7 @@ The primary use case is the selective disclosure of JSON Web Token (JWT) claims.
         time. It is inappropriate to use Internet-Drafts as reference
         material or to cite them other than as "work in progress."<a href="#section-boilerplate.1-3" class="pilcrow">¶</a></p>
 <p id="section-boilerplate.1-4">
-        This Internet-Draft will expire on 8 November 2025.<a href="#section-boilerplate.1-4" class="pilcrow">¶</a></p>
+        This Internet-Draft will expire on 13 November 2025.<a href="#section-boilerplate.1-4" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="copyright">
@@ -1732,7 +1732,7 @@ DIGIT = %x30-39 ; 0-9
 BASE64URL = 1*(ALPHA / DIGIT / "-" / "_")
 JWT = BASE64URL "." BASE64URL "." BASE64URL
 DISCLOSURE = BASE64URL
-SD-JWT = JWT "~" *[DISCLOSURE "~"]
+SD-JWT = JWT "~" *(DISCLOSURE "~")
 KB-JWT = JWT
 SD-JWT-KB = SD-JWT KB-JWT
 
@@ -2435,8 +2435,8 @@ ZHJ5M2xjYndIZ2VaOGtoQXYxVTFPU2xlclAwVmtCSnJXWjAifV0sICJfc2RfYWxnIjog
 InNoYS0yNTYiLCAiY25mIjogeyJqd2siOiB7Imt0eSI6ICJFQyIsICJjcnYiOiAiUC0y
 NTYiLCAieCI6ICJUQ0FFUjE5WnZ1M09IRjRqNFc0dmZTVm9ISVAxSUxpbERsczd2Q2VH
 ZW1jIiwgInkiOiAiWnhqaVdXYlpNUUdIVldLVlE0aGJTSWlyc1ZmdWVjQ0U2dDRqVDlG
-MkhaUSJ9fX0.pUc4LK8BjCkA9Ie6Zzxvut5fYwGzXJ2vLCm_jh8xpPqrbBg034kP-RU_
-aIuCufYv9dXHkPJOhHyNX-PWW26dDQ
+MkhaUSJ9fX0.JX4uO8wYSnFRGrZac-qLIgyDuptpwwrixMPAr0Kg13NGLDekdkXTJNKV
+NZWR8ela3EVuX3yROxvzignrq-kaQw
 
 </pre><a href="#section-5.1-29" class="pilcrow">¶</a>
 </div>
@@ -2458,8 +2458,8 @@ ZHJ5M2xjYndIZ2VaOGtoQXYxVTFPU2xlclAwVmtCSnJXWjAifV0sICJfc2RfYWxnIjog
 InNoYS0yNTYiLCAiY25mIjogeyJqd2siOiB7Imt0eSI6ICJFQyIsICJjcnYiOiAiUC0y
 NTYiLCAieCI6ICJUQ0FFUjE5WnZ1M09IRjRqNFc0dmZTVm9ISVAxSUxpbERsczd2Q2VH
 ZW1jIiwgInkiOiAiWnhqaVdXYlpNUUdIVldLVlE0aGJTSWlyc1ZmdWVjQ0U2dDRqVDlG
-MkhaUSJ9fX0.pUc4LK8BjCkA9Ie6Zzxvut5fYwGzXJ2vLCm_jh8xpPqrbBg034kP-RU_
-aIuCufYv9dXHkPJOhHyNX-PWW26dDQ~WyIyR0xDNDJzS1F2ZUNmR2ZyeU5STjl3IiwgI
+MkhaUSJ9fX0.JX4uO8wYSnFRGrZac-qLIgyDuptpwwrixMPAr0Kg13NGLDekdkXTJNKV
+NZWR8ela3EVuX3yROxvzignrq-kaQw~WyIyR0xDNDJzS1F2ZUNmR2ZyeU5STjl3IiwgI
 mdpdmVuX25hbWUiLCAiSm9obiJd~WyJlbHVWNU9nM2dTTklJOEVZbnN4QV9BIiwgImZh
 bWlseV9uYW1lIiwgIkRvZSJd~WyI2SWo3dE0tYTVpVlBHYm9TNXRtdlZBIiwgImVtYWl
 sIiwgImpvaG5kb2VAZXhhbXBsZS5jb20iXQ~WyJlSThaV205UW5LUHBOUGVOZW5IZGhR
@@ -2503,18 +2503,18 @@ ZHJ5M2xjYndIZ2VaOGtoQXYxVTFPU2xlclAwVmtCSnJXWjAifV0sICJfc2RfYWxnIjog
 InNoYS0yNTYiLCAiY25mIjogeyJqd2siOiB7Imt0eSI6ICJFQyIsICJjcnYiOiAiUC0y
 NTYiLCAieCI6ICJUQ0FFUjE5WnZ1M09IRjRqNFc0dmZTVm9ISVAxSUxpbERsczd2Q2VH
 ZW1jIiwgInkiOiAiWnhqaVdXYlpNUUdIVldLVlE0aGJTSWlyc1ZmdWVjQ0U2dDRqVDlG
-MkhaUSJ9fX0.pUc4LK8BjCkA9Ie6Zzxvut5fYwGzXJ2vLCm_jh8xpPqrbBg034kP-RU_
-aIuCufYv9dXHkPJOhHyNX-PWW26dDQ~WyJlbHVWNU9nM2dTTklJOEVZbnN4QV9BIiwgI
+MkhaUSJ9fX0.JX4uO8wYSnFRGrZac-qLIgyDuptpwwrixMPAr0Kg13NGLDekdkXTJNKV
+NZWR8ela3EVuX3yROxvzignrq-kaQw~WyJlbHVWNU9nM2dTTklJOEVZbnN4QV9BIiwgI
 mZhbWlseV9uYW1lIiwgIkRvZSJd~WyJBSngtMDk1VlBycFR0TjRRTU9xUk9BIiwgImFk
 ZHJlc3MiLCB7InN0cmVldF9hZGRyZXNzIjogIjEyMyBNYWluIFN0IiwgImxvY2FsaXR5
 IjogIkFueXRvd24iLCAicmVnaW9uIjogIkFueXN0YXRlIiwgImNvdW50cnkiOiAiVVMi
 fV0~WyIyR0xDNDJzS1F2ZUNmR2ZyeU5STjl3IiwgImdpdmVuX25hbWUiLCAiSm9obiJd
 ~WyJsa2x4RjVqTVlsR1RQVW92TU5JdkNBIiwgIlVTIl0~eyJhbGciOiAiRVMyNTYiLCA
 idHlwIjogImtiK2p3dCJ9.eyJub25jZSI6ICIxMjM0NTY3ODkwIiwgImF1ZCI6ICJodH
-RwczovL3ZlcmlmaWVyLmV4YW1wbGUub3JnIiwgImlhdCI6IDE3NDY2MjMyMjAsICJzZF
-9oYXNoIjogInVDb1JFVTVsNkxBNVZmekFkMVJWZ3dMbGlncHZwS1F4Tk11X21kSFhocD
-gifQ.g-ELUsYbCUIJPcUKNVCL4KkeidrZlGy82KkjNqFW5pmfB2LYSn_Iq0o8XQPJA8P
-waD7NSCUDrbQUwbr3JXZSuQ
+RwczovL3ZlcmlmaWVyLmV4YW1wbGUub3JnIiwgImlhdCI6IDE3NDcwNzYwMTQsICJzZF
+9oYXNoIjogIktrUUlmSHIxMTRZckFPcUxqMUtkamg0bFRvSUpyYXpqMklkMkVFMGVHbV
+UifQ.n4jGgRr7zPMw89NnqxhaTy-OirNmKuFIL0PXznAOYL89JoGdR_RvQYw-dJOYcsc
+0VxVtgKbLYlIJFKLZcjH7nA
 
 </pre><a href="#section-5.2-2" class="pilcrow">¶</a>
 </div>
@@ -2523,8 +2523,8 @@ waD7NSCUDrbQUwbr3JXZSuQ
 <pre>{
   "nonce": "1234567890",
   "aud": "https://verifier.example.org",
-  "iat": 1746623220,
-  "sd_hash": "uCoREU5l6LA5VfzAd1RVgwLligpvpKQxNMu_mdHXhp8"
+  "iat": 1747076014,
+  "sd_hash": "KkQIfHr114YrAOqLj1Kdjh4lToIJrazj2Id2EE0eGmU"
 }
 
 </pre><a href="#section-5.2-4" class="pilcrow">¶</a>
@@ -3108,8 +3108,8 @@ issued using the Flattened JSON Serialization:<a href="#section-8.2-2" class="pi
     Z1ZWNDRTZ0NGpUOUYySFpRIn19fQ",
   "protected":
     "eyJhbGciOiAiRVMyNTYiLCAidHlwIjogImV4YW1wbGUrc2Qtand0In0",
-  "signature": "Z3mmnYo_EHY1pcJ3s85OuF9HJw_HQhELYb8kPVSy45D9INSKyhx0
-    R_5SF0-51caRWqZeaIUUgogCyi8iJ8WLPQ"
+  "signature": "IyU_-ipowvCjGkoOMFUMuxsL5rlYgxzUyGB1EvFg9NXDtjGOuvbH
+    CXTkQqw15NfjRV6Zs2t8D8-Rbyhbv9B-Bw"
 }
 
 </pre><a href="#section-8.2-3" class="pilcrow">¶</a>
@@ -3126,10 +3126,10 @@ issued using the Flattened JSON Serialization:<a href="#section-8.2-2" class="pi
     ],
     "kb_jwt": "eyJhbGciOiAiRVMyNTYiLCAidHlwIjogImtiK2p3dCJ9.eyJub25j
       ZSI6ICIxMjM0NTY3ODkwIiwgImF1ZCI6ICJodHRwczovL3ZlcmlmaWVyLmV4YW
-      1wbGUub3JnIiwgImlhdCI6IDE3NDY2MjMyMjAsICJzZF9oYXNoIjogInpqTGZn
-      c2swYTY3Z2oydWJaZmhjRFRtVmRpVW9BUWxnWExTRk5tc2Z2M2sifQ.UOwcQ8V
-      srFHL4ZRM2eTJXPJ6abBgTcERZRLYEIV0VyfsAld-wMbVNOfywrE0GhOOIFw2M
-      LH-8aDGK5gdtwKVLw"
+      1wbGUub3JnIiwgImlhdCI6IDE3NDcwNzYwMTQsICJzZF9oYXNoIjogInNBbjJW
+      VHdfMVViaElLX0Uya1VRanRYQlVwdElpR3U5UlhYQWdzUE0zVjgifQ.wnkOkOU
+      MP8WQ9PyLEVPbLGOQaiRAkpZzOYn8-qrCpfkh7TzVEWfJeNY3mjkFV5k2czN9H
+      YkpNPmiom_GwRTaNg"
   },
   "payload": "eyJfc2QiOiBbIjRIQm42YUlZM1d0dUdHV1R4LXFVajZjZGs2V0JwWn
     lnbHRkRmF2UGE3TFkiLCAiOHNtMVFDZjAyMXBObkhBQ0k1c1A0bTRLWmd5Tk9PQV
@@ -3143,8 +3143,8 @@ issued using the Flattened JSON Serialization:<a href="#section-8.2-2" class="pi
     Z1ZWNDRTZ0NGpUOUYySFpRIn19fQ",
   "protected":
     "eyJhbGciOiAiRVMyNTYiLCAidHlwIjogImV4YW1wbGUrc2Qtand0In0",
-  "signature": "Z3mmnYo_EHY1pcJ3s85OuF9HJw_HQhELYb8kPVSy45D9INSKyhx0
-    R_5SF0-51caRWqZeaIUUgogCyi8iJ8WLPQ"
+  "signature": "IyU_-ipowvCjGkoOMFUMuxsL5rlYgxzUyGB1EvFg9NXDtjGOuvbH
+    CXTkQqw15NfjRV6Zs2t8D8-Rbyhbv9B-Bw"
 }
 
 </pre><a href="#section-8.2-5" class="pilcrow">¶</a>
@@ -3187,15 +3187,15 @@ Serialization:<a href="#section-8.3-2" class="pilcrow">¶</a></p>
         "kid": "issuer-key-1",
         "kb_jwt": "eyJhbGciOiAiRVMyNTYiLCAidHlwIjogImtiK2p3dCJ9.eyJu
           b25jZSI6ICIxMjM0NTY3ODkwIiwgImF1ZCI6ICJodHRwczovL3ZlcmlmaW
-          VyLmV4YW1wbGUub3JnIiwgImlhdCI6IDE3NDY2MjMyMjAsICJzZF9oYXNo
-          IjogIkpZeEtjMzBKT3Y5dUtxbUdmVWN5bGFWbW9LT2NKclp4Nk1rRFVKMj
-          ZlZ2sifQ.PH1jgUgwJGolj0N6gR6DMWtA6ORm90aqtp5YFD9lXelROFbNp
-          4zo546i3Dmfywc3AH5_n-rLlhXhZmaQ11Ri5A"
+          VyLmV4YW1wbGUub3JnIiwgImlhdCI6IDE3NDcwNzYwMTQsICJzZF9oYXNo
+          IjogIk9MbV9PZkNCOEY2VkpubHF5RFRtWWYyVnJudi1DYVhjWm9xbWFvdV
+          lCRmsifQ.hkMoSD5Qq2TmHwoS0lHmnCrPoX_QQ-dkUzhAh4G0RIrzke7RU
+          Q68JHnfuqxa3umbc6ri3W4EraIiNwxSRH1qvg"
       },
       "protected":
         "eyJhbGciOiAiRVMyNTYiLCAidHlwIjogImV4YW1wbGUrc2Qtand0In0",
-      "signature": "Zube_Ng_b6yP2F4hfANALLCNalWbAHgUJ9-_GyCnTj6ZW-TV
-        SqMBAuV2g4uhSB3hWx2COmlmDFRWLhm1CNfF5g"
+      "signature": "CRDRVsP4PGUNUVNbENvvl5-SOYb4eFMNFMm3r4PkPXpIPSmX
+        o6YW8wXkaY6L5A0UvLTgHQwC1zb8uKWmfxu_IQ"
     },
     {
       "header": {
@@ -3203,8 +3203,8 @@ Serialization:<a href="#section-8.3-2" class="pilcrow">¶</a></p>
       },
       "protected":
         "eyJhbGciOiAiRVMyNTYiLCAidHlwIjogImV4YW1wbGUrc2Qtand0In0",
-      "signature": "QH_ZK7nUdTry6qOwA-veNoQNFS5xB8WdHdtlOGWa72JyfiSB
-        4AAduBJGzWAd5z9JolB3M22To51LkPuJUxK3dg"
+      "signature": "rkxAQPFOORxw3IsEwxUcar_169EJVNPNbLtgRb0hyz_Oeog1
+        PHQHQ6fSvdrA0SNeps3Jh7Zmi1QuU97IPshoaQ"
     }
   ]
 }
@@ -4365,8 +4365,8 @@ WUpISVo4VnUtZjlDQ3lWdWIyVWZnRWs4anZ2WGV6d0sxcF9KbmVlWFEiLCAiZ2xUM2hy
 U1U3ZlNXZ3dGNVVEWm1Xd0JUdzMyZ25VbGRJaGk4aEdWQ2FWNCIsICJydkpkNmlxNlQ1
 ZWptc0JNb0d3dU5YaDlxQUFGQVRBY2k0MG9pZEVlVnNBIiwgInVOSG9XWWhYc1poVkpD
 TkUyRHF5LXpxdDd0NjlnSkt5NVFhRnY3R3JNWDQiXX0sICJfc2RfYWxnIjogInNoYS0y
-NTYifQ.XxOlihe1-A-vU9VO68wkofyQ71XeWnV5nJNTZcPAzfsmW3nU8Wu5YX8zyMduw
-cL24Trv0gDzAELZkq9OnL-liw~WyJHMDJOU3JRZmpGWFE3SW8wOXN5YWpBIiwgInJlZ2
+NTYifQ.P5wgbVNlfygBrwYZx4f4qg5e4ZEseR5WaJtDDWfHPF3t8QodQMxL4tm3rQtEO
+eLHQ7adNrPIlrv-9SxX6CiBLA~WyJHMDJOU3JRZmpGWFE3SW8wOXN5YWpBIiwgInJlZ2
 lvbiIsICJcdTZlMmZcdTUzM2EiXQ~WyJsa2x4RjVqTVlsR1RQVW92TU5JdkNBIiwgImN
 vdW50cnkiLCAiSlAiXQ~
 
@@ -4717,8 +4717,8 @@ ZFJtc01vIiwgIldOQS1VTks3Rl96aHNBYjlzeVdPNklJUTF1SGxUbU9VOHI4Q3ZKMGNJ
 TWsiLCAiV3hoX3NWM2lSSDliZ3JUQkppLWFZSE5DTHQtdmpoWDFzZC1pZ09mXzlsayIs
 ICJfTy13SmlIM2VuU0I0Uk9IbnRUb1FUOEptTHR6LW1oTzJmMWM4OVhvZXJRIiwgImh2
 RFhod21HY0pRc0JDQTJPdGp1TEFjd0FNcERzYVUwbmtvdmNLT3FXTkUiXX19LCAiX3Nk
-X2FsZyI6ICJzaGEtMjU2In0.qMitvbt_zu79656Brij-XtQ5PJde8hYAJ_3E1wsR9YXg
-sSZkNYXlP5QlcdOrmtOFImvMNIBmla1b2XGZNkqFxQ~WyIyR0xDNDJzS1F2ZUNmR2Zye
+X2FsZyI6ICJzaGEtMjU2In0.B_dYO9Xudd9JVtnXZvI6eP_eE8Ajo4g4Y_hvhiq_WSsg
+aVffUW_CsJROmu9UIhYveQSTbRaj8at_su6FwtgDdg~WyIyR0xDNDJzS1F2ZUNmR2Zye
 U5STjl3IiwgInRpbWUiLCAiMjAxMi0wNC0yM1QxODoyNVoiXQ~WyJQYzMzSk0yTGNoY1
 VfbEhnZ3ZfdWZRIiwgeyJfc2QiOiBbIjl3cGpWUFd1RDdQSzBuc1FETDhCMDZsbWRnVj
 NMVnliaEh5ZFFwVE55TEkiLCAiRzVFbmhPQU9vVTlYXzZRTU52ekZYanBFQV9SYy1BRX
@@ -4841,8 +4841,8 @@ iZXhwIjogMTg4MzAwMDAwMCwgInZjdCI6ICJ1cm46ZXVkaTpwaWQ6ZGU6MSIsICJfc2R
 fYWxnIjogInNoYS0yNTYiLCAiY25mIjogeyJqd2siOiB7Imt0eSI6ICJFQyIsICJjcnY
 iOiAiUC0yNTYiLCAieCI6ICJUQ0FFUjE5WnZ1M09IRjRqNFc0dmZTVm9ISVAxSUxpbER
 sczd2Q2VHZW1jIiwgInkiOiAiWnhqaVdXYlpNUUdIVldLVlE0aGJTSWlyc1ZmdWVjQ0U
-2dDRqVDlGMkhaUSJ9fX0.LpzJ5ZYM_pQeHRJyYasLmvOAGGCCKiot8g1XT4JMsRe4920
-vh2zbAoBcztm1DWQfBIaL8jZDOxqJh3Q6tpjLcQ~WyIyR0xDNDJzS1F2ZUNmR2ZyeU5S
+2dDRqVDlGMkhaUSJ9fX0.PejPCwCcTK-A8cH1aq1xnKg1fAgEMNm66qVGMdA3V6o2lVg
+5vfdundpTSDV5yDPqOx550EqqXULPvgP_qvXoXg~WyIyR0xDNDJzS1F2ZUNmR2ZyeU5S
 Tjl3IiwgImdpdmVuX25hbWUiLCAiRXJpa2EiXQ~WyJlbHVWNU9nM2dTTklJOEVZbnN4Q
 V9BIiwgImZhbWlseV9uYW1lIiwgIk11c3Rlcm1hbm4iXQ~WyI2SWo3dE0tYTVpVlBHYm
 9TNXRtdlZBIiwgImJpcnRoZGF0ZSIsICIxOTYzLTA4LTEyIl0~WyJlSThaV205UW5LUH
@@ -5283,8 +5283,8 @@ iZXhwIjogMTg4MzAwMDAwMCwgInZjdCI6ICJ1cm46ZXVkaTpwaWQ6ZGU6MSIsICJfc2R
 fYWxnIjogInNoYS0yNTYiLCAiY25mIjogeyJqd2siOiB7Imt0eSI6ICJFQyIsICJjcnY
 iOiAiUC0yNTYiLCAieCI6ICJUQ0FFUjE5WnZ1M09IRjRqNFc0dmZTVm9ISVAxSUxpbER
 sczd2Q2VHZW1jIiwgInkiOiAiWnhqaVdXYlpNUUdIVldLVlE0aGJTSWlyc1ZmdWVjQ0U
-2dDRqVDlGMkhaUSJ9fX0.LpzJ5ZYM_pQeHRJyYasLmvOAGGCCKiot8g1XT4JMsRe4920
-vh2zbAoBcztm1DWQfBIaL8jZDOxqJh3Q6tpjLcQ~WyJlSzVvNXBIZmd1cFBwbHRqMXFo
+2dDRqVDlGMkhaUSJ9fX0.PejPCwCcTK-A8cH1aq1xnKg1fAgEMNm66qVGMdA3V6o2lVg
+5vfdundpTSDV5yDPqOx550EqqXULPvgP_qvXoXg~WyJlSzVvNXBIZmd1cFBwbHRqMXFo
 QUp3IiwgImFnZV9lcXVhbF9vcl9vdmVyIiwgeyJfc2QiOiBbIjF0RWl5elBSWU9Lc2Y3
 U3NZR01nUFpLc09UMWxRWlJ4SFhBMHI1X0J3a2siLCAiQ1ZLbmx5NVA5MHlKczNFd3R4
 UWlPdFVjemFYQ1lOQTRJY3pSYW9ock1EZyIsICJhNDQtZzJHcjhfM0FtSncyWFo4a0kx
@@ -5295,9 +5295,9 @@ ZU8wS3FhekdJIl19XQ~WyJPQktsVFZsdkxnLUFkd3FZR2JQOFpBIiwgIjE4IiwgdHJ1Z
 V0~WyJsa2x4RjVqTVlsR1RQVW92TU5JdkNBIiwgIm5hdGlvbmFsaXRpZXMiLCBbIkRFI
 l1d~eyJhbGciOiAiRVMyNTYiLCAidHlwIjogImtiK2p3dCJ9.eyJub25jZSI6ICIxMjM
 0NTY3ODkwIiwgImF1ZCI6ICJodHRwczovL3ZlcmlmaWVyLmV4YW1wbGUub3JnIiwgIml
-hdCI6IDE3NDY2MjMyMjAsICJzZF9oYXNoIjogIkxBdGRXRW5pVTlUYm53d0JfOVRVQTN
-ZMkNmUWRaWV96T0Z6UGQ2dkVNQ2cifQ.YDRwceN0epMbuP-mhxCi2pO2ThihwwsW8dNY
-9lXpsMzAYiFfVZDz9ZhLxhoFZzZzB1Z9iF1yDjD4RZdv8_wcvQ
+hdCI6IDE3NDcwNzYwMTQsICJzZF9oYXNoIjogIkRPaS16NGxCSnV3LU9xcnF2Y1NYdjh
+SQ3J1NUdPMzdHMU02S2pmWU9pcEEifQ.ggt1HSVPOVFKyOkGLj1cCLiHPcMm3Gqfpg-Q
+ln-PduYf4rf8x0xbhe0ti_fKELLSRiUVEpX7qb_QjA_HcVp1cQ
 
 </pre><a href="#appendix-A.3-65" class="pilcrow">¶</a>
 </div>
@@ -5306,8 +5306,8 @@ ZMkNmUWRaWV96T0Z6UGQ2dkVNQ2cifQ.YDRwceN0epMbuP-mhxCi2pO2ThihwwsW8dNY
 <pre>{
   "nonce": "1234567890",
   "aud": "https://verifier.example.org",
-  "iat": 1746623220,
-  "sd_hash": "LAtdWEniU9TbnwwB_9TUA3Y2CfQdZY_zOFzPd6vEMCg"
+  "iat": 1747076014,
+  "sd_hash": "DOi-z4lBJuw-OqrqvcSXv8RCru5GO37G1M6KjfYOipA"
 }
 
 </pre><a href="#appendix-A.3-67" class="pilcrow">¶</a>
@@ -5420,8 +5420,8 @@ VmFjY2luZVJlY2lwaWVudCJ9LCAidHlwZSI6ICJWYWNjaW5hdGlvbkV2ZW50In0sICJf
 c2RfYWxnIjogInNoYS0yNTYiLCAiY25mIjogeyJqd2siOiB7Imt0eSI6ICJFQyIsICJj
 cnYiOiAiUC0yNTYiLCAieCI6ICJUQ0FFUjE5WnZ1M09IRjRqNFc0dmZTVm9ISVAxSUxp
 bERsczd2Q2VHZW1jIiwgInkiOiAiWnhqaVdXYlpNUUdIVldLVlE0aGJTSWlyc1ZmdWVj
-Q0U2dDRqVDlGMkhaUSJ9fX0.vGK1V7AD84a8-o785q7w6uEJJ9WfNPAsiWn862XJq0pl
-fn5thmUH3SeqNMlXPGmST0CkAEMp9QUTYT_iZ8S2Wg~WyIyR0xDNDJzS1F2ZUNmR2Zye
+Q0U2dDRqVDlGMkhaUSJ9fX0.4QVSTFrOZypz1jHXceodXqIf3CttpFrbxrVEeM1Ob9ZI
+L5rQS6MwLex32Wlz61BWGA2zw2jyr38cAk038ZxUGw~WyIyR0xDNDJzS1F2ZUNmR2Zye
 U5STjl3IiwgImF0Y0NvZGUiLCAiSjA3QlgwMyJd~WyJlbHVWNU9nM2dTTklJOEVZbnN4
 QV9BIiwgIm1lZGljaW5hbFByb2R1Y3ROYW1lIiwgIkNPVklELTE5IFZhY2NpbmUgTW9k
 ZXJuYSJd~WyI2SWo3dE0tYTVpVlBHYm9TNXRtdlZBIiwgIm1hcmtldGluZ0F1dGhvcml
@@ -5703,18 +5703,18 @@ VmFjY2luZVJlY2lwaWVudCJ9LCAidHlwZSI6ICJWYWNjaW5hdGlvbkV2ZW50In0sICJf
 c2RfYWxnIjogInNoYS0yNTYiLCAiY25mIjogeyJqd2siOiB7Imt0eSI6ICJFQyIsICJj
 cnYiOiAiUC0yNTYiLCAieCI6ICJUQ0FFUjE5WnZ1M09IRjRqNFc0dmZTVm9ISVAxSUxp
 bERsczd2Q2VHZW1jIiwgInkiOiAiWnhqaVdXYlpNUUdIVldLVlE0aGJTSWlyc1ZmdWVj
-Q0U2dDRqVDlGMkhaUSJ9fX0.vGK1V7AD84a8-o785q7w6uEJJ9WfNPAsiWn862XJq0pl
-fn5thmUH3SeqNMlXPGmST0CkAEMp9QUTYT_iZ8S2Wg~WyJQYzMzSk0yTGNoY1VfbEhnZ
+Q0U2dDRqVDlGMkhaUSJ9fX0.4QVSTFrOZypz1jHXceodXqIf3CttpFrbxrVEeM1Ob9ZI
+L5rQS6MwLex32Wlz61BWGA2zw2jyr38cAk038ZxUGw~WyJQYzMzSk0yTGNoY1VfbEhnZ
 3ZfdWZRIiwgIm9yZGVyIiwgIjMvMyJd~WyJBSngtMDk1VlBycFR0TjRRTU9xUk9BIiwg
 ImRhdGVPZlZhY2NpbmF0aW9uIiwgIjIwMjEtMDYtMjNUMTM6NDA6MTJaIl0~WyIyR0xD
 NDJzS1F2ZUNmR2ZyeU5STjl3IiwgImF0Y0NvZGUiLCAiSjA3QlgwMyJd~WyJlbHVWNU9
 nM2dTTklJOEVZbnN4QV9BIiwgIm1lZGljaW5hbFByb2R1Y3ROYW1lIiwgIkNPVklELTE
 5IFZhY2NpbmUgTW9kZXJuYSJd~eyJhbGciOiAiRVMyNTYiLCAidHlwIjogImtiK2p3dC
 J9.eyJub25jZSI6ICIxMjM0NTY3ODkwIiwgImF1ZCI6ICJodHRwczovL3ZlcmlmaWVyL
-mV4YW1wbGUub3JnIiwgImlhdCI6IDE3NDY2MjMyMjAsICJzZF9oYXNoIjogIkpOZkJCe
-DBuXy1IYnZsSjA3R3BQSy1PUlV4Q0J6OElrSmwwLXAwX3dxR2MifQ.lU4gE0q0EsGY9Q
-urGvRpOVkBciEXFFdDGYXJcHEHPo3B7b4tBS6dKoWYfkjDIBetgYB9Nssh5Id9o7aaW1
-Gvfw
+mV4YW1wbGUub3JnIiwgImlhdCI6IDE3NDcwNzYwMTQsICJzZF9oYXNoIjogInBnRFBha
+U5GQ2pZbENmWW9iSjVfcmVuQ1RxNFBES0NUV0JkeDVTQWUySVEifQ.qXbrhTkNRr3trZ
+QaS8p0H4_ABH8jLfEb5AUMa3ZdXYwRmKj2PEpYLjhVlN7_wamGnYu9vgr-vNM0pJ7al9
+DWzw
 
 </pre><a href="#appendix-A.4-39" class="pilcrow">¶</a>
 </div>
@@ -5893,7 +5893,9 @@ data. The original JSON data is then used by the application. See
 <ul class="compact">
 <li class="compact" id="appendix-C-3.1">Attempt to improve some language around exactly what bytes get base64url encoded<a href="#appendix-C-3.1" class="pilcrow">¶</a>
 </li>
-        <li class="compact" id="appendix-C-3.2">updates from AD's review of comments<a href="#appendix-C-3.2" class="pilcrow">¶</a>
+        <li class="compact" id="appendix-C-3.2">Update the ABNF to something that is cleaner and more idiomatic<a href="#appendix-C-3.2" class="pilcrow">¶</a>
+</li>
+        <li class="compact" id="appendix-C-3.3">updates from AD's review of comments<a href="#appendix-C-3.3" class="pilcrow">¶</a>
 </li>
       </ul>
 <p id="appendix-C-4">-18<a href="#appendix-C-4" class="pilcrow">¶</a></p>
