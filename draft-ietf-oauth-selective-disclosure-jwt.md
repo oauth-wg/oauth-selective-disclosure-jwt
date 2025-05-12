@@ -302,7 +302,7 @@ DIGIT = %x30-39 ; 0-9
 BASE64URL = 1*(ALPHA / DIGIT / "-" / "_")
 JWT = BASE64URL "." BASE64URL "." BASE64URL
 DISCLOSURE = BASE64URL
-SD-JWT = JWT "~" *[DISCLOSURE "~"]
+SD-JWT = JWT "~" *(DISCLOSURE "~")
 KB-JWT = JWT
 SD-JWT-KB = SD-JWT KB-JWT
 ```
@@ -1988,6 +1988,7 @@ data. The original JSON data is then used by the application. See
    -19
 
    * Attempt to improve some language around exactly what bytes get base64url encoded
+   * Update the ABNF to something that is cleaner and more idiomatic
    * updates from AD's review of comments
 
    -18
