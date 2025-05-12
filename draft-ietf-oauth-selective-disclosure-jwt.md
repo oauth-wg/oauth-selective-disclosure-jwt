@@ -43,14 +43,14 @@ organization="Ping Identity"
 
 .# Abstract
 
-This specification defines a mechanism for the selective disclosure of individual elements of a JSON-encoded data structure used as the payload of a JSON Web Signature (JWS).
+This specification defines a mechanism for the selective disclosure of individual elements of a JSON data structure used as the payload of a JSON Web Signature (JWS).
 The primary use case is the selective disclosure of JSON Web Token (JWT) claims.
 
 {mainmatter}
 
 # Introduction {#Introduction}
 
-JSON-encoded data structures for exchange between systems are often secured against modification using JSON Web Signatures (JWS) [@!RFC7515].
+JSON data for exchange between systems is often secured against modification using JSON Web Signatures (JWS) [@!RFC7515].
 A popular application of JWS is JSON Web Token (JWT) [@!RFC7519], a format that is often used to represent a user's identity.
 An ID Token as defined in OpenID Connect [@?OpenID.Core], for example, is a JWT containing the user's claims created by the server for consumption by a relying party.
 In cases where the JWT is sent immediately from the server to the relying party, as in OpenID Connect, the server can select at the time of issuance which user claims to include in the JWT, minimizing the information shared with the relying party who validates the JWT.
@@ -62,9 +62,9 @@ For example, the JWT may contain claims representing both an address and a birth
 The Holder may elect to disclose only the address to one Verifier, and only the birthdate to a different Verifier.
 
 Privacy principles of minimal disclosure in conjunction with this model demand a mechanism enabling selective disclosure of data elements while ensuring that Verifiers can still check the authenticity of the data provided.
-This specification defines such a mechanism for JSON-encoded payloads of JSON Web Signatures, with a primary use case being JWTs.
+This specification defines such a mechanism for JSON payloads of JSON Web Signatures, with a primary use case being JWTs.
 
-SD-JWT is based on an approach called "salted hashes": For any data element that should be selectively disclosable, the Issuer of the SD-JWT does not include the cleartext of the data in the JSON-encoded payload of the JWS structure; instead, a digest of the data takes its place.
+SD-JWT is based on an approach called "salted hashes": For any data element that should be selectively disclosable, the Issuer of the SD-JWT does not include the cleartext of the data in the JSON payload of the JWS structure; instead, a digest of the data takes its place.
 For presentation to a Verifier, the Holder sends the signed payload along with the cleartext of those claims it wants to disclose.
 The Verifier can then compute the digest of the cleartext data and confirm it is included in the signed payload.
 To ensure that Verifiers cannot guess cleartext values of non-disclosed data elements, an additional salt value is used when creating the digest and sent along with the cleartext when disclosing it.
@@ -381,12 +381,11 @@ Disclosures are created differently depending on whether a claim is an object pr
 ### Disclosures for Object Properties {#disclosures_for_object_properties}
 For each claim that is an object property and that is to be made selectively disclosable, the Issuer MUST create a Disclosure as follows:
 
- * Create an array of three elements in this order:
+ * Create a JSON array of three elements in this order:
    1. A salt value. MUST be a string. See (#salt-entropy) for security considerations. It is RECOMMENDED to base64url-encode a minimum of 128 bits of cryptographically secure random data, producing a string. The salt value MUST be unique for each claim that is to be selectively disclosed. The Issuer MUST NOT reveal the salt value to any party other than the Holder.
    2. The claim name, or key, as it would be used in a regular JWT payload. It MUST be a string and MUST NOT be `_sd`, `...`, or a claim name existing in the object as a permanently disclosed claim.
    3. The claim value, as it would be used in a regular JWT payload. The value can be of any type that is allowed in JSON, including numbers, strings, booleans, arrays, null, and objects.
- * JSON-encode the array, producing an UTF-8 string.
- * base64url-encode the byte representation of the UTF-8 string. This string is the Disclosure.
+ * base64url-encode the UTF-8 byte sequence of the JSON array. This string is the Disclosure.
 
 > Note: The order was decided based on readability considerations: salts have a
 constant length within the SD-JWT, claim names would be around the same length
@@ -429,7 +428,7 @@ For each claim that is an array element and that is to be made selectively discl
    1. The salt value as described in (#disclosures_for_object_properties).
    2. The array element that is to be hidden. This value can be of any type that is allowed in JSON, including numbers, strings, booleans, arrays, and objects.
 
-The Disclosure string is created by JSON-encoding this array and base64url-encoding the byte representation of the resulting string as described in (#disclosures_for_object_properties). The same considerations regarding
+The Disclosure string is created by base64url-encoding the UTF-8 byte sequence of the resulting JSON array as described in (#disclosures_for_object_properties). The same considerations regarding
 variations in the result of the JSON encoding apply.
 
 For example, a Disclosure for the second element of the `nationalities` array in the following JWT Claims Set:
@@ -827,13 +826,13 @@ an SD-JWT to validate the SD-JWT and extract the payload:
     3. (**) For each embedded digest found in the previous step:
         1. Compare the value with the digests calculated previously and find the matching Disclosure. If no such Disclosure can be found, the digest MUST be ignored.
         2. If the digest was found in an object's `_sd` key:
-            1. If the contents of the respective Disclosure is not a JSON-encoded array of three elements (salt, claim name, claim value), the SD-JWT MUST be rejected.
+            1. If the contents of the respective Disclosure is not a JSON array of three elements (salt, claim name, claim value), the SD-JWT MUST be rejected.
             2. If the claim name is `_sd` or `...`, the SD-JWT MUST be rejected.
             3. If the claim name already exists at the level of the `_sd` key, the SD-JWT MUST be rejected.
             4. Insert, at the level of the `_sd` key, a new claim using the claim name and claim value from the Disclosure.
             5. Recursively process the value using the steps described in (*) and (**).
         3. If the digest was found in an array element:
-            1. If the contents of the respective Disclosure is not a JSON-encoded array of two elements (salt, value), the SD-JWT MUST be rejected.
+            1. If the contents of the respective Disclosure is not a JSON array of two elements (salt, value), the SD-JWT MUST be rejected.
             2. Replace the array element with the value from the Disclosure.
             3. Recursively process the value using the steps described in (*) and (**).
     4. Remove all array elements for which the digest was not found in the previous step.
@@ -1988,6 +1987,7 @@ data. The original JSON data is then used by the application. See
 
    -19
 
+   * Attempt to improve some language around exactly what bytes get base64url encoded
    * Update the ABNF to something that is cleaner and more idiomatic
    * updates from AD's review of comments
 
