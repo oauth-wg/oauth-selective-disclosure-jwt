@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2025-05-08T00:17:25.418345+00:00",
+  "timestamp": "2025-05-13T00:17:18.807745+00:00",
   "repo": "oauth-wg/oauth-selective-disclosure-jwt",
   "labels": [
     {
@@ -12878,7 +12878,7 @@
       "id": "I_kwDOHTmVzM61Cw7X",
       "title": "celebrations of ABNF must conform to protocol",
       "url": "https://github.com/oauth-wg/oauth-selective-disclosure-jwt/issues/570",
-      "state": "OPEN",
+      "state": "CLOSED",
       "author": "bc-pi",
       "authorAssociation": "COLLABORATOR",
       "assignees": [
@@ -12889,8 +12889,8 @@
       ],
       "body": "per Carsten (not Christian) Bormann the ABNF could be more correct \n\nhttps://mailarchive.ietf.org/arch/msg/oauth/rsL5nrj83Qy_Nl-d7w76MVikOoU/",
       "createdAt": "2025-05-03T13:08:34Z",
-      "updatedAt": "2025-05-03T14:22:45Z",
-      "closedAt": null,
+      "updatedAt": "2025-05-12T18:51:35Z",
+      "closedAt": "2025-05-12T18:51:35Z",
       "comments": [
         {
           "author": "bc-pi",
@@ -12920,7 +12920,7 @@
       "id": "I_kwDOHTmVzM61CzxQ",
       "title": "evalutate for misleading language around encoding",
       "url": "https://github.com/oauth-wg/oauth-selective-disclosure-jwt/issues/571",
-      "state": "OPEN",
+      "state": "CLOSED",
       "author": "bc-pi",
       "authorAssociation": "COLLABORATOR",
       "assignees": [
@@ -12931,8 +12931,8 @@
       ],
       "body": "per Henry (not Hunter) S. Thompson with some help from Carsten (not Christian) Bormann there may be the opportunity to improve some language in the draft https://mailarchive.ietf.org/arch/msg/oauth/hd1CKEIdVodkRKmdNx-vhlTrLt0/ ",
       "createdAt": "2025-05-03T13:31:28Z",
-      "updatedAt": "2025-05-06T20:42:41Z",
-      "closedAt": null,
+      "updatedAt": "2025-05-12T19:17:38Z",
+      "closedAt": "2025-05-12T19:17:38Z",
       "comments": [
         {
           "author": "bc-pi",
@@ -54828,25 +54828,35 @@
       "id": "PR_kwDOHTmVzM6U01x2",
       "title": "Update the ABNF to be cleaner and more idiomatic",
       "url": "https://github.com/oauth-wg/oauth-selective-disclosure-jwt/pull/572",
-      "state": "OPEN",
+      "state": "MERGED",
       "author": "bc-pi",
       "authorAssociation": "COLLABORATOR",
       "assignees": [],
       "labels": [],
       "body": "Update the ABNF to something that is cleaner, less ambiguous, and more idiomatic per https://mailarchive.ietf.org/arch/msg/oauth/-4_YbqYffE6MFIN94H6nTGWaNm8/\r\n\r\nto fix #570",
       "createdAt": "2025-05-03T14:17:05Z",
-      "updatedAt": "2025-05-07T13:07:18Z",
+      "updatedAt": "2025-05-12T18:51:35Z",
       "baseRepository": "oauth-wg/oauth-selective-disclosure-jwt",
       "baseRefName": "master",
       "baseRefOid": "fb7aa92c8e71b77379dc8ff20e553ec2e644972b",
       "headRepository": "oauth-wg/oauth-selective-disclosure-jwt",
       "headRefName": "same-same-but-better",
       "headRefOid": "5cc69112a19e24a91b12e3cbd7aad28bde98b20a",
-      "closedAt": null,
-      "mergedAt": null,
-      "mergedBy": null,
-      "mergeCommit": null,
-      "comments": [],
+      "closedAt": "2025-05-12T18:51:35Z",
+      "mergedAt": "2025-05-12T18:51:34Z",
+      "mergedBy": "bc-pi",
+      "mergeCommit": {
+        "oid": "2b1a9291440d57810efb8e38730297deaa48cb89"
+      },
+      "comments": [
+        {
+          "author": "bc-pi",
+          "authorAssociation": "COLLABORATOR",
+          "body": "Open for more than a week. Two approvals. Telechat fast approaching. ",
+          "createdAt": "2025-05-12T18:51:28Z",
+          "updatedAt": "2025-05-12T18:51:28Z"
+        }
+      ],
       "reviews": [
         {
           "id": "PRR_kwDOHTmVzM6nsJuf",
@@ -54954,25 +54964,35 @@
       "id": "PR_kwDOHTmVzM6U_s4K",
       "title": "try to improve some language around exactly what bytes get base64url encoded",
       "url": "https://github.com/oauth-wg/oauth-selective-disclosure-jwt/pull/573",
-      "state": "OPEN",
+      "state": "MERGED",
       "author": "bc-pi",
       "authorAssociation": "COLLABORATOR",
       "assignees": [],
       "labels": [],
       "body": "Inspired by https://mailarchive.ietf.org/arch/msg/oauth/hd1CKEIdVodkRKmdNx-vhlTrLt0/ this PR attempts to improve some language around exactly what bytes get base64url encoded ",
       "createdAt": "2025-05-05T20:24:54Z",
-      "updatedAt": "2025-05-07T13:06:37Z",
+      "updatedAt": "2025-05-12T19:17:37Z",
       "baseRepository": "oauth-wg/oauth-selective-disclosure-jwt",
       "baseRefName": "master",
-      "baseRefOid": "fb7aa92c8e71b77379dc8ff20e553ec2e644972b",
+      "baseRefOid": "2b1a9291440d57810efb8e38730297deaa48cb89",
       "headRepository": "oauth-wg/oauth-selective-disclosure-jwt",
       "headRefName": "json-is-as-json-does",
-      "headRefOid": "2a8e0e83fd946c9af99a5671bd67d0b80efc0fbf",
-      "closedAt": null,
-      "mergedAt": null,
-      "mergedBy": null,
-      "mergeCommit": null,
-      "comments": [],
+      "headRefOid": "f8d80009b471200c89c30ef6aca79d748733bade",
+      "closedAt": "2025-05-12T19:17:37Z",
+      "mergedAt": "2025-05-12T19:17:37Z",
+      "mergedBy": "bc-pi",
+      "mergeCommit": {
+        "oid": "ae795917f8e183b3e148678ebef84d55e22dd5fa"
+      },
+      "comments": [
+        {
+          "author": "bc-pi",
+          "authorAssociation": "COLLABORATOR",
+          "body": "Open for more than a week. One approval. Some comments addressed. Telechat fast approaching. ",
+          "createdAt": "2025-05-12T18:52:50Z",
+          "updatedAt": "2025-05-12T18:52:50Z"
+        }
+      ],
       "reviews": [
         {
           "id": "PRR_kwDOHTmVzM6n2mso",
