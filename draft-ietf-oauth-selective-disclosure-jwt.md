@@ -816,7 +816,7 @@ an SD-JWT to validate the SD-JWT and extract the payload:
     1. Ensure that a signing algorithm was used that was deemed secure for the application. Refer to [@!RFC8725], Sections 3.1 and 3.2 for details. The `none` algorithm MUST NOT be accepted.
     2. Validate the signature over the Issuer-signed JWT per Section 5.2 of [@!RFC7515].
     3. Validate the Issuer and that the signing key belongs to this Issuer.
-    5. Check that the `_sd_alg` claim value is understood and the hash algorithm is deemed secure (see (#hash_function_claim)).
+    5. Check that the `_sd_alg` claim value is understood and the hash algorithm is deemed secure according to the Holder or Verifier's policy (see (#hash_function_claim)).
 3. Process the Disclosures and embedded digests in the Issuer-signed JWT as follows:
     1. For each Disclosure provided:
         1. Calculate the digest over the base64url-encoded string as described in (#hashing_disclosures).
