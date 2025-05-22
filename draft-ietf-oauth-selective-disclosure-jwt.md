@@ -808,7 +808,7 @@ or a Verifier needs to ensure that:
  * the Issuer-signed JWT is valid, and
  * all Disclosures are valid and correspond to a respective digest value in the Issuer-signed JWT (directly in the payload or recursively included in the contents of other Disclosures).
 
-The Holder or the Verifier MUST perform the following steps when receiving
+The Holder or the Verifier MUST perform the following checks when receiving
 an SD-JWT to validate the SD-JWT and extract the payload:
 
 1. Separate the SD-JWT into the Issuer-signed JWT and the Disclosures (if any).
