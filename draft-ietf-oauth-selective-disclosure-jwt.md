@@ -860,7 +860,7 @@ When receiving an SD-JWT, the Holder MUST do the following:
 
 For presentation to a Verifier, the Holder MUST perform the following (or equivalent) steps (in addition to the checks described in (#sd_jwt_verification) performed after receiving the SD-JWT):
 
- 1. Decide which Disclosures to release to the Verifier, obtaining proper consent if necessary.
+ 1. Decide which Disclosures to release to the Verifier, obtaining consent if necessary.
  2. Verify that each selected Disclosure satisfies one of the two following conditions:
     1. The hash of the Disclosure is contained in the Issuer-signed JWT claims
     2. The hash of the Disclosure is contained in the claim value of another selected Disclosure
