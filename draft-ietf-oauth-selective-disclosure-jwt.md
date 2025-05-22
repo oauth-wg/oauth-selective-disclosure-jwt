@@ -641,7 +641,7 @@ The Key Binding JWT MUST be a JWT according to [@!RFC7519] and its payload MUST 
     * `alg`: REQUIRED. A digital signature algorithm identifier such as per IANA "JSON Web Signature and Encryption Algorithms" registry. It MUST NOT be `none`.
 * in the JWT payload,
     * `iat`: REQUIRED. The value of this claim MUST be the time at which the Key Binding JWT was issued using the syntax defined in [@!RFC7519].
-    * `aud`: REQUIRED. The intended receiver of the Key Binding JWT. How the value is represented is up to the protocol used and out of scope of this specification.
+    * `aud`: REQUIRED. The value MUST be a single string that identifies the intended receiver of the Key Binding JWT. How the value is represented is up to the protocol used and out of scope of this specification.
     * `nonce`: REQUIRED. Ensures the freshness of the signature or its binding to the given transaction. The value type of this claim MUST be a string. How this value is obtained is up to the protocol used and out of scope of this specification.
     * `sd_hash`: REQUIRED. The base64url-encoded hash value over the Issuer-signed JWT and the selected Disclosures as defined below.
 
