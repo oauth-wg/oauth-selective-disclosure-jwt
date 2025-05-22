@@ -994,7 +994,7 @@ has not been tampered with since the issuance. The Issuer-signed JWT MUST be rej
 
 The security of the Issuer-signed JWT depends on the security of the signature algorithm.
 Any of the JWS asymmetric digital signature algorithms registered in [@IANA.JWS.Algorithms]
-that meet the security requirements described in the last paragraph of Section 5.2 of [@RFC7515]
+that meet the requirements described in the last paragraph of Section 5.2 of [@RFC7515]
 can be used, including post-quantum algorithms, when they are ready.
 
 ## Manipulation of Disclosures {#sec-disclosures}
