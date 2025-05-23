@@ -1373,7 +1373,7 @@ Decoy digests increase the size of the SD-JWT. The number of decoy digests (or w
 
 An Issuer issuing only one type of SD-JWT might have privacy implications, because if the Holder has an SD-JWT issued by that Issuer, its type and claim names can be determined.
 
-For example, if the National Cancer Institute only issued SD-JWTs with cancer registry information, it is possible to deduce that the Holder owning its SD-JWT is a cancer patient.
+For example, if a cancer research institute only issued SD-JWTs with cancer registry information, it is possible to deduce that the Holder owning its SD-JWT is a cancer patient.
 
 Moreover, the issuer identifier alone may reveal information about the user.
 
