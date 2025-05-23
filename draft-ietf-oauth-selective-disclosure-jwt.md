@@ -133,6 +133,10 @@ Key Binding JWT (KB-JWT):
 Selectively Disclosable JWT with Key Binding (SD-JWT+KB):
 : A composite structure, comprising an SD-JWT and a Key Binding JWT tied to that SD-JWT.
 
+Processed SD-JWT Payload
+:  The JSON object resulting from verification and processing of the Issuer-signed SD-JWT,
+   with digest placeholders replaced by the corresponding values from the Disclosures.
+
 Issuer:
 :  An entity that creates SD-JWTs.
 
@@ -739,7 +743,7 @@ If the Verifier did not require Key Binding, then the Holder could have
 presented the SD-JWT with selected Disclosures directly, instead of encapsulating it in
 an SD-JWT+KB.
 
-After validation, the Verifier will have the following processed SD-JWT payload available for further handling:
+After validation, the Verifier will have the following Processed SD-JWT Payload available for further handling:
 
 <{{examples/simple/verified_contents.json}}
 
@@ -842,7 +846,7 @@ an SD-JWT to validate the SD-JWT and extract the payload:
 5. If any Disclosure was not referenced by digest value in the Issuer-signed JWT (directly or recursively via other Disclosures), the SD-JWT MUST be rejected.
 6. Check that the SD-JWT is valid using claims such as `nbf`, `exp`, and `aud` in the processed payload, if present. If a required validity-controlling claim is missing (see (#sd-validity-claims)), the SD-JWT MUST be rejected.
 
-If any step fails, the SD-JWT is not valid, and processing MUST be aborted. Otherwise, the JSON document resulting from the preceding processing and verification steps, herein referred to as the processed SD-JWT payload, can be made available to the application to be used for its intended purpose.
+If any step fails, the SD-JWT is not valid, and processing MUST be aborted. Otherwise, the JSON document resulting from the preceding processing and verification steps, herein referred to as the Processed SD-JWT Payload, can be made available to the application to be used for its intended purpose.
 
 > Note that these processing steps do not yield any guarantees to the Holder about having received a complete set of Disclosures. That is, for some digest values in the Issuer-signed JWT (which are not decoy digests) there may be no corresponding Disclosures, for example, if the message from the Issuer was truncated.
 It is up to the Holder how to maintain the mapping between the Disclosures and the plaintext claim values to be able to display them to the user when needed.
@@ -901,7 +905,7 @@ To this end, Verifiers MUST follow the following steps (or equivalent):
 
 If any step fails, the presentation is not valid and processing MUST be aborted.
 
-Otherwise, the processed SD-JWT payload can be passed to the application to be used for the intended purpose.
+Otherwise, the Processed SD-JWT Payload can be passed to the application to be used for the intended purpose.
 
 # JWS JSON Serialization {#json_serialization}
 
@@ -1762,7 +1766,7 @@ and `country` of the `address` property:
 
 <{{examples/simple_structured/sd_jwt_presentation.txt}}
 
-After validation, the Verifier will have the following processed SD-JWT payload available for further handling:
+After validation, the Verifier will have the following Processed SD-JWT Payload available for further handling:
 
 <{{examples/simple_structured/verified_contents.json}}
 
@@ -1787,7 +1791,7 @@ The following is a presentation of the SD-JWT:
 
 <{{examples/complex_ekyc/sd_jwt_presentation.txt}}
 
-The Verifier will have this processed SD-JWT payload available after validation:
+The Verifier will have this Processed SD-JWT Payload available after validation:
 
 <{{examples/complex_ekyc/verified_contents.json}}
 
@@ -1826,7 +1830,7 @@ This is the payload of the corresponding Key Binding JWT:
 
 <{{examples/arf-pid/kb_jwt_payload.json}}
 
-After validation, the Verifier will have the following processed SD-JWT payload available for further handling:
+After validation, the Verifier will have the following Processed SD-JWT Payload available for further handling:
 
 <{{examples/arf-pid/verified_contents.json}}
 
@@ -1858,7 +1862,7 @@ This is an example of an SD-JWT+KB that discloses only `type`, `medicinalProduct
 
 <{{examples/jsonld/sd_jwt_presentation.txt}}
 
-After the validation, the Verifier will have the following processed SD-JWT payload available for further handling:
+After the validation, the Verifier will have the following Processed SD-JWT Payload available for further handling:
 
 <{{examples/jsonld/verified_contents.json}}
 
