@@ -1348,9 +1348,9 @@ be ensured, and the privacy impact has been assessed.
 
 ## Confidentiality during Transport
 
-If the SD-JWT is transmitted over an insecure
+If an SD-JWT or SD-JWT+KB is transmitted over an insecure
 channel during issuance or presentation, an adversary may be able to
-intercept and read the user's personal data or correlate the information with previous uses of the same SD-JWT.
+intercept and read the user's personal data or correlate the information with previous uses.
 
 Usually, transport protocols for issuance and presentation of credentials
 are designed to protect the confidentiality of the transmitted data, for
@@ -1363,7 +1363,7 @@ mechanism.
 Implementers MUST ensure that the transport protocol provides confidentiality
 if the privacy of user data or correlation attacks by passive observers are a concern.
 
-To encrypt the SD-JWT when transmitted over an insecure channel, implementers MAY use JSON Web Encryption (JWE) [@!RFC7516] by nesting the SD-JWT as the plaintext payload of a JWE.
+To encrypt an SD-JWT or SD-JWT+KB during transit over potentially insecure or leakage-prone channels, implementers MAY use JSON Web Encryption (JWE) [@!RFC7516], encapsulating the SD-JWT or SD-JWT+KB as the plaintext payload of the JWE.
 Especially, when an SD-JWT is transmitted via a URL and information may be stored/cached in the browser or end up in web server logs, the SD-JWT SHOULD be encrypted using JWE.
 
 ## Decoy Digests {#decoy_digests_privacy}
