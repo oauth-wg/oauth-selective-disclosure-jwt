@@ -1597,7 +1597,7 @@ the media type is encoded as an SD-JWT.
 
 <reference anchor="VC_DATA_v2.0" target="https://www.w3.org/TR/vc-data-model-2.0/">
   <front>
-    <title>Verifiable Credentials Data Model 2.0 Candidate Recommendation Draft</title>
+    <title>Verifiable Credentials Data Model 2.0</title>
     <author fullname="Manu Sporny">
       <organization>Digital Bazaar</organization>
     </author>
@@ -1613,7 +1613,7 @@ the media type is encoded as an SD-JWT.
     <author fullname="Ivan Herman">
       <organization>W3C</organization>
     </author>
-    <date day="09" month="Aug" year="2024"/>
+    <date month="May" year="2025"/>
   </front>
 </reference>
 
