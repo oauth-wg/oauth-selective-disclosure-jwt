@@ -1063,9 +1063,6 @@ alone does not indicate a hash algorithm's suitability for use in SD-JWT (it con
 heavily truncated digests, such as `sha-256-32` and `sha-256-64`, which are unfit for security
 applications).
 
-Furthermore, the hash algorithms MD2, MD4, MD5, and SHA-1
-revealed fundamental weaknesses and MUST NOT be used.
-
 ## Key Binding {#key_binding_security}
 
 Key Binding aims to ensure that the presenter of an SD-JWT credential is actually the Holder of the credential.
