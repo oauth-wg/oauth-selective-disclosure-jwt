@@ -638,7 +638,7 @@ including the `5G1srw3...` disclosure object.
 This section defines the Key Binding JWT, which encodes a
 signature over an SD-JWT by the Holder's private key.
 
-The Key Binding JWT MUST be a JWT according to [@!RFC7519] and its payload MUST contain the following elements:
+The Key Binding JWT MUST be a JWT according to [@!RFC7519], and it MUST contain the following elements:
 
 * in the JOSE header,
     * `typ`: REQUIRED. MUST be `kb+jwt`, which explicitly types the Key Binding JWT as recommended in Section 3.11 of [@!RFC8725].
