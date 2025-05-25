@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2025-05-18T00:18:59.277774+00:00",
+  "timestamp": "2025-05-25T00:19:26.010164+00:00",
   "repo": "oauth-wg/oauth-selective-disclosure-jwt",
   "labels": [
     {
@@ -55402,6 +55402,253 @@
           ]
         }
       ]
+    },
+    {
+      "number": 575,
+      "id": "PR_kwDOHTmVzM6XL62Y",
+      "title": "reflect some of the AD feedback",
+      "url": "https://github.com/oauth-wg/oauth-selective-disclosure-jwt/pull/575",
+      "state": "OPEN",
+      "author": "Sakurann",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "",
+      "createdAt": "2025-05-22T08:48:37Z",
+      "updatedAt": "2025-05-22T17:25:53Z",
+      "baseRepository": "oauth-wg/oauth-selective-disclosure-jwt",
+      "baseRefName": "master",
+      "baseRefOid": "ae795917f8e183b3e148678ebef84d55e22dd5fa",
+      "headRepository": "oauth-wg/oauth-selective-disclosure-jwt",
+      "headRefName": "feedback",
+      "headRefOid": "87b59801d3ca748a6a330c58ee018ef20245a636",
+      "closedAt": null,
+      "mergedAt": null,
+      "mergedBy": null,
+      "mergeCommit": null,
+      "comments": [],
+      "reviews": [
+        {
+          "id": "PRR_kwDOHTmVzM6qhkqF",
+          "commit": {
+            "abbreviatedOid": "10f77db"
+          },
+          "author": "bc-pi",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2025-05-22T11:51:48Z",
+          "updatedAt": "2025-05-22T11:51:48Z",
+          "comments": [
+            {
+              "originalPosition": 5,
+              "body": "The RECOMMENDED always felt too strong and a little out of place. And the minimum of feels unneeded and redundant to what's in (#salt-entropy)\r\n```suggestion\r\n   1. A salt value. MUST be a string. See (#salt-entropy) for security considerations. To achieve recommended entropy of the salt, the Issuer can base64url-encode 128 bits of cryptographically secure random data, producing a string. The salt value MUST be unique for each claim that is to be selectively disclosed. The Issuer MUST NOT reveal the salt value to any party other than the Holder.\r\n```",
+              "createdAt": "2025-05-22T11:51:48Z",
+              "updatedAt": "2025-05-22T11:51:48Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOHTmVzM6qhl8c",
+          "commit": {
+            "abbreviatedOid": "10f77db"
+          },
+          "author": "bc-pi",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2025-05-22T11:53:47Z",
+          "updatedAt": "2025-05-22T11:53:47Z",
+          "comments": [
+            {
+              "originalPosition": 18,
+              "body": "I still think some kind of allowance to reasonably allow for different implementation choices like order of some steps or use of different intermediate data structures than what's implied.",
+              "createdAt": "2025-05-22T11:53:47Z",
+              "updatedAt": "2025-05-22T11:53:47Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOHTmVzM6qiRJo",
+          "commit": {
+            "abbreviatedOid": "10f77db"
+          },
+          "author": "danielfett",
+          "authorAssociation": "MEMBER",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2025-05-22T12:52:02Z",
+          "updatedAt": "2025-05-22T12:52:02Z",
+          "comments": [
+            {
+              "originalPosition": 5,
+              "body": "Looks good to me, but I'd throw in a definite article.\r\n\r\n```suggestion\r\n   1. A salt value. MUST be a string. See (#salt-entropy) for security considerations. To achieve the recommended entropy of the salt, the Issuer can base64url-encode 128 bits of cryptographically secure random data, producing a string. The salt value MUST be unique for each claim that is to be selectively disclosed. The Issuer MUST NOT reveal the salt value to any party other than the Holder.\r\n```",
+              "createdAt": "2025-05-22T12:52:02Z",
+              "updatedAt": "2025-05-22T12:52:16Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOHTmVzM6qiSXe",
+          "commit": {
+            "abbreviatedOid": "10f77db"
+          },
+          "author": "danielfett",
+          "authorAssociation": "MEMBER",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2025-05-22T12:53:26Z",
+          "updatedAt": "2025-05-22T12:53:27Z",
+          "comments": [
+            {
+              "originalPosition": 18,
+              "body": "What if we change \"steps\" to \"checks\" in order to imply that these things need to be checked, not necessarily in the same order and way?",
+              "createdAt": "2025-05-22T12:53:26Z",
+              "updatedAt": "2025-05-22T12:53:27Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOHTmVzM6qlNEc",
+          "commit": {
+            "abbreviatedOid": "535d971"
+          },
+          "author": "Sakurann",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2025-05-22T16:27:42Z",
+          "updatedAt": "2025-05-22T16:27:42Z",
+          "comments": [
+            {
+              "originalPosition": 18,
+              "body": "```suggestion\r\nThe Holder or the Verifier MUST perform the following checks when receiving\r\n```",
+              "createdAt": "2025-05-22T16:27:42Z",
+              "updatedAt": "2025-05-22T16:27:43Z"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "number": 576,
+      "id": "PR_kwDOHTmVzM6XRz8w",
+      "title": "changes aimed at addressing one IESG member's feedback",
+      "url": "https://github.com/oauth-wg/oauth-selective-disclosure-jwt/pull/576",
+      "state": "OPEN",
+      "author": "bc-pi",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "and that IESG member is @OR13 ",
+      "createdAt": "2025-05-22T19:02:17Z",
+      "updatedAt": "2025-05-24T07:45:32Z",
+      "baseRepository": "oauth-wg/oauth-selective-disclosure-jwt",
+      "baseRefName": "master",
+      "baseRefOid": "ae795917f8e183b3e148678ebef84d55e22dd5fa",
+      "headRepository": "oauth-wg/oauth-selective-disclosure-jwt",
+      "headRefName": "orie-ballot-position",
+      "headRefOid": "9a910cd287a0aaeb3e763798ebf69a5f30389bdf",
+      "closedAt": null,
+      "mergedAt": null,
+      "mergedBy": null,
+      "mergeCommit": null,
+      "comments": [
+        {
+          "author": "OR13",
+          "authorAssociation": "CONTRIBUTOR",
+          "body": "This covers one part of the discuss, but I still want to chat about the scenario described here:\r\n\r\nhttps://mailarchive.ietf.org/arch/msg/oauth/yVX3ku5P4O-3gLinWfAsj86Lj8g/\r\n\r\n> A relying party MUST reject SD-JWT+KB when SD-JWT or KB-JWT contain audience values and none of the audience  values are associated with the relying party.\r\n\r\nHigher bandwidth should resolve this, and its possible this is obvious to folks already, and so redundant to the current requirements.",
+          "createdAt": "2025-05-22T19:22:46Z",
+          "updatedAt": "2025-05-22T19:22:46Z"
+        },
+        {
+          "author": "bc-pi",
+          "authorAssociation": "COLLABORATOR",
+          "body": "Yep, I noted our coming higher bandwidth discussion https://mailarchive.ietf.org/arch/msg/oauth/kfFRfttW9kLhvQ0lyR6oMnuxrMQ/ ",
+          "createdAt": "2025-05-22T21:54:10Z",
+          "updatedAt": "2025-05-22T21:54:10Z"
+        }
+      ],
+      "reviews": [
+        {
+          "id": "PRR_kwDOHTmVzM6qm8nP",
+          "commit": {
+            "abbreviatedOid": "a586fbc"
+          },
+          "author": "OR13",
+          "authorAssociation": "CONTRIBUTOR",
+          "state": "APPROVED",
+          "body": "",
+          "createdAt": "2025-05-22T19:20:17Z",
+          "updatedAt": "2025-05-22T19:20:17Z",
+          "comments": []
+        },
+        {
+          "id": "PRR_kwDOHTmVzM6qo40W",
+          "commit": {
+            "abbreviatedOid": "cace347"
+          },
+          "author": "OR13",
+          "authorAssociation": "CONTRIBUTOR",
+          "state": "APPROVED",
+          "body": "",
+          "createdAt": "2025-05-22T23:55:41Z",
+          "updatedAt": "2025-05-22T23:55:41Z",
+          "comments": []
+        },
+        {
+          "id": "PRR_kwDOHTmVzM6q0KMs",
+          "commit": {
+            "abbreviatedOid": "9a910cd"
+          },
+          "author": "OR13",
+          "authorAssociation": "CONTRIBUTOR",
+          "state": "APPROVED",
+          "body": "",
+          "createdAt": "2025-05-23T21:54:06Z",
+          "updatedAt": "2025-05-23T21:54:06Z",
+          "comments": []
+        },
+        {
+          "id": "PRR_kwDOHTmVzM6q1wXC",
+          "commit": {
+            "abbreviatedOid": "9a910cd"
+          },
+          "author": "selfissued",
+          "authorAssociation": "COLLABORATOR",
+          "state": "APPROVED",
+          "body": "",
+          "createdAt": "2025-05-24T07:45:32Z",
+          "updatedAt": "2025-05-24T07:45:32Z",
+          "comments": []
+        }
+      ]
+    },
+    {
+      "number": 577,
+      "id": "PR_kwDOHTmVzM6XdHUX",
+      "title": "assorted IESG comments",
+      "url": "https://github.com/oauth-wg/oauth-selective-disclosure-jwt/pull/577",
+      "state": "OPEN",
+      "author": "bc-pi",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "",
+      "createdAt": "2025-05-23T21:57:31Z",
+      "updatedAt": "2025-05-23T21:57:32Z",
+      "baseRepository": "oauth-wg/oauth-selective-disclosure-jwt",
+      "baseRefName": "master",
+      "baseRefOid": "ae795917f8e183b3e148678ebef84d55e22dd5fa",
+      "headRepository": "oauth-wg/oauth-selective-disclosure-jwt",
+      "headRefName": "iesg-comments",
+      "headRefOid": "2da5a89708891a4ea106be1ae88d59de7fc9381e",
+      "closedAt": null,
+      "mergedAt": null,
+      "mergedBy": null,
+      "mergeCommit": null,
+      "comments": [],
+      "reviews": []
     }
   ]
 }
