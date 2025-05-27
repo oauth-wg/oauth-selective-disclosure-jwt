@@ -62,7 +62,7 @@ For example, the JWT may contain claims representing both an address and a birth
 The Holder may elect to disclose only the address to one Verifier, and only the birthdate to a different Verifier.
 
 Privacy principles of minimal disclosure in conjunction with this model demand a mechanism enabling selective disclosure of data elements while ensuring that Verifiers can still check the authenticity of the data provided.
-This specification defines such a mechanism for JSON payloads of JSON Web Signatures, with a primary use case being JWTs.
+This specification, Selective Disclosure for JSON Web Tokens (SD-JWT), defines such a mechanism for JSON payloads of JSON Web Signatures (JWS), with JWTs as the primary use case.
 
 SD-JWT is based on an approach called "salted hashes": For any data element that should be selectively disclosable, the Issuer of the SD-JWT does not include the cleartext of the data in the JSON payload of the JWS structure; instead, a digest of the data takes its place.
 For presentation to a Verifier, the Holder sends the signed payload along with the cleartext of those claims it wants to disclose.
@@ -1067,9 +1067,6 @@ alone does not indicate a hash algorithm's suitability for use in SD-JWT (it con
 heavily truncated digests, such as `sha-256-32` and `sha-256-64`, which are unfit for security
 applications).
 
-Furthermore, the hash algorithms MD2, MD4, MD5, and SHA-1
-revealed fundamental weaknesses and MUST NOT be used.
-
 ## Key Binding {#key_binding_security}
 
 Key Binding aims to ensure that the presenter of an SD-JWT credential is actually the Holder of the credential.
@@ -1380,7 +1377,7 @@ Decoy digests increase the size of the SD-JWT. The number of decoy digests (or w
 
 An Issuer issuing only one type of SD-JWT might have privacy implications, because if the Holder has an SD-JWT issued by that Issuer, its type and claim names can be determined.
 
-For example, if the National Cancer Institute only issued SD-JWTs with cancer registry information, it is possible to deduce that the Holder owning its SD-JWT is a cancer patient.
+For example, if a cancer research institute only issued SD-JWTs with cancer registry information, it is possible to deduce that the Holder owning its SD-JWT is a cancer patient.
 
 Moreover, the issuer identifier alone may reveal information about the user.
 
