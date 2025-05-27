@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2025-05-25T00:19:26.010164+00:00",
+  "timestamp": "2025-05-27T00:17:07.579810+00:00",
   "repo": "oauth-wg/oauth-selective-disclosure-jwt",
   "labels": [
     {
@@ -55542,7 +55542,7 @@
       "labels": [],
       "body": "and that IESG member is @OR13 ",
       "createdAt": "2025-05-22T19:02:17Z",
-      "updatedAt": "2025-05-24T07:45:32Z",
+      "updatedAt": "2025-05-26T20:09:40Z",
       "baseRepository": "oauth-wg/oauth-selective-disclosure-jwt",
       "baseRefName": "master",
       "baseRefOid": "ae795917f8e183b3e148678ebef84d55e22dd5fa",
@@ -55620,6 +55620,19 @@
           "body": "",
           "createdAt": "2025-05-24T07:45:32Z",
           "updatedAt": "2025-05-24T07:45:32Z",
+          "comments": []
+        },
+        {
+          "id": "PRR_kwDOHTmVzM6rAyZa",
+          "commit": {
+            "abbreviatedOid": "9a910cd"
+          },
+          "author": "Sakurann",
+          "authorAssociation": "COLLABORATOR",
+          "state": "APPROVED",
+          "body": "",
+          "createdAt": "2025-05-26T20:09:40Z",
+          "updatedAt": "2025-05-26T20:09:40Z",
           "comments": []
         }
       ]
