@@ -386,7 +386,7 @@ Disclosures are created differently depending on whether a claim is an object pr
 For each claim that is an object property and that is to be made selectively disclosable, the Issuer MUST create a Disclosure as follows:
 
  * Create a JSON array of three elements in this order:
-   1. A salt value. MUST be a string. See (#salt-entropy) for security considerations. It is RECOMMENDED to base64url-encode a minimum of 128 bits of cryptographically secure random data, producing a string. The salt value MUST be unique for each claim that is to be selectively disclosed. The Issuer MUST NOT reveal the salt value to any party other than the Holder.
+   1. A salt value. MUST be a string. See (#salt-entropy) for security considerations. To achieve the recommended entropy of the salt, the Issuer can base64url-encode 128 bits of cryptographically secure random data, producing a string. The salt value MUST be unique for each claim that is to be selectively disclosed. The Issuer MUST NOT reveal the salt value to any party other than the Holder.
    2. The claim name, or key, as it would be used in a regular JWT payload. It MUST be a string and MUST NOT be `_sd`, `...`, or a claim name existing in the object as a permanently disclosed claim.
    3. The claim value, as it would be used in a regular JWT payload. The value can be of any type that is allowed in JSON, including numbers, strings, booleans, arrays, null, and objects.
  * base64url-encode the UTF-8 byte sequence of the JSON array. This string is the Disclosure.
@@ -809,10 +809,10 @@ The Issuer creates Disclosures first for the sub-claims and then includes their 
 Upon receiving an SD-JWT, either directly or as a component of an SD-JWT+KB, a Holder
 or a Verifier needs to ensure that:
 
- * the Issuer-signed JWT is valid, i.e., it is signed by the Issuer, the signature is valid, it is not expired, it is not suspended or revoked, etc., and
+ * the Issuer-signed JWT is valid, and
  * all Disclosures are valid and correspond to a respective digest value in the Issuer-signed JWT (directly in the payload or recursively included in the contents of other Disclosures).
 
-The Holder or the Verifier MUST perform the following (or equivalent) steps when receiving
+The Holder or the Verifier MUST perform the following checks when receiving
 an SD-JWT to validate the SD-JWT and extract the payload:
 
 1. Separate the SD-JWT into the Issuer-signed JWT and the Disclosures (if any).
@@ -820,7 +820,7 @@ an SD-JWT to validate the SD-JWT and extract the payload:
     1. Ensure that a signing algorithm was used that was deemed secure for the application. Refer to [@!RFC8725], Sections 3.1 and 3.2 for details. The `none` algorithm MUST NOT be accepted.
     2. Validate the signature over the Issuer-signed JWT per Section 5.2 of [@!RFC7515].
     3. Validate the Issuer and that the signing key belongs to this Issuer.
-    5. Check that the `_sd_alg` claim value is understood and the hash algorithm is deemed secure (see (#hash_function_claim)).
+    5. Check that the `_sd_alg` claim value is understood and the hash algorithm is deemed secure according to the Holder or Verifier's policy (see (#hash_function_claim)).
 3. Process the Disclosures and embedded digests in the Issuer-signed JWT as follows:
     1. For each Disclosure provided:
         1. Calculate the digest over the base64url-encoded string as described in (#hashing_disclosures).
@@ -864,7 +864,7 @@ When receiving an SD-JWT, the Holder MUST do the following:
 
 For presentation to a Verifier, the Holder MUST perform the following (or equivalent) steps (in addition to the checks described in (#sd_jwt_verification) performed after receiving the SD-JWT):
 
- 1. Decide which Disclosures to release to the Verifier, obtaining proper consent if necessary.
+ 1. Decide which Disclosures to release to the Verifier, obtaining consent if necessary.
  2. Verify that each selected Disclosure satisfies one of the two following conditions:
     1. The hash of the Disclosure is contained in the Issuer-signed JWT claims
     2. The hash of the Disclosure is contained in the claim value of another selected Disclosure
@@ -998,7 +998,7 @@ has not been tampered with since the issuance. The Issuer-signed JWT MUST be rej
 
 The security of the Issuer-signed JWT depends on the security of the signature algorithm.
 Any of the JWS asymmetric digital signature algorithms registered in [@IANA.JWS.Algorithms]
-that meet the security requirements described in the last paragraph of Section 5.2 of [@RFC7515]
+that meet the requirements described in the last paragraph of Section 5.2 of [@RFC7515]
 can be used, including post-quantum algorithms, when they are ready.
 
 ## Manipulation of Disclosures {#sec-disclosures}
