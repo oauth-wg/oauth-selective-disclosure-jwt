@@ -133,6 +133,10 @@ Key Binding JWT (KB-JWT):
 Selectively Disclosable JWT with Key Binding (SD-JWT+KB):
 : A composite structure, comprising an SD-JWT and a Key Binding JWT tied to that SD-JWT.
 
+Processed SD-JWT Payload
+:  The JSON object resulting from verification and processing of the Issuer-signed SD-JWT,
+   with digest placeholders replaced by the corresponding values from the Disclosures.
+
 Issuer:
 :  An entity that creates SD-JWTs.
 
@@ -533,7 +537,7 @@ element unless a matching Disclosure for the second element is received.
 
 An Issuer MAY add additional digests to the SD-JWT payload that are not associated with
 any claim.  The purpose of such "decoy" digests is to make it more difficult for
-an adversary to see the original number of claims or array elements contained in the SD-JWT. Decoy
+an adversarial Verifier to see the original number of claims or array elements contained in the SD-JWT. Decoy
 digests MAY be added both to the `_sd` array for objects as well as in arrays.
 
 It is RECOMMENDED to create the decoy digests by hashing over a
@@ -634,14 +638,14 @@ including the `5G1srw3...` disclosure object.
 This section defines the Key Binding JWT, which encodes a
 signature over an SD-JWT by the Holder's private key.
 
-The Key Binding JWT MUST be a JWT according to [@!RFC7519] and its payload MUST contain the following elements:
+The Key Binding JWT MUST be a JWT according to [@!RFC7519], and it MUST contain the following elements:
 
 * in the JOSE header,
     * `typ`: REQUIRED. MUST be `kb+jwt`, which explicitly types the Key Binding JWT as recommended in Section 3.11 of [@!RFC8725].
     * `alg`: REQUIRED. A digital signature algorithm identifier such as per IANA "JSON Web Signature and Encryption Algorithms" registry. It MUST NOT be `none`.
 * in the JWT payload,
     * `iat`: REQUIRED. The value of this claim MUST be the time at which the Key Binding JWT was issued using the syntax defined in [@!RFC7519].
-    * `aud`: REQUIRED. The intended receiver of the Key Binding JWT. How the value is represented is up to the protocol used and out of scope of this specification.
+    * `aud`: REQUIRED. The value MUST be a single string that identifies the intended receiver of the Key Binding JWT. How the value is represented is up to the protocol used and out of scope of this specification.
     * `nonce`: REQUIRED. Ensures the freshness of the signature or its binding to the given transaction. The value type of this claim MUST be a string. How this value is obtained is up to the protocol used and out of scope of this specification.
     * `sd_hash`: REQUIRED. The base64url-encoded hash value over the Issuer-signed JWT and the selected Disclosures as defined below.
 
@@ -739,7 +743,7 @@ If the Verifier did not require Key Binding, then the Holder could have
 presented the SD-JWT with selected Disclosures directly, instead of encapsulating it in
 an SD-JWT+KB.
 
-After validation, the Verifier will have the following processed SD-JWT payload available for further handling:
+After validation, the Verifier will have the following Processed SD-JWT Payload available for further handling:
 
 <{{examples/simple/verified_contents.json}}
 
@@ -840,9 +844,9 @@ an SD-JWT to validate the SD-JWT and extract the payload:
     6. Remove the claim `_sd_alg` from the SD-JWT payload.
 4. If any digest value is encountered more than once in the Issuer-signed JWT payload (directly or recursively via other Disclosures), the SD-JWT MUST be rejected.
 5. If any Disclosure was not referenced by digest value in the Issuer-signed JWT (directly or recursively via other Disclosures), the SD-JWT MUST be rejected.
-6. Check that the SD-JWT is valid using claims such as `nbf`, `iat`, and `exp` in the processed payload. If a required validity-controlling claim is missing (see (#sd-validity-claims)), the SD-JWT MUST be rejected.
+6. Check that the SD-JWT is valid using claims such as `nbf`, `exp`, and `aud` in the processed payload, if present. If a required validity-controlling claim is missing (see (#sd-validity-claims)), the SD-JWT MUST be rejected.
 
-If any step fails, the SD-JWT is not valid, and processing MUST be aborted. Otherwise, the JSON document resulting from the preceding processing and verification steps, herein referred to as the processed SD-JWT payload, can be made available to the application to be used for its intended purpose.
+If any step fails, the SD-JWT is not valid, and processing MUST be aborted. Otherwise, the JSON document resulting from the preceding processing and verification steps, herein referred to as the Processed SD-JWT Payload, can be made available to the application to be used for its intended purpose.
 
 > Note that these processing steps do not yield any guarantees to the Holder about having received a complete set of Disclosures. That is, for some digest values in the Issuer-signed JWT (which are not decoy digests) there may be no corresponding Disclosures, for example, if the message from the Issuer was truncated.
 It is up to the Holder how to maintain the mapping between the Disclosures and the plaintext claim values to be able to display them to the user when needed.
@@ -901,7 +905,7 @@ To this end, Verifiers MUST follow the following steps (or equivalent):
 
 If any step fails, the presentation is not valid and processing MUST be aborted.
 
-Otherwise, the processed SD-JWT payload can be passed to the application to be used for the intended purpose.
+Otherwise, the Processed SD-JWT Payload can be passed to the application to be used for the intended purpose.
 
 # JWS JSON Serialization {#json_serialization}
 
@@ -1348,9 +1352,9 @@ be ensured, and the privacy impact has been assessed.
 
 ## Confidentiality during Transport
 
-If the SD-JWT is transmitted over an insecure
+If an SD-JWT or SD-JWT+KB is transmitted over an insecure
 channel during issuance or presentation, an adversary may be able to
-intercept and read the user's personal data or correlate the information with previous uses of the same SD-JWT.
+intercept and read the user's personal data or correlate the information with previous uses.
 
 Usually, transport protocols for issuance and presentation of credentials
 are designed to protect the confidentiality of the transmitted data, for
@@ -1363,7 +1367,7 @@ mechanism.
 Implementers MUST ensure that the transport protocol provides confidentiality
 if the privacy of user data or correlation attacks by passive observers are a concern.
 
-To encrypt the SD-JWT when transmitted over an insecure channel, implementers MAY use JSON Web Encryption (JWE) [@!RFC7516] by nesting the SD-JWT as the plaintext payload of a JWE.
+To encrypt an SD-JWT or SD-JWT+KB during transit over potentially insecure or leakage-prone channels, implementers MAY use JSON Web Encryption (JWE) [@!RFC7516], encapsulating the SD-JWT or SD-JWT+KB as the plaintext payload of the JWE.
 Especially, when an SD-JWT is transmitted via a URL and information may be stored/cached in the browser or end up in web server logs, the SD-JWT SHOULD be encrypted using JWE.
 
 ## Decoy Digests {#decoy_digests_privacy}
@@ -1593,7 +1597,7 @@ the media type is encoded as an SD-JWT.
 
 <reference anchor="VC_DATA_v2.0" target="https://www.w3.org/TR/vc-data-model-2.0/">
   <front>
-    <title>Verifiable Credentials Data Model 2.0 Candidate Recommendation Draft</title>
+    <title>Verifiable Credentials Data Model 2.0</title>
     <author fullname="Manu Sporny">
       <organization>Digital Bazaar</organization>
     </author>
@@ -1609,7 +1613,7 @@ the media type is encoded as an SD-JWT.
     <author fullname="Ivan Herman">
       <organization>W3C</organization>
     </author>
-    <date day="09" month="Aug" year="2024"/>
+    <date month="May" year="2025"/>
   </front>
 </reference>
 
@@ -1762,7 +1766,7 @@ and `country` of the `address` property:
 
 <{{examples/simple_structured/sd_jwt_presentation.txt}}
 
-After validation, the Verifier will have the following processed SD-JWT payload available for further handling:
+After validation, the Verifier will have the following Processed SD-JWT Payload available for further handling:
 
 <{{examples/simple_structured/verified_contents.json}}
 
@@ -1787,7 +1791,7 @@ The following is a presentation of the SD-JWT:
 
 <{{examples/complex_ekyc/sd_jwt_presentation.txt}}
 
-The Verifier will have this processed SD-JWT payload available after validation:
+The Verifier will have this Processed SD-JWT Payload available after validation:
 
 <{{examples/complex_ekyc/verified_contents.json}}
 
@@ -1826,7 +1830,7 @@ This is the payload of the corresponding Key Binding JWT:
 
 <{{examples/arf-pid/kb_jwt_payload.json}}
 
-After validation, the Verifier will have the following processed SD-JWT payload available for further handling:
+After validation, the Verifier will have the following Processed SD-JWT Payload available for further handling:
 
 <{{examples/arf-pid/verified_contents.json}}
 
@@ -1858,7 +1862,7 @@ This is an example of an SD-JWT+KB that discloses only `type`, `medicinalProduct
 
 <{{examples/jsonld/sd_jwt_presentation.txt}}
 
-After the validation, the Verifier will have the following processed SD-JWT payload available for further handling:
+After the validation, the Verifier will have the following Processed SD-JWT Payload available for further handling:
 
 <{{examples/jsonld/verified_contents.json}}
 
