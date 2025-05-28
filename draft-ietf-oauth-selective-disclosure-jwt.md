@@ -864,7 +864,7 @@ When receiving an SD-JWT, the Holder MUST do the following:
 
 For presentation to a Verifier, the Holder MUST perform the following (or equivalent) steps (in addition to the checks described in (#sd_jwt_verification) performed after receiving the SD-JWT):
 
- 1. Decide which Disclosures to release to the Verifier, obtaining consent if necessary.
+ 1. Decide which Disclosures to release to the Verifier, obtaining consent if necessary (note that if and how consent is attained is out of scope for this document).
  2. Verify that each selected Disclosure satisfies one of the two following conditions:
     1. The hash of the Disclosure is contained in the Issuer-signed JWT claims
     2. The hash of the Disclosure is contained in the claim value of another selected Disclosure
@@ -988,7 +988,7 @@ Additionally, as described in (#key_binding_security), the application of Key Bi
 
 ## Mandatory Signing of the Issuer-signed JWT {#sec-is-jwt}
 
-The JWT MUST be signed by the Issuer to protect integrity of the issued
+The JWT MUST be signed by the Issuer to protect the integrity of the issued
 claims. An attacker can modify or add claims if this JWT is not signed (e.g.,
 change the "email" attribute to take over the victim's account or add an
 attribute indicating a fake academic qualification).
@@ -997,9 +997,9 @@ The Verifier MUST always check the signature of the Issuer-signed JWT to ensure 
 has not been tampered with since the issuance. The Issuer-signed JWT MUST be rejected if the signature cannot be verified.
 
 The security of the Issuer-signed JWT depends on the security of the signature algorithm.
-Any of the JWS asymmetric digital signature algorithms registered in [@IANA.JWS.Algorithms]
-that meet the requirements described in the last paragraph of Section 5.2 of [@RFC7515]
-can be used, including post-quantum algorithms, when they are ready.
+Per the last paragraph of Section 5.2 of [@RFC7515], it is an
+application-specific decision to choose the appropriate JWS
+algorithm from [@IANA.JWS.Algorithms], including post-quantum algorithms, when they are ready.
 
 ## Manipulation of Disclosures {#sec-disclosures}
 
@@ -1985,6 +1985,10 @@ data. The original JSON data is then used by the application. See
 # Document History
 
    [[ To be removed from the final specification ]]
+
+   -21
+
+   * A few more minor IESG balloting updates
 
    -20
 
