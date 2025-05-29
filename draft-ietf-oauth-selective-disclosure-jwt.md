@@ -530,8 +530,9 @@ of the `nationalities` array selectively disclosable:
 
 As described in (#verifier_verification), Verifiers ignore all selectively
 disclosable array elements for which they did not receive a Disclosure. In the
-example above, the verification process would output an array with only one
-element unless a matching Disclosure for the second element is received.
+example above, the verification process would output an array with only two
+elements, `["DE", "US"]`, unless the matching Disclosure for the second element is received,
+in which case the output would be a three element array, `["DE", "FR", "US"]`.
 
 ### Decoy Digests {#decoy_digests}
 
@@ -1396,8 +1397,10 @@ Chad Parry,
 Christian Bormann,
 Christian Paquin,
 Dale Bowie,
+Dan Moore,
 David Bakker,
 David Waite,
+Deb Cooley,
 Dick Hardt,
 Fabian Hauck,
 Filip Skokan,
@@ -1422,6 +1425,7 @@ Peter Altmann,
 Pieter Kasselman,
 Richard Barnes,
 Rohan Mahy,
+Roman Danyliw,
 Ryosuke Abe,
 Sami Rosendahl,
 Shawn Emery,
@@ -1985,6 +1989,10 @@ data. The original JSON data is then used by the application. See
 # Document History
 
    [[ To be removed from the final specification ]]
+
+   -22
+
+   * fix text that was out of sync with the associated example
 
    -21
 
