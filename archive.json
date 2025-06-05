@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2025-06-01T00:22:04.241159+00:00",
+  "timestamp": "2025-06-05T00:17:36.140631+00:00",
   "repo": "oauth-wg/oauth-selective-disclosure-jwt",
   "labels": [
     {
@@ -13096,6 +13096,22 @@
           "updatedAt": "2025-05-16T10:29:31Z"
         }
       ]
+    },
+    {
+      "number": 581,
+      "id": "I_kwDOHTmVzM65sK21",
+      "title": "Issuer/Verifier unlinkability with an honest Verifier can be broken if certain JWS headers are used",
+      "url": "https://github.com/oauth-wg/oauth-selective-disclosure-jwt/issues/581",
+      "state": "OPEN",
+      "author": "nikosft",
+      "authorAssociation": "NONE",
+      "assignees": [],
+      "labels": [],
+      "body": " A malicious issuer may create user-specific `jku` or `x5u` URLs,  include them in the JWS header and use them to track the user. In my opinion at least the following text in bold  should be added in section 10.1 to make the audience aware of the threat:\n\n> Contrary to that, Issuer/Verifier unlinkability with an honest Verifier can generally be achieved. However, a callback from the Verifier to the Issuer, such as a revocation check **or resolution of the key material to verify the Issuer's signature**, [...]\n\nSD-JWT VC explicitly defines such a resolution mechanism and avoids the use of `jku` and `x5u`.  I believe this is a nice recommendation for designers of such profiles which can be included in section 10.1  ",
+      "createdAt": "2025-06-03T20:33:38Z",
+      "updatedAt": "2025-06-03T20:33:38Z",
+      "closedAt": null,
+      "comments": []
     }
   ],
   "pulls": [
