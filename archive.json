@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2025-06-10T00:17:46.645842+00:00",
+  "timestamp": "2025-06-15T00:19:58.119290+00:00",
   "repo": "oauth-wg/oauth-selective-disclosure-jwt",
   "labels": [
     {
@@ -13109,7 +13109,7 @@
       "labels": [],
       "body": " A malicious issuer may create user-specific `jku` or `x5u` URLs,  include them in the JWS header and use them to track the user. In my opinion at least the following text in bold  should be added in section 10.1 to make the audience aware of the threat:\n\n> Contrary to that, Issuer/Verifier unlinkability with an honest Verifier can generally be achieved. However, a callback from the Verifier to the Issuer, such as a revocation check **or resolution of the key material to verify the Issuer's signature**, [...]\n\nSD-JWT VC explicitly defines such a resolution mechanism and avoids the use of `jku` and `x5u`.  I believe this is a nice recommendation for designers of such profiles which can be included in section 10.1  ",
       "createdAt": "2025-06-03T20:33:38Z",
-      "updatedAt": "2025-06-08T16:05:33Z",
+      "updatedAt": "2025-06-12T12:43:57Z",
       "closedAt": null,
       "comments": [
         {
@@ -13118,6 +13118,20 @@
           "body": "Thanks @nikosft, however, this document has moved into the RFC Editor's [Publication Queue](https://www.rfc-editor.org/current_queue.php) and so isn't really amenable to changes at this point. ",
           "createdAt": "2025-06-08T16:05:32Z",
           "updatedAt": "2025-06-08T16:05:32Z"
+        },
+        {
+          "author": "Phandinhvu94",
+          "authorAssociation": "NONE",
+          "body": "orie-ballot-position",
+          "createdAt": "2025-06-12T03:59:59Z",
+          "updatedAt": "2025-06-12T03:59:59Z"
+        },
+        {
+          "author": "bc-pi",
+          "authorAssociation": "COLLABORATOR",
+          "body": "> orie-ballot-position\n\nThanks @Phandinhvu94, that's super helpful insight. I'm not sure what the spam/scam is here but I look forward to seeing more. ",
+          "createdAt": "2025-06-12T12:43:56Z",
+          "updatedAt": "2025-06-12T12:43:56Z"
         }
       ]
     }
