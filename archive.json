@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2025-06-15T00:19:58.119290+00:00",
+  "timestamp": "2025-07-01T00:20:44.763683+00:00",
   "repo": "oauth-wg/oauth-selective-disclosure-jwt",
   "labels": [
     {
@@ -12429,7 +12429,7 @@
       ],
       "body": "> I couldn't find where to file issues for the SD-JWT+KB, so sending this here -- feel free to ignore this or ask me to move it to a more appropriate please\r\n\r\n> I initially filed this here https://github.com/openid/OpenID4VP/issues/325 and moved it here.\r\n\r\nJust a small note, as I was reading along the SD-JWT+KB and ran into a problem implementing this section:\r\n\r\nhttps://www.ietf.org/archive/id/draft-ietf-oauth-selective-disclosure-jwt-13.html#section-4.2.1-2.2\r\n\r\nThe problem is that in this section, my JSON serializer (and I think, most people's web-based JSON.stringy()-based serializer) removes white space between\u00a0array elements.\u00a0\r\n\r\nSo, I was getting `[\"_26bc4LT-ac6q2KI6cBW5es\",\"family_name\",\"M\u00f6bius\"]` rather than `[\"_26bc4LT-ac6q2KI6cBW5es\", \"family_name\", \"M\u00f6bius\"]`, which base64url encodes to `WyJfMjZiYzRMVC1hYzZxMktJNmNCVzVlcyIsImZhbWlseV9uYW1lIiwiTcO2Yml1cyJd` rather than `WyJfMjZiYzRMVC1hYzZxMktJNmNCVzVlcyIsICJmYW1pbHlfbmFtZSIsICJNw7ZiaXVzIl0` as is in the example. \r\n\r\nSince it wasn't matching what was in the spec, I had to debug for a while before I convinced myself that my implementation was valid, so figured other people would too.",
       "createdAt": "2024-11-20T23:22:44Z",
-      "updatedAt": "2024-12-23T22:11:10Z",
+      "updatedAt": "2025-06-30T18:03:59Z",
       "closedAt": "2024-12-23T22:11:10Z",
       "comments": [
         {
@@ -12445,6 +12445,27 @@
           "body": "\"thanks! feel free to close as WAI if that's useful.\" - @samuelgoto in a conversation on slack ",
           "createdAt": "2024-12-23T22:11:10Z",
           "updatedAt": "2024-12-23T22:11:10Z"
+        },
+        {
+          "author": "bc-pi",
+          "authorAssociation": "COLLABORATOR",
+          "body": "cc @panva for his love of gratuitous spaces in JSON serialization :)  ",
+          "createdAt": "2025-06-30T16:48:29Z",
+          "updatedAt": "2025-06-30T16:48:29Z"
+        },
+        {
+          "author": "panva",
+          "authorAssociation": "MEMBER",
+          "body": "Of course the only json serializer in existance that wastes internet space is the one used in the reference implementation ;)",
+          "createdAt": "2025-06-30T16:51:01Z",
+          "updatedAt": "2025-06-30T16:51:16Z"
+        },
+        {
+          "author": "bc-pi",
+          "authorAssociation": "COLLABORATOR",
+          "body": "1/1 doctors recommend that json serializer  (aka Dr. @danielfett) ",
+          "createdAt": "2025-06-30T18:03:59Z",
+          "updatedAt": "2025-06-30T18:03:59Z"
         }
       ]
     },
