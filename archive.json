@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2025-07-03T00:18:15.954871+00:00",
+  "timestamp": "2025-07-10T00:18:13.861541+00:00",
   "repo": "oauth-wg/oauth-selective-disclosure-jwt",
   "labels": [
     {
@@ -12976,7 +12976,7 @@
       "id": "I_kwDOHTmVzM62YAtd",
       "title": "Providing interoperability for ECDH-HMAC signatures on key binding JWT",
       "url": "https://github.com/oauth-wg/oauth-selective-disclosure-jwt/issues/574",
-      "state": "OPEN",
+      "state": "CLOSED",
       "author": "Razumain",
       "authorAssociation": "NONE",
       "assignees": [],
@@ -12987,8 +12987,8 @@
       ],
       "body": "This proposal is produced jointly with Peter Altmann, who discussed the topic with Christian Bormann for additional clarity. At Daniel's suggestion, we are opening this issue for broader discussion.\n\nWe propose amending the current text in **SD-JWT, Section 4.3.2** by appending the following:\n\n**After the current paragraph:**\n\n> If the Verifier requires Key Binding, the Verifier MUST ensure that  \n> the key with which it validates the signature on the Key Binding JWT  \n> is the key specified in the SD-JWT as the Holder's public key. For  \n> example, if the SD-JWT contains a `cnf` value with a `jwk` member, the  \n> Verifier would parse the provided JWK and use it to verify the Key  \n> Binding JWT.\n\n**Add:**\n\n> If the `alg` Header Parameter is HMAC-based (i.e., `HS256`, `HS384`, or `HS512`), the shared secret key **MUST** be derived as:\n>\n> `HMAC-key = HKDF(IKM, keylen, info, salt)`\n>\n> Where:\n> - `HKDF` is the HMAC-based Extract-and-Expand Key Derivation Function as detailed in RFC 5869,\n> - `IKM` is the output of the Diffie-Hellman key exchange between the public key in the `cnf` and the verifier private key,\n> - `keylen` is the output size of the selected HMAC algorithm (256, 384, or 512 bits),\n> - `info` is the ASCII string `\"SD_JWT_KB_\" || alg` (e.g., `\"SD_JWT_KB_HS256\"`),\n> - `salt` is the nonce value.\n\n---\n\n### Motivation\n\n**Note that this discussion is limited to algorithms for the key binding JWT. ECDSA will still be used to sign the issuer signed JWT.**\n\nWhen planning for EU Digital Identity Wallet implementation, we identified several strong requirements:\n\n- The Wallet's private key MUST be managed by a server-based HSM.\n- The HSM MUST expose functionality via the PKCS#11 API.\n- Each attestation must have a distinct public key.\n\nDistinct `cnf` key material is used to enable verifier-unlinkable presentations. We want to derive single-show keys from a HSM-protected root key, but cannot find a way to do so while satisfy the above requirements using ECDSA for the key binding JWT. \n\nHowever, it is possible to meet these requirements using the MAC algorithms listed in [RFC 7518 section 3.1](https://datatracker.ietf.org/doc/html/rfc7518#section-3.1). \n\nThe proposed HMAC signing approach is fully supported in **mDoc**, where the derivation of the HMAC key is specified in Section 9.1.3.5 of [ISO/IEC 18013-5]. The proposal here mirrors that design as RFC 7518 does not specify how the MAC key should be derived. \n\nWe understand the SD-JWT specification is in its final stages. However, this is a non-breaking and narrowly scoped change that promotes interoperability in HMAC-based deployments. We therefore think it is worth the effort of an update before publication. Furthermore, this addition is critical for anyone aiming to support SD-JWT with single-show binding keys, where HSM resources are accessed using PKCS#11. Without it, we may only be able to guarantee verifier-unlinkability for mDoc (ISO/IEC 18013).",
       "createdAt": "2025-05-13T11:37:15Z",
-      "updatedAt": "2025-05-16T10:29:32Z",
-      "closedAt": null,
+      "updatedAt": "2025-07-09T23:06:39Z",
+      "closedAt": "2025-07-09T23:06:39Z",
       "comments": [
         {
           "author": "Denisthemalice",
@@ -13122,6 +13122,13 @@
           "body": "@bc-pi \nThanks for adding this to OpenID4VP.\n\nTo answer your first question, I'm convinced that using ECDH-HMAC is allowed and not prohibited by SD JWT.\nThe problem is just that if it is used, the verifier does not get all the information necessary to deterministically derive the HMAC key. That needs to be specified somewhere. This discussion was an attempt to see if this could be done in SD JWT as a simple and non breaking lat minute change. A primary motivation for this would be to make mDoc/mDL and SD JWT equal in this regard. mDoc/mDL handles this issue, SD JWT does not.\n\n\nAs to @NeilMadden I do agree with the comment. There is a nonce that could be used, but that is defined in OpenID4VP. As such it is not suitable for this document. But I think there are other possible alternatives. Including a static salt value, a null salt value, a hash of the base JWT. If we would go down this route, I'm sure we can come up with something suitable.\n\n\n**Finally, some thoughts on where to fix this**\n\nI will be totally honest here. This is currently very important for us. Being able to use ECDH-HMAC in an interoperable way will solve some significant problems. And not only for us. mDoc works out of the box, but we really want to use SD JWT if we can. I don't care strongly where this is fixed as long as it if fixed in a way that guarantees interoperability. The preference to this in SD JWT is more tactical. It if is done here, interoperability would be guaranteed from the base specification, and we would not have to battle this in OpenID4VP, ETSI or in the EU commission development of technical specification and implementing acts.\n\nThe second best thing would be to solve this in OpenID4VP, and perhaps @bc-pi can predict better than me if this can be done there. My assumption was that OpenID4VP has an ambition to be agnostic on the actual token format and would be reluctant to do this.\n\nIf we have to do this in ETSI or EU commission, I sense that this will be much harder the and outcome feels uncertain.",
           "createdAt": "2025-05-16T10:27:51Z",
           "updatedAt": "2025-05-16T10:29:31Z"
+        },
+        {
+          "author": "bc-pi",
+          "authorAssociation": "COLLABORATOR",
+          "body": "There's a proposal to talk about the JOSE DVS proposal at the IETF 123 meeting https://mailarchive.ietf.org/arch/msg/jose/nBxAALrHMYE7Lgyq1dHoGx7RaHw/ ",
+          "createdAt": "2025-07-09T23:06:33Z",
+          "updatedAt": "2025-07-09T23:06:33Z"
         }
       ]
     },
@@ -13130,15 +13137,15 @@
       "id": "I_kwDOHTmVzM65sK21",
       "title": "Issuer/Verifier unlinkability with an honest Verifier can be broken if certain JWS headers are used",
       "url": "https://github.com/oauth-wg/oauth-selective-disclosure-jwt/issues/581",
-      "state": "OPEN",
+      "state": "CLOSED",
       "author": "nikosft",
       "authorAssociation": "NONE",
       "assignees": [],
       "labels": [],
       "body": " A malicious issuer may create user-specific `jku` or `x5u` URLs,  include them in the JWS header and use them to track the user. In my opinion at least the following text in bold  should be added in section 10.1 to make the audience aware of the threat:\n\n> Contrary to that, Issuer/Verifier unlinkability with an honest Verifier can generally be achieved. However, a callback from the Verifier to the Issuer, such as a revocation check **or resolution of the key material to verify the Issuer's signature**, [...]\n\nSD-JWT VC explicitly defines such a resolution mechanism and avoids the use of `jku` and `x5u`.  I believe this is a nice recommendation for designers of such profiles which can be included in section 10.1  ",
       "createdAt": "2025-06-03T20:33:38Z",
-      "updatedAt": "2025-06-12T12:43:57Z",
-      "closedAt": null,
+      "updatedAt": "2025-07-09T22:59:46Z",
+      "closedAt": "2025-07-09T22:59:46Z",
       "comments": [
         {
           "author": "bc-pi",
