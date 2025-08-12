@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2025-07-10T00:18:13.861541+00:00",
+  "timestamp": "2025-08-12T00:17:58.054814+00:00",
   "repo": "oauth-wg/oauth-selective-disclosure-jwt",
   "labels": [
     {
@@ -13169,6 +13169,22 @@
           "updatedAt": "2025-06-12T12:43:56Z"
         }
       ]
+    },
+    {
+      "number": 582,
+      "id": "I_kwDOHTmVzM7FYDgu",
+      "title": "overriding of claims",
+      "url": "https://github.com/oauth-wg/oauth-selective-disclosure-jwt/issues/582",
+      "state": "OPEN",
+      "author": "adeinega",
+      "authorAssociation": "NONE",
+      "assignees": [],
+      "labels": [],
+      "body": "My apologies for this silly question but what's the expected behavior for a situation when the JWT payload looks like\n```json\n{\n     \"_sd\": [\n       \"sd_hash1\",\n       \"sd_hash2\",\n       ...\n     ],\n     \"iss\": \"https://issuer.example.com\",\n     \"sub\": \"Alice\",\n      ...\n}\n```\nand the Holder provides the Disclosure to the Verifier as\n```json\n[\"sd_salt1\", \"sub\", \"Bob\"]\n```\nor, provides two Disclosures as\n```\n[\"sd_salt1\", \"sub\", \"Bob\"]\n[\"sd_salt2\", \"sub\", \"Mallory\"]\n```\n?\n\nMy wild guess is that the first example \"remains\" to be a legitimate one (but such SD JWTs could be probably discouraged from being issued by the Issuers), and for the second one, a recipient of such SD JWT should simply reject it regardless if everything else is OK with it.\n\nNote, for the second example, you can also omit the sub claim from the JWT payload.\n\nThank you.",
+      "createdAt": "2025-08-11T19:37:44Z",
+      "updatedAt": "2025-08-11T20:44:24Z",
+      "closedAt": null,
+      "comments": []
     }
   ],
   "pulls": [
