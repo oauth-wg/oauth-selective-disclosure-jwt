@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2025-08-12T00:17:58.054814+00:00",
+  "timestamp": "2025-08-19T00:17:40.419370+00:00",
   "repo": "oauth-wg/oauth-selective-disclosure-jwt",
   "labels": [
     {
@@ -13182,9 +13182,17 @@
       "labels": [],
       "body": "My apologies for this silly question but what's the expected behavior for a situation when the JWT payload looks like\n```json\n{\n     \"_sd\": [\n       \"sd_hash1\",\n       \"sd_hash2\",\n       ...\n     ],\n     \"iss\": \"https://issuer.example.com\",\n     \"sub\": \"Alice\",\n      ...\n}\n```\nand the Holder provides the Disclosure to the Verifier as\n```json\n[\"sd_salt1\", \"sub\", \"Bob\"]\n```\nor, provides two Disclosures as\n```\n[\"sd_salt1\", \"sub\", \"Bob\"]\n[\"sd_salt2\", \"sub\", \"Mallory\"]\n```\n?\n\nMy wild guess is that the first example \"remains\" to be a legitimate one (but such SD JWTs could be probably discouraged from being issued by the Issuers), and for the second one, a recipient of such SD JWT should simply reject it regardless if everything else is OK with it.\n\nNote, for the second example, you can also omit the sub claim from the JWT payload.\n\nThank you.",
       "createdAt": "2025-08-11T19:37:44Z",
-      "updatedAt": "2025-08-11T20:44:24Z",
+      "updatedAt": "2025-08-18T22:21:42Z",
       "closedAt": null,
-      "comments": []
+      "comments": [
+        {
+          "author": "bc-pi",
+          "authorAssociation": "COLLABORATOR",
+          "body": "I thought it was stated explicitly or maybe I just can't find it at the moment but this step https://datatracker.ietf.org/doc/html/draft-ietf-oauth-selective-disclosure-jwt-22#section-7.1-4.3.2.3.2.2.2.3 effectively disallows such payloads. The expected behavior would be to reject. ",
+          "createdAt": "2025-08-18T22:13:03Z",
+          "updatedAt": "2025-08-18T22:21:42Z"
+        }
+      ]
     }
   ],
   "pulls": [
