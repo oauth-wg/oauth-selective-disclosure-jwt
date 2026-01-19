@@ -57,3 +57,4 @@ The artifacts generated for the examples (e.g., serialized SD-JWTs, Disclosures,
  * Java: [Java Library for SD-JWT (Authlete)](https://github.com/authlete/sd-jwt)
  * Go: [sd-jwt (TBD)](https://github.com/TBD54566975/ssi-sdk/tree/main/sd-jwt)
  * Go: [go-sd-jwt](https://github.com/MichaelFraser99/go-sd-jwt)
+ * Haskell: [sd-jwt on Hackage](https://hackage.haskell.org/package/sd-jwt)
