@@ -41,6 +41,7 @@ The artifacts generated for the examples (e.g., serialized SD-JWTs, Disclosures,
 # SD-JWT Implementations
 
  * Python: [Reference/Demo Implementation](https://github.com/openwallet-foundation-labs/sd-jwt-python)
+ * Python: [polaris-oid4vp (verifier: SD-JWT VC with key binding)](https://github.com/EgorKhaklin/polaris-id/tree/main/packages/polaris-oid4vp)
  * Kotlin: [SD-JWT-Kotlin (ID Union)](https://github.com/IDunion/SD-JWT-Kotlin)
  * Kotlin: [eudi-lib-jvm-sdjwt (EU Digital Identity Wallet)](https://github.com/eu-digital-identity-wallet/eudi-lib-jvm-sdjwt-kt)
  * Kotlin Multiplatform (JVM/JS) [waltid-sdjwt](https://github.com/walt-id/waltid-identity/tree/main/waltid-sdjwt)
